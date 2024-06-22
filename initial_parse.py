@@ -129,7 +129,6 @@ def filter_links(target, links):
 
 def main():
 
-
     examples = [("https://fourseasonsforest.wordpress.com/about-your-pride-and-my-prejudice/", "https://fourseasonsforest.wordpress.com/2021/12/14/about-your-pride-and-my-prejudice-01/"),
                 ("https://lorenovels.com/surviving-in-a-romance-fantasy-novel/", "https://lorenovels.com/chapter-59-black-moon-unit-part-6/"),
                 ("https://asuracomic.net/manga/magic-academys-genius-blinker/", "https://asuracomic.net/magic-academys-genius-blinker-chapter-22/"), 
@@ -146,7 +145,7 @@ def main():
     res = filter_links(target, links)
 
     for link, score in res:
-        print(link.url, score)
+        print(link.url)
 
 
 if __name__ == "__main__":
