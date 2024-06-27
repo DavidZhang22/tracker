@@ -244,8 +244,3 @@ def page_content(url): # make sure only scan non-content pages for change
         return False
         
     return True
-
-
-
-f = get_links("https://lorenovels.com/surviving-in-a-romance-fantasy-novel/", "https://lorenovels.com/chapter-59-black-moon-unit-part-6/", "")
-print(f)
