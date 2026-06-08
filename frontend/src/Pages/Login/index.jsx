@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -8,7 +7,6 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -32,8 +30,11 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+  const [error, setError] = React.useState('');
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    setError('');
     const data = new FormData(event.currentTarget);
 
     if(!data.get('password') || !data.get('email')){
@@ -47,12 +48,12 @@ export default function SignIn() {
       password: data.get('password'),
     };
     
-    console.log(body)
-
     post("/user/sign-in", body).then((res)=>{
 
       if(res.success){
-        window.location.href = 'dashboard'
+        window.location.href = '/dashboard'
+      } else {
+        setError(res.error || 'Could not sign in.');
       }
   });
 
@@ -75,6 +76,11 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          {error && (
+            <Typography color="error" sx={{ mt: 2 }}>
+              {error}
+            </Typography>
+          )}
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"

@@ -9,9 +9,9 @@ function App() {
   return (
     <div className = "w-screen h-100">
     <Router>
-    <Navbar></Navbar>
+      <Navbar></Navbar>
     <Routes>
-      <Route path='/'  element={<Login/>} />
+      <Route path='/'  element={<Dashboard/>} />
       <Route exact path='login' element={<Login/>} />
       <Route exact path='signup' element={<Signup/>} />
       <Route exact path='dashboard' element={<Dashboard/>} />
