@@ -403,6 +403,68 @@ test("scan preview saves the actual server scan with preferences", async () => {
   );
 });
 
+test("addition cooldown counts down without losing the preview or preferences", async () => {
+  jest.useFakeTimers();
+  try {
+    post
+      .mockResolvedValueOnce({
+        scan_id: "scan-cooldown",
+        title: "Found series",
+        entries: [],
+        kind: "novel",
+        warnings: [],
+        pages_scanned: 1,
+      })
+      .mockRejectedValueOnce(
+        Object.assign(new Error("You can add one item every 8 seconds."), {
+          status: 429,
+          retryAfter: 8,
+        }),
+      )
+      .mockResolvedValueOnce({ id: "saved" });
+    render(
+      <MemoryRouter initialEntries={["/add"]}>
+        <Routes>
+          <Route path="/add" element={<AddPage />} />
+          <Route path="/items/saved" element={<p>Saved item</p>} />
+        </Routes>
+      </MemoryRouter>,
+    );
+    fireEvent.change(screen.getByLabelText(/Source URL/), {
+      target: { value: "https://site.example" },
+    });
+    await click(screen.getByRole("button", { name: "Scan links" }));
+    fireEvent.change(screen.getByLabelText("Item name"), {
+      target: { value: "My title" },
+    });
+    await click(screen.getByLabelText("Mark existing links as read"));
+    await click(screen.getByRole("button", { name: "Add to library" }));
+    expect(screen.getByRole("button", { name: "Add in 8s" })).toBeDisabled();
+    await click(screen.getByRole("button", { name: "Add in 8s" }));
+    expect(post).toHaveBeenCalledTimes(2);
+    act(() => jest.advanceTimersByTime(7999));
+    expect(screen.getByRole("button", { name: "Add in 1s" })).toBeDisabled();
+    expect(screen.getByLabelText("Item name")).toHaveValue("My title");
+    expect(screen.getByLabelText("Mark existing links as read")).toBeChecked();
+    act(() => jest.advanceTimersByTime(1));
+    expect(
+      screen.getByRole("button", { name: "Add to library" }),
+    ).toBeEnabled();
+    expect(post).toHaveBeenCalledTimes(2); // Never rescan or save automatically.
+    await click(screen.getByRole("button", { name: "Add to library" }));
+    expect(post).toHaveBeenLastCalledWith("/items", {
+      scan_id: "scan-cooldown",
+      title: "My title",
+      mark_read: true,
+      auto_read: true,
+    });
+    expect(screen.getByText("Saved item")).toBeInTheDocument();
+    expect(jest.getTimerCount()).toBe(0);
+  } finally {
+    jest.useRealTimers();
+  }
+});
+
 test("opening links marks them read when enabled", async () => {
   mockDetail();
   detail();

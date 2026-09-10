@@ -4,9 +4,12 @@ import json
 import sqlite3
 import uuid
 from contextlib import contextmanager
+from math import ceil
 from pathlib import Path
+from time import time
 
 from .limits import (
+    ITEM_ADD_INTERVAL_SECONDS,
     MAX_ITEMS,
     MAX_LIBRARY_LINKS,
     MAX_LINKS,
@@ -20,6 +23,14 @@ from .urls import DiscoveryError, canonical_url, content_key
 
 def identity(url):
     return content_key(url)
+
+
+class ItemAdditionCooldown(Exception):
+    def __init__(self, remaining):
+        self.retry_after = max(1, ceil(remaining))
+        super().__init__(
+            f"You can add one item every {ITEM_ADD_INTERVAL_SECONDS} seconds. Your scan is ready to save."
+        )
 
 
 class Store:
@@ -51,6 +62,9 @@ class Store:
             CREATE INDEX IF NOT EXISTS idx_links_item_published ON links(item_id,published_at);
             CREATE INDEX IF NOT EXISTS idx_links_item_unread ON links(item_id,read,ignored);
             CREATE TABLE IF NOT EXISTS scans (id TEXT PRIMARY KEY, created_at TEXT NOT NULL, payload TEXT NOT NULL);
+            CREATE TABLE IF NOT EXISTS addition_cooldown (
+              id INTEGER PRIMARY KEY CHECK(id=1), completed_at REAL NOT NULL
+            );
             """)
             # Additive migration: existing libraries, IDs and progress stay intact.
             additions = {
@@ -82,7 +96,7 @@ class Store:
                         db.execute(
                             f"ALTER TABLE {table} ADD COLUMN {name} {definition}"
                         )
-            db.execute("PRAGMA user_version=4")
+            db.execute("PRAGMA user_version=5")
         marker.touch(exist_ok=True)
 
     @contextmanager
@@ -184,7 +198,6 @@ class Store:
 
     def create(self, scan_id, title=None, mark_read=False, auto_read=True):
         iid = uuid.uuid4().hex
-        now = utcnow()
         with self.connection() as db:
             db.execute("BEGIN IMMEDIATE")
             if db.execute("SELECT count(*) FROM items").fetchone()[0] >= MAX_ITEMS:
@@ -203,6 +216,15 @@ class Store:
                 for existing in db.execute("SELECT url FROM items")
             ):
                 raise sqlite3.IntegrityError("Source already exists")
+            # The account's database serializes additions across tabs and workers.
+            # Persist separately from items so deleting them cannot reset the limit.
+            previous = db.execute(
+                "SELECT completed_at FROM addition_cooldown WHERE id=1"
+            ).fetchone()
+            if previous:
+                elapsed = max(0, time() - previous["completed_at"])
+                if elapsed < ITEM_ADD_INTERVAL_SECONDS:
+                    raise ItemAdditionCooldown(ITEM_ADD_INTERVAL_SECONDS - elapsed)
             db.execute(
                 """INSERT INTO items(id,url,title,kind,auto_read,selector,include_path,created_at,keywords)
               VALUES (?,?,?,?,?,?,?,?,?)""",
@@ -214,12 +236,18 @@ class Store:
                     auto_read,
                     scan.get("selector", ""),
                     scan.get("include_path", ""),
-                    now,
+                    utcnow(),
                     scan.get("keywords", ""),
                 ),
             )
             self._merge(db, iid, scan, initial=True, mark_read=mark_read)
             db.execute("DELETE FROM scans WHERE id=?", (scan_id,))
+            # Only a committed addition consumes the cooldown; errors roll it back.
+            db.execute(
+                "INSERT INTO addition_cooldown(id,completed_at) VALUES (1,?) "
+                "ON CONFLICT(id) DO UPDATE SET completed_at=excluded.completed_at",
+                (time(),),
+            )
         return self.item(iid)
 
     def _merge(self, db, iid, scan, initial=False, mark_read=False):

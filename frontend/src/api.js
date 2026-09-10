@@ -21,12 +21,18 @@ export async function api(path, options = {}) {
       "The tracker server is unavailable. Please try again shortly.",
     );
   }
-  if (!response.ok)
-    throw new Error(
+  if (!response.ok) {
+    const error = new Error(
       typeof data.detail === "string"
         ? data.detail
         : "The request could not be completed.",
     );
+    error.status = response.status;
+    const retryAfter = Number(response.headers.get("Retry-After"));
+    if (Number.isFinite(retryAfter) && retryAfter > 0)
+      error.retryAfter = Math.ceil(retryAfter);
+    throw error;
+  }
   return data;
 }
 export const post = (path, body = {}) =>

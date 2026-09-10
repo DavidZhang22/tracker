@@ -7,6 +7,7 @@ index page; the chapter API walks its bounded metadata pagination.
 import argparse
 import json
 import tempfile
+import time
 from pathlib import Path
 
 from fastapi.testclient import TestClient
@@ -105,6 +106,11 @@ def main():
                 item_response = client.post(
                     "/api/items", json={"scan_id": scan["scan_id"]}
                 )
+                if item_response.status_code == 429:
+                    time.sleep(int(item_response.headers["retry-after"]))
+                    item_response = client.post(
+                        "/api/items", json={"scan_id": scan["scan_id"]}
+                    )
                 assert item_response.status_code == 201, item_response.text
                 item = item_response.json()
                 all_links = []

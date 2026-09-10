@@ -3,6 +3,7 @@
 MAX_LINKS = 4_999  # Includes ignored and trashed records; refresh cannot bypass it.
 MAX_LIBRARY_LINKS = 100_000
 MAX_ITEMS = 200
+ITEM_ADD_INTERVAL_SECONDS = 8
 MAX_PREVIEWS = 5
 MAX_PREVIEW_BYTES = 8_000_000
 

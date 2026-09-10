@@ -88,6 +88,8 @@ def test_total_library_and_item_limits_cannot_be_bypassed_with_trash(
     store = Store(tmp_path / "library.sqlite3")
     first = create(store, [Entry(ROOT + "1", "One"), Entry(ROOT + "2", "Two")])
     store.bulk_selected("items", [first["id"]], "delete")
+    now = time.time() + 8
+    monkeypatch.setattr("app.tracker.store.time", lambda: now)
     second = create(
         store, [Entry(ROOT + "3", "Three"), Entry(ROOT + "4", "Four")], ROOT + "other"
     )
@@ -147,6 +149,7 @@ def test_scan_admission_is_bounded_and_releases_slots_on_failure():
 
 def test_scan_quota_rejects_before_discovery_and_refresh_all_charges_each_item(
     tmp_path,
+    monkeypatch,
 ):
     fake = FakeDiscoverer()
     app = create_app(tmp_path / "quota.sqlite3", fake)
@@ -155,6 +158,8 @@ def test_scan_quota_rejects_before_discovery_and_refresh_all_charges_each_item(
         fake.result = Scan(
             ROOT + "other", "Other", entries=[Entry(ROOT + "other/one", "One")]
         )
+        now = time.time() + 8
+        monkeypatch.setattr("app.tracker.store.time", lambda: now)
         add(client)
         guard = app.state.scan_guard
         guard.rates.charge([(f"scan:{app.state.store.path}", 200, 3600)], 197)

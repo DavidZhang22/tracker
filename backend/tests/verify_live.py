@@ -2,6 +2,7 @@
 
 import json
 import tempfile
+import time
 from pathlib import Path
 
 from fastapi.testclient import TestClient
@@ -21,7 +22,12 @@ with tempfile.TemporaryDirectory() as temp:
             assert response.status_code == 200, response.text
             result = response.json()
             assert result["entries"], name + " returned no entries"
-            item = client.post("/api/items", json={"scan_id": result["scan_id"]}).json()
+            saved = client.post("/api/items", json={"scan_id": result["scan_id"]})
+            if saved.status_code == 429:
+                time.sleep(int(saved.headers["retry-after"]))
+                saved = client.post("/api/items", json={"scan_id": result["scan_id"]})
+            assert saved.status_code == 201, saved.text
+            item = saved.json()
             links = client.get(f"/api/items/{item['id']}/links?limit=200").json()
             assert item["total_count"] == len(result["entries"])
             assert (

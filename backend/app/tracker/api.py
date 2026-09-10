@@ -7,6 +7,7 @@ from pydantic import BaseModel, Field
 
 from .keywords import terms
 from .limits import MAX_ITEMS, MAX_LINKS, bounded_scan
+from .store import ItemAdditionCooldown
 from .urls import DiscoveryError
 
 router = APIRouter(prefix="/api")
@@ -132,6 +133,10 @@ def create(body: CreateRequest, request: Request):
         return request.state.store.create(
             body.scan_id, body.title, body.mark_read, body.auto_read
         )
+    except ItemAdditionCooldown as exc:
+        raise HTTPException(
+            429, str(exc), headers={"Retry-After": str(exc.retry_after)}
+        ) from exc
     except sqlite3.IntegrityError as exc:
         raise HTTPException(409, "This source is already in your library.") from exc
 

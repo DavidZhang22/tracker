@@ -34,7 +34,7 @@ Open **http://localhost:3000**. The development proxy forwards `/api` to the bac
 
 ## Use the tracker
 
-1. **Add item:** paste a source URL, scan it, review the actual discovered links, and save. Optional selectors narrow detection for unusual pages. Existing content starts as unread backlog, or you can mark it read during import.
+1. **Add item:** paste a source URL, scan it, review the actual discovered links, and save. Each account can add one item every eight seconds; the server enforces this across tabs and restarts. A cooldown keeps your preview and shows a countdown on the save button. Failed additions do not consume the cooldown. Optional selectors narrow detection for unusual pages. Existing content starts as unread backlog, or you can mark it read during import.
 2. **Library:** search and filter by new content, unread content, favorites, ignored items, and media type. Refresh one item or all active items.
 3. **Item:** open links, mark read/unread, favorite or ignore individual links, and change ordering. “Mark as read when opened” is a saved preference for each item; ordinary clicks, keyboard activation, and middle clicks are supported. Right-click a row, or use its actions button, to favorite, ignore, mark read/unread, or delete. Shift + right click retains the browser menu; opening from the native browser menu cannot automatically mark read.
 4. **New badges:** only links first discovered after initial import are new. They survive later refreshes until read or explicitly cleared. Clearing badges does not mark links read.

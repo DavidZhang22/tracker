@@ -1,3 +1,5 @@
+from time import time
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -79,9 +81,12 @@ def test_ranges_follow_view_order_filters_and_exclude_anchor(tmp_path, sort, dir
     assert not store.links(item["id"], filter="trash")["links"][0]["read"]
 
 
-def test_range_missing_or_foreign_anchor_changes_nothing(tmp_path):
+def test_range_missing_or_foreign_anchor_changes_nothing(tmp_path, monkeypatch):
     store = Store(tmp_path / "db.sqlite3")
-    one, two = make_item(store), make_item(store, source="https://other.example/")
+    one = make_item(store)
+    now = time() + 8
+    monkeypatch.setattr("app.tracker.store.time", lambda: now)
+    two = make_item(store, source="https://other.example/")
     foreign = store.link_selection(two["id"])["ids"][0]
     with pytest.raises(ValueError):
         store.read_range(one["id"], foreign, "before")

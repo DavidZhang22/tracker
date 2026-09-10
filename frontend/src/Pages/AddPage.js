@@ -25,6 +25,19 @@ export default function AddPage() {
     [read, setRead] = useState(false),
     [auto, setAuto] = useState(true),
     [page, setPage] = useState(0);
+  const [retryAt, setRetryAt] = useState(0),
+    [remaining, setRemaining] = useState(0);
+  useEffect(() => {
+    if (!retryAt) return;
+    const update = () => {
+      const seconds = Math.max(0, Math.ceil((retryAt - Date.now()) / 1000));
+      setRemaining(seconds);
+      if (!seconds) setRetryAt(0);
+    };
+    update();
+    const timer = setInterval(update, 250);
+    return () => clearInterval(timer);
+  }, [retryAt]);
   useEffect(() => {
     setUrl(params.get("url") || "");
     setResult(null);
@@ -51,6 +64,7 @@ export default function AddPage() {
     }
   };
   const save = async () => {
+    if (saving || remaining > 0) return;
     setSaving(true);
     setError("");
     try {
@@ -62,7 +76,12 @@ export default function AddPage() {
       });
       navigate(`/items/${item.id}`);
     } catch (e) {
-      setError(e.message);
+      if (e.status === 429 && e.retryAfter) {
+        setRemaining(e.retryAfter);
+        setRetryAt(Date.now() + e.retryAfter * 1000);
+      } else {
+        setError(e.message);
+      }
     } finally {
       setSaving(false);
     }
@@ -171,9 +190,18 @@ export default function AddPage() {
                 <button
                   className="button primary"
                   onClick={save}
-                  disabled={busy || saving}
+                  disabled={busy || saving || remaining > 0}
+                  title={
+                    remaining > 0
+                      ? "You can add one item every 8 seconds."
+                      : undefined
+                  }
                 >
-                  {saving ? "Saving…" : "Add to library"}
+                  {saving
+                    ? "Saving…"
+                    : remaining > 0
+                      ? `Add in ${remaining}s`
+                      : "Add to library"}
                   <Icon as={ArrowRightIcon} />
                 </button>
               </div>
