@@ -67,16 +67,8 @@ export default function AddPage() {
         <Icon as={ArrowLeftIcon} />
         Library
       </Link>
-      <div className="page-heading add-sticky-heading">
+      <div className="page-heading">
         <h1>Add item</h1>
-        <button
-          className="button primary"
-          onClick={save}
-          disabled={!result || busy || saving}
-        >
-          {saving ? "Saving…" : "Add to library"}
-          <Icon as={ArrowRightIcon} />
-        </button>
       </div>
       <Notice error>{error}</Notice>
       <div className="add-layout">
@@ -152,6 +144,17 @@ export default function AddPage() {
           </form>
           {result && (
             <section className="form-panel scan-results">
+              <div className="preview-save-actions preview-sticky">
+                <span className="badge">Review &amp; save</span>
+                <button
+                  className="button primary"
+                  onClick={save}
+                  disabled={busy || saving}
+                >
+                  {saving ? "Saving…" : "Add to library"}
+                  <Icon as={ArrowRightIcon} />
+                </button>
+              </div>
               <div className="preview-head">
                 <div className="item-identity">
                   <TypeIcon kind={result.kind} />
@@ -170,7 +173,6 @@ export default function AddPage() {
                     </div>
                   </div>
                 </div>
-                <span className="badge">Review & save</span>
               </div>
               {result.warnings.length > 0 && (
                 <Notice resetKey={result.scan_id}>

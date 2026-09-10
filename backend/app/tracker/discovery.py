@@ -156,7 +156,7 @@ class Discoverer:
                         selector,
                         include_path,
                         model_cache_tag(),
-                        "collection-api-v3",
+                        "collection-api-v4",
                     ]
                 ).encode()
             ).hexdigest()

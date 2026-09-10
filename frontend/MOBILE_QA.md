@@ -31,11 +31,11 @@ Verified September 10, 2026 with headless Edge and touch emulation:
   and both kinds of pagination work.
 - Latest-entry shortcuts honor automatic reading; failed checks can be expanded
   and dismissed. Publication labels and time-zone details stay inside date disclosures.
-- All 31 frontend component tests pass, including selection cancellation and
+- All 32 frontend component tests pass, including selection cancellation and
   reset when changing lists.
 
 Phone screenshots were visually reviewed. Physical iOS Safari and Android
 devices have not been tested; touch emulation does not reproduce their software
 keyboards, screen cutouts, or every browser behavior.
 
-The Add to library action is sticky at the top of the scan page. Browser checks verify it stays in the viewport after scrolling to the bottom of a long preview.
+The Add to library action sits beside Review & save in a sticky bar at the top of the preview. Browser checks verify it stays visible while reviewing the last entry. Scan details contain exactly two metadata lines; account dots and the old library footer hint are absent.

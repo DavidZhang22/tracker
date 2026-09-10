@@ -33,3 +33,11 @@ SimplifyJobs/New-Grad-Positions README. It contains open application links and
 closed rows, role/company/location/age columns and image-only action labels.
 Regression tests also use authored reordered-column and Markdown layouts,
 blocked-source responses, and untrusted raw README URLs. No applications are submitted.
+
+`novelshaven-chapters.json` retains the 221 public chapter-metadata records from
+https://novelshaven.com/series/the-galgame-martial-saint, captured September 10,
+2026. IDs, reviews, profiles, images and chapter bodies are omitted. The page
+renders 90 anchors but carries all records in escaped Next.js Flight JSON.
+Tests reconstruct the streamed envelope and its React-props reference, including
+chapter zero, and exercise hidden anchors, partial indexes, selectors, scope and
+cyclic references. No JavaScript is evaluated and no chapter pages are fetched.

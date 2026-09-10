@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 
 from .context_model import classify_context
 from .dates import DATE_TEXT, evidence, link_date
+from .embedded_series import embedded_series
 from .link_model import page_scores
 from .models import Entry, Scan, date_rank, date_value, sequence_value
 from .tables import anchor_label, table_context
@@ -299,6 +300,12 @@ def parse_page(text, source, selector="", include_path=""):
         else urlsplit(source).hostname
     )
     scan = Scan(source, title, kind, methods=["page"])
+    if not selector and (embedded := embedded_series(soup, source, title)):
+        if include_path:
+            embedded.entries = [e for e in embedded.entries if include_path in e.url]
+            if len(embedded.entries) < embedded.expected_count:
+                embedded.coverage = "partial"
+        return embedded, [], []
     tables = table_context(soup)
     job_anchors = {
         key for key, value in tables.items() if value["job"] and value["action"]

@@ -260,9 +260,21 @@ async function check() {
         .getByRole("link", { name: api.item.title, exact: true })
         .waitFor();
       await withinViewport(page, `${width} library`);
+      assert.equal(await page.locator(".small-dot").count(), 0);
+      assert.equal(
+        await page
+          .getByText(
+            "Open a row’s actions menu to favorite, ignore, or delete.",
+            { exact: true },
+          )
+          .count(),
+        0,
+      );
       const note = page.locator(".row-scan-note").first();
       await note.locator("summary").click();
-      assert(await note.getByText(/Source is temporarily unavailable/).isVisible());
+      assert(
+        await note.getByText(/Source is temporarily unavailable/).isVisible(),
+      );
       await note.getByRole("button", { name: /Dismiss scan notes/ }).click();
       assert(
         !(await page
@@ -434,13 +446,25 @@ async function check() {
         .getByRole("button", { name: "Scan links", exact: true })
         .click();
       await page.getByText("26 links found").waitFor();
-      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      assert(
+        await page
+          .locator(".preview-sticky")
+          .getByText("Review & save", { exact: true })
+          .count(),
+      );
+      assert(
+        await page
+          .locator(".preview-sticky")
+          .getByRole("button", { name: "Add to library", exact: true })
+          .count(),
+      );
+      await page.locator(".entry-preview").last().scrollIntoViewIfNeeded();
       const saveBounds = await page
         .getByRole("button", { name: "Add to library", exact: true })
         .boundingBox();
       assert(
         saveBounds.y >= 0 && saveBounds.y + saveBounds.height <= height,
-        "Save button must stay in view after scrolling",
+        "Save button must stay in view while reviewing the last entry",
       );
 
       await withinViewport(page, `${width} add preview`);

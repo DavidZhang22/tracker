@@ -190,8 +190,15 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
                 raise HTTPException(404, "API route not found.")
             target = (build / path).resolve()
             if target.is_relative_to(build.resolve()) and target.is_file():
-                return FileResponse(target)
-            return FileResponse(build / "index.html")
+                return FileResponse(
+                    target,
+                    headers={"Cache-Control": "no-store"}
+                    if target.name == "index.html"
+                    else None,
+                )
+            return FileResponse(
+                build / "index.html", headers={"Cache-Control": "no-store"}
+            )
 
     # Added last so admission runs before authentication and body parsing.
     app.add_middleware(ApiGuard)

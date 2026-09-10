@@ -273,7 +273,11 @@ test("scan preview saves the actual server scan with preferences", async () => {
   await click(screen.getByRole("button", { name: "Scan links" }));
   expect(await screen.findByText("0 links found")).toBeInTheDocument();
   await click(screen.getByLabelText("Mark existing links as read"));
-  await click(screen.getByRole("button", { name: /Add to library/ }));
+  const saveButton = screen.getByRole("button", { name: /Add to library/ });
+  expect(saveButton.closest(".preview-sticky")).toHaveTextContent(
+    "Review & save",
+  );
+  await click(saveButton);
   await waitFor(() =>
     expect(post).toHaveBeenCalledWith("/items", {
       scan_id: "scan1",
@@ -456,4 +460,34 @@ test("publication meaning and time zone remain in date details instead of every 
   expect(container.querySelector(".date-origin")).toHaveTextContent(
     /time zone/,
   );
+});
+
+test("item scan details contain only methods and date coverage", async () => {
+  api.mockImplementation((path) =>
+    Promise.resolve(
+      path.includes("/links")
+        ? { links: [], total: 0, sort_used: "source" }
+        : {
+            ...item,
+            pages_scanned: 3,
+            methods: [
+              "page",
+              "application table",
+              "link classifier",
+              "GitHub README",
+            ],
+            dated_count: 0,
+            total_count: 895,
+          },
+    ),
+  );
+  detail();
+  const summary = await screen.findByText("Scan details", { exact: true });
+  const section = summary.closest("details");
+  expect(section.querySelectorAll("p")).toHaveLength(2);
+  expect(section).toHaveTextContent(
+    "3 pages · page, application table, link classifier, GitHub README",
+  );
+  expect(section).toHaveTextContent("0 of 895 links have a source date.");
+  expect(section).not.toHaveTextContent(/Refresh|Checked|New badges|Requests/);
 });

@@ -38,6 +38,12 @@ test("navigation closes after choosing Account and Escape returns focus to Menu"
   const menu = await screen.findByRole("button", { name: "Menu", exact: true });
   await screen.findByRole("heading", { name: "Start your collection" });
   expect(menu).toHaveAttribute("aria-expanded", "false");
+  expect(
+    screen
+      .getByRole("link", { name: "reader · Account" })
+      .closest(".sidebar-foot")
+      .querySelector(".small-dot"),
+  ).toBeNull();
   await act(async () => fireEvent.click(menu));
   expect(menu).toHaveAttribute("aria-expanded", "true");
   await act(async () =>

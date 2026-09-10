@@ -480,6 +480,16 @@ export default function ItemPage() {
           </div>
         </div>
       </section>
+      <details className="scan-details item-scan-summary">
+        <summary>Scan details</summary>
+        <p>
+          {item.pages_scanned} pages · {item.methods.join(", ")}
+        </p>
+        <p>
+          {item.dated_count || 0} of {item.total_count} links have a source
+          date.
+        </p>
+      </details>
       <details className="scan-details">
         <summary>Link detection settings</summary>
         <form

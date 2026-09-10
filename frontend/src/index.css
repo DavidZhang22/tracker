@@ -163,12 +163,7 @@ h2 {
   color: #91a4b5;
   font-size: 0.75rem;
 }
-.small-dot {
-  width: 7px;
-  height: 7px;
-  background: #70dfc9;
-  border-radius: 50%;
-}
+
 .topbar {
   height: 72px;
   border-bottom: 1px solid var(--line);
