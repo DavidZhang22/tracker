@@ -10,10 +10,14 @@ from urllib.parse import parse_qs, urlsplit
 from .adapters import codeforces_endpoint, codeforces_scan, wetried_scan, wetried_series
 from .fenrir import fenrir_endpoint, fenrir_scan
 from .github import github_readme
+from .keywords import matches, terms
 from .limits import MAX_LINKS, bounded_scan
 from .link_model import model_cache_tag
+from .mangadex import scan_mangadex
+from .mangadex import title_id as mangadex_title
 from .models import Entry, Scan, date_value, utcnow
 from .parser import kind_for, merge_entries, parse_page, relevant
+from .record_context import load_record_model
 from .urls import (
     DiscoveryError,
     RequestBudget,
@@ -140,13 +144,15 @@ class Discoverer:
         self.youtube_loader = youtube_loader
         self.scan_locks = [asyncio.Lock() for _ in range(64)]
 
-    async def scan(self, url, selector="", include_path=""):
+    async def scan(self, url, selector="", include_path="", keywords=""):
+        terms(keywords)
         url = canonical_url(url, preserve_slash=True)
         async with self.scan_locks[hash(url) % 64]:
-            return await self._cached_scan(url, selector, include_path)
+            return await self._cached_scan(url, selector, include_path, keywords)
 
-    async def _cached_scan(self, url, selector, include_path):
+    async def _cached_scan(self, url, selector, include_path, keywords=""):
         cache = getattr(self.fetcher, "cache", None)
+        record_model = load_record_model()
         key = (
             "scan:"
             + hashlib.sha256(
@@ -155,8 +161,10 @@ class Discoverer:
                         url,
                         selector,
                         include_path,
+                        keywords,
                         model_cache_tag(),
-                        "collection-api-v4",
+                        record_model["model_id"] if record_model else "record-fallback",
+                        "context-keywords-v1",
                     ]
                 ).encode()
             ).hexdigest()
@@ -171,10 +179,25 @@ class Discoverer:
         token = request_budget.set(budget)
         try:
             async with asyncio.timeout(180):
-                result = await self._scan(url, selector, include_path)
+                result = await self._scan(url, selector, include_path, keywords)
+                result.keywords = keywords
+                if keywords:
+                    result.unfiltered_count = len(result.entries)
+                    result.entries = [e for e in result.entries if matches(e, keywords)]
+                    if not result.entries and result.unfiltered_count:
+                        result.warnings.append(
+                            "No links matched every keyword. Try fewer keywords or a different phrase."
+                        )
+                    result.methods = list(
+                        dict.fromkeys([*result.methods, "keyword context"])
+                    )
                 result.requests_made, result.cache_hits = budget.requests, budget.hits
                 result.checked_at = utcnow()
-                if cache and result.entries:
+                if cache and (
+                    result.entries
+                    or result.unfiltered_count
+                    or (result.coverage == "complete" and result.expected_count == 0)
+                ):
                     cache.put(key, {"scan": result.to_dict()})
                 return result
         except TimeoutError as exc:
@@ -184,7 +207,12 @@ class Discoverer:
         finally:
             request_budget.reset(token)
 
-    async def _scan(self, url, selector, include_path):
+    async def _scan(self, url, selector, include_path, keywords=""):
+        if mangadex_title(url) and not selector:
+            result = await scan_mangadex(self.fetcher, url, self.max_pages, keywords)
+            if include_path:
+                result.entries = [e for e in result.entries if include_path in e.url]
+            return result
         first_error = None
         endpoint = codeforces_endpoint(url) if not selector else None
         chapter_endpoint = fenrir_endpoint(url) if not selector else None

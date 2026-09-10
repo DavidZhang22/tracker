@@ -41,3 +41,11 @@ renders 90 anchors but carries all records in escaped Next.js Flight JSON.
 Tests reconstruct the streamed envelope and its React-props reference, including
 chapter zero, and exercise hidden anchors, partial indexes, selectors, scope and
 cyclic references. No JavaScript is evaluated and no chapter pages are fetched.
+
+`mangadex-chapters.json` retains one public chapter metadata record per language
+from the first 500 records of the supplied One Punch-Man feed, captured September
+10, 2026. The 16-record excerpt keeps chapter IDs, numbers, titles, translation
+languages, publication dates, and manga/group relationships. User relationships,
+images and chapter contents are excluded. Offline tests reduce the pagination
+total to their fixture size and explicitly exercise empty English results,
+pagination limits, other-title records, unavailable chapters, and invalid IDs.

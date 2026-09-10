@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   ArrowLeftIcon,
@@ -35,8 +35,13 @@ export default function ItemPage() {
     [loading, setLoading] = useState(true),
     [version, setVersion] = useState(0);
   const [selector, setSelector] = useState(""),
-    [path, setPath] = useState("");
-  const selection = useSelection(`${id}:${filter}:${search}:${offset}`);
+    [path, setPath] = useState(""),
+    [keywords, setKeywords] = useState("");
+  const selection = useSelection(
+    `${id}:${filter}:${search}:${sort}:${direction}`,
+  );
+  const viewRef = useRef();
+  viewRef.current = `${id}:${filter}:${search}:${sort}:${direction}`;
   const reload = () => setVersion((v) => v + 1);
   useEffect(() => {
     let active = true;
@@ -46,6 +51,7 @@ export default function ItemPage() {
           setItem(i);
           setSelector(i.selector);
           setPath(i.include_path);
+          setKeywords(i.keywords || "");
         }
       })
       .catch((e) => active && setError(e.message));
@@ -132,14 +138,44 @@ export default function ItemPage() {
     setBusy(true);
     setError("");
     try {
-      const r = await post("/links/bulk", { action, ids, item_id: id });
+      const range = action === "read-before" || action === "read-after";
+      const r = range
+        ? await post(`/items/${id}/read-range`, {
+            anchor_id: ids[0],
+            side: action.slice(5),
+            filter,
+            search,
+            sort,
+            direction,
+          })
+        : await post("/links/bulk", { action, ids, item_id: id });
       selection.clear();
       reload();
       setMessage(
         action === "delete"
           ? `${r.updated} links moved to Trash. Refresh will keep them there.`
-          : `${r.updated} links updated.`,
+          : range
+            ? `${r.updated} links marked read in the current order. The selected link was kept as it was.`
+            : `${r.updated} links updated.`,
       );
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setBusy(false);
+    }
+  };
+  const selectAllMatching = async () => {
+    const requestedView = viewRef.current;
+    setBusy(true);
+    setError("");
+    try {
+      const r = await post(`/items/${id}/link-selection`, {
+        filter,
+        search,
+        sort,
+        direction,
+      });
+      if (viewRef.current === requestedView) selection.replace(r.ids);
     } catch (e) {
       setError(e.message);
     } finally {
@@ -359,6 +395,9 @@ export default function ItemPage() {
         </div>
         <SelectionBar
           selection={selection}
+          total={data.total}
+          onSelectAll={selectAllMatching}
+          rangeActions={filter !== "trash" && filter !== "ignored"}
           visible={data.links.map((l) => l.id)}
           onAction={selectedAction}
           busy={busy || loading}
@@ -435,6 +474,7 @@ export default function ItemPage() {
                 />
                 <ActionMenu
                   record={l}
+                  rangeActions={filter !== "trash" && filter !== "ignored"}
                   links
                   disabled={busy}
                   onAction={(action) => selectedAction(action, [l.id])}
@@ -497,12 +537,25 @@ export default function ItemPage() {
           onSubmit={async (e) => {
             e.preventDefault();
             setMessage("");
-            if (await update({ selector, include_path: path }))
+            if (await update({ selector, include_path: path, keywords }))
               setMessage(
                 "Detection settings saved. Refresh this item to apply them.",
               );
           }}
         >
+          <label className="field">
+            Keywords
+            <input
+              value={keywords}
+              maxLength={300}
+              placeholder="English, official"
+              onChange={(e) => setKeywords(e.target.value)}
+            />
+            <span className="hint">
+              Match every comma-separated keyword or phrase in the title or
+              nearby details. Existing saved links are kept.
+            </span>
+          </label>
           <div className="field-row">
             <label className="field">
               Link selector

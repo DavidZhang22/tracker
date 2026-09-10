@@ -1,0 +1,79 @@
+{
+  "model_id": "record-mlp32-e4714e194795",
+  "rows": {
+    "train": 22666,
+    "validation": 4134,
+    "test": 4313
+  },
+  "origin": "Authored layout families and reviewed public fixture boundaries; no universal accuracy claim",
+  "split": "Whole layout families and sources kept in separate splits. Fixed development evaluation; not a blind benchmark.",
+  "candidates": [
+    {
+      "name": "linear",
+      "threshold": 0.5,
+      "precision": 0.7609618104667609,
+      "recall": 0.9871559633027523,
+      "f1": 0.8594249201277955,
+      "record_accuracy": 0.9976133651551312,
+      "anchors": 419
+    },
+    {
+      "name": "mlp32",
+      "threshold": 0.5,
+      "precision": 0.9853211009174312,
+      "recall": 0.9853211009174312,
+      "f1": 0.9853211009174312,
+      "record_accuracy": 1.0,
+      "anchors": 419
+    },
+    {
+      "name": "trees40",
+      "threshold": 0.65,
+      "precision": 0.9901380670611439,
+      "recall": 0.9211009174311927,
+      "f1": 0.9543726235741445,
+      "record_accuracy": 0.9618138424821002,
+      "anchors": 419
+    },
+    {
+      "name": "trees80",
+      "threshold": 0.65,
+      "precision": 0.9906716417910447,
+      "recall": 0.9743119266055046,
+      "f1": 0.9824236817761333,
+      "record_accuracy": 0.9904534606205251,
+      "anchors": 419
+    },
+    {
+      "name": "trees120",
+      "threshold": 0.8,
+      "precision": 0.9907063197026023,
+      "recall": 0.9779816513761468,
+      "f1": 0.984302862419206,
+      "record_accuracy": 0.9904534606205251,
+      "anchors": 419
+    }
+  ],
+  "chosen": {
+    "name": "mlp32",
+    "threshold": 0.5,
+    "precision": 0.9853211009174312,
+    "recall": 0.9853211009174312,
+    "f1": 0.9853211009174312,
+    "record_accuracy": 1.0,
+    "anchors": 419
+  },
+  "test": {
+    "precision": 0.9953810623556582,
+    "recall": 0.9773242630385488,
+    "f1": 0.9862700228832952,
+    "record_accuracy": 0.9952038369304557,
+    "anchors": 417
+  },
+  "export_error": 4.32025901719868e-07,
+  "model_bytes": 10294,
+  "seconds": 20.61,
+  "parameters": 929,
+  "mlp_optimizer_iterations": 300,
+  "mlp_optimizer_note": "Reached the iteration cap; selected by validation metrics, with exported/runtime agreement verified."
+}

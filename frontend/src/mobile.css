@@ -724,3 +724,22 @@ h1,
     justify-content: space-between;
   }
 }
+
+.selection-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.selection-control select {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.preview-context {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}

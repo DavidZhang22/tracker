@@ -117,7 +117,7 @@ test("selecting visible links enables bulk delete and explains Trash retention",
   post.mockResolvedValue({ updated: 1 });
   detail();
   await screen.findByText("Chapter 1");
-  await click(screen.getByLabelText("Select visible links"));
+  await click(screen.getByLabelText("Select this page"));
   await click(screen.getByRole("button", { name: "Delete", exact: true }));
   expect(post).toHaveBeenCalledWith("/links/bulk", {
     ids: ["chapter1"],
@@ -138,6 +138,111 @@ test("changing a link filter clears bulk selection", async () => {
   expect(screen.queryByText("1 selected")).not.toBeInTheDocument();
 });
 
+test("all matching selection keeps off-screen IDs for bulk actions", async () => {
+  const second = { ...link, id: "chapter51", title: "Chapter 51", number: 51 };
+  api.mockImplementation((path) =>
+    Promise.resolve(
+      path.includes("/links")
+        ? {
+            links: path.includes("offset=50") ? [second] : [link],
+            total: 51,
+            sort_used: "number",
+          }
+        : item,
+    ),
+  );
+  post.mockImplementation((path) =>
+    Promise.resolve(
+      path.endsWith("link-selection")
+        ? { ids: [link.id, second.id], total: 2 }
+        : { updated: 2 },
+    ),
+  );
+  detail();
+  await screen.findByText("Chapter 1");
+  await act(async () =>
+    fireEvent.change(screen.getByLabelText("Selection options"), {
+      target: { value: "all" },
+    }),
+  );
+  expect(post).toHaveBeenCalledWith("/items/one/link-selection", {
+    filter: "all",
+    search: "",
+    sort: "auto",
+    direction: "asc",
+  });
+  expect(screen.getByText("2 selected")).toBeInTheDocument();
+  await click(screen.getByRole("button", { name: "Next", exact: true }));
+  await screen.findByText("Chapter 51");
+  expect(screen.getByText("2 selected")).toBeInTheDocument();
+  await click(screen.getByRole("button", { name: "Favorite", exact: true }));
+  expect(post).toHaveBeenCalledWith("/links/bulk", {
+    action: "favorite",
+    item_id: "one",
+    ids: [link.id, second.id],
+  });
+});
+
+test("read ranges are offered for one selected link and use the displayed order", async () => {
+  mockDetail();
+  post.mockResolvedValue({ updated: 12 });
+  detail();
+  await screen.findByText("Chapter 1");
+  await act(async () =>
+    fireEvent.change(screen.getByLabelText("Order direction"), {
+      target: { value: "desc" },
+    }),
+  );
+  await click(screen.getByLabelText("Select link: Chapter 1"));
+  await act(async () =>
+    fireEvent.change(screen.getByLabelText("More bulk actions"), {
+      target: { value: "read-before" },
+    }),
+  );
+  expect(post).toHaveBeenCalledWith("/items/one/read-range", {
+    anchor_id: "chapter1",
+    side: "before",
+    filter: "all",
+    search: "",
+    sort: "auto",
+    direction: "desc",
+  });
+  expect(
+    await screen.findByText(/12 links marked read in the current order/),
+  ).toBeInTheDocument();
+  fireEvent.contextMenu(screen.getByRole("link", { name: /Chapter 1/ }));
+  await click(
+    await screen.findByRole("menuitem", { name: "Mark all after as read" }),
+  );
+  expect(post).toHaveBeenLastCalledWith("/items/one/read-range", {
+    anchor_id: "chapter1",
+    side: "after",
+    filter: "all",
+    search: "",
+    sort: "auto",
+    direction: "desc",
+  });
+});
+
+test("range actions are hidden for multiple selected links", async () => {
+  api.mockImplementation((path) =>
+    Promise.resolve(
+      path.includes("/links")
+        ? {
+            links: [link, { ...link, id: "chapter2", title: "Chapter 2" }],
+            total: 2,
+          }
+        : item,
+    ),
+  );
+  detail();
+  await screen.findByText("Chapter 1");
+  await click(screen.getByLabelText("Select this page"));
+  expect(
+    screen.queryByRole("option", { name: "Mark all before as read" }),
+  ).not.toBeInTheDocument();
+});
+
 test("bulk item selection sends all selected IDs and supports restoring Trash", async () => {
   api.mockResolvedValue([
     item,
@@ -150,7 +255,7 @@ test("bulk item selection sends all selected IDs and supports restoring Trash", 
     </MemoryRouter>,
   );
   await screen.findByText("My series");
-  await click(screen.getByLabelText("Select visible items"));
+  await click(screen.getByLabelText("Select this page"));
   await click(screen.getByRole("button", { name: "Favorite", exact: true }));
   expect(post).toHaveBeenCalledWith("/items/bulk", {
     ids: ["one", "two"],
@@ -270,7 +375,17 @@ test("scan preview saves the actual server scan with preferences", async () => {
   fireEvent.change(screen.getByLabelText(/Source URL/), {
     target: { value: "https://site.example" },
   });
+  expect(screen.queryByText("What gets tracked")).not.toBeInTheDocument();
+  fireEvent.change(screen.getByLabelText(/Keywords/), {
+    target: { value: "English, official" },
+  });
   await click(screen.getByRole("button", { name: "Scan links" }));
+  expect(post).toHaveBeenCalledWith("/scans", {
+    url: "https://site.example",
+    selector: "",
+    include_path: "",
+    keywords: "English, official",
+  });
   expect(await screen.findByText("0 links found")).toBeInTheDocument();
   await click(screen.getByLabelText("Mark existing links as read"));
   const saveButton = screen.getByRole("button", { name: /Add to library/ });

@@ -15,7 +15,8 @@ export default function AddPage() {
     navigate = useNavigate();
   const [url, setUrl] = useState(params.get("url") || ""),
     [selector, setSelector] = useState(""),
-    [path, setPath] = useState("");
+    [path, setPath] = useState(""),
+    [keywords, setKeywords] = useState("");
   const [result, setResult] = useState(null),
     [busy, setBusy] = useState(false),
     [saving, setSaving] = useState(false),
@@ -35,7 +36,12 @@ export default function AddPage() {
     setError("");
     setPage(0);
     try {
-      const r = await post("/scans", { url, selector, include_path: path });
+      const r = await post("/scans", {
+        url,
+        selector,
+        include_path: path,
+        keywords,
+      });
       setResult(r);
       setTitle(r.title);
     } catch (e) {
@@ -94,6 +100,22 @@ export default function AddPage() {
               />
               <span className="hint">
                 Use a series page, channel, blog archive, or RSS / Atom feed.
+              </span>
+            </label>
+            <label className="field">
+              Keywords
+              <input
+                value={keywords}
+                maxLength={300}
+                placeholder="English, official"
+                onChange={(e) => {
+                  setKeywords(e.target.value);
+                  setResult(null);
+                }}
+              />
+              <span className="hint">
+                Optional. Match every comma-separated keyword or phrase in a
+                link’s title or nearby details.
               </span>
             </label>
             <details>
@@ -166,6 +188,14 @@ export default function AddPage() {
                         {result.entries.filter((e) => e.published_at).length}{" "}
                         with dates
                       </span>
+                      {result.keywords && (
+                        <span>Matching: {result.keywords}</span>
+                      )}
+                      {result.unfiltered_count != null && (
+                        <span>
+                          {result.unfiltered_count} checked for keywords
+                        </span>
+                      )}
                       {result.cached && <span>Recent scan reused</span>}
                       {result.expected_count != null && (
                         <span>{result.expected_count} entries reported</span>
@@ -197,6 +227,9 @@ export default function AddPage() {
                     <a href={e.url} target="_blank" rel="noopener noreferrer">
                       {e.title} ↗
                     </a>
+                    {e.summary && (
+                      <span className="preview-context">{e.summary}</span>
+                    )}
                     <LinkDate entry={e} />
                   </div>
                 ))}
@@ -250,25 +283,6 @@ export default function AddPage() {
           )}
         </div>
         <aside className="help-panel">
-          <h2>What gets tracked</h2>
-          <p>
-            Chapters, videos, episodes, posts, and job listings. Refresh an item
-            or your entire library to find new links.
-          </p>
-          <p>
-            Collapsed links in the page are included. If a site hides older
-            content behind scripts or access checks, the scan will show a
-            warning.
-          </p>
-          <p>
-            Scans reuse results for ten minutes and pace requests. Dates come
-            from the source list, feed, or public API; individual content pages
-            are not opened for missing dates.
-          </p>
-          <p>
-            Each item can store up to 4,999 links, including ignored links and
-            Trash.
-          </p>
           <h2>Example sources</h2>
           <div className="example-grid">
             {examples.map((e) => (

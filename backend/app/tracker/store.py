@@ -60,6 +60,7 @@ class Store:
                     "cache_hits": "INTEGER NOT NULL DEFAULT 0",
                     "coverage": "TEXT NOT NULL DEFAULT 'unknown'",
                     "order_hint": "TEXT NOT NULL DEFAULT ''",
+                    "keywords": "TEXT NOT NULL DEFAULT ''",
                 },
                 "links": {
                     "deleted": "INTEGER NOT NULL DEFAULT 0",
@@ -68,6 +69,8 @@ class Store:
                     "date_precision": "TEXT NOT NULL DEFAULT 'day'",
                     "summary": "TEXT NOT NULL DEFAULT ''",
                     "availability": "TEXT NOT NULL DEFAULT ''",
+                    "context": "TEXT NOT NULL DEFAULT ''",
+                    "language": "TEXT NOT NULL DEFAULT ''",
                 },
             }
             for table, columns in additions.items():
@@ -79,7 +82,7 @@ class Store:
                         db.execute(
                             f"ALTER TABLE {table} ADD COLUMN {name} {definition}"
                         )
-            db.execute("PRAGMA user_version=3")
+            db.execute("PRAGMA user_version=4")
         marker.touch(exist_ok=True)
 
     @contextmanager
@@ -201,8 +204,8 @@ class Store:
             ):
                 raise sqlite3.IntegrityError("Source already exists")
             db.execute(
-                """INSERT INTO items(id,url,title,kind,auto_read,selector,include_path,created_at)
-              VALUES (?,?,?,?,?,?,?,?)""",
+                """INSERT INTO items(id,url,title,kind,auto_read,selector,include_path,created_at,keywords)
+              VALUES (?,?,?,?,?,?,?,?,?)""",
                 (
                     iid,
                     scan["url"],
@@ -212,6 +215,7 @@ class Store:
                     scan.get("selector", ""),
                     scan.get("include_path", ""),
                     now,
+                    scan.get("keywords", ""),
                 ),
             )
             self._merge(db, iid, scan, initial=True, mark_read=mark_read)
@@ -325,7 +329,10 @@ class Store:
                     ),
                 )
                 added += 1
-            metadata = {k: entry.get(k, "") for k in ("summary", "availability")}
+            metadata = {
+                k: entry.get(k, "")
+                for k in ("summary", "availability", "context", "language")
+            }
             if entry.get("published_at"):
                 metadata.update(
                     {
@@ -387,6 +394,7 @@ class Store:
                 "title",
                 "selector",
                 "include_path",
+                "keywords",
             },
             "links": {"favorite", "ignored", "read"},
         }
@@ -431,11 +439,9 @@ class Store:
             table not in {"items", "links"}
             or action not in actions
             or not ids
-            or len(ids) > 1000
+            or len(ids) > (MAX_LINKS if table == "links" else 1000)
         ):
-            raise ValueError(
-                "Invalid bulk action or selection (maximum 1,000 records)."
-            )
+            raise ValueError("Invalid bulk action or selection size.")
         ids = list(dict.fromkeys(ids))
         where = "id IN (" + ",".join("?" for _ in ids) + ")"
         args = list(ids)
@@ -455,17 +461,10 @@ class Store:
             db.execute(f"UPDATE {table} SET {actions[action]} WHERE {where}", args)
         return {"updated": len(ids), "action": action}
 
-    def links(
-        self,
-        iid,
-        filter="all",
-        search="",
-        sort="auto",
-        direction="asc",
-        offset=0,
-        limit=50,
-    ):
-        item = self.item(iid)
+    def _link_query(self, db, iid, filter, search, sort, direction):
+        item = db.execute("SELECT order_hint FROM items WHERE id=?", (iid,)).fetchone()
+        if item is None:
+            raise KeyError("Item not found.")
         clauses = ["item_id=?"]
         args = [iid]
         clauses.append("deleted=1" if filter == "trash" else "deleted=0")
@@ -490,30 +489,45 @@ class Store:
                 + search.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
                 + "%"
             )
+        stats = db.execute(
+            "SELECT count(*) n,count(published_at) dated,count(number) numbered FROM links WHERE item_id=? AND deleted=0",
+            (iid,),
+        ).fetchone()
+        if sort == "auto":
+            sort = (
+                "source"
+                if item["order_hint"] == "source"
+                else "number"
+                if stats["n"] == stats["numbered"]
+                else "date"
+                if stats["n"] == stats["dated"]
+                else "source"
+            )
+        field = {
+            "date": "published_at",
+            "number": "number",
+            "source": "position",
+            "discovered": "discovered_at",
+            "title": "title COLLATE NOCASE",
+        }.get(sort, "position")
+        order = "DESC" if direction == "desc" else "ASC"
+        where = " AND ".join(clauses)
+        return where, args, field, order, sort
+
+    def links(
+        self,
+        iid,
+        filter="all",
+        search="",
+        sort="auto",
+        direction="asc",
+        offset=0,
+        limit=50,
+    ):
         with self.connection() as db:
-            stats = db.execute(
-                "SELECT count(*) n,count(published_at) dated,count(number) numbered FROM links WHERE item_id=? AND deleted=0",
-                (iid,),
-            ).fetchone()
-            if sort == "auto":
-                sort = (
-                    "source"
-                    if item.get("order_hint") == "source"
-                    else "number"
-                    if stats["n"] == stats["numbered"]
-                    else "date"
-                    if stats["n"] == stats["dated"]
-                    else "source"
-                )
-            field = {
-                "date": "published_at",
-                "number": "number",
-                "source": "position",
-                "discovered": "discovered_at",
-                "title": "title COLLATE NOCASE",
-            }.get(sort, "position")
-            order = "DESC" if direction == "desc" else "ASC"
-            where = " AND ".join(clauses)
+            where, args, field, order, sort = self._link_query(
+                db, iid, filter, search, sort, direction
+            )
             total = db.execute(
                 "SELECT count(*) FROM links WHERE " + where, args
             ).fetchone()[0]
@@ -528,3 +542,47 @@ class Store:
             "offset": offset,
             "limit": limit,
         }
+
+    def _view_ids(self, db, iid, filter, search, sort, direction):
+        where, args, field, order, sort = self._link_query(
+            db, iid, filter, search, sort, direction
+        )
+        rows = db.execute(
+            f"SELECT id FROM links WHERE {where} ORDER BY {field} IS NULL,{field} {order},position {order},id LIMIT ?",
+            (*args, MAX_LINKS),
+        ).fetchall()
+        return [r["id"] for r in rows], sort
+
+    def link_selection(
+        self, iid, filter="all", search="", sort="auto", direction="asc"
+    ):
+        with self.connection() as db:
+            ids, sort = self._view_ids(db, iid, filter, search, sort, direction)
+        return {"ids": ids, "total": len(ids), "sort_used": sort}
+
+    def read_range(
+        self,
+        iid,
+        anchor_id,
+        side,
+        filter="all",
+        search="",
+        sort="auto",
+        direction="asc",
+    ):
+        if side not in {"before", "after"} or filter in {"trash", "ignored"}:
+            raise ValueError("Choose an active link and a valid read direction.")
+        with self.connection() as db:
+            db.execute("BEGIN IMMEDIATE")
+            ids, sort = self._view_ids(db, iid, filter, search, sort, direction)
+            if anchor_id not in ids:
+                raise ValueError(
+                    "The selected link is no longer in this view. Reload and select it again."
+                )
+            index = ids.index(anchor_id)
+            chosen = ids[:index] if side == "before" else ids[index + 1 :]
+            db.executemany(
+                "UPDATE links SET read=1,is_new=0 WHERE id=? AND item_id=? AND deleted=0 AND ignored=0",
+                ((lid, iid) for lid in chosen),
+            )
+        return {"updated": len(chosen), "sort_used": sort}

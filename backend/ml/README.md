@@ -1,3 +1,9 @@
+# Record keywords and selection, September 10, 2026
+
+The link classifier below now works with a separate 32-unit neural network that
+associates surrounding metadata with each link. See [RECORD_CONTEXT.md](RECORD_CONTEXT.md)
+for its dataset, comparisons, limits, MangaDex API support, and reproducible training.
+
 # Table-aware context classifier, September 10, 2026
 
 The current model adds a job-table specialist to the existing media classifier.

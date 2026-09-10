@@ -1,11 +1,12 @@
 import asyncio
 import sqlite3
-from typing import Literal
+from typing import Annotated, Literal
 
 from fastapi import APIRouter, HTTPException, Query, Request
 from pydantic import BaseModel, Field
 
-from .limits import MAX_ITEMS, bounded_scan
+from .keywords import terms
+from .limits import MAX_ITEMS, MAX_LINKS, bounded_scan
 from .urls import DiscoveryError
 
 router = APIRouter(prefix="/api")
@@ -15,6 +16,7 @@ class ScanRequest(BaseModel):
     url: str = Field(min_length=8, max_length=2048)
     selector: str = Field(default="", max_length=300)
     include_path: str = Field(default="", max_length=300)
+    keywords: str = Field(default="", max_length=300)
 
 
 class CreateRequest(BaseModel):
@@ -31,6 +33,7 @@ class ItemPatch(BaseModel):
     title: str | None = Field(default=None, min_length=1, max_length=300)
     selector: str | None = Field(default=None, max_length=300)
     include_path: str | None = Field(default=None, max_length=300)
+    keywords: str | None = Field(default=None, max_length=300)
 
 
 class LinkPatch(BaseModel):
@@ -40,7 +43,9 @@ class LinkPatch(BaseModel):
 
 
 class BulkRequest(BaseModel):
-    ids: list[str] = Field(min_length=1, max_length=1000)
+    ids: list[Annotated[str, Field(min_length=1, max_length=64)]] = Field(
+        min_length=1, max_length=MAX_LINKS
+    )
     action: Literal[
         "favorite",
         "unfavorite",
@@ -52,6 +57,20 @@ class BulkRequest(BaseModel):
         "unread",
     ]
     item_id: str | None = None
+
+
+class LinkView(BaseModel):
+    filter: Literal[
+        "all", "new", "unread", "read", "favorites", "ignored", "trash", "upcoming"
+    ] = "all"
+    search: str = Field(default="", max_length=300)
+    sort: Literal["auto", "date", "number", "source", "discovered", "title"] = "auto"
+    direction: Literal["asc", "desc"] = "asc"
+
+
+class ReadRange(LinkView):
+    anchor_id: str = Field(min_length=1, max_length=64)
+    side: Literal["before", "after"]
 
 
 @router.get("/health")
@@ -71,15 +90,20 @@ def ready(request: Request):
 
 @router.post("/scans")
 async def scan(body: ScanRequest, request: Request):
+    terms(body.keywords)
     with request.state.store.connection() as db:
         db.execute("SELECT id FROM scans LIMIT 1").fetchone()
     with request.app.state.scan_guard.operation(request.state.store.path):
         result = await request.app.state.discoverer.scan(
-            body.url, body.selector, body.include_path
+            body.url,
+            body.selector,
+            body.include_path,
+            **({"keywords": body.keywords} if body.keywords else {}),
         )
     payload = bounded_scan(result.to_dict()) | {
         "selector": body.selector,
         "include_path": body.include_path,
+        "keywords": body.keywords,
     }
     sid = request.state.store.save_scan(payload)
     return payload | {"scan_id": sid}
@@ -119,6 +143,8 @@ def item(iid: str, request: Request):
 
 @router.patch("/items/{iid}")
 def update_item(iid: str, body: ItemPatch, request: Request):
+    if body.keywords is not None:
+        terms(body.keywords)
     store = request.state.store
     store.item(iid)
     store.update("items", iid, body.model_dump(exclude_none=True))
@@ -149,6 +175,16 @@ def update_link(lid: str, body: LinkPatch, request: Request):
     return {"ok": True}
 
 
+@router.post("/items/{iid}/link-selection")
+def link_selection(iid: str, body: LinkView, request: Request):
+    return request.state.store.link_selection(iid, **body.model_dump())
+
+
+@router.post("/items/{iid}/read-range")
+def read_range(iid: str, body: ReadRange, request: Request):
+    return request.state.store.read_range(iid, **body.model_dump())
+
+
 @router.post("/items/{iid}/read")
 def read_all(iid: str, request: Request):
     request.state.store.bulk(iid, "read")
@@ -171,9 +207,17 @@ async def refresh_item(iid, app, store):
         try:
             async with app.state.scan_semaphore:
                 result = await app.state.discoverer.scan(
-                    item["url"], item["selector"], item["include_path"]
+                    item["url"],
+                    item["selector"],
+                    item["include_path"],
+                    **({"keywords": item["keywords"]} if item.get("keywords") else {}),
                 )
-            if not result.entries:
+            if not result.entries and not (
+                result.unfiltered_count
+                and result.keywords
+                or result.coverage == "complete"
+                and result.expected_count == 0
+            ):
                 raise DiscoveryError(
                     "No content found during refresh. Saved links and progress were kept. "
                     + " ".join(result.warnings)

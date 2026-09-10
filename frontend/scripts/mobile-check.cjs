@@ -139,6 +139,20 @@ function fixtureApi() {
       } else if (/^\/links\/link\d+$/.test(routePath) && method === "PATCH") {
         data = links.find((l) => l.id === routePath.split("/").pop());
         Object.assign(data, body);
+      } else if (routePath === "/items/one/link-selection") {
+        const matching = links.filter((l) => !l.deleted && !l.ignored);
+        data = { ids: matching.map((l) => l.id), total: matching.length };
+      } else if (routePath === "/items/one/read-range") {
+        const index = links.findIndex((l) => l.id === body.anchor_id);
+        const chosen =
+          body.side === "before"
+            ? links.slice(0, index)
+            : links.slice(index + 1);
+        chosen.forEach((l) => {
+          l.read = true;
+          l.is_new = false;
+        });
+        data = { updated: chosen.length };
       } else if (["/links/bulk", "/items/bulk"].includes(routePath)) {
         const records = routePath.startsWith("/links") ? links : items;
         const updates = {
@@ -377,6 +391,22 @@ async function check() {
         .click();
       await page.locator(".entry-row").first().waitFor();
       await withinViewport(page, `${width} item`);
+      if (mobile)
+        await page
+          .getByRole("button", { name: "Select links", exact: true })
+          .click();
+      await page.getByLabel("Selection options").selectOption("all");
+      await page.getByText("65 selected", { exact: true }).waitFor();
+      await withinViewport(page, `${width} all links selected`);
+      await page.screenshot({
+        path: path.join(output, `selection-${width}.png`),
+      });
+      await page.getByRole("button", { name: "Favorite", exact: true }).click();
+      assert(
+        api.calls.some(
+          (c) => c.path === "/links/bulk" && c.body.ids.length === 65,
+        ),
+      );
       await page.screenshot({ path: path.join(output, `item-${width}.png`) });
       const date = page.locator(".entry-date details").first();
       assert(

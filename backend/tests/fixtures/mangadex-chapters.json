@@ -1,0 +1,379 @@
+[
+  {
+    "id": "4a6a675d-f070-4f35-85b8-ba62dd835c03",
+    "type": "chapter",
+    "attributes": {
+      "chapter": "1",
+      "title": "Jedan Udarac",
+      "translatedLanguage": "sr",
+      "isUnavailable": false,
+      "publishAt": "2024-04-20T21:34:05+00:00"
+    },
+    "relationships": [
+      {
+        "id": "d8a959f7-648e-4c8d-8f23-f1f3f8e129f3",
+        "type": "manga"
+      }
+    ]
+  },
+  {
+    "id": "29feb55a-3338-4925-9e0b-f8a0eacc0603",
+    "type": "chapter",
+    "attributes": {
+      "chapter": "1",
+      "title": "",
+      "translatedLanguage": "he",
+      "isUnavailable": false,
+      "publishAt": "2020-10-29T17:10:44+00:00"
+    },
+    "relationships": [
+      {
+        "id": "0c022357-758a-434e-b916-a785400ee895",
+        "type": "scanlation_group",
+        "attributes": {
+          "name": "MangaSheIF"
+        }
+      },
+      {
+        "id": "d8a959f7-648e-4c8d-8f23-f1f3f8e129f3",
+        "type": "manga"
+      }
+    ]
+  },
+  {
+    "id": "61fbba60-3b23-424c-aec1-6b783ff29f07",
+    "type": "chapter",
+    "attributes": {
+      "chapter": "1",
+      "title": "الرجل ذو اللكمة الواحدة يدخل الساحة",
+      "translatedLanguage": "ar",
+      "isUnavailable": false,
+      "publishAt": "2019-04-12T00:14:45+00:00"
+    },
+    "relationships": [
+      {
+        "id": "7e4d2f23-3491-494a-afc9-293c255229ec",
+        "type": "scanlation_group",
+        "attributes": {
+          "name": "Manga.Rick"
+        }
+      },
+      {
+        "id": "d8a959f7-648e-4c8d-8f23-f1f3f8e129f3",
+        "type": "manga"
+      }
+    ]
+  },
+  {
+    "id": "801d66ba-b85c-4af2-9d6f-6a7fc184cc6c",
+    "type": "chapter",
+    "attributes": {
+      "chapter": "1",
+      "title": "Ванпанчмен виходить на сцену!",
+      "translatedLanguage": "uk",
+      "isUnavailable": false,
+      "publishAt": "2023-11-20T13:42:44+00:00"
+    },
+    "relationships": [
+      {
+        "id": "22310802-9df7-42bb-bc2d-15b3c5596fee",
+        "type": "scanlation_group",
+        "attributes": {
+          "name": "Day and Night"
+        }
+      },
+      {
+        "id": "d8a959f7-648e-4c8d-8f23-f1f3f8e129f3",
+        "type": "manga"
+      }
+    ]
+  },
+  {
+    "id": "9b665b3c-06e9-4918-b8c9-463e7a090ac8",
+    "type": "chapter",
+    "attributes": {
+      "chapter": "1",
+      "title": null,
+      "translatedLanguage": "pl",
+      "isUnavailable": false,
+      "publishAt": "2023-02-04T23:40:06+00:00"
+    },
+    "relationships": [
+      {
+        "id": "6e467359-9bd6-4afa-a80c-a20a73da4e13",
+        "type": "scanlation_group",
+        "attributes": {
+          "name": "Galley-la Company"
+        }
+      },
+      {
+        "id": "d8a959f7-648e-4c8d-8f23-f1f3f8e129f3",
+        "type": "manga"
+      }
+    ]
+  },
+  {
+    "id": "9f56d7eb-c1ab-4ae4-b4ae-ee738cf0412a",
+    "type": "chapter",
+    "attributes": {
+      "chapter": "1",
+      "title": "Tek Yumruk",
+      "translatedLanguage": "tr",
+      "isUnavailable": false,
+      "publishAt": "2020-08-06T09:54:18+00:00"
+    },
+    "relationships": [
+      {
+        "id": "29d9f5d6-10a8-4bed-993f-9e858b4b9ef9",
+        "type": "scanlation_group",
+        "attributes": {
+          "name": "Cinnet Fansub"
+        }
+      },
+      {
+        "id": "bc358562-3cfc-4f7c-8c28-969fc431681a",
+        "type": "scanlation_group",
+        "attributes": {
+          "name": "MangaHD"
+        }
+      },
+      {
+        "id": "d8a959f7-648e-4c8d-8f23-f1f3f8e129f3",
+        "type": "manga"
+      }
+    ]
+  },
+  {
+    "id": "b0c2d8b1-9081-4fbf-8e9b-493740084629",
+    "type": "chapter",
+    "attributes": {
+      "chapter": "1",
+      "title": "एक मुक्का",
+      "translatedLanguage": "ne",
+      "isUnavailable": false,
+      "publishAt": "2021-11-08T15:49:37+00:00"
+    },
+    "relationships": [
+      {
+        "id": "1c9082f9-9293-4fe7-8d9b-742f8554ce6f",
+        "type": "scanlation_group",
+        "attributes": {
+          "name": "जुनकिरी"
+        }
+      },
+      {
+        "id": "d8a959f7-648e-4c8d-8f23-f1f3f8e129f3",
+        "type": "manga"
+      }
+    ]
+  },
+  {
+    "id": "4f9b53b2-ff89-4e69-98ec-f58622310714",
+    "type": "chapter",
+    "attributes": {
+      "chapter": "1",
+      "title": "Один удар",
+      "translatedLanguage": "ru",
+      "isUnavailable": false,
+      "publishAt": "2018-05-04T11:35:33+00:00"
+    },
+    "relationships": [
+      {
+        "id": "05b64185-67ff-4de6-a972-2383a412dd41",
+        "type": "scanlation_group",
+        "attributes": {
+          "name": "Уроборос"
+        }
+      },
+      {
+        "id": "d8a959f7-648e-4c8d-8f23-f1f3f8e129f3",
+        "type": "manga"
+      }
+    ]
+  },
+  {
+    "id": "74701d27-9f03-4887-a355-57d4ad610ade",
+    "type": "chapter",
+    "attributes": {
+      "chapter": "1",
+      "title": "ஒரே குத்து",
+      "translatedLanguage": "ta",
+      "isUnavailable": false,
+      "publishAt": "2022-07-22T13:33:51+00:00"
+    },
+    "relationships": [
+      {
+        "id": "ff32df79-ed2c-4087-aa63-a5b99a3e82a6",
+        "type": "scanlation_group",
+        "attributes": {
+          "name": "TamilComics"
+        }
+      },
+      {
+        "id": "d8a959f7-648e-4c8d-8f23-f1f3f8e129f3",
+        "type": "manga"
+      }
+    ]
+  },
+  {
+    "id": "b92d2fb6-5239-46eb-ae25-cdadbc3b6c80",
+    "type": "chapter",
+    "attributes": {
+      "chapter": "1",
+      "title": "Un puñetazo",
+      "translatedLanguage": "es",
+      "isUnavailable": false,
+      "publishAt": "2018-06-24T16:32:19+00:00"
+    },
+    "relationships": [
+      {
+        "id": "7963a16a-68a3-44d6-9424-c19330a2944b",
+        "type": "scanlation_group",
+        "attributes": {
+          "name": "Joker Fansub"
+        }
+      },
+      {
+        "id": "d8a959f7-648e-4c8d-8f23-f1f3f8e129f3",
+        "type": "manga"
+      }
+    ]
+  },
+  {
+    "id": "a3ca85f8-3ab9-4f41-89e9-42e67346257d",
+    "type": "chapter",
+    "attributes": {
+      "chapter": "1",
+      "title": "One Punch",
+      "translatedLanguage": "hi",
+      "isUnavailable": false,
+      "publishAt": "2024-12-12T14:56:14+00:00"
+    },
+    "relationships": [
+      {
+        "id": "f3e04323-4329-47af-9933-974655f272d8",
+        "type": "scanlation_group",
+        "attributes": {
+          "name": "Red Manga"
+        }
+      },
+      {
+        "id": "d8a959f7-648e-4c8d-8f23-f1f3f8e129f3",
+        "type": "manga"
+      }
+    ]
+  },
+  {
+    "id": "9f2e4508-f510-4aff-857f-72c5f7795ff6",
+    "type": "chapter",
+    "attributes": {
+      "chapter": "1",
+      "title": "",
+      "translatedLanguage": "hu",
+      "isUnavailable": false,
+      "publishAt": "2019-06-24T15:24:25+00:00"
+    },
+    "relationships": [
+      {
+        "id": "deb85a19-d535-4303-8736-26acee931a8d",
+        "type": "scanlation_group",
+        "attributes": {
+          "name": "Anime Sekai Team"
+        }
+      },
+      {
+        "id": "d8a959f7-648e-4c8d-8f23-f1f3f8e129f3",
+        "type": "manga"
+      }
+    ]
+  },
+  {
+    "id": "d7ed204c-e2d0-422d-afab-63309a846545",
+    "type": "chapter",
+    "attributes": {
+      "chapter": "1",
+      "title": "Um Soco",
+      "translatedLanguage": "pt-br",
+      "isUnavailable": false,
+      "publishAt": "2018-04-30T17:28:27+00:00"
+    },
+    "relationships": [
+      {
+        "id": "9aa4e5b9-10ba-4dc5-b856-913619255f3d",
+        "type": "scanlation_group",
+        "attributes": {
+          "name": "I Wish Scans"
+        }
+      },
+      {
+        "id": "d8a959f7-648e-4c8d-8f23-f1f3f8e129f3",
+        "type": "manga"
+      }
+    ]
+  },
+  {
+    "id": "e76ac55c-0d25-4f19-bf1d-9da533d8103f",
+    "type": "chapter",
+    "attributes": {
+      "chapter": "1",
+      "title": "1 单行本版",
+      "translatedLanguage": "zh-hk",
+      "isUnavailable": false,
+      "publishAt": "2021-09-26T08:16:30+00:00"
+    },
+    "relationships": [
+      {
+        "id": "d8a959f7-648e-4c8d-8f23-f1f3f8e129f3",
+        "type": "manga"
+      }
+    ]
+  },
+  {
+    "id": "cdb228af-0c5b-4cf0-8696-50671aa6ada2",
+    "type": "chapter",
+    "attributes": {
+      "chapter": "1",
+      "title": "Con un Pugno",
+      "translatedLanguage": "it",
+      "isUnavailable": false,
+      "publishAt": "2019-08-09T14:52:42+00:00"
+    },
+    "relationships": [
+      {
+        "id": "b2f7066f-c000-441c-bc18-f2cb525c1340",
+        "type": "scanlation_group",
+        "attributes": {
+          "name": "Hyena Fansub"
+        }
+      },
+      {
+        "id": "d8a959f7-648e-4c8d-8f23-f1f3f8e129f3",
+        "type": "manga"
+      }
+    ]
+  },
+  {
+    "id": "1696c95a-bfc9-400c-912f-bae46e6029e0",
+    "type": "chapter",
+    "attributes": {
+      "chapter": "20",
+      "title": "Rumor",
+      "translatedLanguage": "es-la",
+      "isUnavailable": false,
+      "publishAt": "2018-06-24T16:36:11+00:00"
+    },
+    "relationships": [
+      {
+        "id": "3fbce7cb-7bc8-4864-af84-e5ad287fe0f9",
+        "type": "scanlation_group",
+        "attributes": {
+          "name": "Ichi no Fansub"
+        }
+      },
+      {
+        "id": "d8a959f7-648e-4c8d-8f23-f1f3f8e129f3",
+        "type": "manga"
+      }
+    ]
+  }
+]

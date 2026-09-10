@@ -11,8 +11,10 @@ from bs4 import BeautifulSoup
 from .context_model import classify_context
 from .dates import DATE_TEXT, evidence, link_date
 from .embedded_series import embedded_series
+from .keywords import language_text
 from .link_model import page_scores
 from .models import Entry, Scan, date_rank, date_value, sequence_value
+from .record_context import RecordContext
 from .tables import anchor_label, table_context
 from .urls import DiscoveryError, canonical_url, content_key
 
@@ -125,6 +127,10 @@ def merge_entries(entries):
                 ):
                     setattr(old, field, getattr(entry, field))
             old.summary = old.summary or entry.summary
+            old.language = entry.language or old.language
+            old.context = " ".join(dict.fromkeys((old.context, entry.context))).strip()[
+                :1800
+            ]
             old.availability = entry.availability or old.availability
             old.number = old.number if old.number is not None else entry.number
     return list(merged.values())
@@ -186,6 +192,17 @@ def parse_feed(text, source):
                 Entry(
                     u,
                     title,
+                    context=" ".join(
+                        (
+                            BeautifulSoup(
+                                str(item.get("summary", ""))[:1500], "html.parser"
+                            ).get_text(" ", strip=True),
+                            " ".join(str(v)[:80] for v in item.get("tags", [])[:20]),
+                            language_text(
+                                item.get("language") or data.get("language", "")
+                            ),
+                        )
+                    )[:1800],
                     number=sequence_value(title, u),
                     method="feed",
                     **evidence(
@@ -262,6 +279,14 @@ def parse_feed(text, source):
             Entry(
                 u,
                 title,
+                context=" ".join(
+                    BeautifulSoup(
+                        " ".join(c.itertext())[:1200], "html.parser"
+                    ).get_text(" ", strip=True)
+                    for c in list(node)
+                    if local(c.tag)
+                    in {"category", "summary", "description", "language"}
+                )[:1800],
                 number=sequence_value(title, u),
                 method="feed",
                 **evidence(
@@ -410,6 +435,7 @@ def parse_page(text, source, selector="", include_path=""):
         ):
             pages.append(u)
     record_cache = {}
+    record_context = RecordContext(soup)
     assisted_urls = set()
     for a in anchors:
         table = tables.get(id(a), {})
@@ -504,7 +530,14 @@ def parse_page(text, source, selector="", include_path=""):
                     "-".join(dated_path.groups()), "URL path (inferred)", "inferred"
                 )
         clean = DATE_TEXT.sub("", label).strip()
-        e = Entry(u, clean or label, number=sequence_value(clean, u), **date)
+        e = Entry(
+            u,
+            clean or label,
+            number=sequence_value(clean, u),
+            context=record_context.text(a),
+            language=record_context.language(a),
+            **date,
+        )
         if table.get("job") and table.get("action"):
             e.number = None
             e.summary = table["summary"]

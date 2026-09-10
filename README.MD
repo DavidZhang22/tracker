@@ -150,3 +150,9 @@ Primary references: [FastAPI deployment](https://fastapi.tiangolo.com/deployment
 Public collection reference: [Codeforces contest.list](https://codeforces.com/apiHelp/methods#contest.list). Site adapters use only publicly exposed index metadata and may need updates if those sites change.
 
 Account tests cover cookie security, invitation requirements, logout/expiry, password changes, rate limits, private preview IDs, cross-account reads/writes/bulk/refresh isolation, and assigning the existing library to an owner. The deployment files have not been container-built here because Docker is unavailable locally.
+
+### Keyword filtering and selection
+
+Add optional comma-separated keywords when scanning, such as `English, official` or `Texas`. Each term must match the link title or associated record metadata. A compact neural model handles nested cards, table cells and adjacent metadata rows; MangaDex uses public translated-chapter metadata with language filtering before pagination. See [model design and evaluation](backend/ml/RECORD_CONTEXT.md).
+
+The selection control offers the current page or all matching links across pages. Selection is cleared when filters or ordering change. One selected link (or its row menu) offers **Mark all before as read** and **Mark all after as read**. These follow the current sort and filters, exclude the anchor itself, and leave ignored/trashed records alone. Bulk changes are limited to 4,999 links; request size remains bounded.

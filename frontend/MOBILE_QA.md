@@ -39,3 +39,5 @@ devices have not been tested; touch emulation does not reproduce their software
 keyboards, screen cutouts, or every browser behavior.
 
 The Add to library action sits beside Review & save in a sticky bar at the top of the preview. Browser checks verify it stays visible while reviewing the last entry. Scan details contain exactly two metadata lines; account dots and the old library footer hint are absent.
+
+Selection checks also cover the current-page/all-matching menu, all 65 fixture IDs across pagination, and the selected count at every viewport. Before/after read actions follow the displayed ordering. The Add page keeps example sources and removes the explanatory What gets tracked block.

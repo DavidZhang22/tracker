@@ -1,0 +1,420 @@
+"""Learned DOM record boundaries. No page scripts, remote model, or ML runtime."""
+
+import json
+import math
+import re
+from collections import Counter
+from functools import lru_cache
+from itertools import islice
+from pathlib import Path
+from urllib.parse import urlsplit
+
+from bs4 import Tag
+
+from .keywords import language_codes, language_text
+
+FEATURES = (
+    "distance",
+    "is_anchor",
+    "semantic_record",
+    "is_page",
+    "record_class",
+    "unique_links",
+    "same_route_links",
+    "other_links",
+    "text_length",
+    "link_fraction",
+    "text_outside_link",
+    "metadata_nodes",
+    "date_nodes",
+    "heading_nodes",
+    "tag_count",
+    "sibling_records",
+    "parent_same_route_links",
+    "has_navigation",
+    "is_paragraph",
+    "is_heading",
+    "single_target",
+    "single_route",
+    "empty_siblings",
+    "joined_sibling",
+    "sibling_following",
+    "sibling_links",
+    "sibling_heading",
+)
+MODEL_PATH = Path(__file__).with_name("record-context-model.json")
+EXCLUDED = {
+    "script",
+    "style",
+    "template",
+    "noscript",
+    "nav",
+    "footer",
+    "select",
+    "button",
+}
+RECORD = re.compile(
+    r"(?:^|[-_ ])(?:row|card|entry|chapter|episode|post|release|result|item)(?:$|[-_ ])",
+    re.I,
+)
+META = re.compile(
+    r"lang|badge|meta|tag|genre|location|category|format|group|status", re.I
+)
+
+
+def route(href):
+    try:
+        path = urlsplit(href[:2048]).path
+        return re.sub(r"/[^/]*$", "/*", path)
+    except (TypeError, ValueError):
+        return ""
+
+
+def snippets(node, limit=1500):
+    parts = []
+    for child in islice(node.descendants, 500):
+        if isinstance(child, Tag):
+            if child.name in EXCLUDED:
+                continue
+            for attr in ("title", "alt", "aria-label", "data-language"):
+                value = child.get(attr)
+                if isinstance(value, str):
+                    parts.append(
+                        language_text(value)[:160]
+                        if attr == "data-language"
+                        else value[:160]
+                    )
+            if child.has_attr("lang") and child.name not in {"html", "body"}:
+                parts.append(language_text(child["lang"]))
+        elif child.strip() and not any(
+            p.name in EXCLUDED for p in islice(child.parents, 10)
+        ):
+            parts.append(str(child).strip()[:240])
+        if sum(map(len, parts)) > limit:
+            break
+    for attr in ("title", "alt", "aria-label", "data-language"):
+        if isinstance(node.get(attr), str):
+            parts.append(
+                language_text(node[attr])[:160]
+                if attr == "data-language"
+                else node[attr][:160]
+            )
+    if node.has_attr("lang") and node.name not in {"html", "body"}:
+        parts.append(language_text(node["lang"]))
+    return " ".join(dict.fromkeys(parts))[:limit]
+
+
+@lru_cache(maxsize=1)
+def load_record_model():
+    try:
+        if MODEL_PATH.stat().st_size > 500_000:
+            return None
+        data = json.loads(MODEL_PATH.read_text(encoding="utf8"))
+        if data["features"] != list(FEATURES) or data["version"] != 1:
+            return None
+        if (
+            not isinstance(data.get("model_id"), str)
+            or not 1 <= len(data["model_id"]) <= 100
+        ):
+            return None
+        if not 0.5 <= data["threshold"] <= 0.99:
+            return None
+        if "layers" in data:
+            width = len(FEATURES)
+            if not 1 <= len(data["layers"]) <= 3:
+                return None
+            for layer in data["layers"]:
+                count = len(layer["bias"])
+                if (
+                    not 1 <= count <= 64
+                    or len(layer["weights"]) != count
+                    or any(len(row) != width for row in layer["weights"])
+                ):
+                    return None
+                if not all(
+                    math.isfinite(v) and abs(v) < 1000
+                    for row in layer["weights"] + [layer["bias"]]
+                    for v in row
+                ):
+                    return None
+                width = count
+            return data if width == 1 else None
+        if not 1 <= len(data["trees"]) <= 120:
+            return None
+        for tree in data["trees"]:
+            if not 1 <= len(tree) <= 63:
+                return None
+            for i, (feature, threshold, left, right, value) in enumerate(tree):
+                if (
+                    not all(
+                        math.isfinite(v)
+                        for v in (feature, threshold, left, right, value)
+                    )
+                    or abs(value) > 100
+                ):
+                    return None
+                if feature == -2 and left == right == -1:
+                    continue
+                if (
+                    not isinstance(feature, int)
+                    or not 0 <= feature < len(FEATURES)
+                    or not all(
+                        isinstance(j, int) and i < j < len(tree) for j in (left, right)
+                    )
+                ):
+                    return None
+        if not math.isfinite(data["intercept"]) or abs(data["intercept"]) > 100:
+            return None
+        return data
+    except (OSError, ValueError, TypeError, KeyError, OverflowError):
+        return None
+
+
+def predict(data, features):
+    if "layers" in data:
+        values = features
+        for i, layer in enumerate(data["layers"]):
+            sparse = [(j, v) for j, v in enumerate(values) if v]
+            values = [
+                bias + sum(weights[j] * v for j, v in sparse)
+                for weights, bias in zip(layer["weights"], layer["bias"], strict=True)
+            ]
+            if i + 1 < len(data["layers"]):
+                values = [max(v, 0) for v in values]
+        return 1 / (1 + math.exp(-max(-60, min(60, values[0]))))
+    score = data["intercept"]
+    for tree in data["trees"]:
+        index = 0
+        while tree[index][0] != -2:
+            f, threshold, left, right, _ = tree[index]
+            index = left if features[f] <= threshold else right
+        score += tree[index][4]
+    return 1 / (1 + math.exp(-max(-60, min(60, score))))
+
+
+class RecordContext:
+    def __init__(self, soup):
+        self.soup = soup
+        self.stats = {}
+        self.selected = {}
+
+    def info(self, node):
+        key = id(node)
+        if key not in self.stats:
+            tags = [node] + list(islice(node.descendants, 400))
+            tags = [t for t in tags if isinstance(t, Tag)]
+            anchors = [t for t in tags if t.name == "a" and t.get("href")]
+            hrefs = {a["href"] for a in anchors}
+            self.stats[key] = dict(
+                hrefs=hrefs,
+                routes=Counter(route(u) for u in hrefs),
+                text=snippets(node),
+                metadata=sum(
+                    bool(META.search(" ".join(t.get("class", []))))
+                    or any(
+                        t.has_attr(k)
+                        for k in ("lang", "data-language", "aria-label", "alt")
+                    )
+                    for t in tags
+                ),
+                dates=sum(t.name == "time" or t.has_attr("datetime") for t in tags),
+                headings=sum(t.name in {"h2", "h3", "h4", "h5", "h6"} for t in tags),
+                navigation=any(t.name in {"nav", "footer", "select"} for t in tags),
+                count=len(tags),
+            )
+        return self.stats[key]
+
+    def candidates(self, anchor):
+        shape = route(anchor.get("href", ""))
+        label = anchor.get_text(" ", strip=True)
+        parents = [anchor] + list(islice(anchor.parents, 8))
+        for distance, node in enumerate(parents):
+            if not isinstance(node, Tag) or node.name == "[document]":
+                break
+            info = self.info(node)
+            siblings = list(islice(node.parent.children, 80)) if node.parent else []
+            siblings = [s for s in siblings if isinstance(s, Tag) and s is not node]
+            repeated = sum(
+                s.name == node.name and bool(s.find("a", href=True)) for s in siblings
+            )
+            parent_routes = (
+                self.info(node.parent)["routes"][shape]
+                if isinstance(node.parent, Tag)
+                else 0
+            )
+            same = info["routes"][shape]
+            text_len = len(info["text"])
+            features = [
+                distance / 8,
+                node is anchor,
+                node.name in {"article", "li", "tr"},
+                node.name in {"html", "body", "main"},
+                bool(RECORD.search(" ".join(node.get("class", [])))),
+                min(len(info["hrefs"]) / 12, 1),
+                min(same / 6, 1),
+                min((len(info["hrefs"]) - same) / 8, 1),
+                min(text_len / 1500, 1),
+                min(len(label) / max(text_len, 1), 1),
+                min(max(0, text_len - len(label)) / 300, 1),
+                min(info["metadata"] / 8, 1),
+                min(info["dates"] / 5, 1),
+                min(info["headings"] / 5, 1),
+                min(info["count"] / 80, 1),
+                min(repeated / 8, 1),
+                min(parent_routes / 6, 1),
+                info["navigation"],
+                node.name == "p",
+                node.name in {"h1", "h2", "h3", "h4", "h5", "h6"},
+                len(info["hrefs"]) == 1,
+                same == 1,
+                min(
+                    sum(not s.find("a", href=True) and s.name != "a" for s in siblings)
+                    / 8,
+                    1,
+                ),
+                0,
+                0,
+                0,
+                0,
+            ]
+            yield node, [float(f) for f in features]
+            if node.name in {"body", "html"}:
+                break
+
+    def regions(self, anchor):
+        shape = route(anchor.get("href", ""))
+        for node, features in self.candidates(anchor):
+            yield node, None, features
+            if node.name in {"html", "body", "main"}:
+                continue
+            own = self.info(node)
+            if own["count"] > 80:
+                continue
+            for following in (True, False):
+                siblings = node.next_siblings if following else node.previous_siblings
+                neighbor = next(
+                    (s for s in islice(siblings, 8) if isinstance(s, Tag)), None
+                )
+                if (
+                    neighbor is None
+                    or neighbor.name in EXCLUDED
+                    or neighbor.name in {"html", "body", "main"}
+                ):
+                    continue
+                other = self.info(neighbor)
+                if other["count"] > 80:
+                    continue
+                combined = own["hrefs"] | other["hrefs"]
+                routes = Counter(route(u) for u in combined)
+                length = len(own["text"]) + len(other["text"])
+                label = len(anchor.get_text(" ", strip=True))
+                updates = {
+                    "unique_links": min(len(combined) / 12, 1),
+                    "same_route_links": min(routes[shape] / 6, 1),
+                    "other_links": min((len(combined) - routes[shape]) / 8, 1),
+                    "text_length": min(length / 1500, 1),
+                    "link_fraction": min(label / max(length, 1), 1),
+                    "text_outside_link": min(max(0, length - label) / 300, 1),
+                    "metadata_nodes": min((own["metadata"] + other["metadata"]) / 8, 1),
+                    "date_nodes": min((own["dates"] + other["dates"]) / 5, 1),
+                    "heading_nodes": min((own["headings"] + other["headings"]) / 5, 1),
+                    "tag_count": min((own["count"] + other["count"]) / 80, 1),
+                    "has_navigation": own["navigation"] or other["navigation"],
+                    "single_target": len(combined) == 1,
+                    "single_route": routes[shape] == 1,
+                    "joined_sibling": 1,
+                    "sibling_following": following,
+                    "sibling_links": min(len(other["hrefs"]) / 8, 1),
+                    "sibling_heading": neighbor.name
+                    in {"h1", "h2", "h3", "h4", "h5", "h6"},
+                }
+                yield (
+                    node,
+                    neighbor,
+                    [
+                        float(updates.get(name, value))
+                        for name, value in zip(FEATURES, features, strict=True)
+                    ],
+                )
+
+    def region(self, anchor):
+        if id(anchor) in self.selected:
+            return self.selected[id(anchor)]
+        self.selected[id(anchor)] = self._region(anchor)
+        return self.selected[id(anchor)]
+
+    def _region(self, anchor):
+        model = load_record_model()
+        choices = list(self.regions(anchor))
+        if model:
+            ranked = [
+                (predict(model, f), -i, node, neighbor)
+                for i, (node, neighbor, f) in enumerate(choices)
+                if node.name not in {"html", "body", "main"}
+            ]
+            if ranked:
+                probability, _, node, neighbor = max(ranked, key=lambda t: t[:2])
+                if probability >= model["threshold"]:
+                    return node, neighbor
+        # Model failure never broadens a keyword match to the whole page.
+        return anchor, None
+
+    def record(self, anchor):
+        return self.region(anchor)[0]
+
+    def language(self, anchor):
+        languages = set()
+        for root in self.region(anchor):
+            if root is None:
+                continue
+            nodes = [root] + list(islice(root.descendants, 200))
+            for node in nodes:
+                if (
+                    not isinstance(node, Tag)
+                    or node.name in EXCLUDED
+                    or node.name
+                    in {"html", "body", "a", "h1", "h2", "h3", "h4", "h5", "h6"}
+                ):
+                    continue
+                values = [
+                    node.get(attr, "")
+                    for attr in ("lang", "data-language", "alt", "title", "aria-label")
+                ]
+                if node.name in {"span", "small", "div", "td"} and not node.find("a"):
+                    values.append(node.get_text(" ", strip=True)[:100])
+                for value in values:
+                    if isinstance(value, str) and (codes := language_codes(value)):
+                        languages.add(codes[0])
+        return languages.pop() if len(languages) == 1 else ""
+
+    def text(self, anchor):
+        record, neighbor = self.region(anchor)
+        parts = [self.info(record)["text"]]
+        if neighbor is not None:
+            parts.append(self.info(neighbor)["text"])
+        # Explicit accessible references are stronger than physical proximity.
+        for ref in (
+            anchor.get("aria-describedby", "")
+            + " "
+            + record.get("aria-describedby", "")
+        ).split()[:4]:
+            if linked := self.soup.find(id=ref):
+                parts.append(snippets(linked, 240))
+        # Section headings can describe a whole group; never take a neighboring row's label.
+        for parent in [record] + list(islice(record.parents, 3)):
+            if parent.name in {"body", "html", "main", "[document]"}:
+                break
+            for previous in islice(parent.previous_siblings, 30):
+                if isinstance(previous, Tag) and previous.name in {
+                    "h2",
+                    "h3",
+                    "h4",
+                    "h5",
+                    "h6",
+                }:
+                    parts.append(snippets(previous, 160))
+                    break
+            else:
+                continue
+            break
+        return " ".join(dict.fromkeys(parts))[:1800]

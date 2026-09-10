@@ -87,6 +87,8 @@ class Entry:
     date_precision: str = "day"
     summary: str = ""
     availability: str = ""
+    context: str = ""
+    language: str = ""
 
 
 @dataclass
@@ -105,6 +107,8 @@ class Scan:
     cached: bool = False
     coverage: str = "unknown"
     order_hint: str = ""
+    keywords: str = ""
+    unfiltered_count: int | None = None
 
     def to_dict(self):
         return asdict(self)

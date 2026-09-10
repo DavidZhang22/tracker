@@ -95,13 +95,18 @@ class ApiGuard:
                 "The server is busy. Please try again shortly.",
                 {"Retry-After": "10"},
             )
+        body_limit = (
+            262_144
+            if self.max_body == 65_536 and scope["path"] == "/api/links/bulk"
+            else self.max_body
+        )
         for key, value in scope.get("headers", []):
             if key == b"content-length":
                 try:
                     length = int(value)
                 except ValueError:
                     return await reject(400, "Invalid request size.")
-                if length < 0 or length > self.max_body:
+                if length < 0 or length > body_limit:
                     return await reject(413, "This request is too large.")
         self.active += 1
         try:
@@ -114,7 +119,7 @@ class ApiGuard:
                             return
                         chunk = message.get("body", b"")
                         size += len(chunk)
-                        if size > self.max_body:
+                        if size > body_limit:
                             return await reject(413, "This request is too large.")
                         if chunk:
                             chunks.append(chunk)

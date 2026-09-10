@@ -42,6 +42,7 @@ export function ActionMenu({
   onAction,
   links = false,
   disabled = false,
+  rangeActions = false,
 }) {
   const button = useRef();
   const actions = record.deleted
@@ -61,6 +62,12 @@ export function ActionMenu({
                 record.read ? "unread" : "read",
                 record.read ? "Mark unread" : "Mark read",
               ],
+            ]
+          : []),
+        ...(rangeActions && !record.ignored
+          ? [
+              ["read-before", "Mark all before as read"],
+              ["read-after", "Mark all after as read"],
             ]
           : []),
         ["delete", "Delete"],
@@ -172,11 +179,17 @@ export function useSelection(scope) {
       setIds((old) =>
         old.includes(id)
           ? old.filter((i) => i !== id)
-          : [...old, id].slice(0, 1000),
+          : [...old, id].slice(0, 4999),
       ),
+    replace: (values) => {
+      setSelecting(true);
+      setIds(values.slice(0, 4999));
+    },
     all: (visible) =>
       setIds((old) =>
-        visible.every((id) => old.includes(id)) ? [] : visible.slice(0, 1000),
+        visible.every((id) => old.includes(id))
+          ? old.filter((id) => !visible.includes(id))
+          : [...new Set([...old, ...visible])].slice(0, 4999),
       ),
   };
 }
@@ -188,14 +201,18 @@ export function SelectionBar({
   busy,
   trash = false,
   links = false,
+  total = visible.length,
+  onSelectAll,
+  rangeActions = false,
 }) {
   const check = useRef();
-  const selected = selection.ids.filter((id) => visible.includes(id));
+  const selected = selection.ids;
+  const onPage = selected.filter((id) => visible.includes(id));
   useEffect(() => {
     if (check.current)
       check.current.indeterminate =
-        selected.length > 0 && selected.length < visible.length;
-  }, [selected.length, visible.length]);
+        onPage.length > 0 && onPage.length < visible.length;
+  }, [onPage.length, visible.length]);
   return (
     <div
       className={`selection-bar ${selected.length ? "has-selection" : ""} ${selection.selecting ? "is-selecting" : ""}`}
@@ -207,18 +224,36 @@ export function SelectionBar({
       >
         Select {links ? "links" : "items"}
       </button>
-      <label className="checkbox select-all">
-        <input
-          ref={check}
-          type="checkbox"
+      <div className="selection-control select-all">
+        <label className="checkbox">
+          <input
+            ref={check}
+            aria-label="Select this page"
+            type="checkbox"
+            disabled={busy || !visible.length}
+            checked={!!visible.length && onPage.length === visible.length}
+            onChange={() => selection.all(visible)}
+          />
+          {selected.length ? `${selected.length} selected` : "Select"}
+        </label>
+        <select
+          aria-label="Selection options"
+          value=""
           disabled={busy || !visible.length}
-          checked={!!visible.length && selected.length === visible.length}
-          onChange={() => selection.all(visible)}
-        />
-        {selected.length
-          ? `${selected.length} selected`
-          : `Select visible ${links ? "links" : "items"}`}
-      </label>
+          onChange={(e) => {
+            if (e.target.value === "all") onSelectAll();
+            else selection.replace(visible);
+          }}
+        >
+          <option value="" disabled>
+            Select…
+          </option>
+          <option value="page">This page ({visible.length})</option>
+          {onSelectAll && total > visible.length && (
+            <option value="all">All matching links ({total})</option>
+          )}
+        </select>
+      </div>
       {(!!selected.length || selection.selecting) && (
         <div className="actions">
           {!!selected.length && (
@@ -269,6 +304,16 @@ export function SelectionBar({
                       <>
                         <option value="read">Mark read</option>
                         <option value="unread">Mark unread</option>
+                        {rangeActions && selected.length === 1 && (
+                          <>
+                            <option value="read-before">
+                              Mark all before as read
+                            </option>
+                            <option value="read-after">
+                              Mark all after as read
+                            </option>
+                          </>
+                        )}
                       </>
                     )}
                   </select>
