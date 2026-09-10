@@ -8,9 +8,11 @@ backend/venv
 
 # testing
 frontend/coverage
+frontend/.mobile-check/
 
 # production
 frontend/build
+__pycache__/
 
 # misc
 .DS_Store
@@ -18,7 +20,31 @@ frontend/build
 .env.development.local
 .env.test.local
 .env.production.local
+*.env
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+backend/.venv/
+backend/data/
+backend/tests/live/
+.pytest_cache/
+*.sqlite3-wal
+*.sqlite3-shm
+
+# Deployment secrets and private backups
+deploy/.env
+catchup-backup*/
+backend/ml/raw/
+backend/ml/.venv/
+
+# Local credentials, libraries and temporary artifacts
+.env
+*.pem
+*.key
+*.sqlite3
+*.db
+*.tgz
+*.zip
+.ruff_cache/

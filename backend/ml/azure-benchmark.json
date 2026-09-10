@@ -1,0 +1,11 @@
+{
+  "environment": "Azure VM; Docker --memory=128m --cpus=1 --network=none",
+  "model_id": "mlp-8-b223bb65103d",
+  "model_file_bytes": 8986,
+  "python_model_allocated_bytes": 12475,
+  "python_model_load_peak_bytes": 32184,
+  "feature_extraction_ms_1000": 164.87,
+  "inference_ms_1000_median": 44.81,
+  "training_libraries_loaded": false,
+  "process_peak_rss_kib": 44496
+}

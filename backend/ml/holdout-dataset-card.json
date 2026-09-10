@@ -1,0 +1,106 @@
+{
+  "feature_version": 1,
+  "features": [
+    "same_host",
+    "same_path",
+    "child_path",
+    "path_depth",
+    "common_depth",
+    "url_length",
+    "query_count",
+    "numeric_path",
+    "dated_path",
+    "content_path",
+    "utility_path",
+    "asset_path",
+    "label_length",
+    "label_words",
+    "numeric_label",
+    "generic_label",
+    "date_label",
+    "sequence_label",
+    "content_label",
+    "utility_label",
+    "contains_heading",
+    "semantic_title",
+    "semantic_navigation",
+    "semantic_body",
+    "has_time",
+    "record_links",
+    "label_density",
+    "shape_frequency",
+    "position",
+    "date_index",
+    "month_label",
+    "metadata_class",
+    "in_h1",
+    "in_h2",
+    "in_h3",
+    "in_h4",
+    "in_article",
+    "in_li",
+    "in_tr",
+    "in_main",
+    "in_nav",
+    "in_header",
+    "in_footer",
+    "in_aside",
+    "in_details",
+    "in_p",
+    "in_code"
+  ],
+  "built_at": "2026-09-09T10:31:12.843884+00:00",
+  "label_method": "Source-specific rules reviewed against index markup; not independently double-annotated.",
+  "data_sha256": "cd97dfb2c509d3765263d57ea173d400c4a0dc935a7068a045b5439294769791",
+  "sources": [
+    {
+      "id": "simonwillison",
+      "url": "https://simonwillison.net/",
+      "split": "holdout",
+      "family": "blog",
+      "rows": 440,
+      "labels": {
+        "0": 332,
+        "1": 108
+      },
+      "positive_urls": 70,
+      "sha256": "f3b3a0cf4932857bb3b8b800078b976281304a3ab26a434d6f52feb13b8d193f",
+      "annotation": "Dated native entries, excluding quotations citations and topic/year navigation."
+    },
+    {
+      "id": "lwn",
+      "url": "https://lwn.net/",
+      "split": "holdout",
+      "family": "news",
+      "rows": 98,
+      "labels": {
+        "0": 65,
+        "1": 33
+      },
+      "positive_urls": 20,
+      "sha256": "87ba36695f4734a8d2c8d7a373fb046c2b274bd304a91cbfd2e54cddebbbcd9d",
+      "annotation": "Primary native stories linked by Full Story, Read the full article, or standalone Comments links; in-body references excluded."
+    },
+    {
+      "id": "schneier",
+      "url": "https://www.schneier.com/",
+      "split": "holdout",
+      "family": "blog",
+      "rows": 151,
+      "labels": {
+        "0": 120,
+        "1": 31
+      },
+      "positive_urls": 11,
+      "sha256": "50caf21e7ad77bda531748a7f69e0154cf16df6cf639ae8108a4618760418206",
+      "annotation": "Individual article pages; archive months, categories, comments and navigation excluded."
+    },
+    {
+      "id": "authored-boundaries",
+      "split": "train",
+      "rows": 0,
+      "labels": {},
+      "annotation": "Authored training-only boundary cases; not captured web pages."
+    }
+  ]
+}

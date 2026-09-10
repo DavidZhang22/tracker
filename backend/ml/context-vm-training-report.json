@@ -1,0 +1,2842 @@
+{
+  "model_id": "context-trees-numeric-2a106aa097f5",
+  "chosen": "trees-numeric",
+  "seed": 81,
+  "training_rows": 6971,
+  "validation_rows": 2227,
+  "vocabulary_size": 0,
+  "candidate_vocabulary_size": 512,
+  "numeric_features": 76,
+  "parameters": 3379,
+  "tree_count": 120,
+  "tree_nodes": 3378,
+  "export_error": 1.1591406667843529e-08,
+  "validation": {
+    "tp": 1108,
+    "fp": 8,
+    "fn": 66,
+    "precision": 0.9928,
+    "recall": 0.9438,
+    "f1": 0.9677,
+    "by_source": {
+      "cloudflare": {
+        "tp": 19,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "django": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "go": {
+        "tp": 10,
+        "fp": 1,
+        "fn": 0,
+        "precision": 0.9091,
+        "recall": 1.0,
+        "f1": 0.9524
+      },
+      "hn": {
+        "tp": 17,
+        "fp": 0,
+        "fn": 13,
+        "precision": 1.0,
+        "recall": 0.5667,
+        "f1": 0.7234
+      },
+      "jvns": {
+        "tp": 544,
+        "fp": 2,
+        "fn": 52,
+        "precision": 0.9963,
+        "recall": 0.9128,
+        "f1": 0.9527
+      },
+      "pythonbytes": {
+        "tp": 495,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "realpython": {
+        "tp": 13,
+        "fp": 5,
+        "fn": 1,
+        "precision": 0.7222,
+        "recall": 0.9286,
+        "f1": 0.8125
+      }
+    },
+    "macro_f1": 0.9201
+  },
+  "candidates": [
+    {
+      "name": "linear",
+      "seconds": 0.11,
+      "selected": {
+        "threshold": 0.5,
+        "tp": 844,
+        "fp": 28,
+        "fn": 330,
+        "precision": 0.9679,
+        "recall": 0.7189,
+        "f1": 0.825,
+        "by_source": {
+          "cloudflare": {
+            "tp": 19,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "django": {
+            "tp": 10,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.7692,
+            "recall": 1.0,
+            "f1": 0.8696
+          },
+          "go": {
+            "tp": 10,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "hn": {
+            "tp": 11,
+            "fp": 7,
+            "fn": 19,
+            "precision": 0.6111,
+            "recall": 0.3667,
+            "f1": 0.4583
+          },
+          "jvns": {
+            "tp": 569,
+            "fp": 2,
+            "fn": 27,
+            "precision": 0.9965,
+            "recall": 0.9547,
+            "f1": 0.9751
+          },
+          "pythonbytes": {
+            "tp": 211,
+            "fp": 0,
+            "fn": 284,
+            "precision": 1.0,
+            "recall": 0.4263,
+            "f1": 0.5977
+          },
+          "realpython": {
+            "tp": 14,
+            "fp": 15,
+            "fn": 0,
+            "precision": 0.4828,
+            "recall": 1.0,
+            "f1": 0.6512
+          }
+        },
+        "macro_f1": 0.7863
+      },
+      "thresholds": [
+        {
+          "threshold": 0.25,
+          "tp": 1131,
+          "fp": 105,
+          "fn": 43,
+          "precision": 0.915,
+          "recall": 0.9634,
+          "f1": 0.9386,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 40,
+              "fn": 0,
+              "precision": 0.2,
+              "recall": 1.0,
+              "f1": 0.3333
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 19,
+              "fp": 45,
+              "fn": 11,
+              "precision": 0.2969,
+              "recall": 0.6333,
+              "f1": 0.4043
+            },
+            "jvns": {
+              "tp": 596,
+              "fp": 2,
+              "fn": 0,
+              "precision": 0.9967,
+              "recall": 1.0,
+              "f1": 0.9983
+            },
+            "pythonbytes": {
+              "tp": 463,
+              "fp": 0,
+              "fn": 32,
+              "precision": 1.0,
+              "recall": 0.9354,
+              "f1": 0.9666
+            },
+            "realpython": {
+              "tp": 14,
+              "fp": 17,
+              "fn": 0,
+              "precision": 0.4516,
+              "recall": 1.0,
+              "f1": 0.6222
+            }
+          },
+          "macro_f1": 0.7539
+        },
+        {
+          "threshold": 0.35,
+          "tp": 1052,
+          "fp": 69,
+          "fn": 122,
+          "precision": 0.9384,
+          "recall": 0.8961,
+          "f1": 0.9168,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 30,
+              "fn": 0,
+              "precision": 0.25,
+              "recall": 1.0,
+              "f1": 0.4
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 15,
+              "fp": 19,
+              "fn": 15,
+              "precision": 0.4412,
+              "recall": 0.5,
+              "f1": 0.4688
+            },
+            "jvns": {
+              "tp": 595,
+              "fp": 2,
+              "fn": 1,
+              "precision": 0.9966,
+              "recall": 0.9983,
+              "f1": 0.9975
+            },
+            "pythonbytes": {
+              "tp": 389,
+              "fp": 0,
+              "fn": 106,
+              "precision": 1.0,
+              "recall": 0.7859,
+              "f1": 0.8801
+            },
+            "realpython": {
+              "tp": 14,
+              "fp": 17,
+              "fn": 0,
+              "precision": 0.4516,
+              "recall": 1.0,
+              "f1": 0.6222
+            }
+          },
+          "macro_f1": 0.7601
+        },
+        {
+          "threshold": 0.45,
+          "tp": 923,
+          "fp": 42,
+          "fn": 251,
+          "precision": 0.9565,
+          "recall": 0.7862,
+          "f1": 0.863,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 12,
+              "fn": 0,
+              "precision": 0.4545,
+              "recall": 1.0,
+              "f1": 0.625
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 13,
+              "fp": 11,
+              "fn": 17,
+              "precision": 0.5417,
+              "recall": 0.4333,
+              "f1": 0.4815
+            },
+            "jvns": {
+              "tp": 584,
+              "fp": 2,
+              "fn": 12,
+              "precision": 0.9966,
+              "recall": 0.9799,
+              "f1": 0.9882
+            },
+            "pythonbytes": {
+              "tp": 273,
+              "fp": 0,
+              "fn": 222,
+              "precision": 1.0,
+              "recall": 0.5515,
+              "f1": 0.7109
+            },
+            "realpython": {
+              "tp": 14,
+              "fp": 16,
+              "fn": 0,
+              "precision": 0.4667,
+              "recall": 1.0,
+              "f1": 0.6364
+            }
+          },
+          "macro_f1": 0.7706
+        },
+        {
+          "threshold": 0.5,
+          "tp": 844,
+          "fp": 28,
+          "fn": 330,
+          "precision": 0.9679,
+          "recall": 0.7189,
+          "f1": 0.825,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 3,
+              "fn": 0,
+              "precision": 0.7692,
+              "recall": 1.0,
+              "f1": 0.8696
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 11,
+              "fp": 7,
+              "fn": 19,
+              "precision": 0.6111,
+              "recall": 0.3667,
+              "f1": 0.4583
+            },
+            "jvns": {
+              "tp": 569,
+              "fp": 2,
+              "fn": 27,
+              "precision": 0.9965,
+              "recall": 0.9547,
+              "f1": 0.9751
+            },
+            "pythonbytes": {
+              "tp": 211,
+              "fp": 0,
+              "fn": 284,
+              "precision": 1.0,
+              "recall": 0.4263,
+              "f1": 0.5977
+            },
+            "realpython": {
+              "tp": 14,
+              "fp": 15,
+              "fn": 0,
+              "precision": 0.4828,
+              "recall": 1.0,
+              "f1": 0.6512
+            }
+          },
+          "macro_f1": 0.7863
+        },
+        {
+          "threshold": 0.6,
+          "tp": 696,
+          "fp": 15,
+          "fn": 478,
+          "precision": 0.9789,
+          "recall": 0.5928,
+          "f1": 0.7385,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 9,
+              "fp": 3,
+              "fn": 21,
+              "precision": 0.75,
+              "recall": 0.3,
+              "f1": 0.4286
+            },
+            "jvns": {
+              "tp": 512,
+              "fp": 2,
+              "fn": 84,
+              "precision": 0.9961,
+              "recall": 0.8591,
+              "f1": 0.9225
+            },
+            "pythonbytes": {
+              "tp": 122,
+              "fp": 0,
+              "fn": 373,
+              "precision": 1.0,
+              "recall": 0.2465,
+              "f1": 0.3955
+            },
+            "realpython": {
+              "tp": 14,
+              "fp": 9,
+              "fn": 0,
+              "precision": 0.6087,
+              "recall": 1.0,
+              "f1": 0.7568
+            }
+          },
+          "macro_f1": 0.7794
+        },
+        {
+          "threshold": 0.7,
+          "tp": 544,
+          "fp": 8,
+          "fn": 630,
+          "precision": 0.9855,
+          "recall": 0.4634,
+          "f1": 0.6304,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 9,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.9,
+              "recall": 0.9,
+              "f1": 0.9
+            },
+            "hn": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 25,
+              "precision": 1.0,
+              "recall": 0.1667,
+              "f1": 0.2857
+            },
+            "jvns": {
+              "tp": 427,
+              "fp": 2,
+              "fn": 169,
+              "precision": 0.9953,
+              "recall": 0.7164,
+              "f1": 0.8332
+            },
+            "pythonbytes": {
+              "tp": 61,
+              "fp": 0,
+              "fn": 434,
+              "precision": 1.0,
+              "recall": 0.1232,
+              "f1": 0.2194
+            },
+            "realpython": {
+              "tp": 13,
+              "fp": 5,
+              "fn": 1,
+              "precision": 0.7222,
+              "recall": 0.9286,
+              "f1": 0.8125
+            }
+          },
+          "macro_f1": 0.7215
+        },
+        {
+          "threshold": 0.8,
+          "tp": 396,
+          "fp": 3,
+          "fn": 778,
+          "precision": 0.9925,
+          "recall": 0.3373,
+          "f1": 0.5035,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 8,
+              "fp": 1,
+              "fn": 2,
+              "precision": 0.8889,
+              "recall": 0.8,
+              "f1": 0.8421
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 321,
+              "fp": 1,
+              "fn": 275,
+              "precision": 0.9969,
+              "recall": 0.5386,
+              "f1": 0.6993
+            },
+            "pythonbytes": {
+              "tp": 25,
+              "fp": 0,
+              "fn": 470,
+              "precision": 1.0,
+              "recall": 0.0505,
+              "f1": 0.0962
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 4,
+              "precision": 0.9091,
+              "recall": 0.7143,
+              "f1": 0.8
+            }
+          },
+          "macro_f1": 0.6599
+        }
+      ]
+    },
+    {
+      "name": "mlp32",
+      "seconds": 3.677,
+      "selected": {
+        "threshold": 0.25,
+        "tp": 1030,
+        "fp": 37,
+        "fn": 144,
+        "precision": 0.9653,
+        "recall": 0.8773,
+        "f1": 0.9192,
+        "by_source": {
+          "cloudflare": {
+            "tp": 19,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "django": {
+            "tp": 10,
+            "fp": 20,
+            "fn": 0,
+            "precision": 0.3333,
+            "recall": 1.0,
+            "f1": 0.5
+          },
+          "go": {
+            "tp": 10,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "hn": {
+            "tp": 9,
+            "fp": 1,
+            "fn": 21,
+            "precision": 0.9,
+            "recall": 0.3,
+            "f1": 0.45
+          },
+          "jvns": {
+            "tp": 500,
+            "fp": 2,
+            "fn": 96,
+            "precision": 0.996,
+            "recall": 0.8389,
+            "f1": 0.9107
+          },
+          "pythonbytes": {
+            "tp": 468,
+            "fp": 0,
+            "fn": 27,
+            "precision": 1.0,
+            "recall": 0.9455,
+            "f1": 0.972
+          },
+          "realpython": {
+            "tp": 14,
+            "fp": 13,
+            "fn": 0,
+            "precision": 0.5185,
+            "recall": 1.0,
+            "f1": 0.6829
+          }
+        },
+        "macro_f1": 0.7811
+      },
+      "thresholds": [
+        {
+          "threshold": 0.25,
+          "tp": 1030,
+          "fp": 37,
+          "fn": 144,
+          "precision": 0.9653,
+          "recall": 0.8773,
+          "f1": 0.9192,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 20,
+              "fn": 0,
+              "precision": 0.3333,
+              "recall": 1.0,
+              "f1": 0.5
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 9,
+              "fp": 1,
+              "fn": 21,
+              "precision": 0.9,
+              "recall": 0.3,
+              "f1": 0.45
+            },
+            "jvns": {
+              "tp": 500,
+              "fp": 2,
+              "fn": 96,
+              "precision": 0.996,
+              "recall": 0.8389,
+              "f1": 0.9107
+            },
+            "pythonbytes": {
+              "tp": 468,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.9455,
+              "f1": 0.972
+            },
+            "realpython": {
+              "tp": 14,
+              "fp": 13,
+              "fn": 0,
+              "precision": 0.5185,
+              "recall": 1.0,
+              "f1": 0.6829
+            }
+          },
+          "macro_f1": 0.7811
+        },
+        {
+          "threshold": 0.35,
+          "tp": 883,
+          "fp": 33,
+          "fn": 291,
+          "precision": 0.964,
+          "recall": 0.7521,
+          "f1": 0.845,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 20,
+              "fn": 0,
+              "precision": 0.3333,
+              "recall": 1.0,
+              "f1": 0.5
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 7,
+              "fp": 0,
+              "fn": 23,
+              "precision": 1.0,
+              "recall": 0.2333,
+              "f1": 0.3784
+            },
+            "jvns": {
+              "tp": 387,
+              "fp": 2,
+              "fn": 209,
+              "precision": 0.9949,
+              "recall": 0.6493,
+              "f1": 0.7858
+            },
+            "pythonbytes": {
+              "tp": 437,
+              "fp": 0,
+              "fn": 58,
+              "precision": 1.0,
+              "recall": 0.8828,
+              "f1": 0.9378
+            },
+            "realpython": {
+              "tp": 13,
+              "fp": 10,
+              "fn": 1,
+              "precision": 0.5652,
+              "recall": 0.9286,
+              "f1": 0.7027
+            }
+          },
+          "macro_f1": 0.751
+        },
+        {
+          "threshold": 0.45,
+          "tp": 730,
+          "fp": 30,
+          "fn": 444,
+          "precision": 0.9605,
+          "recall": 0.6218,
+          "f1": 0.7549,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 20,
+              "fn": 0,
+              "precision": 0.3333,
+              "recall": 1.0,
+              "f1": 0.5
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 26,
+              "precision": 1.0,
+              "recall": 0.1333,
+              "f1": 0.2353
+            },
+            "jvns": {
+              "tp": 277,
+              "fp": 1,
+              "fn": 319,
+              "precision": 0.9964,
+              "recall": 0.4648,
+              "f1": 0.6339
+            },
+            "pythonbytes": {
+              "tp": 397,
+              "fp": 0,
+              "fn": 98,
+              "precision": 1.0,
+              "recall": 0.802,
+              "f1": 0.8901
+            },
+            "realpython": {
+              "tp": 13,
+              "fp": 8,
+              "fn": 1,
+              "precision": 0.619,
+              "recall": 0.9286,
+              "f1": 0.7429
+            }
+          },
+          "macro_f1": 0.7078
+        },
+        {
+          "threshold": 0.5,
+          "tp": 637,
+          "fp": 28,
+          "fn": 537,
+          "precision": 0.9579,
+          "recall": 0.5426,
+          "f1": 0.6928,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 20,
+              "fn": 0,
+              "precision": 0.3333,
+              "recall": 1.0,
+              "f1": 0.5
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 26,
+              "precision": 1.0,
+              "recall": 0.1333,
+              "f1": 0.2353
+            },
+            "jvns": {
+              "tp": 220,
+              "fp": 1,
+              "fn": 376,
+              "precision": 0.9955,
+              "recall": 0.3691,
+              "f1": 0.5386
+            },
+            "pythonbytes": {
+              "tp": 361,
+              "fp": 0,
+              "fn": 134,
+              "precision": 1.0,
+              "recall": 0.7293,
+              "f1": 0.8435
+            },
+            "realpython": {
+              "tp": 13,
+              "fp": 6,
+              "fn": 1,
+              "precision": 0.6842,
+              "recall": 0.9286,
+              "f1": 0.7879
+            }
+          },
+          "macro_f1": 0.694
+        },
+        {
+          "threshold": 0.6,
+          "tp": 483,
+          "fp": 22,
+          "fn": 691,
+          "precision": 0.9564,
+          "recall": 0.4114,
+          "f1": 0.5753,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 19,
+              "fn": 0,
+              "precision": 0.3448,
+              "recall": 1.0,
+              "f1": 0.5128
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 26,
+              "precision": 1.0,
+              "recall": 0.1333,
+              "f1": 0.2353
+            },
+            "jvns": {
+              "tp": 127,
+              "fp": 0,
+              "fn": 469,
+              "precision": 1.0,
+              "recall": 0.2131,
+              "f1": 0.3513
+            },
+            "pythonbytes": {
+              "tp": 301,
+              "fp": 0,
+              "fn": 194,
+              "precision": 1.0,
+              "recall": 0.6081,
+              "f1": 0.7563
+            },
+            "realpython": {
+              "tp": 12,
+              "fp": 2,
+              "fn": 2,
+              "precision": 0.8571,
+              "recall": 0.8571,
+              "f1": 0.8571
+            }
+          },
+          "macro_f1": 0.6665
+        },
+        {
+          "threshold": 0.7,
+          "tp": 331,
+          "fp": 12,
+          "fn": 843,
+          "precision": 0.965,
+          "recall": 0.2819,
+          "f1": 0.4364,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 9,
+              "fn": 0,
+              "precision": 0.5263,
+              "recall": 1.0,
+              "f1": 0.6897
+            },
+            "go": {
+              "tp": 9,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.9,
+              "recall": 0.9,
+              "f1": 0.9
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 60,
+              "fp": 0,
+              "fn": 536,
+              "precision": 1.0,
+              "recall": 0.1007,
+              "f1": 0.1829
+            },
+            "pythonbytes": {
+              "tp": 219,
+              "fp": 0,
+              "fn": 276,
+              "precision": 1.0,
+              "recall": 0.4424,
+              "f1": 0.6134
+            },
+            "realpython": {
+              "tp": 11,
+              "fp": 2,
+              "fn": 3,
+              "precision": 0.8462,
+              "recall": 0.7857,
+              "f1": 0.8148
+            }
+          },
+          "macro_f1": 0.6261
+        },
+        {
+          "threshold": 0.8,
+          "tp": 219,
+          "fp": 2,
+          "fn": 955,
+          "precision": 0.991,
+          "recall": 0.1865,
+          "f1": 0.314,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 8,
+              "fp": 1,
+              "fn": 2,
+              "precision": 0.8889,
+              "recall": 0.8,
+              "f1": 0.8421
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 26,
+              "fp": 0,
+              "fn": 570,
+              "precision": 1.0,
+              "recall": 0.0436,
+              "f1": 0.0836
+            },
+            "pythonbytes": {
+              "tp": 142,
+              "fp": 0,
+              "fn": 353,
+              "precision": 1.0,
+              "recall": 0.2869,
+              "f1": 0.4458
+            },
+            "realpython": {
+              "tp": 11,
+              "fp": 1,
+              "fn": 3,
+              "precision": 0.9167,
+              "recall": 0.7857,
+              "f1": 0.8462
+            }
+          },
+          "macro_f1": 0.6285
+        }
+      ]
+    },
+    {
+      "name": "mlp64x16",
+      "seconds": 2.808,
+      "selected": {
+        "threshold": 0.35,
+        "tp": 1006,
+        "fp": 52,
+        "fn": 168,
+        "precision": 0.9509,
+        "recall": 0.8569,
+        "f1": 0.9014,
+        "by_source": {
+          "cloudflare": {
+            "tp": 19,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "django": {
+            "tp": 10,
+            "fp": 39,
+            "fn": 0,
+            "precision": 0.2041,
+            "recall": 1.0,
+            "f1": 0.339
+          },
+          "go": {
+            "tp": 10,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "hn": {
+            "tp": 18,
+            "fp": 4,
+            "fn": 12,
+            "precision": 0.8182,
+            "recall": 0.6,
+            "f1": 0.6923
+          },
+          "jvns": {
+            "tp": 587,
+            "fp": 2,
+            "fn": 9,
+            "precision": 0.9966,
+            "recall": 0.9849,
+            "f1": 0.9907
+          },
+          "pythonbytes": {
+            "tp": 350,
+            "fp": 0,
+            "fn": 145,
+            "precision": 1.0,
+            "recall": 0.7071,
+            "f1": 0.8284
+          },
+          "realpython": {
+            "tp": 12,
+            "fp": 6,
+            "fn": 2,
+            "precision": 0.6667,
+            "recall": 0.8571,
+            "f1": 0.75
+          }
+        },
+        "macro_f1": 0.7933
+      },
+      "thresholds": [
+        {
+          "threshold": 0.25,
+          "tp": 1075,
+          "fp": 60,
+          "fn": 99,
+          "precision": 0.9471,
+          "recall": 0.9157,
+          "f1": 0.9311,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 41,
+              "fn": 0,
+              "precision": 0.1961,
+              "recall": 1.0,
+              "f1": 0.3279
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 19,
+              "fp": 7,
+              "fn": 11,
+              "precision": 0.7308,
+              "recall": 0.6333,
+              "f1": 0.6786
+            },
+            "jvns": {
+              "tp": 596,
+              "fp": 2,
+              "fn": 0,
+              "precision": 0.9967,
+              "recall": 1.0,
+              "f1": 0.9983
+            },
+            "pythonbytes": {
+              "tp": 408,
+              "fp": 0,
+              "fn": 87,
+              "precision": 1.0,
+              "recall": 0.8242,
+              "f1": 0.9037
+            },
+            "realpython": {
+              "tp": 13,
+              "fp": 9,
+              "fn": 1,
+              "precision": 0.5909,
+              "recall": 0.9286,
+              "f1": 0.7222
+            }
+          },
+          "macro_f1": 0.7976
+        },
+        {
+          "threshold": 0.35,
+          "tp": 1006,
+          "fp": 52,
+          "fn": 168,
+          "precision": 0.9509,
+          "recall": 0.8569,
+          "f1": 0.9014,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 39,
+              "fn": 0,
+              "precision": 0.2041,
+              "recall": 1.0,
+              "f1": 0.339
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 18,
+              "fp": 4,
+              "fn": 12,
+              "precision": 0.8182,
+              "recall": 0.6,
+              "f1": 0.6923
+            },
+            "jvns": {
+              "tp": 587,
+              "fp": 2,
+              "fn": 9,
+              "precision": 0.9966,
+              "recall": 0.9849,
+              "f1": 0.9907
+            },
+            "pythonbytes": {
+              "tp": 350,
+              "fp": 0,
+              "fn": 145,
+              "precision": 1.0,
+              "recall": 0.7071,
+              "f1": 0.8284
+            },
+            "realpython": {
+              "tp": 12,
+              "fp": 6,
+              "fn": 2,
+              "precision": 0.6667,
+              "recall": 0.8571,
+              "f1": 0.75
+            }
+          },
+          "macro_f1": 0.7933
+        },
+        {
+          "threshold": 0.45,
+          "tp": 924,
+          "fp": 42,
+          "fn": 250,
+          "precision": 0.9565,
+          "recall": 0.7871,
+          "f1": 0.8636,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 36,
+              "fn": 0,
+              "precision": 0.2174,
+              "recall": 1.0,
+              "f1": 0.3571
+            },
+            "go": {
+              "tp": 9,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.9,
+              "recall": 0.9,
+              "f1": 0.9
+            },
+            "hn": {
+              "tp": 16,
+              "fp": 1,
+              "fn": 14,
+              "precision": 0.9412,
+              "recall": 0.5333,
+              "f1": 0.6809
+            },
+            "jvns": {
+              "tp": 573,
+              "fp": 2,
+              "fn": 23,
+              "precision": 0.9965,
+              "recall": 0.9614,
+              "f1": 0.9787
+            },
+            "pythonbytes": {
+              "tp": 288,
+              "fp": 0,
+              "fn": 207,
+              "precision": 1.0,
+              "recall": 0.5818,
+              "f1": 0.7356
+            },
+            "realpython": {
+              "tp": 9,
+              "fp": 2,
+              "fn": 5,
+              "precision": 0.8182,
+              "recall": 0.6429,
+              "f1": 0.72
+            }
+          },
+          "macro_f1": 0.7675
+        },
+        {
+          "threshold": 0.5,
+          "tp": 873,
+          "fp": 24,
+          "fn": 301,
+          "precision": 0.9732,
+          "recall": 0.7436,
+          "f1": 0.8431,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 20,
+              "fn": 0,
+              "precision": 0.3333,
+              "recall": 1.0,
+              "f1": 0.5
+            },
+            "go": {
+              "tp": 8,
+              "fp": 1,
+              "fn": 2,
+              "precision": 0.8889,
+              "recall": 0.8,
+              "f1": 0.8421
+            },
+            "hn": {
+              "tp": 14,
+              "fp": 0,
+              "fn": 16,
+              "precision": 1.0,
+              "recall": 0.4667,
+              "f1": 0.6364
+            },
+            "jvns": {
+              "tp": 554,
+              "fp": 2,
+              "fn": 42,
+              "precision": 0.9964,
+              "recall": 0.9295,
+              "f1": 0.9618
+            },
+            "pythonbytes": {
+              "tp": 260,
+              "fp": 0,
+              "fn": 235,
+              "precision": 1.0,
+              "recall": 0.5253,
+              "f1": 0.6887
+            },
+            "realpython": {
+              "tp": 8,
+              "fp": 1,
+              "fn": 6,
+              "precision": 0.8889,
+              "recall": 0.5714,
+              "f1": 0.6957
+            }
+          },
+          "macro_f1": 0.7607
+        },
+        {
+          "threshold": 0.6,
+          "tp": 742,
+          "fp": 23,
+          "fn": 432,
+          "precision": 0.9699,
+          "recall": 0.632,
+          "f1": 0.7653,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 19,
+              "fn": 0,
+              "precision": 0.3448,
+              "recall": 1.0,
+              "f1": 0.5128
+            },
+            "go": {
+              "tp": 8,
+              "fp": 1,
+              "fn": 2,
+              "precision": 0.8889,
+              "recall": 0.8,
+              "f1": 0.8421
+            },
+            "hn": {
+              "tp": 13,
+              "fp": 0,
+              "fn": 17,
+              "precision": 1.0,
+              "recall": 0.4333,
+              "f1": 0.6047
+            },
+            "jvns": {
+              "tp": 488,
+              "fp": 2,
+              "fn": 108,
+              "precision": 0.9959,
+              "recall": 0.8188,
+              "f1": 0.8987
+            },
+            "pythonbytes": {
+              "tp": 200,
+              "fp": 0,
+              "fn": 295,
+              "precision": 1.0,
+              "recall": 0.404,
+              "f1": 0.5755
+            },
+            "realpython": {
+              "tp": 4,
+              "fp": 1,
+              "fn": 10,
+              "precision": 0.8,
+              "recall": 0.2857,
+              "f1": 0.4211
+            }
+          },
+          "macro_f1": 0.6936
+        },
+        {
+          "threshold": 0.7,
+          "tp": 607,
+          "fp": 6,
+          "fn": 567,
+          "precision": 0.9902,
+          "recall": 0.517,
+          "f1": 0.6794,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 2,
+              "fn": 0,
+              "precision": 0.8333,
+              "recall": 1.0,
+              "f1": 0.9091
+            },
+            "go": {
+              "tp": 8,
+              "fp": 1,
+              "fn": 2,
+              "precision": 0.8889,
+              "recall": 0.8,
+              "f1": 0.8421
+            },
+            "hn": {
+              "tp": 11,
+              "fp": 0,
+              "fn": 19,
+              "precision": 1.0,
+              "recall": 0.3667,
+              "f1": 0.5366
+            },
+            "jvns": {
+              "tp": 413,
+              "fp": 2,
+              "fn": 183,
+              "precision": 0.9952,
+              "recall": 0.693,
+              "f1": 0.817
+            },
+            "pythonbytes": {
+              "tp": 144,
+              "fp": 0,
+              "fn": 351,
+              "precision": 1.0,
+              "recall": 0.2909,
+              "f1": 0.4507
+            },
+            "realpython": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 12,
+              "precision": 0.6667,
+              "recall": 0.1429,
+              "f1": 0.2353
+            }
+          },
+          "macro_f1": 0.6844
+        },
+        {
+          "threshold": 0.8,
+          "tp": 438,
+          "fp": 3,
+          "fn": 736,
+          "precision": 0.9932,
+          "recall": 0.3731,
+          "f1": 0.5424,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 6,
+              "fp": 1,
+              "fn": 4,
+              "precision": 0.8571,
+              "recall": 0.6,
+              "f1": 0.7059
+            },
+            "hn": {
+              "tp": 8,
+              "fp": 0,
+              "fn": 22,
+              "precision": 1.0,
+              "recall": 0.2667,
+              "f1": 0.4211
+            },
+            "jvns": {
+              "tp": 307,
+              "fp": 1,
+              "fn": 289,
+              "precision": 0.9968,
+              "recall": 0.5151,
+              "f1": 0.6792
+            },
+            "pythonbytes": {
+              "tp": 87,
+              "fp": 0,
+              "fn": 408,
+              "precision": 1.0,
+              "recall": 0.1758,
+              "f1": 0.299
+            },
+            "realpython": {
+              "tp": 1,
+              "fp": 1,
+              "fn": 13,
+              "precision": 0.5,
+              "recall": 0.0714,
+              "f1": 0.125
+            }
+          },
+          "macro_f1": 0.6043
+        }
+      ]
+    },
+    {
+      "name": "trees-numeric",
+      "seconds": 2.498,
+      "selected": {
+        "threshold": 0.25,
+        "tp": 1108,
+        "fp": 8,
+        "fn": 66,
+        "precision": 0.9928,
+        "recall": 0.9438,
+        "f1": 0.9677,
+        "by_source": {
+          "cloudflare": {
+            "tp": 19,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "django": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "go": {
+            "tp": 10,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "hn": {
+            "tp": 17,
+            "fp": 0,
+            "fn": 13,
+            "precision": 1.0,
+            "recall": 0.5667,
+            "f1": 0.7234
+          },
+          "jvns": {
+            "tp": 544,
+            "fp": 2,
+            "fn": 52,
+            "precision": 0.9963,
+            "recall": 0.9128,
+            "f1": 0.9527
+          },
+          "pythonbytes": {
+            "tp": 495,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "realpython": {
+            "tp": 13,
+            "fp": 5,
+            "fn": 1,
+            "precision": 0.7222,
+            "recall": 0.9286,
+            "f1": 0.8125
+          }
+        },
+        "macro_f1": 0.9201
+      },
+      "thresholds": [
+        {
+          "threshold": 0.25,
+          "tp": 1108,
+          "fp": 8,
+          "fn": 66,
+          "precision": 0.9928,
+          "recall": 0.9438,
+          "f1": 0.9677,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 17,
+              "fp": 0,
+              "fn": 13,
+              "precision": 1.0,
+              "recall": 0.5667,
+              "f1": 0.7234
+            },
+            "jvns": {
+              "tp": 544,
+              "fp": 2,
+              "fn": 52,
+              "precision": 0.9963,
+              "recall": 0.9128,
+              "f1": 0.9527
+            },
+            "pythonbytes": {
+              "tp": 495,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "realpython": {
+              "tp": 13,
+              "fp": 5,
+              "fn": 1,
+              "precision": 0.7222,
+              "recall": 0.9286,
+              "f1": 0.8125
+            }
+          },
+          "macro_f1": 0.9201
+        },
+        {
+          "threshold": 0.35,
+          "tp": 778,
+          "fp": 8,
+          "fn": 396,
+          "precision": 0.9898,
+          "recall": 0.6627,
+          "f1": 0.7939,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 18,
+              "precision": 1.0,
+              "recall": 0.4,
+              "f1": 0.5714
+            },
+            "jvns": {
+              "tp": 219,
+              "fp": 2,
+              "fn": 377,
+              "precision": 0.991,
+              "recall": 0.3674,
+              "f1": 0.5361
+            },
+            "pythonbytes": {
+              "tp": 495,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "realpython": {
+              "tp": 13,
+              "fp": 5,
+              "fn": 1,
+              "precision": 0.7222,
+              "recall": 0.9286,
+              "f1": 0.8125
+            }
+          },
+          "macro_f1": 0.8389
+        },
+        {
+          "threshold": 0.45,
+          "tp": 726,
+          "fp": 6,
+          "fn": 448,
+          "precision": 0.9918,
+          "recall": 0.6184,
+          "f1": 0.7618,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 26,
+              "precision": 1.0,
+              "recall": 0.1333,
+              "f1": 0.2353
+            },
+            "jvns": {
+              "tp": 178,
+              "fp": 0,
+              "fn": 418,
+              "precision": 1.0,
+              "recall": 0.2987,
+              "f1": 0.4599
+            },
+            "pythonbytes": {
+              "tp": 493,
+              "fp": 0,
+              "fn": 2,
+              "precision": 1.0,
+              "recall": 0.996,
+              "f1": 0.998
+            },
+            "realpython": {
+              "tp": 12,
+              "fp": 5,
+              "fn": 2,
+              "precision": 0.7059,
+              "recall": 0.8571,
+              "f1": 0.7742
+            }
+          },
+          "macro_f1": 0.7743
+        },
+        {
+          "threshold": 0.5,
+          "tp": 725,
+          "fp": 5,
+          "fn": 449,
+          "precision": 0.9932,
+          "recall": 0.6175,
+          "f1": 0.7616,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 178,
+              "fp": 0,
+              "fn": 418,
+              "precision": 1.0,
+              "recall": 0.2987,
+              "f1": 0.4599
+            },
+            "pythonbytes": {
+              "tp": 493,
+              "fp": 0,
+              "fn": 2,
+              "precision": 1.0,
+              "recall": 0.996,
+              "f1": 0.998
+            },
+            "realpython": {
+              "tp": 12,
+              "fp": 4,
+              "fn": 2,
+              "precision": 0.75,
+              "recall": 0.8571,
+              "f1": 0.8
+            }
+          },
+          "macro_f1": 0.7703
+        },
+        {
+          "threshold": 0.6,
+          "tp": 721,
+          "fp": 4,
+          "fn": 453,
+          "precision": 0.9945,
+          "recall": 0.6141,
+          "f1": 0.7593,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 28,
+              "precision": 1.0,
+              "recall": 0.0667,
+              "f1": 0.125
+            },
+            "jvns": {
+              "tp": 176,
+              "fp": 0,
+              "fn": 420,
+              "precision": 1.0,
+              "recall": 0.2953,
+              "f1": 0.456
+            },
+            "pythonbytes": {
+              "tp": 493,
+              "fp": 0,
+              "fn": 2,
+              "precision": 1.0,
+              "recall": 0.996,
+              "f1": 0.998
+            },
+            "realpython": {
+              "tp": 11,
+              "fp": 3,
+              "fn": 3,
+              "precision": 0.7857,
+              "recall": 0.7857,
+              "f1": 0.7857
+            }
+          },
+          "macro_f1": 0.7596
+        },
+        {
+          "threshold": 0.7,
+          "tp": 704,
+          "fp": 2,
+          "fn": 470,
+          "precision": 0.9972,
+          "recall": 0.5997,
+          "f1": 0.7489,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 28,
+              "precision": 1.0,
+              "recall": 0.0667,
+              "f1": 0.125
+            },
+            "jvns": {
+              "tp": 171,
+              "fp": 0,
+              "fn": 425,
+              "precision": 1.0,
+              "recall": 0.2869,
+              "f1": 0.4459
+            },
+            "pythonbytes": {
+              "tp": 485,
+              "fp": 0,
+              "fn": 10,
+              "precision": 1.0,
+              "recall": 0.9798,
+              "f1": 0.9898
+            },
+            "realpython": {
+              "tp": 7,
+              "fp": 1,
+              "fn": 7,
+              "precision": 0.875,
+              "recall": 0.5,
+              "f1": 0.6364
+            }
+          },
+          "macro_f1": 0.7356
+        },
+        {
+          "threshold": 0.8,
+          "tp": 644,
+          "fp": 1,
+          "fn": 530,
+          "precision": 0.9984,
+          "recall": 0.5486,
+          "f1": 0.7081,
+          "by_source": {
+            "cloudflare": {
+              "tp": 16,
+              "fp": 0,
+              "fn": 3,
+              "precision": 1.0,
+              "recall": 0.8421,
+              "f1": 0.9143
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 6,
+              "fp": 1,
+              "fn": 4,
+              "precision": 0.8571,
+              "recall": 0.6,
+              "f1": 0.7059
+            },
+            "hn": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 28,
+              "precision": 1.0,
+              "recall": 0.0667,
+              "f1": 0.125
+            },
+            "jvns": {
+              "tp": 128,
+              "fp": 0,
+              "fn": 468,
+              "precision": 1.0,
+              "recall": 0.2148,
+              "f1": 0.3536
+            },
+            "pythonbytes": {
+              "tp": 481,
+              "fp": 0,
+              "fn": 14,
+              "precision": 1.0,
+              "recall": 0.9717,
+              "f1": 0.9857
+            },
+            "realpython": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 13,
+              "precision": 1.0,
+              "recall": 0.0714,
+              "f1": 0.1333
+            }
+          },
+          "macro_f1": 0.6025
+        }
+      ]
+    },
+    {
+      "name": "trees-text",
+      "seconds": 7.684,
+      "selected": {
+        "threshold": 0.35,
+        "tp": 1141,
+        "fp": 44,
+        "fn": 33,
+        "precision": 0.9629,
+        "recall": 0.9719,
+        "f1": 0.9674,
+        "by_source": {
+          "cloudflare": {
+            "tp": 9,
+            "fp": 0,
+            "fn": 10,
+            "precision": 1.0,
+            "recall": 0.4737,
+            "f1": 0.6429
+          },
+          "django": {
+            "tp": 10,
+            "fp": 42,
+            "fn": 0,
+            "precision": 0.1923,
+            "recall": 1.0,
+            "f1": 0.3226
+          },
+          "go": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 10,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "hn": {
+            "tp": 22,
+            "fp": 0,
+            "fn": 8,
+            "precision": 1.0,
+            "recall": 0.7333,
+            "f1": 0.8462
+          },
+          "jvns": {
+            "tp": 596,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.9967,
+            "recall": 1.0,
+            "f1": 0.9983
+          },
+          "pythonbytes": {
+            "tp": 495,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "realpython": {
+            "tp": 9,
+            "fp": 0,
+            "fn": 5,
+            "precision": 1.0,
+            "recall": 0.6429,
+            "f1": 0.7826
+          }
+        },
+        "macro_f1": 0.6561
+      },
+      "thresholds": [
+        {
+          "threshold": 0.25,
+          "tp": 1152,
+          "fp": 86,
+          "fn": 22,
+          "precision": 0.9305,
+          "recall": 0.9813,
+          "f1": 0.9552,
+          "by_source": {
+            "cloudflare": {
+              "tp": 14,
+              "fp": 0,
+              "fn": 5,
+              "precision": 1.0,
+              "recall": 0.7368,
+              "f1": 0.8485
+            },
+            "django": {
+              "tp": 10,
+              "fp": 82,
+              "fn": 0,
+              "precision": 0.1087,
+              "recall": 1.0,
+              "f1": 0.1961
+            },
+            "go": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 10,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "hn": {
+              "tp": 23,
+              "fp": 1,
+              "fn": 7,
+              "precision": 0.9583,
+              "recall": 0.7667,
+              "f1": 0.8519
+            },
+            "jvns": {
+              "tp": 596,
+              "fp": 2,
+              "fn": 0,
+              "precision": 0.9967,
+              "recall": 1.0,
+              "f1": 0.9983
+            },
+            "pythonbytes": {
+              "tp": 495,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "realpython": {
+              "tp": 14,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9333,
+              "recall": 1.0,
+              "f1": 0.9655
+            }
+          },
+          "macro_f1": 0.6943
+        },
+        {
+          "threshold": 0.35,
+          "tp": 1141,
+          "fp": 44,
+          "fn": 33,
+          "precision": 0.9629,
+          "recall": 0.9719,
+          "f1": 0.9674,
+          "by_source": {
+            "cloudflare": {
+              "tp": 9,
+              "fp": 0,
+              "fn": 10,
+              "precision": 1.0,
+              "recall": 0.4737,
+              "f1": 0.6429
+            },
+            "django": {
+              "tp": 10,
+              "fp": 42,
+              "fn": 0,
+              "precision": 0.1923,
+              "recall": 1.0,
+              "f1": 0.3226
+            },
+            "go": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 10,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "hn": {
+              "tp": 22,
+              "fp": 0,
+              "fn": 8,
+              "precision": 1.0,
+              "recall": 0.7333,
+              "f1": 0.8462
+            },
+            "jvns": {
+              "tp": 596,
+              "fp": 2,
+              "fn": 0,
+              "precision": 0.9967,
+              "recall": 1.0,
+              "f1": 0.9983
+            },
+            "pythonbytes": {
+              "tp": 495,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "realpython": {
+              "tp": 9,
+              "fp": 0,
+              "fn": 5,
+              "precision": 1.0,
+              "recall": 0.6429,
+              "f1": 0.7826
+            }
+          },
+          "macro_f1": 0.6561
+        },
+        {
+          "threshold": 0.45,
+          "tp": 1129,
+          "fp": 44,
+          "fn": 45,
+          "precision": 0.9625,
+          "recall": 0.9617,
+          "f1": 0.9621,
+          "by_source": {
+            "cloudflare": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 14,
+              "precision": 1.0,
+              "recall": 0.2632,
+              "f1": 0.4167
+            },
+            "django": {
+              "tp": 10,
+              "fp": 42,
+              "fn": 0,
+              "precision": 0.1923,
+              "recall": 1.0,
+              "f1": 0.3226
+            },
+            "go": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 10,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "hn": {
+              "tp": 17,
+              "fp": 0,
+              "fn": 13,
+              "precision": 1.0,
+              "recall": 0.5667,
+              "f1": 0.7234
+            },
+            "jvns": {
+              "tp": 595,
+              "fp": 2,
+              "fn": 1,
+              "precision": 0.9966,
+              "recall": 0.9983,
+              "f1": 0.9975
+            },
+            "pythonbytes": {
+              "tp": 495,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "realpython": {
+              "tp": 7,
+              "fp": 0,
+              "fn": 7,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6667
+            }
+          },
+          "macro_f1": 0.5896
+        },
+        {
+          "threshold": 0.5,
+          "tp": 1117,
+          "fp": 43,
+          "fn": 57,
+          "precision": 0.9629,
+          "recall": 0.9514,
+          "f1": 0.9572,
+          "by_source": {
+            "cloudflare": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 14,
+              "precision": 1.0,
+              "recall": 0.2632,
+              "f1": 0.4167
+            },
+            "django": {
+              "tp": 10,
+              "fp": 41,
+              "fn": 0,
+              "precision": 0.1961,
+              "recall": 1.0,
+              "f1": 0.3279
+            },
+            "go": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 10,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "hn": {
+              "tp": 8,
+              "fp": 0,
+              "fn": 22,
+              "precision": 1.0,
+              "recall": 0.2667,
+              "f1": 0.4211
+            },
+            "jvns": {
+              "tp": 595,
+              "fp": 2,
+              "fn": 1,
+              "precision": 0.9966,
+              "recall": 0.9983,
+              "f1": 0.9975
+            },
+            "pythonbytes": {
+              "tp": 493,
+              "fp": 0,
+              "fn": 2,
+              "precision": 1.0,
+              "recall": 0.996,
+              "f1": 0.998
+            },
+            "realpython": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 8,
+              "precision": 1.0,
+              "recall": 0.4286,
+              "f1": 0.6
+            }
+          },
+          "macro_f1": 0.5373
+        },
+        {
+          "threshold": 0.6,
+          "tp": 1105,
+          "fp": 39,
+          "fn": 69,
+          "precision": 0.9659,
+          "recall": 0.9412,
+          "f1": 0.9534,
+          "by_source": {
+            "cloudflare": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 14,
+              "precision": 1.0,
+              "recall": 0.2632,
+              "f1": 0.4167
+            },
+            "django": {
+              "tp": 10,
+              "fp": 37,
+              "fn": 0,
+              "precision": 0.2128,
+              "recall": 1.0,
+              "f1": 0.3509
+            },
+            "go": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 10,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "hn": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 25,
+              "precision": 1.0,
+              "recall": 0.1667,
+              "f1": 0.2857
+            },
+            "jvns": {
+              "tp": 592,
+              "fp": 2,
+              "fn": 4,
+              "precision": 0.9966,
+              "recall": 0.9933,
+              "f1": 0.995
+            },
+            "pythonbytes": {
+              "tp": 488,
+              "fp": 0,
+              "fn": 7,
+              "precision": 1.0,
+              "recall": 0.9859,
+              "f1": 0.9929
+            },
+            "realpython": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 9,
+              "precision": 1.0,
+              "recall": 0.3571,
+              "f1": 0.5263
+            }
+          },
+          "macro_f1": 0.5096
+        },
+        {
+          "threshold": 0.7,
+          "tp": 1055,
+          "fp": 23,
+          "fn": 119,
+          "precision": 0.9787,
+          "recall": 0.8986,
+          "f1": 0.9369,
+          "by_source": {
+            "cloudflare": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 17,
+              "precision": 1.0,
+              "recall": 0.1053,
+              "f1": 0.1905
+            },
+            "django": {
+              "tp": 10,
+              "fp": 21,
+              "fn": 0,
+              "precision": 0.3226,
+              "recall": 1.0,
+              "f1": 0.4878
+            },
+            "go": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 10,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "hn": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 26,
+              "precision": 1.0,
+              "recall": 0.1333,
+              "f1": 0.2353
+            },
+            "jvns": {
+              "tp": 547,
+              "fp": 2,
+              "fn": 49,
+              "precision": 0.9964,
+              "recall": 0.9178,
+              "f1": 0.9555
+            },
+            "pythonbytes": {
+              "tp": 487,
+              "fp": 0,
+              "fn": 8,
+              "precision": 1.0,
+              "recall": 0.9838,
+              "f1": 0.9919
+            },
+            "realpython": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 9,
+              "precision": 1.0,
+              "recall": 0.3571,
+              "f1": 0.5263
+            }
+          },
+          "macro_f1": 0.4839
+        },
+        {
+          "threshold": 0.8,
+          "tp": 738,
+          "fp": 21,
+          "fn": 436,
+          "precision": 0.9723,
+          "recall": 0.6286,
+          "f1": 0.7636,
+          "by_source": {
+            "cloudflare": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 19,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 21,
+              "fn": 0,
+              "precision": 0.3226,
+              "recall": 1.0,
+              "f1": 0.4878
+            },
+            "go": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 10,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 258,
+              "fp": 0,
+              "fn": 338,
+              "precision": 1.0,
+              "recall": 0.4329,
+              "f1": 0.6042
+            },
+            "pythonbytes": {
+              "tp": 466,
+              "fp": 0,
+              "fn": 29,
+              "precision": 1.0,
+              "recall": 0.9414,
+              "f1": 0.9698
+            },
+            "realpython": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 13,
+              "precision": 1.0,
+              "recall": 0.0714,
+              "f1": 0.1333
+            }
+          },
+          "macro_f1": 0.3396
+        }
+      ]
+    }
+  ],
+  "data_sha256": "2a106aa097f5c872eff05d1b20c03c6499dbec836c2b29206c38f9ba60d11bbd",
+  "seconds": 17.39,
+  "origin_weights": {
+    "index": 0.75,
+    "cleaneval": 0.1,
+    "authored": 0.15
+  },
+  "promotion_ready": true,
+  "model_bytes": 105308
+}

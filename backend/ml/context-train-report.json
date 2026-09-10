@@ -1,0 +1,663 @@
+{
+  "split": "train",
+  "model_id": "context-trees-numeric-2a106aa097f5",
+  "parser": {
+    "legacy": {
+      "tp": 4397,
+      "fp": 686,
+      "fn": 82,
+      "precision": 0.865,
+      "recall": 0.9817,
+      "f1": 0.9197,
+      "by_source": {
+        "asura": {
+          "tp": 140,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "changelog": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 13,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "codeforces": {
+          "tp": 100,
+          "fp": 552,
+          "fn": 0,
+          "precision": 0.1534,
+          "recall": 1.0,
+          "f1": 0.266
+        },
+        "github": {
+          "tp": 10,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "hackaday": {
+          "tp": 10,
+          "fp": 1,
+          "fn": 8,
+          "precision": 0.9091,
+          "recall": 0.5556,
+          "f1": 0.6897
+        },
+        "lobsters": {
+          "tp": 24,
+          "fp": 73,
+          "fn": 1,
+          "precision": 0.2474,
+          "recall": 0.96,
+          "f1": 0.3934
+        },
+        "lwn": {
+          "tp": 8,
+          "fp": 7,
+          "fn": 12,
+          "precision": 0.5333,
+          "recall": 0.4,
+          "f1": 0.4571
+        },
+        "paulgraham": {
+          "tp": 234,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "planetpython": {
+          "tp": 13,
+          "fp": 46,
+          "fn": 12,
+          "precision": 0.2203,
+          "recall": 0.52,
+          "f1": 0.3095
+        },
+        "python": {
+          "tp": 9,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.9,
+          "recall": 1.0,
+          "f1": 0.9474
+        },
+        "royalroad": {
+          "tp": 109,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rust": {
+          "tp": 391,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "schneier": {
+          "tp": 10,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "recall": 0.9091,
+          "f1": 0.9524
+        },
+        "simonwillison": {
+          "tp": 58,
+          "fp": 6,
+          "fn": 12,
+          "precision": 0.9062,
+          "recall": 0.8286,
+          "f1": 0.8657
+        },
+        "wordpress": {
+          "tp": 5,
+          "fp": 0,
+          "fn": 5,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6667
+        },
+        "xkcd": {
+          "tp": 3276,
+          "fp": 0,
+          "fn": 18,
+          "precision": 1.0,
+          "recall": 0.9945,
+          "f1": 0.9973
+        }
+      },
+      "macro_f1": 0.7216
+    },
+    "on": {
+      "tp": 4461,
+      "fp": 14,
+      "fn": 18,
+      "precision": 0.9969,
+      "recall": 0.996,
+      "f1": 0.9964,
+      "by_source": {
+        "asura": {
+          "tp": 140,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "changelog": {
+          "tp": 13,
+          "fp": 2,
+          "fn": 0,
+          "precision": 0.8667,
+          "recall": 1.0,
+          "f1": 0.9286
+        },
+        "codeforces": {
+          "tp": 100,
+          "fp": 6,
+          "fn": 0,
+          "precision": 0.9434,
+          "recall": 1.0,
+          "f1": 0.9709
+        },
+        "github": {
+          "tp": 10,
+          "fp": 4,
+          "fn": 0,
+          "precision": 0.7143,
+          "recall": 1.0,
+          "f1": 0.8333
+        },
+        "hackaday": {
+          "tp": 18,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "lobsters": {
+          "tp": 25,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "lwn": {
+          "tp": 20,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "paulgraham": {
+          "tp": 234,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "planetpython": {
+          "tp": 25,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.9615,
+          "recall": 1.0,
+          "f1": 0.9804
+        },
+        "python": {
+          "tp": 9,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "royalroad": {
+          "tp": 109,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rust": {
+          "tp": 391,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "schneier": {
+          "tp": 11,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "simonwillison": {
+          "tp": 70,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.9859,
+          "recall": 1.0,
+          "f1": 0.9929
+        },
+        "wordpress": {
+          "tp": 10,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "xkcd": {
+          "tp": 3276,
+          "fp": 0,
+          "fn": 18,
+          "precision": 1.0,
+          "recall": 0.9945,
+          "f1": 0.9973
+        }
+      },
+      "macro_f1": 0.9815
+    },
+    "primary": {
+      "tp": 4461,
+      "fp": 8,
+      "fn": 18,
+      "precision": 0.9982,
+      "recall": 0.996,
+      "f1": 0.9971,
+      "by_source": {
+        "asura": {
+          "tp": 140,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "changelog": {
+          "tp": 13,
+          "fp": 2,
+          "fn": 0,
+          "precision": 0.8667,
+          "recall": 1.0,
+          "f1": 0.9286
+        },
+        "codeforces": {
+          "tp": 100,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "github": {
+          "tp": 10,
+          "fp": 4,
+          "fn": 0,
+          "precision": 0.7143,
+          "recall": 1.0,
+          "f1": 0.8333
+        },
+        "hackaday": {
+          "tp": 18,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "lobsters": {
+          "tp": 25,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "lwn": {
+          "tp": 20,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "paulgraham": {
+          "tp": 234,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "planetpython": {
+          "tp": 25,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.9615,
+          "recall": 1.0,
+          "f1": 0.9804
+        },
+        "python": {
+          "tp": 9,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "royalroad": {
+          "tp": 109,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "rust": {
+          "tp": 391,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "schneier": {
+          "tp": 11,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "simonwillison": {
+          "tp": 70,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.9859,
+          "recall": 1.0,
+          "f1": 0.9929
+        },
+        "wordpress": {
+          "tp": 10,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "xkcd": {
+          "tp": 3276,
+          "fp": 0,
+          "fn": 18,
+          "precision": 1.0,
+          "recall": 0.9945,
+          "f1": 0.9973
+        }
+      },
+      "macro_f1": 0.9833
+    }
+  },
+  "classifier": {
+    "tp": 4479,
+    "fp": 9,
+    "fn": 0,
+    "precision": 0.998,
+    "recall": 1.0,
+    "f1": 0.999,
+    "by_source": {
+      "asura": {
+        "tp": 140,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "changelog": {
+        "tp": 13,
+        "fp": 2,
+        "fn": 0,
+        "precision": 0.8667,
+        "recall": 1.0,
+        "f1": 0.9286
+      },
+      "codeforces": {
+        "tp": 100,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "github": {
+        "tp": 10,
+        "fp": 5,
+        "fn": 0,
+        "precision": 0.6667,
+        "recall": 1.0,
+        "f1": 0.8
+      },
+      "hackaday": {
+        "tp": 18,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "lobsters": {
+        "tp": 25,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "lwn": {
+        "tp": 20,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "paulgraham": {
+        "tp": 234,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "planetpython": {
+        "tp": 25,
+        "fp": 1,
+        "fn": 0,
+        "precision": 0.9615,
+        "recall": 1.0,
+        "f1": 0.9804
+      },
+      "python": {
+        "tp": 9,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "royalroad": {
+        "tp": 109,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "rust": {
+        "tp": 391,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "schneier": {
+        "tp": 11,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "simonwillison": {
+        "tp": 70,
+        "fp": 1,
+        "fn": 0,
+        "precision": 0.9859,
+        "recall": 1.0,
+        "f1": 0.9929
+      },
+      "wordpress": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "xkcd": {
+        "tp": 3294,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "macro_f1": 0.9814
+  },
+  "parse_seconds": {
+    "legacy:asura": 0.75,
+    "legacy:royalroad": 0.473,
+    "legacy:github": 1.079,
+    "legacy:codeforces": 1.96,
+    "legacy:python": 0.058,
+    "legacy:rust": 0.524,
+    "legacy:paulgraham": 0.415,
+    "legacy:xkcd": 2.396,
+    "legacy:planetpython": 0.681,
+    "legacy:hackaday": 0.192,
+    "legacy:lobsters": 0.386,
+    "legacy:changelog": 0.248,
+    "legacy:wordpress": 0.096,
+    "legacy:simonwillison": 1.283,
+    "legacy:lwn": 0.224,
+    "legacy:schneier": 0.14,
+    "on:asura": 0.721,
+    "on:royalroad": 0.468,
+    "on:github": 1.492,
+    "on:codeforces": 0.933,
+    "on:python": 0.057,
+    "on:rust": 0.706,
+    "on:paulgraham": 0.434,
+    "on:xkcd": 3.403,
+    "on:planetpython": 1.047,
+    "on:hackaday": 0.305,
+    "on:lobsters": 0.3,
+    "on:changelog": 0.393,
+    "on:wordpress": 0.168,
+    "on:simonwillison": 0.734,
+    "on:lwn": 0.238,
+    "on:schneier": 0.205,
+    "primary:asura": 0.761,
+    "primary:royalroad": 0.429,
+    "primary:github": 1.292,
+    "primary:codeforces": 0.926,
+    "primary:python": 0.047,
+    "primary:rust": 0.674,
+    "primary:paulgraham": 0.4,
+    "primary:xkcd": 3.3,
+    "primary:planetpython": 0.921,
+    "primary:hackaday": 0.302,
+    "primary:lobsters": 0.297,
+    "primary:changelog": 0.389,
+    "primary:wordpress": 0.166,
+    "primary:simonwillison": 0.769,
+    "primary:lwn": 0.212,
+    "primary:schneier": 0.19
+  },
+  "unlabelled_predictions": {
+    "legacy:asura": 0,
+    "legacy:royalroad": 0,
+    "legacy:github": 0,
+    "legacy:codeforces": 0,
+    "legacy:python": 0,
+    "legacy:rust": 0,
+    "legacy:paulgraham": 0,
+    "legacy:xkcd": 0,
+    "legacy:planetpython": 0,
+    "legacy:hackaday": 0,
+    "legacy:lobsters": 0,
+    "legacy:changelog": 0,
+    "legacy:wordpress": 0,
+    "legacy:simonwillison": 0,
+    "legacy:lwn": 0,
+    "legacy:schneier": 0,
+    "on:asura": 0,
+    "on:royalroad": 0,
+    "on:github": 0,
+    "on:codeforces": 0,
+    "on:python": 0,
+    "on:rust": 0,
+    "on:paulgraham": 0,
+    "on:xkcd": 0,
+    "on:planetpython": 0,
+    "on:hackaday": 0,
+    "on:lobsters": 0,
+    "on:changelog": 0,
+    "on:wordpress": 0,
+    "on:simonwillison": 0,
+    "on:lwn": 0,
+    "on:schneier": 0,
+    "primary:asura": 0,
+    "primary:royalroad": 0,
+    "primary:github": 0,
+    "primary:codeforces": 0,
+    "primary:python": 0,
+    "primary:rust": 0,
+    "primary:paulgraham": 0,
+    "primary:xkcd": 0,
+    "primary:planetpython": 0,
+    "primary:hackaday": 0,
+    "primary:lobsters": 0,
+    "primary:changelog": 0,
+    "primary:wordpress": 0,
+    "primary:simonwillison": 0,
+    "primary:lwn": 0,
+    "primary:schneier": 0
+  },
+  "baseline": "Frozen v1 parser, with v1 classifier enabled"
+}

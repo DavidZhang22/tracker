@@ -1,8 +1,459 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  act,
+} from "@testing-library/react";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { Library } from "./Tracker";
+import AddPage from "./Pages/AddPage";
+import ItemPage from "./Pages/ItemPage";
+import { LinkDate } from "./RowTools";
+import { Notice } from "./Notice";
+import { api, patch, post } from "./api";
+jest.mock("./api", () => ({
+  api: jest.fn(),
+  patch: jest.fn(),
+  post: jest.fn(),
+  examples: [],
+  checked: () => "Today",
+  day: () => "Sep 8, 2026",
+}));
+const item = {
+  id: "one",
+  url: "https://site.example",
+  title: "My series",
+  kind: "novel",
+  favorite: false,
+  ignored: false,
+  auto_read: true,
+  total_count: 2,
+  ignored_count: 0,
+  read_count: 0,
+  unread_count: 2,
+  new_count: 1,
+  warnings: [],
+  methods: ["page"],
+  pages_scanned: 1,
+  created_at: "2026-09-08",
+  selector: "",
+  include_path: "",
+};
+const link = {
+  id: "chapter1",
+  url: "https://site.example/chapter/1",
+  title: "Chapter 1",
+  read: false,
+  favorite: false,
+  ignored: false,
+  is_new: true,
+  number: 1,
+};
+beforeEach(() => jest.clearAllMocks());
+async function click(element) {
+  await act(async () => {
+    fireEvent.click(element);
+  });
+}
+function detail() {
+  render(
+    <MemoryRouter initialEntries={["/items/one"]}>
+      <Routes>
+        <Route path="/items/:id" element={<ItemPage />} />
+      </Routes>
+    </MemoryRouter>,
+  );
+}
+function mockDetail(auto = true) {
+  api.mockImplementation((path) =>
+    Promise.resolve(
+      path.includes("/links")
+        ? { links: [link], total: 1, sort_used: "number" }
+        : { ...item, auto_read: auto },
+    ),
+  );
+  patch.mockResolvedValue(item);
+}
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test("right-click opens link actions without marking read, and favorite persists", async () => {
+  mockDetail();
+  post.mockResolvedValue({ updated: 1 });
+  detail();
+  const title = await screen.findByRole("link", { name: /Chapter 1/ });
+  fireEvent.contextMenu(title);
+  const favorite = await screen.findByRole("menuitem", { name: "Favorite" });
+  expect(patch).not.toHaveBeenCalled();
+  await click(favorite);
+  expect(post).toHaveBeenCalledWith("/links/bulk", {
+    ids: ["chapter1"],
+    item_id: "one",
+    action: "favorite",
+  });
+});
+
+test("library row context menu can ignore and keyboard actions remain available", async () => {
+  api.mockResolvedValue([item]);
+  post.mockResolvedValue({ updated: 1 });
+  render(
+    <MemoryRouter>
+      <Library />
+    </MemoryRouter>,
+  );
+  fireEvent.contextMenu(await screen.findByText("My series"));
+  await click(await screen.findByRole("menuitem", { name: "Ignore" }));
+  expect(post).toHaveBeenCalledWith("/items/bulk", {
+    ids: ["one"],
+    action: "ignore",
+  });
+  await click(screen.getByRole("button", { name: "Actions for My series" }));
+  expect(
+    await screen.findByRole("menuitem", { name: "Delete" }),
+  ).toBeInTheDocument();
+});
+
+test("selecting visible links enables bulk delete and explains Trash retention", async () => {
+  mockDetail();
+  post.mockResolvedValue({ updated: 1 });
+  detail();
+  await screen.findByText("Chapter 1");
+  await click(screen.getByLabelText("Select visible links"));
+  await click(screen.getByRole("button", { name: "Delete", exact: true }));
+  expect(post).toHaveBeenCalledWith("/links/bulk", {
+    ids: ["chapter1"],
+    item_id: "one",
+    action: "delete",
+  });
+  expect(await screen.findByText(/1 links moved to Trash/)).toBeInTheDocument();
+  expect(screen.queryByText("1 selected")).not.toBeInTheDocument();
+});
+
+test("changing a link filter clears bulk selection", async () => {
+  mockDetail();
+  detail();
+  await screen.findByText("Chapter 1");
+  await click(screen.getByLabelText("Select link: Chapter 1"));
+  expect(screen.getByText("1 selected")).toBeInTheDocument();
+  await click(screen.getByRole("button", { name: "Favorites", exact: true }));
+  expect(screen.queryByText("1 selected")).not.toBeInTheDocument();
+});
+
+test("bulk item selection sends all selected IDs and supports restoring Trash", async () => {
+  api.mockResolvedValue([
+    item,
+    { ...item, id: "two", title: "Another series" },
+  ]);
+  post.mockResolvedValue({ updated: 2 });
+  render(
+    <MemoryRouter>
+      <Library />
+    </MemoryRouter>,
+  );
+  await screen.findByText("My series");
+  await click(screen.getByLabelText("Select visible items"));
+  await click(screen.getByRole("button", { name: "Favorite", exact: true }));
+  expect(post).toHaveBeenCalledWith("/items/bulk", {
+    ids: ["one", "two"],
+    action: "favorite",
+  });
+  api.mockResolvedValue([{ ...item, deleted: true }]);
+  await click(screen.getByRole("button", { name: "Trash", exact: true }));
+  expect(api).toHaveBeenCalledWith("/items?trash=true");
+  await click(screen.getByLabelText("Select My series"));
+  await click(screen.getByRole("button", { name: "Restore", exact: true }));
+  expect(post).toHaveBeenCalledWith("/items/bulk", {
+    ids: ["one"],
+    action: "restore",
+  });
+});
+
+test("dates disclose scheduled meaning, origin and time zone", () => {
+  render(
+    <LinkDate
+      entry={{
+        published_at: "2026-09-08T12:00:00+00:00",
+        date_kind: "scheduled",
+        date_precision: "time",
+        date_source: "Contest API",
+      }}
+    />,
+  );
+  expect(screen.getByTitle(/Starts · Contest API/)).toBeInTheDocument();
+  expect(screen.getByText(/Starts ·/)).toBeInTheDocument();
+});
+
+test("a cached refresh explains the ten-minute reuse window", async () => {
+  mockDetail();
+  post.mockResolvedValue({
+    ok: true,
+    cached: true,
+    new_count: 0,
+    checked_at: "2026-09-08T12:00:00Z",
+  });
+  detail();
+  await screen.findByText("Chapter 1");
+  await click(screen.getByRole("button", { name: "Refresh item" }));
+  expect(
+    await screen.findByText(/at most once every ten minutes/),
+  ).toBeInTheDocument();
+});
+
+test("library filters new items and searches by title", async () => {
+  api.mockResolvedValue([
+    item,
+    { ...item, id: "two", title: "Other series", new_count: 0 },
+  ]);
+  render(
+    <MemoryRouter>
+      <Library />
+    </MemoryRouter>,
+  );
+  expect(await screen.findByText("My series")).toBeInTheDocument();
+  await click(screen.getByRole("button", { name: /New content/ }));
+  expect(screen.queryByText("Other series")).not.toBeInTheDocument();
+  fireEvent.change(screen.getByLabelText("Search library"), {
+    target: { value: "missing" },
+  });
+  expect(screen.getByText("No matching items")).toBeInTheDocument();
+});
+
+test("library favorites persist through the API", async () => {
+  api.mockResolvedValue([item]);
+  patch.mockResolvedValue({ ...item, favorite: true });
+  render(
+    <MemoryRouter>
+      <Library />
+    </MemoryRouter>,
+  );
+  await click(
+    await screen.findByRole("button", { name: "Favorite My series" }),
+  );
+  await waitFor(() =>
+    expect(patch).toHaveBeenCalledWith("/items/one", { favorite: true }),
+  );
+});
+
+test("ignored library view can restore an item", async () => {
+  api.mockResolvedValue([{ ...item, ignored: true }]);
+  patch.mockResolvedValue(item);
+  render(
+    <MemoryRouter initialEntries={["/?filter=ignored"]}>
+      <Library />
+    </MemoryRouter>,
+  );
+  await click(await screen.findByRole("button", { name: "Restore My series" }));
+  await waitFor(() =>
+    expect(patch).toHaveBeenCalledWith("/items/one", { ignored: false }),
+  );
+});
+
+test("scan preview saves the actual server scan with preferences", async () => {
+  post.mockImplementation((path) =>
+    Promise.resolve(
+      path === "/scans"
+        ? {
+            scan_id: "scan1",
+            title: "Found series",
+            entries: [],
+            kind: "novel",
+            warnings: [],
+            pages_scanned: 1,
+          }
+        : { id: "one" },
+    ),
+  );
+  render(
+    <MemoryRouter>
+      <AddPage />
+    </MemoryRouter>,
+  );
+  fireEvent.change(screen.getByLabelText(/Source URL/), {
+    target: { value: "https://site.example" },
+  });
+  await click(screen.getByRole("button", { name: "Scan links" }));
+  expect(await screen.findByText("0 links found")).toBeInTheDocument();
+  await click(screen.getByLabelText("Mark existing links as read"));
+  await click(screen.getByRole("button", { name: /Add to library/ }));
+  await waitFor(() =>
+    expect(post).toHaveBeenCalledWith("/items", {
+      scan_id: "scan1",
+      title: "Found series",
+      mark_read: true,
+      auto_read: true,
+    }),
+  );
+});
+
+test("opening links marks them read when enabled", async () => {
+  mockDetail();
+  detail();
+  const anchor = await screen.findByRole("link", { name: /Chapter 1/ });
+  await click(anchor);
+  await waitFor(() =>
+    expect(patch).toHaveBeenCalledWith("/links/chapter1", { read: true }),
+  );
+  expect(anchor).toHaveAttribute("target", "_blank");
+});
+
+test("opening a link does not mark read when preference is off", async () => {
+  mockDetail(false);
+  detail();
+  await click(await screen.findByRole("link", { name: /Chapter 1/ }));
+  expect(patch).not.toHaveBeenCalled();
+});
+
+test("middle click marks read but right click does not", async () => {
+  mockDetail();
+  detail();
+  const anchor = await screen.findByRole("link", { name: /Chapter 1/ });
+  await act(async () => {
+    fireEvent(anchor, new MouseEvent("auxclick", { bubbles: true, button: 2 }));
+  });
+  expect(patch).not.toHaveBeenCalled();
+  await act(async () => {
+    fireEvent(anchor, new MouseEvent("auxclick", { bubbles: true, button: 1 }));
+  });
+  expect(patch).toHaveBeenCalledWith("/links/chapter1", { read: true });
+});
+
+test("read preference and ignored link controls persist", async () => {
+  mockDetail();
+  detail();
+  await click(await screen.findByLabelText("Mark as read when opened"));
+  await waitFor(() =>
+    expect(patch).toHaveBeenCalledWith("/items/one", { auto_read: false }),
+  );
+  await click(
+    await screen.findByRole("button", { name: "Ignore link: Chapter 1" }),
+  );
+  await waitFor(() =>
+    expect(patch).toHaveBeenCalledWith("/links/chapter1", { ignored: true }),
+  );
+});
+
+test("failed refresh displays an actionable error without removing links", async () => {
+  mockDetail();
+  post.mockResolvedValue({ ok: false, error: "Source blocked. Retry later." });
+  detail();
+  await click(await screen.findByRole("button", { name: "Refresh item" }));
+  expect(await screen.findByRole("alert")).toHaveTextContent(
+    "Source blocked. Retry later.",
+  );
+  expect(
+    await screen.findByRole("link", { name: /Chapter 1/ }),
+  ).toBeInTheDocument();
+});
+
+test("database outage shows retry instead of an empty collection", async () => {
+  api.mockRejectedValueOnce(new Error("Storage is temporarily unavailable."));
+  api.mockResolvedValueOnce([item]);
+  render(
+    <MemoryRouter>
+      <Library />
+    </MemoryRouter>,
+  );
+  expect(await screen.findByText("Library unavailable")).toBeInTheDocument();
+  expect(screen.queryByText("Start your collection")).not.toBeInTheDocument();
+  await click(screen.getByRole("button", { name: "Retry loading" }));
+  expect(await screen.findByText("My series")).toBeInTheDocument();
+});
+
+test("dismissed errors stay dismissed until a new message arrives", () => {
+  const { rerender } = render(
+    <Notice error>Source blocked. Retry later.</Notice>,
+  );
+  fireEvent.click(screen.getByRole("button", { name: "Dismiss error" }));
+  expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+  rerender(<Notice error>Source blocked. Retry later.</Notice>);
+  expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+  rerender(<Notice error>Storage is unavailable.</Notice>);
+  expect(screen.getByRole("alert")).toHaveTextContent(
+    "Storage is unavailable.",
+  );
+});
+
+test("routine scan notes do not repeat on library rows", async () => {
+  api.mockResolvedValue([
+    { ...item, warnings: ["Some dates are unavailable."] },
+  ]);
+  render(
+    <MemoryRouter>
+      <Library />
+    </MemoryRouter>,
+  );
+  expect(await screen.findByText("My series")).toBeInTheDocument();
+  expect(
+    screen.queryByText(/Scan notes|Open a row’s actions/),
+  ).not.toBeInTheDocument();
+});
+
+test("failed checks remain dismissible", async () => {
+  api.mockResolvedValue([{ ...item, error: "Source is unavailable." }]);
+  render(
+    <MemoryRouter>
+      <Library />
+    </MemoryRouter>,
+  );
+  expect(await screen.findByText("Last check incomplete")).toBeInTheDocument();
+  await click(
+    screen.getByRole("button", { name: "Dismiss scan notes for My series" }),
+  );
+  expect(screen.queryByText("Last check incomplete")).not.toBeInTheDocument();
+});
+
+test.each([true, false])(
+  "latest shortcut opens the returned link and respects auto-read=%s",
+  async (auto_read) => {
+    const latest_link = { ...link, title: "Latest chapter", id: "latest" };
+    api.mockResolvedValue([{ ...item, auto_read, latest_link }]);
+    patch.mockResolvedValue({ ok: true });
+    render(
+      <MemoryRouter>
+        <Library />
+      </MemoryRouter>,
+    );
+    const latest = await screen.findByRole("link", {
+      name: /Latest entry for My series/,
+    });
+    expect(latest).toHaveAttribute("href", latest_link.url);
+    expect(latest).toHaveAttribute("target", "_blank");
+    fireEvent.contextMenu(latest);
+    expect(patch).not.toHaveBeenCalled();
+    await click(latest);
+    if (auto_read)
+      expect(patch).toHaveBeenCalledWith("/links/latest", { read: true });
+    else expect(patch).not.toHaveBeenCalled();
+  },
+);
+
+test("read status is a labeled text action", async () => {
+  mockDetail();
+  detail();
+  const status = await screen.findByRole("button", {
+    name: "Mark read: Chapter 1",
+  });
+  expect(status).toHaveTextContent("Unread");
+  await click(status);
+  expect(patch).toHaveBeenCalledWith("/links/chapter1", { read: true });
+});
+
+test("publication meaning and time zone remain in date details instead of every row summary", () => {
+  const { container } = render(
+    <LinkDate
+      entry={{
+        published_at: "2026-09-09T13:30:00Z",
+        date_kind: "published",
+        date_precision: "time",
+        date_source: "Chapter list",
+      }}
+    />,
+  );
+  const summary = container.querySelector("summary");
+  expect(summary).not.toHaveTextContent(/Published|EDT/);
+  expect(container.querySelector(".date-origin")).toHaveTextContent(
+    /Published · Chapter list/,
+  );
+  expect(container.querySelector(".date-origin")).toHaveTextContent(
+    /time zone/,
+  );
 });

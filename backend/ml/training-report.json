@@ -1,0 +1,831 @@
+{
+  "seed": 81,
+  "training_rows": 2443,
+  "validation_rows": 1100,
+  "feature_count": 47,
+  "data_sha256": "b223bb65103d5e3db93a2de1fa3c6540061b22592637fa00f2507c06015ae066",
+  "chosen": "mlp-8",
+  "runtime_thresholds": {
+    "reject": 0.03,
+    "accept": 0.85
+  },
+  "baseline_validation": {
+    "tp": 525,
+    "fp": 240,
+    "fn": 10,
+    "precision": 0.6863,
+    "recall": 0.9813,
+    "f1": 0.8077,
+    "by_source": {
+      "django": {
+        "tp": 0,
+        "fp": 240,
+        "fn": 10,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "hn": {
+        "tp": 30,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "pythonbytes": {
+        "tp": 495,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "macro_f1": 0.6667
+  },
+  "candidates": [
+    {
+      "name": "logistic",
+      "iterations": 27,
+      "converged": true,
+      "selected": {
+        "threshold": 0.5,
+        "tp": 440,
+        "fp": 3,
+        "fn": 95,
+        "precision": 0.9932,
+        "recall": 0.8224,
+        "f1": 0.8998,
+        "by_source": {
+          "django": {
+            "tp": 10,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.8333,
+            "recall": 1.0,
+            "f1": 0.9091
+          },
+          "hn": {
+            "tp": 16,
+            "fp": 1,
+            "fn": 14,
+            "precision": 0.9412,
+            "recall": 0.5333,
+            "f1": 0.6809
+          },
+          "pythonbytes": {
+            "tp": 414,
+            "fp": 0,
+            "fn": 81,
+            "precision": 1.0,
+            "recall": 0.8364,
+            "f1": 0.9109
+          }
+        },
+        "macro_f1": 0.8336
+      },
+      "thresholds": [
+        {
+          "threshold": 0.5,
+          "tp": 440,
+          "fp": 3,
+          "fn": 95,
+          "precision": 0.9932,
+          "recall": 0.8224,
+          "f1": 0.8998,
+          "by_source": {
+            "django": {
+              "tp": 10,
+              "fp": 2,
+              "fn": 0,
+              "precision": 0.8333,
+              "recall": 1.0,
+              "f1": 0.9091
+            },
+            "hn": {
+              "tp": 16,
+              "fp": 1,
+              "fn": 14,
+              "precision": 0.9412,
+              "recall": 0.5333,
+              "f1": 0.6809
+            },
+            "pythonbytes": {
+              "tp": 414,
+              "fp": 0,
+              "fn": 81,
+              "precision": 1.0,
+              "recall": 0.8364,
+              "f1": 0.9109
+            }
+          },
+          "macro_f1": 0.8336
+        },
+        {
+          "threshold": 0.7,
+          "tp": 215,
+          "fp": 2,
+          "fn": 320,
+          "precision": 0.9908,
+          "recall": 0.4019,
+          "f1": 0.5718,
+          "by_source": {
+            "django": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 6,
+              "fp": 1,
+              "fn": 24,
+              "precision": 0.8571,
+              "recall": 0.2,
+              "f1": 0.3243
+            },
+            "pythonbytes": {
+              "tp": 199,
+              "fp": 0,
+              "fn": 296,
+              "precision": 1.0,
+              "recall": 0.402,
+              "f1": 0.5735
+            }
+          },
+          "macro_f1": 0.6167
+        },
+        {
+          "threshold": 0.85,
+          "tp": 51,
+          "fp": 0,
+          "fn": 484,
+          "precision": 1.0,
+          "recall": 0.0953,
+          "f1": 0.1741,
+          "by_source": {
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "hn": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 26,
+              "precision": 1.0,
+              "recall": 0.1333,
+              "f1": 0.2353
+            },
+            "pythonbytes": {
+              "tp": 37,
+              "fp": 0,
+              "fn": 458,
+              "precision": 1.0,
+              "recall": 0.0747,
+              "f1": 0.1391
+            }
+          },
+          "macro_f1": 0.4581
+        },
+        {
+          "threshold": 0.9,
+          "tp": 26,
+          "fp": 0,
+          "fn": 509,
+          "precision": 1.0,
+          "recall": 0.0486,
+          "f1": 0.0927,
+          "by_source": {
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "pythonbytes": {
+              "tp": 13,
+              "fp": 0,
+              "fn": 482,
+              "precision": 1.0,
+              "recall": 0.0263,
+              "f1": 0.0512
+            }
+          },
+          "macro_f1": 0.411
+        },
+        {
+          "threshold": 0.95,
+          "tp": 15,
+          "fp": 0,
+          "fn": 520,
+          "precision": 1.0,
+          "recall": 0.028,
+          "f1": 0.0545,
+          "by_source": {
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "pythonbytes": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 493,
+              "precision": 1.0,
+              "recall": 0.004,
+              "f1": 0.008
+            }
+          },
+          "macro_f1": 0.3966
+        },
+        {
+          "threshold": 0.98,
+          "tp": 13,
+          "fp": 0,
+          "fn": 522,
+          "precision": 1.0,
+          "recall": 0.0243,
+          "f1": 0.0474,
+          "by_source": {
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "pythonbytes": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 495,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "macro_f1": 0.3939
+        }
+      ]
+    },
+    {
+      "name": "mlp-8",
+      "iterations": 411,
+      "converged": true,
+      "selected": {
+        "threshold": 0.5,
+        "tp": 377,
+        "fp": 1,
+        "fn": 158,
+        "precision": 0.9974,
+        "recall": 0.7047,
+        "f1": 0.8258,
+        "by_source": {
+          "django": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "hn": {
+            "tp": 20,
+            "fp": 1,
+            "fn": 10,
+            "precision": 0.9524,
+            "recall": 0.6667,
+            "f1": 0.7843
+          },
+          "pythonbytes": {
+            "tp": 347,
+            "fp": 0,
+            "fn": 148,
+            "precision": 1.0,
+            "recall": 0.701,
+            "f1": 0.8242
+          }
+        },
+        "macro_f1": 0.8695
+      },
+      "thresholds": [
+        {
+          "threshold": 0.5,
+          "tp": 377,
+          "fp": 1,
+          "fn": 158,
+          "precision": 0.9974,
+          "recall": 0.7047,
+          "f1": 0.8258,
+          "by_source": {
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "hn": {
+              "tp": 20,
+              "fp": 1,
+              "fn": 10,
+              "precision": 0.9524,
+              "recall": 0.6667,
+              "f1": 0.7843
+            },
+            "pythonbytes": {
+              "tp": 347,
+              "fp": 0,
+              "fn": 148,
+              "precision": 1.0,
+              "recall": 0.701,
+              "f1": 0.8242
+            }
+          },
+          "macro_f1": 0.8695
+        },
+        {
+          "threshold": 0.7,
+          "tp": 239,
+          "fp": 1,
+          "fn": 296,
+          "precision": 0.9958,
+          "recall": 0.4467,
+          "f1": 0.6168,
+          "by_source": {
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "hn": {
+              "tp": 15,
+              "fp": 1,
+              "fn": 15,
+              "precision": 0.9375,
+              "recall": 0.5,
+              "f1": 0.6522
+            },
+            "pythonbytes": {
+              "tp": 214,
+              "fp": 0,
+              "fn": 281,
+              "precision": 1.0,
+              "recall": 0.4323,
+              "f1": 0.6037
+            }
+          },
+          "macro_f1": 0.752
+        },
+        {
+          "threshold": 0.85,
+          "tp": 109,
+          "fp": 1,
+          "fn": 426,
+          "precision": 0.9909,
+          "recall": 0.2037,
+          "f1": 0.338,
+          "by_source": {
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "hn": {
+              "tp": 5,
+              "fp": 1,
+              "fn": 25,
+              "precision": 0.8333,
+              "recall": 0.1667,
+              "f1": 0.2778
+            },
+            "pythonbytes": {
+              "tp": 94,
+              "fp": 0,
+              "fn": 401,
+              "precision": 1.0,
+              "recall": 0.1899,
+              "f1": 0.3192
+            }
+          },
+          "macro_f1": 0.5323
+        },
+        {
+          "threshold": 0.9,
+          "tp": 65,
+          "fp": 1,
+          "fn": 470,
+          "precision": 0.9848,
+          "recall": 0.1215,
+          "f1": 0.2163,
+          "by_source": {
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "hn": {
+              "tp": 5,
+              "fp": 1,
+              "fn": 25,
+              "precision": 0.8333,
+              "recall": 0.1667,
+              "f1": 0.2778
+            },
+            "pythonbytes": {
+              "tp": 50,
+              "fp": 0,
+              "fn": 445,
+              "precision": 1.0,
+              "recall": 0.101,
+              "f1": 0.1835
+            }
+          },
+          "macro_f1": 0.4871
+        },
+        {
+          "threshold": 0.95,
+          "tp": 33,
+          "fp": 1,
+          "fn": 502,
+          "precision": 0.9706,
+          "recall": 0.0617,
+          "f1": 0.116,
+          "by_source": {
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "hn": {
+              "tp": 4,
+              "fp": 1,
+              "fn": 26,
+              "precision": 0.8,
+              "recall": 0.1333,
+              "f1": 0.2286
+            },
+            "pythonbytes": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 476,
+              "precision": 1.0,
+              "recall": 0.0384,
+              "f1": 0.0739
+            }
+          },
+          "macro_f1": 0.4342
+        },
+        {
+          "threshold": 0.98,
+          "tp": 18,
+          "fp": 1,
+          "fn": 517,
+          "precision": 0.9474,
+          "recall": 0.0336,
+          "f1": 0.065,
+          "by_source": {
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 1,
+              "fn": 27,
+              "precision": 0.75,
+              "recall": 0.1,
+              "f1": 0.1765
+            },
+            "pythonbytes": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 490,
+              "precision": 1.0,
+              "recall": 0.0101,
+              "f1": 0.02
+            }
+          },
+          "macro_f1": 0.3988
+        }
+      ]
+    },
+    {
+      "name": "mlp-16",
+      "iterations": 263,
+      "converged": true,
+      "selected": {
+        "threshold": 0.5,
+        "tp": 402,
+        "fp": 5,
+        "fn": 133,
+        "precision": 0.9877,
+        "recall": 0.7514,
+        "f1": 0.8535,
+        "by_source": {
+          "django": {
+            "tp": 10,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.7143,
+            "recall": 1.0,
+            "f1": 0.8333
+          },
+          "hn": {
+            "tp": 19,
+            "fp": 1,
+            "fn": 11,
+            "precision": 0.95,
+            "recall": 0.6333,
+            "f1": 0.76
+          },
+          "pythonbytes": {
+            "tp": 373,
+            "fp": 0,
+            "fn": 122,
+            "precision": 1.0,
+            "recall": 0.7535,
+            "f1": 0.8594
+          }
+        },
+        "macro_f1": 0.8176
+      },
+      "thresholds": [
+        {
+          "threshold": 0.5,
+          "tp": 402,
+          "fp": 5,
+          "fn": 133,
+          "precision": 0.9877,
+          "recall": 0.7514,
+          "f1": 0.8535,
+          "by_source": {
+            "django": {
+              "tp": 10,
+              "fp": 4,
+              "fn": 0,
+              "precision": 0.7143,
+              "recall": 1.0,
+              "f1": 0.8333
+            },
+            "hn": {
+              "tp": 19,
+              "fp": 1,
+              "fn": 11,
+              "precision": 0.95,
+              "recall": 0.6333,
+              "f1": 0.76
+            },
+            "pythonbytes": {
+              "tp": 373,
+              "fp": 0,
+              "fn": 122,
+              "precision": 1.0,
+              "recall": 0.7535,
+              "f1": 0.8594
+            }
+          },
+          "macro_f1": 0.8176
+        },
+        {
+          "threshold": 0.7,
+          "tp": 269,
+          "fp": 5,
+          "fn": 266,
+          "precision": 0.9818,
+          "recall": 0.5028,
+          "f1": 0.665,
+          "by_source": {
+            "django": {
+              "tp": 10,
+              "fp": 4,
+              "fn": 0,
+              "precision": 0.7143,
+              "recall": 1.0,
+              "f1": 0.8333
+            },
+            "hn": {
+              "tp": 8,
+              "fp": 1,
+              "fn": 22,
+              "precision": 0.8889,
+              "recall": 0.2667,
+              "f1": 0.4103
+            },
+            "pythonbytes": {
+              "tp": 251,
+              "fp": 0,
+              "fn": 244,
+              "precision": 1.0,
+              "recall": 0.5071,
+              "f1": 0.6729
+            }
+          },
+          "macro_f1": 0.6388
+        },
+        {
+          "threshold": 0.85,
+          "tp": 122,
+          "fp": 1,
+          "fn": 413,
+          "precision": 0.9919,
+          "recall": 0.228,
+          "f1": 0.3708,
+          "by_source": {
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "hn": {
+              "tp": 5,
+              "fp": 1,
+              "fn": 25,
+              "precision": 0.8333,
+              "recall": 0.1667,
+              "f1": 0.2778
+            },
+            "pythonbytes": {
+              "tp": 107,
+              "fp": 0,
+              "fn": 388,
+              "precision": 1.0,
+              "recall": 0.2162,
+              "f1": 0.3555
+            }
+          },
+          "macro_f1": 0.5444
+        },
+        {
+          "threshold": 0.9,
+          "tp": 75,
+          "fp": 1,
+          "fn": 460,
+          "precision": 0.9868,
+          "recall": 0.1402,
+          "f1": 0.2455,
+          "by_source": {
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "hn": {
+              "tp": 4,
+              "fp": 1,
+              "fn": 26,
+              "precision": 0.8,
+              "recall": 0.1333,
+              "f1": 0.2286
+            },
+            "pythonbytes": {
+              "tp": 61,
+              "fp": 0,
+              "fn": 434,
+              "precision": 1.0,
+              "recall": 0.1232,
+              "f1": 0.2194
+            }
+          },
+          "macro_f1": 0.4827
+        },
+        {
+          "threshold": 0.95,
+          "tp": 30,
+          "fp": 1,
+          "fn": 505,
+          "precision": 0.9677,
+          "recall": 0.0561,
+          "f1": 0.106,
+          "by_source": {
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 1,
+              "fn": 27,
+              "precision": 0.75,
+              "recall": 0.1,
+              "f1": 0.1765
+            },
+            "pythonbytes": {
+              "tp": 17,
+              "fp": 0,
+              "fn": 478,
+              "precision": 1.0,
+              "recall": 0.0343,
+              "f1": 0.0664
+            }
+          },
+          "macro_f1": 0.4143
+        },
+        {
+          "threshold": 0.98,
+          "tp": 15,
+          "fp": 1,
+          "fn": 520,
+          "precision": 0.9375,
+          "recall": 0.028,
+          "f1": 0.0544,
+          "by_source": {
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 1,
+              "fn": 27,
+              "precision": 0.75,
+              "recall": 0.1,
+              "f1": 0.1765
+            },
+            "pythonbytes": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 493,
+              "precision": 1.0,
+              "recall": 0.004,
+              "f1": 0.008
+            }
+          },
+          "macro_f1": 0.3948
+        }
+      ]
+    }
+  ],
+  "export_max_error": 1.1102230246251565e-15,
+  "model_bytes": 8986,
+  "parameters": 393,
+  "training_seconds": 0.713,
+  "test_used_for_selection": false
+}

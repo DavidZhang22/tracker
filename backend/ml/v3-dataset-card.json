@@ -1,0 +1,13 @@
+{
+  "rows": 11837,
+  "splits": {
+    "train": 8429,
+    "validation": 2607,
+    "test": 801
+  },
+  "new_real_rows": 700,
+  "authored_rows": 1140,
+  "source_sha256": "67f6843d53f127aa18ca599fe8c3cdb2d99ae62c76cd795395c497780cfd7618",
+  "data_sha256": "5cd445174fb399122dda9bd738683e46222c04380fd5c6655700ef869a2b09a8",
+  "limitations": "Rule-reviewed public rows and authored templates, not independent human gold labels. GitHub jobs and prior test pages are development/regression data. No claim of universal extraction."
+}

@@ -1,0 +1,49 @@
+name: catchup
+services:
+  app:
+    build:
+      context: ..
+    environment:
+      TRACKER_DB: /data/tracker.sqlite3
+      TRACKER_AUTH_REQUIRED: "1"
+      TRACKER_ORIGIN: https://${TRACKER_DOMAIN:?Set TRACKER_DOMAIN in deploy/.env}
+      TRACKER_SIGNUP_CODE: ${TRACKER_SIGNUP_CODE:-}
+      TRACKER_LINK_MODEL: ${TRACKER_LINK_MODEL:-on}
+      TRACKER_HOSTS: ${TRACKER_DOMAIN},localhost,127.0.0.1
+    volumes:
+      - tracker-data:/data
+    restart: unless-stopped
+    init: true
+    expose:
+      - "8000"
+    command: ["/app/backend/.venv/bin/uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers", "--forwarded-allow-ips", "*"]
+    healthcheck:
+      test: ["CMD", "/app/backend/.venv/bin/python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/ready', timeout=5)"]
+      interval: 30s
+      timeout: 6s
+      retries: 3
+      start_period: 20s
+    logging:
+      options: {max-size: "10m", max-file: "3"}
+  web:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      TRACKER_DOMAIN: ${TRACKER_DOMAIN:?Set TRACKER_DOMAIN in deploy/.env}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      app:
+        condition: service_healthy
+    logging:
+      options: {max-size: "10m", max-file: "3"}
+volumes:
+  tracker-data:
+  caddy-data:
+  caddy-config:

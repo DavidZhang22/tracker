@@ -1,0 +1,18 @@
+{
+  "verified_at_utc": "2026-09-09 18:15:52 UTC",
+  "url": "https://mediatrackify.duckdns.org/",
+  "model_id": "context-trees-numeric-2a106aa097f5",
+  "model_sha256": "9a11e5198ef256f21e929d2d1cd8eaf44faea790bad6c757fa0f879ec245a7f8",
+  "mode": "on",
+  "backend_tests_passed": 142,
+  "lint": "passed",
+  "https_valid": true,
+  "homepage_status": 200,
+  "database_readiness": "ready",
+  "unauthenticated_library_status": 401,
+  "backup_timer": "active",
+  "training_libraries_loaded_in_runtime_check": false,
+  "idle_app_memory_mib": 50.17,
+  "rollback_image": "catchup-app:before-context-model",
+  "database_migration": false
+}

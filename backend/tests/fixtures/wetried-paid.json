@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "total": 1,
+    "per_page": 1000,
+    "current_page": 1,
+    "last_page": 1,
+    "first_page": 1,
+    "first_page_url": "/?page=1",
+    "last_page_url": "/?page=1",
+    "next_page_url": null,
+    "previous_page_url": null
+  },
+  "data": [
+    {
+      "id": 18534,
+      "chapter_slug": "chapter-169",
+      "chapter_name": "Chapter 169",
+      "chapter_title": "Nightmare, Floor 15 (1)",
+      "series_id": 82,
+      "price": 10,
+      "index": "169.0",
+      "public": true,
+      "chapter_thumbnail": null,
+      "chapter_type": "Novel",
+      "created_at": "2026-09-07T16:25:00.027Z",
+      "updated_at": "2026-09-07T16:25:00.027Z",
+      "series": {
+        "series_slug": "climbing-the-tower-with-time-stop-ability",
+        "id": 82,
+        "meta": {}
+      },
+      "chapters_to_be_freed": [],
+      "excerpt": null,
+      "meta": {}
+    }
+  ]
+}

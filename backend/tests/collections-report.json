@@ -1,0 +1,74 @@
+{
+  "mode": "replayed public HTTP observations",
+  "sources": {
+    "wetried": {
+      "url": "https://wetriedtls.com/series/climbing-the-tower-with-time-stop-ability",
+      "links": 169,
+      "dated": 169,
+      "reported_count": 169,
+      "index_responses": 8,
+      "requests_made": 8,
+      "coverage": "complete",
+      "scope": "public API collection",
+      "first_date": "2026-05-12T09:17:00.010000+00:00",
+      "last_date": "2026-09-07T16:25:00.031000+00:00",
+      "warnings": []
+    },
+    "codeforces": {
+      "url": "https://codeforces.com/contests",
+      "links": 2146,
+      "dated": 2146,
+      "reported_count": 2146,
+      "index_responses": 1,
+      "requests_made": 1,
+      "coverage": "complete",
+      "scope": "public API collection",
+      "first_date": "2010-02-19T12:00:00+00:00",
+      "last_date": "2026-10-17T14:35:00+00:00",
+      "warnings": []
+    },
+    "xkcd": {
+      "url": "https://xkcd.com/archive/",
+      "links": 3276,
+      "dated": 3276,
+      "reported_count": null,
+      "index_responses": 1,
+      "requests_made": 1,
+      "coverage": "unknown",
+      "scope": "one archive/index page",
+      "first_date": "2006-01-01T00:00:00+00:00",
+      "last_date": "2026-09-07T00:00:00+00:00",
+      "warnings": []
+    },
+    "hacker_news": {
+      "url": "https://news.ycombinator.com/",
+      "links": 30,
+      "dated": 30,
+      "reported_count": null,
+      "index_responses": 1,
+      "requests_made": 1,
+      "coverage": "partial",
+      "scope": "one archive/index page",
+      "first_date": "2026-09-03T12:53:21+00:00",
+      "last_date": "2026-09-08T08:42:56+00:00",
+      "warnings": [
+        "Scan stopped at the 1-page limit. More pages may remain."
+      ]
+    },
+    "github_releases": {
+      "url": "https://github.com/astral-sh/ruff/releases",
+      "links": 10,
+      "dated": 10,
+      "reported_count": null,
+      "index_responses": 1,
+      "requests_made": 1,
+      "coverage": "partial",
+      "scope": "one archive/index page",
+      "first_date": "2026-06-25T17:21:46+00:00",
+      "last_date": "2026-09-03T17:20:13+00:00",
+      "warnings": [
+        "Scan stopped at the 1-page limit. More pages may remain."
+      ]
+    }
+  }
+}

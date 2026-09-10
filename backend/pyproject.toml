@@ -1,0 +1,41 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Media tracker API and source discovery"
+readme = "README.MD"
+requires-python = ">=3.12"
+dependencies = [
+    "beautifulsoup4>=4.14.2",
+    "fastapi>=0.121.2",
+    "httpx>=0.28.1",
+    "pydantic-settings>=2.12.0",
+    "sqlalchemy>=2.0.44",
+    "sqlmodel>=0.0.27",
+    "uvicorn[standard]>=0.38.0",
+    "python-dateutil>=2.9.0",
+    "yt-dlp>=2026.3.17",
+    "argon2-cffi>=25.1.0",
+    "markdown-it-py>=4.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.25",
+    "ruff>=0.16.6",
+]
+ml = [
+    "numpy==2.4.2",
+    "scikit-learn==1.8.0",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+# CLI scripts establish their repository import path (and CPU limits) first.
+"ml/*.py" = ["E402"]

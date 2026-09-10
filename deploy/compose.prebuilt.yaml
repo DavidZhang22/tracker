@@ -1,0 +1,7 @@
+services:
+  app:
+    build:
+      dockerfile: deploy/Dockerfile.prebuilt
+  web:
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro,Z

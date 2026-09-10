@@ -1,0 +1,122 @@
+{
+  "split": "holdout",
+  "model_id": "mlp-8-b223bb65103d",
+  "baseline": {
+    "tp": 71,
+    "fp": 13,
+    "fn": 30,
+    "precision": 0.8452,
+    "recall": 0.703,
+    "f1": 0.7676,
+    "by_source": {
+      "lwn": {
+        "tp": 8,
+        "fp": 7,
+        "fn": 12,
+        "precision": 0.5333,
+        "recall": 0.4,
+        "f1": 0.4571
+      },
+      "schneier": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 1,
+        "precision": 1.0,
+        "recall": 0.9091,
+        "f1": 0.9524
+      },
+      "simonwillison": {
+        "tp": 53,
+        "fp": 6,
+        "fn": 17,
+        "precision": 0.8983,
+        "recall": 0.7571,
+        "f1": 0.8217
+      }
+    },
+    "macro_f1": 0.7437
+  },
+  "assisted": {
+    "tp": 76,
+    "fp": 13,
+    "fn": 25,
+    "precision": 0.8539,
+    "recall": 0.7525,
+    "f1": 0.8,
+    "by_source": {
+      "lwn": {
+        "tp": 8,
+        "fp": 7,
+        "fn": 12,
+        "precision": 0.5333,
+        "recall": 0.4,
+        "f1": 0.4571
+      },
+      "schneier": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 1,
+        "precision": 1.0,
+        "recall": 0.9091,
+        "f1": 0.9524
+      },
+      "simonwillison": {
+        "tp": 58,
+        "fp": 6,
+        "fn": 12,
+        "precision": 0.9062,
+        "recall": 0.8286,
+        "f1": 0.8657
+      }
+    },
+    "macro_f1": 0.7584
+  },
+  "classifier_alone": {
+    "tp": 25,
+    "fp": 10,
+    "fn": 76,
+    "precision": 0.7143,
+    "recall": 0.2475,
+    "f1": 0.3676,
+    "by_source": {
+      "lwn": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 20,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "schneier": {
+        "tp": 9,
+        "fp": 10,
+        "fn": 2,
+        "precision": 0.4737,
+        "recall": 0.8182,
+        "f1": 0.6
+      },
+      "simonwillison": {
+        "tp": 16,
+        "fp": 0,
+        "fn": 54,
+        "precision": 1.0,
+        "recall": 0.2286,
+        "f1": 0.3721
+      }
+    },
+    "macro_f1": 0.324
+  },
+  "parse_seconds": {
+    "simonwillison-off": 1.2,
+    "simonwillison-on": 1.2388,
+    "lwn-off": 0.2006,
+    "lwn-on": 0.2182,
+    "schneier-off": 0.091,
+    "schneier-on": 0.1236
+  },
+  "unlabelled_predictions": {
+    "simonwillison": 0,
+    "lwn": 0,
+    "schneier": 0
+  }
+}

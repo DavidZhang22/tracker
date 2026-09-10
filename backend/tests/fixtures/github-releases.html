@@ -1,0 +1,339 @@
+<main><div class="Box-body" data-view-component="true"> <div class="d-flex flex-md-row flex-column">
+<div class="d-flex flex-row flex-1 tmp-mb-3 wb-break-word">
+<div class="flex-1" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame">
+<span class="tmp-mr-3 f1 text-bold d-inline" data-view-component="true"><a class="Link--primary Link" data-view-component="true" href="/astral-sh/ruff/releases/tag/0.16.6">0.16.6</a></span>
+<span>
+<a class="Link v-align-text-bottom d-none d-md-inline-block" data-view-component="true" href="/astral-sh/ruff/releases/latest"><span class="Label Label--success Label--large" data-view-component="true">Latest</span></a>
+<div class="ml-2 d-none d-md-inline">
+</div>
+</span>
+</div>
+<div class="tmp-mt-3 ml-2 d-md-none">
+<a class="Link v-align-text-bottom" data-view-component="true" href="/astral-sh/ruff/releases/latest"><span class="Label Label--success Label--large" data-view-component="true">Latest</span></a>
+</div>
+<div class="ml-2 tmp-mt-3 d-md-none">
+</div>
+</div>
+<div class="d-flex tmp-mb-3" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame">
+<select-panel anchor-align="start" anchor-side="outside-bottom" data-fetch-strategy="eventually_local" data-open-on-load="false" data-select-variant="single" data-view-component="true" id="select-panel-efb834c0-a2d0-4c15-aa3d-6beb18287171">
+<dialog-helper>
+<button aria-controls="select-panel-efb834c0-a2d0-4c15-aa3d-6beb18287171-dialog" aria-expanded="false" aria-haspopup="dialog" class="Button--secondary Button--small Button" data-view-component="true" id="select-panel-efb834c0-a2d0-4c15-aa3d-6beb18287171-button" type="button"> <span class="Button-content">
+<span class="Button-label">Compare</span>
+<span class="Button-visual Button-trailingVisual">
+
+</span>
+</span>
+</button>
+<dialog aria-labelledby="select-panel-efb834c0-a2d0-4c15-aa3d-6beb18287171-dialog-title" class="Overlay Overlay-whenNarrow Overlay--size-small-portrait" data-target="select-panel.dialog" data-view-component="true" id="select-panel-efb834c0-a2d0-4c15-aa3d-6beb18287171-dialog" style="position: absolute;">
+<div class="Overlay-header Overlay-header--divided" data-view-component="true">
+<div class="Overlay-headerContentWrap">
+<div class="Overlay-titleWrap">
+<h1 class="Overlay-title" id="select-panel-efb834c0-a2d0-4c15-aa3d-6beb18287171-dialog-title">
+        Choose a tag to compare
+      </h1>
+</div>
+<div class="Overlay-actionWrap">
+<button aria-label="Close" class="close-button Overlay-closeButton" data-close-dialog-id="select-panel-efb834c0-a2d0-4c15-aa3d-6beb18287171-dialog" data-view-component="true" type="button"></button>
+</div>
+</div>
+<div class="Overlay-headerFilter" data-view-component="true"> <div data-target="select-panel.bannerErrorElement" hidden="">
+<x-banner data-dismiss-scheme="none" data-view-component="true">
+<div class="Banner flash Banner--error flash-error mb-2 tmp-mb-2" data-view-component="true">
+<div class="Banner-visual">
+
+</div>
+<div class="Banner-message" data-view-component="true">
+<p class="Banner-title" data-target="x-banner.titleText">
+<h2 class="f6 text-normal">Sorry, something went wrong.</h2>
+</p>
+</div></div></x-banner> </div>
+<remote-input aria-owns="select-panel-efb834c0-a2d0-4c15-aa3d-6beb18287171-body" data-target="select-panel.remoteInput" data-view-component="true">
+<primer-text-field class="FormControl width-full FormControl--fullWidth">
+<label class="sr-only FormControl-label position-absolute sr-only FormControl-label" for="select-panel-efb834c0-a2d0-4c15-aa3d-6beb18287171-filter" id="label-db4c66f3-5a5a-4f65-9440-d66841cccd72">
+        Filter
+</label>
+<div class="FormControl-input-wrap FormControl-input-wrap--leadingVisual">
+<span class="FormControl-input-leadingVisualWrap">
+
+<span data-target="primer-text-field.leadingSpinner" data-view-component="true" hidden="hidden">
+ <span class="sr-only">Loading</span>
+</span>
+</span>
+<input aria-describedby="validation-db4c66f3-5a5a-4f65-9440-d66841cccd72" autofocus="autofocus" class="form-control FormControl-input FormControl-medium" data-target="primer-text-field.inputElement select-panel.filterInputTextField" id="select-panel-efb834c0-a2d0-4c15-aa3d-6beb18287171-filter" name="filter" type="search">
+</input></div>
+<div class="FormControl-inlineValidation" hidden="hidden" id="validation-db4c66f3-5a5a-4f65-9440-d66841cccd72">
+<span class="FormControl-inlineValidation--visual" data-target="primer-text-field.validationSuccessIcon" hidden=""></span>
+<span class="FormControl-inlineValidation--visual" data-target="primer-text-field.validationErrorIcon"></span>
+<span></span>
+</div>
+</primer-text-field>
+</remote-input></div>
+</div> <div class="Overlay-body p-0 tmp-p-0" data-view-component="true">
+<focus-group direction="vertical" mnemonics="" retain="">
+<live-region data-target="select-panel.liveRegion"></live-region>
+<div data-fetch-strategy="eventually_local" data-target="select-panel.list" data-view-component="true">
+<div id="select-panel-efb834c0-a2d0-4c15-aa3d-6beb18287171-body">
+<include-fragment accept="text/fragment+html" data-nonce="v2:3efbd053-bf6f-f518-3e46-f0e43c4fc1bf" data-target="select-panel.includeFragment" data-view-component="true" loading="lazy" src="/astral-sh/ruff/refs?tag_name=0.16.6&amp;experimental=1">
+<div aria-busy="true" aria-disabled="true" class="SelectPanel-loadingPanel mt-2 tmp-mt-2 mb-2 tmp-mb-2 d-flex flex-items-start flex-justify-center text-center" data-view-component="true" id="select-panel-efb834c0-a2d0-4c15-aa3d-6beb18287171-list">
+<div class="pt-2" data-hide-on-error="">
+<span data-target="select-panel.bodySpinner" data-view-component="true">
+</span>
+</div>
+<div data-show-on-error="" data-target="select-panel.fragmentErrorElement" hidden="">
+<div class="pt-2 pb-2">
+
+<h2 class="f5 mt-2">Sorry, something went wrong.</h2>
+</div>
+</div>
+</div>
+<div data-show-on-forbidden-error="" hidden="">
+<div class="Box">
+<div class="blankslate-container">
+<div class="blankslate blankslate-spacious color-bg-default rounded-2" data-view-component="true">
+<h3 class="blankslate-heading" data-view-component="true">        Uh oh!
+</h3>
+<p class="blankslate-description" data-view-component="true"> <p class="color-fg-muted my-2 mb-2 ws-normal">There was an error while loading. <a aria-label="Please reload this page" class="Link--inTextBlock" data-turbo="false" href="">Please reload this page</a>.</p>
+</p>
+</div> </div>
+</div> </div>
+</include-fragment> </div>
+<div class="SelectPanel-emptyPanel" data-target="select-panel.noResults" hidden="">
+<h2 class="v-align-middle m-3 f5">No results found</h2>
+</div>
+</div> </focus-group>
+</div> <div class="Overlay-footer Overlay-footer--alignEnd Overlay-footer--divided" data-view-component="true"> <div class="text-center width-full">
+<a href="/astral-sh/ruff/tags">View all tags</a>
+</div>
+</div>
+</dialog> </dialog-helper>
+</select-panel>
+</div>
+</div>
+<div class="tmp-mb-3 tmp-pb-md-4 border-md-bottom" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame">
+<div class="d-flex flex-row flex-wrap color-fg-muted flex-items-end">
+<div class="tmp-mr-4 mb-2">
+
+<a class="text-bold color-fg-muted" href="/apps/github-actions">github-actions</a>
+
+    released this
+
+      <relative-time class="no-wrap" datetime="2026-09-03T17:20:13Z" prefix="">
+        03 Sep 17:20
+      </relative-time>
+</div>
+<div class="tmp-mr-4 mb-2">
+
+<span>
+            Immutable
+            <span class="sr-only">release. Only release title and notes can be modified.</span>
+</span>
+</div>
+<div class="tmp-mr-4 mb-2">
+<a class="Link Link--muted" data-view-component="true" href="/astral-sh/ruff/tree/0.16.6"><span class="css-truncate css-truncate-target" data-view-component="true">
+
+<span class="ml-1">
+                0.16.6
+              </span>
+</span></a>
+</div>
+<div class="tmp-mr-4 mb-2" style="position: relative; top: 1px;">
+<a class="Link Link--muted" data-hovercard-type="commit" data-hovercard-url="/astral-sh/ruff/commit/22f65a2ab5052990503985c7c794de37598d531e/hovercard" data-view-component="true" href="/astral-sh/ruff/commit/22f65a2ab5052990503985c7c794de37598d531e">
+<code class="f5 ml-1">22f65a2</code></a> <details class="dropdown dropdown-signed-commit details-reset details-overlay js-dropdown-details d-inline-block ml-1">
+<summary class="color-fg-success">
+
+</summary>
+<div class="anim-scale-in" style="position: relative; z-index: 200;">
+<div class="dropdown-menu dropdown-menu-s py-0 color-fg-default text-left">
+<div class="tmp-p-3 signed-commit-header d-flex">
+<div class="pr-1">
+
+</div>
+<div class="flex-1">
+                This commit was created on GitHub.com and signed with GitHub’s <strong>verified signature</strong>.
+          </div>
+</div>
+<div class="signed-commit-footer tmp-p-3 rounded-bottom-2">
+<span class="d-block">GPG key ID: <span class="color-fg-muted">B5690EEEBB952194</span></span>
+<div class="my-1">
+</div>
+<div>Verified
+              <relative-time datetime="2026-09-03 16:36:42 UTC" hour="2-digit" minute="2-digit" threshold="PT0S" year="numeric"></relative-time>
+</div>
+<a class="Link--inTextBlock" href="https://docs.github.com/github/authenticating-to-github/displaying-verification-statuses-for-all-of-your-commits">Learn about vigilant mode</a>.
+        </div>
+</div>
+</div>
+</details>
+</div>
+</div>
+</div>
+
+</div><div class="Box-body" data-view-component="true"> <div class="d-flex flex-md-row flex-column">
+<div class="d-flex flex-row flex-1 tmp-mb-3 wb-break-word">
+<div class="flex-1" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame">
+<span class="tmp-mr-3 f1 text-bold d-inline" data-view-component="true"><a class="Link--primary Link" data-view-component="true" href="/astral-sh/ruff/releases/tag/0.16.5">0.16.5</a></span>
+<span>
+<div class="ml-2 d-none d-md-inline">
+</div>
+</span>
+</div>
+<div class="tmp-mt-3 ml-2 d-md-none">
+</div>
+<div class="ml-2 tmp-mt-3 d-md-none">
+</div>
+</div>
+<div class="d-flex tmp-mb-3" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame">
+<select-panel anchor-align="start" anchor-side="outside-bottom" data-fetch-strategy="eventually_local" data-open-on-load="false" data-select-variant="single" data-view-component="true" id="select-panel-8e58b46f-9ec2-40a9-9320-9b9b9541d817">
+<dialog-helper>
+<button aria-controls="select-panel-8e58b46f-9ec2-40a9-9320-9b9b9541d817-dialog" aria-expanded="false" aria-haspopup="dialog" class="Button--secondary Button--small Button" data-view-component="true" id="select-panel-8e58b46f-9ec2-40a9-9320-9b9b9541d817-button" type="button"> <span class="Button-content">
+<span class="Button-label">Compare</span>
+<span class="Button-visual Button-trailingVisual">
+
+</span>
+</span>
+</button>
+<dialog aria-labelledby="select-panel-8e58b46f-9ec2-40a9-9320-9b9b9541d817-dialog-title" class="Overlay Overlay-whenNarrow Overlay--size-small-portrait" data-target="select-panel.dialog" data-view-component="true" id="select-panel-8e58b46f-9ec2-40a9-9320-9b9b9541d817-dialog" style="position: absolute;">
+<div class="Overlay-header Overlay-header--divided" data-view-component="true">
+<div class="Overlay-headerContentWrap">
+<div class="Overlay-titleWrap">
+<h1 class="Overlay-title" id="select-panel-8e58b46f-9ec2-40a9-9320-9b9b9541d817-dialog-title">
+        Choose a tag to compare
+      </h1>
+</div>
+<div class="Overlay-actionWrap">
+<button aria-label="Close" class="close-button Overlay-closeButton" data-close-dialog-id="select-panel-8e58b46f-9ec2-40a9-9320-9b9b9541d817-dialog" data-view-component="true" type="button"></button>
+</div>
+</div>
+<div class="Overlay-headerFilter" data-view-component="true"> <div data-target="select-panel.bannerErrorElement" hidden="">
+<x-banner data-dismiss-scheme="none" data-view-component="true">
+<div class="Banner flash Banner--error flash-error mb-2 tmp-mb-2" data-view-component="true">
+<div class="Banner-visual">
+
+</div>
+<div class="Banner-message" data-view-component="true">
+<p class="Banner-title" data-target="x-banner.titleText">
+<h2 class="f6 text-normal">Sorry, something went wrong.</h2>
+</p>
+</div></div></x-banner> </div>
+<remote-input aria-owns="select-panel-8e58b46f-9ec2-40a9-9320-9b9b9541d817-body" data-target="select-panel.remoteInput" data-view-component="true">
+<primer-text-field class="FormControl width-full FormControl--fullWidth">
+<label class="sr-only FormControl-label position-absolute sr-only FormControl-label" for="select-panel-8e58b46f-9ec2-40a9-9320-9b9b9541d817-filter" id="label-57abe447-c795-4165-b1d7-d28501e70a9e">
+        Filter
+</label>
+<div class="FormControl-input-wrap FormControl-input-wrap--leadingVisual">
+<span class="FormControl-input-leadingVisualWrap">
+
+<span data-target="primer-text-field.leadingSpinner" data-view-component="true" hidden="hidden">
+ <span class="sr-only">Loading</span>
+</span>
+</span>
+<input aria-describedby="validation-57abe447-c795-4165-b1d7-d28501e70a9e" autofocus="autofocus" class="form-control FormControl-input FormControl-medium" data-target="primer-text-field.inputElement select-panel.filterInputTextField" id="select-panel-8e58b46f-9ec2-40a9-9320-9b9b9541d817-filter" name="filter" type="search">
+</input></div>
+<div class="FormControl-inlineValidation" hidden="hidden" id="validation-57abe447-c795-4165-b1d7-d28501e70a9e">
+<span class="FormControl-inlineValidation--visual" data-target="primer-text-field.validationSuccessIcon" hidden=""></span>
+<span class="FormControl-inlineValidation--visual" data-target="primer-text-field.validationErrorIcon"></span>
+<span></span>
+</div>
+</primer-text-field>
+</remote-input></div>
+</div> <div class="Overlay-body p-0 tmp-p-0" data-view-component="true">
+<focus-group direction="vertical" mnemonics="" retain="">
+<live-region data-target="select-panel.liveRegion"></live-region>
+<div data-fetch-strategy="eventually_local" data-target="select-panel.list" data-view-component="true">
+<div id="select-panel-8e58b46f-9ec2-40a9-9320-9b9b9541d817-body">
+<include-fragment accept="text/fragment+html" data-nonce="v2:3efbd053-bf6f-f518-3e46-f0e43c4fc1bf" data-target="select-panel.includeFragment" data-view-component="true" loading="lazy" src="/astral-sh/ruff/refs?tag_name=0.16.5&amp;experimental=1">
+<div aria-busy="true" aria-disabled="true" class="SelectPanel-loadingPanel mt-2 tmp-mt-2 mb-2 tmp-mb-2 d-flex flex-items-start flex-justify-center text-center" data-view-component="true" id="select-panel-8e58b46f-9ec2-40a9-9320-9b9b9541d817-list">
+<div class="pt-2" data-hide-on-error="">
+<span data-target="select-panel.bodySpinner" data-view-component="true">
+</span>
+</div>
+<div data-show-on-error="" data-target="select-panel.fragmentErrorElement" hidden="">
+<div class="pt-2 pb-2">
+
+<h2 class="f5 mt-2">Sorry, something went wrong.</h2>
+</div>
+</div>
+</div>
+<div data-show-on-forbidden-error="" hidden="">
+<div class="Box">
+<div class="blankslate-container">
+<div class="blankslate blankslate-spacious color-bg-default rounded-2" data-view-component="true">
+<h3 class="blankslate-heading" data-view-component="true">        Uh oh!
+</h3>
+<p class="blankslate-description" data-view-component="true"> <p class="color-fg-muted my-2 mb-2 ws-normal">There was an error while loading. <a aria-label="Please reload this page" class="Link--inTextBlock" data-turbo="false" href="">Please reload this page</a>.</p>
+</p>
+</div> </div>
+</div> </div>
+</include-fragment> </div>
+<div class="SelectPanel-emptyPanel" data-target="select-panel.noResults" hidden="">
+<h2 class="v-align-middle m-3 f5">No results found</h2>
+</div>
+</div> </focus-group>
+</div> <div class="Overlay-footer Overlay-footer--alignEnd Overlay-footer--divided" data-view-component="true"> <div class="text-center width-full">
+<a href="/astral-sh/ruff/tags">View all tags</a>
+</div>
+</div>
+</dialog> </dialog-helper>
+</select-panel>
+</div>
+</div>
+<div class="tmp-mb-3 tmp-pb-md-4 border-md-bottom" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame">
+<div class="d-flex flex-row flex-wrap color-fg-muted flex-items-end">
+<div class="tmp-mr-4 mb-2">
+
+<a class="text-bold color-fg-muted" href="/apps/github-actions">github-actions</a>
+
+    released this
+
+      <relative-time class="no-wrap" datetime="2026-08-27T16:37:58Z" prefix="">
+        27 Aug 16:37
+      </relative-time>
+</div>
+<div class="tmp-mr-4 mb-2">
+
+<span>
+            Immutable
+            <span class="sr-only">release. Only release title and notes can be modified.</span>
+</span>
+</div>
+<div class="tmp-mr-4 mb-2">
+<a class="Link Link--muted" data-view-component="true" href="/astral-sh/ruff/tree/0.16.5"><span class="css-truncate css-truncate-target" data-view-component="true">
+
+<span class="ml-1">
+                0.16.5
+              </span>
+</span></a>
+</div>
+<div class="tmp-mr-4 mb-2" style="position: relative; top: 1px;">
+<a class="Link Link--muted" data-hovercard-type="commit" data-hovercard-url="/astral-sh/ruff/commit/9e4938c4a60bed3e87a11ee1e1db1bd23f4d964a/hovercard" data-view-component="true" href="/astral-sh/ruff/commit/9e4938c4a60bed3e87a11ee1e1db1bd23f4d964a">
+<code class="f5 ml-1">9e4938c</code></a> <details class="dropdown dropdown-signed-commit details-reset details-overlay js-dropdown-details d-inline-block ml-1">
+<summary class="color-fg-success">
+
+</summary>
+<div class="anim-scale-in" style="position: relative; z-index: 200;">
+<div class="dropdown-menu dropdown-menu-s py-0 color-fg-default text-left">
+<div class="tmp-p-3 signed-commit-header d-flex">
+<div class="pr-1">
+
+</div>
+<div class="flex-1">
+                This commit was created on GitHub.com and signed with GitHub’s <strong>verified signature</strong>.
+          </div>
+</div>
+<div class="signed-commit-footer tmp-p-3 rounded-bottom-2">
+<span class="d-block">GPG key ID: <span class="color-fg-muted">B5690EEEBB952194</span></span>
+<div class="my-1">
+</div>
+<div>Verified
+              <relative-time datetime="2026-08-27 16:09:07 UTC" hour="2-digit" minute="2-digit" threshold="PT0S" year="numeric"></relative-time>
+</div>
+<a class="Link--inTextBlock" href="https://docs.github.com/github/authenticating-to-github/displaying-verification-statuses-for-all-of-your-commits">Learn about vigilant mode</a>.
+        </div>
+</div>
+</div>
+</details>
+</div>
+</div>
+</div>
+
+</div></main>

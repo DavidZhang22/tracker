@@ -1,0 +1,291 @@
+{
+  "version": 2,
+  "features": [
+    "same_host",
+    "same_path",
+    "child_path",
+    "path_depth",
+    "common_depth",
+    "url_length",
+    "query_count",
+    "numeric_path",
+    "dated_path",
+    "content_path",
+    "utility_path",
+    "asset_path",
+    "label_length",
+    "label_words",
+    "numeric_label",
+    "generic_label",
+    "date_label",
+    "sequence_label",
+    "content_label",
+    "utility_label",
+    "contains_heading",
+    "semantic_title",
+    "semantic_navigation",
+    "semantic_body",
+    "has_time",
+    "record_links",
+    "label_density",
+    "shape_frequency",
+    "position",
+    "date_index",
+    "month_label",
+    "metadata_class",
+    "in_h1",
+    "in_h2",
+    "in_h3",
+    "in_h4",
+    "in_article",
+    "in_li",
+    "in_tr",
+    "in_main",
+    "in_nav",
+    "in_header",
+    "in_footer",
+    "in_aside",
+    "in_details",
+    "in_p",
+    "in_code",
+    "own_date_attribute",
+    "root_target",
+    "has_fragment",
+    "heading_level",
+    "preceding_heading_level",
+    "heading_distance",
+    "heading_text_overlap",
+    "record_heading_count",
+    "record_words",
+    "paragraph_words",
+    "inline_text_fraction",
+    "sentence_punctuation",
+    "record_first_link",
+    "same_url_count",
+    "same_url_has_heading",
+    "same_url_has_date",
+    "same_url_max_label",
+    "record_primary_url",
+    "record_other_primary",
+    "path_date_index",
+    "rel_author",
+    "rel_tag",
+    "inside_list_record",
+    "inside_content_body",
+    "heading_link_fraction",
+    "preceding_heading_linked",
+    "next_link_same_record",
+    "prev_link_same_record",
+    "same_template_count"
+  ],
+  "rows": 9999,
+  "splits": {
+    "train": 6971,
+    "validation": 2227,
+    "test": 801
+  },
+  "origins": {
+    "index": 7377,
+    "cleaneval": 822,
+    "authored": 1800
+  },
+  "corpus_pages": 160,
+  "corpus_provenance": {
+    "repository": "https://github.com/dalab/web2text",
+    "revision": "0f9c7b787ff125ce5190784e741c5b453ddf0560",
+    "archive_url": "https://codeload.github.com/dalab/web2text/zip/0f9c7b787ff125ce5190784e741c5b453ddf0560",
+    "sha256": "f358f1add617f536363d2aa7e29287634d436675c7bf76dedabf98fe152aef0d",
+    "license_note": "Repository MIT license; original webpage rights remain with their publishers."
+  },
+  "sources": [
+    {
+      "id": "asura",
+      "split": "train",
+      "rows": 174,
+      "positive_urls": 140,
+      "sha256": "df54ea4009a17441f2c41277932a6164fc39bb022738211e8e2f1a95913e8cd4"
+    },
+    {
+      "id": "royalroad",
+      "split": "train",
+      "rows": 323,
+      "positive_urls": 109,
+      "sha256": "d12408a0578c0615f2c2be4d724ceee1df9d8b33a6561582a9aae7298f666d48"
+    },
+    {
+      "id": "github",
+      "split": "train",
+      "rows": 361,
+      "positive_urls": 10,
+      "sha256": "5ef7a5dbdc1c398e17348a4e21ac5f798204491a9517b25852837cbd2b13687a"
+    },
+    {
+      "id": "codeforces",
+      "split": "train",
+      "rows": 450,
+      "positive_urls": 100,
+      "sha256": "2cff84f0593e00476df149907807e9dfd0adbfcbfaa63cac4c14724e24824009"
+    },
+    {
+      "id": "python",
+      "split": "train",
+      "rows": 25,
+      "positive_urls": 9,
+      "sha256": "e0c435b5e6ac00f6b3a9c35a4ba373d0a8723c343aa4d12797ec416410c57131"
+    },
+    {
+      "id": "rust",
+      "split": "train",
+      "rows": 374,
+      "positive_urls": 391,
+      "sha256": "92872b83d7a0cd953b3e9751be7f36699cf36d6aa7c1cb8b3eb19aeee91ca5de"
+    },
+    {
+      "id": "paulgraham",
+      "split": "train",
+      "rows": 239,
+      "positive_urls": 234,
+      "sha256": "6061dfb160109ba93d574ae768087c200b4f1f347ff24a6914773a18792f91e7"
+    },
+    {
+      "id": "cloudflare",
+      "split": "validation",
+      "rows": 188,
+      "positive_urls": 19,
+      "sha256": "aace073b77798a1b93fad1929caeb0bdf32f112e69612d38363f71e7e6031f7e"
+    },
+    {
+      "id": "hn",
+      "split": "validation",
+      "rows": 228,
+      "positive_urls": 30,
+      "sha256": "5c71acfcde0ee258d9c2032a6f30fcfcb08a8961cbdb1a1a4d3aea722a0e2825"
+    },
+    {
+      "id": "django",
+      "split": "validation",
+      "rows": 341,
+      "positive_urls": 10,
+      "sha256": "1c6a3d14e333fdf172b5ee6afa5fe52d1425a85c952959f5d20213a77d2749b4"
+    },
+    {
+      "id": "pythonbytes",
+      "split": "validation",
+      "rows": 531,
+      "positive_urls": 495,
+      "sha256": "c45030699e638e06c42f4d829df1c0e80f8ba7f164448f39104ab0516c04e6c8"
+    },
+    {
+      "id": "xkcd",
+      "split": "train",
+      "rows": 384,
+      "positive_urls": 3294,
+      "sha256": "8e1e7e937098943203f36fb8671eaa28eddd81cfb25a339dcac44f5d50c39703"
+    },
+    {
+      "id": "go",
+      "split": "validation",
+      "rows": 93,
+      "positive_urls": 10,
+      "sha256": "8d1a9f0f442eb536c30c7d6d611b68b45a7f4ebff69b743269178d27fa83bcd6"
+    },
+    {
+      "id": "planetpython",
+      "split": "train",
+      "rows": 413,
+      "positive_urls": 25,
+      "sha256": "f325f50e9989edc86fc71a1733dc2a0565e881fa234768214181f56b8d945294"
+    },
+    {
+      "id": "hackaday",
+      "split": "train",
+      "rows": 180,
+      "positive_urls": 18,
+      "sha256": "23801ff8714a5beceb0a6963a7c92e743a53efea8d476030f2b4684706842553"
+    },
+    {
+      "id": "lobsters",
+      "split": "train",
+      "rows": 276,
+      "positive_urls": 25,
+      "sha256": "cad55acc4909a166b1318516d22e15d7a93fe35a4f6276da06b959f4e0d743cb"
+    },
+    {
+      "id": "changelog",
+      "split": "train",
+      "rows": 331,
+      "positive_urls": 13,
+      "sha256": "ab26260ff85521cb73062c6a8dd6c54da9fb0726b2e3807dbd42cef4b25b6a58"
+    },
+    {
+      "id": "wordpress",
+      "split": "train",
+      "rows": 130,
+      "positive_urls": 10,
+      "sha256": "c52f365653c384594b99f19a8dc1c1e14e1353a1a31555c78d6f7e5d7f838e79"
+    },
+    {
+      "id": "simonwillison",
+      "split": "train",
+      "rows": 440,
+      "positive_urls": 70,
+      "sha256": "f3b3a0cf4932857bb3b8b800078b976281304a3ab26a434d6f52feb13b8d193f"
+    },
+    {
+      "id": "lwn",
+      "split": "train",
+      "rows": 98,
+      "positive_urls": 20,
+      "sha256": "87ba36695f4734a8d2c8d7a373fb046c2b274bd304a91cbfd2e54cddebbbcd9d"
+    },
+    {
+      "id": "schneier",
+      "split": "train",
+      "rows": 151,
+      "positive_urls": 11,
+      "sha256": "50caf21e7ad77bda531748a7f69e0154cf16df6cf639ae8108a4618760418206"
+    },
+    {
+      "id": "jvns",
+      "split": "validation",
+      "rows": 644,
+      "positive_urls": 596,
+      "sha256": "dea169dbc1841a5903f8db288a8505379fe4731c63407a225dcdf575d987ca16"
+    },
+    {
+      "id": "realpython",
+      "split": "validation",
+      "rows": 202,
+      "positive_urls": 14,
+      "sha256": "504dfe3b16befa4ecd783b3deb34d7b2f582962de0b37bf1b5cdfe1107d284fa"
+    },
+    {
+      "id": "gutenberg",
+      "split": "test",
+      "rows": 53,
+      "positive_urls": 25,
+      "sha256": "6b367d2a6dd8c90032bc3f6d728ab8dfaf9ff0c399f599d8e82d52efcfb89ed8"
+    },
+    {
+      "id": "postgres",
+      "skipped": "Capture unavailable; no fabricated examples"
+    },
+    {
+      "id": "smashing",
+      "split": "test",
+      "rows": 144,
+      "positive_urls": 10,
+      "sha256": "81ce989bd2a796783a6ab1988d57402c08ef8bc26cdedb25d84c942ecd3550b6"
+    },
+    {
+      "id": "talkpython",
+      "split": "test",
+      "rows": 604,
+      "positive_urls": 560,
+      "sha256": "48ce73933dc2f991a38636d118e7679f9820576bdaad4e83eece88bfdcec1c4c"
+    }
+  ],
+  "sha256": "2a106aa097f5c872eff05d1b20c03c6499dbec836c2b29206c38f9ba60d11bbd",
+  "label_quality": "Reviewed source rules and conservative corpus weak labels; not independent gold annotation.",
+  "prior_test_policy": "All v1 sites are development data. Only v2 test hosts are unused for fitting/selection."
+}

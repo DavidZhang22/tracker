@@ -1,0 +1,11 @@
+.git
+frontend/node_modules
+frontend/build
+frontend/.mobile-check
+backend/.venv
+backend/data
+backend/tests
+backend/ml
+**/__pycache__
+**/.env
+**/.env.*

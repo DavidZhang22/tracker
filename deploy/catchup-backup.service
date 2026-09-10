@@ -1,0 +1,11 @@
+[Unit]
+Description=Verified online backups of Catchup databases
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+UMask=0077
+ExecStart=/usr/bin/python3 /home/azureuser/tracker/deploy/backup.py /var/lib/docker/volumes/catchup_tracker-data/_data /var/backups/mediatrackify
+TimeoutStartSec=300
+Nice=10

@@ -1,0 +1,202 @@
+[
+  {
+    "id": "asura",
+    "url": "https://asurascans.com/comics/the-nebulas-civilization-53fc8424",
+    "file": "tests/live/asura.html",
+    "split": "train",
+    "family": "comic",
+    "positive": "^/comics/the-nebulas-civilization-53fc8424/chapter/",
+    "reason": "Chapters belonging to this series only."
+  },
+  {
+    "id": "royalroad",
+    "url": "https://www.royalroad.com/fiction/21220/mother-of-learning",
+    "file": "tests/live/royalroad.html",
+    "split": "train",
+    "family": "novel",
+    "positive": "^/fiction/21220/[^/]+/chapter/",
+    "reason": "The fiction's own chapter table, excluding other stories and reviews."
+  },
+  {
+    "id": "github",
+    "url": "https://github.com/astral-sh/ruff/releases",
+    "file": "tests/live/github.html",
+    "split": "train",
+    "family": "releases",
+    "positive": "^/astral-sh/ruff/releases/tag/",
+    "reason": "Release detail pages, not tag source trees, assets or commit links."
+  },
+  {
+    "id": "codeforces",
+    "url": "https://codeforces.com/contests",
+    "file": "tests/live/codeforces.html",
+    "split": "train",
+    "family": "contests",
+    "positive": "^/contest/\\d+$",
+    "reason": "Contest detail pages, not registration, standings or profiles."
+  },
+  {
+    "id": "python",
+    "url": "https://blog.python.org/",
+    "file": "ml/raw/python.html",
+    "split": "train",
+    "family": "blog",
+    "positive": "^/\\d{4}/\\d{2}/[^/]+$",
+    "reason": "Dated Python blog posts, not archive month indexes."
+  },
+  {
+    "id": "rust",
+    "url": "https://blog.rust-lang.org/",
+    "file": "ml/raw/rust.html",
+    "split": "train",
+    "family": "blog",
+    "positive": "^/\\d{4}/\\d{2}/\\d{2}/[^/]+",
+    "reason": "Individual Rust blog articles."
+  },
+  {
+    "id": "paulgraham",
+    "url": "https://paulgraham.com/articles.html",
+    "file": "ml/raw/paulgraham.html",
+    "split": "train",
+    "family": "essay",
+    "positive_selector": "td a[href]",
+    "reason": "Essay titles in the archive table; labels reviewed against the essay list.",
+    "exclude": "^/(?:index|articles|rss)\\.html$",
+    "positive": "\\.(?:html|txt)$",
+    "external": true
+  },
+  {
+    "id": "cloudflare",
+    "url": "https://blog.cloudflare.com/",
+    "file": "ml/raw/cloudflare.html",
+    "split": "train",
+    "family": "news",
+    "positive_selector": "a[href]",
+    "positive": "^/[a-z0-9]+(?:-[a-z0-9]+)+/?$",
+    "reason": "English article slugs; category, author and language routes excluded.",
+    "exclude": "^/[a-z]{2}-[a-z]{2}$"
+  },
+  {
+    "id": "hn",
+    "url": "https://news.ycombinator.com/",
+    "file": "tests/live/hn.html",
+    "split": "validation",
+    "family": "aggregator",
+    "positive_selector": ".titleline > a[href]",
+    "external": true,
+    "reason": "The submitted headline, not its discussion, domain badge or author."
+  },
+  {
+    "id": "django",
+    "url": "https://www.djangoproject.com/weblog/",
+    "file": "ml/raw/django.html",
+    "split": "validation",
+    "family": "blog",
+    "positive": "^/weblog/\\d{4}/[a-z]+/\\d{2}/[^/]+",
+    "reason": "Dated weblog entries; month/year navigation excluded."
+  },
+  {
+    "id": "pythonbytes",
+    "url": "https://pythonbytes.fm/episodes/all",
+    "file": "ml/raw/pythonbytes.html",
+    "split": "validation",
+    "family": "podcast",
+    "positive": "^/episodes/show/\\d+/",
+    "reason": "Episode pages, not topic links, sponsors or subscriptions."
+  },
+  {
+    "id": "xkcd",
+    "url": "https://xkcd.com/archive/",
+    "file": "tests/live/xkcd.html",
+    "split": "test",
+    "family": "comic",
+    "positive": "^/\\d+/?$",
+    "reason": "Numbered comics in the archive; footer and navigation are excluded."
+  },
+  {
+    "id": "go",
+    "url": "https://go.dev/blog/",
+    "file": "ml/raw/go.html",
+    "split": "test",
+    "family": "blog",
+    "positive": "^/blog/[^/]+$",
+    "exclude": "^/blog/(?:index|all|feed\\.atom)$",
+    "reason": "Blog article detail pages, excluding full index and feed."
+  },
+  {
+    "id": "planetpython",
+    "url": "https://planetpython.org/",
+    "file": "ml/raw/planetpython.html",
+    "split": "test",
+    "family": "aggregator",
+    "positive_selector": "#body-main > p > h4 > a[href]",
+    "external": true,
+    "reason": "Syndicated article headings, not links within article excerpts or author homepages."
+  },
+  {
+    "id": "hackaday",
+    "url": "https://hackaday.com/",
+    "file": "ml/raw/hackaday.html",
+    "split": "train",
+    "family": "blog",
+    "positive": "^/\\d{4}/\\d{2}/\\d{2}/[^/]+",
+    "reason": "Dated article detail pages, not year/month archive navigation."
+  },
+  {
+    "id": "lobsters",
+    "url": "https://lobste.rs/",
+    "file": "ml/raw/lobsters.html",
+    "split": "train",
+    "family": "aggregator",
+    "positive_selector": ".link a.u-url",
+    "external": true,
+    "reason": "Submitted story headlines, not comments, domains, tags or profiles."
+  },
+  {
+    "id": "changelog",
+    "url": "https://changelog.com/podcast",
+    "file": "ml/raw/changelog.html",
+    "split": "train",
+    "family": "podcast",
+    "positive": "^/podcast/\\d+$",
+    "reason": "Numbered podcast episodes, excluding topics and show subscription controls."
+  },
+  {
+    "id": "wordpress",
+    "url": "https://wordpress.org/news/",
+    "file": "ml/raw/wordpress.html",
+    "split": "train",
+    "family": "blog",
+    "positive": "^/news/\\d{4}/\\d{2}/[^/]+",
+    "reason": "News articles; month/year archives and release category indexes are negative."
+  },
+  {
+    "id": "simonwillison",
+    "url": "https://simonwillison.net/",
+    "file": "ml/raw/simonwillison.html",
+    "split": "holdout",
+    "family": "blog",
+    "positive": "^/\\d{4}/[A-Za-z]+/\\d{1,2}/[^/]+",
+    "reason": "Dated native entries, excluding quotations citations and topic/year navigation."
+  },
+  {
+    "id": "lwn",
+    "url": "https://lwn.net/",
+    "file": "ml/raw/lwn.html",
+    "split": "holdout",
+    "family": "news",
+    "positive_selector": "a[href]",
+    "reason": "Primary native stories linked by Full Story, Read the full article, or standalone Comments links; in-body references excluded.",
+    "positive": "^/(?:Articles|SubscriberLink)/\\d+",
+    "positive_text": "^(?:Full Story|Read the full article|Comments \\()"
+  },
+  {
+    "id": "schneier",
+    "url": "https://www.schneier.com/",
+    "file": "ml/raw/schneier.html",
+    "split": "holdout",
+    "family": "blog",
+    "positive": "^/blog/archives/\\d{4}/\\d{2}/[^/]+\\.html$",
+    "reason": "Individual article pages; archive months, categories, comments and navigation excluded."
+  }
+]

@@ -1,0 +1,156 @@
+[
+  {
+    "id": 111006,
+    "slug": "1",
+    "name": " Chapter 1",
+    "title": "The Girl Just Wants a Peaceful Life",
+    "number": 1,
+    "part": null,
+    "index": 0,
+    "group": {
+      "name": null,
+      "abbreviation": null,
+      "slug": null,
+      "index": null
+    },
+    "locked": {
+      "price": 0,
+      "unlocked_at": "2025-12-11T08:11:48.000000Z",
+      "is_read_only": false
+    },
+    "created_at": "2025-12-11T06:06:55.000000Z",
+    "updated_at": "2026-09-05T14:24:15.000000Z"
+  },
+  {
+    "id": 111328,
+    "slug": "154-1",
+    "name": " Chapter 154.1",
+    "title": "The Instigator's Whimsical Ideas",
+    "number": 154,
+    "part": 1,
+    "index": 307,
+    "group": {
+      "name": null,
+      "abbreviation": null,
+      "slug": null,
+      "index": null
+    },
+    "locked": {
+      "price": 0,
+      "unlocked_at": "2025-12-11T08:11:49.000000Z",
+      "is_read_only": false
+    },
+    "created_at": "2025-12-11T07:10:24.000000Z",
+    "updated_at": "2026-09-05T14:24:15.000000Z"
+  },
+  {
+    "id": 111329,
+    "slug": "154-2",
+    "name": " Chapter 154.2",
+    "title": "The Instigator's Whimsical Ideas",
+    "number": 154,
+    "part": 2,
+    "index": 308,
+    "group": {
+      "name": null,
+      "abbreviation": null,
+      "slug": null,
+      "index": null
+    },
+    "locked": {
+      "price": 0,
+      "unlocked_at": "2025-12-11T08:11:49.000000Z",
+      "is_read_only": false
+    },
+    "created_at": "2025-12-11T07:10:24.000000Z",
+    "updated_at": "2026-09-05T14:24:15.000000Z"
+  },
+  {
+    "id": 111330,
+    "slug": "154-3",
+    "name": " Chapter 154.3",
+    "title": "The Instigator's Whimsical Ideas",
+    "number": 154,
+    "part": 3,
+    "index": 309,
+    "group": {
+      "name": null,
+      "abbreviation": null,
+      "slug": null,
+      "index": null
+    },
+    "locked": {
+      "price": 0,
+      "unlocked_at": "2025-12-11T08:11:49.000000Z",
+      "is_read_only": false
+    },
+    "created_at": "2025-12-11T07:10:24.000000Z",
+    "updated_at": "2026-09-05T14:24:15.000000Z"
+  },
+  {
+    "id": 111331,
+    "slug": "154-4",
+    "name": " Chapter 154.4",
+    "title": "The Instigator's Whimsical Ideas",
+    "number": 154,
+    "part": 4,
+    "index": 310,
+    "group": {
+      "name": null,
+      "abbreviation": null,
+      "slug": null,
+      "index": null
+    },
+    "locked": {
+      "price": 0,
+      "unlocked_at": "2025-12-11T08:11:49.000000Z",
+      "is_read_only": false
+    },
+    "created_at": "2025-12-11T07:10:24.000000Z",
+    "updated_at": "2026-09-05T14:24:15.000000Z"
+  },
+  {
+    "id": 283298,
+    "slug": "310",
+    "name": " Chapter 310",
+    "title": "The Ascended One Who Kept Humanity Like Livestock",
+    "number": 310,
+    "part": null,
+    "index": 720,
+    "group": {
+      "name": null,
+      "abbreviation": null,
+      "slug": null,
+      "index": null
+    },
+    "locked": {
+      "price": 0,
+      "unlocked_at": "2026-09-05T14:11:31.000000Z",
+      "is_read_only": false
+    },
+    "created_at": "2026-07-30T21:47:24.000000Z",
+    "updated_at": "2026-09-05T14:24:15.000000Z"
+  },
+  {
+    "id": 284708,
+    "slug": "311",
+    "name": " Chapter 311",
+    "title": "Ciel's Discovery",
+    "number": 311,
+    "part": null,
+    "index": 721,
+    "group": {
+      "name": null,
+      "abbreviation": null,
+      "slug": null,
+      "index": null
+    },
+    "locked": {
+      "price": 20,
+      "unlocked_at": null,
+      "is_read_only": false
+    },
+    "created_at": "2026-08-01T10:11:38.000000Z",
+    "updated_at": "2026-09-05T14:24:15.000000Z"
+  }
+]

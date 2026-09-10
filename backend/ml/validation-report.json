@@ -1,0 +1,122 @@
+{
+  "split": "validation",
+  "model_id": "mlp-8-b223bb65103d",
+  "baseline": {
+    "tp": 525,
+    "fp": 240,
+    "fn": 10,
+    "precision": 0.6863,
+    "recall": 0.9813,
+    "f1": 0.8077,
+    "by_source": {
+      "django": {
+        "tp": 0,
+        "fp": 240,
+        "fn": 10,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "hn": {
+        "tp": 30,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "pythonbytes": {
+        "tp": 495,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "macro_f1": 0.6667
+  },
+  "assisted": {
+    "tp": 535,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "by_source": {
+      "django": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "hn": {
+        "tp": 30,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "pythonbytes": {
+        "tp": 495,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "macro_f1": 1.0
+  },
+  "classifier_alone": {
+    "tp": 109,
+    "fp": 1,
+    "fn": 426,
+    "precision": 0.9909,
+    "recall": 0.2037,
+    "f1": 0.338,
+    "by_source": {
+      "django": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "hn": {
+        "tp": 5,
+        "fp": 1,
+        "fn": 25,
+        "precision": 0.8333,
+        "recall": 0.1667,
+        "f1": 0.2778
+      },
+      "pythonbytes": {
+        "tp": 94,
+        "fp": 0,
+        "fn": 401,
+        "precision": 1.0,
+        "recall": 0.1899,
+        "f1": 0.3192
+      }
+    },
+    "macro_f1": 0.5323
+  },
+  "parse_seconds": {
+    "hn-off": 0.1141,
+    "hn-on": 0.1708,
+    "django-off": 0.2288,
+    "django-on": 0.3087,
+    "pythonbytes-off": 5.5407,
+    "pythonbytes-on": 5.8316
+  },
+  "unlabelled_predictions": {
+    "hn": 0,
+    "django": 0,
+    "pythonbytes": 0
+  }
+}

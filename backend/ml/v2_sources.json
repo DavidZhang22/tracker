@@ -1,0 +1,58 @@
+[
+  {
+    "id": "jvns",
+    "url": "https://jvns.ca/",
+    "file": "ml/raw/jvns.html",
+    "split": "validation",
+    "family": "blog",
+    "positive": "^/blog/\\d{4}/\\d{2}/\\d{2}/[^/]+",
+    "reason": "Dated articles; archive and navigation links excluded."
+  },
+  {
+    "id": "realpython",
+    "url": "https://realpython.com/",
+    "file": "ml/raw/realpython.html",
+    "split": "validation",
+    "family": "tutorial",
+    "positive_selector": ".card a[href]",
+    "positive": "^/[^/]+$",
+    "exclude": "^/(?:account|search|products|learning-paths|tutorials|courses|quizzes|podcasts|office-hours|community|team|newsletter|membership|ref|mentor|live|start-here)$",
+    "reason": "Tutorial cards; topic and membership navigation excluded."
+  },
+  {
+    "id": "gutenberg",
+    "url": "https://www.gutenberg.org/ebooks/search/?sort_order=downloads",
+    "file": "ml/raw/gutenberg.html",
+    "split": "test",
+    "family": "books",
+    "positive": "^/ebooks/\\d+$",
+    "reason": "Individual ebook detail pages, not author/subject browsing."
+  },
+  {
+    "id": "postgres",
+    "url": "https://www.postgresql.org/about/news/",
+    "file": "ml/raw/postgres.html",
+    "split": "test",
+    "family": "news",
+    "positive": "^/about/news/[^/]+-\\d+/?$",
+    "reason": "News detail pages rather than month/category/navigation URLs."
+  },
+  {
+    "id": "smashing",
+    "url": "https://www.smashingmagazine.com/articles/",
+    "file": "ml/raw/smashing.html",
+    "split": "test",
+    "family": "blog",
+    "positive": "^/\\d{4}/\\d{2}/[^/]+",
+    "reason": "Article detail pages; author, topic and archive navigation excluded."
+  },
+  {
+    "id": "talkpython",
+    "url": "https://talkpython.fm/episodes/all",
+    "file": "ml/raw/talkpython.html",
+    "split": "test",
+    "family": "podcast",
+    "positive": "^/episodes/show/\\d+/",
+    "reason": "Individual episode pages; network, sponsor and subscribe links excluded."
+  }
+]

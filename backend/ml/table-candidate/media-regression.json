@@ -1,0 +1,169 @@
+{
+  "split": "test",
+  "model_id": "context-tables-gated-5cd445174fb3",
+  "baseline": "Frozen v1 parser, with v1 classifier enabled",
+  "parser": {
+    "legacy": {
+      "tp": 571,
+      "fp": 0,
+      "fn": 24,
+      "precision": 1.0,
+      "recall": 0.9597,
+      "f1": 0.9794,
+      "by_source": {
+        "gutenberg": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 24,
+          "precision": 1.0,
+          "recall": 0.04,
+          "f1": 0.0769
+        },
+        "smashing": {
+          "tp": 10,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "talkpython": {
+          "tp": 560,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "macro_f1": 0.6923
+    },
+    "on": {
+      "tp": 595,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "by_source": {
+        "gutenberg": {
+          "tp": 25,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "smashing": {
+          "tp": 10,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "talkpython": {
+          "tp": 560,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "macro_f1": 1.0
+    },
+    "primary": {
+      "tp": 595,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "by_source": {
+        "gutenberg": {
+          "tp": 25,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "smashing": {
+          "tp": 10,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "talkpython": {
+          "tp": 560,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "macro_f1": 1.0
+    }
+  },
+  "classifier": {
+    "tp": 595,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "by_source": {
+      "gutenberg": {
+        "tp": 25,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "smashing": {
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "talkpython": {
+        "tp": 560,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "macro_f1": 1.0
+  },
+  "parse_seconds": {
+    "legacy:gutenberg": 0.095,
+    "legacy:smashing": 0.23,
+    "legacy:talkpython": 8.186,
+    "on:gutenberg": 0.131,
+    "on:smashing": 0.259,
+    "on:talkpython": 1.53,
+    "primary:gutenberg": 0.109,
+    "primary:smashing": 0.224,
+    "primary:talkpython": 1.653
+  },
+  "unlabelled_predictions": {
+    "legacy:gutenberg": 0,
+    "legacy:smashing": 0,
+    "legacy:talkpython": 0,
+    "on:gutenberg": 0,
+    "on:smashing": 0,
+    "on:talkpython": 0,
+    "primary:gutenberg": 0,
+    "primary:smashing": 0,
+    "primary:talkpython": 0
+  }
+}

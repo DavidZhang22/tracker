@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "total": 3,
+    "per_page": 30,
+    "current_page": 1,
+    "last_page": 1,
+    "first_page": 1,
+    "first_page_url": "/?page=1",
+    "last_page_url": "/?page=6",
+    "next_page_url": null,
+    "previous_page_url": null
+  },
+  "data": [
+    {
+      "id": 16653,
+      "chapter_slug": "chapter-162",
+      "chapter_name": "Chapter 162",
+      "chapter_title": "Treasure Hunt (4)",
+      "series_id": 82,
+      "price": 0,
+      "index": "162.0",
+      "public": true,
+      "chapter_thumbnail": null,
+      "chapter_type": "Novel",
+      "created_at": "2026-09-07T16:25:00.031Z",
+      "updated_at": "2026-09-07T16:25:00.027Z",
+      "series": {
+        "series_slug": "climbing-the-tower-with-time-stop-ability",
+        "id": 82,
+        "meta": {}
+      },
+      "chapters_to_be_freed": [],
+      "excerpt": null,
+      "meta": {}
+    },
+    {
+      "id": 16652,
+      "chapter_slug": "chapter-161",
+      "chapter_name": "Chapter 161",
+      "chapter_title": "Treasure Hunt (3)",
+      "series_id": 82,
+      "price": 0,
+      "index": "161.0",
+      "public": true,
+      "chapter_thumbnail": null,
+      "chapter_type": "Novel",
+      "created_at": "2026-09-04T15:34:00.270Z",
+      "updated_at": "2026-09-04T15:34:00.265Z",
+      "series": {
+        "series_slug": "climbing-the-tower-with-time-stop-ability",
+        "id": 82,
+        "meta": {}
+      },
+      "chapters_to_be_freed": [],
+      "excerpt": null,
+      "meta": {}
+    },
+    {
+      "id": 15869,
+      "chapter_slug": "chapter-160",
+      "chapter_name": "Chapter 160",
+      "chapter_title": "Treasure Hunt (2)",
+      "series_id": 82,
+      "price": 0,
+      "index": "160.0",
+      "public": true,
+      "chapter_thumbnail": null,
+      "chapter_type": "Novel",
+      "created_at": "2026-09-04T15:28:00.044Z",
+      "updated_at": "2026-09-04T15:28:00.039Z",
+      "series": {
+        "series_slug": "climbing-the-tower-with-time-stop-ability",
+        "id": 82,
+        "meta": {}
+      },
+      "chapters_to_be_freed": [],
+      "excerpt": null,
+      "meta": {}
+    }
+  ]
+}

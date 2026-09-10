@@ -1,0 +1,1942 @@
+{
+  "model_id": "context-trees-numeric-5cd445174fb3",
+  "chosen": "trees-numeric",
+  "seed": 81,
+  "training_rows": 8429,
+  "validation_rows": 2607,
+  "vocabulary_size": 0,
+  "candidate_vocabulary_size": 512,
+  "numeric_features": 84,
+  "parameters": 3373,
+  "tree_count": 120,
+  "tree_nodes": 3372,
+  "export_error": 1.5236967021436953e-08,
+  "validation": {
+    "tp": 1202,
+    "fp": 32,
+    "fn": 132,
+    "precision": 0.9741,
+    "recall": 0.901,
+    "f1": 0.9361,
+    "by_source": {
+      "cloudflare": {
+        "tp": 19,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "django": {
+        "tp": 10,
+        "fp": 21,
+        "fn": 0,
+        "precision": 0.3226,
+        "recall": 1.0,
+        "f1": 0.4878
+      },
+      "go": {
+        "tp": 10,
+        "fp": 1,
+        "fn": 0,
+        "precision": 0.9091,
+        "recall": 1.0,
+        "f1": 0.9524
+      },
+      "hn": {
+        "tp": 7,
+        "fp": 0,
+        "fn": 23,
+        "precision": 1.0,
+        "recall": 0.2333,
+        "f1": 0.3784
+      },
+      "jvns": {
+        "tp": 489,
+        "fp": 4,
+        "fn": 107,
+        "precision": 0.9919,
+        "recall": 0.8205,
+        "f1": 0.8981
+      },
+      "pythonbytes": {
+        "tp": 493,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.996,
+        "f1": 0.998
+      },
+      "realpython": {
+        "tp": 14,
+        "fp": 6,
+        "fn": 0,
+        "precision": 0.7,
+        "recall": 1.0,
+        "f1": 0.8235
+      },
+      "table-layouts-validation": {
+        "tp": 160,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "macro_f1": 0.8173
+  },
+  "candidates": [
+    {
+      "name": "trees-numeric",
+      "seconds": 4.597,
+      "selected": {
+        "threshold": 0.25,
+        "tp": 1202,
+        "fp": 32,
+        "fn": 132,
+        "precision": 0.9741,
+        "recall": 0.901,
+        "f1": 0.9361,
+        "by_source": {
+          "cloudflare": {
+            "tp": 19,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "django": {
+            "tp": 10,
+            "fp": 21,
+            "fn": 0,
+            "precision": 0.3226,
+            "recall": 1.0,
+            "f1": 0.4878
+          },
+          "go": {
+            "tp": 10,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "hn": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 23,
+            "precision": 1.0,
+            "recall": 0.2333,
+            "f1": 0.3784
+          },
+          "jvns": {
+            "tp": 489,
+            "fp": 4,
+            "fn": 107,
+            "precision": 0.9919,
+            "recall": 0.8205,
+            "f1": 0.8981
+          },
+          "pythonbytes": {
+            "tp": 493,
+            "fp": 0,
+            "fn": 2,
+            "precision": 1.0,
+            "recall": 0.996,
+            "f1": 0.998
+          },
+          "realpython": {
+            "tp": 14,
+            "fp": 6,
+            "fn": 0,
+            "precision": 0.7,
+            "recall": 1.0,
+            "f1": 0.8235
+          },
+          "table-layouts-validation": {
+            "tp": 160,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "macro_f1": 0.8173
+      },
+      "thresholds": [
+        {
+          "threshold": 0.25,
+          "tp": 1202,
+          "fp": 32,
+          "fn": 132,
+          "precision": 0.9741,
+          "recall": 0.901,
+          "f1": 0.9361,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 21,
+              "fn": 0,
+              "precision": 0.3226,
+              "recall": 1.0,
+              "f1": 0.4878
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 7,
+              "fp": 0,
+              "fn": 23,
+              "precision": 1.0,
+              "recall": 0.2333,
+              "f1": 0.3784
+            },
+            "jvns": {
+              "tp": 489,
+              "fp": 4,
+              "fn": 107,
+              "precision": 0.9919,
+              "recall": 0.8205,
+              "f1": 0.8981
+            },
+            "pythonbytes": {
+              "tp": 493,
+              "fp": 0,
+              "fn": 2,
+              "precision": 1.0,
+              "recall": 0.996,
+              "f1": 0.998
+            },
+            "realpython": {
+              "tp": 14,
+              "fp": 6,
+              "fn": 0,
+              "precision": 0.7,
+              "recall": 1.0,
+              "f1": 0.8235
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.8173
+        },
+        {
+          "threshold": 0.35,
+          "tp": 884,
+          "fp": 23,
+          "fn": 450,
+          "precision": 0.9746,
+          "recall": 0.6627,
+          "f1": 0.7889,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 17,
+              "fn": 0,
+              "precision": 0.3704,
+              "recall": 1.0,
+              "f1": 0.5405
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 177,
+              "fp": 0,
+              "fn": 419,
+              "precision": 1.0,
+              "recall": 0.297,
+              "f1": 0.458
+            },
+            "pythonbytes": {
+              "tp": 493,
+              "fp": 0,
+              "fn": 2,
+              "precision": 1.0,
+              "recall": 0.996,
+              "f1": 0.998
+            },
+            "realpython": {
+              "tp": 12,
+              "fp": 5,
+              "fn": 2,
+              "precision": 0.7059,
+              "recall": 0.8571,
+              "f1": 0.7742
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.7381
+        },
+        {
+          "threshold": 0.45,
+          "tp": 859,
+          "fp": 6,
+          "fn": 475,
+          "precision": 0.9931,
+          "recall": 0.6439,
+          "f1": 0.7813,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 158,
+              "fp": 0,
+              "fn": 438,
+              "precision": 1.0,
+              "recall": 0.2651,
+              "f1": 0.4191
+            },
+            "pythonbytes": {
+              "tp": 488,
+              "fp": 0,
+              "fn": 7,
+              "precision": 1.0,
+              "recall": 0.9859,
+              "f1": 0.9929
+            },
+            "realpython": {
+              "tp": 11,
+              "fp": 4,
+              "fn": 3,
+              "precision": 0.7333,
+              "recall": 0.7857,
+              "f1": 0.7586
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.7821
+        },
+        {
+          "threshold": 0.5,
+          "tp": 837,
+          "fp": 6,
+          "fn": 497,
+          "precision": 0.9929,
+          "recall": 0.6274,
+          "f1": 0.7689,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 143,
+              "fp": 0,
+              "fn": 453,
+              "precision": 1.0,
+              "recall": 0.2399,
+              "f1": 0.387
+            },
+            "pythonbytes": {
+              "tp": 482,
+              "fp": 0,
+              "fn": 13,
+              "precision": 1.0,
+              "recall": 0.9737,
+              "f1": 0.9867
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 4,
+              "fn": 4,
+              "precision": 0.7143,
+              "recall": 0.7143,
+              "f1": 0.7143
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.7718
+        },
+        {
+          "threshold": 0.6,
+          "tp": 779,
+          "fp": 3,
+          "fn": 555,
+          "precision": 0.9962,
+          "recall": 0.584,
+          "f1": 0.7363,
+          "by_source": {
+            "cloudflare": {
+              "tp": 14,
+              "fp": 0,
+              "fn": 5,
+              "precision": 1.0,
+              "recall": 0.7368,
+              "f1": 0.8485
+            },
+            "django": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 91,
+              "fp": 0,
+              "fn": 505,
+              "precision": 1.0,
+              "recall": 0.1527,
+              "f1": 0.2649
+            },
+            "pythonbytes": {
+              "tp": 481,
+              "fp": 0,
+              "fn": 14,
+              "precision": 1.0,
+              "recall": 0.9717,
+              "f1": 0.9857
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 4,
+              "precision": 0.9091,
+              "recall": 0.7143,
+              "f1": 0.8
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.7482
+        },
+        {
+          "threshold": 0.7,
+          "tp": 441,
+          "fp": 3,
+          "fn": 893,
+          "precision": 0.9932,
+          "recall": 0.3306,
+          "f1": 0.4961,
+          "by_source": {
+            "cloudflare": {
+              "tp": 9,
+              "fp": 0,
+              "fn": 10,
+              "precision": 1.0,
+              "recall": 0.4737,
+              "f1": 0.6429
+            },
+            "django": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 73,
+              "fp": 0,
+              "fn": 523,
+              "precision": 1.0,
+              "recall": 0.1225,
+              "f1": 0.2182
+            },
+            "pythonbytes": {
+              "tp": 166,
+              "fp": 0,
+              "fn": 329,
+              "precision": 1.0,
+              "recall": 0.3354,
+              "f1": 0.5023
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 4,
+              "precision": 0.9091,
+              "recall": 0.7143,
+              "f1": 0.8
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.6562
+        },
+        {
+          "threshold": 0.8,
+          "tp": 278,
+          "fp": 3,
+          "fn": 1056,
+          "precision": 0.9893,
+          "recall": 0.2084,
+          "f1": 0.3443,
+          "by_source": {
+            "cloudflare": {
+              "tp": 8,
+              "fp": 0,
+              "fn": 11,
+              "precision": 1.0,
+              "recall": 0.4211,
+              "f1": 0.5926
+            },
+            "django": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 28,
+              "precision": 1.0,
+              "recall": 0.0667,
+              "f1": 0.125
+            },
+            "jvns": {
+              "tp": 32,
+              "fp": 0,
+              "fn": 564,
+              "precision": 1.0,
+              "recall": 0.0537,
+              "f1": 0.1019
+            },
+            "pythonbytes": {
+              "tp": 47,
+              "fp": 0,
+              "fn": 448,
+              "precision": 1.0,
+              "recall": 0.0949,
+              "f1": 0.1734
+            },
+            "realpython": {
+              "tp": 9,
+              "fp": 1,
+              "fn": 5,
+              "precision": 0.9,
+              "recall": 0.6429,
+              "f1": 0.75
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.581
+        }
+      ]
+    },
+    {
+      "name": "trees180-numeric",
+      "seconds": 6.245,
+      "selected": {
+        "threshold": 0.25,
+        "tp": 919,
+        "fp": 6,
+        "fn": 415,
+        "precision": 0.9935,
+        "recall": 0.6889,
+        "f1": 0.8136,
+        "by_source": {
+          "cloudflare": {
+            "tp": 19,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "django": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "go": {
+            "tp": 10,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "hn": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 27,
+            "precision": 1.0,
+            "recall": 0.1,
+            "f1": 0.1818
+          },
+          "jvns": {
+            "tp": 222,
+            "fp": 0,
+            "fn": 374,
+            "precision": 1.0,
+            "recall": 0.3725,
+            "f1": 0.5428
+          },
+          "pythonbytes": {
+            "tp": 481,
+            "fp": 0,
+            "fn": 14,
+            "precision": 1.0,
+            "recall": 0.9717,
+            "f1": 0.9857
+          },
+          "realpython": {
+            "tp": 14,
+            "fp": 5,
+            "fn": 0,
+            "precision": 0.7368,
+            "recall": 1.0,
+            "f1": 0.8485
+          },
+          "table-layouts-validation": {
+            "tp": 160,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "macro_f1": 0.8139
+      },
+      "thresholds": [
+        {
+          "threshold": 0.25,
+          "tp": 919,
+          "fp": 6,
+          "fn": 415,
+          "precision": 0.9935,
+          "recall": 0.6889,
+          "f1": 0.8136,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 222,
+              "fp": 0,
+              "fn": 374,
+              "precision": 1.0,
+              "recall": 0.3725,
+              "f1": 0.5428
+            },
+            "pythonbytes": {
+              "tp": 481,
+              "fp": 0,
+              "fn": 14,
+              "precision": 1.0,
+              "recall": 0.9717,
+              "f1": 0.9857
+            },
+            "realpython": {
+              "tp": 14,
+              "fp": 5,
+              "fn": 0,
+              "precision": 0.7368,
+              "recall": 1.0,
+              "f1": 0.8485
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.8139
+        },
+        {
+          "threshold": 0.35,
+          "tp": 865,
+          "fp": 6,
+          "fn": 469,
+          "precision": 0.9931,
+          "recall": 0.6484,
+          "f1": 0.7846,
+          "by_source": {
+            "cloudflare": {
+              "tp": 18,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.9474,
+              "f1": 0.973
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 170,
+              "fp": 0,
+              "fn": 426,
+              "precision": 1.0,
+              "recall": 0.2852,
+              "f1": 0.4439
+            },
+            "pythonbytes": {
+              "tp": 480,
+              "fp": 0,
+              "fn": 15,
+              "precision": 1.0,
+              "recall": 0.9697,
+              "f1": 0.9846
+            },
+            "realpython": {
+              "tp": 14,
+              "fp": 5,
+              "fn": 0,
+              "precision": 0.7368,
+              "recall": 1.0,
+              "f1": 0.8485
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.798
+        },
+        {
+          "threshold": 0.45,
+          "tp": 829,
+          "fp": 6,
+          "fn": 505,
+          "precision": 0.9928,
+          "recall": 0.6214,
+          "f1": 0.7644,
+          "by_source": {
+            "cloudflare": {
+              "tp": 18,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.9474,
+              "f1": 0.973
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 135,
+              "fp": 0,
+              "fn": 461,
+              "precision": 1.0,
+              "recall": 0.2265,
+              "f1": 0.3694
+            },
+            "pythonbytes": {
+              "tp": 479,
+              "fp": 0,
+              "fn": 16,
+              "precision": 1.0,
+              "recall": 0.9677,
+              "f1": 0.9836
+            },
+            "realpython": {
+              "tp": 14,
+              "fp": 5,
+              "fn": 0,
+              "precision": 0.7368,
+              "recall": 1.0,
+              "f1": 0.8485
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.7886
+        },
+        {
+          "threshold": 0.5,
+          "tp": 806,
+          "fp": 6,
+          "fn": 528,
+          "precision": 0.9926,
+          "recall": 0.6042,
+          "f1": 0.7512,
+          "by_source": {
+            "cloudflare": {
+              "tp": 15,
+              "fp": 0,
+              "fn": 4,
+              "precision": 1.0,
+              "recall": 0.7895,
+              "f1": 0.8824
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 118,
+              "fp": 0,
+              "fn": 478,
+              "precision": 1.0,
+              "recall": 0.198,
+              "f1": 0.3305
+            },
+            "pythonbytes": {
+              "tp": 477,
+              "fp": 0,
+              "fn": 18,
+              "precision": 1.0,
+              "recall": 0.9636,
+              "f1": 0.9815
+            },
+            "realpython": {
+              "tp": 13,
+              "fp": 5,
+              "fn": 1,
+              "precision": 0.7222,
+              "recall": 0.9286,
+              "f1": 0.8125
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.7676
+        },
+        {
+          "threshold": 0.6,
+          "tp": 666,
+          "fp": 5,
+          "fn": 668,
+          "precision": 0.9925,
+          "recall": 0.4993,
+          "f1": 0.6643,
+          "by_source": {
+            "cloudflare": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 7,
+              "precision": 1.0,
+              "recall": 0.6316,
+              "f1": 0.7742
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 103,
+              "fp": 0,
+              "fn": 493,
+              "precision": 1.0,
+              "recall": 0.1728,
+              "f1": 0.2947
+            },
+            "pythonbytes": {
+              "tp": 358,
+              "fp": 0,
+              "fn": 137,
+              "precision": 1.0,
+              "recall": 0.7232,
+              "f1": 0.8394
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 4,
+              "fn": 4,
+              "precision": 0.7143,
+              "recall": 0.7143,
+              "f1": 0.7143
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.7196
+        },
+        {
+          "threshold": 0.7,
+          "tp": 425,
+          "fp": 3,
+          "fn": 909,
+          "precision": 0.993,
+          "recall": 0.3186,
+          "f1": 0.4824,
+          "by_source": {
+            "cloudflare": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 9,
+              "precision": 1.0,
+              "recall": 0.5263,
+              "f1": 0.6897
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 71,
+              "fp": 0,
+              "fn": 525,
+              "precision": 1.0,
+              "recall": 0.1191,
+              "f1": 0.2129
+            },
+            "pythonbytes": {
+              "tp": 153,
+              "fp": 0,
+              "fn": 342,
+              "precision": 1.0,
+              "recall": 0.3091,
+              "f1": 0.4722
+            },
+            "realpython": {
+              "tp": 8,
+              "fp": 2,
+              "fn": 6,
+              "precision": 0.8,
+              "recall": 0.5714,
+              "f1": 0.6667
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.647
+        },
+        {
+          "threshold": 0.8,
+          "tp": 273,
+          "fp": 2,
+          "fn": 1061,
+          "precision": 0.9927,
+          "recall": 0.2046,
+          "f1": 0.3393,
+          "by_source": {
+            "cloudflare": {
+              "tp": 7,
+              "fp": 0,
+              "fn": 12,
+              "precision": 1.0,
+              "recall": 0.3684,
+              "f1": 0.5385
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 7,
+              "fp": 1,
+              "fn": 3,
+              "precision": 0.875,
+              "recall": 0.7,
+              "f1": 0.7778
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 48,
+              "fp": 0,
+              "fn": 548,
+              "precision": 1.0,
+              "recall": 0.0805,
+              "f1": 0.1491
+            },
+            "pythonbytes": {
+              "tp": 30,
+              "fp": 0,
+              "fn": 465,
+              "precision": 1.0,
+              "recall": 0.0606,
+              "f1": 0.1143
+            },
+            "realpython": {
+              "tp": 8,
+              "fp": 1,
+              "fn": 6,
+              "precision": 0.8889,
+              "recall": 0.5714,
+              "f1": 0.6957
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.5572
+        }
+      ]
+    },
+    {
+      "name": "trees240-numeric",
+      "seconds": 8.443,
+      "selected": {
+        "threshold": 0.25,
+        "tp": 912,
+        "fp": 6,
+        "fn": 422,
+        "precision": 0.9935,
+        "recall": 0.6837,
+        "f1": 0.8099,
+        "by_source": {
+          "cloudflare": {
+            "tp": 19,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "django": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "go": {
+            "tp": 10,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "hn": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 27,
+            "precision": 1.0,
+            "recall": 0.1,
+            "f1": 0.1818
+          },
+          "jvns": {
+            "tp": 213,
+            "fp": 0,
+            "fn": 383,
+            "precision": 1.0,
+            "recall": 0.3574,
+            "f1": 0.5266
+          },
+          "pythonbytes": {
+            "tp": 483,
+            "fp": 0,
+            "fn": 12,
+            "precision": 1.0,
+            "recall": 0.9758,
+            "f1": 0.9877
+          },
+          "realpython": {
+            "tp": 14,
+            "fp": 5,
+            "fn": 0,
+            "precision": 0.7368,
+            "recall": 1.0,
+            "f1": 0.8485
+          },
+          "table-layouts-validation": {
+            "tp": 160,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "macro_f1": 0.8121
+      },
+      "thresholds": [
+        {
+          "threshold": 0.25,
+          "tp": 912,
+          "fp": 6,
+          "fn": 422,
+          "precision": 0.9935,
+          "recall": 0.6837,
+          "f1": 0.8099,
+          "by_source": {
+            "cloudflare": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 213,
+              "fp": 0,
+              "fn": 383,
+              "precision": 1.0,
+              "recall": 0.3574,
+              "f1": 0.5266
+            },
+            "pythonbytes": {
+              "tp": 483,
+              "fp": 0,
+              "fn": 12,
+              "precision": 1.0,
+              "recall": 0.9758,
+              "f1": 0.9877
+            },
+            "realpython": {
+              "tp": 14,
+              "fp": 5,
+              "fn": 0,
+              "precision": 0.7368,
+              "recall": 1.0,
+              "f1": 0.8485
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.8121
+        },
+        {
+          "threshold": 0.35,
+          "tp": 864,
+          "fp": 6,
+          "fn": 470,
+          "precision": 0.9931,
+          "recall": 0.6477,
+          "f1": 0.784,
+          "by_source": {
+            "cloudflare": {
+              "tp": 18,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.9474,
+              "f1": 0.973
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 168,
+              "fp": 0,
+              "fn": 428,
+              "precision": 1.0,
+              "recall": 0.2819,
+              "f1": 0.4398
+            },
+            "pythonbytes": {
+              "tp": 481,
+              "fp": 0,
+              "fn": 14,
+              "precision": 1.0,
+              "recall": 0.9717,
+              "f1": 0.9857
+            },
+            "realpython": {
+              "tp": 14,
+              "fp": 5,
+              "fn": 0,
+              "precision": 0.7368,
+              "recall": 1.0,
+              "f1": 0.8485
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.7976
+        },
+        {
+          "threshold": 0.45,
+          "tp": 813,
+          "fp": 6,
+          "fn": 521,
+          "precision": 0.9927,
+          "recall": 0.6094,
+          "f1": 0.7552,
+          "by_source": {
+            "cloudflare": {
+              "tp": 17,
+              "fp": 0,
+              "fn": 2,
+              "precision": 1.0,
+              "recall": 0.8947,
+              "f1": 0.9444
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 121,
+              "fp": 0,
+              "fn": 475,
+              "precision": 1.0,
+              "recall": 0.203,
+              "f1": 0.3375
+            },
+            "pythonbytes": {
+              "tp": 480,
+              "fp": 0,
+              "fn": 15,
+              "precision": 1.0,
+              "recall": 0.9697,
+              "f1": 0.9846
+            },
+            "realpython": {
+              "tp": 12,
+              "fp": 5,
+              "fn": 2,
+              "precision": 0.7059,
+              "recall": 0.8571,
+              "f1": 0.7742
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.7719
+        },
+        {
+          "threshold": 0.5,
+          "tp": 802,
+          "fp": 6,
+          "fn": 532,
+          "precision": 0.9926,
+          "recall": 0.6012,
+          "f1": 0.7488,
+          "by_source": {
+            "cloudflare": {
+              "tp": 14,
+              "fp": 0,
+              "fn": 5,
+              "precision": 1.0,
+              "recall": 0.7368,
+              "f1": 0.8485
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 116,
+              "fp": 0,
+              "fn": 480,
+              "precision": 1.0,
+              "recall": 0.1946,
+              "f1": 0.3258
+            },
+            "pythonbytes": {
+              "tp": 477,
+              "fp": 0,
+              "fn": 18,
+              "precision": 1.0,
+              "recall": 0.9636,
+              "f1": 0.9815
+            },
+            "realpython": {
+              "tp": 12,
+              "fp": 5,
+              "fn": 2,
+              "precision": 0.7059,
+              "recall": 0.8571,
+              "f1": 0.7742
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.758
+        },
+        {
+          "threshold": 0.6,
+          "tp": 713,
+          "fp": 6,
+          "fn": 621,
+          "precision": 0.9917,
+          "recall": 0.5345,
+          "f1": 0.6946,
+          "by_source": {
+            "cloudflare": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 7,
+              "precision": 1.0,
+              "recall": 0.6316,
+              "f1": 0.7742
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 100,
+              "fp": 0,
+              "fn": 496,
+              "precision": 1.0,
+              "recall": 0.1678,
+              "f1": 0.2874
+            },
+            "pythonbytes": {
+              "tp": 407,
+              "fp": 0,
+              "fn": 88,
+              "precision": 1.0,
+              "recall": 0.8222,
+              "f1": 0.9024
+            },
+            "realpython": {
+              "tp": 11,
+              "fp": 5,
+              "fn": 3,
+              "precision": 0.6875,
+              "recall": 0.7857,
+              "f1": 0.7333
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.7289
+        },
+        {
+          "threshold": 0.7,
+          "tp": 602,
+          "fp": 3,
+          "fn": 732,
+          "precision": 0.995,
+          "recall": 0.4513,
+          "f1": 0.6209,
+          "by_source": {
+            "cloudflare": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 9,
+              "precision": 1.0,
+              "recall": 0.5263,
+              "f1": 0.6897
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 78,
+              "fp": 0,
+              "fn": 518,
+              "precision": 1.0,
+              "recall": 0.1309,
+              "f1": 0.2315
+            },
+            "pythonbytes": {
+              "tp": 322,
+              "fp": 0,
+              "fn": 173,
+              "precision": 1.0,
+              "recall": 0.6505,
+              "f1": 0.7882
+            },
+            "realpython": {
+              "tp": 9,
+              "fp": 2,
+              "fn": 5,
+              "precision": 0.8182,
+              "recall": 0.6429,
+              "f1": 0.72
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.6955
+        },
+        {
+          "threshold": 0.8,
+          "tp": 404,
+          "fp": 3,
+          "fn": 930,
+          "precision": 0.9926,
+          "recall": 0.3028,
+          "f1": 0.4641,
+          "by_source": {
+            "cloudflare": {
+              "tp": 8,
+              "fp": 0,
+              "fn": 11,
+              "precision": 1.0,
+              "recall": 0.4211,
+              "f1": 0.5926
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 28,
+              "precision": 1.0,
+              "recall": 0.0667,
+              "f1": 0.125
+            },
+            "jvns": {
+              "tp": 59,
+              "fp": 0,
+              "fn": 537,
+              "precision": 1.0,
+              "recall": 0.099,
+              "f1": 0.1802
+            },
+            "pythonbytes": {
+              "tp": 147,
+              "fp": 0,
+              "fn": 348,
+              "precision": 1.0,
+              "recall": 0.297,
+              "f1": 0.4579
+            },
+            "realpython": {
+              "tp": 8,
+              "fp": 2,
+              "fn": 6,
+              "precision": 0.8,
+              "recall": 0.5714,
+              "f1": 0.6667
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.6219
+        }
+      ]
+    }
+  ],
+  "data_sha256": "5cd445174fb399122dda9bd738683e46222c04380fd5c6655700ef869a2b09a8",
+  "seconds": 20.256,
+  "origin_weights": {
+    "index": 0.75,
+    "cleaneval": 0.1,
+    "authored": 0.15
+  },
+  "promotion_ready": true,
+  "model_bytes": 103896
+}

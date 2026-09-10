@@ -1,0 +1,47 @@
+{
+  "asura": {
+    "url": "https://asurascans.com/comics/the-nebulas-civilization-53fc8424",
+    "count": 140,
+    "reported_count": 140,
+    "pages": 1,
+    "methods": [
+      "page"
+    ],
+    "warnings": [],
+    "order": "number",
+    "first_url": "https://asurascans.com/comics/the-nebulas-civilization-53fc8424/chapter/1",
+    "last_url": "https://asurascans.com/comics/the-nebulas-civilization-53fc8424/chapter/140"
+  },
+  "royalroad": {
+    "url": "https://www.royalroad.com/fiction/21220/mother-of-learning",
+    "count": 109,
+    "reported_count": 109,
+    "pages": 2,
+    "methods": [
+      "page",
+      "feed"
+    ],
+    "warnings": [],
+    "order": "date",
+    "first_url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/301778/1-good-morning-brother",
+    "last_url": "https://www.royalroad.com/fiction/21220/mother-of-learning/chapter/1269041/new-story-is-out-zenith-of-sorcery"
+  },
+  "youtube": {
+    "url": "https://www.youtube.com/channel/UCRIgIJQWuBJ0Cv_VlU3USNA",
+    "count": 130,
+    "reported_count": null,
+    "pages": 2,
+    "methods": [
+      "page",
+      "embedded data",
+      "feed",
+      "YouTube archive"
+    ],
+    "warnings": [
+      "Some publication dates are unavailable. Source order is used where needed."
+    ],
+    "order": "source",
+    "first_url": "https://www.youtube.com/watch?v=FHoFLsb-2A8",
+    "last_url": "https://www.youtube.com/watch?v=eUJKa3UqJDc"
+  }
+}

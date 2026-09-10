@@ -1,4 +1,4 @@
-export const serverOrigin = 'http://localhost:8080'
+export const serverOrigin = 'http://127.0.0.1:8000/'
 
 export function http(method, url, body, content = 'application/json') {
   if (!url.includes('http')) {

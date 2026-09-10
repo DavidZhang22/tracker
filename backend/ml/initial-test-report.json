@@ -1,0 +1,122 @@
+{
+  "split": "test",
+  "model_id": "mlp-8-b223bb65103d",
+  "baseline": {
+    "tp": 3287,
+    "fp": 47,
+    "fn": 42,
+    "precision": 0.9859,
+    "recall": 0.9874,
+    "f1": 0.9866,
+    "by_source": {
+      "go": {
+        "tp": 10,
+        "fp": 1,
+        "fn": 0,
+        "precision": 0.9091,
+        "recall": 1.0,
+        "f1": 0.9524
+      },
+      "planetpython": {
+        "tp": 1,
+        "fp": 46,
+        "fn": 24,
+        "precision": 0.0213,
+        "recall": 0.04,
+        "f1": 0.0278
+      },
+      "xkcd": {
+        "tp": 3276,
+        "fp": 0,
+        "fn": 18,
+        "precision": 1.0,
+        "recall": 0.9945,
+        "f1": 0.9973
+      }
+    },
+    "macro_f1": 0.6592
+  },
+  "assisted": {
+    "tp": 3287,
+    "fp": 47,
+    "fn": 42,
+    "precision": 0.9859,
+    "recall": 0.9874,
+    "f1": 0.9866,
+    "by_source": {
+      "go": {
+        "tp": 10,
+        "fp": 1,
+        "fn": 0,
+        "precision": 0.9091,
+        "recall": 1.0,
+        "f1": 0.9524
+      },
+      "planetpython": {
+        "tp": 1,
+        "fp": 46,
+        "fn": 24,
+        "precision": 0.0213,
+        "recall": 0.04,
+        "f1": 0.0278
+      },
+      "xkcd": {
+        "tp": 3276,
+        "fp": 0,
+        "fn": 18,
+        "precision": 1.0,
+        "recall": 0.9945,
+        "f1": 0.9973
+      }
+    },
+    "macro_f1": 0.6592
+  },
+  "classifier_alone": {
+    "tp": 18,
+    "fp": 1,
+    "fn": 3311,
+    "precision": 0.9474,
+    "recall": 0.0054,
+    "f1": 0.0108,
+    "by_source": {
+      "go": {
+        "tp": 6,
+        "fp": 1,
+        "fn": 4,
+        "precision": 0.8571,
+        "recall": 0.6,
+        "f1": 0.7059
+      },
+      "planetpython": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 13,
+        "precision": 1.0,
+        "recall": 0.48,
+        "f1": 0.6486
+      },
+      "xkcd": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3294,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    "macro_f1": 0.4515
+  },
+  "parse_seconds": {
+    "xkcd-off": 1.759,
+    "xkcd-on": 2.2719,
+    "go-off": 0.0409,
+    "go-on": 0.057,
+    "planetpython-off": 0.4848,
+    "planetpython-on": 0.6477
+  },
+  "unlabelled_predictions": {
+    "xkcd": 0,
+    "go": 0,
+    "planetpython": 0
+  }
+}

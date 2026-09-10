@@ -1,0 +1,14 @@
+{
+  "model_id": "context-trees-numeric-2a106aa097f5",
+  "artifact_bytes": 105310,
+  "model_allocated_bytes": 601014,
+  "model_load_peak_bytes": 712342,
+  "feature_ms_1000": 424.57,
+  "inference_ms_1000": 86.75,
+  "training_libraries_loaded": false,
+  "process_peak_rss_kib": 48900,
+  "container_memory_mib": 128,
+  "container_cpus": 1,
+  "network_enabled": false,
+  "vm_available_ram_mib": 14884
+}
