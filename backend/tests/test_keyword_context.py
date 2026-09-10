@@ -87,6 +87,21 @@ def test_malformed_neighbor_url_does_not_break_valid_context():
     assert len(rows) == 1 and rows[0].number == 1
 
 
+def test_context_budget_falls_back_to_own_text_without_expanding_scope(monkeypatch):
+    import app.tracker.record_context as module
+
+    monkeypatch.setattr(module, "MAX_LINKS", 1)
+    soup = BeautifulSoup(
+        '<article><a href="/1">Chapter 1</a><span>English</span></article><article><a href="/2">Chapter 2</a><span>French</span></article>',
+        "html.parser",
+    )
+    context = RecordContext(soup)
+    first, second = soup.select("a")
+    assert "English" in context.text(first)
+    assert context.text(second) == "Chapter 2"
+    assert len(context.selected) == 1
+
+
 async def test_structured_feed_keywords_and_empty_matches():
     payload = json.dumps(
         {

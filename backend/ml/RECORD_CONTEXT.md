@@ -56,7 +56,7 @@ The exported model agrees with sklearn probabilities within 0.000001.
 
 Limits remain: visually positioned elements with no useful DOM relationship,
 ambiguous unwrapped labels, and unseen widget layouts can omit context. Two
-complex GitHub release cases remain conservative misses in the evaluation set.
+complex GitHub release contexts were not fully recovered in the evaluation set.
 The scanner does not invent metadata when it cannot associate it confidently.
 
 ## MangaDex
@@ -94,3 +94,13 @@ runtime Docker image. The model ID participates in scan caching. The local
 4,999-link benchmark recovered all contexts in 15.28 seconds; model loading used
 about 34 KB of Python allocations. The Azure benchmark report records deployment
 memory and timing under a 512 MB container limit.
+
+Azure verification completed with a 512 MB container and one CPU: the 4,999-link
+benchmark took 15.128 seconds with 67.3 MiB peak process RSS. The live MangaDex
+scan returned 1,917 dated chapters in four requests; Italian returned 112 in one
+request, and English returned zero in one request. Empty-result caching, saved
+keywords, range updates, and progress-preserving refresh all passed. Reports:
+`record-candidate/context-benchmark.json` and `record-candidate/context-live-check.json`.
+
+Context inference is capped at 4,999 anchors per page; excess anchors retain only
+their own bounded text. This bounds model work even on unexpectedly large pages.

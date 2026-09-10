@@ -12,6 +12,7 @@ from urllib.parse import urlsplit
 from bs4 import Tag
 
 from .keywords import language_codes, language_text
+from .limits import MAX_LINKS
 
 FEATURES = (
     "distance",
@@ -340,6 +341,8 @@ class RecordContext:
     def region(self, anchor):
         if id(anchor) in self.selected:
             return self.selected[id(anchor)]
+        if len(self.selected) >= MAX_LINKS:
+            return anchor, None
         self.selected[id(anchor)] = self._region(anchor)
         return self.selected[id(anchor)]
 
@@ -389,6 +392,8 @@ class RecordContext:
 
     def text(self, anchor):
         record, neighbor = self.region(anchor)
+        if id(anchor) not in self.selected:
+            return snippets(anchor, 240)
         parts = [self.info(record)["text"]]
         if neighbor is not None:
             parts.append(self.info(neighbor)["text"])

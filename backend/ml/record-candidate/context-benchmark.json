@@ -1,0 +1,11 @@
+{
+  "model_id": "record-mlp32-e4714e194795",
+  "model_bytes": 10294,
+  "model_allocated_bytes": 34117,
+  "model_load_peak_bytes": 45517,
+  "links": 4999,
+  "matched": 4999,
+  "extraction_seconds": 15.128,
+  "training_libraries_loaded": false,
+  "peak_process_rss_mib": 67.3
+}
