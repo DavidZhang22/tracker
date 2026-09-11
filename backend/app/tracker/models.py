@@ -109,6 +109,7 @@ class Scan:
     order_hint: str = ""
     keywords: str = ""
     unfiltered_count: int | None = None
+    suggestions: list[dict] | None = None
 
     def to_dict(self):
         return asdict(self)

@@ -15,6 +15,7 @@ from .keywords import language_text
 from .link_model import page_scores
 from .models import Entry, Scan, date_rank, date_value, sequence_value
 from .record_context import RecordContext
+from .suggestions import observed_sources
 from .tables import anchor_label, table_context
 from .urls import DiscoveryError, canonical_url, content_key
 
@@ -325,7 +326,9 @@ def parse_page(text, source, selector="", include_path=""):
         else urlsplit(source).hostname
     )
     scan = Scan(source, title, kind, methods=["page"])
+    scan.suggestions = observed_sources(soup, source, kind)
     if not selector and (embedded := embedded_series(soup, source, title)):
+        embedded.suggestions = scan.suggestions
         if include_path:
             embedded.entries = [e for e in embedded.entries if include_path in e.url]
             if len(embedded.entries) < embedded.expected_count:

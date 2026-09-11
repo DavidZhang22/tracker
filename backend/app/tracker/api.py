@@ -1,16 +1,23 @@
 import asyncio
+import json
 import sqlite3
+from collections import deque
+from contextlib import aclosing
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, HTTPException, Query, Request
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
+from starlette.background import BackgroundTask
 
 from .keywords import terms
 from .limits import MAX_ITEMS, MAX_LINKS, bounded_scan
 from .store import ItemAdditionCooldown
+from .suggestions import collect_cached, ranked_suggestions
 from .urls import DiscoveryError
 
 router = APIRouter(prefix="/api")
+REFRESH_HEARTBEAT_SECONDS = 15
 
 
 class ScanRequest(BaseModel):
@@ -35,6 +42,38 @@ class ItemPatch(BaseModel):
     selector: str | None = Field(default=None, max_length=300)
     include_path: str | None = Field(default=None, max_length=300)
     keywords: str | None = Field(default=None, max_length=300)
+
+
+class SuggestionFeedback(BaseModel):
+    dismissed: bool
+
+
+@router.get("/suggestions")
+def suggestions(request: Request):
+    return ranked_suggestions(request.state.store)
+
+
+@router.post("/suggestions/rebuild")
+async def rebuild_suggestions(request: Request):
+    store = request.state.store
+    cache = getattr(
+        getattr(request.app.state.discoverer, "fetcher", None), "cache", None
+    )
+    # Reuse bounded account/global work admission, including its hourly quota.
+    with request.app.state.scan_guard.operation(store.path):
+        info = await asyncio.to_thread(collect_cached, store, cache)
+        return await asyncio.to_thread(ranked_suggestions, store) | info
+
+
+@router.patch("/suggestions/{sid}")
+def suggestion_feedback(sid: str, body: SuggestionFeedback, request: Request):
+    with request.state.store.connection() as db:
+        result = db.execute(
+            "UPDATE suggestions SET dismissed=? WHERE id=?", (body.dismissed, sid)
+        )
+        if not result.rowcount:
+            raise KeyError("Suggestion not found.")
+    return {"updated": True}
 
 
 class LinkPatch(BaseModel):
@@ -202,11 +241,13 @@ def acknowledge(iid: str, request: Request):
     return request.state.store.item(iid)
 
 
-async def refresh_item(iid, app, store):
+async def refresh_item(iid, app, store, skip_unavailable=False):
     # Fixed-size lock striping avoids both overlapping merges and unbounded lock storage.
     lock = app.state.refresh_locks[hash(iid) % 64]
     async with lock:
         item = store.item(iid)
+        if skip_unavailable and (item["deleted"] or item["ignored"]):
+            return {"id": iid, "new_count": 0, "ok": True, "skipped": True}
         if item["deleted"]:
             raise DiscoveryError("Restore this item from Trash before refreshing it.")
         try:
@@ -237,6 +278,8 @@ async def refresh_item(iid, app, store):
                 "requests_made": result.requests_made,
             }
         except DiscoveryError as exc:
+            if store.item(iid)["deleted"]:
+                return {"id": iid, "new_count": 0, "ok": True, "skipped": True}
             store.failure(iid, str(exc))
             return {"id": iid, "new_count": 0, "ok": False, "error": str(exc)}
 
@@ -247,32 +290,149 @@ async def refresh_one(iid: str, request: Request):
         return await refresh_item(iid, request.app, request.state.store)
 
 
+def refresh_summary(results, total):
+    checked = [r for r in results if not r.get("skipped")]
+    return {
+        "checked": len(checked),
+        "failed": sum(not r["ok"] for r in checked),
+        "new_count": sum(r["new_count"] for r in checked),
+        "cached": sum(r.get("cached", False) for r in checked),
+        "skipped": len(results) - len(checked),
+        "remaining": total - len(results),
+    }
+
+
+async def refresh_events(rows, app, store):
+    """Two bounded workers per library; emit each committed result as it finishes."""
+    pending, completed = deque(rows), []
+    queue = asyncio.Queue()
+
+    async def worker():
+        try:
+            while pending:
+                row = pending.popleft()
+                current = store.item(row["id"])
+                if current["deleted"] or current["ignored"]:
+                    result = {
+                        "id": row["id"],
+                        "ok": True,
+                        "new_count": 0,
+                        "skipped": True,
+                    }
+                else:
+                    result = await refresh_item(
+                        row["id"], app, store, skip_unavailable=True
+                    )
+                await queue.put((result, store.item(row["id"])))
+        except Exception as exc:
+            await queue.put(exc)
+        finally:
+            await queue.put(None)
+
+    tasks = [asyncio.create_task(worker()) for _ in range(min(2, len(rows)))]
+    try:
+        yield {"type": "start", "total": len(rows)}
+        try:
+            async with asyncio.timeout(600):
+                running = len(tasks)
+                while running:
+                    try:
+                        event = await asyncio.wait_for(
+                            queue.get(), REFRESH_HEARTBEAT_SECONDS
+                        )
+                    except TimeoutError:
+                        yield {"type": "heartbeat"}
+                        continue
+                    if event is None:
+                        running -= 1
+                    elif isinstance(event, Exception):
+                        raise event
+                    else:
+                        result, item = event
+                        completed.append(result)
+                        yield {
+                            "type": "item",
+                            "item": item,
+                            "result": result,
+                            **refresh_summary(completed, len(rows)),
+                        }
+        except TimeoutError:
+            pass
+        yield {
+            "type": "complete",
+            "results": completed,
+            **refresh_summary(completed, len(rows)),
+        }
+    finally:
+        for task in tasks:
+            task.cancel()
+        await asyncio.gather(*tasks, return_exceptions=True)
+
+
 @router.post("/refresh")
-async def refresh_all(request: Request):
+async def refresh_all(request: Request, stream: bool = False):
     rows = [i for i in request.state.store.items() if not i["ignored"]]
     if len(rows) > MAX_ITEMS:
         raise HTTPException(
             422,
             f"Refresh all supports up to {MAX_ITEMS} active items. Refresh individual items instead.",
         )
-    results = []
-    with request.app.state.scan_guard.operation(
+    admission = request.app.state.scan_guard.operation(
         request.state.store.path, cost=max(1, len(rows))
-    ):
-        # Sequential within each account; other accounts retain their scan slots.
+    )
+    if not stream:
+        with admission:
+            async with aclosing(
+                refresh_events(rows, request.app, request.state.store)
+            ) as events:
+                async for event in events:
+                    if event["type"] == "complete":
+                        return {k: v for k, v in event.items() if k != "type"}
+
+    # Admit before headers so overlapping scans and quota errors remain HTTP 429.
+    admission.__enter__()
+    released = False
+
+    def release():
+        nonlocal released
+        if not released:
+            released = True
+            admission.__exit__(None, None, None)
+
+    async def generate():
+        events = refresh_events(rows, request.app, request.state.store)
         try:
-            async with asyncio.timeout(600):
-                for row in rows:
-                    results.append(
-                        await refresh_item(row["id"], request.app, request.state.store)
-                    )
-        except TimeoutError:
-            pass  # Completed merges remain saved; report the unprocessed remainder.
-    return {
-        "checked": len(results),
-        "failed": sum(not r["ok"] for r in results),
-        "new_count": sum(r["new_count"] for r in results),
-        "cached": sum(r.get("cached", False) for r in results),
-        "results": results,
-        "remaining": len(rows) - len(results),
-    }
+            async for event in events:
+                yield json.dumps(event) + "\n"
+        except sqlite3.DatabaseError:
+            yield (
+                json.dumps(
+                    {
+                        "type": "error",
+                        "detail": "Storage is temporarily unavailable. Completed updates were kept. Try again shortly.",
+                    }
+                )
+                + "\n"
+            )
+        except Exception:
+            yield (
+                json.dumps(
+                    {
+                        "type": "error",
+                        "detail": "Refresh stopped. Completed updates were kept. Please try again.",
+                    }
+                )
+                + "\n"
+            )
+        finally:
+            try:
+                await events.aclose()
+            finally:
+                release()
+
+    return StreamingResponse(
+        generate(),
+        media_type="application/x-ndjson",
+        headers={"X-Accel-Buffering": "no"},
+        background=BackgroundTask(release),
+    )

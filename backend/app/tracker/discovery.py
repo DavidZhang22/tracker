@@ -164,7 +164,7 @@ class Discoverer:
                         keywords,
                         model_cache_tag(),
                         record_model["model_id"] if record_model else "record-fallback",
-                        "context-keywords-v1",
+                        "context-keywords-suggestions-v2",
                     ]
                 ).encode()
             ).hexdigest()

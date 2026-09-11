@@ -12,6 +12,19 @@ fs.mkdirSync(output, { recursive: true });
 
 function fixtureApi() {
   let signedIn = true;
+  let suggestionDismissed = false;
+  const suggestion = {
+    id: "suggestion1",
+    url: "https://fiction.example/series/forest-witch",
+    title:
+      "Forest Witch — a story of magic, science, and unexpected discoveries",
+    kind: "novel",
+    summary:
+      "A traveler explores a forest with changing seasons and forgotten magic.",
+    source_id: "one",
+    source_title: "Climbing the Tower with Time-Stop Ability",
+    reason: "From a favorite source",
+  };
   const calls = [];
   const links = Array.from({ length: 65 }, (_, index) => ({
     id: `link${index + 1}`,
@@ -90,6 +103,40 @@ function fixtureApi() {
       calls.push({ path: routePath, method, body });
       let data;
       let status = 200;
+      if (routePath === "/refresh" && url.searchParams.get("stream")) {
+        const events = [
+          { type: "start", total: items.length },
+          ...items.map((item, index) => ({
+            type: "item",
+            item,
+            checked: index + 1,
+            new_count: 10,
+          })),
+          { type: "complete", checked: items.length, new_count: 10 },
+        ];
+        return route.fulfill({
+          status: 200,
+          contentType: "application/x-ndjson",
+          body: events.map((event) => JSON.stringify(event)).join("\n") + "\n",
+        });
+      }
+      if (routePath === "/suggestions/suggestion1" && method === "PATCH") {
+        suggestionDismissed = body.dismissed;
+        return route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: "{}",
+        });
+      }
+      if (routePath === "/suggestions" || routePath === "/suggestions/rebuild")
+        return route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify({
+            suggestions: suggestionDismissed ? [] : [suggestion],
+            pages_used: 1,
+          }),
+        });
       if (routePath === "/auth/status")
         data = {
           required: true,
@@ -274,6 +321,31 @@ async function check() {
         .getByRole("link", { name: api.item.title, exact: true })
         .waitFor();
       await withinViewport(page, `${width} library`);
+      await page
+        .getByRole("button", { name: "Refresh all", exact: true })
+        .click();
+      const notification = page
+        .locator(".notice")
+        .filter({ hasText: "10 new links. 3 items checked." });
+      await notification.waitFor();
+      const contentBox = await notification
+        .locator(".notice-content")
+        .boundingBox();
+      const dismissBox = await notification
+        .getByRole("button", { name: "Dismiss message" })
+        .boundingBox();
+      assert(
+        Math.abs(
+          contentBox.y +
+            contentBox.height / 2 -
+            dismissBox.y -
+            dismissBox.height / 2,
+        ) < 1,
+        "Notification text should be vertically centered with its dismiss control",
+      );
+      await notification
+        .getByRole("button", { name: "Dismiss message" })
+        .click();
       assert.equal(await page.locator(".small-dot").count(), 0);
       assert.equal(
         await page
@@ -510,6 +582,32 @@ async function check() {
           "A collection with a very long title " + "long-title-".repeat(12),
         );
       await withinViewport(page, `${width} long form`);
+      await page.goto(base + "/suggestions");
+      await page.getByRole("link", { name: /Forest Witch/ }).waitFor();
+      await withinViewport(page, `${width} suggestions`);
+      await page.screenshot({
+        path: path.join(output, `suggestions-${width}.png`),
+      });
+      await page
+        .getByRole("button", { name: /Not interested in Forest Witch/ })
+        .click();
+      await page.getByRole("button", { name: "Undo", exact: true }).click();
+      await page.getByRole("link", { name: /Forest Witch/ }).waitFor();
+      await page.goto(base + "/?filter=trash");
+      await page
+        .getByRole("heading", { name: "Trash is empty", exact: true })
+        .waitFor();
+      assert.equal(
+        await page.getByText("Try a source", { exact: true }).count(),
+        0,
+      );
+      assert.equal(
+        await page
+          .getByRole("button", { name: "Refresh all", exact: true })
+          .count(),
+        0,
+      );
+      await withinViewport(page, `${width} empty trash`);
       api.signOut();
       await page.goto(base + "/account");
       await page

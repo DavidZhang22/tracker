@@ -22,8 +22,9 @@ import {
   MenuIcon,
   XIcon,
   ClockIcon,
+  LightBulbIcon,
 } from "@heroicons/react/outline";
-import { api, patch, post, examples, checked } from "./api";
+import { api, patch, post, examples, checked, refreshLibrary } from "./api";
 import { AuthBoundary, AccountPage, useAuth } from "./Auth";
 import { Notice, ScanNote } from "./Notice";
 import {
@@ -142,6 +143,18 @@ export function Shell() {
               <Icon as={EyeOffIcon} />
               Ignored
             </Link>
+            <Link
+              to="/suggestions"
+              className={
+                location.pathname === "/suggestions" ? "active" : undefined
+              }
+              aria-current={
+                location.pathname === "/suggestions" ? "page" : undefined
+              }
+            >
+              <Icon as={LightBulbIcon} />
+              Suggestions
+            </Link>
           </nav>
           <Link className="button primary side-add" to="/add">
             <Icon as={PlusIcon} />
@@ -180,6 +193,14 @@ export function Shell() {
             <Route path="/" element={<Library />} />
             <Route path="/account" element={<AccountPage />} />
             <Route
+              path="/suggestions"
+              element={
+                <React.Suspense fallback={<p>Loading…</p>}>
+                  <SuggestionsPage />
+                </React.Suspense>
+              }
+            />
+            <Route
               path="/add"
               element={
                 <React.Suspense fallback={<p>Loading…</p>}>
@@ -212,6 +233,7 @@ export function Shell() {
 }
 const AddPage = React.lazy(() => import("./Pages/AddPage"));
 const ItemPage = React.lazy(() => import("./Pages/ItemPage"));
+const SuggestionsPage = React.lazy(() => import("./Pages/SuggestionsPage"));
 export function Library() {
   const [items, setItems] = useState([]),
     [loading, setLoading] = useState(true),
@@ -222,17 +244,34 @@ export function Library() {
     [kind, setKind] = useState("all"),
     [sort, setSort] = useState("recent");
   const [busy, setBusy] = useState(false),
+    [refreshing, setRefreshing] = useState(false),
     [error, setError] = useState(""),
     [message, setMessage] = useState("");
+  const refreshController = useRef(null),
+    trashView = useRef(trash),
+    loadVersion = useRef(0);
+  trashView.current = trash;
+  useEffect(
+    () => () => {
+      refreshController.current?.abort();
+      loadVersion.current++;
+    },
+    [],
+  );
   const selection = useSelection(`${filter}:${search}:${kind}`);
   const load = useCallback(async () => {
+    const version = ++loadVersion.current;
     try {
-      setItems(await api(trash ? "/items?trash=true" : "/items"));
+      const next = trash
+        ? (await Promise.all([api("/items"), api("/items?trash=true")])).flat()
+        : await api("/items");
+      if (version !== loadVersion.current) return;
+      setItems([...new Map(next.map((item) => [item.id, item])).values()]);
       setError("");
     } catch (e) {
-      setError(e.message);
+      if (version === loadVersion.current) setError(e.message);
     } finally {
-      setLoading(false);
+      if (version === loadVersion.current) setLoading(false);
     }
   }, [trash]);
   useEffect(() => {
@@ -247,19 +286,36 @@ export function Library() {
     }
   };
   const refresh = async () => {
-    setBusy(true);
+    if (refreshController.current) return;
+    const controller = new AbortController();
+    refreshController.current = controller;
+    setRefreshing(true);
     setError("");
     setMessage("");
     try {
-      const r = await post("/refresh");
-      await load();
-      setMessage(
-        `${r.new_count} new links. ${r.checked} items checked.${r.cached ? ` ${r.cached} recent scans reused (ten-minute cache).` : ""}${r.failed ? ` ${r.failed} checks could not finish. Saved links were kept.` : ""}${r.remaining ? ` Refresh paused after ten minutes; ${r.remaining} items remain. Refresh those items individually.` : ""}`,
-      );
+      await refreshLibrary((r) => {
+        if (controller.signal.aborted) return;
+        if (r.type === "item" && !trashView.current) {
+          setItems((current) =>
+            current
+              .map((i) => (i.id === r.item.id ? r.item : i))
+              .filter((i) => !i.deleted),
+          );
+        }
+        if (r.type === "start") setMessage(`Checking ${r.total} items…`);
+        else
+          setMessage(
+            `${r.new_count} new ${r.new_count === 1 ? "link" : "links"}. ${r.checked} ${r.checked === 1 ? "item" : "items"} checked.${r.type !== "complete" ? " Refreshing…" : ""}${r.failed ? ` ${r.failed} checks could not finish. Saved links were kept.` : ""}${r.type === "complete" && r.remaining ? ` Refresh paused; ${r.remaining} items remain.` : ""}`,
+          );
+      }, controller.signal);
     } catch (e) {
-      setError(e.message);
+      if (e.name !== "AbortError") {
+        setError(e.message);
+        setMessage("");
+      }
     } finally {
-      setBusy(false);
+      refreshController.current = null;
+      if (!controller.signal.aborted) setRefreshing(false);
     }
   };
   const selectedAction = async (action, ids) => {
@@ -295,15 +351,22 @@ export function Library() {
     }
   };
   const active = items.filter((i) => !i.ignored && !i.deleted);
+  const libraryItems = items.filter((i) => !i.deleted);
+  const viewItems = trash ? items.filter((i) => i.deleted) : libraryItems;
   const counts = {
-    all: active.length,
+    all: libraryItems.length,
     new: active.filter((i) => i.new_count > 0).length,
     unread: active.filter((i) => i.unread_count > 0).length,
     favorites: active.filter((i) => i.favorite).length,
-    ignored: items.filter((i) => i.ignored).length,
+    ignored: libraryItems.filter((i) => i.ignored).length,
   };
   const visible = items
-    .filter((i) => trash || (filter === "ignored" ? i.ignored : !i.ignored))
+    .filter((i) =>
+      trash
+        ? i.deleted
+        : !i.deleted &&
+          (filter === "all" || (filter === "ignored" ? i.ignored : !i.ignored)),
+    )
     .filter((i) =>
       filter === "new"
         ? i.new_count > 0
@@ -317,14 +380,17 @@ export function Library() {
     .filter((i) =>
       `${i.title} ${i.url}`.toLowerCase().includes(search.toLowerCase()),
     )
-    .sort((a, b) =>
-      sort === "title"
-        ? a.title.localeCompare(b.title)
-        : sort === "unread"
-          ? b.unread_count - a.unread_count
-          : (b.latest_discovered_at || b.created_at).localeCompare(
-              a.latest_discovered_at || a.created_at,
-            ),
+    .sort(
+      (a, b) =>
+        Number(a.ignored) - Number(b.ignored) ||
+        Number(b.favorite) - Number(a.favorite) ||
+        (sort === "title"
+          ? a.title.localeCompare(b.title)
+          : sort === "unread"
+            ? b.unread_count - a.unread_count
+            : (b.latest_discovered_at || b.created_at).localeCompare(
+                a.latest_discovered_at || a.created_at,
+              )),
     );
   return (
     <>
@@ -333,22 +399,26 @@ export function Library() {
           <h1>
             {trash ? "Trash" : "Library"}{" "}
             <span className="heading-count">
-              {trash ? items.length : active.length}
+              {trash
+                ? items.filter((i) => i.deleted).length
+                : libraryItems.length}
             </span>
           </h1>
         </div>
         <div className="actions">
-          <button
-            className="button"
-            onClick={refresh}
-            disabled={busy || !active.length}
-          >
-            <Icon
-              as={RefreshIcon}
-              className={`icon ${busy ? "spinning" : ""}`}
-            />
-            {busy ? "Refreshing…" : "Refresh all"}
-          </button>
+          {!trash && (
+            <button
+              className="button"
+              onClick={refresh}
+              disabled={busy || refreshing || !active.length}
+            >
+              <Icon
+                as={RefreshIcon}
+                className={`icon ${refreshing ? "spinning" : ""}`}
+              />
+              {refreshing ? "Refreshing…" : "Refresh all"}
+            </button>
+          )}
           <Link className="button primary" to="/add">
             <Icon as={PlusIcon} />
             Add item
@@ -555,24 +625,32 @@ export function Library() {
               <Icon as={CollectionIcon} />
             </span>
             <h2>
-              {items.length ? "No matching items" : "Start your collection"}
+              {viewItems.length
+                ? "No matching items"
+                : trash
+                  ? "Trash is empty"
+                  : "Start your collection"}
             </h2>
             <p>
-              {items.length
+              {viewItems.length
                 ? "Try another filter or search."
-                : "Add a series, channel, blog, or feed to keep track of new releases."}
+                : trash
+                  ? "Deleted items appear here."
+                  : "Add a series, channel, blog, or feed to keep track of new releases."}
             </p>
-            <Link className="button primary" to="/add">
-              <Icon as={PlusIcon} />
-              Add item
-            </Link>
+            {!trash && (
+              <Link className="button primary" to="/add">
+                <Icon as={PlusIcon} />
+                Add item
+              </Link>
+            )}
           </div>
         )}
         <div className="panel-footer">
           <span>{visible.length} items</span>
         </div>
       </div>
-      {!items.length && !loading && !error && (
+      {!trash && !items.length && !loading && !error && (
         <div className="examples">
           <h2>Try a source</h2>
           <div className="example-grid">

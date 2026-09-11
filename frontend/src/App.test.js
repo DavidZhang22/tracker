@@ -11,11 +11,12 @@ import AddPage from "./Pages/AddPage";
 import ItemPage from "./Pages/ItemPage";
 import { LinkDate } from "./RowTools";
 import { Notice } from "./Notice";
-import { api, patch, post } from "./api";
+import { api, patch, post, refreshLibrary } from "./api";
 jest.mock("./api", () => ({
   api: jest.fn(),
   patch: jest.fn(),
   post: jest.fn(),
+  refreshLibrary: jest.fn(),
   examples: [],
   checked: () => "Today",
   day: () => "Sep 8, 2026",
@@ -51,6 +52,128 @@ const link = {
   number: 1,
 };
 beforeEach(() => jest.clearAllMocks());
+
+test("all items includes ignored last, favorites first, and excludes Trash", async () => {
+  api.mockResolvedValue([
+    { ...item, id: "normal", title: "A normal source" },
+    {
+      ...item,
+      id: "ignored",
+      title: "An ignored favorite",
+      favorite: true,
+      ignored: true,
+    },
+    { ...item, id: "favorite", title: "Z favorite source", favorite: true },
+    { ...item, id: "trash", title: "Trashed source", deleted: true },
+  ]);
+  render(
+    <MemoryRouter>
+      <Library />
+    </MemoryRouter>,
+  );
+  await screen.findByText("Z favorite source");
+  const titles = () =>
+    screen
+      .getAllByRole("article")
+      .map((row) => row.querySelector(".item-title").textContent);
+  expect(titles()).toEqual([
+    "Z favorite source",
+    "A normal source",
+    "An ignored favorite",
+  ]);
+  expect(
+    screen.getByRole("button", { name: "All items 3" }),
+  ).toBeInTheDocument();
+  fireEvent.change(screen.getByLabelText("Sort items"), {
+    target: { value: "title" },
+  });
+  expect(titles()).toEqual([
+    "Z favorite source",
+    "A normal source",
+    "An ignored favorite",
+  ]);
+  expect(screen.queryByText("Trashed source")).not.toBeInTheDocument();
+});
+
+test("empty Trash has no example sources or refresh control", async () => {
+  api.mockResolvedValue([]);
+  render(
+    <MemoryRouter initialEntries={["/?filter=trash"]}>
+      <Library />
+    </MemoryRouter>,
+  );
+  expect(await screen.findByText("Trash is empty")).toBeInTheDocument();
+  expect(screen.queryByText("Try a source")).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole("button", { name: "Refresh all" }),
+  ).not.toBeInTheDocument();
+  expect(api).toHaveBeenCalledWith("/items?trash=true");
+});
+
+test("each refresh completion updates its row before the batch finishes", async () => {
+  api.mockResolvedValue([item, { ...item, id: "slow", title: "Slow source" }]);
+  let finish;
+  const pending = new Promise((resolve) => {
+    finish = resolve;
+  });
+  refreshLibrary.mockImplementation(async (receive) => {
+    receive({ type: "start", total: 2 });
+    receive({
+      type: "item",
+      item: { ...item, new_count: 10, unread_count: 12 },
+      checked: 1,
+      new_count: 10,
+    });
+    await pending;
+    receive({ type: "complete", checked: 2, new_count: 10 });
+  });
+  render(
+    <MemoryRouter>
+      <Library />
+    </MemoryRouter>,
+  );
+  await screen.findByText("My series");
+  await click(screen.getByRole("button", { name: "Refresh all" }));
+  expect(screen.getByText("12 unread")).toBeInTheDocument();
+  expect(
+    screen.getByText("10 new links. 1 item checked. Refreshing…"),
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole("button", { name: "Favorite My series" }),
+  ).toBeEnabled();
+  expect(screen.getByRole("button", { name: "Refreshing…" })).toBeDisabled();
+  await act(async () => finish());
+  expect(
+    screen.getByText("10 new links. 2 items checked."),
+  ).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Refresh all" })).toBeEnabled();
+});
+
+test("interrupted refresh keeps completed row updates and clears its busy status", async () => {
+  api.mockResolvedValue([item]);
+  refreshLibrary.mockImplementation(async (receive) => {
+    receive({
+      type: "item",
+      item: { ...item, unread_count: 8 },
+      checked: 1,
+      new_count: 6,
+    });
+    throw new Error("Refresh connection closed. Completed updates were kept.");
+  });
+  render(
+    <MemoryRouter>
+      <Library />
+    </MemoryRouter>,
+  );
+  await screen.findByText("My series");
+  await click(screen.getByRole("button", { name: "Refresh all" }));
+  expect(screen.getByText("8 unread")).toBeInTheDocument();
+  expect(screen.getByRole("alert")).toHaveTextContent(
+    "Completed updates were kept.",
+  );
+  expect(screen.getByRole("button", { name: "Refresh all" })).toBeEnabled();
+  expect(screen.queryByText(/items checked/)).not.toBeInTheDocument();
+});
 async function click(element) {
   await act(async () => {
     fireEvent.click(element);

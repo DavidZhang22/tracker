@@ -18,6 +18,7 @@ from .limits import (
     bounded_scan,
 )
 from .models import date_rank, utcnow
+from .suggestions import save_observations
 from .urls import DiscoveryError, canonical_url, content_key
 
 
@@ -65,6 +66,16 @@ class Store:
             CREATE TABLE IF NOT EXISTS addition_cooldown (
               id INTEGER PRIMARY KEY CHECK(id=1), completed_at REAL NOT NULL
             );
+            CREATE TABLE IF NOT EXISTS suggestions (
+              id TEXT PRIMARY KEY, url TEXT NOT NULL UNIQUE, title TEXT NOT NULL,
+              summary TEXT NOT NULL DEFAULT '', kind TEXT NOT NULL DEFAULT 'website',
+              found_at TEXT NOT NULL, dismissed INTEGER NOT NULL DEFAULT 0
+            );
+            CREATE TABLE IF NOT EXISTS suggestion_sources (
+              suggestion_id TEXT NOT NULL REFERENCES suggestions(id) ON DELETE CASCADE,
+              item_id TEXT NOT NULL REFERENCES items(id) ON DELETE CASCADE,
+              PRIMARY KEY(suggestion_id,item_id)
+            );
             """)
             # Additive migration: existing libraries, IDs and progress stay intact.
             additions = {
@@ -75,6 +86,7 @@ class Store:
                     "coverage": "TEXT NOT NULL DEFAULT 'unknown'",
                     "order_hint": "TEXT NOT NULL DEFAULT ''",
                     "keywords": "TEXT NOT NULL DEFAULT ''",
+                    "suggestions_checked": "REAL NOT NULL DEFAULT 0",
                 },
                 "links": {
                     "deleted": "INTEGER NOT NULL DEFAULT 0",
@@ -96,7 +108,7 @@ class Store:
                         db.execute(
                             f"ALTER TABLE {table} ADD COLUMN {name} {definition}"
                         )
-            db.execute("PRAGMA user_version=5")
+            db.execute("PRAGMA user_version=6")
         marker.touch(exist_ok=True)
 
     @contextmanager
@@ -398,18 +410,26 @@ class Store:
                 iid,
             ),
         )
+        save_observations(db, iid, scan.get("suggestions"))
         return added
 
     def merge(self, iid, scan):
         with self.connection() as db:
             # Serialize quota checks with inserts, including concurrent refreshes.
             db.execute("BEGIN IMMEDIATE")
+            row = db.execute("SELECT deleted FROM items WHERE id=?", (iid,)).fetchone()
+            if not row:
+                raise KeyError("Item not found.")
+            if row["deleted"]:
+                raise DiscoveryError(
+                    "Restore this item from Trash before refreshing it."
+                )
             return self._merge(db, iid, scan)
 
     def failure(self, iid, message):
         with self.connection() as db:
             db.execute(
-                "UPDATE items SET error=?,last_attempt_at=? WHERE id=?",
+                "UPDATE items SET error=?,last_attempt_at=? WHERE id=? AND deleted=0",
                 (message, utcnow(), iid),
             )
 
