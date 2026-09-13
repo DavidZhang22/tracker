@@ -79,9 +79,10 @@ def tokens(label, url, ancestry, heading):
     return sorted(set(result))[:220]
 
 
-def context_candidates(soup, source, limit=4000):
+def context_candidates(soup, source, limit=4000, *, tables=None):
     base = list(base_candidates(soup, source, limit))
-    tables = table_context(soup)
+    if tables is None:
+        tables = table_context(soup)
     if not base:
         return
     node_order, heading_before, previous_heading = {}, {}, None

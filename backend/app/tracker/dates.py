@@ -3,6 +3,8 @@
 import re
 from itertools import islice
 
+from bs4 import Tag
+
 from .models import date_value
 
 DATE_TEXT = re.compile(
@@ -39,9 +41,18 @@ def evidence(raw, source, kind="published"):
 def node_dates(node):
     found = []
     labeled = []
-    candidates = [node] + node.select(
-        "time, relative-time, [datetime], [data-date], [data-timestamp], [title]"
-    )
+    candidates = [node] + [
+        t
+        for t in node.descendants
+        if isinstance(t, Tag)
+        and (
+            t.name in {"time", "relative-time"}
+            or any(
+                attr in t.attrs
+                for attr in ("datetime", "data-date", "data-timestamp", "title")
+            )
+        )
+    ]
     for t in candidates:
         for attr in ("datetime", "data-date", "data-timestamp", "title"):
             if d := evidence(t.get(attr), f"{t.name}[{attr}]"):

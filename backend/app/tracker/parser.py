@@ -12,7 +12,7 @@ from .context_model import classify_context
 from .dates import DATE_TEXT, evidence, link_date
 from .embedded_series import embedded_series
 from .keywords import language_text
-from .link_model import page_scores
+from .link_model import load_model, page_scores
 from .models import Entry, Scan, date_rank, date_value, sequence_value
 from .record_context import RecordContext
 from .suggestions import observed_sources
@@ -371,11 +371,13 @@ def parse_page(text, source, selector="", include_path=""):
     scores, labels, rejected, model = ({}, {}, set(), None)
     fallback_scores, fallback_model = ({}, None)
     if not selector and kind == "website":
-        scores, labels, rejected, model = classify_context(soup, source)
+        scores, labels, rejected, model = classify_context(
+            soup, source, fallback_scores=fallback_scores, tables=tables
+        )
         if model is None:
             scores, model = page_scores(soup, source)
         else:
-            fallback_scores, fallback_model = page_scores(soup, source)
+            fallback_model = load_model()
     context_model = bool(getattr(model, "primary", False))
     all_anchors = anchors
     if not selector and kind == "website":
@@ -440,6 +442,7 @@ def parse_page(text, source, selector="", include_path=""):
     record_cache = {}
     record_context = RecordContext(soup)
     assisted_urls = set()
+    has_chapters = kind == "novel" and soup.select_one("#chapters") is not None
     for a in anchors:
         table = tables.get(id(a), {})
         if job_anchors and not selector and id(a) not in job_anchors:
@@ -516,11 +519,7 @@ def parse_page(text, source, selector="", include_path=""):
             )
         ):
             continue
-        if (
-            kind == "novel"
-            and soup.select_one("#chapters")
-            and not a.find_parent(id="chapters")
-        ):
+        if has_chapters and not a.find_parent(id="chapters"):
             continue
         date = link_date(a)
         if not date:

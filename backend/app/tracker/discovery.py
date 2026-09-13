@@ -5,6 +5,7 @@ import re
 import subprocess
 import sys
 import time
+from copy import deepcopy
 from urllib.parse import parse_qs, urlsplit
 
 from .adapters import codeforces_endpoint, codeforces_scan, wetried_scan, wetried_series
@@ -26,6 +27,27 @@ from .urls import (
     content_key,
     request_budget,
 )
+from .workers import run_blocking
+
+DISCOVERY_VERSION = "context-keywords-suggestions-v2"
+
+
+def parser_version():
+    record_model = load_record_model()
+    return [
+        model_cache_tag(),
+        record_model["model_id"] if record_model else "record-fallback",
+        DISCOVERY_VERSION,
+    ]
+
+
+def scan_from_dict(data):
+    return Scan(
+        **{
+            key: [Entry(**e) for e in value] if key == "entries" else deepcopy(value)
+            for key, value in data.items()
+        }
+    )
 
 
 def youtube_archive(url):
@@ -152,7 +174,6 @@ class Discoverer:
 
     async def _cached_scan(self, url, selector, include_path, keywords=""):
         cache = getattr(self.fetcher, "cache", None)
-        record_model = load_record_model()
         key = (
             "scan:"
             + hashlib.sha256(
@@ -162,17 +183,15 @@ class Discoverer:
                         selector,
                         include_path,
                         keywords,
-                        model_cache_tag(),
-                        record_model["model_id"] if record_model else "record-fallback",
-                        "context-keywords-suggestions-v2",
+                        *parser_version(),
                     ]
                 ).encode()
             ).hexdigest()
         )
-        cached = cache.get(key) if cache else None
+        cached = await run_blocking(cache.get, key) if cache else None
         if cached and time.time() - cached["checked"] < 600:
             data = bounded_scan(cached["scan"])
-            result = Scan(**(data | {"entries": [Entry(**e) for e in data["entries"]]}))
+            result = scan_from_dict(data)
             result.cached, result.requests_made, result.cache_hits = True, 0, 1
             return result
         budget = RequestBudget(self.max_pages)
@@ -198,7 +217,9 @@ class Discoverer:
                     or result.unfiltered_count
                     or (result.coverage == "complete" and result.expected_count == 0)
                 ):
-                    cache.put(key, {"scan": result.to_dict()})
+                    await run_blocking(
+                        lambda: cache.put(key, {"scan": result.to_dict()})
+                    )
                 return result
         except TimeoutError as exc:
             raise DiscoveryError(
@@ -206,6 +227,43 @@ class Discoverer:
             ) from exc
         finally:
             request_budget.reset(token)
+
+    def _parse_page(self, text, url, selector, include_path):
+        """Content-addressed parse reuse after HTTP revalidation, not a longer fetch TTL.
+
+        This runs in the scan worker. Changed HTML, URL, selection or model version
+        always causes a new parse. Each hit reconstructs independent entries.
+        """
+        cache = getattr(self.fetcher, "cache", None)
+        if cache is None:
+            return parse_page(text, url, selector, include_path)
+        key = (
+            "parsed:"
+            + hashlib.sha256(
+                json.dumps(
+                    [
+                        hashlib.sha256(text.encode()).hexdigest(),
+                        url,
+                        selector,
+                        include_path,
+                        *parser_version(),
+                    ]
+                ).encode()
+            ).hexdigest()
+        )
+        cached = cache.get(key)
+        if cached:
+            return (
+                scan_from_dict(cached["scan"]),
+                list(cached["pages"]),
+                list(cached["feeds"]),
+            )
+        scan, pages, feeds = parse_page(text, url, selector, include_path)
+        # Do not truncate a parser result when caching it: the discovery layer
+        # still needs the actual count to report coverage and enforce its cap.
+        if len(scan.entries) <= MAX_LINKS:
+            cache.put(key, {"scan": scan.to_dict(), "pages": pages, "feeds": feeds})
+        return scan, pages, feeds
 
     async def _scan(self, url, selector, include_path, keywords=""):
         if mangadex_title(url) and not selector:
@@ -231,7 +289,9 @@ class Discoverer:
             result, pages, feeds = codeforces_scan(text, url), [], []
         else:
             text, readme_pages = await github_readme(self.fetcher, final, text)
-            result, pages, feeds = parse_page(text, final, selector, include_path)
+            result, pages, feeds = await run_blocking(
+                self._parse_page, text, final, selector, include_path
+            )
         result.pages_scanned = 0 if first_error else 1
         if not endpoint and not chapter_endpoint:
             result.pages_scanned += readme_pages
@@ -279,8 +339,12 @@ class Discoverer:
             try:
                 actual, html = await self.fetcher.get(target)
                 seen.add(actual)
-                part, more, _ = parse_page(
-                    html, actual, "" if is_feed else selector, include_path
+                part, more, _ = await run_blocking(
+                    self._parse_page,
+                    html,
+                    actual,
+                    "" if is_feed else selector,
+                    include_path,
                 )
                 if (
                     not is_feed
@@ -343,7 +407,7 @@ class Discoverer:
                     archive_url = (
                         "https://www.youtube.com/playlist?list=UU" + channel[1][2:]
                     )
-                title, entries, warnings = await asyncio.to_thread(
+                title, entries, warnings = await run_blocking(
                     self.youtube_loader, archive_url
                 )
                 if entries:

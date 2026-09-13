@@ -70,11 +70,29 @@ def observed_sources(soup, source, kind="website"):
     """Conservative collection roots and explicitly labeled blog/channel lists."""
     found = {}
     root = urlsplit(source)
-    for anchor in islice(soup.find_all("a", href=True), 8000):
+    root_key = source_key(source)
+    markers = {}
+    for anchor in soup.find_all("a", href=True, limit=8000):
         url = safe_source(anchor.get("href"), source)
-        if not url or source_key(url) == source_key(source):
+        if not url or source_key(url) == root_key:
             continue
         p = urlsplit(url)
+        collection = bool(COLLECTION.fullmatch(p.path))
+        blog_target = p.hostname != root.hostname and p.path.rstrip("/") in {
+            "",
+            "/blog",
+            "/feed",
+            "/rss",
+            "/archive",
+            "/posts",
+        }
+        repository_target = p.hostname == "github.com" and bool(
+            re.fullmatch(r"/[^/]+/[^/]+", p.path)
+        )
+        # A chapter/article URL cannot be a suggested collection. Reject it
+        # before examining ancestors, especially on long chapter indexes.
+        if not (collection or blog_target or repository_target):
+            continue
         if (
             p.query
             or p.hostname.removeprefix("www.") in SOCIAL_HOSTS
@@ -85,17 +103,18 @@ def observed_sources(soup, source, kind="website"):
         for parent in islice(anchor.parents, 5):
             if parent.name in {"body", "html", "[document]"}:
                 break
-            heading = parent.find(["h2", "h3", "h4"], recursive=False)
-            marker = " ".join(
-                [
-                    str(parent.get("id", "")),
-                    " ".join(parent.get("class", [])),
-                    str(parent.get("aria-label", "")),
-                    heading.get_text(" ", strip=True)[:120] if heading else "",
-                ]
-            )
-            related = related or bool(RELATED.search(marker))
-        collection = bool(COLLECTION.fullmatch(p.path))
+            if id(parent) not in markers:
+                heading = parent.find(["h2", "h3", "h4"], recursive=False)
+                marker = " ".join(
+                    [
+                        str(parent.get("id", "")),
+                        " ".join(parent.get("class", [])),
+                        str(parent.get("aria-label", "")),
+                        heading.get_text(" ", strip=True)[:120] if heading else "",
+                    ]
+                )
+                markers[id(parent)] = bool(RELATED.search(marker))
+            related = related or markers[id(parent)]
         if p.path.rstrip("/").rsplit("/", 1)[-1].lower() in {
             "all",
             "ranking",
@@ -107,17 +126,8 @@ def observed_sources(soup, source, kind="website"):
             "completed",
         }:
             continue
-        blog = (
-            related
-            and p.hostname != root.hostname
-            and p.path.rstrip("/")
-            in {"", "/blog", "/feed", "/rss", "/archive", "/posts"}
-        )
-        repository = (
-            related
-            and p.hostname == "github.com"
-            and bool(re.fullmatch(r"/[^/]+/[^/]+", p.path))
-        )
+        blog = related and blog_target
+        repository = related and repository_target
         if not (
             collection
             and (p.hostname == root.hostname or related)

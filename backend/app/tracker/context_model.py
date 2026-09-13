@@ -9,7 +9,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from .link_context import EXTRA_FEATURES, context_candidates
-from .link_model import FEATURES
+from .link_model import FEATURES, load_model
 
 NUMERIC_FEATURES = FEATURES + EXTRA_FEATURES
 MODEL_PATH = Path(__file__).with_name("link-context-model.json")
@@ -179,16 +179,21 @@ def load_context_model():
         return None
 
 
-def classify_context(soup, source):
+def classify_context(soup, source, *, fallback_scores=None, tables=None):
     mode = os.environ.get("TRACKER_LINK_MODEL", "on").lower()
     if mode in ("0", "off", "false", "legacy"):
         return {}, {}, set(), None
     model = load_context_model()
     if model is None:
         return {}, {}, set(), None
+    fallback = load_model() if fallback_scores is not None else None
     scores, labels, rejected = {}, {}, set()
-    for row in context_candidates(soup, source):
+    for row in context_candidates(soup, source, tables=tables):
         key = id(row["anchor"])
+        if fallback is not None:
+            # The context model starts with the exact legacy feature vector.
+            # Extract it once; both trained classifiers keep their own decision.
+            fallback_scores[key] = fallback.score(row["features"][: len(FEATURES)])
         scores[key] = model.score(row["features"], row["tokens"])
         labels[key] = row["label"]
         if scores[key] < model.upper and (

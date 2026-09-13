@@ -11,6 +11,7 @@ from urllib.parse import parse_qsl, urlencode, urljoin, urlsplit, urlunsplit
 import httpx
 
 from .cache import FetchCache
+from .workers import run_blocking
 
 
 @dataclass
@@ -130,7 +131,7 @@ class SafeFetcher:
             return await self._get(original, slot)
 
     async def _get(self, original, slot):
-        cached = self.cache.get(original)
+        cached = await run_blocking(self.cache.get, original)
         budget = request_budget.get()
         if cached and cached.get("expires", 0) > time.time():
             if budget:
@@ -148,7 +149,7 @@ class SafeFetcher:
             ip = addresses[0]
             netloc = f"[{ip}]" if ":" in ip else ip
             target = urlunsplit((p.scheme, netloc, p.path, p.query, ""))
-            backoff = self.cache.get("backoff:" + p.hostname)
+            backoff = await run_blocking(self.cache.get, "backoff:" + p.hostname)
             if backoff and backoff["expires"] > time.time():
                 raise DiscoveryError(
                     "This source requested a pause. Retry after "
@@ -195,7 +196,7 @@ class SafeFetcher:
                                 cached.update(
                                     checked=time.time(), expires=time.time() + self.ttl
                                 )
-                                self.cache.put(original, cached)
+                                await run_blocking(self.cache.put, original, cached)
                                 return cached["final"], cached["body"]
                             if response.is_redirect:
                                 url = canonical_url(
@@ -218,11 +219,13 @@ class SafeFetcher:
                                     )
                                 except (ValueError, TypeError, OverflowError):
                                     pass
-                                self.cache.put(
+                                await run_blocking(
+                                    self.cache.put,
                                     "backoff:" + p.hostname,
                                     {"expires": time.time() + min(delay, 86400)},
                                 )
-                                self.cache.put(
+                                await run_blocking(
+                                    self.cache.put,
                                     original,
                                     {
                                         "error": message,
@@ -254,7 +257,8 @@ class SafeFetcher:
                             if "no-store" not in response.headers.get(
                                 "Cache-Control", ""
                             ):
-                                self.cache.put(
+                                await run_blocking(
+                                    self.cache.put,
                                     original,
                                     {
                                         "final": url,

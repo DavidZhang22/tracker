@@ -188,6 +188,23 @@ class Store:
             raise KeyError("Item not found.")
         return rows[0]
 
+    def refresh_source(self, item_id):
+        """Preferences and current flags without aggregating thousands of links."""
+        with self.connection() as db:
+            row = db.execute("SELECT * FROM items WHERE id=?", (item_id,)).fetchone()
+        if row is None:
+            raise KeyError("Item not found.")
+        return self.decode(row)
+
+    def refresh_sources(self):
+        with self.connection() as db:
+            return [
+                dict(row)
+                for row in db.execute(
+                    "SELECT id FROM items WHERE ignored=0 AND deleted=0 ORDER BY created_at DESC"
+                )
+            ]
+
     def save_scan(self, payload):
         payload = bounded_scan(payload)
         encoded = json.dumps(payload)
@@ -270,13 +287,14 @@ class Store:
             )
         now = utcnow()
         added = 0
-        previous = [
-            r["identity"]
+        previous_rows = {
+            r["identity"]: dict(r)
             for r in db.execute(
-                "SELECT identity FROM links WHERE item_id=? ORDER BY position,id",
+                "SELECT * FROM links WHERE item_id=? ORDER BY position,id",
                 (iid,),
             )
-        ]
+        }
+        previous = list(previous_rows)
         known = set(previous)
         remaining = max(
             0,
@@ -296,8 +314,8 @@ class Store:
                     continue
                 remaining -= 1
                 known.add(key)
-            accepted.append(entry)
-        scan = scan | {"entries": accepted}
+            accepted.append((key, entry))
+        scan = scan | {"entries": [entry for _, entry in accepted]}
         if capped:
             scan = scan | {
                 "coverage": "partial",
@@ -306,7 +324,7 @@ class Store:
                     f"Storage limit reached ({MAX_LINKS:,} links per item; {MAX_LIBRARY_LINKS:,} per library, including Trash). Saved links and progress were kept; additional links were skipped.",
                 ],
             }
-        incoming = list(dict.fromkeys(identity(e["url"]) for e in scan["entries"]))
+        incoming = list(dict.fromkeys(key for key, _ in accepted))
         incoming_set = set(incoming)
         # Retain disappeared entries next to their surviving source neighbors.
         before = {}
@@ -321,11 +339,9 @@ class Store:
             order.extend(reversed(before.get(key, [])))
             order.append(key)
         order.extend(reversed(before.get(None, [])))
-        for entry in scan["entries"]:
-            key = identity(entry["url"])
-            old = db.execute(
-                "SELECT * FROM links WHERE item_id=? AND identity=?", (iid, key)
-            ).fetchone()
+        positions = {key: i for i, key in enumerate(order)}
+        for key, entry in accepted:
+            old = previous_rows.get(key)
             if old:
                 if date_rank(old) > date_rank(entry):
                     entry = dict(entry)
@@ -336,19 +352,6 @@ class Store:
                         "date_precision",
                     ):
                         entry[field] = old[field]
-                db.execute(
-                    """UPDATE links SET url=?,title=?,published_at=coalesce(?,published_at),
-                    number=coalesce(?,number),position=?,method=? WHERE id=?""",
-                    (
-                        entry["url"],
-                        entry["title"],
-                        entry.get("published_at"),
-                        entry["number"],
-                        entry["position"],
-                        entry["method"],
-                        old["id"],
-                    ),
-                )
             else:
                 db.execute(
                     """INSERT INTO links(id,item_id,identity,url,title,published_at,number,position,method,discovered_at,is_new,read)
@@ -361,7 +364,7 @@ class Store:
                         entry["title"],
                         entry["published_at"],
                         entry["number"],
-                        entry["position"],
+                        positions[key],
                         entry["method"],
                         now,
                         not initial,
@@ -369,6 +372,7 @@ class Store:
                     ),
                 )
                 added += 1
+                old = {"id": None}  # New rows need their extended metadata below.
             metadata = {
                 k: entry.get(k, "")
                 for k in ("summary", "availability", "context", "language")
@@ -384,15 +388,33 @@ class Store:
                         )
                     }
                 )
-            db.execute(
-                "UPDATE links SET "
-                + ",".join(k + "=?" for k in metadata)
-                + " WHERE item_id=? AND identity=?",
-                (*metadata.values(), iid, key),
+            metadata.update(
+                url=entry["url"],
+                title=entry["title"],
+                method=entry["method"],
+                position=positions[key],
             )
+            if entry.get("published_at") is not None:
+                metadata["published_at"] = entry["published_at"]
+            if entry.get("number") is not None:
+                metadata["number"] = entry["number"]
+            changed = {k: v for k, v in metadata.items() if old.get(k) != v}
+            if changed:
+                db.execute(
+                    "UPDATE links SET "
+                    + ",".join(k + "=?" for k in changed)
+                    + " WHERE item_id=? AND identity=?",
+                    (*changed.values(), iid, key),
+                )
+            # Preserve the original sequential behavior for duplicate identities.
+            previous_rows[key] = old | metadata
         db.executemany(
             "UPDATE links SET position=? WHERE item_id=? AND identity=?",
-            ((i, iid, key) for i, key in enumerate(order)),
+            (
+                (i, iid, key)
+                for i, key in enumerate(order)
+                if key not in incoming_set and previous_rows[key]["position"] != i
+            ),
         )
         db.execute(
             """UPDATE items SET last_checked_at=?,last_attempt_at=?,error=NULL,warnings=?,methods=?,pages_scanned=?,expected_count=?,requests_made=?,cache_hits=?,coverage=?,order_hint=? WHERE id=?""",

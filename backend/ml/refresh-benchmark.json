@@ -1,0 +1,259 @@
+{
+  "date": "2026-09-13",
+  "baseline_revision": "9a77788",
+  "limits": {
+    "cpu": 1,
+    "memory_mib": 512
+  },
+  "method": "Three timed offline samples (median), separate cProfile pass; 10 cache writes. Public sources captured once, then identical response bodies replayed. No account data. Network time is not comparable to a replay.",
+  "before": {
+    "python": "3.12.14",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.41",
+    "parsing": {
+      "nested_1000": {
+        "median_s": 5.996907,
+        "samples_s": [
+          5.996906991000287,
+          5.948058077017777,
+          6.000898530008271
+        ],
+        "links": 1000,
+        "input_sha256": "02cbe206a3fd0295b0bfc6cb9996c00479db09c857dc8af9ddd7b1c2ec682884",
+        "output_sha256": "6e130c4aa58e37defaaaa86717f69528f8359d0b98b9e9c9d4b74154bfff0af8"
+      },
+      "jobs-table.html": {
+        "median_s": 0.043823,
+        "samples_s": [
+          0.046716542972717434,
+          0.04382344597252086,
+          0.043775054975412786
+        ],
+        "links": 8,
+        "input_sha256": "fa1b58ec4393ff34fd34c9d4f7b1db840e1dd05be91794c0197c503c4f43656a",
+        "output_sha256": "8065c0839901d5aa6f4187f0eae5216cc87ffafd469ddab8bd44852f1530c95f"
+      },
+      "royalroad.html": {
+        "median_s": 0.443315,
+        "samples_s": [
+          0.45491508301347494,
+          0.44331486604642123,
+          0.44298554596025497
+        ],
+        "links": 109,
+        "input_sha256": "c6188fee44b800de82c32176d68606028c2c17e5b0f5a031c0d59bb6ffbcfa6f",
+        "output_sha256": "f2b2729e24a6a37ae0008cc3a21557a1cb50ce18909f69a4c68bce9186dd8589"
+      },
+      "hn.html": {
+        "median_s": 0.042846,
+        "samples_s": [
+          0.045241205021739006,
+          0.04284559498773888,
+          0.04198120895307511
+        ],
+        "links": 4,
+        "input_sha256": "e02ae75f4f11d1f7f7dfc8d4b13f7433ad1e05b319413db0c0f253c7760c930a",
+        "output_sha256": "dabbd940e734a0aa9e26f7f67adebd3b8852311c49c076cb2c91594cae591e96"
+      },
+      "xkcd.html": {
+        "median_s": 0.006777,
+        "samples_s": [
+          0.007122106966562569,
+          0.006777087051887065,
+          0.006750087020918727
+        ],
+        "links": 4,
+        "input_sha256": "c64af0a5780f14d3009b9d10aa1d47c4371c40135a32b2e7c7f0e2bfdac4570b",
+        "output_sha256": "88ac5330d0f0c62bc9a4db36c4262084c05f6c099c657762ccb9a2587a60ee0e"
+      }
+    },
+    "profile": "         41441270 function calls (41278267 primitive calls) in 17.848 seconds\n\n   Ordered by: cumulative time\n   List reduced from 387 to 35 due to restriction <35>\n\n   ncalls  tottime  percall  cumtime  percall filename:lineno(function)\n        1    0.038    0.038   17.856   17.856 parser.py:304(parse_page)\n   181847    0.355    0.000   10.648    0.000 element.py:3024(find_all)\n   188847    0.407    0.000   10.648    0.000 element.py:1266(_find_all)\n   174841    0.355    0.000   10.497    0.000 element.py:2957(find)\n     1000    0.020    0.000    8.117    0.008 record_context.py:393(text)\n     2000    0.007    0.000    8.085    0.004 record_context.py:341(region)\n     1000    0.014    0.000    8.077    0.008 record_context.py:349(_region)\n   246679    0.470    0.000    7.228    0.000 {built-in method builtins.sum}\n     7998    0.092    0.000    7.167    0.001 record_context.py:285(regions)\n   187847    0.355    0.000    6.986    0.000 filter.py:163(find_all)\n     5000    0.110    0.000    6.688    0.001 record_context.py:228(candidates)\n   360688    0.962    0.000    6.407    0.000 filter.py:130(filter)\n  1480699    0.644    0.000    4.467    0.000 filter.py:726(match)\n        1    0.024    0.024    4.269    4.269 suggestions.py:69(observed_sources)\n  1421693    1.589    0.000    3.643    0.000 filter.py:540(matches_tag)\n   188847    1.156    0.000    3.214    0.000 filter.py:378(__init__)\n    85920    0.125    0.000    3.188    0.000 record_context.py:238(<genexpr>)\n    85920    0.108    0.000    3.137    0.000 record_context.py:272(<genexpr>)\n1041229/937229    0.546    0.000    1.702    0.000 filter.py:492(_make_match_rules)\n     6011    0.007    0.000    1.578    0.000 css_match.py:1624(select)\n     5008    0.008    0.000    1.575    0.000 element.py:3126(select)\n    10012    0.012    0.000    1.571    0.000 css_match.py:1629(iselect)\n     5008    0.009    0.000    1.562    0.000 css.py:162(select)\n     1000    0.016    0.000    1.544    0.002 dates.py:76(link_date)\n     5008    0.006    0.000    1.527    0.000 __init__.py:135(select)\n    10012    0.032    0.000    1.482    0.000 css_match.py:1523(select)\n  3263841    0.827    0.000    1.337    0.000 filter.py:321(matches_tag)\n    74023    0.064    0.000    1.308    0.000 css_match.py:1556(match)\n        1    0.004    0.004    1.259    1.259 context_model.py:182(classify_context)\n108023/74023    0.194    0.000    1.189    0.000 css_match.py:1439(match_selectors)\n5242294/5242292    0.735    0.000    0.962    0.000 {built-in method builtins.isinstance}\n     1001    0.054    0.000    0.929    0.001 link_context.py:82(context_candidates)\n     2002    0.098    0.000    0.912    0.000 link_model.py:101(candidates)\n     5998    0.174    0.000    0.891    0.000 record_context.py:174(predict)\n  1515705    0.380    0.000    0.839    0.000 {built-in method builtins.next}\n\n\n",
+    "unchanged_merge_4999": {
+      "median_s": 0.347934,
+      "samples_s": [
+        0.3479335260344669,
+        0.3438350739888847,
+        0.3491553160129115
+      ]
+    },
+    "item_read_4999": {
+      "median_s": 0.007474,
+      "samples_s": [
+        0.012649943004362285,
+        0.007473870005924255,
+        0.007333165034651756
+      ]
+    },
+    "cache_put_with_55mb": {
+      "median_s": 0.046192,
+      "samples_s": [
+        0.04458164202515036,
+        0.049115017987787724,
+        0.0482055259635672,
+        0.046673570992425084,
+        0.0487167879473418,
+        0.044588987017050385,
+        0.04426086897728965,
+        0.045710087986662984,
+        0.044481645978521556,
+        0.052918126981239766
+      ]
+    },
+    "scan_replay": {
+      "cold_s": 6.214522656984627,
+      "warm_s": 0.005583261023275554,
+      "unchanged_revalidated_s": 6.245674556004815,
+      "max_event_loop_lag_s": 6.20463274396956,
+      "heartbeat_samples": 3,
+      "fetch_calls": 2
+    },
+    "training_libraries_loaded": false,
+    "peak_rss_mib": 221.4140625
+  },
+  "after": {
+    "python": "3.12.14",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.41",
+    "parsing": {
+      "nested_1000": {
+        "median_s": 2.051856,
+        "samples_s": [
+          2.0662410489749163,
+          2.051856104983017,
+          2.037901179981418
+        ],
+        "links": 1000,
+        "input_sha256": "02cbe206a3fd0295b0bfc6cb9996c00479db09c857dc8af9ddd7b1c2ec682884",
+        "output_sha256": "6e130c4aa58e37defaaaa86717f69528f8359d0b98b9e9c9d4b74154bfff0af8"
+      },
+      "jobs-table.html": {
+        "median_s": 0.029949,
+        "samples_s": [
+          0.03275115502765402,
+          0.029856954992283136,
+          0.02994866803055629
+        ],
+        "links": 8,
+        "input_sha256": "fa1b58ec4393ff34fd34c9d4f7b1db840e1dd05be91794c0197c503c4f43656a",
+        "output_sha256": "8065c0839901d5aa6f4187f0eae5216cc87ffafd469ddab8bd44852f1530c95f"
+      },
+      "royalroad.html": {
+        "median_s": 0.211325,
+        "samples_s": [
+          0.2227975280256942,
+          0.21111536404350773,
+          0.21132535894867033
+        ],
+        "links": 109,
+        "input_sha256": "c6188fee44b800de82c32176d68606028c2c17e5b0f5a031c0d59bb6ffbcfa6f",
+        "output_sha256": "f2b2729e24a6a37ae0008cc3a21557a1cb50ce18909f69a4c68bce9186dd8589"
+      },
+      "hn.html": {
+        "median_s": 0.034451,
+        "samples_s": [
+          0.03733588696923107,
+          0.03413353697396815,
+          0.03445079404627904
+        ],
+        "links": 4,
+        "input_sha256": "e02ae75f4f11d1f7f7dfc8d4b13f7433ad1e05b319413db0c0f253c7760c930a",
+        "output_sha256": "dabbd940e734a0aa9e26f7f67adebd3b8852311c49c076cb2c91594cae591e96"
+      },
+      "xkcd.html": {
+        "median_s": 0.00601,
+        "samples_s": [
+          0.006385082029737532,
+          0.005806692992337048,
+          0.006009534990880638
+        ],
+        "links": 4,
+        "input_sha256": "c64af0a5780f14d3009b9d10aa1d47c4371c40135a32b2e7c7f0e2bfdac4570b",
+        "output_sha256": "88ac5330d0f0c62bc9a4db36c4262084c05f6c099c657762ccb9a2587a60ee0e"
+      }
+    },
+    "profile": "         11061587 function calls (10947583 primitive calls) in 5.591 seconds\n\n   Ordered by: cumulative time\n   List reduced from 388 to 35 due to restriction <35>\n\n   ncalls  tottime  percall  cumtime  percall filename:lineno(function)\n        1    0.037    0.037    5.599    5.599 parser.py:304(parse_page)\n        1    0.005    0.005    1.363    1.363 context_model.py:182(classify_context)\n     3011    0.004    0.000    1.223    0.000 css_match.py:1624(select)\n     6012    0.006    0.000    1.219    0.000 css_match.py:1629(iselect)\n     6012    0.027    0.000    1.174    0.000 css_match.py:1523(select)\n     2008    0.003    0.000    1.139    0.001 element.py:3126(select)\n     2008    0.004    0.000    1.134    0.001 css.py:162(select)\n    22087    0.060    0.000    1.133    0.000 element.py:1266(_find_all)\n     1000    0.016    0.000    1.124    0.001 dates.py:87(link_date)\n     2008    0.002    0.000    1.119    0.001 __init__.py:135(select)\n    68023    0.056    0.000    1.026    0.000 css_match.py:1556(match)\n     1000    0.019    0.000    0.925    0.001 record_context.py:414(text)\n102023/68023    0.146    0.000    0.920    0.000 css_match.py:1439(match_selectors)\n     1001    0.056    0.000    0.908    0.001 link_context.py:82(context_candidates)\n     2000    0.006    0.000    0.895    0.000 record_context.py:362(region)\n    16087    0.039    0.000    0.890    0.000 element.py:3024(find_all)\n     1000    0.015    0.000    0.888    0.001 record_context.py:370(_region)\n     7998    0.084    0.000    0.865    0.000 record_context.py:306(regions)\n    22087    0.142    0.000    0.565    0.000 filter.py:378(__init__)\n    21087    0.037    0.000    0.500    0.000 filter.py:163(find_all)\n   144031    0.075    0.000    0.495    0.000 css_match.py:811(match_tag)\n     7002    0.056    0.000    0.473    0.000 urls.py:56(canonical_url)\n    10083    0.020    0.000    0.469    0.000 element.py:2957(find)\n     1001    0.049    0.000    0.451    0.000 link_model.py:101(candidates)\n    32169    0.086    0.000    0.435    0.000 filter.py:130(filter)\n     5000    0.063    0.000    0.413    0.000 record_context.py:257(candidates)\n    14998    0.051    0.000    0.408    0.000 record_context.py:231(info)\n162431/100431    0.109    0.000    0.380    0.000 filter.py:492(_make_match_rules)\n1560728/1560726    0.236    0.000    0.372    0.000 {built-in method builtins.isinstance}\n        1    0.000    0.000    0.354    0.354 __init__.py:211(__init__)\n        1    0.000    0.000    0.354    0.354 __init__.py:653(_feed)\n        1    0.000    0.000    0.354    0.354 _htmlparser.py:449(feed)\n        1    0.000    0.000    0.354    0.354 parser.py:146(feed)\n        2    0.031    0.016    0.354    0.177 parser.py:223(goahead)\n2000/1000    0.154    0.000    0.320    0.000 context_model.py:131(score)\n\n\n",
+    "unchanged_merge_4999": {
+      "median_s": 0.109059,
+      "samples_s": [
+        0.12197679001837969,
+        0.10383502597687766,
+        0.10905949102016166
+      ]
+    },
+    "item_read_4999": {
+      "median_s": 0.007311,
+      "samples_s": [
+        0.0074536429601721466,
+        0.0073113749967888,
+        0.007150291989091784
+      ]
+    },
+    "cache_put_with_55mb": {
+      "median_s": 0.012719,
+      "samples_s": [
+        0.009539288992527872,
+        0.00969203602289781,
+        0.02411099203163758,
+        0.012654643971472979,
+        0.010008322016801685,
+        0.009258890990167856,
+        0.016387964016757905,
+        0.013583121995907277,
+        0.012783245998434722,
+        0.016558743955101818
+      ]
+    },
+    "scan_replay": {
+      "cold_s": 2.1336250549647957,
+      "warm_s": 0.006379030004609376,
+      "unchanged_revalidated_s": 0.031121290987357497,
+      "max_event_loop_lag_s": 0.010400676992721855,
+      "heartbeat_samples": 145,
+      "fetch_calls": 2
+    },
+    "training_libraries_loaded": false,
+    "peak_rss_mib": 66.51953125
+  },
+  "public_live_baseline": [
+    {
+      "source": "https://github.com/SimplifyJobs/New-Grad-Positions",
+      "seconds": 14.744094278023113,
+      "fetch_s": 4.2788911639363505,
+      "parse_s": 10.233027370006312,
+      "calls": 3,
+      "links": 911,
+      "requests": 4,
+      "output_sha256": "e1b07f04b4e8cbea4dec1abf7e2fdf40d112af6625a28146a1fe2146bb25aa69"
+    },
+    {
+      "source": "https://novelshaven.com/series/the-galgame-martial-saint",
+      "seconds": 1.534564864996355,
+      "fetch_s": 1.36935779300984,
+      "parse_s": 0.1422493820427917,
+      "calls": 1,
+      "links": 221,
+      "requests": 1,
+      "output_sha256": "f030ed1c47de555d2ee8c4cf351faa431344c4067b5c475fab4599de410dbc81"
+    }
+  ],
+  "public_replay_candidate": [
+    {
+      "source": "https://github.com/SimplifyJobs/New-Grad-Positions",
+      "seconds": 5.039566660998389,
+      "fetch_s": 6.73359609209001e-05,
+      "parse_s": 4.783545308979228,
+      "calls": 3,
+      "links": 911,
+      "requests": 0,
+      "output_sha256": "e1b07f04b4e8cbea4dec1abf7e2fdf40d112af6625a28146a1fe2146bb25aa69"
+    },
+    {
+      "source": "https://novelshaven.com/series/the-galgame-martial-saint",
+      "seconds": 0.15981096599716693,
+      "fetch_s": 1.0469986591488123e-05,
+      "parse_s": 0.10736418701708317,
+      "calls": 1,
+      "links": 221,
+      "requests": 0,
+      "output_sha256": "f030ed1c47de555d2ee8c4cf351faa431344c4067b5c475fab4599de410dbc81"
+    }
+  ]
+}

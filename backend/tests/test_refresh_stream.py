@@ -85,6 +85,7 @@ async def test_slow_scan_emits_heartbeat_without_finishing_early(app, monkeypatc
     monkeypatch.setattr("app.tracker.api.REFRESH_HEARTBEAT_SECONDS", 0.01)
     events = refresh_events([slow], app, app.state.store)
     await anext(events)
+    await asyncio.wait_for(scanner.started.wait(), 2)
     assert (await asyncio.wait_for(anext(events), 1))["type"] == "heartbeat"
     assert scanner.active == 1
     scanner.release.set()

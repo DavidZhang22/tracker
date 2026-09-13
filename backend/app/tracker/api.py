@@ -15,6 +15,7 @@ from .limits import MAX_ITEMS, MAX_LINKS, bounded_scan
 from .store import ItemAdditionCooldown
 from .suggestions import collect_cached, ranked_suggestions
 from .urls import DiscoveryError
+from .workers import run_blocking
 
 router = APIRouter(prefix="/api")
 REFRESH_HEARTBEAT_SECONDS = 15
@@ -134,18 +135,19 @@ async def scan(body: ScanRequest, request: Request):
     with request.state.store.connection() as db:
         db.execute("SELECT id FROM scans LIMIT 1").fetchone()
     with request.app.state.scan_guard.operation(request.state.store.path):
-        result = await request.app.state.discoverer.scan(
-            body.url,
-            body.selector,
-            body.include_path,
-            **({"keywords": body.keywords} if body.keywords else {}),
-        )
+        async with request.app.state.scan_semaphore:
+            result = await request.app.state.discoverer.scan(
+                body.url,
+                body.selector,
+                body.include_path,
+                **({"keywords": body.keywords} if body.keywords else {}),
+            )
     payload = bounded_scan(result.to_dict()) | {
         "selector": body.selector,
         "include_path": body.include_path,
         "keywords": body.keywords,
     }
-    sid = request.state.store.save_scan(payload)
+    sid = await run_blocking(request.state.store.save_scan, payload)
     return payload | {"scan_id": sid}
 
 
@@ -245,7 +247,7 @@ async def refresh_item(iid, app, store, skip_unavailable=False):
     # Fixed-size lock striping avoids both overlapping merges and unbounded lock storage.
     lock = app.state.refresh_locks[hash(iid) % 64]
     async with lock:
-        item = store.item(iid)
+        item = await run_blocking(store.refresh_source, iid)
         if skip_unavailable and (item["deleted"] or item["ignored"]):
             return {"id": iid, "new_count": 0, "ok": True, "skipped": True}
         if item["deleted"]:
@@ -268,7 +270,7 @@ async def refresh_item(iid, app, store, skip_unavailable=False):
                     "No content found during refresh. Saved links and progress were kept. "
                     + " ".join(result.warnings)
                 )
-            added = store.merge(iid, result.to_dict())
+            added = await run_blocking(lambda: store.merge(iid, result.to_dict()))
             return {
                 "id": iid,
                 "new_count": added,
@@ -278,9 +280,9 @@ async def refresh_item(iid, app, store, skip_unavailable=False):
                 "requests_made": result.requests_made,
             }
         except DiscoveryError as exc:
-            if store.item(iid)["deleted"]:
+            if (await run_blocking(store.refresh_source, iid))["deleted"]:
                 return {"id": iid, "new_count": 0, "ok": True, "skipped": True}
-            store.failure(iid, str(exc))
+            await run_blocking(store.failure, iid, str(exc))
             return {"id": iid, "new_count": 0, "ok": False, "error": str(exc)}
 
 
@@ -311,19 +313,10 @@ async def refresh_events(rows, app, store):
         try:
             while pending:
                 row = pending.popleft()
-                current = store.item(row["id"])
-                if current["deleted"] or current["ignored"]:
-                    result = {
-                        "id": row["id"],
-                        "ok": True,
-                        "new_count": 0,
-                        "skipped": True,
-                    }
-                else:
-                    result = await refresh_item(
-                        row["id"], app, store, skip_unavailable=True
-                    )
-                await queue.put((result, store.item(row["id"])))
+                result = await refresh_item(
+                    row["id"], app, store, skip_unavailable=True
+                )
+                await queue.put((result, await run_blocking(store.item, row["id"])))
         except Exception as exc:
             await queue.put(exc)
         finally:
@@ -371,7 +364,7 @@ async def refresh_events(rows, app, store):
 
 @router.post("/refresh")
 async def refresh_all(request: Request, stream: bool = False):
-    rows = [i for i in request.state.store.items() if not i["ignored"]]
+    rows = await run_blocking(request.state.store.refresh_sources)
     if len(rows) > MAX_ITEMS:
         raise HTTPException(
             422,

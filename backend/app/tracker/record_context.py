@@ -198,6 +198,35 @@ class RecordContext:
         self.soup = soup
         self.stats = {}
         self.selected = {}
+        self.sibling_stats = {}
+        self.references = None
+        model = load_record_model()
+        self.model = model
+        # Repeated layouts often produce identical feature vectors. Keep the
+        # exact prediction, bounded to this page; no weights/thresholds change.
+        self.score = lru_cache(maxsize=2048)(lambda features: predict(model, features))
+
+    def siblings(self, node):
+        parent = node.parent
+        if parent is None:
+            return 0, 0
+        key = id(parent)
+        if key not in self.sibling_stats:
+            repeated, linked, empty = Counter(), set(), set()
+            for sibling in islice(parent.children, 80):
+                if not isinstance(sibling, Tag):
+                    continue
+                if sibling.find("a", href=True):
+                    repeated[sibling.name] += 1
+                    linked.add(id(sibling))
+                elif sibling.name != "a":
+                    empty.add(id(sibling))
+            self.sibling_stats[key] = repeated, linked, empty
+        repeated, linked, empty = self.sibling_stats[key]
+        # Exclude this node only when it was within the original 80-child window.
+        return repeated[node.name] - (id(node) in linked), len(empty) - (
+            id(node) in empty
+        )
 
     def info(self, node):
         key = id(node)
@@ -233,11 +262,7 @@ class RecordContext:
             if not isinstance(node, Tag) or node.name == "[document]":
                 break
             info = self.info(node)
-            siblings = list(islice(node.parent.children, 80)) if node.parent else []
-            siblings = [s for s in siblings if isinstance(s, Tag) and s is not node]
-            repeated = sum(
-                s.name == node.name and bool(s.find("a", href=True)) for s in siblings
-            )
+            repeated, empty = self.siblings(node)
             parent_routes = (
                 self.info(node.parent)["routes"][shape]
                 if isinstance(node.parent, Tag)
@@ -268,11 +293,7 @@ class RecordContext:
                 node.name in {"h1", "h2", "h3", "h4", "h5", "h6"},
                 len(info["hrefs"]) == 1,
                 same == 1,
-                min(
-                    sum(not s.find("a", href=True) and s.name != "a" for s in siblings)
-                    / 8,
-                    1,
-                ),
+                min(empty / 8, 1),
                 0,
                 0,
                 0,
@@ -347,11 +368,11 @@ class RecordContext:
         return self.selected[id(anchor)]
 
     def _region(self, anchor):
-        model = load_record_model()
+        model = self.model
         choices = list(self.regions(anchor))
         if model:
             ranked = [
-                (predict(model, f), -i, node, neighbor)
+                (self.score(tuple(f)), -i, node, neighbor)
                 for i, (node, neighbor, f) in enumerate(choices)
                 if node.name not in {"html", "body", "main"}
             ]
@@ -403,7 +424,11 @@ class RecordContext:
             + " "
             + record.get("aria-describedby", "")
         ).split()[:4]:
-            if linked := self.soup.find(id=ref):
+            if self.references is None:
+                self.references = {}
+                for node in self.soup.find_all(id=True):
+                    self.references.setdefault(node["id"], node)
+            if linked := self.references.get(ref):
                 parts.append(snippets(linked, 240))
         # Section headings can describe a whole group; never take a neighboring row's label.
         for parent in [record] + list(islice(record.parents, 3)):
