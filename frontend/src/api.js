@@ -41,15 +41,12 @@ export async function api(path, options = {}) {
 }
 
 export async function refreshLibrary(onEvent, signal, deep = false) {
-  const response = await request(
-    `/refresh?stream=true${deep ? "&deep=true" : ""}`,
-    {
-      method: "POST",
-      body: "{}",
-      signal,
-      headers: { Accept: "application/x-ndjson" },
-    },
-  );
+  const response = await request(`/refresh?stream=true&deep=${deep}`, {
+    method: "POST",
+    body: "{}",
+    signal,
+    headers: { Accept: "application/x-ndjson" },
+  });
   if (!response.body?.getReader)
     throw new Error(
       "Live refresh is unavailable in this browser. Refresh items individually.",

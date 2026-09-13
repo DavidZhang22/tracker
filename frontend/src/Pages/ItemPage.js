@@ -10,6 +10,7 @@ import {
 } from "@heroicons/react/outline";
 import { Icon, Notice, TypeIcon, IconButton } from "../Tracker";
 import { api, patch, post, checked } from "../api";
+import { usePreferences } from "../Preferences";
 import {
   ActionMenu,
   FilterOptions,
@@ -21,12 +22,13 @@ import {
 } from "../RowTools";
 
 export default function ItemPage() {
+  const { preferences } = usePreferences();
   const { id } = useParams();
   const [item, setItem] = useState(null),
     [data, setData] = useState({ links: [], total: 0 }),
     [filter, setFilter] = useState("all"),
-    [sort, setSort] = useState("auto"),
-    [direction, setDirection] = useState("asc"),
+    [sort, setSort] = useState(preferences.link_sort),
+    [direction, setDirection] = useState(preferences.link_direction),
     [search, setSearch] = useState(""),
     [offset, setOffset] = useState(0);
   const [error, setError] = useState(""),
@@ -34,9 +36,6 @@ export default function ItemPage() {
     [busy, setBusy] = useState(false),
     [loading, setLoading] = useState(true),
     [version, setVersion] = useState(0);
-  const [selector, setSelector] = useState(""),
-    [path, setPath] = useState(""),
-    [keywords, setKeywords] = useState("");
   const selection = useSelection(
     `${id}:${filter}:${search}:${sort}:${direction}`,
   );
@@ -49,9 +48,6 @@ export default function ItemPage() {
       .then((i) => {
         if (active) {
           setItem(i);
-          setSelector(i.selector);
-          setPath(i.include_path);
-          setKeywords(i.keywords || "");
         }
       })
       .catch((e) => active && setError(e.message));
@@ -108,7 +104,7 @@ export default function ItemPage() {
     setError("");
     setMessage("");
     try {
-      const r = await post(`/items/${id}/refresh${deep ? "?deep=true" : ""}`);
+      const r = await post(`/items/${id}/refresh?deep=${deep}`);
       if (!r.ok) setError(r.error);
       else
         setMessage(
@@ -302,14 +298,7 @@ export default function ItemPage() {
         </button>
       </div>
       <div className="detail-controls">
-        <label className="checkbox">
-          <input
-            type="checkbox"
-            checked={item.auto_read}
-            onChange={(e) => update({ auto_read: e.target.checked })}
-          />
-          Mark as read when opened
-        </label>
+        <Link to={`/settings?item=${id}#item-settings`}>Item settings</Link>
         <div className="actions">
           {item.new_count > 0 && (
             <button
@@ -384,8 +373,8 @@ export default function ItemPage() {
               value={direction}
               onChange={(e) => choose(setDirection, e.target.value)}
             >
-              <option value="asc">Oldest / first</option>
-              <option value="desc">Newest / last</option>
+              <option value="desc">Newest to oldest</option>
+              <option value="asc">Oldest to newest</option>
             </select>
           </FilterOptions>
         </div>
@@ -525,55 +514,6 @@ export default function ItemPage() {
           {item.dated_count || 0} of {item.total_count} links have a source
           date.
         </p>
-      </details>
-      <details className="scan-details">
-        <summary>Link detection settings</summary>
-        <form
-          className="form-panel"
-          onSubmit={async (e) => {
-            e.preventDefault();
-            setMessage("");
-            if (await update({ selector, include_path: path, keywords }))
-              setMessage(
-                "Detection settings saved. Refresh this item to apply them.",
-              );
-          }}
-        >
-          <label className="field">
-            Keywords
-            <input
-              value={keywords}
-              maxLength={300}
-              placeholder="English, official"
-              onChange={(e) => setKeywords(e.target.value)}
-            />
-            <span className="hint">
-              Match every comma-separated keyword or phrase in the title or
-              nearby details. Existing saved links are kept.
-            </span>
-          </label>
-          <div className="field-row">
-            <label className="field">
-              Link selector
-              <input
-                value={selector}
-                onChange={(e) => setSelector(e.target.value)}
-                placeholder="#chapters a"
-              />
-            </label>
-            <label className="field">
-              URL must contain
-              <input
-                value={path}
-                onChange={(e) => setPath(e.target.value)}
-                placeholder="/chapter/"
-              />
-            </label>
-          </div>
-          <button className="button" type="submit">
-            Save settings
-          </button>
-        </form>
       </details>
     </>
   );

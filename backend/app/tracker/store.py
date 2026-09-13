@@ -18,6 +18,7 @@ from .limits import (
     bounded_scan,
 )
 from .models import date_rank, utcnow
+from .preferences import Preferences
 from .suggestions import save_observations
 from .urls import DiscoveryError, canonical_url, content_key
 
@@ -66,6 +67,9 @@ class Store:
             CREATE TABLE IF NOT EXISTS addition_cooldown (
               id INTEGER PRIMARY KEY CHECK(id=1), completed_at REAL NOT NULL
             );
+            CREATE TABLE IF NOT EXISTS preferences (
+              id INTEGER PRIMARY KEY CHECK(id=1), payload TEXT NOT NULL
+            );
             CREATE TABLE IF NOT EXISTS suggestions (
               id TEXT PRIMARY KEY, url TEXT NOT NULL UNIQUE, title TEXT NOT NULL,
               summary TEXT NOT NULL DEFAULT '', kind TEXT NOT NULL DEFAULT 'website',
@@ -108,7 +112,7 @@ class Store:
                         db.execute(
                             f"ALTER TABLE {table} ADD COLUMN {name} {definition}"
                         )
-            db.execute("PRAGMA user_version=6")
+            db.execute("PRAGMA user_version=7")
         marker.touch(exist_ok=True)
 
     @contextmanager
@@ -225,7 +229,37 @@ class Store:
             )
         return sid
 
-    def create(self, scan_id, title=None, mark_read=False, auto_read=True):
+    @staticmethod
+    def _settings(db):
+        row = db.execute("SELECT payload FROM preferences WHERE id=1").fetchone()
+        return Preferences(**(json.loads(row[0]) if row else {})).model_dump()
+
+    def settings(self):
+        with self.connection() as db:
+            return self._settings(db)
+
+    def update_settings(self, values, apply_auto_read=False):
+        with self.connection() as db:
+            db.execute("BEGIN IMMEDIATE")
+            saved = Preferences(**(self._settings(db) | values)).model_dump()
+            if apply_auto_read and "auto_read" not in values:
+                raise ValueError(
+                    "Choose read-on-open behavior before applying it to existing items."
+                )
+            db.execute(
+                "INSERT INTO preferences(id,payload) VALUES (1,?) ON CONFLICT(id) DO UPDATE SET payload=excluded.payload",
+                (json.dumps(saved),),
+            )
+            if apply_auto_read:
+                db.execute(
+                    "UPDATE items SET auto_read=? WHERE deleted=0",
+                    (saved["auto_read"],),
+                )
+            return saved
+
+    def create(
+        self, scan_id, title=None, mark_read=False, auto_read=None, read_indices=None
+    ):
         iid = uuid.uuid4().hex
         with self.connection() as db:
             db.execute("BEGIN IMMEDIATE")
@@ -240,6 +274,21 @@ class Store:
             if not row:
                 raise ValueError("This scan expired. Scan the source again.")
             scan = json.loads(row["payload"])
+            selected = set(read_indices or [])
+            if len(selected) > MAX_LINKS or any(
+                type(i) is not int or not 0 <= i < len(scan["entries"])
+                for i in selected
+            ):
+                raise ValueError(
+                    "Some selected links are not in this scan. Review the preview and try again."
+                )
+            if selected and mark_read:
+                raise ValueError(
+                    "Choose individual read links or mark all read, not both."
+                )
+            read_identities = {identity(scan["entries"][i]["url"]) for i in selected}
+            if auto_read is None:
+                auto_read = self._settings(db)["auto_read"]
             if any(
                 canonical_url(existing["url"]) == canonical_url(scan["url"])
                 for existing in db.execute("SELECT url FROM items")
@@ -269,7 +318,14 @@ class Store:
                     scan.get("keywords", ""),
                 ),
             )
-            self._merge(db, iid, scan, initial=True, mark_read=mark_read)
+            self._merge(
+                db,
+                iid,
+                scan,
+                initial=True,
+                mark_read=mark_read,
+                read_identities=read_identities,
+            )
             db.execute("DELETE FROM scans WHERE id=?", (scan_id,))
             # Only a committed addition consumes the cooldown; errors roll it back.
             db.execute(
@@ -279,7 +335,10 @@ class Store:
             )
         return self.item(iid)
 
-    def _merge(self, db, iid, scan, initial=False, mark_read=False):
+    def _merge(
+        self, db, iid, scan, initial=False, mark_read=False, read_identities=None
+    ):
+        read_identities = read_identities or set()
         scan = bounded_scan(scan)
         if len(json.dumps(scan).encode()) > MAX_PREVIEW_BYTES:
             raise DiscoveryError(
@@ -368,7 +427,7 @@ class Store:
                         entry["method"],
                         now,
                         not initial,
-                        mark_read,
+                        mark_read or key in read_identities,
                     ),
                 )
                 added += 1
@@ -532,6 +591,10 @@ class Store:
         return {"updated": len(ids), "action": action}
 
     def _link_query(self, db, iid, filter, search, sort, direction):
+        if sort is None or direction is None:
+            preferences = self._settings(db)
+            sort = sort or preferences["link_sort"]
+            direction = direction or preferences["link_direction"]
         item = db.execute("SELECT order_hint FROM items WHERE id=?", (iid,)).fetchone()
         if item is None:
             raise KeyError("Item not found.")
@@ -589,8 +652,8 @@ class Store:
         iid,
         filter="all",
         search="",
-        sort="auto",
-        direction="asc",
+        sort=None,
+        direction=None,
         offset=0,
         limit=50,
     ):
@@ -623,9 +686,7 @@ class Store:
         ).fetchall()
         return [r["id"] for r in rows], sort
 
-    def link_selection(
-        self, iid, filter="all", search="", sort="auto", direction="asc"
-    ):
+    def link_selection(self, iid, filter="all", search="", sort=None, direction=None):
         with self.connection() as db:
             ids, sort = self._view_ids(db, iid, filter, search, sort, direction)
         return {"ids": ids, "total": len(ids), "sort_used": sort}
@@ -637,8 +698,8 @@ class Store:
         side,
         filter="all",
         search="",
-        sort="auto",
-        direction="asc",
+        sort=None,
+        direction=None,
     ):
         if side not in {"before", "after"} or filter in {"trash", "ignored"}:
             raise ValueError("Choose an active link and a valid read direction.")

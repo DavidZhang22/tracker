@@ -1040,6 +1040,87 @@ progress::-moz-progress-bar {
   display: inline-flex;
   align-items: stretch;
 }
+.settings-layout {
+  max-width: 760px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+}
+.settings-card h2 {
+  margin-bottom: 12px;
+}
+.settings-card fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.settings-card .checkbox {
+  margin: 18px 0 12px;
+  align-items: flex-start;
+}
+.settings-card .settings-apply {
+  margin-left: 24px;
+}
+.settings-card > .hint {
+  margin-bottom: 18px;
+}
+.settings-card select,
+.preview-reading select {
+  min-width: 0;
+  max-width: 100%;
+}
+.settings-card details {
+  margin-bottom: 24px;
+}
+.settings-account {
+  scroll-margin-top: 80px;
+}
+.settings-account .account-card {
+  max-width: none;
+}
+.preferences-loading {
+  max-width: 480px;
+  margin: 48px auto;
+}
+.preview-reading {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: 24px 0 12px;
+}
+.preview-reading .field {
+  width: 100%;
+  margin: 0;
+}
+.preview-read {
+  min-height: 44px;
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  margin: 0;
+}
+.entry-preview:has(.preview-read) {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: start;
+  gap: 4px 12px;
+}
+.entry-preview:has(.preview-read) > a,
+.entry-preview:has(.preview-read) > .link-date,
+.entry-preview:has(.preview-read) > .preview-context {
+  grid-column: 2;
+}
+.entry-preview:has(.preview-read) > a {
+  min-height: 44px;
+  padding-top: 10px;
+}
+.entry-preview:has(.preview-read) > .preview-context {
+  white-space: normal;
+}
+#item-settings {
+  scroll-margin-top: 80px;
+}
 .refresh-control > .button {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;

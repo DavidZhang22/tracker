@@ -22,9 +22,11 @@ import {
   XIcon,
   ClockIcon,
   LightBulbIcon,
+  CogIcon,
 } from "@heroicons/react/outline";
 import { api, patch, post, examples, checked, refreshLibrary } from "./api";
 import { AuthBoundary, AccountPage, useAuth } from "./Auth";
+import { PreferencesProvider, usePreferences } from "./Preferences";
 import { Notice, ScanNote } from "./Notice";
 import {
   ActionMenu,
@@ -155,6 +157,18 @@ export function Shell() {
               <Icon as={LightBulbIcon} />
               Suggestions
             </Link>
+            <Link
+              to="/settings"
+              className={
+                location.pathname === "/settings" ? "active" : undefined
+              }
+              aria-current={
+                location.pathname === "/settings" ? "page" : undefined
+              }
+            >
+              <Icon as={CogIcon} />
+              Settings
+            </Link>
           </nav>
           <Link className="button primary side-add" to="/add">
             <Icon as={PlusIcon} />
@@ -163,7 +177,9 @@ export function Shell() {
           <div className="sidebar-foot">
             {auth.required ? (
               <>
-                <Link to="/account">{auth.user.username} · Account</Link>
+                <Link to="/settings#account">
+                  {auth.user.username} · Account
+                </Link>
                 <button
                   className="text-button"
                   onClick={async () => {
@@ -192,6 +208,14 @@ export function Shell() {
           <Routes>
             <Route path="/" element={<Library />} />
             <Route path="/account" element={<AccountPage />} />
+            <Route
+              path="/settings"
+              element={
+                <React.Suspense fallback={<p>Loading…</p>}>
+                  <SettingsPage />
+                </React.Suspense>
+              }
+            />
             <Route
               path="/suggestions"
               element={
@@ -234,7 +258,9 @@ export function Shell() {
 const AddPage = React.lazy(() => import("./Pages/AddPage"));
 const ItemPage = React.lazy(() => import("./Pages/ItemPage"));
 const SuggestionsPage = React.lazy(() => import("./Pages/SuggestionsPage"));
+const SettingsPage = React.lazy(() => import("./Pages/SettingsPage"));
 export function Library() {
+  const { preferences } = usePreferences();
   const [items, setItems] = useState([]),
     [loading, setLoading] = useState(true),
     [params, setParams] = useSearchParams();
@@ -242,7 +268,7 @@ export function Library() {
   const trash = filter === "trash";
   const [search, setSearch] = useState(""),
     [kind, setKind] = useState("all"),
-    [sort, setSort] = useState("recent");
+    [sort, setSort] = useState(preferences.library_sort);
   const [busy, setBusy] = useState(false),
     [refreshing, setRefreshing] = useState(false),
     [error, setError] = useState(""),
@@ -673,7 +699,9 @@ export default function Tracker() {
         Skip to content
       </a>
       <AuthBoundary>
-        <Shell />
+        <PreferencesProvider>
+          <Shell />
+        </PreferencesProvider>
       </AuthBoundary>
     </BrowserRouter>
   );

@@ -174,7 +174,7 @@ function SignIn({ registration, onSignedIn }) {
   );
 }
 
-export function AccountPage() {
+export function AccountPage({ embedded = false }) {
   const auth = useAuth();
   const [current, setCurrent] = useState(""),
     [password, setPassword] = useState(""),
@@ -208,10 +208,12 @@ export function AccountPage() {
   };
   return (
     <>
-      <Link className="back-link" to="/">
-        ← Library
-      </Link>
-      <h1>Account</h1>
+      {!embedded && (
+        <Link className="back-link" to="/">
+          ← Library
+        </Link>
+      )}
+      {embedded ? <h2>Account</h2> : <h1>Account</h1>}
       {auth.required ? (
         <form className="form-panel account-card" onSubmit={submit}>
           <h2>{auth.user.username}</h2>

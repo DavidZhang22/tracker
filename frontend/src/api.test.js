@@ -56,14 +56,14 @@ test("incomplete stream reports interruption after delivering saved item updates
 });
 
 test.each([false, true])(
-  "library refresh sends deep=%s only when requested",
+  "library refresh sends explicit deep=%s so an override beats saved preferences",
   async (deep) => {
     streamingReader([
       new TextEncoder().encode('{"type":"complete","checked":0}\n'),
     ]);
     await refreshLibrary(jest.fn(), undefined, deep);
     expect(global.fetch.mock.calls[0][0]).toBe(
-      `/api/refresh?stream=true${deep ? "&deep=true" : ""}`,
+      `/api/refresh?stream=true&deep=${deep}`,
     );
   },
 );

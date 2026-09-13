@@ -8,6 +8,7 @@ import {
   RefreshIcon,
 } from "@heroicons/react/outline";
 import { day } from "./api";
+import { usePreferences } from "./Preferences";
 
 export function openRowMenu(event) {
   if (event.shiftKey) return; // Shift + right click keeps the browser menu available.
@@ -51,13 +52,20 @@ export function RefreshControl({
 }) {
   const anchor = useRef();
   const blocked = disabled || busy;
+  const { preferences } = usePreferences();
+  const defaultDeep = preferences.refresh_mode === "deep";
+  const alternateLabel = `${defaultDeep ? "Lightweight refresh" : "Deep refresh"}${label === "Refresh all" ? " all" : ""}`;
   return (
     <div className={`refresh-control ${primary ? "primary" : ""}`}>
       <button
         className={`button ${primary ? "primary" : ""}`}
         disabled={blocked}
-        title="Use learned detection rules; run full detection automatically when needed."
-        onClick={() => onRefresh(false)}
+        title={
+          defaultDeep
+            ? "Run full detection and rebuild learned rules."
+            : "Use learned detection rules; run full detection automatically when needed."
+        }
+        onClick={() => onRefresh(defaultDeep)}
       >
         <RefreshIcon
           className={`icon ${busy ? "spinning" : ""}`}
@@ -81,17 +89,15 @@ export function RefreshControl({
                 {({ active }) => (
                   <button
                     className={`action-menu-item ${active ? "focused" : ""}`}
-                    title="Run the full model scan and rebuild detection rules."
-                    aria-label={
-                      label === "Refresh all"
-                        ? "Deep refresh all"
-                        : "Deep refresh"
+                    title={
+                      defaultDeep
+                        ? "Use learned rules with automatic fallback."
+                        : "Run the full model scan and rebuild detection rules."
                     }
-                    onClick={() => onRefresh(true)}
+                    aria-label={alternateLabel}
+                    onClick={() => onRefresh(!defaultDeep)}
                   >
-                    {label === "Refresh all"
-                      ? "Deep refresh all"
-                      : "Deep refresh"}
+                    {alternateLabel}
                   </button>
                 )}
               </Menu.Item>

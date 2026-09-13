@@ -149,9 +149,7 @@ test.each([false, true])(
     } else {
       await click(screen.getByRole("button", { name: "Refresh item" }));
     }
-    expect(post.mock.calls[0][0]).toBe(
-      `/items/one/refresh${deep ? "?deep=true" : ""}`,
-    );
+    expect(post.mock.calls[0][0]).toBe(`/items/one/refresh?deep=${deep}`);
   },
 );
 
@@ -337,7 +335,7 @@ test("all matching selection keeps off-screen IDs for bulk actions", async () =>
     filter: "all",
     search: "",
     sort: "auto",
-    direction: "asc",
+    direction: "desc",
   });
   expect(screen.getByText("2 selected")).toBeInTheDocument();
   await click(screen.getByRole("button", { name: "Next", exact: true }));
@@ -555,7 +553,9 @@ test("scan preview saves the actual server scan with preferences", async () => {
     keywords: "English, official",
   });
   expect(await screen.findByText("0 links found")).toBeInTheDocument();
-  await click(screen.getByLabelText("Mark existing links as read"));
+  fireEvent.change(screen.getByLabelText("Reading progress"), {
+    target: { value: "all" },
+  });
   const saveButton = screen.getByRole("button", { name: /Add to library/ });
   expect(saveButton.closest(".preview-sticky")).toHaveTextContent(
     "Review & save",
@@ -566,7 +566,7 @@ test("scan preview saves the actual server scan with preferences", async () => {
       scan_id: "scan1",
       title: "Found series",
       mark_read: true,
-      auto_read: true,
+      read_indices: [],
     }),
   );
 });
@@ -605,7 +605,9 @@ test("addition cooldown counts down without losing the preview or preferences", 
     fireEvent.change(screen.getByLabelText("Item name"), {
       target: { value: "My title" },
     });
-    await click(screen.getByLabelText("Mark existing links as read"));
+    fireEvent.change(screen.getByLabelText("Reading progress"), {
+      target: { value: "all" },
+    });
     await click(screen.getByRole("button", { name: "Add to library" }));
     expect(screen.getByRole("button", { name: "Add in 8s" })).toBeDisabled();
     await click(screen.getByRole("button", { name: "Add in 8s" }));
@@ -613,7 +615,7 @@ test("addition cooldown counts down without losing the preview or preferences", 
     act(() => jest.advanceTimersByTime(7999));
     expect(screen.getByRole("button", { name: "Add in 1s" })).toBeDisabled();
     expect(screen.getByLabelText("Item name")).toHaveValue("My title");
-    expect(screen.getByLabelText("Mark existing links as read")).toBeChecked();
+    expect(screen.getByLabelText("Reading progress")).toHaveValue("all");
     act(() => jest.advanceTimersByTime(1));
     expect(
       screen.getByRole("button", { name: "Add to library" }),
@@ -624,7 +626,7 @@ test("addition cooldown counts down without losing the preview or preferences", 
       scan_id: "scan-cooldown",
       title: "My title",
       mark_read: true,
-      auto_read: true,
+      read_indices: [],
     });
     expect(screen.getByText("Saved item")).toBeInTheDocument();
     expect(jest.getTimerCount()).toBe(0);
@@ -665,13 +667,15 @@ test("middle click marks read but right click does not", async () => {
   expect(patch).toHaveBeenCalledWith("/links/chapter1", { read: true });
 });
 
-test("read preference and ignored link controls persist", async () => {
+test("item settings are centralized while ignored link controls stay accessible", async () => {
   mockDetail();
   detail();
-  await click(await screen.findByLabelText("Mark as read when opened"));
-  await waitFor(() =>
-    expect(patch).toHaveBeenCalledWith("/items/one", { auto_read: false }),
-  );
+  expect(
+    await screen.findByRole("link", { name: "Item settings" }),
+  ).toHaveAttribute("href", "/settings?item=one#item-settings");
+  expect(
+    screen.queryByLabelText("Mark as read when opened"),
+  ).not.toBeInTheDocument();
   await click(
     await screen.findByRole("button", { name: "Ignore link: Chapter 1" }),
   );

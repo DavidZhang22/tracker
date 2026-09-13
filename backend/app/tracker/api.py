@@ -12,6 +12,7 @@ from starlette.background import BackgroundTask
 
 from .keywords import terms
 from .limits import MAX_ITEMS, MAX_LINKS, bounded_scan
+from .preferences import PreferencesPatch
 from .store import ItemAdditionCooldown
 from .suggestions import collect_cached, ranked_suggestions
 from .urls import DiscoveryError
@@ -32,7 +33,23 @@ class CreateRequest(BaseModel):
     scan_id: str = Field(min_length=1, max_length=64)
     title: str | None = Field(default=None, max_length=300)
     mark_read: bool = False
-    auto_read: bool = True
+    auto_read: bool | None = None
+    read_indices: list[Annotated[int, Field(strict=True, ge=0, lt=MAX_LINKS)]] = Field(
+        default_factory=list, max_length=MAX_LINKS
+    )
+
+
+@router.get("/settings")
+def settings(request: Request):
+    return request.state.store.settings()
+
+
+@router.patch("/settings")
+def update_settings(body: PreferencesPatch, request: Request):
+    return request.state.store.update_settings(
+        body.model_dump(exclude_none=True, exclude={"apply_auto_read"}),
+        body.apply_auto_read,
+    )
 
 
 class ItemPatch(BaseModel):
@@ -105,8 +122,10 @@ class LinkView(BaseModel):
         "all", "new", "unread", "read", "favorites", "ignored", "trash", "upcoming"
     ] = "all"
     search: str = Field(default="", max_length=300)
-    sort: Literal["auto", "date", "number", "source", "discovered", "title"] = "auto"
-    direction: Literal["asc", "desc"] = "asc"
+    sort: Literal["auto", "date", "number", "source", "discovered", "title"] | None = (
+        None
+    )
+    direction: Literal["asc", "desc"] | None = None
 
 
 class ReadRange(LinkView):
@@ -173,7 +192,7 @@ def link_bulk(body: BulkRequest, request: Request):
 def create(body: CreateRequest, request: Request):
     try:
         return request.state.store.create(
-            body.scan_id, body.title, body.mark_read, body.auto_read
+            body.scan_id, body.title, body.mark_read, body.auto_read, body.read_indices
         )
     except ItemAdditionCooldown as exc:
         raise HTTPException(
@@ -206,8 +225,9 @@ def links(
         "all", "new", "unread", "read", "favorites", "ignored", "trash", "upcoming"
     ] = "all",
     search: str = Query("", max_length=300),
-    sort: Literal["auto", "date", "number", "source", "discovered", "title"] = "auto",
-    direction: Literal["asc", "desc"] = "asc",
+    sort: Literal["auto", "date", "number", "source", "discovered", "title"]
+    | None = None,
+    direction: Literal["asc", "desc"] | None = None,
     offset: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=200),
 ):
@@ -290,7 +310,11 @@ async def refresh_item(iid, app, store, skip_unavailable=False, deep=False):
 
 
 @router.post("/items/{iid}/refresh")
-async def refresh_one(iid: str, request: Request, deep: bool = False):
+async def refresh_one(iid: str, request: Request, deep: bool | None = None):
+    if deep is None:
+        deep = (await run_blocking(request.state.store.settings))[
+            "refresh_mode"
+        ] == "deep"
     with request.app.state.scan_guard.operation(request.state.store.path):
         return await refresh_item(iid, request.app, request.state.store, deep=deep)
 
@@ -366,7 +390,11 @@ async def refresh_events(rows, app, store, deep=False):
 
 
 @router.post("/refresh")
-async def refresh_all(request: Request, stream: bool = False, deep: bool = False):
+async def refresh_all(request: Request, stream: bool = False, deep: bool | None = None):
+    if deep is None:
+        deep = (await run_blocking(request.state.store.settings))[
+            "refresh_mode"
+        ] == "deep"
     rows = await run_blocking(request.state.store.refresh_sources)
     if len(rows) > MAX_ITEMS:
         raise HTTPException(

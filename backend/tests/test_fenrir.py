@@ -82,7 +82,7 @@ async def test_group_order_and_double_digit_parts_survive_storage_and_latest(tmp
     result = await Discoverer(f, max_pages=1).scan(SOURCE)
     store = Store(tmp_path / "fenrir.sqlite3")
     item = store.create(store.save_scan(result.to_dict()))
-    listing = store.links(item["id"])
+    listing = store.links(item["id"], direction="asc")
     assert listing["sort_used"] == "source"
     assert [e["url"].removeprefix(SOURCE + "/") for e in listing["links"]] == [
         "volume-one/1-2",
@@ -103,7 +103,7 @@ async def test_group_order_and_double_digit_parts_survive_storage_and_latest(tmp
     store.update("links", lid, {"read": True, "favorite": True})
     assert store.merge(item["id"], result.to_dict()) == 0
     reopened = Store(store.path)
-    saved = reopened.links(item["id"])["links"][0]
+    saved = reopened.links(item["id"], direction="asc")["links"][0]
     assert saved["id"] == lid and saved["read"] and saved["favorite"]
     assert reopened.item(item["id"])["order_hint"] == "source"
 

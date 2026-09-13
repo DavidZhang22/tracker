@@ -156,7 +156,7 @@ def test_partial_refresh_preserves_source_neighbor_order(client):
         [Entry(ROOT + n, n, position=i) for i, n in enumerate(["One", "Two", "Three"])]
     )
     client.post(f"/api/items/{item['id']}/refresh")
-    assert [e["title"] for e in entries(client, item)["links"]] == [
+    assert [e["title"] for e in entries(client, item, direction="asc")["links"]] == [
         "One",
         "Interlude",
         "Two",
@@ -203,10 +203,10 @@ def test_numeric_sort_decimal_and_pagination(client):
         [Entry(ROOT + str(n), "Chapter " + str(n), number=n) for n in (10, 2, 9.5, 1)]
     )
     item = add(client)
-    assert [e["number"] for e in entries(client, item, limit=2)["links"]] == [1, 2]
+    assert [e["number"] for e in entries(client, item, limit=2)["links"]] == [10, 9.5]
     assert [e["number"] for e in entries(client, item, offset=2, limit=2)["links"]] == [
-        9.5,
-        10,
+        2,
+        1,
     ]
     assert (
         entries(client, item, sort="number", direction="desc")["links"][0]["number"]
@@ -237,7 +237,7 @@ def test_publication_sort_uses_parsed_dates_not_url_numbers(client):
         ]
     )
     item = add(client)
-    assert entries(client, item)["links"][0]["title"] == "Earlier"
+    assert entries(client, item)["links"][0]["title"] == "Later"
 
 
 def test_royalroad_slug_change_retains_link_identity(client):

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
   ArrowLeftIcon,
@@ -9,8 +9,10 @@ import {
 import { Icon, Notice, TypeIcon } from "../Tracker";
 import { post, examples } from "../api";
 import { LinkDate } from "../RowTools";
+import { orderedPreview, usePreferences } from "../Preferences";
 
 export default function AddPage() {
+  const { preferences } = usePreferences();
   const [params] = useSearchParams(),
     navigate = useNavigate();
   const [url, setUrl] = useState(params.get("url") || ""),
@@ -22,11 +24,24 @@ export default function AddPage() {
     [saving, setSaving] = useState(false),
     [error, setError] = useState("");
   const [title, setTitle] = useState(""),
-    [read, setRead] = useState(false),
-    [auto, setAuto] = useState(true),
+    [readMode, setReadMode] = useState("unread"),
+    [selectedRead, setSelectedRead] = useState(new Set()),
     [page, setPage] = useState(0);
   const [retryAt, setRetryAt] = useState(0),
     [remaining, setRemaining] = useState(0);
+  const preview = useMemo(
+    () =>
+      result
+        ? orderedPreview(result.entries, preferences, result.order_hint)
+        : [],
+    [result, preferences],
+  );
+  const readCount =
+    readMode === "all"
+      ? preview.length
+      : readMode === "choose"
+        ? selectedRead.size
+        : 0;
   useEffect(() => {
     if (!retryAt) return;
     const update = () => {
@@ -48,6 +63,8 @@ export default function AddPage() {
     setResult(null);
     setError("");
     setPage(0);
+    setReadMode("unread");
+    setSelectedRead(new Set());
     try {
       const r = await post("/scans", {
         url,
@@ -71,8 +88,9 @@ export default function AddPage() {
       const item = await post("/items", {
         scan_id: result.scan_id,
         title: title.trim() || result.title,
-        mark_read: read,
-        auto_read: auto,
+        mark_read: readMode === "all",
+        read_indices:
+          readMode === "choose" ? [...selectedRead].sort((a, b) => a - b) : [],
       });
       navigate(`/items/${item.id}`);
     } catch (e) {
@@ -111,7 +129,7 @@ export default function AddPage() {
                 required
                 placeholder="https://example.com/series"
                 value={url}
-                disabled={busy}
+                disabled={busy || saving}
                 onChange={(e) => {
                   setUrl(e.target.value);
                   setResult(null);
@@ -169,7 +187,11 @@ export default function AddPage() {
                 </span>
               </label>
             </details>
-            <button className="button primary" disabled={busy} type="submit">
+            <button
+              className="button primary"
+              disabled={busy || saving}
+              type="submit"
+            >
               <Icon
                 as={busy ? RefreshIcon : ArrowRightIcon}
                 className={`icon ${busy ? "spinning" : ""}`}
@@ -250,17 +272,97 @@ export default function AddPage() {
                 />
               </label>
               <div>
-                {result.entries.slice(page * 25, (page + 1) * 25).map((e) => (
-                  <div className="entry-preview" key={e.url}>
-                    <a href={e.url} target="_blank" rel="noopener noreferrer">
-                      {e.title} ↗
-                    </a>
-                    {e.summary && (
-                      <span className="preview-context">{e.summary}</span>
-                    )}
-                    <LinkDate entry={e} />
-                  </div>
-                ))}
+                <div className="preview-reading">
+                  <label className="field">
+                    Reading progress
+                    <select
+                      value={readMode}
+                      disabled={saving}
+                      onChange={(e) => {
+                        const next = e.target.value;
+                        if (next === "choose" && readMode === "all")
+                          setSelectedRead(
+                            new Set(preview.map(({ index }) => index)),
+                          );
+                        if (next === "unread") setSelectedRead(new Set());
+                        setReadMode(next);
+                      }}
+                    >
+                      <option value="unread">Not started</option>
+                      <option value="choose">Choose read links</option>
+                      <option value="all">Caught up</option>
+                    </select>
+                  </label>
+                  <span className="hint" role="status">
+                    {readCount} read · {preview.length - readCount} unread
+                  </span>
+                  {readMode === "choose" && (
+                    <button
+                      className="text-button"
+                      disabled={
+                        saving ||
+                        preview
+                          .slice(page * 25, (page + 1) * 25)
+                          .every(({ index }) => selectedRead.has(index))
+                      }
+                      onClick={() =>
+                        setSelectedRead(
+                          (old) =>
+                            new Set([
+                              ...old,
+                              ...preview
+                                .slice(page * 25, (page + 1) * 25)
+                                .map(({ index }) => index),
+                            ]),
+                        )
+                      }
+                    >
+                      Mark this page read
+                    </button>
+                  )}
+                  {readMode === "choose" && (
+                    <button
+                      className="text-button"
+                      disabled={saving || !selectedRead.size}
+                      onClick={() => setSelectedRead(new Set())}
+                    >
+                      Clear read selection
+                    </button>
+                  )}
+                </div>
+                {preview
+                  .slice(page * 25, (page + 1) * 25)
+                  .map(({ entry: e, index }) => (
+                    <div className="entry-preview" key={e.url}>
+                      {readMode === "choose" && (
+                        <label className="checkbox preview-read">
+                          <input
+                            type="checkbox"
+                            aria-label={`Read: ${e.title}`}
+                            disabled={saving}
+                            checked={selectedRead.has(index)}
+                            onChange={(event) => {
+                              const checked = event.target.checked;
+                              setSelectedRead((old) => {
+                                const next = new Set(old);
+                                if (checked) next.add(index);
+                                else next.delete(index);
+                                return next;
+                              });
+                            }}
+                          />
+                          Read
+                        </label>
+                      )}
+                      <a href={e.url} target="_blank" rel="noopener noreferrer">
+                        {e.title} ↗
+                      </a>
+                      {e.summary && (
+                        <span className="preview-context">{e.summary}</span>
+                      )}
+                      <LinkDate entry={e} />
+                    </div>
+                  ))}
               </div>
               {result.entries.length > 25 && (
                 <div className="pagination">
@@ -283,29 +385,9 @@ export default function AddPage() {
                   </button>
                 </div>
               )}
-              <div className="save-actions">
-                <div>
-                  <label className="checkbox">
-                    <input
-                      type="checkbox"
-                      checked={read}
-                      onChange={(e) => setRead(e.target.checked)}
-                    />
-                    Mark existing links as read
-                  </label>
-                  <label className="checkbox">
-                    <input
-                      type="checkbox"
-                      checked={auto}
-                      onChange={(e) => setAuto(e.target.checked)}
-                    />
-                    Mark links as read when opened
-                  </label>
-                </div>
-              </div>
               <p className="hint" style={{ marginTop: 15 }}>
-                Future discoveries get a new badge. Existing links start as your
-                backlog.
+                Read-on-open is {preferences.auto_read ? "on" : "off"} for new
+                items. Change defaults in <Link to="/settings">Settings</Link>.
               </p>
             </section>
           )}
