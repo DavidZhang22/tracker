@@ -1,7 +1,12 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Menu } from "@headlessui/react";
-import { AdjustmentsIcon, DotsHorizontalIcon } from "@heroicons/react/outline";
+import {
+  AdjustmentsIcon,
+  DotsHorizontalIcon,
+  ChevronDownIcon,
+  RefreshIcon,
+} from "@heroicons/react/outline";
 import { day } from "./api";
 
 export function openRowMenu(event) {
@@ -34,6 +39,67 @@ export function FilterOptions({ children, label = "Filter" }) {
         {children}
       </div>
     </>
+  );
+}
+
+export function RefreshControl({
+  onRefresh,
+  label,
+  busy = false,
+  disabled = false,
+  primary = false,
+}) {
+  const anchor = useRef();
+  const blocked = disabled || busy;
+  return (
+    <div className={`refresh-control ${primary ? "primary" : ""}`}>
+      <button
+        className={`button ${primary ? "primary" : ""}`}
+        disabled={blocked}
+        title="Use learned detection rules; run full detection automatically when needed."
+        onClick={() => onRefresh(false)}
+      >
+        <RefreshIcon
+          className={`icon ${busy ? "spinning" : ""}`}
+          aria-hidden="true"
+        />
+        {busy ? "Refreshing…" : label}
+      </button>
+      <Menu as="div" className="action-menu">
+        {({ open }) => (
+          <>
+            <Menu.Button
+              ref={anchor}
+              className={`button refresh-options ${primary ? "primary" : ""}`}
+              disabled={blocked}
+              aria-label={`Options for ${label.toLowerCase()}`}
+            >
+              <ChevronDownIcon className="icon" aria-hidden="true" />
+            </Menu.Button>
+            <FloatingMenu anchor={anchor} open={open}>
+              <Menu.Item>
+                {({ active }) => (
+                  <button
+                    className={`action-menu-item ${active ? "focused" : ""}`}
+                    title="Run the full model scan and rebuild detection rules."
+                    aria-label={
+                      label === "Refresh all"
+                        ? "Deep refresh all"
+                        : "Deep refresh"
+                    }
+                    onClick={() => onRefresh(true)}
+                  >
+                    {label === "Refresh all"
+                      ? "Deep refresh all"
+                      : "Deep refresh"}
+                  </button>
+                )}
+              </Menu.Item>
+            </FloatingMenu>
+          </>
+        )}
+      </Menu>
+    </div>
   );
 }
 

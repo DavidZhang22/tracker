@@ -110,6 +110,7 @@ class Scan:
     keywords: str = ""
     unfiltered_count: int | None = None
     suggestions: list[dict] | None = None
+    analysis_mode: str = "deep"
 
     def to_dict(self):
         return asdict(self)

@@ -59,7 +59,8 @@ async def test_fast_item_is_emitted_while_other_item_is_still_scanning(
     update = await asyncio.wait_for(anext(events), 2)
     assert update["item"]["id"] == fast["id"]
     assert update["item"]["total_count"] == 2 and update["checked"] == 1
-    assert scanner.started.is_set() and scanner.active == 1
+    await asyncio.wait_for(scanner.started.wait(), 2)
+    assert scanner.active == 1
     scanner.release.set()
     assert (await anext(events))["item"]["id"] == slow["id"]
     complete = await anext(events)

@@ -193,10 +193,10 @@ def predict(data, features):
 
 
 class RecordContext:
-    def __init__(self, soup):
+    def __init__(self, soup, regions=None):
         self.soup = soup
         self.stats = {}
-        self.selected = {}
+        self.selected = dict(regions or {})
         self.sibling_stats = {}
         self.references = None
         model = load_record_model()

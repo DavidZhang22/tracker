@@ -1035,3 +1035,26 @@ progress::-moz-progress-bar {
   text-align: left;
   margin-top: 10px;
 }
+/* Keep both refresh choices together with a full touch target for the menu. */
+.refresh-control {
+  display: inline-flex;
+  align-items: stretch;
+}
+.refresh-control > .button {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.refresh-control .refresh-options {
+  min-width: 44px;
+  height: 100%;
+  padding-inline: 10px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: -1px;
+}
+@media (max-width: 420px) {
+  .page-heading:not(.detail-heading) > .actions:has(.refresh-control) {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}

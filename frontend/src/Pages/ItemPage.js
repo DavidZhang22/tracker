@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   ArrowLeftIcon,
-  RefreshIcon,
   StarIcon,
   EyeOffIcon,
   ExternalLinkIcon,
@@ -18,6 +17,7 @@ import {
   SelectionBar,
   useSelection,
   LinkDate,
+  RefreshControl,
 } from "../RowTools";
 
 export default function ItemPage() {
@@ -103,12 +103,12 @@ export default function ItemPage() {
       setError(e.message);
     }
   };
-  const refresh = async () => {
+  const refresh = async (deep = false) => {
     setBusy(true);
     setError("");
     setMessage("");
     try {
-      const r = await post(`/items/${id}/refresh`);
+      const r = await post(`/items/${id}/refresh${deep ? "?deep=true" : ""}`);
       if (!r.ok) setError(r.error);
       else
         setMessage(
@@ -241,17 +241,13 @@ export default function ItemPage() {
             active={item.ignored}
             onClick={() => update({ ignored: !item.ignored })}
           />
-          <button
-            className="button primary"
-            onClick={refresh}
-            disabled={busy || item.deleted}
-          >
-            <Icon
-              as={RefreshIcon}
-              className={`icon ${busy ? "spinning" : ""}`}
-            />
-            {busy ? "Working…" : "Refresh item"}
-          </button>
+          <RefreshControl
+            label="Refresh item"
+            onRefresh={refresh}
+            busy={busy}
+            disabled={item.deleted}
+            primary
+          />
         </div>
       </div>
       <Notice

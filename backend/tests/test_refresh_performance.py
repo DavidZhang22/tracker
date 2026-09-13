@@ -78,6 +78,7 @@ async def test_unchanged_page_reuses_parse_but_changed_content_and_options_do_no
     tmp_path, monkeypatch, disk
 ):
     import app.tracker.discovery as module
+    import app.tracker.parser as parser_module
 
     cache = FetchCache(tmp_path / "cache.db" if disk else None)
     original_get = cache.get
@@ -99,14 +100,14 @@ async def test_unchanged_page_reuses_parse_but_changed_content_and_options_do_no
     fetcher = Fetcher()
     fetcher.cache = cache
     scanner = Discoverer(fetcher)
-    original_parse = module.parse_page
+    original_parse = parser_module.parse_page
     calls = []
 
-    def parse(*args):
+    def parse(*args, **kwargs):
         calls.append(args)
-        return original_parse(*args)
+        return original_parse(*args, **kwargs)
 
-    monkeypatch.setattr(module, "parse_page", parse)
+    monkeypatch.setattr(parser_module, "parse_page", parse)
     source = "https://example.org/series/story"
     first = await scanner.scan(source)
     second = await scanner.scan(source, keywords="English")

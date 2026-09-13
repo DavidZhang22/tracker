@@ -176,7 +176,7 @@ async def test_concurrent_scan_is_rejected_instead_of_queued(tmp_path):
     started, release = asyncio.Event(), asyncio.Event()
 
     class SlowDiscoverer:
-        async def scan(self, *args):
+        async def scan(self, *args, **kwargs):
             started.set()
             await release.wait()
             return scan()

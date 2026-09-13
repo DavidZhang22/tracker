@@ -141,6 +141,7 @@ async def scan(body: ScanRequest, request: Request):
                 body.selector,
                 body.include_path,
                 **({"keywords": body.keywords} if body.keywords else {}),
+                deep=True,
             )
     payload = bounded_scan(result.to_dict()) | {
         "selector": body.selector,
@@ -243,7 +244,7 @@ def acknowledge(iid: str, request: Request):
     return request.state.store.item(iid)
 
 
-async def refresh_item(iid, app, store, skip_unavailable=False):
+async def refresh_item(iid, app, store, skip_unavailable=False, deep=False):
     # Fixed-size lock striping avoids both overlapping merges and unbounded lock storage.
     lock = app.state.refresh_locks[hash(iid) % 64]
     async with lock:
@@ -259,6 +260,7 @@ async def refresh_item(iid, app, store, skip_unavailable=False):
                     item["selector"],
                     item["include_path"],
                     **({"keywords": item["keywords"]} if item.get("keywords") else {}),
+                    **({"deep": True} if deep else {}),
                 )
             if not result.entries and not (
                 result.unfiltered_count
@@ -278,6 +280,7 @@ async def refresh_item(iid, app, store, skip_unavailable=False):
                 "cached": result.cached,
                 "checked_at": result.checked_at,
                 "requests_made": result.requests_made,
+                "analysis_mode": result.analysis_mode,
             }
         except DiscoveryError as exc:
             if (await run_blocking(store.refresh_source, iid))["deleted"]:
@@ -287,9 +290,9 @@ async def refresh_item(iid, app, store, skip_unavailable=False):
 
 
 @router.post("/items/{iid}/refresh")
-async def refresh_one(iid: str, request: Request):
+async def refresh_one(iid: str, request: Request, deep: bool = False):
     with request.app.state.scan_guard.operation(request.state.store.path):
-        return await refresh_item(iid, request.app, request.state.store)
+        return await refresh_item(iid, request.app, request.state.store, deep=deep)
 
 
 def refresh_summary(results, total):
@@ -304,7 +307,7 @@ def refresh_summary(results, total):
     }
 
 
-async def refresh_events(rows, app, store):
+async def refresh_events(rows, app, store, deep=False):
     """Two bounded workers per library; emit each committed result as it finishes."""
     pending, completed = deque(rows), []
     queue = asyncio.Queue()
@@ -314,7 +317,7 @@ async def refresh_events(rows, app, store):
             while pending:
                 row = pending.popleft()
                 result = await refresh_item(
-                    row["id"], app, store, skip_unavailable=True
+                    row["id"], app, store, skip_unavailable=True, deep=deep
                 )
                 await queue.put((result, await run_blocking(store.item, row["id"])))
         except Exception as exc:
@@ -363,7 +366,7 @@ async def refresh_events(rows, app, store):
 
 
 @router.post("/refresh")
-async def refresh_all(request: Request, stream: bool = False):
+async def refresh_all(request: Request, stream: bool = False, deep: bool = False):
     rows = await run_blocking(request.state.store.refresh_sources)
     if len(rows) > MAX_ITEMS:
         raise HTTPException(
@@ -376,7 +379,7 @@ async def refresh_all(request: Request, stream: bool = False):
     if not stream:
         with admission:
             async with aclosing(
-                refresh_events(rows, request.app, request.state.store)
+                refresh_events(rows, request.app, request.state.store, deep=deep)
             ) as events:
                 async for event in events:
                     if event["type"] == "complete":
@@ -393,7 +396,7 @@ async def refresh_all(request: Request, stream: bool = False):
             admission.__exit__(None, None, None)
 
     async def generate():
-        events = refresh_events(rows, request.app, request.state.store)
+        events = refresh_events(rows, request.app, request.state.store, deep=deep)
         try:
             async for event in events:
                 yield json.dumps(event) + "\n"

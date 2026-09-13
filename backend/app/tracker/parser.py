@@ -4,6 +4,7 @@ import json
 import re
 import xml.etree.ElementTree as ET
 from collections import Counter
+from types import SimpleNamespace
 from urllib.parse import parse_qs, urlsplit
 
 from bs4 import BeautifulSoup
@@ -302,7 +303,7 @@ def parse_feed(text, source):
     return scan, links
 
 
-def parse_page(text, source, selector="", include_path=""):
+def parse_page(text, source, selector="", include_path="", *, learned=None, trace=None):
     text = text.lstrip("\ufeff \t\r\n")
     if text.lstrip().startswith("{"):
         feed = parse_feed(text, source)
@@ -315,6 +316,11 @@ def parse_page(text, source, selector="", include_path=""):
         if feed:
             return feed[0], feed[1], []
     soup = BeautifulSoup(text, "html.parser")
+    bindings = None
+    if learned is not None:
+        from .recipes import bind_recipe
+
+        bindings = bind_recipe(soup, source, learned)
     kind = kind_for(source)
     heading = (
         soup.select_one('meta[property="og:title"]')
@@ -371,7 +377,11 @@ def parse_page(text, source, selector="", include_path=""):
     # selectors retain authority. A model decision never creates a crawl request.
     scores, labels, rejected, model = ({}, {}, set(), None)
     fallback_scores, fallback_model = ({}, None)
-    if not selector and kind == "website":
+    if bindings is not None and kind == "website":
+        model = SimpleNamespace(primary=True, upper=0.5, lower=0.1)
+        scores = {key: 1.0 for key, value in bindings.items() if value}
+        rejected = {key for key, value in bindings.items() if not value}
+    elif not selector and kind == "website":
         scores, labels, rejected, model = classify_context(
             soup, source, fallback_scores=fallback_scores, tables=tables
         )
@@ -381,7 +391,7 @@ def parse_page(text, source, selector="", include_path=""):
             fallback_model = load_model()
     context_model = bool(getattr(model, "primary", False))
     all_anchors = anchors
-    if not selector and kind == "website":
+    if bindings is None and not selector and kind == "website":
         prefix = urlsplit(source).path.rstrip("/") + "/"
         scoped = []
         for a in anchors:
@@ -415,6 +425,8 @@ def parse_page(text, source, selector="", include_path=""):
             for a in all_anchors
             if id(a) in selected or scores.get(id(a), 0) >= model.upper
         ]
+    if bindings is not None:
+        anchors = [a for a in anchors if bindings.get(id(a))]
     # Pagination is independent of a custom content selector.
     for a in soup.select("a[href]"):
         u = candidate_url(a.get("href"), source)
@@ -441,7 +453,17 @@ def parse_page(text, source, selector="", include_path=""):
         ):
             pages.append(u)
     record_cache = {}
-    record_context = RecordContext(soup)
+    record_context = RecordContext(
+        soup,
+        {
+            key: value["regions"]
+            for key, value in bindings.items()
+            if value and value["regions"] is not None
+        }
+        if bindings is not None
+        else None,
+    )
+    traced = {}
     assisted_urls = set()
     has_chapters = kind == "novel" and soup.select_one("#chapters") is not None
     for a in anchors:
@@ -454,6 +476,9 @@ def parse_page(text, source, selector="", include_path=""):
         href = a.get("href") or a.get("data-href")
         u = candidate_url(href, source)
         label = anchor_label(a)
+        policy = bindings.get(id(a)) if bindings is not None else None
+        if policy and policy["label_node"] is not None:
+            label = anchor_label(policy["label_node"])
         if context_model and model_accepts:
             label = labels.get(id(a)) or label
         if table.get("job") and table.get("action"):
@@ -522,7 +547,16 @@ def parse_page(text, source, selector="", include_path=""):
             continue
         if has_chapters and not a.find_parent(id="chapters"):
             continue
-        date = link_date(a)
+        if policy and policy["date_skip"]:
+            date = {}  # Verified Astro publication metadata is applied below.
+        elif policy and policy["date_node"] is not None:
+            from .dates import node_dates
+
+            date = node_dates(policy["date_node"])
+            if date:
+                date.update(policy["date_metadata"])
+        else:
+            date = link_date(a)
         if not date:
             dated_path = re.search(
                 r"/((?:19|20)\d{2})[/-](\d{1,2})[/-](\d{1,2})(?:/|[-_])",
@@ -576,7 +610,12 @@ def parse_page(text, source, selector="", include_path=""):
                 assisted_urls.add(u)
                 e.method = "page + classifier"
                 strong = True
+        if policy:
+            e.method = policy["method"]
+            strong = True
         raw.append((e, strong))
+        if trace is not None:
+            traced[id(a)] = (a, e, label, dict(date))
 
     def shape(e):
         p = urlsplit(e.url)
@@ -741,4 +780,11 @@ def parse_page(text, source, selector="", include_path=""):
         feeds = (matched or feeds)[
             :1
         ]  # RSS and Atom usually represent the same collection.
-    return scan, list(dict.fromkeys(pages)), list(dict.fromkeys(feeds))
+    result = scan, list(dict.fromkeys(pages)), list(dict.fromkeys(feeds))
+    if bindings is not None:
+        from .recipes import validate_result
+
+        validate_result(result, bindings, learned)
+    if trace is not None:
+        trace.update(soup=soup, anchors=traced, context=record_context, tables=tables)
+    return result

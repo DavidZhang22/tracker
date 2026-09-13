@@ -11,7 +11,6 @@ import {
   CollectionIcon,
   StarIcon,
   EyeOffIcon,
-  RefreshIcon,
   PlusIcon,
   SearchIcon,
   ExternalLinkIcon,
@@ -33,6 +32,7 @@ import {
   openRowMenu,
   SelectionBar,
   useSelection,
+  RefreshControl,
 } from "./RowTools";
 export { Notice } from "./Notice";
 export function Icon({ as: Component, ...props }) {
@@ -285,7 +285,7 @@ export function Library() {
       setError(e.message);
     }
   };
-  const refresh = async () => {
+  const refresh = async (deep = false) => {
     if (refreshController.current) return;
     const controller = new AbortController();
     refreshController.current = controller;
@@ -293,21 +293,25 @@ export function Library() {
     setError("");
     setMessage("");
     try {
-      await refreshLibrary((r) => {
-        if (controller.signal.aborted) return;
-        if (r.type === "item" && !trashView.current) {
-          setItems((current) =>
-            current
-              .map((i) => (i.id === r.item.id ? r.item : i))
-              .filter((i) => !i.deleted),
-          );
-        }
-        if (r.type === "start") setMessage(`Checking ${r.total} items…`);
-        else
-          setMessage(
-            `${r.new_count} new ${r.new_count === 1 ? "link" : "links"}. ${r.checked} ${r.checked === 1 ? "item" : "items"} checked.${r.type !== "complete" ? " Refreshing…" : ""}${r.failed ? ` ${r.failed} checks could not finish. Saved links were kept.` : ""}${r.type === "complete" && r.remaining ? ` Refresh paused; ${r.remaining} items remain.` : ""}`,
-          );
-      }, controller.signal);
+      await refreshLibrary(
+        (r) => {
+          if (controller.signal.aborted) return;
+          if (r.type === "item" && !trashView.current) {
+            setItems((current) =>
+              current
+                .map((i) => (i.id === r.item.id ? r.item : i))
+                .filter((i) => !i.deleted),
+            );
+          }
+          if (r.type === "start") setMessage(`Checking ${r.total} items…`);
+          else
+            setMessage(
+              `${r.new_count} new ${r.new_count === 1 ? "link" : "links"}. ${r.checked} ${r.checked === 1 ? "item" : "items"} checked.${r.type !== "complete" ? " Refreshing…" : ""}${r.failed ? ` ${r.failed} checks could not finish. Saved links were kept.` : ""}${r.type === "complete" && r.remaining ? ` Refresh paused; ${r.remaining} items remain.` : ""}`,
+            );
+        },
+        controller.signal,
+        deep,
+      );
     } catch (e) {
       if (e.name !== "AbortError") {
         setError(e.message);
@@ -407,17 +411,12 @@ export function Library() {
         </div>
         <div className="actions">
           {!trash && (
-            <button
-              className="button"
-              onClick={refresh}
-              disabled={busy || refreshing || !active.length}
-            >
-              <Icon
-                as={RefreshIcon}
-                className={`icon ${refreshing ? "spinning" : ""}`}
-              />
-              {refreshing ? "Refreshing…" : "Refresh all"}
-            </button>
+            <RefreshControl
+              label="Refresh all"
+              onRefresh={refresh}
+              busy={refreshing}
+              disabled={busy || !active.length}
+            />
           )}
           <Link className="button primary" to="/add">
             <Icon as={PlusIcon} />

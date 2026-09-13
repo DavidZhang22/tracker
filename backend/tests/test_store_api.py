@@ -27,7 +27,7 @@ class FakeDiscoverer:
         self.result = scan()
         self.calls = []
 
-    async def scan(self, url, *args):
+    async def scan(self, url, *args, **kwargs):
         self.calls.append(url)
         if isinstance(self.result, Exception):
             raise self.result

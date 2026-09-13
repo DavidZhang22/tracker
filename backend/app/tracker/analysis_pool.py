@@ -27,11 +27,16 @@ def worker_ready():
     return os.getpid()
 
 
-def analyze_page(text, url, selector="", include_path=""):
-    """Only plain strings cross the process boundary; the DOM is built once here."""
+def analyze_page(text, url, selector="", include_path="", learn=False, recipe=None):
+    """Only HTML and plain recipe data cross the process boundary."""
     started = time.monotonic()
     cpu_started = time.thread_time()
-    result = parse_page(text, url, selector, include_path)
+    if learn:
+        from .recipes import analyze
+
+        result = analyze(text, url, selector, include_path, recipe)
+    else:
+        result = parse_page(text, url, selector, include_path)
     return result, {
         "pid": os.getpid(),
         "started": started,
@@ -75,20 +80,24 @@ class PageAnalyzer:
             await await_worker(asyncio.gather(*futures))
 
     async def analyze(self, text, url, selector="", include_path=""):
+        return await self._run(text, url, selector, include_path)
+
+    async def analyze_learned(
+        self, text, url, selector="", include_path="", recipe=None
+    ):
+        return await self._run(text, url, selector, include_path, True, recipe)
+
+    async def _run(self, *args):
         # Admission happens before submit, keeping the executor's queue bounded.
         async with self._slots:
             if self._closed:
                 raise DiscoveryError("Page analysis is stopping. Please retry shortly.")
             if not self.workers:
-                result, stats = await run_blocking(
-                    analyze_page, text, url, selector, include_path
-                )
+                result, stats = await run_blocking(analyze_page, *args)
             else:
                 pool = await self._executor()
                 try:
-                    future = asyncio.wrap_future(
-                        pool.submit(analyze_page, text, url, selector, include_path)
-                    )
+                    future = asyncio.wrap_future(pool.submit(analyze_page, *args))
                     result, stats = await await_worker(future)
                 except (BrokenProcessPool, OSError) as exc:
                     async with self._lifecycle:

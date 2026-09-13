@@ -55,6 +55,19 @@ test("incomplete stream reports interruption after delivering saved item updates
   expect(receive).toHaveBeenCalledWith(event);
 });
 
+test.each([false, true])(
+  "library refresh sends deep=%s only when requested",
+  async (deep) => {
+    streamingReader([
+      new TextEncoder().encode('{"type":"complete","checked":0}\n'),
+    ]);
+    await refreshLibrary(jest.fn(), undefined, deep);
+    expect(global.fetch.mock.calls[0][0]).toBe(
+      `/api/refresh?stream=true${deep ? "&deep=true" : ""}`,
+    );
+  },
+);
+
 test("storage errors inside a stream keep the server's actionable message", async () => {
   streamingReader([
     new TextEncoder().encode(

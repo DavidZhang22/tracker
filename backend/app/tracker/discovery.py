@@ -5,6 +5,7 @@ import re
 import subprocess
 import sys
 import time
+from contextvars import ContextVar
 from copy import deepcopy
 from urllib.parse import parse_qs, urlsplit
 
@@ -29,7 +30,8 @@ from .urls import (
 )
 from .workers import run_blocking
 
-DISCOVERY_VERSION = "context-keywords-suggestions-asura-dates-v3"
+DISCOVERY_VERSION = "learned-page-recipes-v1"
+DEEP_SCAN = ContextVar("deep_scan", default=False)
 
 
 def parser_version():
@@ -169,11 +171,15 @@ class Discoverer:
         self.analyzer = analyzer
         self.scan_locks = [asyncio.Lock() for _ in range(64)]
 
-    async def scan(self, url, selector="", include_path="", keywords=""):
+    async def scan(self, url, selector="", include_path="", keywords="", *, deep=False):
         terms(keywords)
         url = canonical_url(url, preserve_slash=True)
         async with self.scan_locks[hash(url) % 64]:
-            return await self._cached_scan(url, selector, include_path, keywords)
+            token = DEEP_SCAN.set(deep)
+            try:
+                return await self._cached_scan(url, selector, include_path, keywords)
+            finally:
+                DEEP_SCAN.reset(token)
 
     async def _cached_scan(self, url, selector, include_path, keywords=""):
         cache = getattr(self.fetcher, "cache", None)
@@ -192,7 +198,7 @@ class Discoverer:
             ).hexdigest()
         )
         cached = await run_blocking(cache.get, key) if cache else None
-        if cached and time.time() - cached["checked"] < 600:
+        if not DEEP_SCAN.get() and cached and time.time() - cached["checked"] < 600:
             data = bounded_scan(cached["scan"])
             result = scan_from_dict(data)
             result.cached, result.requests_made, result.cache_hits = True, 0, 1
@@ -240,7 +246,20 @@ class Discoverer:
         key, cached = self._cached_page(text, url, selector, include_path)
         if cached is not None:
             return cached
-        result = parse_page(text, url, selector, include_path)
+        if getattr(self.fetcher, "cache", None) is not None:
+            from .recipes import analyze
+
+            result, recipe, used = analyze(
+                text,
+                url,
+                selector,
+                include_path,
+                self._recipe(url, selector, include_path),
+            )
+            self._save_recipe(url, selector, include_path, recipe)
+            result[0].analysis_mode = "light" if used else "deep"
+        else:
+            result = parse_page(text, url, selector, include_path)
         self._save_page(key, result)
         return result
 
@@ -262,7 +281,7 @@ class Discoverer:
                 ).encode()
             ).hexdigest()
         )
-        cached = cache.get(key)
+        cached = None if DEEP_SCAN.get() else cache.get(key)
         if cached:
             return key, (
                 scan_from_dict(cached["scan"]),
@@ -292,9 +311,38 @@ class Discoverer:
         )
         if cached is not None:
             return cached
-        result = await self.analyzer.analyze(text, url, selector, include_path)
+        if getattr(self.fetcher, "cache", None) is not None and hasattr(
+            self.analyzer, "analyze_learned"
+        ):
+            recipe = await run_blocking(self._recipe, url, selector, include_path)
+            result, recipe, used = await self.analyzer.analyze_learned(
+                text, url, selector, include_path, recipe
+            )
+            result[0].analysis_mode = "light" if used else "deep"
+            await run_blocking(self._save_recipe, url, selector, include_path, recipe)
+        else:
+            result = await self.analyzer.analyze(text, url, selector, include_path)
         await run_blocking(self._save_page, key, result)
         return result
+
+    def _recipe_key(self, url, selector, include_path):
+        return (
+            "recipe:"
+            + hashlib.sha256(
+                json.dumps([url, selector, include_path, *parser_version()]).encode()
+            ).hexdigest()
+        )
+
+    def _recipe(self, url, selector, include_path):
+        if DEEP_SCAN.get():
+            return None
+        cached = self.fetcher.cache.get(self._recipe_key(url, selector, include_path))
+        return cached.get("recipe") if cached else None
+
+    def _save_recipe(self, url, selector, include_path, recipe):
+        self.fetcher.cache.put(
+            self._recipe_key(url, selector, include_path), {"recipe": recipe}
+        )
 
     async def _scan(self, url, selector, include_path, keywords=""):
         if mangadex_title(url) and not selector:
@@ -386,6 +434,8 @@ class Discoverer:
                         "The advertised feed did not return a supported RSS or Atom feed."
                     )
                 result.pages_scanned += 1
+                if result.analysis_mode != part.analysis_mode:
+                    result.analysis_mode = "mixed"
                 incoming = part.entries
                 if result.kind in {"novel", "comic"}:
                     fiction = re.search(r"/fiction/(\d+)", final)

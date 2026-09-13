@@ -110,6 +110,51 @@ test("empty Trash has no example sources or refresh control", async () => {
   expect(api).toHaveBeenCalledWith("/items?trash=true");
 });
 
+test("library deep refresh reaches the streaming API", async () => {
+  api.mockResolvedValue([item]);
+  refreshLibrary.mockImplementation(async (receive) => {
+    receive({ type: "complete", checked: 1, new_count: 0 });
+  });
+  render(
+    <MemoryRouter>
+      <Library />
+    </MemoryRouter>,
+  );
+  await screen.findByText("My series");
+  await click(screen.getByRole("button", { name: "Options for refresh all" }));
+  await click(
+    await screen.findByRole("menuitem", { name: "Deep refresh all" }),
+  );
+  expect(refreshLibrary).toHaveBeenCalledWith(
+    expect.any(Function),
+    expect.any(AbortSignal),
+    true,
+  );
+});
+
+test.each([false, true])(
+  "item refresh sends deep=%s to its endpoint",
+  async (deep) => {
+    mockDetail();
+    post.mockResolvedValue({ item, new_count: 0 });
+    detail();
+    await screen.findByText("Chapter 1");
+    if (deep) {
+      await click(
+        screen.getByRole("button", { name: "Options for refresh item" }),
+      );
+      await click(
+        await screen.findByRole("menuitem", { name: "Deep refresh" }),
+      );
+    } else {
+      await click(screen.getByRole("button", { name: "Refresh item" }));
+    }
+    expect(post.mock.calls[0][0]).toBe(
+      `/items/one/refresh${deep ? "?deep=true" : ""}`,
+    );
+  },
+);
+
 test("each refresh completion updates its row before the batch finishes", async () => {
   api.mockResolvedValue([item, { ...item, id: "slow", title: "Slow source" }]);
   let finish;

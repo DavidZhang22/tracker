@@ -1,0 +1,200 @@
+{
+  "date": "2026-09-13",
+  "baseline_revision": "2a09baa",
+  "source_requests": 0,
+  "cases": [
+    {
+      "name": "nested-1000",
+      "links": 1000,
+      "recipe_used": true,
+      "initial_scan_and_validation_s": 4.005868964944966,
+      "samples_s": {
+        "deep": [
+          1.9268917700392194,
+          1.9312777820159681,
+          1.8830955610028468
+        ],
+        "light": [
+          0.986964673968032,
+          0.9871612300048582,
+          0.9892702340148389
+        ]
+      },
+      "deep_median_s": 1.9268917700392194,
+      "light_median_s": 0.9871612300048582,
+      "speedup": 1.9519524384377782,
+      "recipe_bytes": 35550,
+      "output_hash": "d005b192427bdcaf76202d5c66bf419bc414e1620e47ea0e86e6db383e555d4f",
+      "all_fields_match": true
+    },
+    {
+      "name": "asura",
+      "links": 140,
+      "recipe_used": true,
+      "initial_scan_and_validation_s": 0.4198913790169172,
+      "samples_s": {
+        "deep": [
+          0.15221573802409694,
+          0.15173803799552843,
+          0.1521067830035463
+        ],
+        "light": [
+          0.1595243460033089,
+          0.1583995470427908,
+          0.1575246989959851
+        ]
+      },
+      "deep_median_s": 0.1521067830035463,
+      "light_median_s": 0.1583995470427908,
+      "speedup": 0.9602728406947746,
+      "recipe_bytes": 12060,
+      "output_hash": "1f315fa5c24cc55e400dfc54dee3f734587bac3b3e03a8c4cd839e8b715dc4cf",
+      "all_fields_match": true
+    },
+    {
+      "name": "royalroad",
+      "links": 109,
+      "recipe_used": true,
+      "initial_scan_and_validation_s": 0.5150870360084809,
+      "samples_s": {
+        "deep": [
+          0.2176159640075639,
+          0.19014465098734945,
+          0.18971990095451474
+        ],
+        "light": [
+          0.16790376201970503,
+          0.1683869929984212,
+          0.16910145798465237
+        ]
+      },
+      "deep_median_s": 0.19014465098734945,
+      "light_median_s": 0.1683869929984212,
+      "speedup": 1.1292122247775531,
+      "recipe_bytes": 2930,
+      "output_hash": "e47dd6e3393d777cb1899bddde3fb03a4b9e7bb5889fd22101c277080f7e10aa",
+      "all_fields_match": true
+    },
+    {
+      "name": "hn",
+      "links": 4,
+      "recipe_used": true,
+      "initial_scan_and_validation_s": 0.06272530800197273,
+      "samples_s": {
+        "deep": [
+          0.03198340302333236,
+          0.03207744000246748,
+          0.03202943003270775
+        ],
+        "light": [
+          0.017624753003474325,
+          0.017711176013108343,
+          0.017664518032688648
+        ]
+      },
+      "deep_median_s": 0.03202943003270775,
+      "light_median_s": 0.017664518032688648,
+      "speedup": 1.8132071293106589,
+      "recipe_bytes": 2677,
+      "output_hash": "3d0cb85c7ca7ff4dca18462af4c4c1d104681ba1c564974959981d5b14386eba",
+      "all_fields_match": true
+    },
+    {
+      "name": "xkcd",
+      "links": 4,
+      "recipe_used": true,
+      "initial_scan_and_validation_s": 0.01060372602660209,
+      "samples_s": {
+        "deep": [
+          0.005298892967402935,
+          0.005283272999804467,
+          0.005260531033854932
+        ],
+        "light": [
+          0.003182385000400245,
+          0.003162036999128759,
+          0.0031805619946680963
+        ]
+      },
+      "deep_median_s": 0.005283272999804467,
+      "light_median_s": 0.0031805619946680963,
+      "speedup": 1.661113038721258,
+      "recipe_bytes": 735,
+      "output_hash": "6e24716058f48635850e3145301e2eecee31e444023b9723b7737eb62163461e",
+      "all_fields_match": true
+    },
+    {
+      "name": "asura-current",
+      "links": 169,
+      "recipe_used": true,
+      "initial_scan_and_validation_s": 2.2276134259882383,
+      "samples_s": {
+        "deep": [
+          1.7255895899725147,
+          1.7369216129882261,
+          1.7365960290189832
+        ],
+        "light": [
+          0.3712298280443065,
+          0.3442370289703831,
+          0.34359788498841226
+        ]
+      },
+      "deep_median_s": 1.7365960290189832,
+      "light_median_s": 0.3442370289703831,
+      "speedup": 5.044768234879211,
+      "recipe_bytes": 15841,
+      "output_hash": "1240d791c5b9e5a5a766ac4283f71b365c9e04aaa0d674766b3bb0385621aff2",
+      "all_fields_match": true
+    },
+    {
+      "name": "jobs-911",
+      "links": 911,
+      "recipe_used": true,
+      "initial_scan_and_validation_s": 9.008214742003474,
+      "samples_s": {
+        "deep": [
+          4.740032887028065,
+          4.733875848993193,
+          4.72812637797324
+        ],
+        "light": [
+          3.2840694740298204,
+          3.3413502530311234,
+          3.331989230995532
+        ]
+      },
+      "deep_median_s": 4.733875848993193,
+      "light_median_s": 3.331989230995532,
+      "speedup": 1.4207356389260615,
+      "recipe_bytes": 206793,
+      "output_hash": "4f9b4f07df191466afa3af7819c81ecfc0c0319694129f67814affda898a2a02",
+      "all_fields_match": true
+    },
+    {
+      "name": "novelshaven-structured",
+      "links": 221,
+      "recipe_used": false,
+      "initial_scan_and_validation_s": 0.10400714899878949,
+      "samples_s": {
+        "deep": [
+          0.10301290702773258,
+          0.10186064796289429,
+          0.10498632298549637
+        ],
+        "light": [
+          0.10414756403770298,
+          0.18400592199759558,
+          0.10361239599296823
+        ]
+      },
+      "deep_median_s": 0.10301290702773258,
+      "light_median_s": 0.10414756403770298,
+      "speedup": 0.9891052947761733,
+      "recipe_bytes": 0,
+      "output_hash": "6bf0cb5e61be603685bf0f5da4a29e701f441c938ed35f6600af85123421d785",
+      "all_fields_match": true
+    }
+  ],
+  "container_peak_mib": 113.37109375
+}
