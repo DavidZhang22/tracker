@@ -8,6 +8,7 @@ from urllib.parse import parse_qs, urlsplit
 
 from bs4 import BeautifulSoup
 
+from .asura import enrich_asura_dates
 from .context_model import classify_context
 from .dates import DATE_TEXT, evidence, link_date
 from .embedded_series import embedded_series
@@ -677,6 +678,8 @@ def parse_page(text, source, selector="", include_path=""):
                     )
                 )
     scan.entries = merge_entries(scan.entries)
+    if enrich_asura_dates(soup, source, scan.entries):
+        scan.methods.append("embedded chapter dates")
     if job_anchors and not selector:
         scan.methods.append("application table")
         # Ages order rows across category tables without inventing absolute dates.

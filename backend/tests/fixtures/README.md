@@ -1,5 +1,13 @@
 # Source fixtures
 
+`asura-astro.html` is a minimized September 13, 2026 excerpt from
+https://asurascans.com/comics/dungeon-odyssey-53fc8424. It retains seven actual
+chapter anchors and their typed Astro `props`, including relative-age labels and
+exact `published_at` values. Other timestamps remain to test that creation and
+early-access dates cannot substitute for publication. The full captured listing
+has 169 chapters; the offline excerpt retains its original reported count.
+Images, IDs, view counts and chapter bodies are omitted. No chapter pages are fetched.
+
 Captured 2026-09-08 from the three user-supplied test sources. `asura.html` retains the 140 chapter anchors and dates; `royalroad.html` retains the 109 table-of-contents rows and dates. Body text, images, scripts, and styling are removed. These are observed snapshots, not promises about future live counts.
 
 - https://asurascans.com/comics/the-nebulas-civilization-53fc8424

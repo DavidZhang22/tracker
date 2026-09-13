@@ -29,7 +29,7 @@ from .urls import (
 )
 from .workers import run_blocking
 
-DISCOVERY_VERSION = "context-keywords-suggestions-v2"
+DISCOVERY_VERSION = "context-keywords-suggestions-asura-dates-v3"
 
 
 def parser_version():
