@@ -9,6 +9,7 @@ services:
       TRACKER_ORIGIN: https://${TRACKER_DOMAIN:?Set TRACKER_DOMAIN in deploy/.env}
       TRACKER_SIGNUP_CODE: ${TRACKER_SIGNUP_CODE:-}
       TRACKER_LINK_MODEL: ${TRACKER_LINK_MODEL:-on}
+      TRACKER_ANALYSIS_WORKERS: ${TRACKER_ANALYSIS_WORKERS:-2}
       TRACKER_HOSTS: ${TRACKER_DOMAIN},localhost,127.0.0.1
     volumes:
       - tracker-data:/data

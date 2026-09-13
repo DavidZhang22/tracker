@@ -248,7 +248,7 @@ class LinkModel:
         values = features
         for index, layer in enumerate(self.layers):
             values = [
-                bias + sum(w * x for w, x in zip(weights, values, strict=True))
+                bias + math.sumprod(weights, values)
                 for weights, bias in zip(layer["weights"], layer["bias"], strict=True)
             ]
             if index != len(self.layers) - 1:

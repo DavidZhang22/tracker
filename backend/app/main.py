@@ -2,6 +2,7 @@ import asyncio
 import logging
 import os
 import sqlite3
+from contextlib import asynccontextmanager
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -13,6 +14,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.tracker.accounts import Accounts, cookie_name
 from app.tracker.accounts import router as account_router
+from app.tracker.analysis_pool import PageAnalyzer
 from app.tracker.api import router
 from app.tracker.cache import FetchCache
 from app.tracker.discovery import Discoverer
@@ -22,7 +24,24 @@ from app.tracker.urls import SafeFetcher
 
 
 def create_app(db_path=None, discoverer=None, auth_config=None):
-    app = FastAPI(title="Catchup", version="1.0.0")
+    analyzer = (
+        None
+        if discoverer is not None
+        else PageAnalyzer(int(os.environ.get("TRACKER_ANALYSIS_WORKERS", "2")))
+    )
+
+    @asynccontextmanager
+    async def lifespan(app):
+        try:
+            if analyzer is not None:
+                await analyzer.start()
+            yield
+        finally:
+            if analyzer is not None:
+                await analyzer.aclose()
+
+    app = FastAPI(title="Catchup", version="1.0.0", lifespan=lifespan)
+    app.state.analyzer = analyzer
     app.state.store = Store(
         db_path
         or os.environ.get(
@@ -33,7 +52,8 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
     app.state.discoverer = discoverer or Discoverer(
         SafeFetcher(
             FetchCache(Path(app.state.store.path).with_name("fetch-cache.sqlite3"))
-        )
+        ),
+        analyzer=analyzer,
     )
     app.state.scan_semaphore = asyncio.Semaphore(3)
     app.state.scan_guard = ScanGuard()

@@ -175,9 +175,8 @@ def predict(data, features):
     if "layers" in data:
         values = features
         for i, layer in enumerate(data["layers"]):
-            sparse = [(j, v) for j, v in enumerate(values) if v]
             values = [
-                bias + sum(weights[j] * v for j, v in sparse)
+                bias + math.sumprod(weights, values)
                 for weights, bias in zip(layer["weights"], layer["bias"], strict=True)
             ]
             if i + 1 < len(data["layers"]):

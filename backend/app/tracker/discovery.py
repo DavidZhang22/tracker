@@ -160,10 +160,13 @@ def youtube_archive(url):
 
 
 class Discoverer:
-    def __init__(self, fetcher=None, max_pages=40, youtube_loader=youtube_archive):
+    def __init__(
+        self, fetcher=None, max_pages=40, youtube_loader=youtube_archive, analyzer=None
+    ):
         self.fetcher = fetcher or SafeFetcher()
         self.max_pages = max_pages
         self.youtube_loader = youtube_loader
+        self.analyzer = analyzer
         self.scan_locks = [asyncio.Lock() for _ in range(64)]
 
     async def scan(self, url, selector="", include_path="", keywords=""):
@@ -234,9 +237,17 @@ class Discoverer:
         This runs in the scan worker. Changed HTML, URL, selection or model version
         always causes a new parse. Each hit reconstructs independent entries.
         """
+        key, cached = self._cached_page(text, url, selector, include_path)
+        if cached is not None:
+            return cached
+        result = parse_page(text, url, selector, include_path)
+        self._save_page(key, result)
+        return result
+
+    def _cached_page(self, text, url, selector, include_path):
         cache = getattr(self.fetcher, "cache", None)
         if cache is None:
-            return parse_page(text, url, selector, include_path)
+            return None, None
         key = (
             "parsed:"
             + hashlib.sha256(
@@ -253,17 +264,37 @@ class Discoverer:
         )
         cached = cache.get(key)
         if cached:
-            return (
+            return key, (
                 scan_from_dict(cached["scan"]),
                 list(cached["pages"]),
                 list(cached["feeds"]),
             )
-        scan, pages, feeds = parse_page(text, url, selector, include_path)
+        return key, None
+
+    def _save_page(self, key, result):
+        if key is None:
+            return
+        scan, pages, feeds = result
         # Do not truncate a parser result when caching it: the discovery layer
         # still needs the actual count to report coverage and enforce its cap.
         if len(scan.entries) <= MAX_LINKS:
-            cache.put(key, {"scan": scan.to_dict(), "pages": pages, "feeds": feeds})
-        return scan, pages, feeds
+            self.fetcher.cache.put(
+                key, {"scan": scan.to_dict(), "pages": pages, "feeds": feeds}
+            )
+
+    async def _analyze_page(self, text, url, selector, include_path):
+        if self.analyzer is None:
+            return await run_blocking(
+                self._parse_page, text, url, selector, include_path
+            )
+        key, cached = await run_blocking(
+            self._cached_page, text, url, selector, include_path
+        )
+        if cached is not None:
+            return cached
+        result = await self.analyzer.analyze(text, url, selector, include_path)
+        await run_blocking(self._save_page, key, result)
+        return result
 
     async def _scan(self, url, selector, include_path, keywords=""):
         if mangadex_title(url) and not selector:
@@ -289,8 +320,8 @@ class Discoverer:
             result, pages, feeds = codeforces_scan(text, url), [], []
         else:
             text, readme_pages = await github_readme(self.fetcher, final, text)
-            result, pages, feeds = await run_blocking(
-                self._parse_page, text, final, selector, include_path
+            result, pages, feeds = await self._analyze_page(
+                text, final, selector, include_path
             )
         result.pages_scanned = 0 if first_error else 1
         if not endpoint and not chapter_endpoint:
@@ -339,8 +370,7 @@ class Discoverer:
             try:
                 actual, html = await self.fetcher.get(target)
                 seen.add(actual)
-                part, more, _ = await run_blocking(
-                    self._parse_page,
+                part, more, _ = await self._analyze_page(
                     html,
                     actual,
                     "" if is_feed else selector,

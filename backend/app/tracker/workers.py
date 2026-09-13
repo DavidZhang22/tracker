@@ -10,6 +10,11 @@ async def run_blocking(function, *args, **kwargs):
     # request must retain its admission/locks until its worker really stops;
     # otherwise repeated disconnects could create unlimited background work.
     task = asyncio.create_task(asyncio.to_thread(function, *args, **kwargs))
+    return await await_worker(task)
+
+
+async def await_worker(task):
+    """Keep admission until a thread/process future actually completes."""
     try:
         return await asyncio.shield(task)
     except asyncio.CancelledError:

@@ -1,0 +1,12 @@
+# Parser-only experiment, built after the ordinary application image.
+FROM catchup-app:latest
+USER root
+RUN /usr/local/bin/python -m pip install --no-cache-dir uv==0.12.13
+ENV UV_PYTHON_INSTALL_DIR=/opt/python
+RUN uv python install 3.14.7t && uv venv --python 3.14.7t /opt/free
+RUN uv pip install --python /opt/free/bin/python \
+    anyio==4.11.0 beautifulsoup4==4.14.2 certifi==2025.11.12 \
+    h11==0.16.0 httpcore==1.0.9 httpx==0.28.1 idna==3.11 \
+    markdown-it-py==4.2.0 mdurl==0.1.2 python-dateutil==2.9.0.post0 \
+    six==1.17.0 sniffio==1.3.1 soupsieve==2.8 typing-extensions==4.15.0
+USER tracker

@@ -1,0 +1,694 @@
+{
+  "date": "2026-09-13",
+  "baseline_revision": "69f87d4",
+  "limits": {
+    "cpus": 2,
+    "memory_mib": 512,
+    "network": "none"
+  },
+  "method": "Three offline samples per mode in separate containers on the same VM. Fixed saved GitHub README and NovelsHaven pages, plus two 1000-link nested layouts. Warm pool startup timed separately. No user data or source requests. Limit test is one sample of two 4999-link pages.",
+  "results": {
+    "freethreaded": {
+      "python": "3.14.7 free-threading build (main, Sep  1 2026, 14:17:47) [Clang 22.1.3 ]",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.41",
+      "gil_enabled": false,
+      "cases": [
+        {
+          "name": "chapters-0",
+          "bytes": 162793
+        },
+        {
+          "name": "chapters-1",
+          "bytes": 162793
+        },
+        {
+          "name": "jobs",
+          "bytes": 708027
+        },
+        {
+          "name": "novels",
+          "bytes": 539819
+        }
+      ],
+      "modes": [
+        {
+          "mode": "threads",
+          "startup_s": 2.1539744921028614e-06,
+          "median_s": 5.830159597971942,
+          "samples_s": [
+            5.830159597971942,
+            5.792147627042141,
+            5.879610877018422
+          ],
+          "max_event_loop_lag_s": 0.034150293979328124,
+          "jobs": [
+            [
+              {
+                "pid": 1,
+                "started": 370606.538524305,
+                "finished": 370608.394376414,
+                "cpu_seconds": 1.838336529,
+                "gil_enabled": false
+              },
+              {
+                "pid": 1,
+                "started": 370606.538185082,
+                "finished": 370608.479921014,
+                "cpu_seconds": 1.9203673460000001,
+                "gil_enabled": false
+              },
+              {
+                "pid": 1,
+                "started": 370608.480266615,
+                "finished": 370608.570759472,
+                "cpu_seconds": 0.09048174500000017,
+                "gil_enabled": false
+              },
+              {
+                "pid": 1,
+                "started": 370608.394675267,
+                "finished": 370612.36556756,
+                "cpu_seconds": 3.970238223,
+                "gil_enabled": false
+              }
+            ],
+            [
+              {
+                "pid": 1,
+                "started": 370612.391786521,
+                "finished": 370614.177017845,
+                "cpu_seconds": 1.7837525679999997,
+                "gil_enabled": false
+              },
+              {
+                "pid": 1,
+                "started": 370612.3918071,
+                "finished": 370614.197856414,
+                "cpu_seconds": 1.800288884,
+                "gil_enabled": false
+              },
+              {
+                "pid": 1,
+                "started": 370614.198090485,
+                "finished": 370614.285855307,
+                "cpu_seconds": 0.08776453999999978,
+                "gil_enabled": false
+              },
+              {
+                "pid": 1,
+                "started": 370614.177267966,
+                "finished": 370618.183526922,
+                "cpu_seconds": 4.005570711000001,
+                "gil_enabled": false
+              }
+            ],
+            [
+              {
+                "pid": 1,
+                "started": 370618.2099466,
+                "finished": 370620.013909159,
+                "cpu_seconds": 1.8013065490000013,
+                "gil_enabled": false
+              },
+              {
+                "pid": 1,
+                "started": 370618.211831239,
+                "finished": 370620.036279272,
+                "cpu_seconds": 1.8193718140000001,
+                "gil_enabled": false
+              },
+              {
+                "pid": 1,
+                "started": 370620.036541926,
+                "finished": 370620.126954883,
+                "cpu_seconds": 0.09041193499999967,
+                "gil_enabled": false
+              },
+              {
+                "pid": 1,
+                "started": 370620.014200948,
+                "finished": 370624.088395709,
+                "cpu_seconds": 4.073825757,
+                "gil_enabled": false
+              }
+            ]
+          ],
+          "output_hashes": {
+            "chapters-0": "bada8bf759e2a5e462a1fc1279da1174c41f2d6c5ecf56c2cd29e0c5549bbd4a",
+            "chapters-1": "a1c9d799e83dda2b3489164be1acb13d6e8f9295c105d6a6b8fac9c77a7a6f2c",
+            "jobs": "cb581a53b0cf7c19f50f0db2c4af8c2b3c51c31faeddcd13183b6b5901ab41c9",
+            "novels": "4826d627fe6c5e618edc077c5014896b60fc4a7c74a3c54851b2cd80c3c38624"
+          },
+          "cpu_wall_ratios": [
+            1.3412023653211889,
+            1.325480149565971,
+            1.3240529378277102
+          ]
+        }
+      ],
+      "training_packages_loaded": false,
+      "container_peak_mib": 199.6796875
+    },
+    "limit": {
+      "python": "3.12.14 (main, Sep  1 2026, 00:10:07) [GCC 14.2.0]",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.41",
+      "gil_enabled": true,
+      "cases": [
+        {
+          "name": "chapters-0",
+          "bytes": 822628
+        },
+        {
+          "name": "chapters-1",
+          "bytes": 822628
+        }
+      ],
+      "modes": [
+        {
+          "mode": "processes",
+          "startup_s": 0.6625785210053436,
+          "median_s": 9.498526627023239,
+          "samples_s": [
+            9.498526627023239
+          ],
+          "max_event_loop_lag_s": 0.07173371100565419,
+          "jobs": [
+            [
+              {
+                "pid": 9,
+                "started": 370626.243405718,
+                "finished": 370635.699288717,
+                "cpu_seconds": 9.423173935,
+                "gil_enabled": true
+              },
+              {
+                "pid": 12,
+                "started": 370626.259161561,
+                "finished": 370635.711535778,
+                "cpu_seconds": 9.412966521,
+                "gil_enabled": true
+              }
+            ]
+          ],
+          "output_hashes": {
+            "chapters-0": "e9389cd5c962995c0371193b0f30ac9323e1df005ca5b1e072114eb906b4587c",
+            "chapters-1": "5ddbc7ed769da79887195a7f6b931eb5ecaa52630237398e26b37e8337aad199"
+          },
+          "cpu_wall_ratios": [
+            1.9830591833486382
+          ]
+        }
+      ],
+      "training_packages_loaded": false,
+      "container_peak_mib": 223.9609375
+    },
+    "native": [
+      {
+        "name": "record-context",
+        "rows": 31113,
+        "thresholds": [
+          0.5
+        ],
+        "threshold_changes": 0,
+        "region_groups": 2922,
+        "region_selection_changes": 0,
+        "max_absolute_probability_difference": 3.885780586188048e-16,
+        "samples_s": {
+          "before": [
+            1.565876042994205,
+            1.5675564460107125,
+            1.5673053039936349
+          ],
+          "after": [
+            0.8160433779703453,
+            0.8155518020503223,
+            0.814803282963112
+          ]
+        },
+        "speedup": 1.9217728414717266
+      },
+      {
+        "name": "link",
+        "rows": 8507,
+        "thresholds": [
+          0.03,
+          0.85
+        ],
+        "threshold_changes": 0,
+        "region_groups": 0,
+        "region_selection_changes": 0,
+        "max_absolute_probability_difference": 4.440892098500626e-16,
+        "samples_s": {
+          "before": [
+            0.3669731299742125,
+            0.36810226301895455,
+            0.36790660000406206
+          ],
+          "after": [
+            0.13670360599644482,
+            0.13680842699250206,
+            0.13652891101082787
+          ]
+        },
+        "speedup": 2.6912720942681645
+      }
+    ],
+    "processes": {
+      "python": "3.12.14 (main, Sep  1 2026, 00:10:07) [GCC 14.2.0]",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.41",
+      "gil_enabled": true,
+      "cases": [
+        {
+          "name": "chapters-0",
+          "bytes": 162793
+        },
+        {
+          "name": "chapters-1",
+          "bytes": 162793
+        },
+        {
+          "name": "jobs",
+          "bytes": 708027
+        },
+        {
+          "name": "novels",
+          "bytes": 539819
+        }
+      ],
+      "modes": [
+        {
+          "mode": "processes",
+          "startup_s": 0.6518206789623946,
+          "median_s": 6.697543254005723,
+          "samples_s": [
+            6.697543254005723,
+            6.727049731998704,
+            6.645384997944348
+          ],
+          "max_event_loop_lag_s": 0.02331891499692574,
+          "jobs": [
+            [
+              {
+                "pid": 9,
+                "started": 370584.413593715,
+                "finished": 370586.362026147,
+                "cpu_seconds": 1.9433037659999997,
+                "gil_enabled": true
+              },
+              {
+                "pid": 12,
+                "started": 370584.4337397,
+                "finished": 370586.397707657,
+                "cpu_seconds": 1.9550813750000002,
+                "gil_enabled": true
+              },
+              {
+                "pid": 12,
+                "started": 370586.404966976,
+                "finished": 370586.516857037,
+                "cpu_seconds": 0.10977101099999986,
+                "gil_enabled": true
+              },
+              {
+                "pid": 9,
+                "started": 370586.373872457,
+                "finished": 370591.102568444,
+                "cpu_seconds": 4.728164803,
+                "gil_enabled": true
+              }
+            ],
+            [
+              {
+                "pid": 12,
+                "started": 370591.136853335,
+                "finished": 370593.125630693,
+                "cpu_seconds": 1.9801880520000004,
+                "gil_enabled": true
+              },
+              {
+                "pid": 9,
+                "started": 370591.137038492,
+                "finished": 370593.139024287,
+                "cpu_seconds": 1.9981232989999995,
+                "gil_enabled": true
+              },
+              {
+                "pid": 9,
+                "started": 370593.14859975,
+                "finished": 370593.257551375,
+                "cpu_seconds": 0.1089419360000008,
+                "gil_enabled": true
+              },
+              {
+                "pid": 12,
+                "started": 370593.133053632,
+                "finished": 370597.85602712,
+                "cpu_seconds": 4.722443878999999,
+                "gil_enabled": true
+              }
+            ],
+            [
+              {
+                "pid": 9,
+                "started": 370597.889248628,
+                "finished": 370599.833869565,
+                "cpu_seconds": 1.9386460579999998,
+                "gil_enabled": true
+              },
+              {
+                "pid": 12,
+                "started": 370597.889425548,
+                "finished": 370599.904274,
+                "cpu_seconds": 2.0094368439999997,
+                "gil_enabled": true
+              },
+              {
+                "pid": 12,
+                "started": 370599.921248598,
+                "finished": 370600.026848039,
+                "cpu_seconds": 0.10558542899999956,
+                "gil_enabled": true
+              },
+              {
+                "pid": 9,
+                "started": 370599.843830186,
+                "finished": 370604.527353901,
+                "cpu_seconds": 4.682787727999999,
+                "gil_enabled": true
+              }
+            ]
+          ],
+          "output_hashes": {
+            "chapters-0": "bada8bf759e2a5e462a1fc1279da1174c41f2d6c5ecf56c2cd29e0c5549bbd4a",
+            "chapters-1": "a1c9d799e83dda2b3489164be1acb13d6e8f9295c105d6a6b8fac9c77a7a6f2c",
+            "jobs": "cb581a53b0cf7c19f50f0db2c4af8c2b3c51c31faeddcd13183b6b5901ab41c9",
+            "novels": "4826d627fe6c5e618edc077c5014896b60fc4a7c74a3c54851b2cd80c3c38624"
+          },
+          "cpu_wall_ratios": [
+            1.30440679868322,
+            1.309592989047594,
+            1.3146651490775165
+          ]
+        }
+      ],
+      "training_packages_loaded": false,
+      "container_peak_mib": 191.6171875
+    },
+    "threads-reference": {
+      "python": "3.12.14 (main, Sep  1 2026, 00:10:07) [GCC 14.2.0]",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.41",
+      "gil_enabled": true,
+      "cases": [
+        {
+          "name": "chapters-0",
+          "bytes": 162793
+        },
+        {
+          "name": "chapters-1",
+          "bytes": 162793
+        },
+        {
+          "name": "jobs",
+          "bytes": 708027
+        },
+        {
+          "name": "novels",
+          "bytes": 539819
+        }
+      ],
+      "modes": [
+        {
+          "mode": "threads-reference",
+          "startup_s": 2.6549678295850754e-06,
+          "median_s": 9.211991363030393,
+          "samples_s": [
+            9.098349373962265,
+            9.211991363030393,
+            9.267987609026022
+          ],
+          "max_event_loop_lag_s": 0.3807532140146941,
+          "jobs": [
+            [
+              {
+                "pid": 1,
+                "started": 370525.563254342,
+                "finished": 370529.537067449,
+                "cpu_seconds": 2.0639936679999997,
+                "gil_enabled": true
+              },
+              {
+                "pid": 1,
+                "started": 370525.568512333,
+                "finished": 370529.710866377,
+                "cpu_seconds": 2.027485826,
+                "gil_enabled": true
+              },
+              {
+                "pid": 1,
+                "started": 370529.726595966,
+                "finished": 370529.970771455,
+                "cpu_seconds": 0.11160155500000002,
+                "gil_enabled": true
+              },
+              {
+                "pid": 1,
+                "started": 370529.567940626,
+                "finished": 370534.659345188,
+                "cpu_seconds": 4.893499738,
+                "gil_enabled": true
+              }
+            ],
+            [
+              {
+                "pid": 1,
+                "started": 370534.686941286,
+                "finished": 370538.760989001,
+                "cpu_seconds": 2.0774997170000002,
+                "gil_enabled": true
+              },
+              {
+                "pid": 1,
+                "started": 370534.692041627,
+                "finished": 370538.868612026,
+                "cpu_seconds": 2.0618344109999995,
+                "gil_enabled": true
+              },
+              {
+                "pid": 1,
+                "started": 370538.889328707,
+                "finished": 370539.108364747,
+                "cpu_seconds": 0.11143146599999909,
+                "gil_enabled": true
+              },
+              {
+                "pid": 1,
+                "started": 370538.777008086,
+                "finished": 370543.89704909,
+                "cpu_seconds": 4.955603634,
+                "gil_enabled": true
+              }
+            ],
+            [
+              {
+                "pid": 1,
+                "started": 370543.931562362,
+                "finished": 370547.975657298,
+                "cpu_seconds": 2.040153944,
+                "gil_enabled": true
+              },
+              {
+                "pid": 1,
+                "started": 370543.926446787,
+                "finished": 370548.190862934,
+                "cpu_seconds": 2.1129437159999984,
+                "gil_enabled": true
+              },
+              {
+                "pid": 1,
+                "started": 370548.221847573,
+                "finished": 370548.459901916,
+                "cpu_seconds": 0.11025848700000118,
+                "gil_enabled": true
+              },
+              {
+                "pid": 1,
+                "started": 370547.996364323,
+                "finished": 370553.192511578,
+                "cpu_seconds": 5.001279650000001,
+                "gil_enabled": true
+              }
+            ]
+          ],
+          "output_hashes": {
+            "chapters-0": "bada8bf759e2a5e462a1fc1279da1174c41f2d6c5ecf56c2cd29e0c5549bbd4a",
+            "chapters-1": "a1c9d799e83dda2b3489164be1acb13d6e8f9295c105d6a6b8fac9c77a7a6f2c",
+            "jobs": "cb581a53b0cf7c19f50f0db2c4af8c2b3c51c31faeddcd13183b6b5901ab41c9",
+            "novels": "4826d627fe6c5e618edc077c5014896b60fc4a7c74a3c54851b2cd80c3c38624"
+          },
+          "cpu_wall_ratios": [
+            0.9998056145252758,
+            0.9993896938448124,
+            0.999638345219327
+          ]
+        }
+      ],
+      "training_packages_loaded": false,
+      "container_peak_mib": 91.24609375
+    },
+    "threads": {
+      "python": "3.12.14 (main, Sep  1 2026, 00:10:07) [GCC 14.2.0]",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.41",
+      "gil_enabled": true,
+      "cases": [
+        {
+          "name": "chapters-0",
+          "bytes": 162793
+        },
+        {
+          "name": "chapters-1",
+          "bytes": 162793
+        },
+        {
+          "name": "jobs",
+          "bytes": 708027
+        },
+        {
+          "name": "novels",
+          "bytes": 539819
+        }
+      ],
+      "modes": [
+        {
+          "mode": "threads",
+          "startup_s": 2.4650362320244312e-06,
+          "median_s": 9.029980123974383,
+          "samples_s": [
+            8.926265240006614,
+            9.029980123974383,
+            9.074163794983178
+          ],
+          "max_event_loop_lag_s": 0.37301933294860645,
+          "jobs": [
+            [
+              {
+                "pid": 1,
+                "started": 370555.078450076,
+                "finished": 370559.105473417,
+                "cpu_seconds": 2.024035613,
+                "gil_enabled": true
+              },
+              {
+                "pid": 1,
+                "started": 370555.088815031,
+                "finished": 370559.121986146,
+                "cpu_seconds": 2.0274217820000002,
+                "gil_enabled": true
+              },
+              {
+                "pid": 1,
+                "started": 370559.13781218,
+                "finished": 370559.388390968,
+                "cpu_seconds": 0.112875662,
+                "gil_enabled": true
+              },
+              {
+                "pid": 1,
+                "started": 370559.122057761,
+                "finished": 370564.002485648,
+                "cpu_seconds": 4.751450724,
+                "gil_enabled": true
+              }
+            ],
+            [
+              {
+                "pid": 1,
+                "started": 370564.035384719,
+                "finished": 370568.057487893,
+                "cpu_seconds": 2.033548929,
+                "gil_enabled": true
+              },
+              {
+                "pid": 1,
+                "started": 370564.030270402,
+                "finished": 370568.160183605,
+                "cpu_seconds": 2.06410833,
+                "gil_enabled": true
+              },
+              {
+                "pid": 1,
+                "started": 370568.180926294,
+                "finished": 370568.428871195,
+                "cpu_seconds": 0.11019782599999939,
+                "gil_enabled": true
+              },
+              {
+                "pid": 1,
+                "started": 370568.083281312,
+                "finished": 370573.058421569,
+                "cpu_seconds": 4.8126059560000005,
+                "gil_enabled": true
+              }
+            ],
+            [
+              {
+                "pid": 1,
+                "started": 370573.087594926,
+                "finished": 370577.163462869,
+                "cpu_seconds": 2.016521892,
+                "gil_enabled": true
+              },
+              {
+                "pid": 1,
+                "started": 370573.092715276,
+                "finished": 370577.172833005,
+                "cpu_seconds": 2.082075648,
+                "gil_enabled": true
+              },
+              {
+                "pid": 1,
+                "started": 370577.178410104,
+                "finished": 370577.489531583,
+                "cpu_seconds": 0.1159397809999998,
+                "gil_enabled": true
+              },
+              {
+                "pid": 1,
+                "started": 370577.17329228,
+                "finished": 370582.159786801,
+                "cpu_seconds": 4.853769305000002,
+                "gil_enabled": true
+              }
+            ]
+          ],
+          "output_hashes": {
+            "chapters-0": "bada8bf759e2a5e462a1fc1279da1174c41f2d6c5ecf56c2cd29e0c5549bbd4a",
+            "chapters-1": "a1c9d799e83dda2b3489164be1acb13d6e8f9295c105d6a6b8fac9c77a7a6f2c",
+            "jobs": "cb581a53b0cf7c19f50f0db2c4af8c2b3c51c31faeddcd13183b6b5901ab41c9",
+            "novels": "4826d627fe6c5e618edc077c5014896b60fc4a7c74a3c54851b2cd80c3c38624"
+          },
+          "cpu_wall_ratios": [
+            0.9988257732965813,
+            0.9989458356670011,
+            0.9993545224534722
+          ]
+        }
+      ],
+      "training_packages_loaded": false,
+      "container_peak_mib": 90.1015625
+    }
+  },
+  "runtime": {
+    "real_http_during_process_analysis": "passed",
+    "read_seconds": 0.0044296300038695335,
+    "immediate_item_update": "passed",
+    "concurrent_processes": 2,
+    "complete_scan_entries": 1520,
+    "source_requests": 0
+  },
+  "validation": {
+    "backend_tests": 248,
+    "frontend_tests": 53,
+    "all_page_output_hashes_match": true,
+    "source_requests": 0
+  }
+}
