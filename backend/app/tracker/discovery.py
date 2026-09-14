@@ -34,7 +34,7 @@ from .urls import (
 )
 from .workers import run_blocking
 
-DISCOVERY_VERSION = "stable-content-identities-v2"
+DISCOVERY_VERSION = "browser-listing-discovery-v1"
 DEEP_SCAN = ContextVar("deep_scan", default=False)
 
 
@@ -246,6 +246,19 @@ class Discoverer:
             async with asyncio.timeout(180):
                 if source_method == "auto":
                     result = await self._scan(url, selector, include_path, keywords)
+                elif source_method == "browser":
+                    from .browser_discovery import scan_browser
+
+                    result = await scan_browser(
+                        self, url, keywords=keywords, deep=DEEP_SCAN.get()
+                    )
+                    if include_path:
+                        result.entries = [
+                            e for e in result.entries if include_path in e.url
+                        ]
+                    result.entries.sort(key=lambda e: (e.published_at or "", e.url))
+                    for i, entry in enumerate(result.entries):
+                        entry.position = i
                 else:
                     from .inventories import scan_inventory
 
@@ -399,6 +412,32 @@ class Discoverer:
         )
 
     async def _scan(self, url, selector, include_path, keywords=""):
+        from .steam import app_id
+
+        if app_id(url) and not selector:
+            from .public_apis import scan_api
+
+            result = await scan_api(
+                self.fetcher, url, "steam", self.max_pages, keywords
+            )
+            if include_path:
+                result.entries = [e for e in result.entries if include_path in e.url]
+            result.entries.sort(key=lambda e: (e.published_at or "", e.url))
+            for i, entry in enumerate(result.entries):
+                entry.position = i
+            return result
+        if not DEEP_SCAN.get() and not selector and not keywords:
+            from .listing_recipes import cached_listing
+
+            if cached := await cached_listing(self.fetcher, url, self.max_pages):
+                if include_path:
+                    cached.entries = [
+                        e for e in cached.entries if include_path in e.url
+                    ]
+                cached.entries.sort(key=lambda e: (e.published_at or "", e.url))
+                for i, entry in enumerate(cached.entries):
+                    entry.position = i
+                return cached
         if mangadex_title(url) and not selector:
             result = await scan_mangadex(self.fetcher, url, self.max_pages, keywords)
             if include_path:
@@ -426,6 +465,7 @@ class Discoverer:
                 text, final, selector, include_path
             )
         result.pages_scanned = 0 if first_error else 1
+        browser_candidate = not result.entries and "<script" in text.lower()
         if not endpoint and not chapter_endpoint:
             result.pages_scanned += readme_pages
             if readme_pages:
@@ -565,6 +605,41 @@ class Discoverer:
                 result.warnings.append(str(exc))
             if first_error:
                 result.warnings.append(first_error)
+        from .browser_client import enabled as browser_enabled
+
+        if (
+            browser_enabled()
+            and result.kind != "youtube"
+            and (
+                request_budget.get() is None
+                or request_budget.get().requests < request_budget.get().limit - 2
+            )
+            and (
+                not result.entries
+                or browser_candidate
+                or (
+                    result.expected_count
+                    and len(result.entries) < result.expected_count
+                )
+                or any("load-more control" in warning for warning in result.warnings)
+            )
+        ):
+            from .browser_discovery import scan_browser
+
+            try:
+                rendered = await scan_browser(
+                    self,
+                    final,
+                    initial=text,
+                    selector=selector,
+                    include_path=include_path,
+                    keywords=keywords,
+                    deep=DEEP_SCAN.get(),
+                )
+                rendered.entries = merge_entries(result.entries + rendered.entries)
+                result = rendered
+            except DiscoveryError as exc:
+                result.warnings.append(str(exc))
         result.entries = merge_entries(result.entries)
         if include_path:
             result.entries = [e for e in result.entries if include_path in e.url]
@@ -580,7 +655,7 @@ class Discoverer:
             result.coverage = "complete"
         if not result.entries:
             result.warnings.append(
-                "No content links found. Try a feed/archive URL or adjust the link selector. Links loaded only by JavaScript may be unavailable."
+                "No content links found. Try a public API, feed/archive URL, or adjust the link selector."
             )
         if result.kind in {"blog", "website"} and result.methods == ["feed"]:
             result.warnings.append(

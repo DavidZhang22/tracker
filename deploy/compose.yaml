@@ -13,6 +13,7 @@ services:
       TRACKER_YOUTUBE_API_KEY: ${TRACKER_YOUTUBE_API_KEY:-}
       TRACKER_GHOST_CONTENT_KEYS: ${TRACKER_GHOST_CONTENT_KEYS:-}
       TRACKER_YOUTUBE_ARCHIVE: "0"
+      TRACKER_BROWSER_SOCKET: /run/tracker-browser/worker.sock
       TRACKER_OPERATOR_NAME: ${TRACKER_OPERATOR_NAME:-MediaTrackify}
       TRACKER_PRIVACY_EMAIL: ${TRACKER_PRIVACY_EMAIL:-}
       TRACKER_HOSTING_DESCRIPTION: ${TRACKER_HOSTING_DESCRIPTION:-The site operator's hosting provider}
@@ -21,6 +22,10 @@ services:
       TRACKER_HOSTS: ${TRACKER_DOMAIN},localhost,127.0.0.1
     volumes:
       - tracker-data:/data
+      - browser-ipc:/run/tracker-browser:ro
+    depends_on:
+      browser:
+        condition: service_healthy
     restart: unless-stopped
     init: true
     read_only: true
@@ -42,6 +47,34 @@ services:
       start_period: 20s
     logging:
       options: {max-size: "10m", max-file: "3"}
+  browser:
+    build:
+      context: ..
+      dockerfile: deploy/browser/Dockerfile
+    network_mode: none
+    volumes:
+      - browser-ipc:/run/tracker-browser
+    restart: unless-stopped
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=512m,mode=1777
+    shm_size: 256m
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+      - seccomp=./browser/seccomp.json
+    pids_limit: 256
+    mem_limit: 1g
+    cpus: 1.0
+    healthcheck:
+      test: ["CMD", "python", "-c", "import pathlib; assert pathlib.Path('/run/tracker-browser/worker.sock').is_socket()"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    logging:
+      options: {max-size: "10m", max-file: "2"}
   web:
     image: caddy:2-alpine
     restart: unless-stopped
@@ -61,6 +94,7 @@ services:
     logging:
       options: {max-size: "10m", max-file: "3"}
 volumes:
+  browser-ipc:
   tracker-data:
   caddy-data:
   caddy-config:

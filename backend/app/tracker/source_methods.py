@@ -20,6 +20,8 @@ SourceMethod = Literal[
     "youtube",
     "ghost",
     "mangadex",
+    "steam",
+    "browser",
 ]
 
 
@@ -41,6 +43,11 @@ def detect_source_method(url):
         parse_qs(p.query, keep_blank_values=True),
     )
     method = "auto"
+    if host == "store.steampowered.com" and not query:
+        from .steam import app_id
+
+        if app_id(url):
+            return {"source_method": "steam", "note": ""}
     if not query:
         if (
             re.fullmatch(r"[a-z0-9-]+\.wordpress\.com", host)

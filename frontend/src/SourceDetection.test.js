@@ -45,6 +45,29 @@ beforeEach(() => {
 });
 afterEach(() => jest.useRealTimers());
 
+test("Steam news URLs automatically select the news API", async () => {
+  post.mockResolvedValue({ source_method: "steam", note: "" });
+  show();
+  change(/Source URL/, "https://store.steampowered.com/news/app/1623730");
+  await tick();
+  expect(screen.getByLabelText("Source method")).toHaveValue("steam");
+  expect(screen.getByText(/official Steam announcements/)).toBeInTheDocument();
+});
+
+test("Browser mode can be selected explicitly without API auto-detection", async () => {
+  show();
+  change(/Source URL/, "https://example.org/series");
+  change("Source method", "browser");
+  await tick();
+  expect(post).not.toHaveBeenCalled();
+  await scan();
+  expect(post).toHaveBeenLastCalledWith(
+    "/scans",
+    expect.objectContaining({ source_method: "browser", detect_api: false }),
+  );
+  expect(screen.getByLabelText("Source method")).toHaveValue("browser");
+});
+
 test("typing is debounced, the API is selected, and scans persist the server choice", async () => {
   show();
   change(/Source URL/, "https://example.wordpress.co");

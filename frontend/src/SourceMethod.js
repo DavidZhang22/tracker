@@ -8,10 +8,11 @@ export const apiMethods = [
   ["youtube", "YouTube API"],
   ["ghost", "Ghost Content API"],
   ["mangadex", "MangaDex API"],
+  ["steam", "Steam news API"],
 ];
 
 const hints = {
-  auto: "Uses the existing page, feed, and supported site detection.",
+  auto: "Uses pages, feeds, and site adapters, with a browser fallback for JavaScript listings.",
   sitemap:
     "Lists pages from the site’s sitemap. Titles come from URLs; dates indicate updates. Use “URL must contain” to narrow the list.",
   wordpress_com:
@@ -31,6 +32,10 @@ const hints = {
     "Requires a Ghost Content API key configured on the server for this site. Sitemap works without a key when available.",
   mangadex:
     "Use a title URL. Keywords such as English can filter chapter languages.",
+  steam:
+    "Lists the game’s official Steam announcements, with publication dates.",
+  browser:
+    "Loads JavaScript and checks a limited number of load-more steps. Validated listing APIs are reused on lightweight refreshes.",
 };
 
 export default function SourceMethod({
@@ -50,6 +55,7 @@ export default function SourceMethod({
       >
         <option value="auto">Automatic</option>
         <option value="sitemap">Sitemap</option>
+        <option value="browser">Browser (JavaScript)</option>
         <optgroup label="Public APIs">
           {apiMethods.map(([id, name]) => (
             <option key={id} value={id}>

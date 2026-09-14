@@ -11,6 +11,7 @@ from .dates import evidence
 from .limits import MAX_LINKS
 from .mangadex import scan_mangadex
 from .models import Entry, Scan
+from .steam import steam
 from .urls import DiscoveryError, canonical_url, content_key
 
 
@@ -455,6 +456,7 @@ async def scan_api(fetcher, source, method, max_pages, keywords=""):
         "mastodon": (mastodon, "Mastodon"),
         "youtube": (youtube, "YouTube"),
         "ghost": (ghost, "Ghost"),
+        "steam": (steam, "Steam news"),
     }
     if method not in providers:
         raise DiscoveryError("Choose a supported API.")

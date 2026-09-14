@@ -8,7 +8,7 @@ progress; refresh it to collect results through the selected method.
 
 Detection makes no requests to the source site. It recognizes WordPress.com
 homepages, WordPress `/wp-json/` roots, DEV.to profiles, GitHub release lists,
-Codeforces contests, MangaDex titles, and profiles on mastodon.social/online.
+Codeforces contests, Steam game news pages, MangaDex titles, and profiles on mastodon.social/online.
 YouTube channels/playlists and Ghost homepages select their APIs only when the
 server has the required key. Unknown custom domains, individual posts, filtered
 archives, and bare GitHub repositories retain the page scanner. Other Mastodon
@@ -36,6 +36,8 @@ The preview shows exactly which entries will be saved.
 | YouTube API | Channel ID, @handle, legacy user URL, or playlist | Server API key required; Google project quota applies. Uses uploads playlists instead of expensive search calls. Dates are video publication times, not playlist addition times. |
 | Ghost Content API | Site homepage over HTTPS | Requires a Content API key configured for that exact hostname. Lists published posts and pages. |
 | MangaDex API | MangaDex title URL | No key. Chapter metadata, dates, numbers, and languages; recognized language keywords reduce requests. |
+| Steam news API | `https://store.steampowered.com/news/app/1623730` | No key. Official game announcements with publication dates and stable IDs; uses a one-character content limit and never opens articles. |
+| Browser (JavaScript) | Public listing URL | Executes JavaScript in the isolated worker. Checks up to four load-more/scroll steps, retaining earlier DOM windows. May report partial coverage. |
 | Sitemap | Site URL or direct `.xml` / `.xml.gz` sitemap | No key. Reads declared XML sitemaps and indexes, including compressed files; only page URLs on the source host are included. |
 
 Sitemap titles come from URL slugs. `lastmod` is stored as **Updated**, not
@@ -101,6 +103,60 @@ missing keys, API errors, source selection persistence, method-separated caches,
 filters, ID-based renames, cross-method deduplication, migration, date evidence,
 sitemap cycles and namespaces, XML entity rejection, decompression limits,
 credential redaction, and redirect safety.
+
+## JavaScript listings
+
+Automatic uses the browser worker when the initial scan has no content links or
+detects a load-more control. Browser mode can also be selected explicitly in Add
+item or Settings → Item settings. Known APIs take precedence; existing Automatic
+Steam items also use the news API on their next refresh.
+
+Rendered links pass through the existing link and context classifiers, including
+dates and neighboring language labels. Snapshots are combined so virtualized
+lists do not lose entries from earlier steps. Coverage stays partial unless a
+listing API's full pagination chain can be validated. A browser cannot guarantee
+complete results from login-only, protected, POST-only, or arbitrarily long lists.
+
+The app can learn a same-host public GET/JSON API with URL/title records matching
+the first rendered list and an explicit `next`/`next_url`/`next_page_url` chain.
+It validates that chain before caching a data-only recipe. Lightweight refreshes
+read every API page; deep refreshes rediscover it. Repeated pages, changed fields,
+foreign endpoints, credentials, and resource limits invalidate the recipe and
+fall back to normal discovery. This does not guess offsets or persist executable
+code. Recipes expire with the seven-day scan cache. Scans with CSS selectors or
+context keywords retain DOM analysis instead of assuming API metadata contains
+the same neighboring context.
+
+The worker has no network interface, account database, credentials, or public
+port. All allowed browser GETs are fulfilled through the application's existing
+DNS-pinned SafeFetcher, HTTP cache, host pacing, and per-scan limits. It blocks
+forms/POSTs, popups, frames, content navigation, WebSockets, service workers,
+credential-like query fields, images, media, and fonts. It uses a fresh Chromium
+process per job with the Chromium sandbox enabled, non-root UID, read-only
+filesystem, dropped capabilities, one CPU, 1 GB RAM, 256 processes, and temporary
+memory-backed storage. A private Unix socket is its only app connection; the app
+mounts that socket directory read-only. One job runs at a time, with a 50-second
+render limit, four interaction steps, five 1-million-character snapshots, and at
+most 40 resource requests (also subject to the shared 40-request/32-MB budget).
+
+Deployment builds the separate `browser` image automatically with Compose. Its
+seccomp profile is vendored from the official [Playwright Docker profile](https://github.com/microsoft/playwright/blob/main/utils/docker/seccomp_profile.json)
+to permit Chromium's nested user namespaces. It additionally permits the `chroot`
+syscall needed inside those namespaces; container capabilities remain dropped.
+Do not disable the Chromium sandbox
+or grant SYS_ADMIN to work around startup failures. Local development without a
+worker still supports HTML/API scans; Browser mode returns a clear setup message.
+
+Verified September 14, 2026: the supplied Palworld news archive returned 117 unique
+dated announcements in two API requests, with no article requests. A real
+networkless Chromium fixture retained six records across replaced DOM windows,
+then a lightweight refresh used four listing API requests to find eight records
+without launching Chromium. The browser container peaked at approximately
+186 MiB of memory in that test; more complex pages may use more, up to its limit.
+
+References: [Steam news API](https://partner.steamgames.com/doc/webapi/ISteamNews),
+[Playwright network routing](https://playwright.dev/python/docs/network),
+[Chromium sandbox in Docker](https://playwright.dev/python/docs/docker).
 
 Live metadata checks on 2026-09-14: Galactoid Tetris returned 191 non-homepage
 entries with dates in two WordPress API requests. Sitemap discovery returned 191
