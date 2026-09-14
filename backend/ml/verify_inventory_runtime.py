@@ -87,14 +87,19 @@ def verify_routes(path):
     fetcher = Listings()
     app = create_app(path, Discoverer(fetcher), auth_config={"required": False})
     with TestClient(app) as client:
+        detected = client.post(
+            "/api/source-method/detect", json={"url": "https://example.wordpress.com/"}
+        )
+        assert detected.json()["source_method"] == "wordpress_com"
+        assert not fetcher.calls
         response = client.post(
             "/api/scans",
             json={
                 "url": "https://example.wordpress.com/",
-                "source_method": "wordpress_com",
             },
         )
         assert response.status_code == 200, response.text
+        assert response.json()["source_method"] == "wordpress_com"
         item = client.post(
             "/api/items",
             json={"scan_id": response.json()["scan_id"], "mark_read": True},
@@ -103,6 +108,11 @@ def verify_routes(path):
         iid = item["id"]
         original = client.get(f"/api/items/{iid}/links").json()["links"][0]
         assert original["source_id"] and original["date_kind"] == "published"
+        assert client.post(f"/api/items/{iid}/refresh?deep=true").status_code == 200
+        assert all(
+            urlsplit(url).hostname == "public-api.wordpress.com"
+            for url in fetcher.calls
+        )
         assert (
             client.patch(
                 f"/api/items/{iid}", json={"source_method": "sitemap"}
@@ -121,7 +131,11 @@ def verify_routes(path):
         )
         assert client.get("/api/settings").json()["source_method"] == "sitemap"
         assert client.get("/api/ready").status_code == 200
-    return {"api_and_sitemap": "passed", "method_switch_preserves_progress": "passed"}
+    return {
+        "api_detection": "passed",
+        "api_and_sitemap": "passed",
+        "method_switch_preserves_progress": "passed",
+    }
 
 
 def main():

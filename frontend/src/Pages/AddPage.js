@@ -11,15 +11,13 @@ import { post, examples } from "../api";
 import { LinkDate } from "../RowTools";
 import { orderedPreview, usePreferences } from "../Preferences";
 import SourceMethod from "../SourceMethod";
+import useSourceMethod from "../useSourceMethod";
 
 export default function AddPage() {
   const { preferences } = usePreferences();
   const [params] = useSearchParams(),
     navigate = useNavigate();
   const [url, setUrl] = useState(params.get("url") || ""),
-    [sourceMethod, setSourceMethod] = useState(
-      preferences.source_method || "auto",
-    ),
     [selector, setSelector] = useState(""),
     [path, setPath] = useState(""),
     [keywords, setKeywords] = useState("");
@@ -27,6 +25,13 @@ export default function AddPage() {
     [busy, setBusy] = useState(false),
     [saving, setSaving] = useState(false),
     [error, setError] = useState("");
+  const source = useSourceMethod(
+    url,
+    preferences.source_method,
+    selector,
+    busy || saving || Boolean(result),
+  );
+  const sourceMethod = source.method;
   const [title, setTitle] = useState(""),
     [readMode, setReadMode] = useState("unread"),
     [selectedRead, setSelectedRead] = useState(new Set()),
@@ -75,8 +80,9 @@ export default function AddPage() {
         selector: sourceMethod === "auto" ? selector : "",
         include_path: path,
         keywords,
-        source_method: sourceMethod,
+        ...source.request,
       });
+      source.accept(r);
       setResult(r);
       setTitle(r.title);
     } catch (e) {
@@ -148,10 +154,15 @@ export default function AddPage() {
               value={sourceMethod}
               disabled={busy || saving}
               onChange={(method) => {
-                setSourceMethod(method);
+                source.select(method);
                 setResult(null);
               }}
             />
+            {source.note && (
+              <p className="hint" role="status">
+                {source.note}
+              </p>
+            )}
             <label className="field">
               Keywords
               <input

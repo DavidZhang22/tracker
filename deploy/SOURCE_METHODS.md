@@ -1,11 +1,25 @@
 # API and sitemap sources
 
 Choose **Source method** on Add item, or under Settings → Item settings. Settings
-also contains **Default source method** for new items. Existing items keep
-Automatic until changed. Changing an item’s method keeps its saved links and
+also contains **Default source method** for new items. New items with the Automatic
+default select a supported API from their URL. Existing items keep their saved
+method. Changing an item’s method keeps its saved links and
 progress; refresh it to collect results through the selected method.
 
-Automatic retains the existing page, feed, model, and site-adapter behavior.
+Detection makes no requests to the source site. It recognizes WordPress.com
+homepages, WordPress `/wp-json/` roots, DEV.to profiles, GitHub release lists,
+Codeforces contests, MangaDex titles, and profiles on mastodon.social/online.
+YouTube channels/playlists and Ghost homepages select their APIs only when the
+server has the required key. Unknown custom domains, individual posts, filtered
+archives, and bare GitHub repositories retain the page scanner. Other Mastodon
+instances and self-hosted/custom-domain blogs can still select their API manually.
+
+The detected method is saved with the item and reused on refresh. Choosing a
+method manually (including Automatic), a saved non-Automatic default, or entering
+a CSS selector overrides detection. Explicit Automatic retains the existing page,
+feed, model, and site-adapter behavior. API clients may send `detect_api: false`
+with `source_method: "auto"` to request that same behavior. `/api/source-method/detect`
+returns a URL-only suggestion; `/api/scans` independently resolves and persists it.
 Selecting an API or Sitemap explicitly never silently falls back to crawling.
 CSS selectors only apply to Automatic. Keywords and URL substring filters remain
 available in every method, using the metadata the chosen source actually supplies.

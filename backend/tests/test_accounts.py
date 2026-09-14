@@ -52,6 +52,7 @@ def test_all_private_routes_require_session_before_any_scan(app):
     for method, path, body in [
         ("get", "/api/items", None),
         ("post", "/api/scans", {"url": ROOT}),
+        ("post", "/api/source-method/detect", {"url": ROOT}),
         ("post", "/api/refresh", {}),
         ("patch", "/api/links/arbitrary", {"read": True}),
         ("post", "/api/items/bulk", {"action": "delete", "ids": ["x"]}),

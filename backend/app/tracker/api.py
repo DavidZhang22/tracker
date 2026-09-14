@@ -13,7 +13,7 @@ from starlette.background import BackgroundTask
 from .keywords import terms
 from .limits import MAX_ITEMS, MAX_LINKS, bounded_scan
 from .preferences import PreferencesPatch
-from .source_methods import SourceMethod
+from .source_methods import SourceMethod, detect_source_method
 from .store import ItemAdditionCooldown
 from .suggestions import collect_cached, ranked_suggestions
 from .urls import DiscoveryError
@@ -23,12 +23,16 @@ router = APIRouter(prefix="/api")
 REFRESH_HEARTBEAT_SECONDS = 15
 
 
-class ScanRequest(BaseModel):
+class SourceDetectionRequest(BaseModel):
     url: str = Field(min_length=8, max_length=2048)
+
+
+class ScanRequest(SourceDetectionRequest):
     selector: str = Field(default="", max_length=300)
     include_path: str = Field(default="", max_length=300)
     keywords: str = Field(default="", max_length=300)
     source_method: SourceMethod = "auto"
+    detect_api: bool = True
 
 
 class CreateRequest(BaseModel):
@@ -151,30 +155,35 @@ def ready(request: Request):
     return {"status": "ready"}
 
 
+@router.post("/source-method/detect")
+def detect_method(body: SourceDetectionRequest):
+    return detect_source_method(body.url)
+
+
 @router.post("/scans")
 async def scan(body: ScanRequest, request: Request):
     terms(body.keywords)
+    selector = body.selector.strip()
+    method = body.source_method
+    if method == "auto" and body.detect_api and not selector:
+        method = detect_source_method(body.url)["source_method"]
     with request.state.store.connection() as db:
         db.execute("SELECT id FROM scans LIMIT 1").fetchone()
     with request.app.state.scan_guard.operation(request.state.store.path):
         async with request.app.state.scan_semaphore:
             result = await request.app.state.discoverer.scan(
                 body.url,
-                body.selector,
+                selector,
                 body.include_path,
                 **({"keywords": body.keywords} if body.keywords else {}),
-                **(
-                    {"source_method": body.source_method}
-                    if body.source_method != "auto"
-                    else {}
-                ),
+                **({"source_method": method} if method != "auto" else {}),
                 deep=True,
             )
     payload = bounded_scan(result.to_dict()) | {
-        "selector": body.selector,
+        "selector": selector,
         "include_path": body.include_path,
         "keywords": body.keywords,
-        "source_method": body.source_method,
+        "source_method": method,
     }
     sid = await run_blocking(request.state.store.save_scan, payload)
     return payload | {"scan_id": sid}
