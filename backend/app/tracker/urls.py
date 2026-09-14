@@ -1,8 +1,10 @@
 import asyncio
+import hashlib
 import ipaddress
 import re
 import socket
 import time
+import zlib
 from contextvars import ContextVar
 from dataclasses import dataclass
 from email.utils import parsedate_to_datetime
@@ -137,15 +139,23 @@ class SafeFetcher:
         self.network_locks = [asyncio.Lock() for _ in range(64)]
         self.last_requests = [0.0] * 64
 
-    async def get(self, url):
+    async def get(self, url, *, secret_query=None):
         original = canonical_url(url, preserve_slash=True)
+        if secret_query and urlsplit(original).scheme != "https":
+            raise DiscoveryError("API credentials require HTTPS.")
         host = urlsplit(original).hostname
         slot = hash(host) % 64
         async with self.locks[slot]:
-            return await self._get(original, slot)
+            return await self._get(original, slot, secret_query)
 
-    async def _get(self, original, slot):
-        cached = await run_blocking(self.cache.get, original)
+    async def _get(self, original, slot, secret_query=None):
+        cache_key = (
+            original
+            if not secret_query
+            else "credentialed:"
+            + hashlib.sha256((original + urlencode(secret_query)).encode()).hexdigest()
+        )
+        cached = await run_blocking(self.cache.get, cache_key)
         budget = request_budget.get()
         if cached and cached.get("expires", 0) > time.time():
             if budget:
@@ -163,6 +173,8 @@ class SafeFetcher:
             ip = addresses[0]
             netloc = f"[{ip}]" if ":" in ip else ip
             target = urlunsplit((p.scheme, netloc, p.path, p.query, ""))
+            if secret_query:
+                target += ("&" if p.query else "?") + urlencode(secret_query)
             backoff = await run_blocking(self.cache.get, "backoff:" + p.hostname)
             if backoff and backoff["expires"] > time.time():
                 raise DiscoveryError(
@@ -210,9 +222,13 @@ class SafeFetcher:
                                 cached.update(
                                     checked=time.time(), expires=time.time() + self.ttl
                                 )
-                                await run_blocking(self.cache.put, original, cached)
+                                await run_blocking(self.cache.put, cache_key, cached)
                                 return cached["final"], cached["body"]
                             if response.is_redirect:
+                                if secret_query:
+                                    raise DiscoveryError(
+                                        "The API redirected. Credentials were not forwarded; check the configured API host."
+                                    )
                                 url = canonical_url(
                                     response.headers.get("location", ""),
                                     url,
@@ -240,7 +256,7 @@ class SafeFetcher:
                                 )
                                 await run_blocking(
                                     self.cache.put,
-                                    original,
+                                    cache_key,
                                     {
                                         "error": message,
                                         "expires": time.time() + min(delay, 86400),
@@ -257,6 +273,20 @@ class SafeFetcher:
                                     raise DiscoveryError(
                                         "The page exceeds the 8 MB scan limit."
                                     )
+                            if data[:2] == b"\x1f\x8b":
+                                try:
+                                    unpacker = zlib.decompressobj(16 + zlib.MAX_WBITS)
+                                    data = unpacker.decompress(bytes(data), 8_000_001)
+                                    if len(data) > 8_000_000 or not unpacker.eof:
+                                        raise DiscoveryError(
+                                            "The expanded sitemap exceeds the 8 MB scan limit or is incomplete."
+                                        )
+                                    if budget:
+                                        budget.take_bytes(len(data))
+                                except zlib.error as exc:
+                                    raise DiscoveryError(
+                                        "The compressed sitemap is unreadable."
+                                    ) from exc
                             text = data.decode(
                                 response.encoding or "utf-8", errors="replace"
                             )
@@ -273,7 +303,7 @@ class SafeFetcher:
                             ):
                                 await run_blocking(
                                     self.cache.put,
-                                    original,
+                                    cache_key,
                                     {
                                         "final": url,
                                         "body": text,

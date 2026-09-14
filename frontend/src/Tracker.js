@@ -120,9 +120,12 @@ export function Shell() {
           className="sidebar-content"
           onClick={(event) => {
             if (menuOpen && event.target.closest("a[href]")) {
+              const anchor = event.target.closest("a[href]").hash?.slice(1);
               setMenuOpen(false);
               requestAnimationFrame(() =>
-                main.current?.focus({ preventScroll: true }),
+                (document.getElementById(anchor) || main.current)?.focus({
+                  preventScroll: true,
+                }),
               );
             }
           }}

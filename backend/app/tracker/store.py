@@ -92,6 +92,7 @@ class Store:
                     "order_hint": "TEXT NOT NULL DEFAULT ''",
                     "keywords": "TEXT NOT NULL DEFAULT ''",
                     "suggestions_checked": "REAL NOT NULL DEFAULT 0",
+                    "source_method": "TEXT NOT NULL DEFAULT 'auto'",
                 },
                 "links": {
                     "deleted": "INTEGER NOT NULL DEFAULT 0",
@@ -102,6 +103,7 @@ class Store:
                     "availability": "TEXT NOT NULL DEFAULT ''",
                     "context": "TEXT NOT NULL DEFAULT ''",
                     "language": "TEXT NOT NULL DEFAULT ''",
+                    "source_id": "TEXT NOT NULL DEFAULT ''",
                 },
             }
             for table, columns in additions.items():
@@ -115,7 +117,7 @@ class Store:
                         )
             if db.execute("PRAGMA user_version").fetchone()[0] < 8:
                 self._migrate_link_identities(db)
-                db.execute("PRAGMA user_version=8")
+            db.execute("PRAGMA user_version=9")
         marker.touch(exist_ok=True)
 
     @staticmethod
@@ -132,49 +134,52 @@ class Store:
                 original = rows[0]
                 if len(rows) == 1 and original["identity"] == key:
                     continue
-                # Newest discovered URL/metadata wins; precise dates and explicit
-                # saved flags survive even when only an older alias has them.
-                merged = dict(rows[-1])
-                merged["number"] = next(
-                    (r["number"] for r in reversed(rows) if r["number"] is not None),
-                    None,
-                )
-                for field in ("summary", "availability", "context", "language"):
-                    merged[field] = next(
-                        (r[field] for r in reversed(rows) if r[field]), ""
-                    )
-                best_date = max(reversed(rows), key=date_rank)
-                for field in (
-                    "published_at",
-                    "date_kind",
-                    "date_source",
-                    "date_precision",
-                ):
-                    merged[field] = best_date[field]
-                for field in ("read", "favorite", "ignored", "deleted"):
-                    merged[field] = any(r[field] for r in rows)
-                merged.update(
-                    identity=key,
-                    position=original["position"],
-                    is_new=bool(original["is_new"] and not merged["read"]),
-                )
-                # Delete redundant copies before changing the surviving key so
-                # the existing per-item UNIQUE constraint remains enforced.
-                db.executemany(
-                    "DELETE FROM links WHERE id=?", ((r["id"],) for r in rows[1:])
-                )
-                changes = {
-                    k: v
-                    for k, v in merged.items()
-                    if k not in {"id", "item_id", "discovered_at"} and original[k] != v
-                }
-                if changes:
-                    db.execute(
-                        "UPDATE links SET "
-                        + ",".join(k + "=?" for k in changes)
-                        + " WHERE id=?",
-                        (*changes.values(), original["id"]),
-                    )
+                Store._combine_link_rows(db, rows, key)
+
+    @staticmethod
+    def _combine_link_rows(db, rows, key):
+        rows = sorted(rows, key=lambda r: (r["discovered_at"], r["id"]))
+        original = rows[0]
+        # Newest discovered URL/metadata wins; precise dates and explicit
+        # saved flags survive even when only an older alias has them.
+        merged = dict(rows[-1])
+        merged["number"] = next(
+            (r["number"] for r in reversed(rows) if r["number"] is not None),
+            None,
+        )
+        for field in ("summary", "availability", "context", "language", "source_id"):
+            merged[field] = next((r[field] for r in reversed(rows) if r[field]), "")
+        best_date = max(reversed(rows), key=date_rank)
+        for field in (
+            "published_at",
+            "date_kind",
+            "date_source",
+            "date_precision",
+        ):
+            merged[field] = best_date[field]
+        for field in ("read", "favorite", "ignored", "deleted"):
+            merged[field] = any(r[field] for r in rows)
+        merged.update(
+            identity=key,
+            position=original["position"],
+            is_new=bool(original["is_new"] and not merged["read"]),
+        )
+        # Delete redundant copies before changing the surviving key so
+        # the existing per-item UNIQUE constraint remains enforced.
+        db.executemany("DELETE FROM links WHERE id=?", ((r["id"],) for r in rows[1:]))
+        changes = {
+            k: v
+            for k, v in merged.items()
+            if k not in {"id", "item_id", "discovered_at"} and original[k] != v
+        }
+        if changes:
+            db.execute(
+                "UPDATE links SET "
+                + ",".join(k + "=?" for k in changes)
+                + " WHERE id=?",
+                (*changes.values(), original["id"]),
+            )
+        return original | changes
 
     @contextmanager
     def connection(self, create=False):
@@ -365,8 +370,8 @@ class Store:
                 if elapsed < ITEM_ADD_INTERVAL_SECONDS:
                     raise ItemAdditionCooldown(ITEM_ADD_INTERVAL_SECONDS - elapsed)
             db.execute(
-                """INSERT INTO items(id,url,title,kind,auto_read,selector,include_path,created_at,keywords)
-              VALUES (?,?,?,?,?,?,?,?,?)""",
+                """INSERT INTO items(id,url,title,kind,auto_read,selector,include_path,created_at,keywords,source_method)
+              VALUES (?,?,?,?,?,?,?,?,?,?)""",
                 (
                     iid,
                     scan["url"],
@@ -377,6 +382,7 @@ class Store:
                     scan.get("include_path", ""),
                     utcnow(),
                     scan.get("keywords", ""),
+                    scan.get("source_method", "auto"),
                 ),
             )
             self._merge(
@@ -414,7 +420,37 @@ class Store:
                 (iid,),
             )
         }
+        # API IDs can prove that a renamed URL and a previously saved sitemap
+        # URL refer to the same content. Coalesce that evidence before quotas.
+        indexed_urls = {identity(r["url"]): r for r in previous_rows.values()}
+        indexed_sources = {
+            r["source_id"]: r for r in previous_rows.values() if r["source_id"]
+        }
+        for entry in scan["entries"]:
+            source_id = entry.get("source_id")
+            a = indexed_sources.get(source_id) if source_id else None
+            b = indexed_urls.get(identity(entry["url"]))
+            if a and b and a["id"] != b["id"]:
+                original = min((a, b), key=lambda r: (r["discovered_at"], r["id"]))
+                merged = self._combine_link_rows(db, [a, b], original["identity"])
+                previous_rows.pop(a["identity"], None)
+                previous_rows.pop(b["identity"], None)
+                previous_rows[merged["identity"]] = merged
+                indexed_sources[source_id] = merged
+                for row in (a, b):
+                    indexed_urls[identity(row["url"])] = merged
+        previous_rows = dict(
+            sorted(
+                previous_rows.items(), key=lambda kv: (kv[1]["position"], kv[1]["id"])
+            )
+        )
         previous = list(previous_rows)
+        by_url = {identity(row["url"]): key for key, row in previous_rows.items()}
+        by_source = {
+            row["source_id"]: key
+            for key, row in previous_rows.items()
+            if row["source_id"]
+        }
         known = set(previous)
         remaining = max(
             0,
@@ -427,13 +463,18 @@ class Store:
         accepted = []
         capped = False
         for entry in scan["entries"]:
-            key = identity(entry["url"])
+            url_key = identity(entry["url"])
+            source_id = entry.get("source_id", "")
+            key = by_source.get(source_id) or by_url.get(url_key, url_key)
             if key not in known:
                 if not remaining:
                     capped = True
                     continue
                 remaining -= 1
                 known.add(key)
+            by_url[url_key] = key
+            if source_id:
+                by_source[source_id] = key
             accepted.append((key, entry))
         scan = scan | {"entries": [entry for _, entry in accepted]}
         if capped:
@@ -463,6 +504,13 @@ class Store:
         for key, entry in accepted:
             old = previous_rows.get(key)
             if old:
+                if entry.get("method") == "sitemap":
+                    # URL-derived labels and absent sitemap context should not
+                    # replace an existing title or richer API/page metadata.
+                    entry = dict(entry)
+                    entry["title"] = old["title"]
+                    for field in ("summary", "availability", "context", "language"):
+                        entry[field] = entry.get(field) or old.get(field, "")
                 if date_rank(old) > date_rank(entry):
                     entry = dict(entry)
                     for field in (
@@ -514,6 +562,8 @@ class Store:
                 method=entry["method"],
                 position=positions[key],
             )
+            if entry.get("source_id"):
+                metadata["source_id"] = entry["source_id"]
             if entry.get("published_at") is not None:
                 metadata["published_at"] = entry["published_at"]
             if entry.get("number") is not None:
@@ -585,6 +635,7 @@ class Store:
                 "selector",
                 "include_path",
                 "keywords",
+                "source_method",
             },
             "links": {"favorite", "ignored", "read"},
         }

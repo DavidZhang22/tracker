@@ -122,7 +122,7 @@ def test_migration_repairs_existing_duplicates_preserves_states_and_is_idempoten
     store = Store(path)
     with store.connection() as db:
         rows = [dict(r) for r in db.execute("SELECT * FROM links")]
-        assert db.execute("PRAGMA user_version").fetchone()[0] == 8
+        assert db.execute("PRAGMA user_version").fetchone()[0] >= 8
     assert len(rows) == 1
     row = rows[0]
     assert (

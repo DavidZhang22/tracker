@@ -53,7 +53,7 @@ test("navigation closes after choosing Account and Escape returns focus to Menu"
     await screen.findByRole("heading", { name: "Account" }),
   ).toBeInTheDocument();
   expect(menu).toHaveAttribute("aria-expanded", "false");
-  await waitFor(() => expect(screen.getByRole("main")).toHaveFocus());
+  await waitFor(() => expect(document.getElementById("account")).toHaveFocus());
   await act(async () => fireEvent.click(menu));
   screen.getByRole("link", { name: "reader · Account" }).focus();
   fireEvent.keyDown(window, { key: "Escape" });

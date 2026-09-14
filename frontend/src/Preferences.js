@@ -8,6 +8,7 @@ export const defaults = {
   library_sort: "recent",
   auto_read: true,
   refresh_mode: "light",
+  source_method: "auto",
 };
 const PreferencesContext = createContext({ preferences: defaults });
 export const usePreferences = () => useContext(PreferencesContext);

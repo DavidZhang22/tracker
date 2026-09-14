@@ -4,6 +4,7 @@ import { api, patch } from "../api";
 import { AccountPage } from "../Auth";
 import { Notice } from "../Notice";
 import { linkSortOptions, usePreferences } from "../Preferences";
+import SourceMethod from "../SourceMethod";
 
 export default function SettingsPage() {
   const { hash } = useLocation();
@@ -129,10 +130,15 @@ export default function SettingsPage() {
               </select>
               <span className="hint">
                 Lightweight reuses learned rules and runs full detection when
-                needed. Both modes check the full listing and respect source
-                request limits.
+                needed. API and sitemap sources use their selected method in
+                either mode. All scans respect source request limits.
               </span>
             </label>
+            <SourceMethod
+              label="Default source method"
+              value={draft.source_method || "auto"}
+              onChange={(value) => change("source_method", value)}
+            />
             <button className="button primary" type="submit">
               {busy ? "Saving…" : "Save preferences"}
             </button>
@@ -229,8 +235,12 @@ function ItemSettings({ autoUpdate, settingsBusy, onBusy }) {
               await patch(`/items/${id}`, {
                 auto_read: draft.auto_read,
                 keywords: draft.keywords || "",
-                selector: draft.selector,
+                selector:
+                  (draft.source_method || "auto") === "auto"
+                    ? draft.selector
+                    : "",
                 include_path: draft.include_path,
+                source_method: draft.source_method || "auto",
               });
               setMessage(
                 "Item settings saved. Refresh the item to apply detection changes.",
@@ -252,6 +262,10 @@ function ItemSettings({ autoUpdate, settingsBusy, onBusy }) {
               />
               Mark as read when opened for this item
             </label>
+            <SourceMethod
+              value={draft.source_method || "auto"}
+              onChange={(value) => change("source_method", value)}
+            />
             <label className="field">
               Keywords
               <input
@@ -267,15 +281,17 @@ function ItemSettings({ autoUpdate, settingsBusy, onBusy }) {
             </label>
             <details>
               <summary>Advanced link detection</summary>
-              <label className="field">
-                Link selector
-                <input
-                  value={draft.selector}
-                  maxLength={300}
-                  placeholder="#chapters a"
-                  onChange={(e) => change("selector", e.target.value)}
-                />
-              </label>
+              {(draft.source_method || "auto") === "auto" && (
+                <label className="field">
+                  Link selector
+                  <input
+                    value={draft.selector}
+                    maxLength={300}
+                    placeholder="#chapters a"
+                    onChange={(e) => change("selector", e.target.value)}
+                  />
+                </label>
+              )}
               <label className="field">
                 URL must contain
                 <input

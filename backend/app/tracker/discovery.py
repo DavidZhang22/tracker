@@ -7,6 +7,7 @@ import sys
 import time
 from contextvars import ContextVar
 from copy import deepcopy
+from typing import get_args
 from urllib.parse import parse_qs, urlsplit
 
 from .adapters import codeforces_endpoint, codeforces_scan, wetried_scan, wetried_series
@@ -20,6 +21,7 @@ from .mangadex import title_id as mangadex_title
 from .models import Entry, Scan, date_value, utcnow
 from .parser import kind_for, merge_entries, parse_page, relevant
 from .record_context import load_record_model
+from .source_methods import SourceMethod
 from .urls import (
     DiscoveryError,
     RequestBudget,
@@ -171,17 +173,36 @@ class Discoverer:
         self.analyzer = analyzer
         self.scan_locks = [asyncio.Lock() for _ in range(64)]
 
-    async def scan(self, url, selector="", include_path="", keywords="", *, deep=False):
+    async def scan(
+        self,
+        url,
+        selector="",
+        include_path="",
+        keywords="",
+        *,
+        deep=False,
+        source_method="auto",
+    ):
         terms(keywords)
+        if source_method not in get_args(SourceMethod):
+            raise DiscoveryError("Choose a supported source method.")
+        if source_method != "auto" and selector:
+            raise DiscoveryError(
+                "CSS selectors apply to Automatic scans. Clear the selector to use an API or sitemap."
+            )
         url = canonical_url(url, preserve_slash=True)
         async with self.scan_locks[hash(url) % 64]:
             token = DEEP_SCAN.set(deep)
             try:
-                return await self._cached_scan(url, selector, include_path, keywords)
+                return await self._cached_scan(
+                    url, selector, include_path, keywords, source_method
+                )
             finally:
                 DEEP_SCAN.reset(token)
 
-    async def _cached_scan(self, url, selector, include_path, keywords=""):
+    async def _cached_scan(
+        self, url, selector, include_path, keywords="", source_method="auto"
+    ):
         cache = getattr(self.fetcher, "cache", None)
         key = (
             "scan:"
@@ -192,7 +213,12 @@ class Discoverer:
                         selector,
                         include_path,
                         keywords,
-                        *parser_version(),
+                        source_method,
+                        *(
+                            parser_version()
+                            if source_method == "auto"
+                            else ["inventory-v1"]
+                        ),
                     ]
                 ).encode()
             ).hexdigest()
@@ -207,7 +233,24 @@ class Discoverer:
         token = request_budget.set(budget)
         try:
             async with asyncio.timeout(180):
-                result = await self._scan(url, selector, include_path, keywords)
+                if source_method == "auto":
+                    result = await self._scan(url, selector, include_path, keywords)
+                else:
+                    from .inventories import scan_inventory
+
+                    result = await scan_inventory(
+                        self.fetcher, url, source_method, self.max_pages, keywords
+                    )
+                    if include_path:
+                        result.entries = [
+                            e for e in result.entries if include_path in e.url
+                        ]
+                    result.entries = merge_entries(result.entries)
+                    # Stable oldest-first source positions support either view direction.
+                    if result.entries and all(e.published_at for e in result.entries):
+                        result.entries.sort(key=lambda e: (e.published_at, e.url))
+                    for i, entry in enumerate(result.entries):
+                        entry.position = i
                 result.keywords = keywords
                 if keywords:
                     result.unfiltered_count = len(result.entries)

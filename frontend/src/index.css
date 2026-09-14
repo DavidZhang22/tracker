@@ -638,10 +638,16 @@ progress::-moz-progress-bar {
 }
 .form-panel label.field {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 9px;
   font-size: 0.875rem;
   font-weight: 600;
   margin-bottom: 22px;
+}
+.field select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 .field input {
   padding: 13px;

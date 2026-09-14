@@ -547,6 +547,7 @@ test("scan preview saves the actual server scan with preferences", async () => {
   });
   await click(screen.getByRole("button", { name: "Scan links" }));
   expect(post).toHaveBeenCalledWith("/scans", {
+    source_method: "auto",
     url: "https://site.example",
     selector: "",
     include_path: "",

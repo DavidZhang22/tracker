@@ -10,12 +10,16 @@ import { Icon, Notice, TypeIcon } from "../Tracker";
 import { post, examples } from "../api";
 import { LinkDate } from "../RowTools";
 import { orderedPreview, usePreferences } from "../Preferences";
+import SourceMethod from "../SourceMethod";
 
 export default function AddPage() {
   const { preferences } = usePreferences();
   const [params] = useSearchParams(),
     navigate = useNavigate();
   const [url, setUrl] = useState(params.get("url") || ""),
+    [sourceMethod, setSourceMethod] = useState(
+      preferences.source_method || "auto",
+    ),
     [selector, setSelector] = useState(""),
     [path, setPath] = useState(""),
     [keywords, setKeywords] = useState("");
@@ -68,9 +72,10 @@ export default function AddPage() {
     try {
       const r = await post("/scans", {
         url,
-        selector,
+        selector: sourceMethod === "auto" ? selector : "",
         include_path: path,
         keywords,
+        source_method: sourceMethod,
       });
       setResult(r);
       setTitle(r.title);
@@ -139,9 +144,18 @@ export default function AddPage() {
                 Use a series page, channel, blog archive, or RSS / Atom feed.
               </span>
             </label>
+            <SourceMethod
+              value={sourceMethod}
+              disabled={busy || saving}
+              onChange={(method) => {
+                setSourceMethod(method);
+                setResult(null);
+              }}
+            />
             <label className="field">
               Keywords
               <input
+                disabled={busy || saving}
                 value={keywords}
                 maxLength={300}
                 placeholder="English, official"
@@ -157,24 +171,28 @@ export default function AddPage() {
             </label>
             <details>
               <summary>Refine link detection</summary>
-              <label className="field">
-                Link selector
-                <input
-                  value={selector}
-                  placeholder="#chapters a, article h2 a"
-                  onChange={(e) => {
-                    setSelector(e.target.value);
-                    setResult(null);
-                  }}
-                />
-                <span className="hint">
-                  Optional CSS selector for content links. Useful for pages with
-                  several lists.
-                </span>
-              </label>
+              {sourceMethod === "auto" && (
+                <label className="field">
+                  Link selector
+                  <input
+                    disabled={busy || saving}
+                    value={selector}
+                    placeholder="#chapters a, article h2 a"
+                    onChange={(e) => {
+                      setSelector(e.target.value);
+                      setResult(null);
+                    }}
+                  />
+                  <span className="hint">
+                    Optional CSS selector for content links. Useful for pages
+                    with several lists.
+                  </span>
+                </label>
+              )}
               <label className="field">
                 URL must contain
                 <input
+                  disabled={busy || saving}
                   value={path}
                   placeholder="/my-series/chapter/"
                   onChange={(e) => {
@@ -200,7 +218,7 @@ export default function AddPage() {
             </button>
             {busy && (
               <p role="status" className="hint" style={{ marginTop: 15 }}>
-                Checking pages and feeds. Large YouTube archives can take up to
+                Checking the selected source. Large listings can take up to
                 three minutes.
               </p>
             )}

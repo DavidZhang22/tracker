@@ -125,11 +125,88 @@ test("per-item read-on-open and detection settings are saved in one place", asyn
   change("URL must contain", "/chapter/");
   await click(screen.getByRole("button", { name: "Save item settings" }));
   expect(patch).toHaveBeenCalledWith("/items/one", {
+    source_method: "auto",
     auto_read: false,
     keywords: "Spanish, official",
     selector: "article a",
     include_path: "/chapter/",
   });
+});
+
+test("source method defaults persist and item methods save independently", async () => {
+  settings("/settings?item=one");
+  await screen.findByLabelText("Source method");
+  change("Default source method", "sitemap");
+  await click(screen.getByRole("button", { name: "Save preferences" }));
+  expect(saved.source_method).toBe("sitemap");
+  expect(screen.getByLabelText("Source method")).toHaveValue("auto");
+  await click(screen.getByText("Advanced link detection"));
+  change("Link selector", "article a");
+  change("Source method", "wordpress_com");
+  expect(screen.queryByLabelText("Link selector")).not.toBeInTheDocument();
+  await click(screen.getByRole("button", { name: "Save item settings" }));
+  expect(patch).toHaveBeenLastCalledWith(
+    "/items/one",
+    expect.objectContaining({ source_method: "wordpress_com", selector: "" }),
+  );
+});
+
+test("add uses the saved method and changing it clears the old preview", async () => {
+  saved.source_method = "sitemap";
+  post.mockResolvedValue({
+    ...item,
+    scan_id: "preview",
+    entries: [{ url: "https://example.org/post", title: "Post" }],
+    warnings: [],
+  });
+  render(
+    <MemoryRouter>
+      <PreferencesProvider>
+        <AddPage />
+      </PreferencesProvider>
+    </MemoryRouter>,
+  );
+  await screen.findByLabelText("Source method");
+  expect(screen.getByLabelText("Source method")).toHaveValue("sitemap");
+  change(/Source URL/, "https://example.org/");
+  await click(screen.getByRole("button", { name: "Scan links" }));
+  expect(post).toHaveBeenLastCalledWith(
+    "/scans",
+    expect.objectContaining({ source_method: "sitemap" }),
+  );
+  expect(
+    await screen.findByRole("button", { name: "Add to library" }),
+  ).toBeInTheDocument();
+  change("Source method", "wordpress_com");
+  expect(
+    screen.queryByRole("button", { name: "Add to library" }),
+  ).not.toBeInTheDocument();
+  await click(screen.getByRole("button", { name: "Scan links" }));
+  expect(post).toHaveBeenLastCalledWith(
+    "/scans",
+    expect.objectContaining({ source_method: "wordpress_com", selector: "" }),
+  );
+});
+
+test("missing API credentials keep the explicit choice and show a dismissible error", async () => {
+  post.mockRejectedValue(
+    new Error("YouTube API needs a server API key. Choose Automatic for now."),
+  );
+  render(
+    <MemoryRouter>
+      <AddPage />
+    </MemoryRouter>,
+  );
+  change(/Source URL/, "https://youtube.com/@example");
+  change("Source method", "youtube");
+  await click(screen.getByRole("button", { name: "Scan links" }));
+  expect(await screen.findByRole("alert")).toHaveTextContent(
+    "needs a server API key",
+  );
+  expect(screen.getByLabelText("Source method")).toHaveValue("youtube");
+  expect(post).toHaveBeenCalledTimes(1);
+  await click(screen.getByRole("button", { name: /Dismiss/ }));
+  expect(screen.queryByRole("alert")).not.toBeInTheDocument();
 });
 
 test("failed settings save retains edits and never claims success", async () => {

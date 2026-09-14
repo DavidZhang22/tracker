@@ -89,6 +89,7 @@ class Entry:
     availability: str = ""
     context: str = ""
     language: str = ""
+    source_id: str = ""
 
 
 @dataclass

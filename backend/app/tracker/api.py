@@ -13,6 +13,7 @@ from starlette.background import BackgroundTask
 from .keywords import terms
 from .limits import MAX_ITEMS, MAX_LINKS, bounded_scan
 from .preferences import PreferencesPatch
+from .source_methods import SourceMethod
 from .store import ItemAdditionCooldown
 from .suggestions import collect_cached, ranked_suggestions
 from .urls import DiscoveryError
@@ -27,6 +28,7 @@ class ScanRequest(BaseModel):
     selector: str = Field(default="", max_length=300)
     include_path: str = Field(default="", max_length=300)
     keywords: str = Field(default="", max_length=300)
+    source_method: SourceMethod = "auto"
 
 
 class CreateRequest(BaseModel):
@@ -60,6 +62,7 @@ class ItemPatch(BaseModel):
     selector: str | None = Field(default=None, max_length=300)
     include_path: str | None = Field(default=None, max_length=300)
     keywords: str | None = Field(default=None, max_length=300)
+    source_method: SourceMethod | None = None
 
 
 class SuggestionFeedback(BaseModel):
@@ -160,12 +163,18 @@ async def scan(body: ScanRequest, request: Request):
                 body.selector,
                 body.include_path,
                 **({"keywords": body.keywords} if body.keywords else {}),
+                **(
+                    {"source_method": body.source_method}
+                    if body.source_method != "auto"
+                    else {}
+                ),
                 deep=True,
             )
     payload = bounded_scan(result.to_dict()) | {
         "selector": body.selector,
         "include_path": body.include_path,
         "keywords": body.keywords,
+        "source_method": body.source_method,
     }
     sid = await run_blocking(request.state.store.save_scan, payload)
     return payload | {"scan_id": sid}
@@ -281,6 +290,11 @@ async def refresh_item(iid, app, store, skip_unavailable=False, deep=False):
                     item["include_path"],
                     **({"keywords": item["keywords"]} if item.get("keywords") else {}),
                     **({"deep": True} if deep else {}),
+                    **(
+                        {"source_method": item["source_method"]}
+                        if item.get("source_method", "auto") != "auto"
+                        else {}
+                    ),
                 )
             if not result.entries and not (
                 result.unfiltered_count
