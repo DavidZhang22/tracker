@@ -30,7 +30,7 @@ from .urls import (
 )
 from .workers import run_blocking
 
-DISCOVERY_VERSION = "learned-page-recipes-v1"
+DISCOVERY_VERSION = "stable-content-identities-v2"
 DEEP_SCAN = ContextVar("deep_scan", default=False)
 
 

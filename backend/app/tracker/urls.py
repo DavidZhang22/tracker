@@ -43,7 +43,21 @@ class DiscoveryError(ValueError):
 
 
 def content_key(url):
+    # Apply the same normalization at discovery and storage boundaries, including
+    # cached scans made by older parsers.
+    url = canonical_url(url)
     p = urlsplit(url)
+    if p.hostname in {"asurascans.com", "www.asurascans.com"}:
+        match = re.fullmatch(
+            r"/comics/([a-z0-9]+(?:-[a-z0-9]+)*)-[0-9a-f]{8}/chapter/(\d+(?:\.\d+)?)",
+            p.path,
+        )
+        if match:
+            # Asura rotates the series URL suffix without changing the chapter.
+            # Retain the series, full chapter number and meaningful query values.
+            return f"asura:{match[1]}:chapter:{match[2]}" + (
+                "?" + p.query if p.query else ""
+            )
     if p.hostname in {"www.royalroad.com", "royalroad.com"}:
         match = re.search(r"/chapter/(\d+)(?:/|$)", p.path)
         if match:

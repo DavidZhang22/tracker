@@ -114,6 +114,7 @@ def merge_entries(entries):
             entry.position = len(merged)
             merged[key] = entry
         else:
+            old.url = entry.url  # Keep the latest observed target for this identity.
             if old.title.lower() in {
                 "first chapter",
                 "start reading",

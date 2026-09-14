@@ -81,6 +81,7 @@ class Store:
               PRIMARY KEY(suggestion_id,item_id)
             );
             """)
+            db.execute("BEGIN IMMEDIATE")
             # Additive migration: existing libraries, IDs and progress stay intact.
             additions = {
                 "items": {
@@ -112,8 +113,68 @@ class Store:
                         db.execute(
                             f"ALTER TABLE {table} ADD COLUMN {name} {definition}"
                         )
-            db.execute("PRAGMA user_version=7")
+            if db.execute("PRAGMA user_version").fetchone()[0] < 8:
+                self._migrate_link_identities(db)
+                db.execute("PRAGMA user_version=8")
         marker.touch(exist_ok=True)
+
+    @staticmethod
+    def _migrate_link_identities(db):
+        """Coalesce old URL aliases atomically, retaining progress and original IDs."""
+        for item in db.execute("SELECT id FROM items").fetchall():
+            groups = {}
+            for row in db.execute(
+                "SELECT * FROM links WHERE item_id=? ORDER BY discovered_at,id",
+                (item["id"],),
+            ):
+                groups.setdefault(identity(row["url"]), []).append(dict(row))
+            for key, rows in groups.items():
+                original = rows[0]
+                if len(rows) == 1 and original["identity"] == key:
+                    continue
+                # Newest discovered URL/metadata wins; precise dates and explicit
+                # saved flags survive even when only an older alias has them.
+                merged = dict(rows[-1])
+                merged["number"] = next(
+                    (r["number"] for r in reversed(rows) if r["number"] is not None),
+                    None,
+                )
+                for field in ("summary", "availability", "context", "language"):
+                    merged[field] = next(
+                        (r[field] for r in reversed(rows) if r[field]), ""
+                    )
+                best_date = max(reversed(rows), key=date_rank)
+                for field in (
+                    "published_at",
+                    "date_kind",
+                    "date_source",
+                    "date_precision",
+                ):
+                    merged[field] = best_date[field]
+                for field in ("read", "favorite", "ignored", "deleted"):
+                    merged[field] = any(r[field] for r in rows)
+                merged.update(
+                    identity=key,
+                    position=original["position"],
+                    is_new=bool(original["is_new"] and not merged["read"]),
+                )
+                # Delete redundant copies before changing the surviving key so
+                # the existing per-item UNIQUE constraint remains enforced.
+                db.executemany(
+                    "DELETE FROM links WHERE id=?", ((r["id"],) for r in rows[1:])
+                )
+                changes = {
+                    k: v
+                    for k, v in merged.items()
+                    if k not in {"id", "item_id", "discovered_at"} and original[k] != v
+                }
+                if changes:
+                    db.execute(
+                        "UPDATE links SET "
+                        + ",".join(k + "=?" for k in changes)
+                        + " WHERE id=?",
+                        (*changes.values(), original["id"]),
+                    )
 
     @contextmanager
     def connection(self, create=False):
