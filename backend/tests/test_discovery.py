@@ -447,7 +447,8 @@ async def test_youtube_continuation_loader_and_partial_warning():
     assert len(result.entries) == 1 and "YouTube archive" in result.methods
 
 
-def test_youtube_nested_archive_flattening():
+def test_youtube_nested_archive_flattening(monkeypatch):
+    monkeypatch.setenv("TRACKER_YOUTUBE_ARCHIVE", "1")
     data = {
         "title": "Channel",
         "entries": [

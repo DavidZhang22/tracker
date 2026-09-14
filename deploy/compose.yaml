@@ -12,14 +12,28 @@ services:
       TRACKER_ANALYSIS_WORKERS: ${TRACKER_ANALYSIS_WORKERS:-2}
       TRACKER_YOUTUBE_API_KEY: ${TRACKER_YOUTUBE_API_KEY:-}
       TRACKER_GHOST_CONTENT_KEYS: ${TRACKER_GHOST_CONTENT_KEYS:-}
+      TRACKER_YOUTUBE_ARCHIVE: "0"
+      TRACKER_OPERATOR_NAME: ${TRACKER_OPERATOR_NAME:-MediaTrackify}
+      TRACKER_PRIVACY_EMAIL: ${TRACKER_PRIVACY_EMAIL:-}
+      TRACKER_HOSTING_DESCRIPTION: ${TRACKER_HOSTING_DESCRIPTION:-The site operator's hosting provider}
+      PYTHONDONTWRITEBYTECODE: "1"
+      TMPDIR: /tmp
       TRACKER_HOSTS: ${TRACKER_DOMAIN},localhost,127.0.0.1
     volumes:
       - tracker-data:/data
     restart: unless-stopped
     init: true
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=128m,mode=1777
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 128
+    mem_limit: 1g
+    cpus: 2.0
     expose:
       - "8000"
-    command: ["/app/backend/.venv/bin/uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers", "--forwarded-allow-ips", "*"]
+    command: ["/app/backend/.venv/bin/uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers", "--forwarded-allow-ips", "*", "--no-access-log", "--limit-concurrency", "96", "--timeout-keep-alive", "5"]
     healthcheck:
       test: ["CMD", "/app/backend/.venv/bin/python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/ready', timeout=5)"]
       interval: 30s

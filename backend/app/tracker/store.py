@@ -27,6 +27,10 @@ def identity(url):
     return content_key(url)
 
 
+class LibraryErased(Exception):
+    pass
+
+
 class ItemAdditionCooldown(Exception):
     def __init__(self, remaining):
         self.retry_after = max(1, ceil(remaining))
@@ -36,8 +40,10 @@ class ItemAdditionCooldown(Exception):
 
 
 class Store:
-    def __init__(self, path):
+    def __init__(self, path, *, allow_erased=False):
         self.path = str(path)
+        self.allow_erased = allow_erased
+        self.erased_marker = Path(str(self.path) + ".erased")
         Path(path).parent.mkdir(parents=True, exist_ok=True)
         marker = Path(str(self.path) + ".initialized")
         if marker.exists() and not Path(self.path).is_file():
@@ -183,17 +189,25 @@ class Store:
 
     @contextmanager
     def connection(self, create=False):
+        self.check_active()
         target = Path(self.path).resolve().as_uri() + (
             "?mode=rwc" if create else "?mode=rw"
         )
         db = sqlite3.connect(target, uri=True, timeout=3)
         db.row_factory = sqlite3.Row
         db.execute("PRAGMA foreign_keys=ON")
+        db.execute("PRAGMA secure_delete=ON")
         try:
             with db:
                 yield db
+                # An already-running refresh must not restore erased records.
+                self.check_active()
         finally:
             db.close()
+
+    def check_active(self):
+        if not self.allow_erased and self.erased_marker.exists():
+            raise LibraryErased("This account's library has been deleted.")
 
     @staticmethod
     def decode(row):

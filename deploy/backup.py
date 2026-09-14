@@ -13,6 +13,9 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend"))
+from app.tracker.erasure import apply_erasure, ledger
+
 
 def backup(data_directory, backup_directory):
     os.umask(0o077)
@@ -21,6 +24,14 @@ def backup(data_directory, backup_directory):
     if destination == source or destination.is_relative_to(source):
         raise ValueError("Backups must be outside the live data directory")
     destination.mkdir(parents=True, exist_ok=True, mode=0o700)
+    erased = ledger(source / "accounts.sqlite3")
+    for old in destination.glob("catchup-*"):
+        if old.is_dir() and not old.is_symlink() and (old / "manifest.json").is_file():
+            created = json.loads((old / "manifest.json").read_text())["created"]
+            if datetime.fromisoformat(created).timestamp() < time.time() - 7 * 86400:
+                shutil.rmtree(old)
+            else:
+                apply_erasure(old, old / "tracker.sqlite3", erased)
     name = datetime.now(timezone.utc).strftime("catchup-%Y%m%dT%H%M%S%fZ")
     staging = destination / (name + ".partial")
     staging.mkdir(mode=0o700)
@@ -52,6 +63,10 @@ def backup(data_directory, backup_directory):
                 live.close()
             # The snapshot itself has been initialized even on older deployments.
             Path(str(target) + ".initialized").touch(mode=0o600)
+        # Re-read: deletion may have arrived during individual database snapshots.
+        apply_erasure(
+            staging, staging / "tracker.sqlite3", ledger(source / "accounts.sqlite3")
+        )
         (staging / "manifest.json").write_text(
             json.dumps(
                 {

@@ -4,10 +4,12 @@ import json
 import sqlite3
 import time
 from contextlib import closing
+from contextvars import ContextVar
 from pathlib import Path
 from threading import RLock
 
 MAX_BYTES = 64_000_000
+cache_epochs = ContextVar("cache_epochs", default=None)
 
 
 class FetchCache:
@@ -17,6 +19,7 @@ class FetchCache:
         self.sizes = {}
         self.total_bytes = 0
         self.lock = RLock()
+        self.generation = 0
         if self.path:
             Path(self.path).parent.mkdir(parents=True, exist_ok=True)
             with closing(sqlite3.connect(self.path)) as db, db:
@@ -37,12 +40,51 @@ class FetchCache:
     def get(self, key):
         if not self.path:
             with self.lock:
-                return self.memory.get(key)
+                value = self.memory.get(key)
+                return (
+                    value
+                    if value
+                    and value.get("checked", time.time()) > time.time() - 7 * 86400
+                    else None
+                )
         with closing(sqlite3.connect(self.path)) as db:
             row = db.execute("SELECT payload FROM cache WHERE key=?", (key,)).fetchone()
-        return json.loads(row[0]) if row else None
+        value = json.loads(row[0]) if row else None
+        return (
+            value
+            if value and value.get("checked", time.time()) > time.time() - 7 * 86400
+            else None
+        )
+
+    def prune(self):
+        with self.lock:
+            if self.path:
+                with closing(sqlite3.connect(self.path)) as db, db:
+                    db.execute("PRAGMA secure_delete=ON")
+                    db.execute(
+                        "DELETE FROM cache WHERE checked<?", (time.time() - 7 * 86400,)
+                    )
 
     def put(self, key, value):
+        with self.lock:
+            if (cache_epochs.get() or {}).get(
+                id(self), self.generation
+            ) != self.generation:
+                return
+            self._put(key, value)
+
+    def clear(self):
+        with self.lock:
+            self.generation += 1
+            self.memory.clear()
+            self.sizes.clear()
+            self.total_bytes = 0
+            if self.path:
+                with closing(sqlite3.connect(self.path)) as db, db:
+                    db.execute("PRAGMA secure_delete=ON")
+                    db.execute("DELETE FROM cache")
+
+    def _put(self, key, value):
         value = dict(value)
         value.setdefault("checked", time.time())
         payload = json.dumps(value)

@@ -1,6 +1,7 @@
 import asyncio
 import hashlib
 import json
+import os
 import re
 import subprocess
 import sys
@@ -11,6 +12,7 @@ from typing import get_args
 from urllib.parse import parse_qs, urlsplit
 
 from .adapters import codeforces_endpoint, codeforces_scan, wetried_scan, wetried_series
+from .cache import cache_epochs
 from .fenrir import fenrir_endpoint, fenrir_scan
 from .github import github_readme
 from .keywords import matches, terms
@@ -56,6 +58,10 @@ def scan_from_dict(data):
 
 def youtube_archive(url):
     """Use a maintained extractor for continuation tokens. No video downloads."""
+    if os.environ.get("TRACKER_YOUTUBE_ARCHIVE", "0") != "1":
+        raise DiscoveryError(
+            "The external YouTube extractor is disabled. Choose YouTube API for the full archive, or use the public feed."
+        )
     parsed = urlsplit(url)
     query = parse_qs(parsed.query)
     if parsed.hostname not in {"www.youtube.com", "youtube.com"}:
@@ -193,12 +199,17 @@ class Discoverer:
         url = canonical_url(url, preserve_slash=True)
         async with self.scan_locks[hash(url) % 64]:
             token = DEEP_SCAN.set(deep)
+            cache = getattr(self.fetcher, "cache", None)
+            epoch = cache_epochs.set(
+                cache_epochs.get() or {id(cache): getattr(cache, "generation", 0)}
+            )
             try:
                 return await self._cached_scan(
                     url, selector, include_path, keywords, source_method
                 )
             finally:
                 DEEP_SCAN.reset(token)
+                cache_epochs.reset(epoch)
 
     async def _cached_scan(
         self, url, selector, include_path, keywords="", source_method="auto"

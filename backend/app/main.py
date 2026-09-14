@@ -2,7 +2,7 @@ import asyncio
 import logging
 import os
 import sqlite3
-from contextlib import asynccontextmanager
+from contextlib import asynccontextmanager, suppress
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -16,11 +16,13 @@ from app.tracker.accounts import Accounts, cookie_name
 from app.tracker.accounts import router as account_router
 from app.tracker.analysis_pool import PageAnalyzer
 from app.tracker.api import router
-from app.tracker.cache import FetchCache
+from app.tracker.cache import FetchCache, cache_epochs
 from app.tracker.discovery import Discoverer
 from app.tracker.guards import ApiGuard, ScanGuard
-from app.tracker.store import Store
+from app.tracker.privacy import router as privacy_router
+from app.tracker.store import LibraryErased, Store
 from app.tracker.urls import SafeFetcher
+from app.tracker.workers import run_blocking
 
 
 def create_app(db_path=None, discoverer=None, auth_config=None):
@@ -32,22 +34,50 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
 
     @asynccontextmanager
     async def lifespan(app):
+        async def maintain_privacy():
+            while True:
+                try:
+                    cache = getattr(
+                        getattr(app.state.discoverer, "fetcher", None), "cache", None
+                    )
+                    await run_blocking(app.state.accounts.maintenance, cache)
+                except (sqlite3.Error, OSError):
+                    logging.getLogger(__name__).error(
+                        "Privacy maintenance failed; will retry"
+                    )
+                await asyncio.sleep(300)
+
+        maintenance = None
         try:
             if analyzer is not None:
                 await analyzer.start()
+            if app.state.accounts:
+                maintenance = asyncio.create_task(maintain_privacy())
             yield
         finally:
+            if maintenance:
+                maintenance.cancel()
+                with suppress(asyncio.CancelledError):
+                    await maintenance
             if analyzer is not None:
                 await analyzer.aclose()
 
-    app = FastAPI(title="Catchup", version="1.0.0", lifespan=lifespan)
+    app = FastAPI(
+        title="Catchup",
+        version="1.0.0",
+        lifespan=lifespan,
+        docs_url=None,
+        redoc_url=None,
+        openapi_url=None,
+    )
     app.state.analyzer = analyzer
     app.state.store = Store(
         db_path
         or os.environ.get(
             "TRACKER_DB",
             str(Path(__file__).resolve().parents[1] / "data" / "tracker.sqlite3"),
-        )
+        ),
+        allow_erased=True,
     )
     app.state.discoverer = discoverer or Discoverer(
         SafeFetcher(
@@ -144,6 +174,7 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
             and request.url.path.startswith("/api/")
             and request.url.path
             not in {
+                "/api/privacy",
                 "/api/health",
                 "/api/ready",
                 "/api/auth/status",
@@ -159,13 +190,27 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
                     status_code=401,
                     headers={"Cache-Control": "no-store"},
                 )
-            request.state.store = app.state.accounts.store(user)
+            request.state.user = user
+            # Account recovery/deletion must remain possible if its library is down.
+            request.state.store = (
+                app.state.store
+                if request.url.path.startswith("/api/auth/")
+                else app.state.accounts.store(user)
+            )
         else:
             request.state.store = app.state.store
-        response = await call_next(request)
+        cache = getattr(getattr(app.state.discoverer, "fetcher", None), "cache", None)
+        epoch = cache_epochs.set({id(cache): getattr(cache, "generation", 0)})
+        try:
+            response = await call_next(request)
+        finally:
+            cache_epochs.reset(epoch)
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
         response.headers["X-Frame-Options"] = "DENY"
+        response.headers["Permissions-Policy"] = (
+            "camera=(), microphone=(), geolocation=(), payment=()"
+        )
         if request.url.path.startswith("/api/"):
             response.headers["Cache-Control"] = "no-store"
         return response
@@ -176,6 +221,18 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
             return await call_next(request)
         except sqlite3.DatabaseError as exc:
             return storage_failure(exc)
+        except LibraryErased:
+            return JSONResponse(
+                {"detail": "This account's library has been deleted."},
+                status_code=410,
+                headers={"Cache-Control": "no-store"},
+            )
+
+    @app.exception_handler(LibraryErased)
+    async def erased_library(request, exc):
+        return JSONResponse(
+            {"detail": "This account's library has been deleted."}, status_code=410
+        )
 
     @app.exception_handler(KeyError)
     async def missing(request, exc):
@@ -200,6 +257,7 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
 
     app.include_router(router)
     app.include_router(account_router)
+    app.include_router(privacy_router)
     build = Path(__file__).resolve().parents[2] / "frontend" / "build"
     if build.exists():
         app.mount("/static", StaticFiles(directory=build / "static"), name="static")

@@ -73,6 +73,8 @@ def canonical_url(value, base="", preserve_slash=False):
     if not isinstance(value, str) or not value.strip():
         raise DiscoveryError("Enter a public http or https URL.")
     raw = value.strip()
+    if len(raw) > 4096 or re.search(r"[\x00-\x20\x7f\\]", raw):
+        raise DiscoveryError("URL is too long or contains unsafe characters.")
     if raw.startswith("#"):
         raise DiscoveryError("Fragment-only links are not content.")
     p = urlsplit(urljoin(base, raw))
@@ -124,9 +126,25 @@ async def public_addresses(host):
     except OSError as exc:
         raise DiscoveryError("The source address could not be resolved.") from exc
     addresses = list(dict.fromkeys(info[4][0] for info in infos))
-    if not addresses or any(not ipaddress.ip_address(ip).is_global for ip in addresses):
+    if not addresses or any(not permitted_address(ip) for ip in addresses):
         raise DiscoveryError("Local and private network addresses cannot be scanned.")
     return addresses
+
+
+def permitted_address(value):
+    ip = ipaddress.ip_address(value)
+    # Azure's WireServer uses a globally classified address but is VM-local.
+    if not ip.is_global or ip.is_multicast or str(ip) == "168.63.129.16":
+        return False
+    if isinstance(ip, ipaddress.IPv6Address):
+        if (
+            ip.ipv4_mapped
+            or ip.sixtofour
+            or ip.teredo
+            or ip in ipaddress.ip_network("64:ff9b::/96")
+        ):
+            return False
+    return True
 
 
 class SafeFetcher:
@@ -196,6 +214,7 @@ class SafeFetcher:
                     "Host": p.hostname,
                     "User-Agent": "MediaTracker/1.0 (personal link index)",
                     "Accept": "text/html,application/xml,application/json,*/*;q=0.5",
+                    "Accept-Encoding": "gzip, deflate",
                 }
                 if cached and not cached.get("error") and url == cached.get("final"):
                     if cached.get("etag"):
@@ -264,8 +283,30 @@ class SafeFetcher:
                                 )
                                 raise DiscoveryError(message)
                             response.raise_for_status()
+                            encoding = (
+                                response.headers.get("Content-Encoding", "identity")
+                                .lower()
+                                .strip()
+                            )
+                            if encoding not in {"identity", "gzip", "deflate", ""}:
+                                raise DiscoveryError(
+                                    "The source used unsupported response compression."
+                                )
+                            # Limit compressed bytes before decompression. httpx's
+                            # decoded iterator can allocate a zip bomb in one chunk.
+                            consumed = response.is_stream_consumed
+
+                            async def raw_chunks(
+                                raw_response=response, pre_read=consumed
+                            ):
+                                if pre_read:  # Pre-read mock/custom transports.
+                                    yield raw_response.content
+                                else:
+                                    async for raw in raw_response.aiter_raw():
+                                        yield raw
+
                             data = bytearray()
-                            async for chunk in response.aiter_bytes():
+                            async for chunk in raw_chunks():
                                 if budget:
                                     budget.take_bytes(len(chunk))
                                 data.extend(chunk)
@@ -273,9 +314,17 @@ class SafeFetcher:
                                     raise DiscoveryError(
                                         "The page exceeds the 8 MB scan limit."
                                     )
-                            if data[:2] == b"\x1f\x8b":
+                            compressed = data[:2] == b"\x1f\x8b" or (
+                                not consumed and encoding in {"gzip", "deflate"}
+                            )
+                            if compressed:
                                 try:
-                                    unpacker = zlib.decompressobj(16 + zlib.MAX_WBITS)
+                                    bits = (
+                                        16 + zlib.MAX_WBITS
+                                        if data[:2] == b"\x1f\x8b" or encoding == "gzip"
+                                        else zlib.MAX_WBITS
+                                    )
+                                    unpacker = zlib.decompressobj(bits)
                                     data = unpacker.decompress(bytes(data), 8_000_001)
                                     if len(data) > 8_000_000 or not unpacker.eof:
                                         raise DiscoveryError(

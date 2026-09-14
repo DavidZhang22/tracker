@@ -649,6 +649,37 @@ progress::-moz-progress-bar {
   min-width: 0;
   max-width: 100%;
 }
+.legal-page {
+  max-width: 760px;
+  margin: 32px auto;
+  padding: 0 20px 40px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.legal-page h2 {
+  margin-top: 30px;
+}
+.account-data {
+  margin-top: 24px;
+}
+.account-data fieldset {
+  border: 0;
+  padding: 0;
+  min-width: 0;
+}
+.account-delete {
+  margin-top: 24px;
+}
+.account-delete p {
+  line-height: 1.6;
+}
+.account-data .actions {
+  flex-wrap: wrap;
+}
+.button.danger {
+  color: #a42828;
+  border-color: #a42828;
+}
 .field input {
   padding: 13px;
   border: 1px solid #cbd5dc;

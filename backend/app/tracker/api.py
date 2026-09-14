@@ -284,6 +284,7 @@ async def refresh_item(iid, app, store, skip_unavailable=False, deep=False):
             raise DiscoveryError("Restore this item from Trash before refreshing it.")
         try:
             async with app.state.scan_semaphore:
+                store.check_active()
                 result = await app.state.discoverer.scan(
                     item["url"],
                     item["selector"],

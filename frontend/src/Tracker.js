@@ -27,6 +27,7 @@ import {
 import { api, patch, post, examples, checked, refreshLibrary } from "./api";
 import { AuthBoundary, AccountPage, useAuth } from "./Auth";
 import { PreferencesProvider, usePreferences } from "./Preferences";
+import PrivacyPage from "./Pages/PrivacyPage";
 import { Notice, ScanNote } from "./Notice";
 import {
   ActionMenu,
@@ -701,11 +702,20 @@ export default function Tracker() {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <AuthBoundary>
-        <PreferencesProvider>
-          <Shell />
-        </PreferencesProvider>
-      </AuthBoundary>
+      <Routes>
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<PrivacyPage terms />} />
+        <Route
+          path="*"
+          element={
+            <AuthBoundary>
+              <PreferencesProvider>
+                <Shell />
+              </PreferencesProvider>
+            </AuthBoundary>
+          }
+        />
+      </Routes>
     </BrowserRouter>
   );
 }

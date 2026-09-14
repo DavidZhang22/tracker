@@ -8,11 +8,13 @@ import {
 import { Link } from "react-router-dom";
 import { api, post } from "./api";
 import { Notice } from "./Notice";
+import AccountData from "./AccountData";
 
 const AuthContext = createContext({ required: false, user: null });
 export const useAuth = () => useContext(AuthContext);
 
 export function AuthBoundary({ children }) {
+  const [sessionNotice, setSessionNotice] = useState("");
   const [status, setStatus] = useState(null),
     [error, setError] = useState("");
   const load = useCallback(async () => {
@@ -49,6 +51,7 @@ export function AuthBoundary({ children }) {
   if (status.required && !status.user)
     return (
       <SignIn
+        notice={sessionNotice}
         registration={status.registration}
         onSignedIn={(user) => setStatus({ ...status, user })}
       />
@@ -57,6 +60,10 @@ export function AuthBoundary({ children }) {
     <AuthContext.Provider
       value={{
         ...status,
+        endSession: (message = "") => {
+          setSessionNotice(message);
+          setStatus({ ...status, user: null });
+        },
         logout: async () => {
           await post("/auth/logout");
           setStatus({ ...status, user: null });
@@ -68,7 +75,7 @@ export function AuthBoundary({ children }) {
   );
 }
 
-function SignIn({ registration, onSignedIn }) {
+function SignIn({ registration, onSignedIn, notice }) {
   const [create, setCreate] = useState(false),
     [username, setUsername] = useState(""),
     [password, setPassword] = useState(""),
@@ -105,6 +112,7 @@ function SignIn({ registration, onSignedIn }) {
           Your media and reading progress, saved to your account.
         </p>
         <Notice error>{error}</Notice>
+        <Notice>{notice}</Notice>
         <label className="field">
           Username
           <input
@@ -169,6 +177,10 @@ function SignIn({ registration, onSignedIn }) {
             Forgot your password? Ask the site owner to reset it.
           </p>
         )}
+        <p className="hint">
+          {create && "By creating an account, you agree to the terms. "}
+          <a href="/privacy">Privacy</a> · <a href="/terms">Terms of use</a>
+        </p>
       </form>
     </main>
   );
@@ -215,49 +227,52 @@ export function AccountPage({ embedded = false }) {
       )}
       {embedded ? <h2>Account</h2> : <h1>Account</h1>}
       {auth.required ? (
-        <form className="form-panel account-card" onSubmit={submit}>
-          <h2>{auth.user.username}</h2>
-          <h3>Change password</h3>
-          <Notice error>{error}</Notice>
-          <Notice>{message}</Notice>
-          <label className="field">
-            Current password
-            <input
-              type="password"
-              autoComplete="current-password"
-              required
-              value={current}
-              onChange={(e) => setCurrent(e.target.value)}
-            />
-          </label>
-          <label className="field">
-            New password
-            <input
-              type="password"
-              autoComplete="new-password"
-              required
-              minLength={10}
-              maxLength={128}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </label>
-          <label className="field">
-            Repeat new password
-            <input
-              type="password"
-              autoComplete="new-password"
-              required
-              minLength={10}
-              maxLength={128}
-              value={repeat}
-              onChange={(e) => setRepeat(e.target.value)}
-            />
-          </label>
-          <button className="button primary" disabled={busy}>
-            Change password
-          </button>
-        </form>
+        <>
+          <form className="form-panel account-card" onSubmit={submit}>
+            <h2>{auth.user.username}</h2>
+            <h3>Change password</h3>
+            <Notice error>{error}</Notice>
+            <Notice>{message}</Notice>
+            <label className="field">
+              Current password
+              <input
+                type="password"
+                autoComplete="current-password"
+                required
+                value={current}
+                onChange={(e) => setCurrent(e.target.value)}
+              />
+            </label>
+            <label className="field">
+              New password
+              <input
+                type="password"
+                autoComplete="new-password"
+                required
+                minLength={10}
+                maxLength={128}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </label>
+            <label className="field">
+              Repeat new password
+              <input
+                type="password"
+                autoComplete="new-password"
+                required
+                minLength={10}
+                maxLength={128}
+                value={repeat}
+                onChange={(e) => setRepeat(e.target.value)}
+              />
+            </label>
+            <button className="button primary" disabled={busy}>
+              Change password
+            </button>
+          </form>
+          <AccountData auth={auth} />
+        </>
       ) : (
         <p>This local server uses a personal library without sign-in.</p>
       )}
