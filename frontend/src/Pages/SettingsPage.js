@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { api, patch } from "../api";
-import { AccountPage } from "../Auth";
-import { Notice } from "../Notice";
-import { linkSortOptions, usePreferences } from "../Preferences";
-import SourceMethod from "../SourceMethod";
+import { AccountPage } from "../Auth/Auth";
+import { Notice } from "../Components/Notice";
+import { linkSortOptions, usePreferences } from "../Contexts/Preferences";
+import SourceMethod from "../Components/SourceMethod";
 
 export default function SettingsPage() {
   const { hash } = useLocation();

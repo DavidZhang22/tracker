@@ -76,13 +76,13 @@ def annotated_index(soup, source):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", type=Path, default=ROOT / "ml/v2-dataset.jsonl")
+    parser.add_argument("--output", type=Path, default=ROOT / "ml/datasets/v2-dataset.jsonl")
     args = parser.parse_args()
-    sources = json.loads((ROOT / "ml/sources.json").read_text())
+    sources = json.loads((ROOT / "ml/datasets/sources.json").read_text())
     validation = {"hn", "django", "pythonbytes", "go", "cloudflare"}
     for source in sources:
         source["split"] = "validation" if source["id"] in validation else "train"
-    sources += json.loads((ROOT / "ml/v2_sources.json").read_text())
+    sources += json.loads((ROOT / "ml/datasets/v2_sources.json").read_text())
     records, summary, hosts = [], [], {}
     for source in sources:
         path = ROOT / source["file"]

@@ -14,7 +14,7 @@ from app.tracker.urls import RequestBudget, SafeFetcher, request_budget
 
 async def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--manifest", default="sources.json")
+    parser.add_argument("--manifest", default="datasets/sources.json")
     args = parser.parse_args()
     sources = json.loads((ROOT / "ml" / args.manifest).read_text())
     raw = ROOT / "ml/raw"

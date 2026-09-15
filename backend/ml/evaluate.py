@@ -33,9 +33,9 @@ def main():
         for line in (
             ROOT
             / (
-                "ml/holdout-dataset.jsonl"
+                "ml/datasets/holdout-dataset.jsonl"
                 if args.split == "holdout"
-                else "ml/dataset.jsonl"
+                else "ml/datasets/dataset.jsonl"
             )
         )
         .read_text()
@@ -44,7 +44,7 @@ def main():
     ]
     sources = [
         s
-        for s in json.loads((ROOT / "ml/sources.json").read_text())
+        for s in json.loads((ROOT / "ml/datasets/sources.json").read_text())
         if s["split"] == args.split
     ]
     sets, timings = {}, {}
@@ -74,7 +74,7 @@ def main():
         )
         for s in sources
     }
-    path = ROOT / ("ml/" + args.split + "-report.json")
+    path = ROOT / ("ml/reports/" + args.split + "-report.json")
     path.write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps(report, indent=2))
 

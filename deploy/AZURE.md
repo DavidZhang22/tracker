@@ -11,7 +11,7 @@ a private library. Password changes revoke existing sessions. Never put credenti
 or database backups in Git.
 
 The small link-classification model is enabled for generic HTML discovery. See
-`backend/ml/README.md` for measured resource use, dataset, limitations and retraining.
+`backend/ml/docs/LINK_CLASSIFIER.md` for measured resource use, dataset, limitations and retraining.
 To disable it, add `TRACKER_LINK_MODEL=off` to `deploy/.env` and recreate the app
 with Compose. No separate ML service or database is needed.
 

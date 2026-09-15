@@ -22,7 +22,7 @@ from app.tracker.parser import candidate_url, parse_page
 
 def build(split=None):
     records, report, hosts = [], [], {}
-    sources = json.loads((ROOT / "ml/sources.json").read_text())
+    sources = json.loads((ROOT / "ml/datasets/sources.json").read_text())
     sources = (
         [s for s in sources if s["split"] == split]
         if split
@@ -169,7 +169,7 @@ def build(split=None):
             annotation="Authored training-only boundary cases; not captured web pages.",
         )
     )
-    target = ROOT / ("ml/" + (split + "-" if split else "") + "dataset.jsonl")
+    target = ROOT / ("ml/datasets/" + (split + "-" if split else "") + "dataset.jsonl")
     target.write_text(
         "".join(
             json.dumps(row, ensure_ascii=True, separators=(",", ":")) + "\n"
@@ -185,9 +185,9 @@ def build(split=None):
         data_sha256=hashlib.sha256(target.read_bytes()).hexdigest(),
         sources=report,
     )
-    (ROOT / ("ml/" + (split + "-" if split else "") + "dataset-card.json")).write_text(
-        json.dumps(metadata, indent=2) + "\n"
-    )
+    (
+        ROOT / ("ml/datasets/" + (split + "-" if split else "") + "dataset-card.json")
+    ).write_text(json.dumps(metadata, indent=2) + "\n")
     print(
         json.dumps(
             dict(

@@ -1,70 +1,30 @@
-# Getting Started with Create React App
+# Trackify frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React renders the library, item views, CSV imports and account controls. The development server proxies `/api` to FastAPI at `127.0.0.1:8000`; production serves the built files through the backend.
 
-## Available Scripts
+```sh
+npm ci
+npm start
+```
 
-In the project directory, you can run:
+| Location | Purpose |
+| --- | --- |
+| `src/App.js` | Public routes, authentication and application providers |
+| `src/Pages/` | Library, item, import, settings, privacy and suggestions pages |
+| `src/Components/` | Navigation shell, icons, notices and reusable controls |
+| `src/Auth/` | Account sessions, authentication forms and data controls |
+| `src/Contexts/` | Saved preferences and their provider |
+| `src/Hooks/` | Search result caching and source detection |
+| `src/api.js` | HTTP requests and streamed refresh updates |
+| `src/styles/` | Shared and responsive styles |
+| `src/__tests__/` | Interaction and API regression tests |
+| `scripts/` | Browser checks using fixture APIs |
+| `public/` | App icon, manifest and downloadable CSV example |
 
-### `npm start`
+```sh
+npm run lint
+npm test -- --watchAll=false --runInBand
+npm run build
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Lint checks application JavaScript; the test command verifies interaction behavior. Run backend tests before the production build, which replaces the static files used by backend route tests. See [mobile checks](MOBILE_QA.md) and the [project setup](../README.MD).

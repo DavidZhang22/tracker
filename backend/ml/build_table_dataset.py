@@ -19,7 +19,9 @@ from app.tracker.link_context import context_candidates
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--base", type=Path, default=ROOT / "ml/v3-base-dataset.jsonl")
+    parser.add_argument(
+        "--base", type=Path, default=ROOT / "ml/datasets/v3-base-dataset.jsonl"
+    )
     args = parser.parse_args()
     rows = [
         json.loads(line) for line in args.base.read_text(encoding="utf8").splitlines()
@@ -106,7 +108,7 @@ def main():
                     reason="Authored application-column contract with profile and promotion negatives",
                 )
             )
-    target = ROOT / "ml/v3-dataset.jsonl"
+    target = ROOT / "ml/datasets/v3-dataset.jsonl"
     target.write_text(
         "".join(json.dumps(r, separators=(",", ":")) + "\n" for r in rows),
         encoding="utf8",
@@ -120,7 +122,7 @@ def main():
         data_sha256=hashlib.sha256(target.read_bytes()).hexdigest(),
         limitations="Rule-reviewed public rows and authored templates, not independent human gold labels. GitHub jobs and prior test pages are development/regression data. No claim of universal extraction.",
     )
-    (ROOT / "ml/v3-dataset-card.json").write_text(
+    (ROOT / "ml/datasets/v3-dataset-card.json").write_text(
         json.dumps(report, indent=2) + "\n", encoding="utf8"
     )
     print(json.dumps(report))
