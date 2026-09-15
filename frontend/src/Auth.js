@@ -27,14 +27,14 @@ export function AuthBoundary({ children }) {
   }, []);
   useEffect(() => {
     load();
-    window.addEventListener("catchup:unauthorized", load);
-    return () => window.removeEventListener("catchup:unauthorized", load);
+    window.addEventListener("trackify:unauthorized", load);
+    return () => window.removeEventListener("trackify:unauthorized", load);
   }, [load]);
   if (!status)
     return (
       <div className="auth-page">
         <div className="form-panel">
-          <h1>Catchup</h1>
+          <h1>Trackify</h1>
           {error ? (
             <>
               <Notice error>{error}</Notice>
@@ -53,6 +53,7 @@ export function AuthBoundary({ children }) {
       <SignIn
         notice={sessionNotice}
         registration={status.registration}
+        inviteRequired={status.invite_required ?? true}
         onSignedIn={(user) => setStatus({ ...status, user })}
       />
     );
@@ -75,7 +76,7 @@ export function AuthBoundary({ children }) {
   );
 }
 
-function SignIn({ registration, onSignedIn, notice }) {
+function SignIn({ registration, inviteRequired, onSignedIn, notice }) {
   const [create, setCreate] = useState(false),
     [username, setUsername] = useState(""),
     [password, setPassword] = useState(""),
@@ -90,7 +91,7 @@ function SignIn({ registration, onSignedIn, notice }) {
       const result = await post(create ? "/auth/register" : "/auth/login", {
         username,
         password,
-        ...(create ? { invite_code: invite } : {}),
+        ...(create && inviteRequired ? { invite_code: invite } : {}),
       });
       setPassword("");
       setInvite("");
@@ -105,7 +106,7 @@ function SignIn({ registration, onSignedIn, notice }) {
     <main className="auth-page">
       <form className="form-panel auth-card" onSubmit={submit}>
         <div className="auth-brand">
-          Catchup<span>.</span>
+          Trackify<span>.</span>
         </div>
         <h1>{create ? "Create account" : "Sign in"}</h1>
         <p className="muted">
@@ -140,7 +141,7 @@ function SignIn({ registration, onSignedIn, notice }) {
           />
           {create && <span className="hint">At least 10 characters.</span>}
         </label>
-        {create && (
+        {create && inviteRequired && (
           <label className="field">
             Invite code
             <input
@@ -169,12 +170,14 @@ function SignIn({ registration, onSignedIn, notice }) {
           >
             {create
               ? "Already have an account? Sign in"
-              : "Create an account with an invite"}
+              : inviteRequired
+                ? "Create an account with an invite"
+                : "Create an account"}
           </button>
         )}
         {!create && (
           <p className="hint">
-            Forgot your password? Ask the site owner to reset it.
+            Forgot your password? <a href="/privacy">Contact the operator</a>.
           </p>
         )}
         <p className="hint">

@@ -65,6 +65,7 @@ def test_all_private_routes_require_session_before_any_scan(app):
     assert c.get("/api/auth/status").json() == {
         "required": True,
         "registration": True,
+        "invite_required": True,
         "user": None,
     }
     assert not app.state.discoverer.calls

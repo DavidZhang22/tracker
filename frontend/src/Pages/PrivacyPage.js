@@ -14,7 +14,7 @@ export default function PrivacyPage({ terms = false }) {
   return (
     <main className="legal-page" id="main">
       <Link to="/" className="back-link">
-        ← MediaTrackify
+        ← Trackify
       </Link>
       <h1>{terms ? "Terms of use" : "Privacy"}</h1>
       <Notice error>{error}</Notice>
@@ -29,17 +29,16 @@ export default function PrivacyPage({ terms = false }) {
                 <a href={`mailto:${details.contact}`}>{details.contact}</a>.
               </>
             ) : (
-              "Contact the person who invited you; the operator has not configured a public contact yet."
+              "The operator has not configured a public contact yet."
             )}
           </p>
           {terms ? (
             <>
               <h2>Using the service</h2>
               <p>
-                MediaTrackify saves links and reading progress for your personal
-                use. Keep your credentials private and use a password you do not
-                use elsewhere. The service is not intended for children under
-                16.
+                Trackify saves links and reading progress for your personal use.
+                Keep your credentials private and use a password you do not use
+                elsewhere. The service is not intended for children under 16.
               </p>
               <h2>Sources and acceptable use</h2>
               <p>
@@ -124,9 +123,11 @@ export default function PrivacyPage({ terms = false }) {
                 Account data and saved library content, including Trash, remain
                 until you delete your account or ask the operator to remove
                 them. Sessions expire after seven days. Authentication attempt
-                records are removed after 15 minutes by maintenance; other rate
-                limits are held temporarily in memory. Shared scan caches expire
-                within seven days and are cleared on account deletion.
+                records are removed after 15 minutes by maintenance. Public
+                signup counters retain a hashed IP address and creation time for
+                up to one hour, with cleanup on the next maintenance run; other
+                rate limits are held temporarily in memory. Shared scan caches
+                expire within seven days and are cleared on account deletion.
                 Application request-access logging is disabled in the hosted
                 deployment.
               </p>

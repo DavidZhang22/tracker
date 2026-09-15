@@ -1,4 +1,4 @@
-"""Invite-only accounts with opaque, revocable sessions and isolated libraries."""
+"""Accounts with opaque, revocable sessions and isolated libraries."""
 
 import argparse
 import getpass
@@ -64,12 +64,13 @@ def matches(encoded, password):
 
 
 class Accounts:
-    def __init__(self, library_path, signup_code=""):
+    def __init__(self, library_path, signup_code="", public_signup=False):
         self.library_path = Path(library_path).resolve()
         self.root = self.library_path.parent
         self.root.mkdir(parents=True, exist_ok=True)
         self.path = self.root / "accounts.sqlite3"
         self.signup_code = signup_code
+        self.public_signup = public_signup
         self.stores = {}
         self.lock = threading.Lock()
         self.privacy_rates = RateLimits()
@@ -90,6 +91,8 @@ class Accounts:
                 CREATE INDEX IF NOT EXISTS sessions_user ON sessions(user_id);
                 CREATE TABLE IF NOT EXISTS attempts (key TEXT NOT NULL, created REAL NOT NULL);
                 CREATE INDEX IF NOT EXISTS attempts_key_created ON attempts(key,created);
+                CREATE TABLE IF NOT EXISTS registrations (address_hash TEXT NOT NULL, created REAL NOT NULL);
+                CREATE INDEX IF NOT EXISTS registrations_created ON registrations(created);
                 CREATE TABLE IF NOT EXISTS erasures (
                   user_id TEXT PRIMARY KEY, legacy_library INTEGER NOT NULL,
                   requested REAL NOT NULL, completed REAL, cache_cleared INTEGER NOT NULL DEFAULT 0);
@@ -136,23 +139,55 @@ class Accounts:
                 "INSERT INTO attempts VALUES (?,?)", ((key, now) for key, _ in limits)
             )
 
-    def create(self, name, password, claim_existing=False):
+    def check_registration_limit(self, db, address, now):
+        recent = db.execute(
+            "SELECT address_hash,created FROM registrations WHERE created>? ORDER BY created",
+            (now - 3600,),
+        ).fetchall()
+        for rows, limit in (
+            ([row for row in recent if row["address_hash"] == digest(address)], 3),
+            (recent, 20),
+        ):
+            if len(rows) >= limit:
+                retry = max(1, int(rows[-limit]["created"] + 3600 - now) + 1)
+                raise HTTPException(
+                    429,
+                    "Account creation is temporarily limited. Please try again later.",
+                    headers={"Retry-After": str(retry)},
+                )
+
+    def create(self, name, password, claim_existing=False, signup_address=None):
         if claim_existing and Path(str(self.library_path) + ".erased").exists():
             raise ValueError(
                 "The former owner's library was erased; create a new account without claiming it."
             )
-        name, encoded = username(name), hash_password(password)
+        name = username(name)
+        if signup_address is not None:
+            with self.connection() as db:
+                self.check_registration_limit(db, signup_address, time.time())
+        encoded = hash_password(password)
         uid = uuid.uuid4().hex
         try:
             with self.connection() as db:
                 db.execute("BEGIN IMMEDIATE")
+                now = time.time()
+                if signup_address is not None:
+                    # Check again under the write lock so concurrent signups share the quota.
+                    self.check_registration_limit(db, signup_address, now)
+                    db.execute(
+                        "DELETE FROM registrations WHERE created<=?", (now - 3600,)
+                    )
+                    db.execute(
+                        "INSERT INTO registrations VALUES (?,?)",
+                        (digest(signup_address), now),
+                    )
                 if db.execute("SELECT count(*) FROM users").fetchone()[0] >= 200:
                     raise ValueError(
                         "This server has reached its account limit. Contact the operator."
                     )
                 db.execute(
                     "INSERT INTO users VALUES (?,?,?,?,?)",
-                    (uid, name, encoded, time.time(), claim_existing),
+                    (uid, name, encoded, now, claim_existing),
                 )
         except sqlite3.IntegrityError as exc:
             raise ValueError(
@@ -279,6 +314,9 @@ class Accounts:
                 )
             ]
             db.execute("DELETE FROM attempts WHERE created<?", (time.time() - 900,))
+            db.execute(
+                "DELETE FROM registrations WHERE created<=?", (time.time() - 3600,)
+            )
             db.execute("DELETE FROM sessions WHERE expires<?", (time.time(),))
             cache_pending = db.execute(
                 "SELECT 1 FROM erasures WHERE cache_cleared=0 LIMIT 1"
@@ -299,7 +337,8 @@ class Credentials(BaseModel):
 
 
 class Signup(Credentials):
-    invite_code: str = Field(min_length=1, max_length=200)
+    password: str = Field(min_length=10, max_length=128)
+    invite_code: str = Field(default="", max_length=200)
 
 
 class PasswordChange(BaseModel):
@@ -369,7 +408,7 @@ def export_account(body: ConfirmAccount, request: Request):
         export(),
         media_type="application/json",
         headers={
-            "Content-Disposition": 'attachment; filename="catchup-export.json"',
+            "Content-Disposition": 'attachment; filename="trackify-export.json"',
             "Cache-Control": "no-store",
         },
     )
@@ -456,7 +495,8 @@ def status(request: Request, response: Response):
     auth = request.app.state.accounts
     return {
         "required": bool(auth),
-        "registration": bool(auth and auth.signup_code),
+        "registration": bool(auth and (auth.public_signup or auth.signup_code)),
+        "invite_required": bool(auth and auth.signup_code and not auth.public_signup),
         "user": public_user(auth.user(request.cookies.get(cookie_name(request))))
         if auth
         else None,
@@ -475,12 +515,18 @@ def login(body: Credentials, request: Request, response: Response):
 @router.post("/register", status_code=201)
 def register(body: Signup, request: Request, response: Response):
     auth = manager(request)
-    auth.throttle(request.client.host if request.client else "unknown", body.username)
-    if not auth.signup_code or not hmac.compare_digest(
-        digest(body.invite_code), digest(auth.signup_code)
+    address = request.client.host if request.client else "unknown"
+    auth.throttle(address, body.username)
+    if not auth.public_signup and (
+        not auth.signup_code
+        or not hmac.compare_digest(digest(body.invite_code), digest(auth.signup_code))
     ):
         raise HTTPException(403, "A valid invite code is required.")
-    user = auth.create(body.username, body.password)
+    user = auth.create(
+        body.username,
+        body.password,
+        signup_address=address if auth.public_signup else None,
+    )
     set_session(request, response, user["id"])
     return {"user": public_user(user)}
 

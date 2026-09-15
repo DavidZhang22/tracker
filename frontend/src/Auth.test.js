@@ -95,12 +95,68 @@ test("expired sessions remove the private view", async () => {
   await screen.findByText("alice");
   api.mockResolvedValue({ required: true, user: null, registration: false });
   await act(async () =>
-    window.dispatchEvent(new Event("catchup:unauthorized")),
+    window.dispatchEvent(new Event("trackify:unauthorized")),
   );
   await waitFor(() =>
     expect(screen.queryByText("Private library")).not.toBeInTheDocument(),
   );
   expect(screen.getByRole("heading", { name: "Sign in" })).toBeInTheDocument();
+});
+
+test("public signup requires no invite and signs in to a private library", async () => {
+  api.mockResolvedValue({
+    required: true,
+    registration: true,
+    invite_required: false,
+    user: null,
+  });
+  post.mockResolvedValue({ user: { username: "alice" } });
+  view();
+  fireEvent.click(
+    await screen.findByRole("button", { name: "Create an account" }),
+  );
+  expect(screen.queryByLabelText(/Invite code/)).not.toBeInTheDocument();
+  fireEvent.change(screen.getByLabelText("Username"), {
+    target: { value: "alice" },
+  });
+  fireEvent.change(screen.getByLabelText(/Password/), {
+    target: { value: "not-a-real-password" },
+  });
+  fireEvent.click(screen.getByRole("button", { name: "Create account" }));
+  await screen.findByText("Private library");
+  expect(post).toHaveBeenCalledWith("/auth/register", {
+    username: "alice",
+    password: "not-a-real-password",
+  });
+  expect(localStorage.length).toBe(0);
+});
+
+test("public signup limits leave the form available to retry", async () => {
+  api.mockResolvedValue({
+    required: true,
+    registration: true,
+    invite_required: false,
+    user: null,
+  });
+  post.mockRejectedValue(
+    new Error(
+      "Account creation is temporarily limited. Please try again later.",
+    ),
+  );
+  view();
+  fireEvent.click(
+    await screen.findByRole("button", { name: "Create an account" }),
+  );
+  fireEvent.change(screen.getByLabelText("Username"), {
+    target: { value: "alice" },
+  });
+  fireEvent.change(screen.getByLabelText(/Password/), {
+    target: { value: "not-a-real-password" },
+  });
+  fireEvent.click(screen.getByRole("button", { name: "Create account" }));
+  await screen.findByText(/Account creation is temporarily limited/);
+  expect(screen.getByRole("button", { name: "Create account" })).toBeEnabled();
+  expect(screen.queryByText("Private library")).not.toBeInTheDocument();
 });
 
 test("local mode still opens the existing personal library", async () => {

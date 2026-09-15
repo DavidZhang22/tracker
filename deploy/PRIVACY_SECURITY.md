@@ -11,6 +11,13 @@ legal compliance or a guarantee that exploitation is impossible.
 
 ## Account controls
 
+Public signup is controlled by `TRACKER_PUBLIC_SIGNUP`. Successful registrations
+are limited to three per IP and twenty across the server per hour, with a total
+cap of 200 accounts. SQLite stores hashed IP addresses and timestamps for the
+hourly quota, without a username or account ID; maintenance removes expired rows.
+These counters survive restart and account deletion. Authentication and library
+isolation remain required when registration is open.
+
 Settings → Account offers JSON export, sign-out everywhere, and permanent account
 deletion. Each requires the current password. Deletion also requires typing
 `DELETE`. Export includes saved items/links, Trash, settings, suggestions, and

@@ -13,7 +13,7 @@ async function request(path, options = {}) {
     );
   }
   if (response.status === 401 && !path.startsWith("/auth/"))
-    window.dispatchEvent(new Event("catchup:unauthorized"));
+    window.dispatchEvent(new Event("trackify:unauthorized"));
   if (!response.ok) {
     const data = await response.json().catch(() => ({}));
     const error = new Error(

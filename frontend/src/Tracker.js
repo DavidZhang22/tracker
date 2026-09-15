@@ -104,7 +104,7 @@ export function Shell() {
           <span className="brand-mark">
             <Icon as={CollectionIcon} />
           </span>
-          Catchup<span className="brand-dot">.</span>
+          Trackify<span className="brand-dot">.</span>
         </Link>
         <button
           ref={menuButton}

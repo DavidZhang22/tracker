@@ -1,5 +1,5 @@
 [Unit]
-Description=Verified online backups of Catchup databases
+Description=Verified online backups of Trackify databases
 After=docker.service
 Requires=docker.service
 

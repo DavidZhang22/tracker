@@ -1072,7 +1072,6 @@ progress::-moz-progress-bar {
   text-align: left;
   margin-top: 10px;
 }
-/* Keep both refresh choices together with a full touch target for the menu. */
 .refresh-control {
   display: inline-flex;
   align-items: stretch;

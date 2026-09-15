@@ -8,7 +8,7 @@ beforeEach(() => jest.resetAllMocks());
 
 test("privacy notice is available without account context and shows the operator contact", async () => {
   api.mockResolvedValue({
-    operator: "MediaTrackify",
+    operator: "Trackify",
     contact: "privacy@example.com",
     hosting: "Test hosting",
     updated: "2026-09-14",

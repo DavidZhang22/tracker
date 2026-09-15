@@ -11,12 +11,12 @@ router = APIRouter()
 @router.get("/api/privacy")
 def privacy_details():
     return {
-        "operator": os.environ.get("TRACKER_OPERATOR_NAME", "MediaTrackify"),
+        "operator": os.environ.get("TRACKER_OPERATOR_NAME", "Trackify"),
         "contact": os.environ.get("TRACKER_PRIVACY_EMAIL", ""),
         "hosting": os.environ.get(
             "TRACKER_HOSTING_DESCRIPTION", "The site operator's hosting provider"
         ),
-        "updated": "2026-09-14",
+        "updated": "2026-09-15",
     }
 
 

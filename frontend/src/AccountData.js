@@ -31,7 +31,7 @@ export default function AccountData({ auth }) {
         );
         const link = document.createElement("a");
         link.href = url;
-        link.download = "catchup-export.json";
+        link.download = "trackify-export.json";
         document.body.appendChild(link);
         link.click();
         link.remove();

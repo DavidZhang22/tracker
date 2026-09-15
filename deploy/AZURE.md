@@ -1,4 +1,4 @@
-# MediaTrackify deployment
+# Trackify deployment
 
 Azure VM: `20.25.217.119`, Ubuntu 24.04, SSH user `azureuser`.
 Domain: `mediatrackify.duckdns.org`; its A record must point to the Azure IP.
@@ -6,9 +6,9 @@ Application directory: `/home/azureuser/tracker`.
 
 The stack uses Docker Compose, a private app container, and Caddy on ports 80/443.
 Accounts and libraries live in the persistent `catchup_tracker-data` volume.
-Registration is closed. The initial owner is `david`; set a new password on the
-Account page after using the privately delivered temporary login. Password changes
-revoke existing sessions. Never put credentials or database backups in Git.
+Public registration is enabled with `TRACKER_PUBLIC_SIGNUP=1`; each account has
+a private library. Password changes revoke existing sessions. Never put credentials
+or database backups in Git.
 
 The small link-classification model is enabled for generic HTML discovery. See
 `backend/ml/README.md` for measured resource use, dataset, limitations and retraining.

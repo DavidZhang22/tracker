@@ -1,5 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 frontend/node_modules
 frontend/.pnp
@@ -36,6 +34,7 @@ backend/tests/live/
 # Deployment secrets and private backups
 deploy/.env
 catchup-backup*/
+trackify-backup*/
 backend/ml/raw/
 backend/ml/.venv/
 

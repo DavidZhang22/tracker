@@ -35,7 +35,7 @@ also apply to cached pages. The YouTube archive adapter separately uses a
 4,999-link output cap, a 120-second subprocess timeout and paced metadata requests;
 its internal HTTP requests are not part of the fetcher's 40-request/32 MB budget.
 
-Existing protections remain: invite-only registration, login/password attempt
+Existing protections remain: rate-limited public or invite-only registration, login/password attempt
 limits, isolated account databases, HTTPS cookies and origin checks, private
 network/metadata-address rejection and DNS pinning on each fetch redirect,
 ten-minute source caching, source pacing, refusal backoff, bounded cache storage,

@@ -63,7 +63,7 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
                 await analyzer.aclose()
 
     app = FastAPI(
-        title="Catchup",
+        title="Trackify",
         version="1.0.0",
         lifespan=lifespan,
         docs_url=None,
@@ -95,6 +95,7 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
             "required": os.environ.get("TRACKER_AUTH_REQUIRED", "0") == "1",
             "origin": os.environ.get("TRACKER_ORIGIN", ""),
             "signup_code": os.environ.get("TRACKER_SIGNUP_CODE", ""),
+            "public_signup": os.environ.get("TRACKER_PUBLIC_SIGNUP", "0") == "1",
         }
     )
     origin = config.get("origin", "").rstrip("/")
@@ -120,7 +121,11 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
                 "Use an invite code with at least 20 characters, or disable registration."
             )
     app.state.accounts = (
-        Accounts(app.state.store.path, config.get("signup_code", ""))
+        Accounts(
+            app.state.store.path,
+            config.get("signup_code", ""),
+            public_signup=config.get("public_signup", False),
+        )
         if config.get("required")
         else None
     )
