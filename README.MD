@@ -32,6 +32,7 @@ The models train offline and load numeric JSON weights in production without Num
 - [Model training and evaluation](backend/ml/README.md)
 - [Record context network](backend/ml/RECORD_CONTEXT.md)
 - [Parallel analysis benchmark](backend/ml/PARALLEL_ANALYSIS.md)
+- [Response memory and refresh throughput](backend/ml/MEMORY_PIPELINE.md)
 - [Lightweight refresh design](backend/ml/LIGHTWEIGHT_REFRESH.md)
 
 Sources can block access or change their layouts. Scans report incomplete coverage and preserve existing data on failure. Requests are paced and capped; each item stores at most 4,999 links, including muted links and Trash.

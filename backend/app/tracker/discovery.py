@@ -13,6 +13,7 @@ from urllib.parse import parse_qs, urlsplit
 
 from .adapters import codeforces_endpoint, codeforces_scan, wetried_scan, wetried_series
 from .cache import cache_epochs
+from .documents import Document, unpack
 from .fenrir import fenrir_endpoint, fenrir_scan
 from .github import github_readme
 from .keywords import matches, terms
@@ -30,6 +31,7 @@ from .urls import (
     SafeFetcher,
     canonical_url,
     content_key,
+    fetch_document,
     request_budget,
 )
 from .workers import run_blocking
@@ -339,7 +341,9 @@ class Discoverer:
             + hashlib.sha256(
                 json.dumps(
                     [
-                        hashlib.sha256(text.encode()).hexdigest(),
+                        text.digest
+                        if isinstance(text, Document)
+                        else hashlib.sha256(text.encode()).hexdigest(),
                         url,
                         selector,
                         include_path,
@@ -453,7 +457,10 @@ class Discoverer:
         endpoint = codeforces_endpoint(url) if not selector else None
         chapter_endpoint = fenrir_endpoint(url) if not selector else None
         try:
-            final, text = await self.fetcher.get(endpoint or chapter_endpoint or url)
+            if endpoint or chapter_endpoint:
+                final, text = await self.fetcher.get(endpoint or chapter_endpoint)
+            else:
+                final, text = await fetch_document(self.fetcher, url)
         except DiscoveryError as exc:
             if kind_for(url) != "youtube":
                 raise
@@ -466,17 +473,27 @@ class Discoverer:
             final = url
             result, pages, feeds = codeforces_scan(text, url), [], []
         else:
-            text, readme_pages = await github_readme(self.fetcher, final, text)
+            text, readme_pages = await github_readme(
+                self.fetcher, final, text, self.analyzer
+            )
             result, pages, feeds = await self._analyze_page(
                 text, final, selector, include_path
             )
         result.pages_scanned = 0 if first_error else 1
-        browser_candidate = not result.entries and "<script" in text.lower()
+        browser_candidate = not result.entries and (
+            text.has_scripts
+            if isinstance(text, Document)
+            else "<script" in text.lower()
+        )
         if not endpoint and not chapter_endpoint:
             result.pages_scanned += readme_pages
             if readme_pages:
                 result.methods.append("GitHub README")
-        if not selector and (series_id := wetried_series(text, final)) is not None:
+        if (
+            not selector
+            and (series_id := await run_blocking(wetried_series, text, final))
+            is not None
+        ):
             result = await wetried_scan(
                 self.fetcher, final, series_id, result, self.max_pages - 1
             )
@@ -487,6 +504,7 @@ class Discoverer:
         queue = [(u, False) for u in pages] + [(u, True) for u in feeds if need_feed]
         seen = {url, final}
         if result.kind == "youtube":
+            text = await run_blocking(unpack, text)
             channel = re.search(r"/channel/(UC[\w-]{22})", final) or re.search(
                 r'"(?:channelId|externalId)"\s*:\s*"(UC[\w-]{22})"', text
             )
@@ -516,7 +534,7 @@ class Discoverer:
                 )
                 continue
             try:
-                actual, html = await self.fetcher.get(target)
+                actual, html = await fetch_document(self.fetcher, target)
                 seen.add(actual)
                 part, more, _ = await self._analyze_page(
                     html,
@@ -636,7 +654,7 @@ class Discoverer:
                 rendered = await scan_browser(
                     self,
                     final,
-                    initial=text,
+                    initial=await run_blocking(unpack, text),
                     selector=selector,
                     include_path=include_path,
                     keywords=keywords,

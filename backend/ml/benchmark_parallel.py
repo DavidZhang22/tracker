@@ -148,6 +148,8 @@ async def main():
 
         url = "https://github.com/SimplifyJobs/New-Grad-Positions"
         html, _ = await github_readme(Fetcher(), url, data[url][1])
+        if not isinstance(html, str):
+            html = html.text()
         cases += [("jobs", html, url)]
         url = "https://novelshaven.com/series/the-galgame-martial-saint"
         cases += [("novels", data[url][1], url)]

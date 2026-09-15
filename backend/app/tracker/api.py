@@ -1,9 +1,10 @@
 import asyncio
 import json
 import sqlite3
-from collections import deque
+from collections import Counter
 from contextlib import aclosing
 from typing import Annotated, Literal
+from urllib.parse import urlsplit
 
 from fastapi import APIRouter, HTTPException, Query, Request
 from fastapi.responses import StreamingResponse
@@ -379,24 +380,35 @@ def refresh_summary(results, total):
 
 
 async def refresh_events(rows, app, store, deep=False):
-    """Two bounded workers per library; emit each committed result as it finishes."""
-    pending, completed = deque(rows), []
+    """Bounded scans, favoring hosts with fewer active items; emit committed results."""
+    pending, completed, active_hosts = list(rows), [], Counter()
     queue = asyncio.Queue()
 
     async def worker():
         try:
             while pending:
-                row = pending.popleft()
-                result = await refresh_item(
-                    row["id"], app, store, skip_unavailable=True, deep=deep
+                index = min(
+                    range(len(pending)),
+                    key=lambda i: active_hosts[
+                        urlsplit(pending[i].get("url", "")).hostname
+                    ],
                 )
-                await queue.put((result, await run_blocking(store.item, row["id"])))
+                row = pending.pop(index)
+                host = urlsplit(row.get("url", "")).hostname
+                active_hosts[host] += 1
+                try:
+                    result = await refresh_item(
+                        row["id"], app, store, skip_unavailable=True, deep=deep
+                    )
+                    await queue.put((result, await run_blocking(store.item, row["id"])))
+                finally:
+                    active_hosts[host] -= 1
         except Exception as exc:
             await queue.put(exc)
         finally:
             await queue.put(None)
 
-    tasks = [asyncio.create_task(worker()) for _ in range(min(2, len(rows)))]
+    tasks = [asyncio.create_task(worker()) for _ in range(min(4, len(rows)))]
     try:
         yield {"type": "start", "total": len(rows)}
         try:

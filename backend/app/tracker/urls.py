@@ -4,7 +4,6 @@ import ipaddress
 import re
 import socket
 import time
-import zlib
 from contextvars import ContextVar
 from dataclasses import dataclass
 from email.utils import parsedate_to_datetime
@@ -13,6 +12,8 @@ from urllib.parse import parse_qsl, urlencode, urljoin, urlsplit, urlunsplit
 import httpx
 
 from .cache import FetchCache
+from .documents import MAX_RESPONSE, Document
+from .errors import DiscoveryError
 from .workers import run_blocking
 
 
@@ -40,8 +41,19 @@ class RequestBudget:
 request_budget = ContextVar("request_budget", default=None)
 
 
-class DiscoveryError(ValueError):
-    pass
+def response_key(key):
+    return "response-v1:" + hashlib.sha256(key.encode()).hexdigest()
+
+
+async def fetch_document(fetcher, url):
+    # Respect injected fetchers and request auditing overrides.
+    if (
+        isinstance(fetcher, SafeFetcher)
+        and type(fetcher).get is SafeFetcher.get
+        and "get" not in vars(fetcher)
+    ):
+        return await fetcher.get_document(url)
+    return await fetcher.get(url)
 
 
 def content_key(url):
@@ -156,8 +168,13 @@ class SafeFetcher:
         self.locks = [asyncio.Lock() for _ in range(64)]
         self.network_locks = [asyncio.Lock() for _ in range(64)]
         self.last_requests = [0.0] * 64
+        self.fetch_slots = asyncio.Semaphore(4)
 
     async def get(self, url, *, secret_query=None):
+        final, body = await self.get_document(url, secret_query=secret_query)
+        return final, await run_blocking(body.text)
+
+    async def get_document(self, url, *, secret_query=None):
         original = canonical_url(url, preserve_slash=True)
         if secret_query and urlsplit(original).scheme != "https":
             raise DiscoveryError("API credentials require HTTPS.")
@@ -166,6 +183,21 @@ class SafeFetcher:
         async with self.locks[slot]:
             return await self._get(original, slot, secret_query)
 
+    def _cached_response(self, cache_key, legacy_key):
+        cached = self.cache.get(cache_key)
+        if cached is None:
+            cached = self.cache.get(legacy_key)
+        if not cached or cached.get("error"):
+            return cached, None
+        if "document" in cached:
+            return cached, Document.from_cache(cached["document"])
+        body = Document.from_text(cached["body"])
+        cached = {key: value for key, value in cached.items() if key != "body"} | {
+            "document": body.to_cache()
+        }
+        self.cache.put(cache_key, cached)
+        return cached, body
+
     async def _get(self, original, slot, secret_query=None):
         cache_key = (
             original
@@ -173,7 +205,9 @@ class SafeFetcher:
             else "credentialed:"
             + hashlib.sha256((original + urlencode(secret_query)).encode()).hexdigest()
         )
-        cached = await run_blocking(self.cache.get, cache_key)
+        legacy_key = cache_key
+        cache_key = response_key(cache_key)
+        cached, body = await run_blocking(self._cached_response, cache_key, legacy_key)
         budget = request_budget.get()
         if cached and cached.get("expires", 0) > time.time():
             if budget:
@@ -181,8 +215,8 @@ class SafeFetcher:
             if cached.get("error"):
                 raise DiscoveryError(cached["error"])
             if budget:
-                budget.take_bytes(len(cached["body"].encode()))
-            return cached["final"], cached["body"]
+                budget.take_bytes(body.text_size)
+            return cached["final"], body
         url = original
         for _ in range(6):
             url = canonical_url(url, preserve_slash=True)
@@ -207,9 +241,6 @@ class SafeFetcher:
                         0, self.interval - (time.monotonic() - self.last_requests[slot])
                     )
                 )
-                if budget:
-                    budget.take()
-                self.last_requests[slot] = time.monotonic()
                 headers = {
                     "Host": p.hostname,
                     "User-Agent": "MediaTracker/1.0 (personal link index)",
@@ -222,9 +253,15 @@ class SafeFetcher:
                     if cached.get("modified"):
                         headers["If-Modified-Since"] = cached["modified"]
                 try:
-                    async with httpx.AsyncClient(
-                        timeout=20, trust_env=False, follow_redirects=False
-                    ) as client:
+                    async with (
+                        self.fetch_slots,
+                        httpx.AsyncClient(
+                            timeout=20, trust_env=False, follow_redirects=False
+                        ) as client,
+                    ):
+                        if budget:
+                            budget.take()
+                        self.last_requests[slot] = time.monotonic()
                         async with client.stream(
                             "GET",
                             target,
@@ -237,12 +274,12 @@ class SafeFetcher:
                                 and not cached.get("error")
                             ):
                                 if budget:
-                                    budget.take_bytes(len(cached["body"].encode()))
+                                    budget.take_bytes(body.text_size)
                                 cached.update(
                                     checked=time.time(), expires=time.time() + self.ttl
                                 )
                                 await run_blocking(self.cache.put, cache_key, cached)
-                                return cached["final"], cached["body"]
+                                return cached["final"], body
                             if response.is_redirect:
                                 if secret_query:
                                     raise DiscoveryError(
@@ -310,60 +347,48 @@ class SafeFetcher:
                                 if budget:
                                     budget.take_bytes(len(chunk))
                                 data.extend(chunk)
-                                if len(data) > 8_000_000:
+                                if len(data) > MAX_RESPONSE:
                                     raise DiscoveryError(
                                         "The page exceeds the 8 MB scan limit."
                                     )
-                            compressed = data[:2] == b"\x1f\x8b" or (
-                                not consumed and encoding in {"gzip", "deflate"}
+                            compression = (
+                                "gzip"
+                                if data[:2] == b"\x1f\x8b"
+                                else encoding
+                                if not consumed and encoding in {"gzip", "deflate"}
+                                else "identity"
                             )
-                            if compressed:
-                                try:
-                                    bits = (
-                                        16 + zlib.MAX_WBITS
-                                        if data[:2] == b"\x1f\x8b" or encoding == "gzip"
-                                        else zlib.MAX_WBITS
-                                    )
-                                    unpacker = zlib.decompressobj(bits)
-                                    data = unpacker.decompress(bytes(data), 8_000_001)
-                                    if len(data) > 8_000_000 or not unpacker.eof:
-                                        raise DiscoveryError(
-                                            "The expanded sitemap exceeds the 8 MB scan limit or is incomplete."
-                                        )
-                                    if budget:
-                                        budget.take_bytes(len(data))
-                                except zlib.error as exc:
-                                    raise DiscoveryError(
-                                        "The compressed sitemap is unreadable."
-                                    ) from exc
-                            text = data.decode(
-                                response.encoding or "utf-8", errors="replace"
+                            body = await run_blocking(
+                                Document.from_wire,
+                                data,
+                                compression,
+                                response.encoding or "utf-8",
                             )
-                            if re.search(
-                                r"<title>\s*(?:Just a moment|Attention Required|Access Denied)",
-                                text,
-                                re.IGNORECASE,
-                            ):
-                                raise DiscoveryError(
-                                    "The source requires a browser check. Retry later or supply a public feed URL."
-                                )
+                            del data
+                            if budget and compression != "identity":
+                                budget.take_bytes(body.expanded_size)
                             if "no-store" not in response.headers.get(
                                 "Cache-Control", ""
                             ):
-                                await run_blocking(
-                                    self.cache.put,
-                                    cache_key,
-                                    {
-                                        "final": url,
-                                        "body": text,
-                                        "etag": response.headers.get("etag"),
-                                        "modified": response.headers.get(
-                                            "last-modified"
-                                        ),
-                                        "expires": time.time() + self.ttl,
-                                    },
-                                )
-                            return url, text
+
+                                def save_response(
+                                    url=url, body=body, response=response
+                                ):
+                                    self.cache.put(
+                                        cache_key,
+                                        {
+                                            "final": url,
+                                            "document": body.to_cache(),
+                                            "etag": response.headers.get("etag"),
+                                            "modified": response.headers.get(
+                                                "last-modified"
+                                            ),
+                                            "expires": time.time() + self.ttl,
+                                        },
+                                    )
+
+                                await run_blocking(save_response)
+                            return url, body
                 except httpx.HTTPError as exc:
                     raise DiscoveryError(
                         f"Could not load the source ({type(exc).__name__}). Retry later."

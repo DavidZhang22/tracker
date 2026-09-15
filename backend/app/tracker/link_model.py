@@ -15,6 +15,7 @@ from itertools import islice
 from pathlib import Path
 from urllib.parse import parse_qsl, urlsplit
 
+from .dom import HEADINGS, first_tag, tags
 from .tables import anchor_label
 from .urls import DiscoveryError, canonical_url
 
@@ -103,7 +104,7 @@ def candidates(soup, source, limit=MAX_CANDIDATES):
     root = urlsplit(source)
     root_parts = root.path.strip("/").split("/") if root.path.strip("/") else []
     anchors = []
-    for a in soup.find_all("a", href=True, limit=limit):
+    for a in tags(soup, {"a"}, attribute="href", limit=limit):
         try:
             url = canonical_url(a["href"], source)
         except (DiscoveryError, ValueError, UnicodeError):
@@ -125,9 +126,9 @@ def candidates(soup, source, limit=MAX_CANDIDATES):
         if id(record) not in record_cache:
             text = " ".join(islice(record.stripped_strings, 60))[:1200]
             record_cache[id(record)] = (
-                len(record.find_all("a", href=True, limit=32)),
+                sum(1 for _ in tags(record, {"a"}, attribute="href", limit=32)),
                 len(text),
-                bool(record.find(["time", "relative-time"])),
+                bool(first_tag(record, {"time", "relative-time"})),
             )
         link_count, record_length, has_time = record_cache[id(record)]
         ancestry = " ".join(
@@ -165,7 +166,7 @@ def candidates(soup, source, limit=MAX_CANDIDATES):
             ),
             bool(CONTENT.search(label)),
             bool(UTILITY.search(label)),
-            bool(a.find(["h1", "h2", "h3", "h4", "h5", "h6"])),
+            bool(first_tag(a, HEADINGS)),
             bool(re.search(r"title|headline", ancestry, re.I)),
             bool(
                 re.search(

@@ -223,7 +223,7 @@ def validate_result(result, bindings, recipe):
 
 
 def learn_recipe(trace, result, source):
-    from .parser import parse_page
+    from .parser import _parse_html
 
     scan = result[0]
     if not trace or not 3 <= len(scan.entries) <= MAX_LINKS:
@@ -326,7 +326,9 @@ def learn_recipe(trace, result, source):
         if len(json.dumps(recipe).encode()) > MAX_RECIPE_BYTES:
             return None
         # Every field, order, pagination link, warning, and suggestion must match.
-        replay = parse_page(str(soup), source, learned=recipe)
+        # Both passes are read-only. Reuse the tree instead of serializing and
+        # allocating a second DOM while the first one is still needed.
+        replay = _parse_html(soup, source, "", "", recipe, None)
         if replay != result:
             trace["recipe_rejection"] = "Shadow output differs"
             return None
@@ -375,10 +377,15 @@ def analyze(text, source, selector="", include_path="", recipe=None):
         ):
             pass  # Run the full parser on the same fetched document, never refetch.
     trace = {}
-    result = parse_page(text, source, selector, include_path, trace=trace)
-    learned = (
-        learn_recipe(trace, result, source)
-        if not selector and not include_path
-        else None
-    )
-    return result, learned, False
+    try:
+        result = parse_page(text, source, selector, include_path, trace=trace)
+        learned = (
+            learn_recipe(trace, result, source)
+            if not selector and not include_path
+            else None
+        )
+        return result, learned, False
+    finally:
+        if "soup" in trace:
+            trace["soup"].clear(decompose=True)
+            trace["soup"].decompose()

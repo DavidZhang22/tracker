@@ -297,7 +297,7 @@ class Store:
             return [
                 dict(row)
                 for row in db.execute(
-                    "SELECT id FROM items WHERE ignored=0 AND deleted=0 ORDER BY created_at DESC"
+                    "SELECT id,url FROM items WHERE ignored=0 AND deleted=0 ORDER BY created_at DESC"
                 )
             ]
 

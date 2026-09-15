@@ -154,3 +154,30 @@ def test_database_failure_in_stream_is_safe_and_does_not_leave_busy_account(
         assert "secret" not in response.text
         assert app.state.store.item(item["id"])["total_count"] == 1
         assert not app.state.scan_guard.active
+
+
+async def test_refresh_favors_other_hosts_and_bounds_library_workers(app, monkeypatch):
+    rows = []
+    for i in range(4):
+        item = add(app, f"slow-{i}")
+        # These URLs belong to the same source host, while preserving unique items.
+        with app.state.store.connection() as db:
+            db.execute(
+                "UPDATE items SET url=? WHERE id=?",
+                (f"https://slow.example/book/{i}", item["id"]),
+            )
+        rows.append({"id": item["id"], "url": f"https://slow.example/book/{i}"})
+    rows += [add(app, f"fast-{i}") for i in range(4)]
+    ids = {row["id"]: i for i, row in enumerate(rows)}
+    monkeypatch.setattr("app.tracker.api.hash", lambda iid: ids[iid], raising=False)
+    scanner = app.state.discoverer = ControlledScanner()
+    events = refresh_events(rows, app, app.state.store)
+    await anext(events)
+    event = await asyncio.wait_for(anext(events), 2)
+    assert "fast" in event["item"]["url"]
+    assert sum("slow.example" in url for url in scanner.calls[:4]) <= 1
+    assert scanner.active <= 4
+    scanner.release.set()
+    rest = [e async for e in events]
+    assert rest[-1]["checked"] == 8 and not rest[-1]["failed"]
+    assert not scanner.active

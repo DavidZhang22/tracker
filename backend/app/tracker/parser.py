@@ -12,6 +12,7 @@ from bs4 import BeautifulSoup
 from .asura import enrich_asura_dates
 from .context_model import classify_context
 from .dates import DATE_TEXT, evidence, link_date
+from .documents import unpack
 from .embedded_series import embedded_series
 from .keywords import language_text
 from .link_model import load_model, page_scores
@@ -305,6 +306,7 @@ def parse_feed(text, source):
 
 
 def parse_page(text, source, selector="", include_path="", *, learned=None, trace=None):
+    text = unpack(text)
     text = text.lstrip("\ufeff \t\r\n")
     if text.lstrip().startswith("{"):
         feed = parse_feed(text, source)
@@ -317,6 +319,16 @@ def parse_page(text, source, selector="", include_path="", *, learned=None, trac
         if feed:
             return feed[0], feed[1], []
     soup = BeautifulSoup(text, "html.parser")
+    del text
+    try:
+        return _parse_html(soup, source, selector, include_path, learned, trace)
+    finally:
+        if trace is None or trace.get("soup") is not soup:
+            soup.clear(decompose=True)
+            soup.decompose()
+
+
+def _parse_html(soup, source, selector, include_path, learned, trace):
     bindings = None
     if learned is not None:
         from .recipes import bind_recipe

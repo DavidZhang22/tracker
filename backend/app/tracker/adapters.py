@@ -72,6 +72,9 @@ def wetried_series(text, source):
         r"/series/[\w-]+/?", p.path
     ):
         return None
+    from .documents import unpack
+
+    text = unpack(text)
     slug = p.path.strip("/").split("/")[-1]
     for script in BeautifulSoup(text, "html.parser").select("script"):
         for root in json_objects(script.string or script.get_text()):

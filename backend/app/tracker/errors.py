@@ -1,0 +1,2 @@
+class DiscoveryError(ValueError):
+    pass

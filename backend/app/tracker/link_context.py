@@ -8,6 +8,7 @@ from urllib.parse import parse_qsl, unquote, urlsplit
 
 from bs4 import Tag
 
+from .dom import HEADINGS, first_tag, tags
 from .link_model import candidates as base_candidates
 from .tables import TABLE_FEATURES, table_context
 
@@ -93,14 +94,14 @@ def context_candidates(soup, source, limit=4000, *, tables=None):
         node_order[id(node)] = count
         if node.name == "a":
             heading_before[id(node)] = previous_heading
-        if re.fullmatch("h[1-6]", node.name or ""):
+        if node.name in HEADINGS:
             previous_heading = node
         count += 1
     info, url_info, template_counts, record_info = [], {}, Counter(), {}
     for a, url, label, features in base:
         parents = list(islice(a.parents, 10))
-        heading = a.find(["h1", "h2", "h3", "h4", "h5", "h6"]) or next(
-            (p for p in parents if re.fullmatch("h[1-6]", p.name or "")), None
+        heading = first_tag(a, HEADINGS) or next(
+            (p for p in parents if p.name in HEADINGS), None
         )
         before = heading_before.get(id(a))
         record = next(
@@ -117,11 +118,16 @@ def context_candidates(soup, source, limit=4000, *, tables=None):
             a.parent or a,
         )
         if id(record) not in record_info:
-            heads = record.find_all(["h1", "h2", "h3", "h4", "h5", "h6"], limit=12)
+            heads = list(tags(record, HEADINGS, limit=12))
             primary = next(
-                (h.find("a", href=True) for h in heads if h.find("a", href=True)), None
+                (
+                    link
+                    for h in heads
+                    if (link := first_tag(h, {"a"}, attribute="href")) is not None
+                ),
+                None,
             )
-            first = record.find("a", href=True)
+            first = first_tag(record, {"a"}, attribute="href")
             record_info[id(record)] = (
                 len(heads),
                 len(" ".join(islice(record.stripped_strings, 160)).split()),
@@ -228,7 +234,7 @@ def context_candidates(soup, source, limit=4000, *, tables=None):
                 )
             ),
             min(len(heading.get_text()) / max(len(htext), 1), 1) if heading else 0,
-            bool(before is not None and before.find("a", href=True)),
+            bool(before is not None and first_tag(before, {"a"}, attribute="href")),
             index + 1 < len(info) and id(info[index + 1][7]) == id(record),
             index > 0 and id(info[index - 1][7]) == id(record),
             min(template_counts[template] / 30, 1),

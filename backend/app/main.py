@@ -85,7 +85,7 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
         ),
         analyzer=analyzer,
     )
-    app.state.scan_semaphore = asyncio.Semaphore(3)
+    app.state.scan_semaphore = asyncio.Semaphore(6)
     app.state.scan_guard = ScanGuard()
     app.state.refresh_locks = [asyncio.Lock() for _ in range(64)]
     config = (

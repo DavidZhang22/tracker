@@ -242,9 +242,12 @@ async def test_cache_is_persistent_and_conditional_304_reuses_body(tmp_path, tra
         == first
     )
     assert len(calls) == 1
-    old = f.cache.get("https://example.com/")
+    from app.tracker.urls import response_key
+
+    key = response_key("https://example.com/")
+    old = f.cache.get(key)
     old["expires"] = 0
-    f.cache.put("https://example.com/", old)
+    f.cache.put(key, old)
     state.update(status=304, text="")
     assert await f.get("https://example.com/") == first
     assert calls[-1].headers["if-none-match"] == '"one"'

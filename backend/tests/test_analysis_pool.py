@@ -45,7 +45,7 @@ async def test_cancelled_analysis_retains_admission_until_process_finishes():
         def __init__(self):
             self.futures = []
 
-        def submit(self, *args):
+        def submit(self, *args, **kwargs):
             future = Future()
             future.set_running_or_notify_cancel()
             self.futures.append(future)

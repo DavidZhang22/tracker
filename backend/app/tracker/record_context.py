@@ -11,6 +11,7 @@ from urllib.parse import urlsplit
 
 from bs4 import Tag
 
+from .dom import first_tag
 from .keywords import language_codes, language_text
 from .limits import MAX_LINKS
 
@@ -215,7 +216,7 @@ class RecordContext:
             for sibling in islice(parent.children, 80):
                 if not isinstance(sibling, Tag):
                     continue
-                if sibling.find("a", href=True):
+                if first_tag(sibling, {"a"}, attribute="href"):
                     repeated[sibling.name] += 1
                     linked.add(id(sibling))
                 elif sibling.name != "a":
