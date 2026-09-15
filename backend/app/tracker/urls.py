@@ -293,6 +293,11 @@ class SafeFetcher:
                                 continue
                             if response.status_code in (401, 403, 429, 503):
                                 message = f"The source refused access (HTTP {response.status_code}). Retry later or supply a public feed URL."
+                                if response.headers.get("cf-mitigated") == "challenge":
+                                    message = (
+                                        f"The source requires Cloudflare browser verification (HTTP {response.status_code}). "
+                                        "Trackify could not read its listing. Use an accessible feed or import a CSV; saved entries were kept."
+                                    )
                                 delay = self.ttl
                                 retry = response.headers.get("Retry-After", "")
                                 try:

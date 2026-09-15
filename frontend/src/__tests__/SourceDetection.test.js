@@ -175,8 +175,8 @@ test("changing URL clears the old API immediately and ignores out-of-order repli
 test("custom CSS keeps the page scanner", async () => {
   show();
   change(/Source URL/, wp);
-  fireEvent.click(screen.getByText("Refine link detection"));
-  change(/Link selector/, "article a");
+  fireEvent.click(screen.getByText("Refine content detection"));
+  change(/Content selector/, "article a");
   await tick();
   expect(post).not.toHaveBeenCalled();
   await scan();

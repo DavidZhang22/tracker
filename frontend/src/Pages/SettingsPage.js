@@ -284,16 +284,21 @@ function ItemSettings({ autoUpdate, settingsBusy, onBusy }) {
                   </span>
                 </label>
                 <details>
-                  <summary>Advanced link detection</summary>
+                  <summary>Advanced content detection</summary>
                   {(draft.source_method || "auto") === "auto" && (
                     <label className="field">
-                      Link selector
+                      Content selector
                       <input
+                        aria-label="Content selector"
                         value={draft.selector}
                         maxLength={300}
-                        placeholder="#chapters a"
+                        placeholder="#chapters li"
                         onChange={(e) => change("selector", e.target.value)}
                       />
+                      <span className="hint">
+                        Select links or list rows, including titles without
+                        links.
+                      </span>
                     </label>
                   )}
                   <label className="field">

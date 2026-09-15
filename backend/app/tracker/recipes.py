@@ -212,6 +212,8 @@ def bind_recipe(soup, source, recipe):
 def validate_result(result, bindings, recipe):
     scan = result[0]
     expected = {content_key(p["url"]): p for p in bindings.values() if p}
+    if any(not e.url for e in scan.entries):
+        raise RecipeMismatch("Listing now includes entries without URLs")
     actual = {content_key(e.url): e for e in scan.entries}
     if set(actual) != set(expected) or not set(recipe["known_urls"]).issubset(actual):
         raise RecipeMismatch("Known links disappeared or selection changed")
@@ -226,7 +228,11 @@ def learn_recipe(trace, result, source):
     from .parser import _parse_html
 
     scan = result[0]
-    if not trace or not 3 <= len(scan.entries) <= MAX_LINKS:
+    if (
+        not trace
+        or not 3 <= len(scan.entries) <= MAX_LINKS
+        or any(not e.url for e in scan.entries)
+    ):
         return None
     if any(
         e.method in {"embedded data", "embedded chapter index", "feed"}

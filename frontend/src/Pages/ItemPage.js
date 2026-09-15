@@ -1,6 +1,7 @@
 import { CsvDetails } from "../Components/CsvUpload";
+import EntryLink from "../Components/EntryLink";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import {
   ArrowLeftIcon,
   StarIcon,
@@ -27,11 +28,14 @@ import {
 export default function ItemPage() {
   const { preferences } = usePreferences();
   const { id } = useParams();
+  const [params] = useSearchParams();
   const [item, setItem] = useState(null),
     [filter, setFilter] = useState("all"),
     [sort, setSort] = useState(preferences.link_sort),
     [direction, setDirection] = useState(preferences.link_direction),
-    [search, setSearch] = useState(""),
+    [search, setSearch] = useState(() =>
+      (params.get("search") || "").slice(0, 300),
+    ),
     [offset, setOffset] = useState(0);
   const [error, setError] = useState(""),
     [message, setMessage] = useState(""),
@@ -461,33 +465,27 @@ export default function ItemPage() {
                 </label>
               </div>
               <div className="entry-content">
-                <a
+                <EntryLink
+                  entry={l}
                   className="entry-title"
-                  href={l.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   onClick={(e) => openLink(e, l)}
                   onAuxClick={(e) => openLink(e, l)}
-                >
-                  {l.title} <span aria-hidden="true">↗</span>
-                </a>
+                />
                 {l.members?.length > 1 && (
                   <details className="merged-links">
                     <summary>{l.members.length} links in this entry</summary>
                     <ul>
                       {l.members.map((member) => (
                         <li key={member.id}>
-                          <a
-                            href={member.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                          <EntryLink
+                            entry={member}
                             onClick={(event) => openLink(event, l)}
                             onAuxClick={(event) => openLink(event, l)}
-                          >
-                            {member.title} ↗
-                          </a>
+                          />
                           <span className="muted">
-                            {new URL(member.url).hostname}
+                            {member.url
+                              ? new URL(member.url).hostname
+                              : "No link"}
                           </span>
                         </li>
                       ))}
@@ -502,6 +500,7 @@ export default function ItemPage() {
                     <span className="badge">New</span>
                   )}
                   {l.number != null && <span>No. {l.number}</span>}
+                  {!l.url && <span>No link</span>}
                   <button
                     className="read-status"
                     aria-label={`${l.read ? "Mark unread" : "Mark read"}: ${l.title}`}

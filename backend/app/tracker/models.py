@@ -77,6 +77,8 @@ def sequence_value(title, url=""):
 
 @dataclass
 class Entry:
+    """A listing record. An empty URL represents a title with no source link."""
+
     url: str
     title: str
     published_at: str | None = None

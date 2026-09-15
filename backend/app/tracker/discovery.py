@@ -36,7 +36,7 @@ from .urls import (
 )
 from .workers import run_blocking
 
-DISCOVERY_VERSION = "enma-listing-discovery-v1"
+DISCOVERY_VERSION = "content-list-discovery-v1"
 DEEP_SCAN = ContextVar("deep_scan", default=False)
 
 
@@ -575,7 +575,8 @@ class Discoverer:
                     incoming = [
                         e
                         for e in incoming
-                        if relevant(e.url, final, e.title, result.kind)
+                        if (not e.url and not is_feed)
+                        or relevant(e.url, final, e.title, result.kind)
                         or trusted_feed_alias(e)
                     ]
                 if include_path:
@@ -679,7 +680,7 @@ class Discoverer:
             result.coverage = "complete"
         if not result.entries:
             result.warnings.append(
-                "No content links found. Try a public API, feed/archive URL, or adjust the link selector."
+                "No content entries found. Try a public API, feed/archive URL, or select a content list."
             )
         if result.kind in {"blog", "website"} and result.methods == ["feed"]:
             result.warnings.append(

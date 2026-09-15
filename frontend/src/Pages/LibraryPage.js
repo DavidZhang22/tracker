@@ -388,20 +388,30 @@ export default function LibraryPage() {
                       {i.new_count > 0 && (
                         <span className="badge">{i.new_count} new</span>
                       )}
-                      {i.latest_link && (
-                        <a
-                          className="latest-link"
-                          href={i.latest_link.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`Latest entry for ${i.title}: ${i.latest_link.title}`}
-                          title={i.latest_link.title}
-                          onClick={(event) => openLatest(event, i)}
-                          onAuxClick={(event) => openLatest(event, i)}
-                        >
-                          Latest <Icon as={ExternalLinkIcon} />
-                        </a>
-                      )}
+                      {i.latest_link &&
+                        (i.latest_link.url ? (
+                          <a
+                            className="latest-link"
+                            href={i.latest_link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`Latest entry for ${i.title}: ${i.latest_link.title}`}
+                            title={i.latest_link.title}
+                            onClick={(event) => openLatest(event, i)}
+                            onAuxClick={(event) => openLatest(event, i)}
+                          >
+                            Latest <Icon as={ExternalLinkIcon} />
+                          </a>
+                        ) : (
+                          <Link
+                            className="latest-link"
+                            to={`/items/${i.id}?search=${encodeURIComponent(i.latest_link.title.slice(0, 300))}`}
+                            aria-label={`Latest entry for ${i.title}: ${i.latest_link.title}`}
+                            title={i.latest_link.title}
+                          >
+                            Latest
+                          </Link>
+                        ))}
                     </div>
                     <ScanNote item={i} />
                   </div>

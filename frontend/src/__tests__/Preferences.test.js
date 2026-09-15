@@ -124,8 +124,8 @@ test("per-item read-on-open and detection settings are saved in one place", asyn
     await screen.findByLabelText("Mark as read when opened for this item"),
   );
   change(/Keywords/, "Spanish, official");
-  await click(screen.getByText("Advanced link detection"));
-  change("Link selector", "article a");
+  await click(screen.getByText("Advanced content detection"));
+  change("Content selector", "article a");
   change("URL must contain", "/chapter/");
   await click(screen.getByRole("button", { name: "Save item settings" }));
   expect(patch).toHaveBeenCalledWith("/items/one", {
@@ -144,10 +144,10 @@ test("source method defaults persist and item methods save independently", async
   await click(screen.getByRole("button", { name: "Save preferences" }));
   expect(saved.source_method).toBe("sitemap");
   expect(screen.getByLabelText("Source method")).toHaveValue("auto");
-  await click(screen.getByText("Advanced link detection"));
-  change("Link selector", "article a");
+  await click(screen.getByText("Advanced content detection"));
+  change("Content selector", "article a");
   change("Source method", "wordpress_com");
-  expect(screen.queryByLabelText("Link selector")).not.toBeInTheDocument();
+  expect(screen.queryByLabelText("Content selector")).not.toBeInTheDocument();
   await click(screen.getByRole("button", { name: "Save item settings" }));
   expect(patch).toHaveBeenLastCalledWith(
     "/items/one",
@@ -340,4 +340,38 @@ test("preview sorting honors dates, decimal numbers, missing fields, and source 
     1, 0, 2,
   ]);
   expect(order({}, "source")).toEqual([2, 1, 0]);
+});
+
+test("preview saves separate read choices for entries with no URLs", async () => {
+  post.mockImplementation(async (path) =>
+    path === "/scans"
+      ? {
+          ...item,
+          scan_id: "list-scan",
+          warnings: [],
+          entries: [
+            { title: "Chapter 1", url: "", source_id: "first", number: 1 },
+            { title: "Chapter 2", url: "", source_id: "second", number: 2 },
+          ],
+        }
+      : { id: "saved" },
+  );
+  render(
+    <MemoryRouter>
+      <AddPage />
+    </MemoryRouter>,
+  );
+  change(/Source URL/, item.url);
+  await click(screen.getByRole("button", { name: "Scan links" }));
+  expect(await screen.findByText("2 entries found")).toBeInTheDocument();
+  expect(
+    screen.queryByRole("link", { name: /Chapter/ }),
+  ).not.toBeInTheDocument();
+  change("Reading progress", "choose");
+  await click(screen.getByLabelText("Read: Chapter 2"));
+  await click(screen.getByRole("button", { name: "Add to library" }));
+  expect(post).toHaveBeenLastCalledWith(
+    "/items",
+    expect.objectContaining({ read_indices: [1] }),
+  );
 });

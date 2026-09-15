@@ -198,7 +198,7 @@ test("a merged row exposes every URL, supports separation and uses Muted wording
   view();
   await screen.findByText("3 links in this entry");
   await click(screen.getByText("3 links in this entry"));
-  expect(screen.getByRole("link", { name: "Chapter 2 ↗" })).toHaveAttribute(
+  expect(screen.getByRole("link", { name: "Chapter 2" })).toHaveAttribute(
     "href",
     rows[1].url,
   );
@@ -242,4 +242,31 @@ test("Search retries a failed request without requiring a different query", asyn
   await click(screen.getByRole("button", { name: "Search", exact: true }));
   await screen.findByText("Chapter 1");
   expect(requests()).toHaveLength(2);
+});
+
+test("entries without URLs remain readable and selectable, including merged members", async () => {
+  const entry = {
+    ...rows[0],
+    url: "",
+    members: [{ ...rows[0], url: "" }, rows[1]],
+  };
+  api.mockImplementation((path) =>
+    Promise.resolve(
+      path.includes("/links?") ? { ...result, links: [entry] } : item,
+    ),
+  );
+  view();
+  const read = await screen.findByRole("button", {
+    name: "Mark read: Chapter 1",
+  });
+  expect(
+    screen.queryByRole("link", { name: "Chapter 1" }),
+  ).not.toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /Chapter 2/ })).toHaveAttribute(
+    "href",
+    rows[1].url,
+  );
+  expect(screen.getByLabelText("Select link: Chapter 1")).toBeEnabled();
+  await click(read);
+  expect(patch).toHaveBeenCalledWith("/links/c1", { read: true });
 });

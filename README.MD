@@ -36,6 +36,8 @@ Merge with above groups each selected row with its preceding row. Consecutive se
 
 Known sources use their public APIs where available. Feeds, sitemaps and HTML listing pages provide links without visiting every article or chapter. A small neural network identifies the surrounding record; compact tree classifiers distinguish content links from navigation and promotional links. Dates and sequence numbers come from source evidence.
 
+Chapter and episode lists can also contain titles without links. Trackify stores these as entries with read, favorite and mute controls; it does not invent a destination URL. For other lists, use **Refine content detection → Content selector** (for example, `#updates li` or `table tbody tr`). Dates stay within each row, and relative ages remain context when no exact date is supplied. A URL filter excludes entries without links. Source IDs, volume/season boundaries and unambiguous chapter numbers keep refreshes stable; indistinguishable unnumbered titles cannot reliably represent separate records without source IDs.
+
 Initial scans can learn validated extraction recipes for subsequent refreshes. A bounded, isolated Chromium worker handles JavaScript listings and can learn reusable public JSON listing requests. All browser network requests pass through the application's URL validation, cache and request limits. There is no hosted AI service or GPU requirement.
 
 The models train offline and load numeric JSON weights in production without NumPy or scikit-learn. In a saved four-page, two-CPU benchmark, reusable analysis processes reduced batch time from 9.21 to 6.70 seconds with identical scan output. This measures that fixture workload, not every website.
@@ -49,6 +51,8 @@ The models train offline and load numeric JSON weights in production without Num
 Sources can block access or change their layouts. Scans report incomplete coverage and preserve existing data on failure. Requests are paced and capped; each item stores at most 4,999 links, including muted links and Trash.
 
 Enma watch URLs select its episode-list API, making one metadata request without loading the player. On September 15, 2026, Enma returned HTTP 403 to both local and deployed scans. Trackify reports that refusal and respects the fetch backoff; it cannot guarantee access. The adapter has synthetic contract tests based on the site's published client code, but successful live extraction remains unverified. Episode numbers come from listing metadata; missing publication dates remain unavailable.
+
+A direct diagnostic request on September 15 identified Enma's response as `Forbidden: Origin not allowed`. Trackify leaves that access restriction in place. Webnovel's official [Shadow Slave catalogue](https://www.webnovel.com/book/22196546206090805/catalog) is the preferred source for its chapter inventory, but direct requests currently receive a Cloudflare challenge (`cf-mitigated: challenge`). This happens before extraction; neither a larger classifier nor list parsing resolves a 403. Use accessible publisher listings, authorized APIs or CSV imports when automated access is unavailable. No chapter bodies, login tokens, challenge cookies or player streams are needed for inventory tracking.
 
 ## Repository layout
 

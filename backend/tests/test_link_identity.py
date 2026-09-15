@@ -89,7 +89,7 @@ def test_duplicate_entries_update_in_place_and_retain_best_date(tmp_path):
 
 
 def seed_legacy(path):
-    with patch("app.tracker.store.identity", side_effect=lambda url: url):
+    with patch("app.tracker.store.entry_key", side_effect=lambda entry: entry["url"]):
         store = Store(path)
         item = store.create(
             store.save_scan(

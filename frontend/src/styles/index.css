@@ -821,7 +821,7 @@ progress::-moz-progress-bar {
   line-height: 1.55;
   overflow-wrap: anywhere;
 }
-.entry-title:hover {
+a.entry-title:hover {
   text-decoration: underline;
   color: var(--accent);
 }
@@ -1142,12 +1142,12 @@ progress::-moz-progress-bar {
   align-items: start;
   gap: 4px 12px;
 }
-.entry-preview:has(.preview-read) > a,
+.entry-preview:has(.preview-read) > .preview-title,
 .entry-preview:has(.preview-read) > .link-date,
 .entry-preview:has(.preview-read) > .preview-context {
   grid-column: 2;
 }
-.entry-preview:has(.preview-read) > a {
+.entry-preview:has(.preview-read) > .preview-title {
   min-height: 44px;
   padding-top: 10px;
 }
@@ -1287,4 +1287,11 @@ progress::-moz-progress-bar {
   max-width: 100%;
   min-width: 0;
   padding: 10px;
+}
+
+.entry-preview .preview-title {
+  color: inherit;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  min-width: 0;
 }

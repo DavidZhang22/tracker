@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import EntryLink from "../Components/EntryLink";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
   ArrowLeftIcon,
@@ -264,22 +265,23 @@ export default function AddPage() {
                 </span>
               </label>
               <details>
-                <summary>Refine link detection</summary>
+                <summary>Refine content detection</summary>
                 {sourceMethod === "auto" && (
                   <label className="field">
-                    Link selector
+                    Content selector
                     <input
+                      aria-label="Content selector"
                       disabled={busy || saving}
                       value={selector}
-                      placeholder="#chapters a, article h2 a"
+                      placeholder="#chapters li, article"
                       onChange={(e) => {
                         setSelector(e.target.value);
                         setResult(null);
                       }}
                     />
                     <span className="hint">
-                      Optional CSS selector for content links. Useful for pages
-                      with several lists.
+                      Optional CSS selector for links or list rows, including
+                      titles without links. For example: #chapters li.
                     </span>
                   </label>
                 )}
@@ -295,7 +297,8 @@ export default function AddPage() {
                     }}
                   />
                   <span className="hint">
-                    Optional text that every content URL must include.
+                    Optional text that every content URL must include. Excludes
+                    entries without links.
                   </span>
                 </label>
               </details>
@@ -351,7 +354,11 @@ export default function AddPage() {
                 <div className="item-identity">
                   <TypeIcon kind={result.kind} />
                   <div>
-                    <h2>{result.entries.length} links found</h2>
+                    <h2>
+                      {result.entries.length}{" "}
+                      {result.entries.some((e) => !e.url) ? "entries" : "links"}{" "}
+                      found
+                    </h2>
                     <div className="scan-meta">
                       <span>
                         {result.csv
@@ -459,7 +466,10 @@ export default function AddPage() {
                 {preview
                   .slice(page * 25, (page + 1) * 25)
                   .map(({ entry: e, index }) => (
-                    <div className="entry-preview" key={e.url}>
+                    <div
+                      className="entry-preview"
+                      key={e.source_id || e.url || index}
+                    >
                       {readMode === "choose" && (
                         <label className="checkbox preview-read">
                           <input
@@ -480,9 +490,8 @@ export default function AddPage() {
                           Read
                         </label>
                       )}
-                      <a href={e.url} target="_blank" rel="noopener noreferrer">
-                        {e.title} ↗
-                      </a>
+                      <EntryLink entry={e} className="preview-title" />
+                      {!e.url && <span>No link</span>}
                       {e.summary && (
                         <span className="preview-context">{e.summary}</span>
                       )}

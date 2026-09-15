@@ -14,13 +14,16 @@ from .context_model import classify_context
 from .dates import DATE_TEXT, evidence, link_date
 from .documents import unpack
 from .embedded_series import embedded_series
+from .entry_identity import entry_key
 from .keywords import language_text
+from .limits import MAX_LINKS
 from .link_model import load_model, page_scores
+from .list_entries import extract_list_entries
 from .models import Entry, Scan, date_rank, date_value, sequence_value
 from .record_context import RecordContext
 from .suggestions import observed_sources
 from .tables import anchor_label, table_context
-from .urls import DiscoveryError, canonical_url, content_key
+from .urls import DiscoveryError, canonical_url
 
 SKIP = re.compile(
     r"(?:^|/)(?:login|sign-?up|register|privacy|terms|contact|about|search|tag|category|author|user|members|forum|reviews?|comments?|donate|shop|cart)(?:/|$)",
@@ -108,14 +111,18 @@ def relevant(
 
 def merge_entries(entries):
     merged = {}
+    sources = {}
     for entry in entries:
-        key = content_key(entry.url)
+        key = sources.get(entry.source_id) or entry_key(entry)
+        if entry.source_id:
+            sources[entry.source_id] = key
         old = merged.get(key)
         if old is None:
             entry.position = len(merged)
             merged[key] = entry
         else:
-            old.url = entry.url  # Keep the latest observed target for this identity.
+            old.url = entry.url or old.url
+            old.source_id = entry.source_id or old.source_id
             if old.title.lower() in {
                 "first chapter",
                 "start reading",
@@ -383,7 +390,17 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
         ):
             feeds.append(u)
     try:
-        anchors = soup.select(selector) if selector else soup.select("a[href]")
+        anchors = soup.select("a[href]")
+        if selector:
+            anchors = [
+                a
+                for node in soup.select(selector)
+                for a in (
+                    [node]
+                    if node.name == "a" or node.get("data-href")
+                    else node.select("a[href]")
+                )
+            ]
     except Exception as exc:
         raise DiscoveryError("The link selector is not valid CSS.") from exc
     # Classify generic anchors before clustering. Structured sources and explicit
@@ -729,7 +746,26 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
                         ),
                     )
                 )
+    listed = extract_list_entries(soup, source, selector, include_path)
+    linked = {e.url: e for e in scan.entries if e.url}
+    ordered_list = []
+    for entry in listed:
+        if entry.url in linked:
+            # Give linked and linkless versions of the same row a shared identity.
+            linked[entry.url].source_id = entry.source_id
+            ordered_list.append(linked[entry.url])
+        elif not entry.url or selector:
+            scan.entries.append(entry)
+            ordered_list.append(entry)
+    if ordered_list and set(linked) <= {e.url for e in ordered_list}:
+        scan.entries = ordered_list
+    if any(not e.url for e in scan.entries):
+        scan.methods.append("content list")
     scan.entries = merge_entries(scan.entries)
+    if len(listed) > MAX_LINKS:
+        scan.entries = scan.entries[:MAX_LINKS]
+        scan.coverage = "partial"
+        scan.warnings.append(f"Scan reached the {MAX_LINKS:,}-entry limit.")
     if enrich_asura_dates(soup, source, scan.entries):
         scan.methods.append("embedded chapter dates")
     if job_anchors and not selector:

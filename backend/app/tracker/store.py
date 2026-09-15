@@ -10,6 +10,7 @@ from pathlib import Path
 from time import time
 
 from . import link_groups
+from .entry_identity import entry_key
 from .limits import (
     ITEM_ADD_INTERVAL_SECONDS,
     MAX_ITEMS,
@@ -384,7 +385,7 @@ class Store:
                 raise ValueError(
                     "Choose individual read links or mark all read, not both."
                 )
-            read_identities = {identity(scan["entries"][i]["url"]) for i in selected}
+            read_identities = {entry_key(scan["entries"][i]) for i in selected}
             if auto_read is None:
                 auto_read = self._settings(db)["auto_read"]
             if any(
@@ -498,14 +499,14 @@ class Store:
         }
         # API IDs can prove that a renamed URL and a previously saved sitemap
         # URL refer to the same content. Coalesce that evidence before quotas.
-        indexed_urls = {identity(r["url"]): r for r in previous_rows.values()}
+        indexed_urls = {entry_key(r): r for r in previous_rows.values()}
         indexed_sources = {
             r["source_id"]: r for r in previous_rows.values() if r["source_id"]
         }
         for entry in scan["entries"]:
             source_id = entry.get("source_id")
             a = indexed_sources.get(source_id) if source_id else None
-            b = indexed_urls.get(identity(entry["url"]))
+            b = indexed_urls.get(entry_key(entry))
             if a and b and a["id"] != b["id"]:
                 original = min((a, b), key=lambda r: (r["discovered_at"], r["id"]))
                 merged = self._combine_link_rows(db, [a, b], original["identity"])
@@ -514,14 +515,14 @@ class Store:
                 previous_rows[merged["identity"]] = merged
                 indexed_sources[source_id] = merged
                 for row in (a, b):
-                    indexed_urls[identity(row["url"])] = merged
+                    indexed_urls[entry_key(row)] = merged
         previous_rows = dict(
             sorted(
                 previous_rows.items(), key=lambda kv: (kv[1]["position"], kv[1]["id"])
             )
         )
         previous = list(previous_rows)
-        by_url = {identity(row["url"]): key for key, row in previous_rows.items()}
+        by_url = {entry_key(row): key for key, row in previous_rows.items()}
         by_source = {
             row["source_id"]: key
             for key, row in previous_rows.items()
@@ -539,7 +540,7 @@ class Store:
         accepted = []
         capped = False
         for entry in scan["entries"]:
-            url_key = identity(entry["url"])
+            url_key = entry_key(entry)
             source_id = entry.get("source_id", "")
             key = by_source.get(source_id) or by_url.get(url_key, url_key)
             if key not in known:
@@ -633,7 +634,7 @@ class Store:
                     }
                 )
             metadata.update(
-                url=entry["url"],
+                url=entry["url"] or old.get("url", ""),
                 title=entry["title"],
                 method=entry["method"],
                 position=positions[key],

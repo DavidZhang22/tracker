@@ -99,6 +99,8 @@ def infer(observation, source, rendered):
                     next_paths.append([*path, key])
         if len(next_paths) != 1:
             return None
+        if any(not e.url for e in rendered):
+            return None
         wanted = {content_key(e.url): e for e in rendered}
         if len(wanted) < 2:
             return None

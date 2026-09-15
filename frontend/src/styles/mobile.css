@@ -664,7 +664,7 @@ h1,
   .entry-preview {
     display: block;
   }
-  .entry-preview > a {
+  .entry-preview > .preview-title {
     display: block;
     min-height: 44px;
     padding: 8px 0;

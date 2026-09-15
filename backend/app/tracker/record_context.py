@@ -106,6 +106,32 @@ def snippets(node, limit=1500):
     return " ".join(dict.fromkeys(parts))[:limit]
 
 
+def language_in_regions(roots):
+    languages = set()
+    for root in roots:
+        if root is None:
+            continue
+        nodes = [root] + list(islice(root.descendants, 200))
+        for node in nodes:
+            if (
+                not isinstance(node, Tag)
+                or node.name in EXCLUDED
+                or node.name
+                in {"html", "body", "a", "h1", "h2", "h3", "h4", "h5", "h6"}
+            ):
+                continue
+            values = [
+                node.get(attr, "")
+                for attr in ("lang", "data-language", "alt", "title", "aria-label")
+            ]
+            if node.name in {"span", "small", "div", "td"} and not node.find("a"):
+                values.append(node.get_text(" ", strip=True)[:100])
+            for value in values:
+                if isinstance(value, str) and (codes := language_codes(value)):
+                    languages.add(codes[0])
+    return languages.pop() if len(languages) == 1 else ""
+
+
 @lru_cache(maxsize=1)
 def load_record_model():
     try:
@@ -387,29 +413,7 @@ class RecordContext:
         return self.region(anchor)[0]
 
     def language(self, anchor):
-        languages = set()
-        for root in self.region(anchor):
-            if root is None:
-                continue
-            nodes = [root] + list(islice(root.descendants, 200))
-            for node in nodes:
-                if (
-                    not isinstance(node, Tag)
-                    or node.name in EXCLUDED
-                    or node.name
-                    in {"html", "body", "a", "h1", "h2", "h3", "h4", "h5", "h6"}
-                ):
-                    continue
-                values = [
-                    node.get(attr, "")
-                    for attr in ("lang", "data-language", "alt", "title", "aria-label")
-                ]
-                if node.name in {"span", "small", "div", "td"} and not node.find("a"):
-                    values.append(node.get_text(" ", strip=True)[:100])
-                for value in values:
-                    if isinstance(value, str) and (codes := language_codes(value)):
-                        languages.add(codes[0])
-        return languages.pop() if len(languages) == 1 else ""
+        return language_in_regions(self.region(anchor))
 
     def text(self, anchor):
         record, neighbor = self.region(anchor)

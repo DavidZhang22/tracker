@@ -842,3 +842,16 @@ test("item scan details contain only methods and date coverage", async () => {
   expect(section).toHaveTextContent("0 of 895 links have a source date.");
   expect(section).not.toHaveTextContent(/Refresh|Checked|New badges|Requests/);
 });
+
+test("latest entry without a URL opens its item without marking it read", async () => {
+  api.mockResolvedValue([{ ...item, latest_link: { ...link, url: "" } }]);
+  render(
+    <MemoryRouter>
+      <Library />
+    </MemoryRouter>,
+  );
+  const latest = await screen.findByRole("link", { name: /Latest entry for/ });
+  expect(latest).toHaveAttribute("href", "/items/one?search=Chapter%201");
+  await click(latest);
+  expect(patch).not.toHaveBeenCalled();
+});
