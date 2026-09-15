@@ -1,6 +1,7 @@
 """Hard bounds shared by discovery and durable storage."""
 
 MAX_LINKS = 4_999  # Includes ignored and trashed records; refresh cannot bypass it.
+MAX_CSV_BYTES = 4_000_000
 MAX_LIBRARY_LINKS = 100_000
 MAX_ITEMS = 200
 ITEM_ADD_INTERVAL_SECONDS = 8

@@ -257,7 +257,7 @@ def dot(a, b):
 def ranked_suggestions(store, limit=40):
     items = store.items() + store.items(trash=True)
     active = {i["id"]: i for i in items if not i["ignored"] and not i["deleted"]}
-    known = {source_key(i["url"]) for i in items}
+    known = {source_key(i["url"]) for i in items if i.get("source_type") != "csv"}
     with store.connection() as db:
         candidates = [
             dict(r)
@@ -362,7 +362,7 @@ def collect_cached(store, cache):
     if cache is None:
         return {"pages_used": 0}
     for item in store.items():
-        if item["ignored"] or item["deleted"]:
+        if item["ignored"] or item["deleted"] or item.get("source_type") == "csv":
             continue
         cached = cache.get(canonical_url(item["url"], preserve_slash=True))
         if not cached or not isinstance(cached.get("body"), str) or cached.get("error"):

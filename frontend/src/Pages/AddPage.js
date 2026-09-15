@@ -7,16 +7,21 @@ import {
   ExternalLinkIcon,
 } from "@heroicons/react/outline";
 import { Icon, Notice, TypeIcon } from "../Tracker";
-import { post, examples } from "../api";
+import { api, post, examples } from "../api";
 import { LinkDate } from "../RowTools";
 import { orderedPreview, usePreferences } from "../Preferences";
 import SourceMethod from "../SourceMethod";
 import useSourceMethod from "../useSourceMethod";
+import CsvUpload, { CsvDetails } from "../CsvUpload";
 
 export default function AddPage() {
   const { preferences } = usePreferences();
   const [params] = useSearchParams(),
     navigate = useNavigate();
+  const importId = params.get("import");
+  const sourceUrl = params.get("url") || "";
+  const [mode, setMode] = useState(importId ? "csv" : "web");
+  const [target, setTarget] = useState(null);
   const [url, setUrl] = useState(params.get("url") || ""),
     [selector, setSelector] = useState(""),
     [path, setPath] = useState(""),
@@ -26,7 +31,7 @@ export default function AddPage() {
     [saving, setSaving] = useState(false),
     [error, setError] = useState("");
   const source = useSourceMethod(
-    url,
+    mode === "web" ? url : "",
     preferences.source_method,
     selector,
     busy || saving || Boolean(result),
@@ -63,9 +68,29 @@ export default function AddPage() {
     return () => clearInterval(timer);
   }, [retryAt]);
   useEffect(() => {
-    setUrl(params.get("url") || "");
+    setUrl(sourceUrl);
     setResult(null);
-  }, [params]);
+    if (importId) setMode("csv");
+    else if (sourceUrl) setMode("web");
+    setTarget(null);
+    if (!importId) return;
+    let active = true;
+    api(`/items/${importId}`)
+      .then((item) => {
+        if (!active) return;
+        if (item.source_type !== "csv" || item.deleted)
+          throw new Error("Choose a CSV item outside Trash to update.");
+        setTarget(item);
+        setTitle(item.title);
+        setKeywords(item.keywords || "");
+      })
+      .catch((e) => {
+        if (active) setError(e.message);
+      });
+    return () => {
+      active = false;
+    };
+  }, [sourceUrl, importId]);
   const scan = async (e) => {
     e.preventDefault();
     setBusy(true);
@@ -92,17 +117,33 @@ export default function AddPage() {
     }
   };
   const save = async () => {
-    if (saving || remaining > 0) return;
+    if (
+      !result ||
+      (mode === "csv" && !result.entries.length) ||
+      saving ||
+      remaining > 0 ||
+      (importId && !target)
+    )
+      return;
     setSaving(true);
     setError("");
     try {
-      const item = await post("/items", {
-        scan_id: result.scan_id,
-        title: title.trim() || result.title,
-        mark_read: readMode === "all",
-        read_indices:
-          readMode === "choose" ? [...selectedRead].sort((a, b) => a - b) : [],
-      });
+      const item = await post(
+        importId ? `/items/${importId}/import` : "/items",
+        {
+          scan_id: result.scan_id,
+          title: title.trim() || result.title,
+          ...(!importId
+            ? {
+                mark_read: readMode === "all",
+                read_indices:
+                  readMode === "choose"
+                    ? [...selectedRead].sort((a, b) => a - b)
+                    : [],
+              }
+            : {}),
+        },
+      );
       navigate(`/items/${item.id}`);
     } catch (e) {
       if (e.status === 429 && e.retryAfter) {
@@ -122,118 +163,160 @@ export default function AddPage() {
         Library
       </Link>
       <div className="page-heading">
-        <h1>Add item</h1>
+        <h1>{importId ? "Update CSV item" : "Add item"}</h1>
       </div>
+      {!importId && (
+        <div className="source-tabs" role="group" aria-label="Item source">
+          {[
+            ["web", "Website"],
+            ["csv", "CSV file"],
+          ].map(([value, label]) => (
+            <button
+              key={value}
+              className={`button ${mode === value ? "primary" : ""}`}
+              aria-pressed={mode === value}
+              disabled={busy || saving}
+              onClick={() => {
+                setMode(value);
+                setResult(null);
+                setError("");
+              }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
       <Notice error>{error}</Notice>
       <div className="add-layout">
         <div>
-          <form className="form-panel" onSubmit={scan}>
-            <label className="field">
-              Source URL
-              <input
-                type="url"
-                inputMode="url"
-                autoCapitalize="none"
-                autoCorrect="off"
-                spellCheck={false}
-                enterKeyHint="go"
-                required
-                placeholder="https://example.com/series"
-                value={url}
-                disabled={busy || saving}
-                onChange={(e) => {
-                  setUrl(e.target.value);
-                  setResult(null);
-                }}
-              />
-              <span className="hint">
-                Use a series page, channel, blog archive, or RSS / Atom feed.
-              </span>
-            </label>
-            <SourceMethod
-              value={sourceMethod}
-              disabled={busy || saving}
-              onChange={(method) => {
-                source.select(method);
-                setResult(null);
+          {mode === "csv" ? (
+            <CsvUpload
+              key={importId || "new"}
+              disabled={saving || Boolean(importId && !target)}
+              itemId={importId}
+              keywords={keywords}
+              onKeywords={setKeywords}
+              onBusy={setBusy}
+              onError={setError}
+              onInvalidate={() => setResult(null)}
+              onPreview={(r) => {
+                setResult(r);
+                setPage(0);
+                setReadMode("unread");
+                setSelectedRead(new Set());
+                setTitle(target?.title || r.title);
               }}
             />
-            {source.note && (
-              <p className="hint" role="status">
-                {source.note}
-              </p>
-            )}
-            <label className="field">
-              Keywords
-              <input
-                disabled={busy || saving}
-                value={keywords}
-                maxLength={300}
-                placeholder="English, official"
-                onChange={(e) => {
-                  setKeywords(e.target.value);
-                  setResult(null);
-                }}
-              />
-              <span className="hint">
-                Optional. Match every comma-separated keyword or phrase in a
-                link’s title or nearby details.
-              </span>
-            </label>
-            <details>
-              <summary>Refine link detection</summary>
-              {sourceMethod === "auto" && (
-                <label className="field">
-                  Link selector
-                  <input
-                    disabled={busy || saving}
-                    value={selector}
-                    placeholder="#chapters a, article h2 a"
-                    onChange={(e) => {
-                      setSelector(e.target.value);
-                      setResult(null);
-                    }}
-                  />
-                  <span className="hint">
-                    Optional CSS selector for content links. Useful for pages
-                    with several lists.
-                  </span>
-                </label>
-              )}
+          ) : (
+            <form className="form-panel" onSubmit={scan}>
               <label className="field">
-                URL must contain
+                Source URL
                 <input
+                  type="url"
+                  inputMode="url"
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck={false}
+                  enterKeyHint="go"
+                  required
+                  placeholder="https://example.com/series"
+                  value={url}
                   disabled={busy || saving}
-                  value={path}
-                  placeholder="/my-series/chapter/"
                   onChange={(e) => {
-                    setPath(e.target.value);
+                    setUrl(e.target.value);
                     setResult(null);
                   }}
                 />
                 <span className="hint">
-                  Optional text that every content URL must include.
+                  Use a series page, channel, blog archive, or RSS / Atom feed.
                 </span>
               </label>
-            </details>
-            <button
-              className="button primary"
-              disabled={busy || saving}
-              type="submit"
-            >
-              <Icon
-                as={busy ? RefreshIcon : ArrowRightIcon}
-                className={`icon ${busy ? "spinning" : ""}`}
+              <SourceMethod
+                value={sourceMethod}
+                disabled={busy || saving}
+                onChange={(method) => {
+                  source.select(method);
+                  setResult(null);
+                }}
               />
-              {busy ? "Scanning source…" : "Scan links"}
-            </button>
-            {busy && (
-              <p role="status" className="hint" style={{ marginTop: 15 }}>
-                Checking the selected source. Large listings can take up to
-                three minutes.
-              </p>
-            )}
-          </form>
+              {source.note && (
+                <p className="hint" role="status">
+                  {source.note}
+                </p>
+              )}
+              <label className="field">
+                Keywords
+                <input
+                  disabled={busy || saving}
+                  value={keywords}
+                  maxLength={300}
+                  placeholder="English, official"
+                  onChange={(e) => {
+                    setKeywords(e.target.value);
+                    setResult(null);
+                  }}
+                />
+                <span className="hint">
+                  Optional. Match every comma-separated keyword or phrase in a
+                  link’s title or nearby details.
+                </span>
+              </label>
+              <details>
+                <summary>Refine link detection</summary>
+                {sourceMethod === "auto" && (
+                  <label className="field">
+                    Link selector
+                    <input
+                      disabled={busy || saving}
+                      value={selector}
+                      placeholder="#chapters a, article h2 a"
+                      onChange={(e) => {
+                        setSelector(e.target.value);
+                        setResult(null);
+                      }}
+                    />
+                    <span className="hint">
+                      Optional CSS selector for content links. Useful for pages
+                      with several lists.
+                    </span>
+                  </label>
+                )}
+                <label className="field">
+                  URL must contain
+                  <input
+                    disabled={busy || saving}
+                    value={path}
+                    placeholder="/my-series/chapter/"
+                    onChange={(e) => {
+                      setPath(e.target.value);
+                      setResult(null);
+                    }}
+                  />
+                  <span className="hint">
+                    Optional text that every content URL must include.
+                  </span>
+                </label>
+              </details>
+              <button
+                className="button primary"
+                disabled={busy || saving}
+                type="submit"
+              >
+                <Icon
+                  as={busy ? RefreshIcon : ArrowRightIcon}
+                  className={`icon ${busy ? "spinning" : ""}`}
+                />
+                {busy ? "Scanning source…" : "Scan links"}
+              </button>
+              {busy && (
+                <p role="status" className="hint" style={{ marginTop: 15 }}>
+                  Checking the selected source. Large listings can take up to
+                  three minutes.
+                </p>
+              )}
+            </form>
+          )}
           {result && (
             <section className="form-panel scan-results">
               <div className="preview-save-actions preview-sticky">
@@ -241,7 +324,12 @@ export default function AddPage() {
                 <button
                   className="button primary"
                   onClick={save}
-                  disabled={busy || saving || remaining > 0}
+                  disabled={
+                    busy ||
+                    saving ||
+                    remaining > 0 ||
+                    (mode === "csv" && !result.entries.length)
+                  }
                   title={
                     remaining > 0
                       ? "You can add one item every 8 seconds."
@@ -252,7 +340,9 @@ export default function AddPage() {
                     ? "Saving…"
                     : remaining > 0
                       ? `Add in ${remaining}s`
-                      : "Add to library"}
+                      : importId
+                        ? "Update item"
+                        : "Add to library"}
                   <Icon as={ArrowRightIcon} />
                 </button>
               </div>
@@ -262,7 +352,11 @@ export default function AddPage() {
                   <div>
                     <h2>{result.entries.length} links found</h2>
                     <div className="scan-meta">
-                      <span>{result.pages_scanned} pages scanned</span>
+                      <span>
+                        {result.csv
+                          ? `${result.csv.rows} CSV rows`
+                          : `${result.pages_scanned} pages scanned`}
+                      </span>
                       <span>
                         {result.entries.filter((e) => e.published_at).length}{" "}
                         with dates
@@ -270,7 +364,7 @@ export default function AddPage() {
                       {result.keywords && (
                         <span>Matching: {result.keywords}</span>
                       )}
-                      {result.unfiltered_count != null && (
+                      {result.keywords && result.unfiltered_count != null && (
                         <span>
                           {result.unfiltered_count} checked for keywords
                         </span>
@@ -301,64 +395,66 @@ export default function AddPage() {
                 />
               </label>
               <div>
-                <div className="preview-reading">
-                  <label className="field">
-                    Reading progress
-                    <select
-                      value={readMode}
-                      disabled={saving}
-                      onChange={(e) => {
-                        const next = e.target.value;
-                        if (next === "choose" && readMode === "all")
+                {!importId && (
+                  <div className="preview-reading">
+                    <label className="field">
+                      Reading progress
+                      <select
+                        value={readMode}
+                        disabled={saving}
+                        onChange={(e) => {
+                          const next = e.target.value;
+                          if (next === "choose" && readMode === "all")
+                            setSelectedRead(
+                              new Set(preview.map(({ index }) => index)),
+                            );
+                          if (next === "unread") setSelectedRead(new Set());
+                          setReadMode(next);
+                        }}
+                      >
+                        <option value="unread">Not started</option>
+                        <option value="choose">Choose read links</option>
+                        <option value="all">Caught up</option>
+                      </select>
+                    </label>
+                    <span className="hint" role="status">
+                      {readCount} read · {preview.length - readCount} unread
+                    </span>
+                    {readMode === "choose" && (
+                      <button
+                        className="text-button"
+                        disabled={
+                          saving ||
+                          preview
+                            .slice(page * 25, (page + 1) * 25)
+                            .every(({ index }) => selectedRead.has(index))
+                        }
+                        onClick={() =>
                           setSelectedRead(
-                            new Set(preview.map(({ index }) => index)),
-                          );
-                        if (next === "unread") setSelectedRead(new Set());
-                        setReadMode(next);
-                      }}
-                    >
-                      <option value="unread">Not started</option>
-                      <option value="choose">Choose read links</option>
-                      <option value="all">Caught up</option>
-                    </select>
-                  </label>
-                  <span className="hint" role="status">
-                    {readCount} read · {preview.length - readCount} unread
-                  </span>
-                  {readMode === "choose" && (
-                    <button
-                      className="text-button"
-                      disabled={
-                        saving ||
-                        preview
-                          .slice(page * 25, (page + 1) * 25)
-                          .every(({ index }) => selectedRead.has(index))
-                      }
-                      onClick={() =>
-                        setSelectedRead(
-                          (old) =>
-                            new Set([
-                              ...old,
-                              ...preview
-                                .slice(page * 25, (page + 1) * 25)
-                                .map(({ index }) => index),
-                            ]),
-                        )
-                      }
-                    >
-                      Mark this page read
-                    </button>
-                  )}
-                  {readMode === "choose" && (
-                    <button
-                      className="text-button"
-                      disabled={saving || !selectedRead.size}
-                      onClick={() => setSelectedRead(new Set())}
-                    >
-                      Clear read selection
-                    </button>
-                  )}
-                </div>
+                            (old) =>
+                              new Set([
+                                ...old,
+                                ...preview
+                                  .slice(page * 25, (page + 1) * 25)
+                                  .map(({ index }) => index),
+                              ]),
+                          )
+                        }
+                      >
+                        Mark this page read
+                      </button>
+                    )}
+                    {readMode === "choose" && (
+                      <button
+                        className="text-button"
+                        disabled={saving || !selectedRead.size}
+                        onClick={() => setSelectedRead(new Set())}
+                      >
+                        Clear read selection
+                      </button>
+                    )}
+                  </div>
+                )}
                 {preview
                   .slice(page * 25, (page + 1) * 25)
                   .map(({ entry: e, index }) => (
@@ -389,6 +485,7 @@ export default function AddPage() {
                       {e.summary && (
                         <span className="preview-context">{e.summary}</span>
                       )}
+                      {mode === "csv" && <CsvDetails context={e.context} />}
                       <LinkDate entry={e} />
                     </div>
                   ))}
@@ -414,24 +511,49 @@ export default function AddPage() {
                   </button>
                 </div>
               )}
-              <p className="hint" style={{ marginTop: 15 }}>
-                Read-on-open is {preferences.auto_read ? "on" : "off"} for new
-                items. Change defaults in <Link to="/settings">Settings</Link>.
-              </p>
+              {!importId && (
+                <p className="hint" style={{ marginTop: 15 }}>
+                  Read-on-open is {preferences.auto_read ? "on" : "off"} for new
+                  items. Change defaults in <Link to="/settings">Settings</Link>
+                  .
+                </p>
+              )}
             </section>
           )}
         </div>
         <aside className="help-panel">
-          <h2>Example sources</h2>
-          <div className="example-grid">
-            {examples.map((e) => (
-              <Link key={e.url} to={`/add?url=${encodeURIComponent(e.url)}`}>
-                <span className="muted">{e.kind}</span>
-                <strong>{e.title}</strong>
-                <Icon as={ExternalLinkIcon} />
-              </Link>
-            ))}
-          </div>
+          {mode === "csv" ? (
+            <>
+              <h2>Import links</h2>
+              <p>
+                Use a column of complete website links. Titles, dates, and other
+                details come from the same row.
+              </p>
+              <p>
+                Review the detected columns before saving. Update this item
+                later by uploading a revised CSV.
+              </p>
+              <a className="button" href="/examples/links.csv" download>
+                Download example CSV
+              </a>
+            </>
+          ) : (
+            <>
+              <h2>Example sources</h2>
+              <div className="example-grid">
+                {examples.map((e) => (
+                  <Link
+                    key={e.url}
+                    to={`/add?url=${encodeURIComponent(e.url)}`}
+                  >
+                    <span className="muted">{e.kind}</span>
+                    <strong>{e.title}</strong>
+                    <Icon as={ExternalLinkIcon} />
+                  </Link>
+                ))}
+              </div>
+            </>
+          )}
         </aside>
       </div>
     </>

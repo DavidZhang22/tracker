@@ -1258,3 +1258,9 @@ progress::-moz-progress-bar {
     justify-self: end;
   }
 }
+.source-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+.csv-field-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 0 16px; margin-top: 16px; }
+.csv-columns { margin-bottom: 20px; }
+.csv-details { font-size: 0.875rem; margin-top: 8px; min-width: 0; }
+.csv-details p { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.6; margin-top: 8px; }
+.form-panel input[type="file"] { max-width: 100%; min-width: 0; padding: 10px; }

@@ -19,6 +19,7 @@ def date_rank(entry):
         {
             "published": 400,
             "scheduled": 400,
+            "deadline": 300,
             "listed": 300,
             "updated": 200,
             "inferred": 100,

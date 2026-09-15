@@ -12,6 +12,17 @@ Track blogs, chapters, videos, game updates, job listings and other public sourc
 - Lightweight refreshes with a full model scan available when a source changes.
 - Suggestions ranked locally using existing source metadata.
 - Password-protected accounts, data export, session revocation and account deletion.
+- CSV uploads with column detection, preview and updates to one item.
+
+## Import a CSV
+
+Choose **Add item → CSV file**, upload your file, and review the detected columns. Each row becomes a link within one item. Select a link column, an optional title, company/creator, content date, and chapter/episode number. Other cells stay searchable under each link’s Details. Reading progress can be selected before saving.
+
+CSV imports parse structured rows directly; the HTML link classifier does not discard explicit CSV records. Imports never fetch their links, execute formulas, or render cell contents as HTML. UTF-8, UTF-16 with a BOM, Windows-1252, comma, semicolon, tab and pipe exports are supported. Files are limited to 4 MB, 10,000 input rows, 64 columns and 4,999 saved unique links. Duplicate URLs use the same identity rules as web scans. Ambiguous numeric dates require an explicit day/month choice; verification dates are kept as details. Deadlines and updates are labeled separately from publication dates.
+
+CSV items use **Upload CSV** to merge a revised file after preview. Matching links retain read, favorite, muted, Trash and grouping state. Missing rows stay saved. Refresh all skips CSV items. No database or external model service needs to be set up.
+
+A local acceptance check of a 59-row, 19-column job CSV retained all 59 unique application URLs and all row details, associated 17 content dates, and preserved progress on re-upload. Its median parse time was 9.5 ms across five runs. A synthetic 4,999-link, 2.28 MB CSV peaked at 14.1 MiB of traced Python allocations; this excludes the application’s baseline memory. Permanent tests use synthetic records; the personal test file is not included.
 
 ## Organizing links
 

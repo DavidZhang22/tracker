@@ -427,7 +427,7 @@ export function Library() {
         )
         .filter((i) => kind === "all" || i.kind === kind)
         .filter((i) =>
-          `${i.title} ${i.url}`
+          `${i.title} ${i.url} ${i.source_name || ""}`
             .normalize("NFKC")
             .toLowerCase()
             .includes(search.trim().normalize("NFKC").toLowerCase()),
@@ -466,7 +466,7 @@ export function Library() {
               label="Refresh all"
               onRefresh={refresh}
               busy={refreshing}
-              disabled={busy || !active.length}
+              disabled={busy || !active.some((i) => i.source_type !== "csv")}
             />
           )}
           <Link className="button primary" to="/add">
@@ -622,10 +622,16 @@ export function Library() {
                     </Link>
                     <div className="item-meta">
                       <span>
-                        {new URL(i.url).hostname.replace(/^www\./, "")}
+                        {i.source_type === "csv"
+                          ? "CSV import"
+                          : new URL(i.url).hostname.replace(/^www\./, "")}
                       </span>
                       <span className="kind-label">
-                        {i.kind === "youtube" ? "YouTube" : i.kind}
+                        {i.source_type === "csv"
+                          ? i.source_name
+                          : i.kind === "youtube"
+                            ? "YouTube"
+                            : i.kind}
                       </span>
                       {i.new_count > 0 && (
                         <span className="badge">{i.new_count} new</span>

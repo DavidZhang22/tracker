@@ -11,6 +11,7 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 from starlette.background import BackgroundTask
 
+from .csv_import import parse_csv
 from .keywords import terms
 from .limits import MAX_ITEMS, MAX_LINKS, bounded_scan
 from .preferences import PreferencesPatch
@@ -213,6 +214,72 @@ def items(request: Request, trash: bool = False):
     return request.state.store.items(trash=trash)
 
 
+@router.post("/scans/csv")
+async def csv_preview(
+    request: Request,
+    filename: str = Query("links.csv", max_length=255),
+    url_column: int | None = Query(None, ge=0, le=63),
+    title_column: int | None = Query(None, ge=-1, le=63),
+    company_column: int | None = Query(None, ge=-1, le=63),
+    date_column: int | None = Query(None, ge=-1, le=63),
+    number_column: int | None = Query(None, ge=-1, le=63),
+    delimiter: Literal["auto", ",", ";", "\t", "|"] = "auto",
+    header: Literal["auto", "yes", "no"] = "auto",
+    date_order: Literal["auto", "day_first", "month_first"] = "auto",
+    keywords: str = Query("", max_length=300),
+    item_id: str | None = Query(None, min_length=1, max_length=64),
+):
+    mime = request.headers.get("content-type", "").split(";", 1)[0].strip().lower()
+    if mime not in {
+        "text/csv",
+        "text/tab-separated-values",
+        "text/plain",
+        "application/octet-stream",
+        "application/vnd.ms-excel",
+    }:
+        raise HTTPException(
+            415, "Upload CSV text. Export Excel workbooks as CSV first."
+        )
+    store = request.state.store
+    target = await run_blocking(store.refresh_source, item_id) if item_id else None
+    if target and (target["source_type"] != "csv" or target["deleted"]):
+        raise HTTPException(422, "Choose a CSV item outside Trash to update.")
+    columns = {
+        field: value
+        for field, value in zip(
+            ("url", "title", "company", "date", "number"),
+            (url_column, title_column, company_column, date_column, number_column),
+            strict=True,
+        )
+        if value is not None
+    }
+    with request.app.state.scan_guard.operation(store.path):
+        payload = await run_blocking(
+            parse_csv,
+            await request.body(),
+            filename,
+            columns=columns,
+            delimiter=delimiter,
+            header=header,
+            date_order=date_order,
+            keywords=keywords,
+        )
+        if target:
+            payload.update(url=target["url"], import_item_id=item_id)
+        sid = await run_blocking(store.save_scan, payload)
+    return payload | {"scan_id": sid}
+
+
+class CsvImportRequest(BaseModel):
+    scan_id: str = Field(min_length=1, max_length=64)
+    title: str | None = Field(default=None, min_length=1, max_length=300)
+
+
+@router.post("/items/{iid}/import")
+def import_csv(iid: str, body: CsvImportRequest, request: Request):
+    return request.state.store.import_csv(iid, body.scan_id, body.title)
+
+
 @router.post("/items/bulk")
 def item_bulk(body: BulkRequest, request: Request):
     return request.state.store.bulk_selected("items", body.ids, body.action)
@@ -311,10 +378,14 @@ async def refresh_item(iid, app, store, skip_unavailable=False, deep=False):
     lock = app.state.refresh_locks[hash(iid) % 64]
     async with lock:
         item = await run_blocking(store.refresh_source, iid)
-        if skip_unavailable and (item["deleted"] or item["ignored"]):
+        if skip_unavailable and (
+            item["deleted"] or item["ignored"] or item.get("source_type") == "csv"
+        ):
             return {"id": iid, "new_count": 0, "ok": True, "skipped": True}
         if item["deleted"]:
             raise DiscoveryError("Restore this item from Trash before refreshing it.")
+        if item.get("source_type") == "csv":
+            raise DiscoveryError("Upload a CSV to update this item.")
         try:
             async with app.state.scan_semaphore:
                 store.check_active()

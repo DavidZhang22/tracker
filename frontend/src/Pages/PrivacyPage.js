@@ -79,6 +79,12 @@ export default function PrivacyPage({ terms = false }) {
                 Passwords and raw session tokens are not stored in the database.
               </p>
               <p>
+                CSV imports store the filename and each imported row’s links,
+                titles, dates and other details in your private library. The
+                original file is processed in memory and is not retained as a
+                file. Importing a CSV does not visit its links.
+              </p>
+              <p>
                 We use this data to provide the tracker you request, relying on
                 performance of the service agreement where GDPR applies. We use
                 short-lived abuse counters and security records for our

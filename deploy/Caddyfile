@@ -1,6 +1,11 @@
 {$TRACKER_DOMAIN} {
     encode zstd gzip
-    request_body {
+    @csvUpload path /api/scans/csv
+    request_body @csvUpload {
+        max_size 4MB
+    }
+    @standardRequest not path /api/scans/csv
+    request_body @standardRequest {
         max_size 256KB
     }
     header {

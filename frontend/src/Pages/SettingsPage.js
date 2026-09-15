@@ -243,7 +243,9 @@ function ItemSettings({ autoUpdate, settingsBusy, onBusy }) {
                 source_method: draft.source_method || "auto",
               });
               setMessage(
-                "Item settings saved. Refresh the item to apply detection changes.",
+                draft.source_type === "csv"
+                  ? "Item settings saved."
+                  : "Item settings saved. Refresh the item to apply detection changes.",
               );
             } catch (e) {
               setError(e.message);
@@ -262,46 +264,50 @@ function ItemSettings({ autoUpdate, settingsBusy, onBusy }) {
               />
               Mark as read when opened for this item
             </label>
-            <SourceMethod
-              value={draft.source_method || "auto"}
-              onChange={(value) => change("source_method", value)}
-            />
-            <label className="field">
-              Keywords
-              <input
-                value={draft.keywords || ""}
-                maxLength={300}
-                placeholder="English, official"
-                onChange={(e) => change("keywords", e.target.value)}
-              />
-              <span className="hint">
-                Match every comma-separated keyword in a title or nearby
-                details. Saved links are kept.
-              </span>
-            </label>
-            <details>
-              <summary>Advanced link detection</summary>
-              {(draft.source_method || "auto") === "auto" && (
-                <label className="field">
-                  Link selector
-                  <input
-                    value={draft.selector}
-                    maxLength={300}
-                    placeholder="#chapters a"
-                    onChange={(e) => change("selector", e.target.value)}
-                  />
-                </label>
-              )}
-              <label className="field">
-                URL must contain
-                <input
-                  value={draft.include_path}
-                  maxLength={300}
-                  placeholder="/chapter/"
-                  onChange={(e) => change("include_path", e.target.value)}
+            {draft.source_type !== "csv" && (
+              <>
+                <SourceMethod
+                  value={draft.source_method || "auto"}
+                  onChange={(value) => change("source_method", value)}
                 />
-              </label>
-            </details>
+                <label className="field">
+                  Keywords
+                  <input
+                    value={draft.keywords || ""}
+                    maxLength={300}
+                    placeholder="English, official"
+                    onChange={(e) => change("keywords", e.target.value)}
+                  />
+                  <span className="hint">
+                    Match every comma-separated keyword in a title or nearby
+                    details. Saved links are kept.
+                  </span>
+                </label>
+                <details>
+                  <summary>Advanced link detection</summary>
+                  {(draft.source_method || "auto") === "auto" && (
+                    <label className="field">
+                      Link selector
+                      <input
+                        value={draft.selector}
+                        maxLength={300}
+                        placeholder="#chapters a"
+                        onChange={(e) => change("selector", e.target.value)}
+                      />
+                    </label>
+                  )}
+                  <label className="field">
+                    URL must contain
+                    <input
+                      value={draft.include_path}
+                      maxLength={300}
+                      placeholder="/chapter/"
+                      onChange={(e) => change("include_path", e.target.value)}
+                    />
+                  </label>
+                </details>
+              </>
+            )}
             <div className="actions">
               <button className="button" type="submit">
                 {busy ? "Saving…" : "Save item settings"}

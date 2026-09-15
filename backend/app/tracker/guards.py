@@ -9,6 +9,8 @@ from threading import Lock
 from fastapi import HTTPException
 from starlette.responses import JSONResponse
 
+from .limits import MAX_CSV_BYTES
+
 
 class RateLimits:
     def __init__(self, clock=time.monotonic, max_keys=4096):
@@ -71,6 +73,7 @@ class ApiGuard:
         self.rates = rates or RateLimits()
         self.max_body, self.body_timeout = max_body, body_timeout
         self.active = 0
+        self.uploads = 0
 
     async def __call__(self, scope, receive, send):
         if scope["type"] != "http" or not scope["path"].startswith("/api/"):
@@ -85,18 +88,23 @@ class ApiGuard:
             await response(scope, receive, send)
 
         ip = (scope.get("client") or ("unknown",))[0]
+        csv_upload = scope["path"] == "/api/scans/csv" and scope["method"] == "POST"
         try:
             self.rates.charge([("api:global", 1200, 60), (f"api:{ip}", 240, 60)])
+            if csv_upload:
+                self.rates.charge([("csv:global", 240, 3600), (f"csv:{ip}", 60, 3600)])
         except HTTPException as exc:
             return await reject(exc.status_code, exc.detail, exc.headers)
-        if self.active >= 64:
+        if self.active >= 64 or csv_upload and self.uploads >= 3:
             return await reject(
                 429,
                 "The server is busy. Please try again shortly.",
                 {"Retry-After": "10"},
             )
         body_limit = (
-            262_144
+            MAX_CSV_BYTES
+            if csv_upload and self.max_body == 65_536
+            else 262_144
             if self.max_body == 65_536
             and (
                 scope["path"] == "/api/links/bulk"
@@ -116,6 +124,7 @@ class ApiGuard:
                 if length < 0 or length > body_limit:
                     return await reject(413, "This request is too large.")
         self.active += 1
+        self.uploads += int(csv_upload)
         try:
             chunks, size = [], 0
             try:
@@ -135,6 +144,7 @@ class ApiGuard:
             except TimeoutError:
                 return await reject(408, "The request took too long to arrive.")
             body = b"".join(chunks)
+            chunks.clear()
             delivered = False
 
             async def replay():
@@ -147,3 +157,4 @@ class ApiGuard:
             await self.app(scope, replay, send)
         finally:
             self.active -= 1
+            self.uploads -= int(csv_upload)

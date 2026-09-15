@@ -1,3 +1,4 @@
+import { CsvDetails } from "../CsvUpload";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
@@ -223,15 +224,21 @@ export default function ItemPage() {
           <TypeIcon kind={item.kind} />
           <div>
             <h1>{item.title}</h1>
-            <a
-              className="source-link"
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {new URL(item.url).hostname}
-              <Icon as={ExternalLinkIcon} />
-            </a>
+            {item.source_type === "csv" ? (
+              <span className="source-link">
+                {item.source_name || "CSV import"}
+              </span>
+            ) : (
+              <a
+                className="source-link"
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {new URL(item.url).hostname}
+                <Icon as={ExternalLinkIcon} />
+              </a>
+            )}
           </div>
         </div>
         <div className="actions">
@@ -247,13 +254,21 @@ export default function ItemPage() {
             active={item.ignored}
             onClick={() => update({ ignored: !item.ignored })}
           />
-          <RefreshControl
-            label="Refresh item"
-            onRefresh={refresh}
-            busy={busy}
-            disabled={item.deleted}
-            primary
-          />
+          {item.source_type === "csv" ? (
+            !item.deleted && (
+              <Link className="button primary" to={`/add?import=${id}`}>
+                Upload CSV
+              </Link>
+            )
+          ) : (
+            <RefreshControl
+              label="Refresh item"
+              onRefresh={refresh}
+              busy={busy}
+              disabled={item.deleted}
+              primary
+            />
+          )}
         </div>
       </div>
       <Notice
@@ -499,6 +514,9 @@ export default function ItemPage() {
                   )}
                   {l.summary && <span>{l.summary}</span>}
                 </div>
+                {item.source_type === "csv" && (
+                  <CsvDetails context={l.context} />
+                )}
               </div>
               <div className="entry-date">
                 <LinkDate entry={l} />
@@ -568,9 +586,13 @@ export default function ItemPage() {
         </div>
       </section>
       <details className="scan-details item-scan-summary">
-        <summary>Scan details</summary>
+        <summary>
+          {item.source_type === "csv" ? "Import details" : "Scan details"}
+        </summary>
         <p>
-          {item.pages_scanned} pages · {item.methods.join(", ")}
+          {item.source_type === "csv"
+            ? item.source_name
+            : `${item.pages_scanned} pages · ${item.methods.join(", ")}`}
         </p>
         <p>
           {item.dated_count || 0} of {item.total_count} links have a source

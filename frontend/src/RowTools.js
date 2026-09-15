@@ -491,7 +491,8 @@ export function LinkDate({ entry }) {
       updated: "Updated",
       listed: "Listed",
       scheduled: "Starts",
-      inferred: "Date in URL",
+      deadline: "Deadline",
+      inferred: entry.method === "CSV import" ? "Approximate" : "Date in URL",
     }[entry.date_kind] || "Date";
   if (!value) return <span className="link-date">Date unavailable</span>;
   const origin = `${entry.date_source || "Source page"}${precise ? ` · ${new Date(value).toISOString()} (shown in your time zone)` : " · Date only"}`;
