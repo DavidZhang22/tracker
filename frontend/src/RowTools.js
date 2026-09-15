@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Menu } from "@headlessui/react";
 import {
@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/outline";
 import { day } from "./api";
 import { usePreferences } from "./Preferences";
+import SelectionPattern from "./SelectionPattern";
 
 export function openRowMenu(event) {
   if (event.shiftKey) return; // Shift + right click keeps the browser menu available.
@@ -115,6 +116,7 @@ export function ActionMenu({
   links = false,
   disabled = false,
   rangeActions = false,
+  mergeActions = false,
 }) {
   const button = useRef();
   const actions = record.deleted
@@ -126,7 +128,7 @@ export function ActionMenu({
         ],
         [
           record.ignored ? "unignore" : "ignore",
-          record.ignored ? "Stop ignoring" : "Ignore",
+          record.ignored ? "Unmute" : "Mute",
         ],
         ...(links
           ? [
@@ -140,6 +142,14 @@ export function ActionMenu({
           ? [
               ["read-before", "Mark all before as read"],
               ["read-after", "Mark all after as read"],
+            ]
+          : []),
+        ...(mergeActions
+          ? [
+              ["merge", "Merge with above"],
+              ...(record.link_count > 1
+                ? [["separate", "Separate links"]]
+                : []),
             ]
           : []),
         ["delete", "Delete"],
@@ -235,24 +245,59 @@ function FloatingMenu({ anchor, open, children }) {
 export function useSelection(scope) {
   const [ids, setIds] = useState([]);
   const [selecting, setSelecting] = useState(false);
+  const anchor = useRef(null);
+  const selectedSet = useMemo(() => new Set(ids), [ids]);
   useEffect(() => {
     setIds([]);
     setSelecting(false);
+    anchor.current = null;
   }, [scope]);
   return {
     ids,
+    has: (id) => selectedSet.has(id),
     selecting: selecting || ids.length > 0,
     start: () => setSelecting(true),
     clear: () => {
       setIds([]);
       setSelecting(false);
     },
-    toggle: (id) =>
-      setIds((old) =>
-        old.includes(id)
-          ? old.filter((i) => i !== id)
-          : [...old, id].slice(0, 4999),
-      ),
+    toggle: (id, shift = false, visible = []) => {
+      const previous = anchor.current;
+      anchor.current = id;
+      if (shift && visible.includes(previous) && visible.includes(id)) {
+        const [start, end] = [
+          visible.indexOf(previous),
+          visible.indexOf(id),
+        ].sort((a, b) => a - b);
+        setIds((old) =>
+          [...new Set([...old, ...visible.slice(start, end + 1)])].slice(
+            0,
+            4999,
+          ),
+        );
+      } else
+        setIds((old) =>
+          old.includes(id)
+            ? old.filter((i) => i !== id)
+            : [...old, id].slice(0, 4999),
+        );
+    },
+    apply: (values, mode = "replace") => {
+      setSelecting(true);
+      setIds((old) => {
+        const candidates = new Set(values),
+          current = new Set(old);
+        if (mode === "add")
+          return [...new Set([...old, ...values])].slice(0, 4999);
+        if (mode === "remove") return old.filter((id) => !candidates.has(id));
+        if (mode === "invert")
+          return [
+            ...old.filter((id) => !candidates.has(id)),
+            ...values.filter((id) => !current.has(id)),
+          ].slice(0, 4999);
+        return [...candidates].slice(0, 4999);
+      });
+    },
     replace: (values) => {
       setSelecting(true);
       setIds(values.slice(0, 4999));
@@ -276,129 +321,164 @@ export function SelectionBar({
   total = visible.length,
   onSelectAll,
   rangeActions = false,
+  mergeActions = false,
+  patternSelection = false,
 }) {
   const check = useRef();
+  const [patternOpen, setPatternOpen] = useState(false);
   const selected = selection.ids;
-  const onPage = selected.filter((id) => visible.includes(id));
+  const onPage = useMemo(() => {
+    const shown = new Set(visible);
+    return selected.filter((id) => shown.has(id));
+  }, [selected, visible]);
   useEffect(() => {
     if (check.current)
       check.current.indeterminate =
         onPage.length > 0 && onPage.length < visible.length;
   }, [onPage.length, visible.length]);
   return (
-    <div
-      className={`selection-bar ${selected.length ? "has-selection" : ""} ${selection.selecting ? "is-selecting" : ""}`}
-    >
-      <button
-        className="text-button mobile-select-toggle"
-        disabled={busy || !visible.length}
-        onClick={selection.start}
+    <>
+      <div
+        className={`selection-bar ${selected.length ? "has-selection" : ""} ${selection.selecting ? "is-selecting" : ""}`}
       >
-        Select {links ? "links" : "items"}
-      </button>
-      <div className="selection-control select-all">
-        <label className="checkbox">
-          <input
-            ref={check}
-            aria-label="Select this page"
-            type="checkbox"
-            disabled={busy || !visible.length}
-            checked={!!visible.length && onPage.length === visible.length}
-            onChange={() => selection.all(visible)}
-          />
-          {selected.length ? `${selected.length} selected` : "Select"}
-        </label>
-        <select
-          aria-label="Selection options"
-          value=""
+        <button
+          className="text-button mobile-select-toggle"
           disabled={busy || !visible.length}
-          onChange={(e) => {
-            if (e.target.value === "all") onSelectAll();
-            else selection.replace(visible);
-          }}
+          onClick={selection.start}
         >
-          <option value="" disabled>
-            Select…
-          </option>
-          <option value="page">This page ({visible.length})</option>
-          {onSelectAll && total > visible.length && (
-            <option value="all">All matching links ({total})</option>
-          )}
-        </select>
-      </div>
-      {(!!selected.length || selection.selecting) && (
-        <div className="actions">
-          {!!selected.length && (
-            <>
-              {trash ? (
-                <button
-                  className="text-button"
-                  disabled={busy}
-                  onClick={() => onAction("restore", selected)}
-                >
-                  Restore
-                </button>
-              ) : (
-                <>
-                  <button
-                    className="text-button"
-                    disabled={busy}
-                    onClick={() => onAction("favorite", selected)}
-                  >
-                    Favorite
-                  </button>
-                  <button
-                    className="text-button"
-                    disabled={busy}
-                    onClick={() => onAction("ignore", selected)}
-                  >
-                    Ignore
-                  </button>
-                  <button
-                    className="text-button danger-text"
-                    disabled={busy}
-                    onClick={() => onAction("delete", selected)}
-                  >
-                    Delete
-                  </button>
-                  <select
-                    aria-label="More bulk actions"
-                    value=""
-                    disabled={busy}
-                    onChange={(e) => onAction(e.target.value, selected)}
-                  >
-                    <option value="" disabled>
-                      More actions
-                    </option>
-                    <option value="unfavorite">Unfavorite</option>
-                    <option value="unignore">Stop ignoring</option>
-                    {links && (
-                      <>
-                        <option value="read">Mark read</option>
-                        <option value="unread">Mark unread</option>
-                        {rangeActions && selected.length === 1 && (
-                          <>
-                            <option value="read-before">
-                              Mark all before as read
-                            </option>
-                            <option value="read-after">
-                              Mark all after as read
-                            </option>
-                          </>
-                        )}
-                      </>
-                    )}
-                  </select>
-                </>
-              )}
-            </>
-          )}
-          <button className="text-button" onClick={selection.clear}>
-            Cancel selection
-          </button>
+          Select {links ? "links" : "items"}
+        </button>
+        <div className="selection-control select-all">
+          <label className="checkbox">
+            <input
+              ref={check}
+              aria-label="Select this page"
+              type="checkbox"
+              disabled={busy || !visible.length}
+              checked={!!visible.length && onPage.length === visible.length}
+              onChange={() => selection.all(visible)}
+            />
+            {selected.length ? `${selected.length} selected` : "Select"}
+          </label>
+          <select
+            aria-label="Selection options"
+            value=""
+            disabled={busy || !visible.length}
+            onChange={(e) => {
+              if (e.target.value === "all") onSelectAll();
+              else if (e.target.value === "invert")
+                onSelectAll
+                  ? onSelectAll(undefined, "invert")
+                  : selection.apply(visible, "invert");
+              else if (e.target.value === "none") selection.clear();
+              else if (e.target.value === "pattern") {
+                setPatternOpen(true);
+                selection.start();
+              } else selection.replace(visible);
+            }}
+          >
+            <option value="" disabled>
+              Select…
+            </option>
+            <option value="page">This page ({visible.length})</option>
+            {onSelectAll && (
+              <option value="all">All matching links ({total})</option>
+            )}
+            <option value="invert">Invert selection</option>
+            <option value="none">Clear selection</option>
+            {patternSelection && (
+              <option value="pattern">Choose a pattern…</option>
+            )}
+          </select>
         </div>
+        {(!!selected.length || selection.selecting) && (
+          <div className="actions">
+            {!!selected.length && (
+              <>
+                {trash ? (
+                  <button
+                    className="text-button"
+                    disabled={busy}
+                    onClick={() => onAction("restore", selected)}
+                  >
+                    Restore
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      className="text-button"
+                      disabled={busy}
+                      onClick={() => onAction("favorite", selected)}
+                    >
+                      Favorite
+                    </button>
+                    <button
+                      className="text-button"
+                      disabled={busy}
+                      onClick={() => onAction("ignore", selected)}
+                    >
+                      Mute
+                    </button>
+                    <button
+                      className="text-button danger-text"
+                      disabled={busy}
+                      onClick={() => onAction("delete", selected)}
+                    >
+                      Delete
+                    </button>
+                    <select
+                      aria-label="More bulk actions"
+                      value=""
+                      disabled={busy}
+                      onChange={(e) => onAction(e.target.value, selected)}
+                    >
+                      <option value="" disabled>
+                        More actions
+                      </option>
+                      <option value="unfavorite">Unfavorite</option>
+                      {mergeActions && (
+                        <option value="merge">Merge with above</option>
+                      )}
+                      {mergeActions && (
+                        <option value="separate">Separate links</option>
+                      )}
+                      <option value="unignore">Unmute</option>
+                      {links && (
+                        <>
+                          <option value="read">Mark read</option>
+                          <option value="unread">Mark unread</option>
+                          {rangeActions && selected.length === 1 && (
+                            <>
+                              <option value="read-before">
+                                Mark all before as read
+                              </option>
+                              <option value="read-after">
+                                Mark all after as read
+                              </option>
+                            </>
+                          )}
+                        </>
+                      )}
+                    </select>
+                  </>
+                )}
+              </>
+            )}
+            <button className="text-button" onClick={selection.clear}>
+              Cancel selection
+            </button>
+          </div>
+        )}
+      </div>
+      {patternOpen && (
+        <SelectionPattern
+          total={total}
+          busy={busy}
+          onApply={onSelectAll}
+          onClose={() => setPatternOpen(false)}
+        />
       )}
-    </div>
+    </>
   );
 }
 

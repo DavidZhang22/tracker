@@ -75,7 +75,7 @@ export default function PrivacyPage({ terms = false }) {
                 We store your username, an Argon2id password hash, account
                 creation time, hashed session tokens and their expiry, your
                 source URLs, saved link metadata, reading progress, favorites,
-                ignored items, Trash, settings and temporary scan previews.
+                muted items, Trash, settings and temporary scan previews.
                 Passwords and raw session tokens are not stored in the database.
               </p>
               <p>

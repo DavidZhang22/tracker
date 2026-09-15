@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   ArrowLeftIcon,
@@ -11,6 +11,7 @@ import {
 import { Icon, Notice, TypeIcon, IconButton } from "../Tracker";
 import { api, patch, post, checked } from "../api";
 import { usePreferences } from "../Preferences";
+import { useLinkResults } from "../useLinkResults";
 import {
   ActionMenu,
   FilterOptions,
@@ -25,7 +26,6 @@ export default function ItemPage() {
   const { preferences } = usePreferences();
   const { id } = useParams();
   const [item, setItem] = useState(null),
-    [data, setData] = useState({ links: [], total: 0 }),
     [filter, setFilter] = useState("all"),
     [sort, setSort] = useState(preferences.link_sort),
     [direction, setDirection] = useState(preferences.link_direction),
@@ -34,7 +34,6 @@ export default function ItemPage() {
   const [error, setError] = useState(""),
     [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false),
-    [loading, setLoading] = useState(true),
     [version, setVersion] = useState(0);
   const selection = useSelection(
     `${id}:${filter}:${search}:${sort}:${direction}`,
@@ -55,30 +54,26 @@ export default function ItemPage() {
       active = false;
     };
   }, [id, version]);
-  useEffect(() => {
-    let active = true;
-    setLoading(true);
-    const q = new URLSearchParams({
-      filter,
-      sort,
-      direction,
-      search,
-      offset,
-      limit: 50,
-    });
-    api(`/items/${id}/links?${q}`)
-      .then((d) => {
-        if (active) {
-          setData(d);
-          if (offset && offset >= d.total) setOffset(0);
-        }
-      })
-      .catch((e) => active && setError(e.message))
-      .finally(() => active && setLoading(false));
-    return () => {
-      active = false;
-    };
-  }, [id, filter, sort, direction, search, offset, version]);
+  const {
+    data,
+    initialLoading,
+    updating: loading,
+    error: searchError,
+    submitSearch,
+  } = useLinkResults({
+    id,
+    filter,
+    sort,
+    direction,
+    search,
+    offset,
+    version,
+    setOffset,
+  });
+  const visibleIds = useMemo(
+    () => data.links.map((link) => link.id),
+    [data.links],
+  );
   const update = async (body) => {
     setError("");
     try {
@@ -135,24 +130,38 @@ export default function ItemPage() {
     setError("");
     try {
       const range = action === "read-before" || action === "read-after";
-      const r = range
-        ? await post(`/items/${id}/read-range`, {
-            anchor_id: ids[0],
-            side: action.slice(5),
+      const grouping = action === "merge" || action === "separate";
+      const r = grouping
+        ? await post(`/items/${id}/link-groups`, {
+            action,
+            ids,
             filter,
-            search,
+            search: search.trim(),
             sort,
             direction,
           })
-        : await post("/links/bulk", { action, ids, item_id: id });
+        : range
+          ? await post(`/items/${id}/read-range`, {
+              anchor_id: ids[0],
+              side: action.slice(5),
+              filter,
+              search,
+              sort,
+              direction,
+            })
+          : await post("/links/bulk", { action, ids, item_id: id });
       selection.clear();
       reload();
       setMessage(
-        action === "delete"
-          ? `${r.updated} links moved to Trash. Refresh will keep them there.`
-          : range
-            ? `${r.updated} links marked read in the current order. The selected link was kept as it was.`
-            : `${r.updated} links updated.`,
+        grouping
+          ? action === "merge"
+            ? `${r.updated} rows merged with the row above.${r.skipped ? " The first row has no row above it." : ""}`
+            : `${r.updated} links separated.`
+          : action === "delete"
+            ? `${r.updated} links moved to Trash. Refresh will keep them there.`
+            : range
+              ? `${r.updated} links marked read in the current order. The selected link was kept as it was.`
+              : `${r.updated} links updated.`,
       );
     } catch (e) {
       setError(e.message);
@@ -160,7 +169,7 @@ export default function ItemPage() {
       setBusy(false);
     }
   };
-  const selectAllMatching = async () => {
+  const selectAllMatching = async (pattern, mode = "replace") => {
     const requestedView = viewRef.current;
     setBusy(true);
     setError("");
@@ -170,8 +179,9 @@ export default function ItemPage() {
         search,
         sort,
         direction,
+        ...(pattern ? { pattern } : {}),
       });
-      if (viewRef.current === requestedView) selection.replace(r.ids);
+      if (viewRef.current === requestedView) selection.apply(r.ids, mode);
     } catch (e) {
       setError(e.message);
     } finally {
@@ -179,7 +189,7 @@ export default function ItemPage() {
     }
   };
   const openLink = (e, link) => {
-    if (item.auto_read && (e.type === "click" || e.button === 1))
+    if (item.auto_read && !link.read && (e.type === "click" || e.button === 1))
       updateLink(link.id, { read: true });
   };
   const choose = (setter, value) => {
@@ -233,7 +243,7 @@ export default function ItemPage() {
           />
           <IconButton
             icon={EyeOffIcon}
-            label={item.ignored ? "Restore item" : "Ignore item"}
+            label={item.ignored ? "Unmute item" : "Mute item"}
             active={item.ignored}
             onClick={() => update({ ignored: !item.ignored })}
           />
@@ -250,7 +260,7 @@ export default function ItemPage() {
         error
         resetKey={`${id}:${error}:${item.error}:${item.last_attempt_at}`}
       >
-        {error || item.error}
+        {error || searchError || item.error}
       </Notice>
       <Notice>{message}</Notice>
       {item.deleted && (
@@ -273,13 +283,13 @@ export default function ItemPage() {
       )}
       {item.ignored && (
         <Notice>
-          This item is ignored. It is excluded from Refresh all and your active
+          This item is muted. It is excluded from Refresh all and your active
           library.{" "}
           <button
             className="text-button"
             onClick={() => update({ ignored: false })}
           >
-            Restore item
+            Unmute item
           </button>
         </Notice>
       )}
@@ -329,7 +339,7 @@ export default function ItemPage() {
             ["new", "New"],
             ["favorites", "Favorites"],
             ["read", "Read"],
-            ["ignored", "Ignored"],
+            ["ignored", "Muted"],
             ...(item.kind === "events" || item.upcoming_count > 0
               ? [["upcoming", "Upcoming"]]
               : []),
@@ -346,15 +356,30 @@ export default function ItemPage() {
           ))}
         </div>
         <div className="toolbar">
-          <label className="search">
-            <Icon as={SearchIcon} />
-            <input
-              aria-label="Search links"
-              placeholder="Search links"
-              value={search}
-              onChange={(e) => choose(setSearch, e.target.value)}
-            />
-          </label>
+          <form
+            className="search-form"
+            role="search"
+            aria-label="Link search"
+            onSubmit={(event) => {
+              event.preventDefault();
+              submitSearch();
+            }}
+          >
+            <label className="search">
+              <Icon as={SearchIcon} />
+              <input
+                aria-label="Search links"
+                type="search"
+                maxLength={300}
+                placeholder="Search links"
+                value={search}
+                onChange={(e) => choose(setSearch, e.target.value)}
+              />
+            </label>
+            <button className="button" type="submit">
+              Search
+            </button>
+          </form>
           <FilterOptions label="Sort">
             <select
               aria-label="Order links by"
@@ -383,18 +408,20 @@ export default function ItemPage() {
           total={data.total}
           onSelectAll={selectAllMatching}
           rangeActions={filter !== "trash" && filter !== "ignored"}
-          visible={data.links.map((l) => l.id)}
+          visible={visibleIds}
+          patternSelection
+          mergeActions={!item.deleted && filter !== "trash"}
           onAction={selectedAction}
           busy={busy || loading}
           trash={filter === "trash"}
           links
         />
-        {loading ? (
+        {initialLoading ? (
           <div className="empty" role="status">
             Loading links…
           </div>
         ) : data.links.length ? (
-          data.links.map((l) => (
+          data.links.map((l, index) => (
             <article
               key={l.id}
               onContextMenu={openRowMenu}
@@ -405,9 +432,15 @@ export default function ItemPage() {
                   <input
                     type="checkbox"
                     aria-label={`Select link: ${l.title}`}
-                    checked={selection.ids.includes(l.id)}
-                    onChange={() => selection.toggle(l.id)}
-                    disabled={busy}
+                    checked={selection.has(l.id)}
+                    onChange={(event) =>
+                      selection.toggle(
+                        l.id,
+                        event.nativeEvent.shiftKey,
+                        visibleIds,
+                      )
+                    }
+                    disabled={busy || loading}
                   />
                 </label>
               </div>
@@ -422,7 +455,33 @@ export default function ItemPage() {
                 >
                   {l.title} <span aria-hidden="true">↗</span>
                 </a>
+                {l.members?.length > 1 && (
+                  <details className="merged-links">
+                    <summary>{l.members.length} links in this entry</summary>
+                    <ul>
+                      {l.members.map((member) => (
+                        <li key={member.id}>
+                          <a
+                            href={member.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(event) => openLink(event, l)}
+                            onAuxClick={(event) => openLink(event, l)}
+                          >
+                            {member.title} ↗
+                          </a>
+                          <span className="muted">
+                            {new URL(member.url).hostname}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                )}
                 <div className="entry-subtitle">
+                  {selection.selecting && (
+                    <span>Position {offset + index + 1}</span>
+                  )}
                   {l.is_new && !l.read && !l.ignored && (
                     <span className="badge">New</span>
                   )}
@@ -454,14 +513,15 @@ export default function ItemPage() {
                 <IconButton
                   icon={EyeOffIcon}
                   active={l.ignored}
-                  label={`${l.ignored ? "Restore" : "Ignore"} link: ${l.title}`}
+                  label={`${l.ignored ? "Unmute" : "Mute"} link: ${l.title}`}
                   onClick={() => updateLink(l.id, { ignored: !l.ignored })}
                 />
                 <ActionMenu
                   record={l}
                   rangeActions={filter !== "trash" && filter !== "ignored"}
                   links
-                  disabled={busy}
+                  mergeActions={!item.deleted && filter !== "trash"}
+                  disabled={busy || loading}
                   onAction={(action) => selectedAction(action, [l.id])}
                 />
               </div>
@@ -469,7 +529,9 @@ export default function ItemPage() {
           ))
         ) : (
           <div className="empty">
-            <h2>No links in this view</h2>
+            <h2>
+              {searchError ? "Links unavailable" : "No links in this view"}
+            </h2>
             <p>Change the filter, or refresh to check for content.</p>
           </div>
         )}

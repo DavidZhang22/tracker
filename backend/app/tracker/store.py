@@ -2,12 +2,14 @@
 
 import json
 import sqlite3
+import unicodedata
 import uuid
 from contextlib import contextmanager
 from math import ceil
 from pathlib import Path
 from time import time
 
+from . import link_groups
 from .limits import (
     ITEM_ADD_INTERVAL_SECONDS,
     MAX_ITEMS,
@@ -101,6 +103,8 @@ class Store:
                     "source_method": "TEXT NOT NULL DEFAULT 'auto'",
                 },
                 "links": {
+                    "merged_into": "TEXT",
+                    "merge_order": "INTEGER NOT NULL DEFAULT 0",
                     "deleted": "INTEGER NOT NULL DEFAULT 0",
                     "date_kind": "TEXT NOT NULL DEFAULT 'published'",
                     "date_source": "TEXT NOT NULL DEFAULT ''",
@@ -123,7 +127,8 @@ class Store:
                         )
             if db.execute("PRAGMA user_version").fetchone()[0] < 8:
                 self._migrate_link_identities(db)
-            db.execute("PRAGMA user_version=9")
+            link_groups.install_view(db)
+            db.execute("PRAGMA user_version=10")
         marker.touch(exist_ok=True)
 
     @staticmethod
@@ -145,7 +150,7 @@ class Store:
     @staticmethod
     def _combine_link_rows(db, rows, key):
         rows = sorted(rows, key=lambda r: (r["discovered_at"], r["id"]))
-        original = rows[0]
+        original = link_groups.coalesce_groups(db, rows, rows[0]["id"])
         # Newest discovered URL/metadata wins; precise dates and explicit
         # saved flags survive even when only an older alias has them.
         merged = dict(rows[-1])
@@ -176,7 +181,8 @@ class Store:
         changes = {
             k: v
             for k, v in merged.items()
-            if k not in {"id", "item_id", "discovered_at"} and original[k] != v
+            if k not in {"id", "item_id", "discovered_at", "merged_into", "merge_order"}
+            and original[k] != v
         }
         if changes:
             db.execute(
@@ -195,6 +201,12 @@ class Store:
         )
         db = sqlite3.connect(target, uri=True, timeout=3)
         db.row_factory = sqlite3.Row
+        db.create_function(
+            "fold",
+            1,
+            lambda value: unicodedata.normalize("NFKC", str(value or "")).casefold(),
+            deterministic=True,
+        )
         db.execute("PRAGMA foreign_keys=ON")
         db.execute("PRAGMA secure_delete=ON")
         try:
@@ -236,7 +248,7 @@ class Store:
               coalesce(sum(l.published_at IS NOT NULL AND l.ignored=0),0) active_dated,
               coalesce(sum(l.date_kind='scheduled' AND l.published_at > strftime('%Y-%m-%dT%H:%M:%S','now') AND l.ignored=0),0) upcoming_count,
               max(l.discovered_at) latest_discovered_at
-              FROM items i LEFT JOIN links l ON l.item_id=i.id AND l.deleted=0 """
+              FROM items i LEFT JOIN link_entries l ON l.item_id=i.id AND l.deleted=0 """
                 + ("WHERE i.id=? " if item_id else "WHERE i.deleted=? ")
                 + "GROUP BY i.id ORDER BY i.created_at DESC",
                 (item_id,) if item_id else (trash,),
@@ -259,7 +271,7 @@ class Store:
                     None
                     if item["deleted"] or not count
                     else db.execute(
-                        f"SELECT id,url,title,read,number,published_at FROM links WHERE item_id=? AND ignored=0 AND deleted=0 ORDER BY {order} DESC,position DESC,id DESC LIMIT 1",
+                        f"SELECT id,url,title,read,number,published_at FROM link_entries WHERE item_id=? AND ignored=0 AND deleted=0 ORDER BY {order} DESC,position DESC,id DESC LIMIT 1",
                         (item["id"],),
                     ).fetchone()
                 )
@@ -657,11 +669,18 @@ class Store:
             raise ValueError("Invalid update.")
         if values:
             with self.connection() as db:
+                db.execute("BEGIN IMMEDIATE")
                 sql = ",".join(k + "=?" for k in values)
                 if table == "links" and values.get("read"):
                     sql += ",is_new=0"
+                ids = (
+                    link_groups.expand_ids(db, [row_id])
+                    if table == "links"
+                    else [row_id]
+                )
                 cur = db.execute(
-                    f"UPDATE {table} SET {sql} WHERE id=?", (*values.values(), row_id)
+                    f"UPDATE {table} SET {sql} WHERE id IN ({','.join('?' for _ in ids)})",
+                    (*values.values(), *ids),
                 )
                 if not cur.rowcount:
                     raise KeyError("Record not found.")
@@ -671,7 +690,7 @@ class Store:
         with self.connection() as db:
             if action == "read":
                 db.execute(
-                    "UPDATE links SET read=1,is_new=0 WHERE item_id=? AND ignored=0 AND deleted=0",
+                    "UPDATE links SET read=1,is_new=0 WHERE coalesce(merged_into,id) IN (SELECT id FROM link_entries WHERE item_id=? AND ignored=0 AND deleted=0)",
                     (iid,),
                 )
             elif action == "acknowledge":
@@ -706,6 +725,7 @@ class Store:
             where += " AND item_id=?"
             args.append(item_id)
         with self.connection() as db:
+            db.execute("BEGIN IMMEDIATE")
             count = db.execute(
                 f"SELECT count(*) FROM {table} WHERE {where}", args
             ).fetchone()[0]
@@ -713,6 +733,10 @@ class Store:
                 raise KeyError(
                     "Some selected records no longer exist in this collection. Nothing was changed."
                 )
+            if table == "links":
+                expanded = link_groups.expand_ids(db, ids, item_id)
+                where = "id IN (" + ",".join("?" for _ in expanded) + ")"
+                args = expanded
             db.execute(f"UPDATE {table} SET {actions[action]} WHERE {where}", args)
         return {"updated": len(ids), "action": action}
 
@@ -741,15 +765,13 @@ class Store:
             clauses.extend(["is_new=1", "read=0"])
         if filter == "favorites":
             clauses.append("favorite=1")
-        if search:
-            clauses.append("title LIKE ? ESCAPE '\\'")
-            args.append(
-                "%"
-                + search.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
-                + "%"
+        if search.strip():
+            clauses.append(
+                "EXISTS (SELECT 1 FROM links candidate WHERE candidate.item_id=link_entries.item_id AND coalesce(candidate.merged_into,candidate.id)=+link_entries.id AND instr(fold(candidate.title || ' ' || candidate.url || ' ' || candidate.summary || ' ' || candidate.context || ' ' || candidate.language || ' ' || coalesce(candidate.number,'') || ' ' || coalesce(candidate.published_at,'')),fold(?))>0)"
             )
+            args.append(search.strip())
         stats = db.execute(
-            "SELECT count(*) n,count(published_at) dated,count(number) numbered FROM links WHERE item_id=? AND deleted=0",
+            "SELECT count(*) n,count(published_at) dated,count(number) numbered FROM link_entries WHERE item_id=? AND deleted=0",
             (iid,),
         ).fetchone()
         if sort == "auto":
@@ -788,14 +810,21 @@ class Store:
                 db, iid, filter, search, sort, direction
             )
             total = db.execute(
-                "SELECT count(*) FROM links WHERE " + where, args
+                "SELECT count(*) FROM link_entries WHERE " + where, args
             ).fetchone()[0]
             rows = db.execute(
-                f"SELECT * FROM links WHERE {where} ORDER BY {field} IS NULL,{field} {order},position {order},id LIMIT ? OFFSET ?",
+                f"SELECT * FROM link_entries WHERE {where} ORDER BY {field} IS NULL,{field} {order},position {order},id LIMIT ? OFFSET ?",
                 (*args, limit, offset),
             ).fetchall()
+            entries = [self.decode(r) for r in rows]
+            for entry in entries:
+                entry["members"] = (
+                    [self.decode(r) for r in link_groups.members(db, entry["id"])]
+                    if entry["link_count"] > 1
+                    else []
+                )
         return {
-            "links": [self.decode(r) for r in rows],
+            "links": entries,
             "total": total,
             "sort_used": sort,
             "offset": offset,
@@ -807,15 +836,47 @@ class Store:
             db, iid, filter, search, sort, direction
         )
         rows = db.execute(
-            f"SELECT id FROM links WHERE {where} ORDER BY {field} IS NULL,{field} {order},position {order},id LIMIT ?",
+            f"SELECT id FROM link_entries WHERE {where} ORDER BY {field} IS NULL,{field} {order},position {order},id LIMIT ?",
             (*args, MAX_LINKS),
         ).fetchall()
         return [r["id"] for r in rows], sort
 
-    def link_selection(self, iid, filter="all", search="", sort=None, direction=None):
+    def link_selection(
+        self, iid, filter="all", search="", sort=None, direction=None, pattern=None
+    ):
         with self.connection() as db:
             ids, sort = self._view_ids(db, iid, filter, search, sort, direction)
-        return {"ids": ids, "total": len(ids), "sort_used": sort}
+        total = len(ids)
+        if pattern:
+            ids = link_groups.pattern_ids(ids, **pattern)
+        return {"ids": ids, "total": total, "sort_used": sort}
+
+    def group_links(
+        self, iid, ids, action, filter="all", search="", sort=None, direction=None
+    ):
+        if not ids or len(ids) > MAX_LINKS or action not in {"merge", "separate"}:
+            raise ValueError("Choose links and a valid grouping action.")
+        if filter == "trash":
+            raise ValueError("Restore links from Trash before merging them.")
+        with self.connection() as db:
+            db.execute("BEGIN IMMEDIATE")
+            self_item = db.execute(
+                "SELECT deleted FROM items WHERE id=?", (iid,)
+            ).fetchone()
+            if not self_item:
+                raise KeyError("Item not found.")
+            if self_item["deleted"]:
+                raise ValueError("Restore this item from Trash before merging links.")
+            ordered, _ = self._view_ids(db, iid, filter, search, sort, direction)
+            if not set(ids).issubset(ordered):
+                raise KeyError(
+                    "Some selected links are no longer in this view. Nothing was changed."
+                )
+            return (
+                link_groups.merge_above(db, ordered, ids)
+                if action == "merge"
+                else link_groups.separate(db, ids, iid)
+            )
 
     def read_range(
         self,
@@ -838,8 +899,9 @@ class Store:
                 )
             index = ids.index(anchor_id)
             chosen = ids[:index] if side == "before" else ids[index + 1 :]
+            expanded = link_groups.expand_ids(db, chosen, iid) if chosen else []
             db.executemany(
-                "UPDATE links SET read=1,is_new=0 WHERE id=? AND item_id=? AND deleted=0 AND ignored=0",
-                ((lid, iid) for lid in chosen),
+                "UPDATE links SET read=1,is_new=0 WHERE id=? AND item_id=? AND deleted=0",
+                ((lid, iid) for lid in expanded),
             )
         return {"updated": len(chosen), "sort_used": sort}

@@ -267,7 +267,7 @@ test("library row context menu can ignore and keyboard actions remain available"
     </MemoryRouter>,
   );
   fireEvent.contextMenu(await screen.findByText("My series"));
-  await click(await screen.findByRole("menuitem", { name: "Ignore" }));
+  await click(await screen.findByRole("menuitem", { name: "Mute" }));
   expect(post).toHaveBeenCalledWith("/items/bulk", {
     ids: ["one"],
     action: "ignore",
@@ -512,7 +512,7 @@ test("ignored library view can restore an item", async () => {
       <Library />
     </MemoryRouter>,
   );
-  await click(await screen.findByRole("button", { name: "Restore My series" }));
+  await click(await screen.findByRole("button", { name: "Unmute My series" }));
   await waitFor(() =>
     expect(patch).toHaveBeenCalledWith("/items/one", { ignored: false }),
   );
@@ -679,7 +679,7 @@ test("item settings are centralized while ignored link controls stay accessible"
     screen.queryByLabelText("Mark as read when opened"),
   ).not.toBeInTheDocument();
   await click(
-    await screen.findByRole("button", { name: "Ignore link: Chapter 1" }),
+    await screen.findByRole("button", { name: "Mute link: Chapter 1" }),
   );
   await waitFor(() =>
     expect(patch).toHaveBeenCalledWith("/links/chapter1", { ignored: true }),

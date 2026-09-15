@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   BrowserRouter,
   Routes,
@@ -147,7 +153,7 @@ export function Shell() {
             </Link>
             <Link to="/?filter=ignored" {...navProps("ignored")}>
               <Icon as={EyeOffIcon} />
-              Ignored
+              Muted
             </Link>
             <Link
               to="/suggestions"
@@ -384,48 +390,63 @@ export function Library() {
       setError(e.message);
     }
   };
-  const active = items.filter((i) => !i.ignored && !i.deleted);
-  const libraryItems = items.filter((i) => !i.deleted);
+  const active = useMemo(
+    () => items.filter((i) => !i.ignored && !i.deleted),
+    [items],
+  );
+  const libraryItems = useMemo(() => items.filter((i) => !i.deleted), [items]);
   const viewItems = trash ? items.filter((i) => i.deleted) : libraryItems;
-  const counts = {
-    all: libraryItems.length,
-    new: active.filter((i) => i.new_count > 0).length,
-    unread: active.filter((i) => i.unread_count > 0).length,
-    favorites: active.filter((i) => i.favorite).length,
-    ignored: libraryItems.filter((i) => i.ignored).length,
-  };
-  const visible = items
-    .filter((i) =>
-      trash
-        ? i.deleted
-        : !i.deleted &&
-          (filter === "all" || (filter === "ignored" ? i.ignored : !i.ignored)),
-    )
-    .filter((i) =>
-      filter === "new"
-        ? i.new_count > 0
-        : filter === "unread"
-          ? i.unread_count > 0
-          : filter === "favorites"
-            ? i.favorite
-            : true,
-    )
-    .filter((i) => kind === "all" || i.kind === kind)
-    .filter((i) =>
-      `${i.title} ${i.url}`.toLowerCase().includes(search.toLowerCase()),
-    )
-    .sort(
-      (a, b) =>
-        Number(a.ignored) - Number(b.ignored) ||
-        Number(b.favorite) - Number(a.favorite) ||
-        (sort === "title"
-          ? a.title.localeCompare(b.title)
-          : sort === "unread"
-            ? b.unread_count - a.unread_count
-            : (b.latest_discovered_at || b.created_at).localeCompare(
-                a.latest_discovered_at || a.created_at,
-              )),
-    );
+  const counts = useMemo(
+    () => ({
+      all: libraryItems.length,
+      new: active.filter((i) => i.new_count > 0).length,
+      unread: active.filter((i) => i.unread_count > 0).length,
+      favorites: active.filter((i) => i.favorite).length,
+      ignored: libraryItems.filter((i) => i.ignored).length,
+    }),
+    [libraryItems, active],
+  );
+  const visible = useMemo(
+    () =>
+      items
+        .filter((i) =>
+          trash
+            ? i.deleted
+            : !i.deleted &&
+              (filter === "all" ||
+                (filter === "ignored" ? i.ignored : !i.ignored)),
+        )
+        .filter((i) =>
+          filter === "new"
+            ? i.new_count > 0
+            : filter === "unread"
+              ? i.unread_count > 0
+              : filter === "favorites"
+                ? i.favorite
+                : true,
+        )
+        .filter((i) => kind === "all" || i.kind === kind)
+        .filter((i) =>
+          `${i.title} ${i.url}`
+            .normalize("NFKC")
+            .toLowerCase()
+            .includes(search.trim().normalize("NFKC").toLowerCase()),
+        )
+        .sort(
+          (a, b) =>
+            Number(a.ignored) - Number(b.ignored) ||
+            Number(b.favorite) - Number(a.favorite) ||
+            (sort === "title"
+              ? a.title.localeCompare(b.title)
+              : sort === "unread"
+                ? b.unread_count - a.unread_count
+                : (b.latest_discovered_at || b.created_at).localeCompare(
+                    a.latest_discovered_at || a.created_at,
+                  )),
+        ),
+    [items, trash, filter, kind, search, sort],
+  );
+  const visibleIds = useMemo(() => visible.map((i) => i.id), [visible]);
   return (
     <>
       <div className="page-heading">
@@ -488,7 +509,7 @@ export function Library() {
             ["new", "New content"],
             ["unread", "Unread"],
             ["favorites", "Favorites"],
-            ["ignored", "Ignored"],
+            ["ignored", "Muted"],
             ["trash", "Trash"],
           ].map(([key, label]) => (
             <button
@@ -503,15 +524,30 @@ export function Library() {
           ))}
         </div>
         <div className="toolbar">
-          <label className="search">
-            <Icon as={SearchIcon} />
-            <input
-              aria-label="Search library"
-              placeholder="Search your library"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </label>
+          <form
+            className="search-form"
+            role="search"
+            aria-label="Library search"
+            onSubmit={(event) => {
+              event.preventDefault();
+              setSearch((value) => value.trim());
+            }}
+          >
+            <label className="search">
+              <Icon as={SearchIcon} />
+              <input
+                aria-label="Search library"
+                type="search"
+                maxLength={300}
+                placeholder="Search your library"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </label>
+            <button className="button" type="submit">
+              Search
+            </button>
+          </form>
           <FilterOptions>
             <select
               aria-label="Media type"
@@ -539,7 +575,7 @@ export function Library() {
         </div>
         <SelectionBar
           selection={selection}
-          visible={visible.map((i) => i.id)}
+          visible={visibleIds}
           onAction={selectedAction}
           busy={busy}
           trash={trash}
@@ -635,7 +671,7 @@ export function Library() {
                   />
                   <IconButton
                     icon={EyeOffIcon}
-                    label={`${i.ignored ? "Restore" : "Ignore"} ${i.title}`}
+                    label={`${i.ignored ? "Unmute" : "Mute"} ${i.title}`}
                     active={i.ignored}
                     onClick={() => update(i.id, { ignored: !i.ignored })}
                   />

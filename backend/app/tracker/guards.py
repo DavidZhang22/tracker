@@ -97,7 +97,14 @@ class ApiGuard:
             )
         body_limit = (
             262_144
-            if self.max_body == 65_536 and scope["path"] == "/api/links/bulk"
+            if self.max_body == 65_536
+            and (
+                scope["path"] == "/api/links/bulk"
+                or (
+                    scope["path"].startswith("/api/items/")
+                    and scope["path"].endswith("/link-groups")
+                )
+            )
             else self.max_body
         )
         for key, value in scope.get("headers", []):

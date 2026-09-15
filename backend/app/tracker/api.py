@@ -140,6 +140,24 @@ class ReadRange(LinkView):
     side: Literal["before", "after"]
 
 
+class SelectionPattern(BaseModel):
+    every: int = Field(default=1, ge=1, le=MAX_LINKS)
+    starting: int = Field(default=1, ge=1, le=MAX_LINKS)
+    first: int = Field(default=1, ge=1, le=MAX_LINKS)
+    last: int | None = Field(default=None, ge=1, le=MAX_LINKS)
+
+
+class LinkSelection(LinkView):
+    pattern: SelectionPattern | None = None
+
+
+class LinkGrouping(LinkView):
+    ids: list[Annotated[str, Field(min_length=1, max_length=64)]] = Field(
+        min_length=1, max_length=MAX_LINKS
+    )
+    action: Literal["merge", "separate"]
+
+
 @router.get("/health")
 def health():
     return {"status": "ok"}
@@ -261,8 +279,13 @@ def update_link(lid: str, body: LinkPatch, request: Request):
 
 
 @router.post("/items/{iid}/link-selection")
-def link_selection(iid: str, body: LinkView, request: Request):
+def link_selection(iid: str, body: LinkSelection, request: Request):
     return request.state.store.link_selection(iid, **body.model_dump())
+
+
+@router.post("/items/{iid}/link-groups")
+def group_links(iid: str, body: LinkGrouping, request: Request):
+    return request.state.store.group_links(iid, **body.model_dump())
 
 
 @router.post("/items/{iid}/read-range")

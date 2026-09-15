@@ -6,12 +6,20 @@ Track blogs, chapters, videos, game updates, job listings and other public sourc
 
 ## Features
 
-- Dated and numbered links, unread filters, favorites, ignored items and Trash.
+- Dated and numbered links, unread filters, favorites, muted items and Trash.
 - Mobile layouts, bulk actions, reading order preferences and optional mark-as-read on opening a link.
 - Keyword filtering using nearby record context, including language and location.
 - Lightweight refreshes with a full model scan available when a source changes.
 - Suggestions ranked locally using existing source metadata.
 - Password-protected accounts, data export, session revocation and account deletion.
+
+## Organizing links
+
+Search matches titles, URLs and saved metadata. Results stay visible while a search runs, with recent views cached briefly in the current tab.
+
+Use Selection → Choose a pattern to combine an interval with a position range. For example, every 2 links, starting with 1, within positions 1–49 selects positions 1, 3, 5 … 49 in the current filtered order. Selection can be replaced, extended, reduced or inverted; Shift-click selects a range on the current page.
+
+Merge with above groups each selected row with its preceding row. Consecutive selections join the same group. Every original URL and its progress remain stored; Separate links removes the grouping. Group actions apply to all members, and a group is read or muted when all its members are. Favorites apply when any member is a favorite. Refresh preserves these groups. The 4,999-link storage cap still counts every original URL.
 
 ## How discovery works
 
@@ -26,7 +34,7 @@ The models train offline and load numeric JSON weights in production without Num
 - [Parallel analysis benchmark](backend/ml/PARALLEL_ANALYSIS.md)
 - [Lightweight refresh design](backend/ml/LIGHTWEIGHT_REFRESH.md)
 
-Sources can block access or change their layouts. Scans report incomplete coverage and preserve existing data on failure. Requests are paced and capped; each item stores at most 4,999 links, including ignored links and Trash.
+Sources can block access or change their layouts. Scans report incomplete coverage and preserve existing data on failure. Requests are paced and capped; each item stores at most 4,999 links, including muted links and Trash.
 
 ## Run locally
 

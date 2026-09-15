@@ -56,6 +56,7 @@ def test_all_private_routes_require_session_before_any_scan(app):
         ("post", "/api/refresh", {}),
         ("patch", "/api/links/arbitrary", {"read": True}),
         ("post", "/api/items/bulk", {"action": "delete", "ids": ["x"]}),
+        ("post", "/api/items/arbitrary/link-groups", {"action": "merge", "ids": ["x"]}),
     ]:
         response = getattr(c, method)(
             path, **({"json": body} if body is not None else {})
@@ -132,6 +133,11 @@ def test_two_accounts_cannot_read_mutate_refresh_or_bulk_other_library(app):
             {"ids": [lid], "item_id": item["id"], "action": "delete"},
         ),
         ("post", "/api/items/bulk", {"ids": [item["id"]], "action": "delete"}),
+        (
+            "post",
+            f"/api/items/{item['id']}/link-groups",
+            {"ids": [lid], "action": "merge"},
+        ),
     ]
     for method, path, body in paths:
         assert (

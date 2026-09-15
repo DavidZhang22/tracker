@@ -436,6 +436,7 @@ def test_v1_database_migration_preserves_existing_user_state(tmp_path):
     lid = store.links(item["id"])["links"][0]["id"]
     store.update("links", lid, {"read": True, "favorite": True})
     with sqlite3.connect(dbpath) as db:
+        db.execute("DROP VIEW link_entries")
         for col in [
             "deleted",
             "date_kind",
