@@ -54,6 +54,21 @@ test("Steam news URLs automatically select the news API", async () => {
   expect(screen.getByText(/official Steam announcements/)).toBeInTheDocument();
 });
 
+test("Enma watch URLs select the episode API and disclose access restrictions", async () => {
+  post.mockResolvedValue({ source_method: "enma", note: "" });
+  show();
+  change(
+    /Source URL/,
+    "https://www.enma.lol/watch/grand-blue-dreaming-season-3-199111?ep=9",
+  );
+  await tick();
+  expect(screen.getByLabelText("Source method")).toHaveValue("enma");
+  expect(
+    screen.getByText(/Enma may restrict server access/),
+  ).toBeInTheDocument();
+  expect(post).toHaveBeenCalledTimes(1);
+});
+
 test("Browser mode can be selected explicitly without API auto-detection", async () => {
   show();
   change(/Source URL/, "https://example.org/series");

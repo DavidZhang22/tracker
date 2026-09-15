@@ -9,6 +9,7 @@ export const apiMethods = [
   ["ghost", "Ghost Content API"],
   ["mangadex", "MangaDex API"],
   ["steam", "Steam news API"],
+  ["enma", "Enma episodes API"],
 ];
 
 const hints = {
@@ -34,6 +35,7 @@ const hints = {
     "Use a title URL. Keywords such as English can filter chapter languages.",
   steam:
     "Lists the game’s official Steam announcements, with publication dates.",
+  enma: "Uses the watch URL to request episode metadata without loading the player. Enma may restrict server access.",
   browser:
     "Loads JavaScript and checks a limited number of load-more steps. Validated listing APIs are reused on lightweight refreshes.",
 };

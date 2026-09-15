@@ -34,7 +34,7 @@ from .urls import (
 )
 from .workers import run_blocking
 
-DISCOVERY_VERSION = "browser-listing-discovery-v1"
+DISCOVERY_VERSION = "enma-listing-discovery-v1"
 DEEP_SCAN = ContextVar("deep_scan", default=False)
 
 
@@ -412,8 +412,14 @@ class Discoverer:
         )
 
     async def _scan(self, url, selector, include_path, keywords=""):
+        from .enma import scan_enma, series_slug
         from .steam import app_id
 
+        if series_slug(url) and not selector:
+            result = await scan_enma(self.fetcher, url)
+            if include_path:
+                result.entries = [e for e in result.entries if include_path in e.url]
+            return result
         if app_id(url) and not selector:
             from .public_apis import scan_api
 

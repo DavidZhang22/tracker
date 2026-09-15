@@ -436,6 +436,10 @@ async def ghost(inv):
 
 
 async def scan_api(fetcher, source, method, max_pages, keywords=""):
+    if method == "enma":
+        from .enma import scan_enma
+
+        return await scan_enma(fetcher, source)
     if method == "mangadex":
         return await scan_mangadex(fetcher, source, max_pages, keywords)
     if method == "codeforces":
