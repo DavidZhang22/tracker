@@ -79,7 +79,7 @@ export default function CsvUpload({
       <details className="csv-columns" open={metadata ? true : undefined}>
         <summary>{metadata ? "Review columns" : "File options"}</summary>
         <div className="csv-field-grid">
-          <label className="field">
+          <label className="field csv-keywords">
             Keywords
             <input
               value={keywords}

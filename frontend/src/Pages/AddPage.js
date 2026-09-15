@@ -549,7 +549,7 @@ export default function AddPage() {
             </>
           ) : (
             <>
-              <h2>Example sources</h2>
+              <h2>Example source</h2>
               <div className="example-grid">
                 {examples.map((e) => (
                   <Link

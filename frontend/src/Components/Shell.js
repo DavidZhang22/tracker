@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
 import {
   CollectionIcon,
   StarIcon,
@@ -8,7 +8,6 @@ import {
   MenuIcon,
   XIcon,
   ClockIcon,
-  LightBulbIcon,
   CogIcon,
 } from "@heroicons/react/outline";
 import { AccountPage, useAuth } from "../Auth/Auth";
@@ -96,18 +95,6 @@ export function Shell() {
               Muted
             </Link>
             <Link
-              to="/suggestions"
-              className={
-                location.pathname === "/suggestions" ? "active" : undefined
-              }
-              aria-current={
-                location.pathname === "/suggestions" ? "page" : undefined
-              }
-            >
-              <Icon as={LightBulbIcon} />
-              Suggestions
-            </Link>
-            <Link
               to="/settings"
               className={
                 location.pathname === "/settings" ? "active" : undefined
@@ -166,14 +153,7 @@ export function Shell() {
                 </React.Suspense>
               }
             />
-            <Route
-              path="/suggestions"
-              element={
-                <React.Suspense fallback={<p>Loading…</p>}>
-                  <SuggestionsPage />
-                </React.Suspense>
-              }
-            />
+            <Route path="/suggestions" element={<Navigate to="/" replace />} />
             <Route
               path="/add"
               element={
@@ -207,5 +187,4 @@ export function Shell() {
 }
 const AddPage = React.lazy(() => import("../Pages/AddPage"));
 const ItemPage = React.lazy(() => import("../Pages/ItemPage"));
-const SuggestionsPage = React.lazy(() => import("../Pages/SuggestionsPage"));
 const SettingsPage = React.lazy(() => import("../Pages/SettingsPage"));

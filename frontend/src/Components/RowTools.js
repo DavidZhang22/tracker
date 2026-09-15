@@ -358,7 +358,7 @@ export function SelectionBar({
               checked={!!visible.length && onPage.length === visible.length}
               onChange={() => selection.all(visible)}
             />
-            {selected.length ? `${selected.length} selected` : "Select"}
+            {selected.length ? `${selected.length} selected` : null}
           </label>
           <select
             aria-label="Selection options"
@@ -464,8 +464,12 @@ export function SelectionBar({
                 )}
               </>
             )}
-            <button className="text-button" onClick={selection.clear}>
-              Cancel selection
+            <button
+              className="text-button"
+              aria-label="Cancel selection"
+              onClick={selection.clear}
+            >
+              Cancel
             </button>
           </div>
         )}

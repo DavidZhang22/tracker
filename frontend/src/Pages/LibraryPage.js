@@ -235,19 +235,19 @@ export default function LibraryPage() {
             <span className="summary-number">
               {active.reduce((s, i) => s + i.unread_count, 0)}
             </span>
-            <span>Unread links</span>
+            <span>Unread</span>
             <Icon as={ArrowRightIcon} />
           </button>
           <button onClick={() => setParams({ filter: "new" })}>
             <span className="summary-number teal">
               {active.reduce((s, i) => s + i.new_count, 0)}
             </span>
-            <span>New since tracking</span>
+            <span>New</span>
             <Icon as={ArrowRightIcon} />
           </button>
           <button onClick={() => setParams({ filter: "favorites" })}>
             <span className="summary-number">{counts.favorites}</span>
-            <span>Favorite items</span>
+            <span>Favorites</span>
             <Icon as={StarIcon} />
           </button>
         </div>

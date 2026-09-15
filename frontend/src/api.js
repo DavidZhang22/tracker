@@ -108,31 +108,6 @@ export const uploadCsv = (file, options = {}) =>
     },
   );
 export const examples = [
-  {
-    title: "The Nebula’s Civilization",
-    kind: "Comic",
-    url: "https://asurascans.com/comics/the-nebulas-civilization-53fc8424",
-  },
-  {
-    title: "ヨルシカ / n-buna Official",
-    kind: "YouTube",
-    url: "https://www.youtube.com/channel/UCRIgIJQWuBJ0Cv_VlU3USNA",
-  },
-  {
-    title: "Mother of Learning",
-    kind: "Novel",
-    url: "https://www.royalroad.com/fiction/21220/mother-of-learning",
-  },
-  {
-    title: "Climbing the Tower with Time-Stop Ability",
-    kind: "Novel",
-    url: "https://wetriedtls.com/series/climbing-the-tower-with-time-stop-ability",
-  },
-  {
-    title: "Codeforces contests",
-    kind: "Events",
-    url: "https://codeforces.com/contests",
-  },
   { title: "xkcd", kind: "Comic archive", url: "https://xkcd.com/archive/" },
 ];
 export const day = (value) =>
