@@ -6,13 +6,14 @@ import {
   RefreshIcon,
   ExternalLinkIcon,
 } from "@heroicons/react/outline";
-import { Icon, Notice, TypeIcon } from "../Tracker";
+import { Icon, TypeIcon } from "../Components/Icons";
+import { Notice } from "../Components/Notice";
 import { api, post, examples } from "../api";
-import { LinkDate } from "../RowTools";
-import { orderedPreview, usePreferences } from "../Preferences";
-import SourceMethod from "../SourceMethod";
-import useSourceMethod from "../useSourceMethod";
-import CsvUpload, { CsvDetails } from "../CsvUpload";
+import { LinkDate } from "../Components/RowTools";
+import { orderedPreview, usePreferences } from "../Contexts/Preferences";
+import SourceMethod from "../Components/SourceMethod";
+import useSourceMethod from "../Hooks/useSourceMethod";
+import CsvUpload, { CsvDetails } from "../Components/CsvUpload";
 
 export default function AddPage() {
   const { preferences } = usePreferences();

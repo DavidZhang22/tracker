@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ExternalLinkIcon, RefreshIcon } from "@heroicons/react/outline";
 import { api, patch, post } from "../api";
-import { Icon, TypeIcon } from "../Tracker";
-import { Notice } from "../Notice";
+import { Icon, TypeIcon } from "../Components/Icons";
+import { Notice } from "../Components/Notice";
 
 export default function SuggestionsPage() {
   const [suggestions, setSuggestions] = useState([]),

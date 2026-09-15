@@ -90,7 +90,7 @@ def main():
     if output_dir:
         output_dir.mkdir(parents=True, exist_ok=True)
     started = time.perf_counter()
-    dataset = ROOT / "ml/dataset.jsonl"
+    dataset = ROOT / "ml/datasets/dataset.jsonl"
     # Deliberately do not use test rows during model selection.
     rows = [
         r
@@ -228,7 +228,7 @@ def main():
     (
         output_dir / "training-report.json"
         if output_dir
-        else ROOT / "ml/training-report.json"
+        else ROOT / "ml/reports/training-report.json"
     ).write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps({k: v for k, v in report.items() if k != "candidates"}, indent=2))
     for r in results:

@@ -40,15 +40,21 @@ Initial scans can learn validated extraction recipes for subsequent refreshes. A
 
 The models train offline and load numeric JSON weights in production without NumPy or scikit-learn. In a saved four-page, two-CPU benchmark, reusable analysis processes reduced batch time from 9.21 to 6.70 seconds with identical scan output. This measures that fixture workload, not every website.
 
-- [Model training and evaluation](backend/ml/README.md)
-- [Record context network](backend/ml/RECORD_CONTEXT.md)
-- [Parallel analysis benchmark](backend/ml/PARALLEL_ANALYSIS.md)
-- [Response memory and refresh throughput](backend/ml/MEMORY_PIPELINE.md)
-- [Lightweight refresh design](backend/ml/LIGHTWEIGHT_REFRESH.md)
+- [Model training and evaluation](backend/ml/docs/LINK_CLASSIFIER.md)
+- [Record context network](backend/ml/docs/RECORD_CONTEXT.md)
+- [Parallel analysis benchmark](backend/ml/docs/PARALLEL_ANALYSIS.md)
+- [Response memory and refresh throughput](backend/ml/docs/MEMORY_PIPELINE.md)
+- [Lightweight refresh design](backend/ml/docs/LIGHTWEIGHT_REFRESH.md)
 
 Sources can block access or change their layouts. Scans report incomplete coverage and preserve existing data on failure. Requests are paced and capped; each item stores at most 4,999 links, including muted links and Trash.
 
 Enma watch URLs select its episode-list API, making one metadata request without loading the player. On September 15, 2026, Enma returned HTTP 403 to both local and deployed scans. Trackify reports that refusal and respects the fetch backoff; it cannot guarantee access. The adapter has synthetic contract tests based on the site's published client code, but successful live extraction remains unverified. Episode numbers come from listing metadata; missing publication dates remain unavailable.
+
+## Repository layout
+
+`frontend/src` separates pages, shared controls, account code, hooks, preferences and styles. `backend/app/tracker` contains the active API, storage, source adapters and inference code. Tests live in `frontend/src/__tests__` and `backend/tests`; ML datasets, reports and design notes are grouped under `backend/ml`. `deploy` contains the production Compose configuration and backup tools. The root Compose file runs a local-only instance.
+
+See the [frontend guide](frontend/README.md), [backend guide](backend/README.MD), and [model tools](backend/ml/README.md) for entry points. Local databases, credentials, captures and generated build files are ignored.
 
 ## Run locally
 

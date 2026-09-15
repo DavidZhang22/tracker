@@ -222,7 +222,7 @@ def main():
     rows = []
     for source, split, soup in [*pages(), *captured_pages()]:
         rows.extend(dict(r, split=split) for r in labeled_regions(soup, source))
-    dataset = ROOT / "ml/record-context-dataset.jsonl"
+    dataset = ROOT / "ml/datasets/record-context-dataset.jsonl"
     dataset.write_text(
         "".join(json.dumps(r, separators=(",", ":")) + "\n" for r in rows),
         encoding="utf8",
@@ -342,7 +342,7 @@ def main():
     runtime = np.array([predict(data, f) for f in x["test"]])
     export_error = float(np.max(abs(runtime - model.predict_proba(x["test"])[:, 1])))
     assert export_error < 1e-5
-    output = ROOT / "ml/record-candidate"
+    output = ROOT / "ml/experiments/records"
     output.mkdir(exist_ok=True)
     artifact = output / "record-context-model.json"
     artifact.write_text(json.dumps(data, separators=(",", ":")) + "\n", encoding="utf8")

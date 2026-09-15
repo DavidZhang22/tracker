@@ -55,7 +55,7 @@ def check(name, rows, before, after, thresholds, repeats):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data", type=Path, default=Path(__file__).parent)
+    parser.add_argument("--data", type=Path, default=Path(__file__).parent / "datasets")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--repeats", type=int, default=3)
     args = parser.parse_args()

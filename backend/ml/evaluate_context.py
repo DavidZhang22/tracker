@@ -21,7 +21,9 @@ from app.tracker.parser import parse_page
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--dataset", type=Path, default=ROOT / "ml/v3-dataset.jsonl")
+    parser.add_argument(
+        "--dataset", type=Path, default=ROOT / "ml/datasets/v3-dataset.jsonl"
+    )
     parser.add_argument("--output", type=Path)
     parser.add_argument(
         "--split", choices=["train", "validation", "test"], default="validation"
@@ -40,8 +42,8 @@ def main():
     identifiers = {r["source_id"] for r in rows}
     sources = [
         s
-        for s in json.loads((ROOT / "ml/sources.json").read_text())
-        + json.loads((ROOT / "ml/v2_sources.json").read_text())
+        for s in json.loads((ROOT / "ml/datasets/sources.json").read_text())
+        + json.loads((ROOT / "ml/datasets/v2_sources.json").read_text())
         if s["id"] in identifiers
     ]
     if args.split == "train":
@@ -53,7 +55,7 @@ def main():
             )
             rows.extend(annotated_index(soup, source)[0])
     old_spec = importlib.util.spec_from_file_location(
-        "app.tracker.v1_parser", ROOT / "ml/v1/parser.py"
+        "app.tracker.v1_parser", ROOT / "ml/baselines/v1/parser.py"
     )
     old_parser = importlib.util.module_from_spec(old_spec)
     old_spec.loader.exec_module(old_parser)
@@ -78,7 +80,7 @@ def main():
             rows, [r["url"] in found[r["source_id"]] for r in rows]
         )
     if args.baseline_only:
-        path = ROOT / f"ml/context-{args.split}-report.json"
+        path = ROOT / f"ml/reports/context-{args.split}-report.json"
         report = json.loads(path.read_text())
         report["parser"]["legacy"] = predictions["legacy"]
         report["parse_seconds"].update(timings)
@@ -99,7 +101,7 @@ def main():
         parse_seconds=timings,
         unlabelled_predictions=unknown,
     )
-    (args.output or ROOT / f"ml/context-{args.split}-report.json").write_text(
+    (args.output or ROOT / f"ml/reports/context-{args.split}-report.json").write_text(
         json.dumps(report, indent=2) + "\n"
     )
     print(json.dumps(report, indent=2))

@@ -43,9 +43,9 @@ def vectorize(rows, vocabulary, idf):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--output-dir", type=Path, default=ROOT / "ml/context-candidate"
+        "--output-dir", type=Path, default=ROOT / "ml/experiments/context"
     )
-    parser.add_argument("--dataset", type=Path, default=ROOT / "ml/v3-dataset.jsonl")
+    parser.add_argument("--dataset", type=Path, default=ROOT / "ml/datasets/v3-dataset.jsonl")
     parser.add_argument("--expanded", action="store_true")
     parser.add_argument("--fallback-model", type=Path)
     args = parser.parse_args()

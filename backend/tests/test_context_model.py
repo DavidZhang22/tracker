@@ -138,7 +138,7 @@ def test_frozen_dataset_has_no_host_leak_and_corpus_is_training_only():
     root = Path(__file__).resolve().parents[1]
     groups = {}
     origins = set()
-    for line in (root / "ml/v3-dataset.jsonl").read_text().splitlines():
+    for line in (root / "ml/datasets/v3-dataset.jsonl").read_text().splitlines():
         row = json.loads(line)
         host = urlsplit(row["source"]).hostname
         assert groups.setdefault(host, row["split"]) == row["split"]

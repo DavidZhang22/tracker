@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../api";
-import { Notice } from "../Notice";
+import { Notice } from "../Components/Notice";
 
 export default function PrivacyPage({ terms = false }) {
   const [details, setDetails] = useState(null);

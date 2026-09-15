@@ -103,7 +103,7 @@ def test_assistance_rescues_article_collection_and_rejects_calendar_indexes(
 
 
 def test_dataset_site_split_and_feature_schema_are_consistent():
-    path = Path(__file__).resolve().parents[1] / "ml/dataset.jsonl"
+    path = Path(__file__).resolve().parents[1] / "ml/datasets/dataset.jsonl"
     groups = {}
     for line in path.read_text().splitlines():
         row = json.loads(line)
