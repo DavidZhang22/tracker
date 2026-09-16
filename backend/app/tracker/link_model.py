@@ -286,9 +286,9 @@ def model_cache_tag():
         return "rules-v2"
     if os.environ.get("TRACKER_LINK_MODEL", "on").lower() != "legacy":
         # Lazy import avoids the shared feature extractor's dependency cycle.
-        from .context_model import load_context_model
+        from .context_model import active_context_model
 
-        context = load_context_model()
+        context = active_context_model()
         if context is not None:
             return (
                 "context-v2:"

@@ -63,6 +63,24 @@ def words(value):
     ]
 
 
+def model_tokens(values, mode="words"):
+    result = set(values)
+    if mode == "subwords-v1":
+        for token in values:
+            if token[:2] not in {"t:", "u:"}:
+                continue
+            for word in token[2:].split("_")[:4]:
+                if not 4 <= len(word) <= 25 or word == "num":
+                    continue
+                padded = "^" + word + "$"
+                result.update(
+                    "g" + token[0] + ":" + padded[i : i + size]
+                    for size in (3, 4)
+                    for i in range(len(padded) - size + 1)
+                )
+    return result
+
+
 def tokens(label, url, ancestry, heading):
     path = urlsplit(url)
     fields = {"t": label, "u": path.path, "c": ancestry, "h": heading}

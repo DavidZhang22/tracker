@@ -1,4 +1,6 @@
 .git
+**/_model_native.dll
+**/_model_native.so
 frontend/node_modules
 frontend/build
 frontend/.mobile-check

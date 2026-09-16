@@ -8,7 +8,7 @@ import struct
 from functools import lru_cache
 from pathlib import Path
 
-from .link_context import EXTRA_FEATURES, context_candidates
+from .link_context import EXTRA_FEATURES, context_candidates, model_tokens
 from .link_model import FEATURES, load_model
 
 NUMERIC_FEATURES = FEATURES + EXTRA_FEATURES
@@ -20,7 +20,7 @@ def nuisance_context(features):
     f = dict(zip(NUMERIC_FEATURES, features, strict=True))
     return bool(
         (f["root_target"] and not f["query_count"] and not f["semantic_title"])
-        or f["date_index"]
+        or (f["date_index"] and not f["sequence_label"])
         or f["semantic_navigation"]
         or f["rel_author"]
         or f["rel_tag"]
@@ -53,12 +53,24 @@ class ContextModel:
         ):
             raise ValueError("Incompatible context model")
         self.numeric_count = len(data["features"])
+        self.token_mode = data.get("token_mode", "words")
+        if self.token_mode not in {"words", "subwords-v1"}:
+            raise ValueError("Invalid token preprocessing")
+        self.calibration = data.get("calibration", [1.0, 0.0])
+        if (
+            len(self.calibration) != 2
+            or not all(math.isfinite(v) and abs(v) <= 100 for v in self.calibration)
+            or self.calibration[0] <= 0
+        ):
+            raise ValueError("Invalid calibration")
         self.fallback = None
         if "fallback" in data:
             if not allow_fallback or data.get("gate_feature") != "job_table":
                 raise ValueError("Invalid model routing")
             self.fallback = ContextModel(data["fallback"], allow_fallback=False)
         self.model_id = data["model_id"]
+        if not isinstance(self.model_id, str) or not 1 <= len(self.model_id) <= 100:
+            raise ValueError("Invalid model identity")
         self.upper = float(data["threshold"])
         self.lower = float(data.get("reject_threshold", 0.08))
         if not 0.05 <= self.upper <= 0.95:
@@ -137,7 +149,11 @@ class ContextModel:
             return self.fallback.score(numeric, words)
         numeric = numeric[: self.numeric_count]
         sparse = [(i, value) for i, value in enumerate(numeric) if value]
-        text = [self.vocabulary[word] for word in set(words) if word in self.vocabulary]
+        text = [
+            self.vocabulary[word]
+            for word in model_tokens(words, self.token_mode)
+            if word in self.vocabulary
+        ]
         norm = math.sqrt(sum(value * value for _, value in text)) or 1
         sparse += [(i, value / norm) for i, value in text]
         if self.trees is not None:
@@ -150,7 +166,7 @@ class ContextModel:
                     feature, threshold, left, right, _ = tree[index]
                     index = left if vector.get(feature, 0) <= threshold else right
                 total += tree[index][4]
-            return 1 / (1 + math.exp(-max(-60, min(60, total))))
+            return self.calibrate(1 / (1 + math.exp(-max(-60, min(60, total)))))
         values = [
             b + sum(weights[i] * value for i, value in sparse)
             for weights, b in zip(
@@ -163,7 +179,37 @@ class ContextModel:
                 b + sum(w * v for w, v in zip(weights, values, strict=True))
                 for weights, b in zip(layer["weights"], layer["bias"], strict=True)
             ]
-        return 1 / (1 + math.exp(-max(-60, min(60, values[0]))))
+        return self.calibrate(1 / (1 + math.exp(-max(-60, min(60, values[0])))))
+
+    def calibrate(self, probability):
+        if self.calibration == [1.0, 0.0]:
+            return probability
+        p = min(1 - 1e-12, max(1e-12, probability))
+        value = self.calibration[0] * math.log(p / (1 - p)) + self.calibration[1]
+        return 1 / (1 + math.exp(-max(-60, min(60, value))))
+
+    def score_many(self, rows):
+        from .native_model import predict
+
+        if any(
+            len(row["features"]) not in (self.numeric_count, len(NUMERIC_FEATURES))
+            or not all(math.isfinite(v) and 0 <= v <= 1 for v in row["features"])
+            for row in rows
+        ):
+            raise ValueError("Invalid context features")
+        if self.fallback is None:
+            return predict(self, rows)
+        gate = NUMERIC_FEATURES.index("job_table")
+        groups = [[], []]
+        for i, row in enumerate(rows):
+            groups[bool(row["features"][gate])].append((i, row))
+        scores = [0.0] * len(rows)
+        for model, group in zip((self.fallback, self), groups, strict=True):
+            for (i, _), score in zip(
+                group, predict(model, [row for _, row in group]), strict=True
+            ):
+                scores[i] = score
+        return scores
 
 
 @lru_cache(maxsize=1)
@@ -179,22 +225,32 @@ def load_context_model():
         return None
 
 
+def active_context_model():
+    if os.environ.get("TRACKER_LINK_MODEL", "on").lower() == "cascade":
+        from .cascade_model import load_cascade_model
+
+        if candidate := load_cascade_model():
+            return candidate
+    return load_context_model()
+
+
 def classify_context(soup, source, *, fallback_scores=None, tables=None):
     mode = os.environ.get("TRACKER_LINK_MODEL", "on").lower()
     if mode in ("0", "off", "false", "legacy"):
         return {}, {}, set(), None
-    model = load_context_model()
+    model = active_context_model()
     if model is None:
         return {}, {}, set(), None
     fallback = load_model() if fallback_scores is not None else None
     scores, labels, rejected = {}, {}, set()
-    for row in context_candidates(soup, source, tables=tables):
+    rows = list(context_candidates(soup, source, tables=tables))
+    for row, score in zip(rows, model.score_many(rows), strict=True):
         key = id(row["anchor"])
         if fallback is not None:
             # The context model starts with the exact legacy feature vector.
             # Extract it once; both trained classifiers keep their own decision.
             fallback_scores[key] = fallback.score(row["features"][: len(FEATURES)])
-        scores[key] = model.score(row["features"], row["tokens"])
+        scores[key] = score
         labels[key] = row["label"]
         if scores[key] < model.upper and (
             mode == "primary" or nuisance_context(row["features"])

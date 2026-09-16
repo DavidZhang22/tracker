@@ -47,3 +47,6 @@ backend/ml/.venv/
 *.tgz
 *.zip
 .ruff_cache/
+# Platform-specific inference kernels are built from the checked-in C source.
+_model_native.dll
+_model_native.so

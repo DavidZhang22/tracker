@@ -1,0 +1,145 @@
+{
+  "python": "3.12.14 (main, Sep  1 2026, 00:10:07) [GCC 14.2.0]",
+  "repeats": 3,
+  "network": "disabled externally for container runs",
+  "models": {
+    "production": {
+      "model_id": "context-tables-gated-5cd445174fb3",
+      "pages": {
+        "nasa-index": {
+          "expected": 25,
+          "found": 43,
+          "correct": 19,
+          "unwanted": 24,
+          "missing": 6,
+          "dated": 15,
+          "times": [
+            0.895661927992478,
+            0.8836040220921859,
+            0.867821178981103
+          ],
+          "median_seconds": 0.8836040220921859,
+          "output_sha256": "baf51cb9ca5a741821253d746528b49038ddde9056583c35d7328104dc750bc0"
+        },
+        "pmlr-volumes": {
+          "expected": 327,
+          "found": 209,
+          "correct": 206,
+          "unwanted": 3,
+          "missing": 121,
+          "dated": 0,
+          "times": [
+            0.8362585209542885,
+            0.835401757969521,
+            0.8375317590544
+          ],
+          "median_seconds": 0.8362585209542885,
+          "output_sha256": "fabc259f55ea8d82348704fe5fd888232dc0023bcceac4095597df9337a26570"
+        },
+        "python-releases": {
+          "expected": 260,
+          "found": 260,
+          "correct": 260,
+          "unwanted": 0,
+          "missing": 0,
+          "dated": 107,
+          "times": [
+            1.2081855749711394,
+            1.2007015710696578,
+            1.1809895900078118
+          ],
+          "median_seconds": 1.2007015710696578,
+          "output_sha256": "98c3b2620532970fb77423cd2fb762272e784ba8d26d414a46f74fb0bb655328"
+        },
+        "esa-gallery": {
+          "expected": 58,
+          "found": 58,
+          "correct": 58,
+          "unwanted": 0,
+          "missing": 0,
+          "dated": 57,
+          "times": [
+            0.29091732494998723,
+            0.27082638000138104,
+            0.2697671849746257
+          ],
+          "median_seconds": 0.27082638000138104,
+          "output_sha256": "413b00672c95ee537b6a6521181cb55c4392a9d9b13b142c22702c7fa339114b"
+        },
+        "w3c-standards": {
+          "expected": 1233,
+          "found": 1411,
+          "correct": 1233,
+          "unwanted": 178,
+          "missing": 0,
+          "dated": 1345,
+          "times": [
+            9.562590465997346,
+            9.60406195896212,
+            9.638699523056857
+          ],
+          "median_seconds": 9.60406195896212,
+          "output_sha256": "0ee5bb702f3a29ecd349b2bd30f8bf9ec30e9b00c31e9268772c0243fdc21c46"
+        },
+        "cascade-eff": {
+          "expected": 14,
+          "found": 17,
+          "correct": 14,
+          "unwanted": 3,
+          "missing": 0,
+          "dated": 17,
+          "times": [
+            0.29816745000425726,
+            0.29428175103385,
+            0.2954829059308395
+          ],
+          "median_seconds": 0.2954829059308395,
+          "output_sha256": "664419e05d77c04dc267653904cadf9f5bbb29610452b808274214c0e7f7d5e8"
+        },
+        "cascade-planetary": {
+          "expected": 11,
+          "found": 14,
+          "correct": 9,
+          "unwanted": 5,
+          "missing": 2,
+          "dated": 0,
+          "times": [
+            0.31485756300389767,
+            0.29048247600439936,
+            0.28873979405034333
+          ],
+          "median_seconds": 0.29048247600439936,
+          "output_sha256": "f0f0e31e977af24c821b5d10c670093051831ca53a2f33482c32781f21d5ccc4"
+        },
+        "cascade-freecodecamp": {
+          "expected": 64,
+          "found": 25,
+          "correct": 25,
+          "unwanted": 0,
+          "missing": 39,
+          "dated": 25,
+          "times": [
+            0.3092626759316772,
+            0.30459132697433233,
+            0.30202563595958054
+          ],
+          "median_seconds": 0.30459132697433233,
+          "output_sha256": "4fe80093caaaf8ac8f01b6f30e4825e922f24ef7345c44706a0de7fcba4f65e4"
+        }
+      }
+    }
+  },
+  "native_kernel": false,
+  "stress": {
+    "workers": 2,
+    "pages": 4,
+    "links_per_page": 4999,
+    "padding_bytes": 6000000,
+    "seconds": 21.07490368001163,
+    "output_sha256": "52d08ed67903630380ed80682f692fa801fd4a989529bd513cc49e3d434440ef",
+    "identical": true,
+    "extracted_count": 4799
+  },
+  "container_peak_bytes": 332697600,
+  "native_disabled": false
+}

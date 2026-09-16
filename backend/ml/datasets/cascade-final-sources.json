@@ -1,0 +1,197 @@
+[
+  {
+    "id": "cascade-eff",
+    "url": "https://www.eff.org/updates",
+    "split": "test",
+    "family": "policy",
+    "positive": ".",
+    "reason": "Reviewed primary collection cards; excludes footer guides and inline references, includes mixed-path publication types. Scope corrected after baseline replay, before candidate comparison; not a pristine blind gold test.",
+    "positive_selector": ".node__title a[href]",
+    "status": "captured",
+    "file": "data/cascade-sources/eff.html",
+    "sha256": "de4f80fb671cfa6c032c8e004f1e5eaccd8f23950b09f4f840315bbd75b0d6ac",
+    "rows": 230,
+    "expected_urls": [
+      "https://www.eff.org/deeplinks/2026/09/2026-eff-award-winners-access-now-7amleh-arab-center-advancement-social-media",
+      "https://www.eff.org/deeplinks/2026/09/california-tell-governor-stand-net-neutrality-affordability-and-public-safety",
+      "https://www.eff.org/deeplinks/2026/09/cold-take-amazons-new-encryption-method-still-doesnt-deliver-real-privacy",
+      "https://www.eff.org/deeplinks/2026/09/cops-play-hide-and-seek-about-using-spy-tech-avoid-scrutiny-and-bad-pr",
+      "https://www.eff.org/deeplinks/2026/09/court-rules-against-citizen-journalists-dmca-takedown-case-eff-will-appeal",
+      "https://www.eff.org/deeplinks/2026/09/digital-sovereignty-what-it-what-it-could-be",
+      "https://www.eff.org/deeplinks/2026/09/governor-newsom-signs-student-backed-digital-literacy-bills-alongside-misguided",
+      "https://www.eff.org/deeplinks/2026/09/high-crime-lmao-how-cops-are-treating-mass-surveillance-joke",
+      "https://www.eff.org/deeplinks/2026/09/judge-rules-dod-unlawfully-retaliated-against-anthropic",
+      "https://www.eff.org/deeplinks/2026/09/metas-17-billion-settlement-bad-deal-teens-and-all-social-media-users",
+      "https://www.eff.org/deeplinks/2026/09/new-records-reveal-problems-medicares-ai-prior-authorization-experiment",
+      "https://www.eff.org/deeplinks/2026/09/texas-and-florida-step-back-alprs",
+      "https://www.eff.org/event/eff-bsidespdx-0",
+      "https://www.eff.org/event/eff-forum-internet-freedom-africa-2026",
+      "https://www.eff.org/press/releases/we-all-deserve-better-internet-not-smaller-one"
+    ],
+    "samples": [
+      {
+        "url": "https://www.eff.org/deeplinks/2026/09/california-tell-governor-stand-net-neutrality-affordability-and-public-safety",
+        "text": "",
+        "label": 1
+      },
+      {
+        "url": "https://www.eff.org/deeplinks/2026/09/california-tell-governor-stand-net-neutrality-affordability-and-public-safety",
+        "text": "California: Tell the Governor to Stand Up for Net Neutrality, Affordability, and Public Safety",
+        "label": 1
+      },
+      {
+        "url": "https://www.eff.org/deeplinks/2026/09/high-crime-lmao-how-cops-are-treating-mass-surveillance-joke",
+        "text": "Flock cameras and surveillance cameras among barbed wire in a dystopian scene",
+        "label": 1
+      },
+      {
+        "url": "https://www.eff.org/deeplinks/2026/09/high-crime-lmao-how-cops-are-treating-mass-surveillance-joke",
+        "text": "The High Crime of “LMAO”: How Cops Are Treating Mass Surveillance As a Joke",
+        "label": 1
+      },
+      {
+        "url": "https://www.eff.org/deeplinks/2026/09/governor-newsom-signs-student-backed-digital-literacy-bills-alongside-misguided",
+        "text": "young EFF'ers show phones with security icons",
+        "label": 1
+      }
+    ]
+  },
+  {
+    "id": "cascade-planetary",
+    "url": "https://www.planetary.org/articles",
+    "split": "test",
+    "family": "space",
+    "positive": ".",
+    "reason": "Reviewed primary collection cards; excludes footer guides and inline references, includes mixed-path publication types. Scope corrected after baseline replay, before candidate comparison; not a pristine blind gold test.",
+    "positive_selector": "main h2 a[href]",
+    "status": "captured",
+    "file": "data/cascade-sources/planetary.html",
+    "sha256": "0c7d9b2d7ec2c3fc248722ffd83af9b7e99c16ad8665f18afd1e078e5f093995",
+    "rows": 191,
+    "expected_urls": [
+      "https://www.planetary.org/articles/meet-the-nancy-grace-roman-space-telescope",
+      "https://www.planetary.org/articles/momentum-july-2026",
+      "https://www.planetary.org/articles/omb-rule-change-comments-whats-next",
+      "https://www.planetary.org/articles/swap-pepssi-and-the-secrets-of-the-solar-system",
+      "https://www.planetary.org/articles/the-best-images-from-the-2026-solar-eclipse",
+      "https://www.planetary.org/articles/the-cost-of-a-promise-lunar-rover",
+      "https://www.planetary.org/articles/the-nancy-grace-roman-space-telescope-launch",
+      "https://www.planetary.org/articles/the-new-faces-of-mars",
+      "https://www.planetary.org/articles/what-could-the-artemis-iv-astronauts-discover-on-the-moon",
+      "https://www.planetary.org/space-advocate/space-advocate-august-2026",
+      "https://www.planetary.org/space-advocate/space-advocate-july-2026",
+      "https://www.planetary.org/the-downlink/cosmic-neighborhood-watch",
+      "https://www.planetary.org/the-downlink/little-moons-megarocket-tiny-cubesat",
+      "https://www.planetary.org/the-downlink/more-than-one-way-to-make-an-impact",
+      "https://www.planetary.org/the-downlink/portraits-of-the-red-planet",
+      "https://www.planetary.org/the-downlink/shakeups-and-smash-ups",
+      "https://www.planetary.org/the-downlink/size-is-in-the-eye-of-the-beholder",
+      "https://www.planetary.org/the-downlink/the-next-generation",
+      "https://www.planetary.org/the-downlink/total-solar-eclipse-edition",
+      "https://www.planetary.org/the-downlink/who-knew-there-were-so-many-more-moons"
+    ],
+    "samples": [
+      {
+        "url": "https://www.planetary.org/articles/swap-pepssi-and-the-secrets-of-the-solar-system",
+        "text": "Read more of SWAP, PEPSSI, and the secrets of the Solar System",
+        "label": 1
+      },
+      {
+        "url": "https://www.planetary.org/articles/swap-pepssi-and-the-secrets-of-the-solar-system",
+        "text": "SWAP, PEPSSI, and the secrets of the Solar System",
+        "label": 1
+      },
+      {
+        "url": "https://www.planetary.org/the-downlink/the-next-generation",
+        "text": "Read more of The next generation",
+        "label": 1
+      },
+      {
+        "url": "https://www.planetary.org/the-downlink/the-next-generation",
+        "text": "The next generation",
+        "label": 1
+      },
+      {
+        "url": "https://www.planetary.org/articles/the-new-faces-of-mars",
+        "text": "Read more of Meet the next generation of Mars exploration",
+        "label": 1
+      }
+    ]
+  },
+  {
+    "id": "cascade-freecodecamp",
+    "url": "https://www.freecodecamp.org/news/",
+    "split": "test",
+    "family": "tutorials",
+    "positive": ".",
+    "reason": "Reviewed primary collection cards; excludes footer guides and inline references, includes mixed-path publication types. Scope corrected after baseline replay, before candidate comparison; not a pristine blind gold test.",
+    "positive_selector": ".post-card-title a[href]",
+    "status": "captured",
+    "file": "data/cascade-sources/freecodecamp.html",
+    "sha256": "e997d585916a60cb5c48f112a1a2a8aa2dd9dfe9cf3204fdb905cb0659de8497",
+    "rows": 182,
+    "expected_urls": [
+      "https://www.freecodecamp.org/news/apple-watch-health-age-whats-it-actually-measuring",
+      "https://www.freecodecamp.org/news/apple-watch-vo2-max-test-cardiorespiratory-fitness",
+      "https://www.freecodecamp.org/news/build-a-self-evaluating-ai-system-automated-testing-and-evaluation-pipelines-for-llm-apps",
+      "https://www.freecodecamp.org/news/build-an-endpoint-data-loss-prevention-strategy-for-your-dev-team",
+      "https://www.freecodecamp.org/news/catch-security-vulnerabilities-code-pull-requests",
+      "https://www.freecodecamp.org/news/differential-testing-legacy-migration",
+      "https://www.freecodecamp.org/news/how-ai-is-changing-malware-detection",
+      "https://www.freecodecamp.org/news/how-linux-actually-boots-from-firmware-to-the-login-screen",
+      "https://www.freecodecamp.org/news/how-to-build-a-deployment-checklist-that-actually-prevents-production-incidents",
+      "https://www.freecodecamp.org/news/how-to-build-an-ai-chat-app-interface-with-the-ai-sdk",
+      "https://www.freecodecamp.org/news/how-to-connect-to-hmrc-making-tax-digital-api",
+      "https://www.freecodecamp.org/news/how-to-design-gifting-features-people-actually-use-evidence-from-58-apps",
+      "https://www.freecodecamp.org/news/how-to-implement-feature-flags-for-safe-and-gradual-rollouts",
+      "https://www.freecodecamp.org/news/how-to-implement-lego-architecture-in-flutter-handbook",
+      "https://www.freecodecamp.org/news/how-to-prevent-race-conditions-in-django",
+      "https://www.freecodecamp.org/news/how-to-sandbox-a-linux-process-with-landlock-no-root-required",
+      "https://www.freecodecamp.org/news/how-to-use-lovable-responsibly",
+      "https://www.freecodecamp.org/news/how-to-write-a-linux-kernel-module-that-actually-builds",
+      "https://www.freecodecamp.org/news/how-webrtc-scales-signaling-nat-traversal-and-the-mesh-sfu-mcu-tradeoff",
+      "https://www.freecodecamp.org/news/openai-codex-crash-course",
+      "https://www.freecodecamp.org/news/the-7-essential-parts-of-your-online-presence",
+      "https://www.freecodecamp.org/news/the-composite-design-pattern-work-with-individual-objects-and-groups-through-the-same-interface",
+      "https://www.freecodecamp.org/news/what-a-machine-learning-model-is-and-how-to-make-one",
+      "https://www.freecodecamp.org/news/what-is-an-agent-harness",
+      "https://www.freecodecamp.org/news/whats-new-in-macos-27-for-developers"
+    ],
+    "samples": [
+      {
+        "url": "https://www.freecodecamp.org/news/how-to-write-a-linux-kernel-module-that-actually-builds",
+        "text": "How to Write a Linux Kernel Module That Actually Builds",
+        "label": 1
+      },
+      {
+        "url": "https://www.freecodecamp.org/news/how-to-write-a-linux-kernel-module-that-actually-builds",
+        "text": "How to Write a Linux Kernel Module That Actually Builds",
+        "label": 1
+      },
+      {
+        "url": "https://www.freecodecamp.org/news/the-7-essential-parts-of-your-online-presence",
+        "text": "The 7 Essential Parts of Your Online Presence",
+        "label": 1
+      },
+      {
+        "url": "https://www.freecodecamp.org/news/the-7-essential-parts-of-your-online-presence",
+        "text": "The 7 Essential Parts of Your Online Presence",
+        "label": 1
+      },
+      {
+        "url": "https://www.freecodecamp.org/news/build-an-endpoint-data-loss-prevention-strategy-for-your-dev-team",
+        "text": "How to Build an Endpoint Data Loss Prevention Strategy for Your Development Team",
+        "label": 1
+      }
+    ]
+  },
+  {
+    "id": "cascade-mozilla",
+    "url": "https://www.mozilla.org/en-US/firefox/releases/",
+    "split": "test",
+    "family": "releases",
+    "positive": "^/en-US/firefox/[\\d.]+/releasenotes/?$",
+    "reason": "No saved capture",
+    "status": "unavailable"
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "rows": 18855,
+  "model_id": "cascade-text-structure-v1-067e036ceaaa",
+  "timings": {
+    "off": {
+      "runs": [
+        2.1156200999976136
+      ],
+      "median_seconds": 2.1156200999976136
+    },
+    "on": {
+      "runs": [
+        0.7062895999988541
+      ],
+      "median_seconds": 0.7062895999988541
+    }
+  },
+  "maximum_error": 2.220446049250313e-16,
+  "decision_changes": 0
+}

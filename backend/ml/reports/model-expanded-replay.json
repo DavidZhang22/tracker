@@ -1,0 +1,425 @@
+{
+  "notes": "One offline replay on the Windows development machine; timings are diagnostic, not a performance gate. Both models use the optimized parser. Scope labels remain weak annotations.",
+  "baseline": {
+    "python": "3.12.8 | packaged by conda-forge | (main, Dec  5 2024, 14:06:27) [MSC v.1942 64 bit (AMD64)]",
+    "repeats": 1,
+    "network": "disabled externally for container runs",
+    "models": {
+      "production": {
+        "model_id": "context-tables-gated-5cd445174fb3",
+        "pages": {
+          "cascade-sqlite": {
+            "capture_sha256": "5c5346b2d41beaa088ba85c9b4d1f2e04f7ae5cf07969496d6158029a20c5247",
+            "expected": 262,
+            "found": 262,
+            "correct": 262,
+            "unwanted": 0,
+            "missing": 0,
+            "dated": 262,
+            "times": [
+              1.0021875000093132
+            ],
+            "median_seconds": 1.0021875000093132,
+            "output_sha256": "4a13c7175c0fdde65ae9c1ae75d4223c00fb5540ff40b3665a87f944f0b359b3"
+          },
+          "cascade-debian": {
+            "capture_sha256": "a484b1e90394953100da09a03dc11896686ecfe6ba5627b501b44b9ac8de12d5",
+            "expected": 20,
+            "found": 2,
+            "correct": 0,
+            "unwanted": 2,
+            "missing": 20,
+            "dated": 0,
+            "times": [
+              0.07084280002163723
+            ],
+            "median_seconds": 0.07084280002163723,
+            "output_sha256": "ade0dbab394813a4a43bb910aa5bd5748b23bd2b8ab21775cc6a35a9b70ba046"
+          },
+          "cascade-arch": {
+            "capture_sha256": "42edea8a0d23836e6744daf857cc849972a8037f5a658d9a35e1d116d0346aed",
+            "expected": 50,
+            "found": 50,
+            "correct": 50,
+            "unwanted": 0,
+            "missing": 0,
+            "dated": 50,
+            "times": [
+              0.1793513000011444
+            ],
+            "median_seconds": 0.1793513000011444,
+            "output_sha256": "176315ff568d08bab26e3dc018dcd885e02507f260362c78143cd2058d6ac691"
+          },
+          "cascade-usenix": {
+            "capture_sha256": "b6e6ac01f9b2c23d64f7108a70b60116edd2d27220a9ebc453ba8a59eef895cd",
+            "expected": 53,
+            "found": 54,
+            "correct": 53,
+            "unwanted": 1,
+            "missing": 0,
+            "dated": 0,
+            "times": [
+              0.7140863999957219
+            ],
+            "median_seconds": 0.7140863999957219,
+            "output_sha256": "7d4acf5060e94d39798a238b640bc33d6b80c01bbb89783f8f24ef7d3f598300"
+          },
+          "cascade-quanta": {
+            "capture_sha256": "53b402e460ccc8e0e6fad17b452b8299dbd7b5d0455e5dd2eb9b7dd59eba5da7",
+            "expected": 12,
+            "found": 9,
+            "correct": 9,
+            "unwanted": 0,
+            "missing": 3,
+            "dated": 8,
+            "times": [
+              0.6621274999924935
+            ],
+            "median_seconds": 0.6621274999924935,
+            "output_sha256": "046c98f1de2dcf8fdf111a5b61259fa2b17ca993c7bcb8c702a595bef0446723"
+          },
+          "cascade-aeon": {
+            "capture_sha256": "cd61de52cbef4f97fe390dfb0eccf3f375c306265646fbade2d11dc8b40ea224",
+            "expected": 13,
+            "found": 13,
+            "correct": 13,
+            "unwanted": 0,
+            "missing": 0,
+            "dated": 0,
+            "times": [
+              0.13513529999181628
+            ],
+            "median_seconds": 0.13513529999181628,
+            "output_sha256": "572f708bcd7b3fa9b6796f9467aa4a5365bc10af4712e802ef16e39cd8d7ae27"
+          },
+          "cascade-atlas": {
+            "capture_sha256": "7d6c78bb28762de8206dba135ec51a1b328afff285804bdbd9aefaaaea20be29",
+            "expected": 9,
+            "found": 18,
+            "correct": 8,
+            "unwanted": 10,
+            "missing": 1,
+            "dated": 16,
+            "times": [
+              0.21774860000004992
+            ],
+            "median_seconds": 0.21774860000004992,
+            "output_sha256": "09492849d8d98f2010a1dfa489e8a5a0778b3510e4bdf2a7bc22330426a57ced"
+          },
+          "cascade-laphams": {
+            "capture_sha256": "8b5a99b619cb2fdca0a4391645148c77a042f46cdc6e206507c1ebf90b0d025a",
+            "expected": 11,
+            "found": 12,
+            "correct": 11,
+            "unwanted": 1,
+            "missing": 0,
+            "dated": 11,
+            "times": [
+              0.23978330002864823
+            ],
+            "median_seconds": 0.23978330002864823,
+            "output_sha256": "66accd966071da29936ec22413e557b5855926249e69f9f3c7c93c9e00006be8"
+          },
+          "cascade-smithsonian": {
+            "capture_sha256": "72bbbf59278ac8dc989f9ed8afa8654655b65b2048f9dbd1b99d165eb75fd806",
+            "expected": 15,
+            "found": 20,
+            "correct": 9,
+            "unwanted": 11,
+            "missing": 6,
+            "dated": 19,
+            "times": [
+              0.20252359996084124
+            ],
+            "median_seconds": 0.20252359996084124,
+            "output_sha256": "3624cbaa112c5871e500dda7f4c747c19f33adf48ccfbd4b8d4cd5e899bf1970"
+          },
+          "cascade-blender": {
+            "capture_sha256": "12595c46a3d7c09c0638e450e9ae25532099dd383aa8e5bed30e09ca204ddef7",
+            "expected": 24,
+            "found": 8,
+            "correct": 6,
+            "unwanted": 2,
+            "missing": 18,
+            "dated": 0,
+            "times": [
+              0.15683450002688915
+            ],
+            "median_seconds": 0.15683450002688915,
+            "output_sha256": "4bf8d29fdc3ddbc6a64dc1279da4946b0c714821a36f3729f81d27ce62a84640"
+          },
+          "cascade-imperial": {
+            "capture_sha256": "4eac36f5bdb723eae8ed30419cfa8f1c220db3d9098ec98cf24e2399aa4f34a4",
+            "expected": 26,
+            "found": 36,
+            "correct": 26,
+            "unwanted": 10,
+            "missing": 0,
+            "dated": 25,
+            "times": [
+              0.22830189997330308
+            ],
+            "median_seconds": 0.22830189997330308,
+            "output_sha256": "1828e5843b41fed24f05746f82667f18cdf4d80cc1ae541217b5828ca1bab7bb"
+          },
+          "cascade-nationalgallery": {
+            "capture_sha256": "bf1b8d6bb1cda5ae0453ffbecc024540efdf07593cc5753c5e8c950f849dbb93",
+            "expected": 7,
+            "found": 7,
+            "correct": 7,
+            "unwanted": 0,
+            "missing": 0,
+            "dated": 2,
+            "times": [
+              0.11414009996224195
+            ],
+            "median_seconds": 0.11414009996224195,
+            "output_sha256": "611365cd8e626137a2cf015c4fa5a0513084965ff23c4f127489880111b74ca2"
+          },
+          "cascade-nist": {
+            "capture_sha256": "f850880f9bc908d989aa33574b0a600f610614923dfae2d317216d90a47b100f",
+            "expected": 12,
+            "found": 18,
+            "correct": 12,
+            "unwanted": 6,
+            "missing": 0,
+            "dated": 17,
+            "times": [
+              0.2638200999936089
+            ],
+            "median_seconds": 0.2638200999936089,
+            "output_sha256": "ffb29ea6ff253401643a8766264fa97013d0aaa953aa6587740dbcb7458a0167"
+          },
+          "cascade-britishmuseum": {
+            "capture_sha256": "d36a5f1e009aea8e0a75e08944a75c27a121c0bfed5bc465e33f8a7a1a43d0d5",
+            "expected": 11,
+            "found": 14,
+            "correct": 11,
+            "unwanted": 3,
+            "missing": 0,
+            "dated": 5,
+            "times": [
+              0.2520441999658942
+            ],
+            "median_seconds": 0.2520441999658942,
+            "output_sha256": "a9fc4c5837500928225a923e239f52628d5a6149255177c487b77694543f9270"
+          }
+        }
+      }
+    },
+    "native_kernel": true,
+    "container_peak_bytes": null,
+    "native_disabled": false
+  },
+  "rescue": {
+    "python": "3.12.8 | packaged by conda-forge | (main, Dec  5 2024, 14:06:27) [MSC v.1942 64 bit (AMD64)]",
+    "repeats": 1,
+    "network": "disabled externally for container runs",
+    "models": {
+      "rescue-cascade": {
+        "model_id": "cascade-text-structure-v1-067e036ceaaa",
+        "pages": {
+          "cascade-sqlite": {
+            "capture_sha256": "5c5346b2d41beaa088ba85c9b4d1f2e04f7ae5cf07969496d6158029a20c5247",
+            "expected": 262,
+            "found": 262,
+            "correct": 262,
+            "unwanted": 0,
+            "missing": 0,
+            "dated": 262,
+            "times": [
+              0.9370726000051945
+            ],
+            "median_seconds": 0.9370726000051945,
+            "output_sha256": "4a13c7175c0fdde65ae9c1ae75d4223c00fb5540ff40b3665a87f944f0b359b3"
+          },
+          "cascade-debian": {
+            "capture_sha256": "a484b1e90394953100da09a03dc11896686ecfe6ba5627b501b44b9ac8de12d5",
+            "expected": 20,
+            "found": 2,
+            "correct": 0,
+            "unwanted": 2,
+            "missing": 20,
+            "dated": 0,
+            "times": [
+              0.06269830005476251
+            ],
+            "median_seconds": 0.06269830005476251,
+            "output_sha256": "ade0dbab394813a4a43bb910aa5bd5748b23bd2b8ab21775cc6a35a9b70ba046"
+          },
+          "cascade-arch": {
+            "capture_sha256": "42edea8a0d23836e6744daf857cc849972a8037f5a658d9a35e1d116d0346aed",
+            "expected": 50,
+            "found": 50,
+            "correct": 50,
+            "unwanted": 0,
+            "missing": 0,
+            "dated": 50,
+            "times": [
+              0.16519459994742647
+            ],
+            "median_seconds": 0.16519459994742647,
+            "output_sha256": "176315ff568d08bab26e3dc018dcd885e02507f260362c78143cd2058d6ac691"
+          },
+          "cascade-usenix": {
+            "capture_sha256": "b6e6ac01f9b2c23d64f7108a70b60116edd2d27220a9ebc453ba8a59eef895cd",
+            "expected": 53,
+            "found": 54,
+            "correct": 53,
+            "unwanted": 1,
+            "missing": 0,
+            "dated": 0,
+            "times": [
+              0.6814473000122234
+            ],
+            "median_seconds": 0.6814473000122234,
+            "output_sha256": "7d4acf5060e94d39798a238b640bc33d6b80c01bbb89783f8f24ef7d3f598300"
+          },
+          "cascade-quanta": {
+            "capture_sha256": "53b402e460ccc8e0e6fad17b452b8299dbd7b5d0455e5dd2eb9b7dd59eba5da7",
+            "expected": 12,
+            "found": 9,
+            "correct": 9,
+            "unwanted": 0,
+            "missing": 3,
+            "dated": 8,
+            "times": [
+              0.6383510999730788
+            ],
+            "median_seconds": 0.6383510999730788,
+            "output_sha256": "331016c6ca0fadaf7d2553b8050253fb284fc46f7b4dca612913d845ab8971d6"
+          },
+          "cascade-aeon": {
+            "capture_sha256": "cd61de52cbef4f97fe390dfb0eccf3f375c306265646fbade2d11dc8b40ea224",
+            "expected": 13,
+            "found": 13,
+            "correct": 13,
+            "unwanted": 0,
+            "missing": 0,
+            "dated": 0,
+            "times": [
+              0.11816340003861114
+            ],
+            "median_seconds": 0.11816340003861114,
+            "output_sha256": "572f708bcd7b3fa9b6796f9467aa4a5365bc10af4712e802ef16e39cd8d7ae27"
+          },
+          "cascade-atlas": {
+            "capture_sha256": "7d6c78bb28762de8206dba135ec51a1b328afff285804bdbd9aefaaaea20be29",
+            "expected": 9,
+            "found": 18,
+            "correct": 8,
+            "unwanted": 10,
+            "missing": 1,
+            "dated": 16,
+            "times": [
+              0.19213919999310747
+            ],
+            "median_seconds": 0.19213919999310747,
+            "output_sha256": "09492849d8d98f2010a1dfa489e8a5a0778b3510e4bdf2a7bc22330426a57ced"
+          },
+          "cascade-laphams": {
+            "capture_sha256": "8b5a99b619cb2fdca0a4391645148c77a042f46cdc6e206507c1ebf90b0d025a",
+            "expected": 11,
+            "found": 12,
+            "correct": 11,
+            "unwanted": 1,
+            "missing": 0,
+            "dated": 11,
+            "times": [
+              0.21935009997105226
+            ],
+            "median_seconds": 0.21935009997105226,
+            "output_sha256": "66accd966071da29936ec22413e557b5855926249e69f9f3c7c93c9e00006be8"
+          },
+          "cascade-smithsonian": {
+            "capture_sha256": "72bbbf59278ac8dc989f9ed8afa8654655b65b2048f9dbd1b99d165eb75fd806",
+            "expected": 15,
+            "found": 20,
+            "correct": 9,
+            "unwanted": 11,
+            "missing": 6,
+            "dated": 19,
+            "times": [
+              0.194377500039991
+            ],
+            "median_seconds": 0.194377500039991,
+            "output_sha256": "3624cbaa112c5871e500dda7f4c747c19f33adf48ccfbd4b8d4cd5e899bf1970"
+          },
+          "cascade-blender": {
+            "capture_sha256": "12595c46a3d7c09c0638e450e9ae25532099dd383aa8e5bed30e09ca204ddef7",
+            "expected": 24,
+            "found": 8,
+            "correct": 6,
+            "unwanted": 2,
+            "missing": 18,
+            "dated": 0,
+            "times": [
+              0.15997039998183027
+            ],
+            "median_seconds": 0.15997039998183027,
+            "output_sha256": "4bf8d29fdc3ddbc6a64dc1279da4946b0c714821a36f3729f81d27ce62a84640"
+          },
+          "cascade-imperial": {
+            "capture_sha256": "4eac36f5bdb723eae8ed30419cfa8f1c220db3d9098ec98cf24e2399aa4f34a4",
+            "expected": 26,
+            "found": 36,
+            "correct": 26,
+            "unwanted": 10,
+            "missing": 0,
+            "dated": 25,
+            "times": [
+              0.23369259998435155
+            ],
+            "median_seconds": 0.23369259998435155,
+            "output_sha256": "1828e5843b41fed24f05746f82667f18cdf4d80cc1ae541217b5828ca1bab7bb"
+          },
+          "cascade-nationalgallery": {
+            "capture_sha256": "bf1b8d6bb1cda5ae0453ffbecc024540efdf07593cc5753c5e8c950f849dbb93",
+            "expected": 7,
+            "found": 7,
+            "correct": 7,
+            "unwanted": 0,
+            "missing": 0,
+            "dated": 2,
+            "times": [
+              0.11789579998003319
+            ],
+            "median_seconds": 0.11789579998003319,
+            "output_sha256": "611365cd8e626137a2cf015c4fa5a0513084965ff23c4f127489880111b74ca2"
+          },
+          "cascade-nist": {
+            "capture_sha256": "f850880f9bc908d989aa33574b0a600f610614923dfae2d317216d90a47b100f",
+            "expected": 12,
+            "found": 18,
+            "correct": 12,
+            "unwanted": 6,
+            "missing": 0,
+            "dated": 17,
+            "times": [
+              0.2663526000105776
+            ],
+            "median_seconds": 0.2663526000105776,
+            "output_sha256": "ffb29ea6ff253401643a8766264fa97013d0aaa953aa6587740dbcb7458a0167"
+          },
+          "cascade-britishmuseum": {
+            "capture_sha256": "d36a5f1e009aea8e0a75e08944a75c27a121c0bfed5bc465e33f8a7a1a43d0d5",
+            "expected": 11,
+            "found": 14,
+            "correct": 11,
+            "unwanted": 3,
+            "missing": 0,
+            "dated": 5,
+            "times": [
+              0.26254620001418516
+            ],
+            "median_seconds": 0.26254620001418516,
+            "output_sha256": "a9fc4c5837500928225a923e239f52628d5a6149255177c487b77694543f9270"
+          }
+        }
+      }
+    },
+    "native_kernel": true,
+    "container_peak_bytes": null,
+    "native_disabled": false
+  }
+}

@@ -1,6 +1,6 @@
 # Models and discovery tools
 
-Production loads the three bounded JSON models in [`app/tracker`](../app/tracker). Training and benchmarking are offline tools; they are excluded from the production image.
+Production loads bounded numeric JSON models in [`app/tracker`](../app/tracker). The optional light/deep cascade adds a small neural rescue pass to the existing link classifier. Docker builds compile a fixed C inference kernel; Python remains the fallback. Training and benchmarking are offline tools, excluded from the production image.
 
 | Location | Purpose |
 | --- | --- |
@@ -31,6 +31,8 @@ Training uses frozen feature rows. Full page replay additionally needs the ignor
 - [Parallel analysis](docs/PARALLEL_ANALYSIS.md)
 - [Response memory and throughput](docs/MEMORY_PIPELINE.md)
 - [Refresh profiling](docs/REFRESH_PERFORMANCE.md)
+- [Model improvement roadmap](docs/MODEL_ROADMAP.md)
+- [Neural cascade, native inference, and measured release results](reports/model-pipeline.md)
 - [Suggestions](docs/SUGGESTIONS.md)
 
 - [Document imports and expanded source evaluation](reports/generalization.md)

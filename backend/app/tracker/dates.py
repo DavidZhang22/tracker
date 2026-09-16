@@ -84,13 +84,17 @@ def node_dates(node):
     return next(iter(unique.values())) if len(unique) == 1 else {}
 
 
-def link_date(anchor):
+def link_date(anchor, context=None):
+    from .page_context import PageContext
+
+    context = context or PageContext()
+    dates = context.node_dates
     # Archive anchors often carry their own date (e.g. xkcd).
-    if own := node_dates(anchor):
+    if own := dates(anchor):
         return own
     row = anchor.find_parent("tr")
     if row:
-        if d := node_dates(row):
+        if d := dates(row):
             return d
         # Paired title/metadata rows are a common news-board layout.
         next_row = row.find_next_sibling("tr")
@@ -100,7 +104,7 @@ def link_date(anchor):
             and not next_row.get("id")
             and anchor.find_parent(class_=re.compile("titleline|headline"))
         ):
-            if d := node_dates(next_row):
+            if d := dates(next_row):
                 return d | {
                     "date_kind": "listed",
                     "date_source": "following metadata row",
@@ -109,29 +113,16 @@ def link_date(anchor):
     for depth, parent in enumerate(anchor.parents):
         if depth > 5 or parent.name in {"body", "html", "main", "table"}:
             break
-        headings = {
-            a.get("href")
-            for a in parent.select(
-                "h1 a[href],h2 a[href],h3 a[href],.entry-title a[href]"
-            )
-            if not a.get("href", "").startswith("#")
-        }
-        if len(headings) > 1:
+        if context.heading_count(parent) > 1:
             break
         # Do not cross from one list/card into its siblings.
         if len(parent.find_all(["article", "li"], recursive=False)) > 1:
             break
-        if d := node_dates(parent):
+        if d := dates(parent):
             return d
         if parent.name in {"article", "li"}:
             break
         # Repeated cards are boundaries even when one card has no date.
-        if parent.parent and any(
-            sibling is not parent
-            and sibling.name == parent.name
-            and sibling.get("class", []) == parent.get("class", [])
-            and sibling.select_one("a[href]")
-            for sibling in parent.parent.find_all(parent.name, recursive=False)
-        ):
+        if context.sibling_boundary(parent):
             break
     return {}

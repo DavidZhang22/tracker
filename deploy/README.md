@@ -63,3 +63,9 @@ Use SQLite's online backup API and verify snapshots. Do not copy a live database
 `/api/ready` returns 503 when storage is unavailable. Writes fail visibly and existing data is preserved. Authentication, exact-origin checks and per-account authorization remain enabled in production. Models, scans and browser rendering have bounded concurrency and resource limits; see [SAFEGUARDS.md](SAFEGUARDS.md).
 
 Run one Uvicorn application worker. The default two analysis processes speed up parsing without duplicating database or network orchestration. The browser container has no direct network access and receives validated responses through the app's request broker.
+
+## Link model
+
+`TRACKER_LINK_MODEL=cascade` enables the tested light/deep combination: the existing classifier handles every candidate and a small neural network can rescue borderline rejections. `on` selects the previous classifier; `off` selects the original rules and adapters. Recreate the app after changing this value. A missing or invalid cascade falls back to the previous classifier. Model and extraction versions invalidate cached scan results.
+
+Both Dockerfiles compile a fixed, bounded C inference kernel in a separate build stage. The compiler and training dependencies are absent from the runtime image. Python inference remains available when the kernel cannot load. No model training or uploaded executable/model loading occurs in the web application. See the [benchmark and evaluation limits](../backend/ml/reports/model-pipeline.md).

@@ -10,10 +10,12 @@ Public registration is enabled with `TRACKER_PUBLIC_SIGNUP=1`; each account has
 a private library. Password changes revoke existing sessions. Never put credentials
 or database backups in Git.
 
-The small link-classification model is enabled for generic HTML discovery. See
-`backend/ml/docs/LINK_CLASSIFIER.md` for measured resource use, dataset, limitations and retraining.
-To disable it, add `TRACKER_LINK_MODEL=off` to `deploy/.env` and recreate the app
-with Compose. No separate ML service or database is needed.
+Generic HTML discovery uses `TRACKER_LINK_MODEL=cascade`: the existing light
+classifier plus a bounded neural rescue pass. See the
+[measured release results](../backend/ml/reports/model-pipeline.md) for speed,
+memory, dataset limitations and retraining. Set `TRACKER_LINK_MODEL=on` to return
+to the previous classifier, or `off` to disable model assistance, then recreate
+the app with Compose. No separate ML service or database is needed.
 
 ## Operations
 

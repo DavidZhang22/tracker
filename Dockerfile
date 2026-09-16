@@ -5,6 +5,10 @@ RUN npm ci
 COPY frontend/ ./
 RUN npm run build
 
+FROM gcc:14-bookworm AS inference
+COPY backend/app/tracker/native_model.c /src/native_model.c
+RUN gcc -O3 -ffp-contract=off -fPIC -shared /src/native_model.c -o /model_native.so -lm
+
 FROM python:3.12-slim
 RUN pip install --no-cache-dir uv==0.8.22
 WORKDIR /app/backend
@@ -12,6 +16,7 @@ COPY backend/pyproject.toml backend/uv.lock backend/README.MD ./
 RUN uv sync --frozen --no-dev
 COPY backend/app/main.py ./app/main.py
 COPY backend/app/tracker ./app/tracker
+COPY --from=inference /model_native.so ./app/tracker/_model_native.so
 COPY --from=frontend /src/frontend/build /app/frontend/build
 RUN useradd --create-home tracker && mkdir -p /data && chown tracker:tracker /data && chmod 700 /data
 ENV TRACKER_DB=/data/tracker.sqlite3

@@ -14,6 +14,7 @@ from bs4 import Tag
 from .dom import first_tag
 from .keywords import language_codes, language_text
 from .limits import MAX_LINKS
+from .page_context import PageContext
 
 FEATURES = (
     "distance",
@@ -74,7 +75,9 @@ def route(href):
 
 def snippets(node, limit=1500):
     parts = []
+    size = 0
     for child in islice(node.descendants, 500):
+        previous = len(parts)
         if isinstance(child, Tag):
             if child.name in EXCLUDED:
                 continue
@@ -92,7 +95,8 @@ def snippets(node, limit=1500):
             p.name in EXCLUDED for p in islice(child.parents, 10)
         ):
             parts.append(str(child).strip()[:240])
-        if sum(map(len, parts)) > limit:
+        size += sum(len(part) for part in parts[previous:])
+        if size > limit:
             break
     for attr in ("title", "alt", "aria-label", "data-language"):
         if isinstance(node.get(attr), str):
@@ -220,8 +224,10 @@ def predict(data, features):
 
 
 class RecordContext:
-    def __init__(self, soup, regions=None):
+    def __init__(self, soup, regions=None, *, page=None):
         self.soup = soup
+        self.page = page or PageContext()
+        self.languages = {}
         self.stats = {}
         self.selected = dict(regions or {})
         self.sibling_stats = {}
@@ -264,7 +270,7 @@ class RecordContext:
             self.stats[key] = dict(
                 hrefs=hrefs,
                 routes=Counter(route(u) for u in hrefs),
-                text=snippets(node),
+                text=self.page.snippet(node),
                 metadata=sum(
                     bool(META.search(" ".join(t.get("class", []))))
                     or any(
@@ -413,7 +419,11 @@ class RecordContext:
         return self.region(anchor)[0]
 
     def language(self, anchor):
-        return language_in_regions(self.region(anchor))
+        region = self.region(anchor)
+        key = tuple(id(node) for node in region)
+        if key not in self.languages:
+            self.languages[key] = language_in_regions(region)
+        return self.languages[key]
 
     def text(self, anchor):
         record, neighbor = self.region(anchor)

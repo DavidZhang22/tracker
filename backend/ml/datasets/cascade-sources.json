@@ -1,0 +1,1177 @@
+[
+  {
+    "id": "cascade-sqlite",
+    "url": "https://www.sqlite.org/chronology.html",
+    "split": "train",
+    "family": "releases",
+    "positive": "^/releaselog/.*\\.html$",
+    "reason": "Publisher index scope annotated by URL role; weak labels, not independent human gold.",
+    "status": "captured",
+    "file": "data/cascade-sources/sqlite.html",
+    "sha256": "777c0f9da22605d6b47786de36918a576108f65c6e64bdbfe7a10f4fe0bc1488",
+    "rows": 647,
+    "expected_urls": [
+      "https://www.sqlite.org/releaselog/3_0_0.html",
+      "https://www.sqlite.org/releaselog/3_0_1.html",
+      "https://www.sqlite.org/releaselog/3_0_2.html",
+      "https://www.sqlite.org/releaselog/3_0_3.html",
+      "https://www.sqlite.org/releaselog/3_0_4.html",
+      "https://www.sqlite.org/releaselog/3_0_5.html",
+      "https://www.sqlite.org/releaselog/3_0_6.html",
+      "https://www.sqlite.org/releaselog/3_0_7.html",
+      "https://www.sqlite.org/releaselog/3_0_8.html",
+      "https://www.sqlite.org/releaselog/3_10_0.html",
+      "https://www.sqlite.org/releaselog/3_10_1.html",
+      "https://www.sqlite.org/releaselog/3_10_2.html",
+      "https://www.sqlite.org/releaselog/3_11_0.html",
+      "https://www.sqlite.org/releaselog/3_11_1.html",
+      "https://www.sqlite.org/releaselog/3_12_0.html",
+      "https://www.sqlite.org/releaselog/3_12_1.html",
+      "https://www.sqlite.org/releaselog/3_12_2.html",
+      "https://www.sqlite.org/releaselog/3_13_0.html",
+      "https://www.sqlite.org/releaselog/3_14.html",
+      "https://www.sqlite.org/releaselog/3_14_1.html",
+      "https://www.sqlite.org/releaselog/3_14_2.html",
+      "https://www.sqlite.org/releaselog/3_15_0.html",
+      "https://www.sqlite.org/releaselog/3_15_1.html",
+      "https://www.sqlite.org/releaselog/3_15_2.html",
+      "https://www.sqlite.org/releaselog/3_16_0.html",
+      "https://www.sqlite.org/releaselog/3_16_1.html",
+      "https://www.sqlite.org/releaselog/3_16_2.html",
+      "https://www.sqlite.org/releaselog/3_17_0.html",
+      "https://www.sqlite.org/releaselog/3_18_0.html",
+      "https://www.sqlite.org/releaselog/3_18_1.html",
+      "https://www.sqlite.org/releaselog/3_18_2.html",
+      "https://www.sqlite.org/releaselog/3_19_0.html",
+      "https://www.sqlite.org/releaselog/3_19_1.html",
+      "https://www.sqlite.org/releaselog/3_19_2.html",
+      "https://www.sqlite.org/releaselog/3_19_3.html",
+      "https://www.sqlite.org/releaselog/3_1_0.html",
+      "https://www.sqlite.org/releaselog/3_1_1.html",
+      "https://www.sqlite.org/releaselog/3_1_2.html",
+      "https://www.sqlite.org/releaselog/3_1_3.html",
+      "https://www.sqlite.org/releaselog/3_1_4.html",
+      "https://www.sqlite.org/releaselog/3_1_5.html",
+      "https://www.sqlite.org/releaselog/3_1_6.html",
+      "https://www.sqlite.org/releaselog/3_20_0.html",
+      "https://www.sqlite.org/releaselog/3_20_1.html",
+      "https://www.sqlite.org/releaselog/3_21_0.html",
+      "https://www.sqlite.org/releaselog/3_22_0.html",
+      "https://www.sqlite.org/releaselog/3_23_0.html",
+      "https://www.sqlite.org/releaselog/3_23_1.html",
+      "https://www.sqlite.org/releaselog/3_24_0.html",
+      "https://www.sqlite.org/releaselog/3_25_0.html",
+      "https://www.sqlite.org/releaselog/3_25_1.html",
+      "https://www.sqlite.org/releaselog/3_25_2.html",
+      "https://www.sqlite.org/releaselog/3_25_3.html",
+      "https://www.sqlite.org/releaselog/3_26_0.html",
+      "https://www.sqlite.org/releaselog/3_27_0.html",
+      "https://www.sqlite.org/releaselog/3_27_1.html",
+      "https://www.sqlite.org/releaselog/3_27_2.html",
+      "https://www.sqlite.org/releaselog/3_28_0.html",
+      "https://www.sqlite.org/releaselog/3_29_0.html",
+      "https://www.sqlite.org/releaselog/3_2_0.html",
+      "https://www.sqlite.org/releaselog/3_2_1.html",
+      "https://www.sqlite.org/releaselog/3_2_2.html",
+      "https://www.sqlite.org/releaselog/3_2_3.html",
+      "https://www.sqlite.org/releaselog/3_2_4.html",
+      "https://www.sqlite.org/releaselog/3_2_5.html",
+      "https://www.sqlite.org/releaselog/3_2_6.html",
+      "https://www.sqlite.org/releaselog/3_2_7.html",
+      "https://www.sqlite.org/releaselog/3_2_8.html",
+      "https://www.sqlite.org/releaselog/3_30_0.html",
+      "https://www.sqlite.org/releaselog/3_30_1.html",
+      "https://www.sqlite.org/releaselog/3_31_0.html",
+      "https://www.sqlite.org/releaselog/3_31_1.html",
+      "https://www.sqlite.org/releaselog/3_32_0.html",
+      "https://www.sqlite.org/releaselog/3_32_1.html",
+      "https://www.sqlite.org/releaselog/3_32_2.html",
+      "https://www.sqlite.org/releaselog/3_32_3.html",
+      "https://www.sqlite.org/releaselog/3_33_0.html",
+      "https://www.sqlite.org/releaselog/3_34_0.html",
+      "https://www.sqlite.org/releaselog/3_34_1.html",
+      "https://www.sqlite.org/releaselog/3_35_0.html",
+      "https://www.sqlite.org/releaselog/3_35_1.html",
+      "https://www.sqlite.org/releaselog/3_35_2.html",
+      "https://www.sqlite.org/releaselog/3_35_3.html",
+      "https://www.sqlite.org/releaselog/3_35_4.html",
+      "https://www.sqlite.org/releaselog/3_35_5.html",
+      "https://www.sqlite.org/releaselog/3_36_0.html",
+      "https://www.sqlite.org/releaselog/3_37_0.html",
+      "https://www.sqlite.org/releaselog/3_37_1.html",
+      "https://www.sqlite.org/releaselog/3_37_2.html",
+      "https://www.sqlite.org/releaselog/3_38_0.html",
+      "https://www.sqlite.org/releaselog/3_38_1.html",
+      "https://www.sqlite.org/releaselog/3_38_2.html",
+      "https://www.sqlite.org/releaselog/3_38_3.html",
+      "https://www.sqlite.org/releaselog/3_38_4.html",
+      "https://www.sqlite.org/releaselog/3_38_5.html",
+      "https://www.sqlite.org/releaselog/3_39_0.html",
+      "https://www.sqlite.org/releaselog/3_39_1.html",
+      "https://www.sqlite.org/releaselog/3_39_2.html",
+      "https://www.sqlite.org/releaselog/3_39_3.html",
+      "https://www.sqlite.org/releaselog/3_39_4.html",
+      "https://www.sqlite.org/releaselog/3_3_0.html",
+      "https://www.sqlite.org/releaselog/3_3_1.html",
+      "https://www.sqlite.org/releaselog/3_3_10.html",
+      "https://www.sqlite.org/releaselog/3_3_11.html",
+      "https://www.sqlite.org/releaselog/3_3_12.html",
+      "https://www.sqlite.org/releaselog/3_3_13.html",
+      "https://www.sqlite.org/releaselog/3_3_14.html",
+      "https://www.sqlite.org/releaselog/3_3_15.html",
+      "https://www.sqlite.org/releaselog/3_3_16.html",
+      "https://www.sqlite.org/releaselog/3_3_17.html",
+      "https://www.sqlite.org/releaselog/3_3_2.html",
+      "https://www.sqlite.org/releaselog/3_3_3.html",
+      "https://www.sqlite.org/releaselog/3_3_4.html",
+      "https://www.sqlite.org/releaselog/3_3_5.html",
+      "https://www.sqlite.org/releaselog/3_3_6.html",
+      "https://www.sqlite.org/releaselog/3_3_7.html",
+      "https://www.sqlite.org/releaselog/3_3_8.html",
+      "https://www.sqlite.org/releaselog/3_3_9.html",
+      "https://www.sqlite.org/releaselog/3_40_0.html",
+      "https://www.sqlite.org/releaselog/3_40_1.html",
+      "https://www.sqlite.org/releaselog/3_41_0.html",
+      "https://www.sqlite.org/releaselog/3_41_1.html",
+      "https://www.sqlite.org/releaselog/3_41_2.html",
+      "https://www.sqlite.org/releaselog/3_42_0.html",
+      "https://www.sqlite.org/releaselog/3_43_0.html",
+      "https://www.sqlite.org/releaselog/3_43_1.html",
+      "https://www.sqlite.org/releaselog/3_43_2.html",
+      "https://www.sqlite.org/releaselog/3_44_0.html",
+      "https://www.sqlite.org/releaselog/3_44_1.html",
+      "https://www.sqlite.org/releaselog/3_44_2.html",
+      "https://www.sqlite.org/releaselog/3_45_0.html",
+      "https://www.sqlite.org/releaselog/3_45_1.html",
+      "https://www.sqlite.org/releaselog/3_45_2.html",
+      "https://www.sqlite.org/releaselog/3_45_3.html",
+      "https://www.sqlite.org/releaselog/3_46_0.html",
+      "https://www.sqlite.org/releaselog/3_46_1.html",
+      "https://www.sqlite.org/releaselog/3_47_0.html",
+      "https://www.sqlite.org/releaselog/3_47_1.html",
+      "https://www.sqlite.org/releaselog/3_47_2.html",
+      "https://www.sqlite.org/releaselog/3_48_0.html",
+      "https://www.sqlite.org/releaselog/3_49_0.html",
+      "https://www.sqlite.org/releaselog/3_49_1.html",
+      "https://www.sqlite.org/releaselog/3_49_2.html",
+      "https://www.sqlite.org/releaselog/3_4_0.html",
+      "https://www.sqlite.org/releaselog/3_4_1.html",
+      "https://www.sqlite.org/releaselog/3_4_2.html",
+      "https://www.sqlite.org/releaselog/3_50_0.html",
+      "https://www.sqlite.org/releaselog/3_50_1.html",
+      "https://www.sqlite.org/releaselog/3_50_2.html",
+      "https://www.sqlite.org/releaselog/3_50_3.html",
+      "https://www.sqlite.org/releaselog/3_50_4.html",
+      "https://www.sqlite.org/releaselog/3_51_0.html",
+      "https://www.sqlite.org/releaselog/3_51_1.html",
+      "https://www.sqlite.org/releaselog/3_51_2.html",
+      "https://www.sqlite.org/releaselog/3_51_3.html",
+      "https://www.sqlite.org/releaselog/3_52_0.html",
+      "https://www.sqlite.org/releaselog/3_53_0.html",
+      "https://www.sqlite.org/releaselog/3_53_1.html",
+      "https://www.sqlite.org/releaselog/3_53_2.html",
+      "https://www.sqlite.org/releaselog/3_53_3.html",
+      "https://www.sqlite.org/releaselog/3_53_4.html",
+      "https://www.sqlite.org/releaselog/3_5_0.html",
+      "https://www.sqlite.org/releaselog/3_5_1.html",
+      "https://www.sqlite.org/releaselog/3_5_2.html",
+      "https://www.sqlite.org/releaselog/3_5_3.html",
+      "https://www.sqlite.org/releaselog/3_5_4.html",
+      "https://www.sqlite.org/releaselog/3_5_5.html",
+      "https://www.sqlite.org/releaselog/3_5_6.html",
+      "https://www.sqlite.org/releaselog/3_5_7.html",
+      "https://www.sqlite.org/releaselog/3_5_8.html",
+      "https://www.sqlite.org/releaselog/3_5_9.html",
+      "https://www.sqlite.org/releaselog/3_6_0.html",
+      "https://www.sqlite.org/releaselog/3_6_1.html",
+      "https://www.sqlite.org/releaselog/3_6_10.html",
+      "https://www.sqlite.org/releaselog/3_6_11.html",
+      "https://www.sqlite.org/releaselog/3_6_12.html",
+      "https://www.sqlite.org/releaselog/3_6_13.html",
+      "https://www.sqlite.org/releaselog/3_6_14.html",
+      "https://www.sqlite.org/releaselog/3_6_14_1.html",
+      "https://www.sqlite.org/releaselog/3_6_14_2.html",
+      "https://www.sqlite.org/releaselog/3_6_15.html",
+      "https://www.sqlite.org/releaselog/3_6_16.html",
+      "https://www.sqlite.org/releaselog/3_6_16_1.html",
+      "https://www.sqlite.org/releaselog/3_6_17.html",
+      "https://www.sqlite.org/releaselog/3_6_18.html",
+      "https://www.sqlite.org/releaselog/3_6_19.html",
+      "https://www.sqlite.org/releaselog/3_6_2.html",
+      "https://www.sqlite.org/releaselog/3_6_20.html",
+      "https://www.sqlite.org/releaselog/3_6_21.html",
+      "https://www.sqlite.org/releaselog/3_6_22.html",
+      "https://www.sqlite.org/releaselog/3_6_23.html",
+      "https://www.sqlite.org/releaselog/3_6_23_1.html",
+      "https://www.sqlite.org/releaselog/3_6_3.html",
+      "https://www.sqlite.org/releaselog/3_6_4.html",
+      "https://www.sqlite.org/releaselog/3_6_5.html",
+      "https://www.sqlite.org/releaselog/3_6_6.html",
+      "https://www.sqlite.org/releaselog/3_6_6_1.html",
+      "https://www.sqlite.org/releaselog/3_6_6_2.html",
+      "https://www.sqlite.org/releaselog/3_6_7.html",
+      "https://www.sqlite.org/releaselog/3_6_8.html",
+      "https://www.sqlite.org/releaselog/3_6_9.html",
+      "https://www.sqlite.org/releaselog/3_7_0.html",
+      "https://www.sqlite.org/releaselog/3_7_0_1.html",
+      "https://www.sqlite.org/releaselog/3_7_1.html",
+      "https://www.sqlite.org/releaselog/3_7_10.html",
+      "https://www.sqlite.org/releaselog/3_7_11.html",
+      "https://www.sqlite.org/releaselog/3_7_12.html",
+      "https://www.sqlite.org/releaselog/3_7_12_1.html",
+      "https://www.sqlite.org/releaselog/3_7_13.html",
+      "https://www.sqlite.org/releaselog/3_7_14.html",
+      "https://www.sqlite.org/releaselog/3_7_14_1.html",
+      "https://www.sqlite.org/releaselog/3_7_15.html",
+      "https://www.sqlite.org/releaselog/3_7_15_1.html",
+      "https://www.sqlite.org/releaselog/3_7_15_2.html",
+      "https://www.sqlite.org/releaselog/3_7_16.html",
+      "https://www.sqlite.org/releaselog/3_7_16_1.html",
+      "https://www.sqlite.org/releaselog/3_7_16_2.html",
+      "https://www.sqlite.org/releaselog/3_7_17.html",
+      "https://www.sqlite.org/releaselog/3_7_2.html",
+      "https://www.sqlite.org/releaselog/3_7_3.html",
+      "https://www.sqlite.org/releaselog/3_7_4.html",
+      "https://www.sqlite.org/releaselog/3_7_5.html",
+      "https://www.sqlite.org/releaselog/3_7_6.html",
+      "https://www.sqlite.org/releaselog/3_7_6_1.html",
+      "https://www.sqlite.org/releaselog/3_7_6_2.html",
+      "https://www.sqlite.org/releaselog/3_7_6_3.html",
+      "https://www.sqlite.org/releaselog/3_7_7.html",
+      "https://www.sqlite.org/releaselog/3_7_7_1.html",
+      "https://www.sqlite.org/releaselog/3_7_8.html",
+      "https://www.sqlite.org/releaselog/3_7_9.html",
+      "https://www.sqlite.org/releaselog/3_8_0.html",
+      "https://www.sqlite.org/releaselog/3_8_0_1.html",
+      "https://www.sqlite.org/releaselog/3_8_0_2.html",
+      "https://www.sqlite.org/releaselog/3_8_1.html",
+      "https://www.sqlite.org/releaselog/3_8_10.html",
+      "https://www.sqlite.org/releaselog/3_8_10_1.html",
+      "https://www.sqlite.org/releaselog/3_8_10_2.html",
+      "https://www.sqlite.org/releaselog/3_8_11.html",
+      "https://www.sqlite.org/releaselog/3_8_11_1.html",
+      "https://www.sqlite.org/releaselog/3_8_2.html",
+      "https://www.sqlite.org/releaselog/3_8_3.html",
+      "https://www.sqlite.org/releaselog/3_8_3_1.html",
+      "https://www.sqlite.org/releaselog/3_8_4.html",
+      "https://www.sqlite.org/releaselog/3_8_4_1.html",
+      "https://www.sqlite.org/releaselog/3_8_4_2.html",
+      "https://www.sqlite.org/releaselog/3_8_4_3.html",
+      "https://www.sqlite.org/releaselog/3_8_5.html",
+      "https://www.sqlite.org/releaselog/3_8_6.html",
+      "https://www.sqlite.org/releaselog/3_8_7.html",
+      "https://www.sqlite.org/releaselog/3_8_7_1.html",
+      "https://www.sqlite.org/releaselog/3_8_7_2.html",
+      "https://www.sqlite.org/releaselog/3_8_7_3.html",
+      "https://www.sqlite.org/releaselog/3_8_7_4.html",
+      "https://www.sqlite.org/releaselog/3_8_8.html",
+      "https://www.sqlite.org/releaselog/3_8_8_1.html",
+      "https://www.sqlite.org/releaselog/3_8_8_2.html",
+      "https://www.sqlite.org/releaselog/3_8_8_3.html",
+      "https://www.sqlite.org/releaselog/3_8_9.html",
+      "https://www.sqlite.org/releaselog/3_9_0.html",
+      "https://www.sqlite.org/releaselog/3_9_1.html",
+      "https://www.sqlite.org/releaselog/3_9_2.html",
+      "https://www.sqlite.org/releaselog/3_9_3.html"
+    ],
+    "samples": [
+      {
+        "url": "https://www.sqlite.org/releaselog/3_53_4.html",
+        "text": "3.53.4",
+        "label": 1
+      },
+      {
+        "url": "https://www.sqlite.org/releaselog/3_53_3.html",
+        "text": "3.53.3",
+        "label": 1
+      },
+      {
+        "url": "https://www.sqlite.org/releaselog/3_53_2.html",
+        "text": "3.53.2",
+        "label": 1
+      },
+      {
+        "url": "https://www.sqlite.org/releaselog/3_53_1.html",
+        "text": "3.53.1",
+        "label": 1
+      },
+      {
+        "url": "https://www.sqlite.org/releaselog/3_53_0.html",
+        "text": "3.53.0",
+        "label": 1
+      }
+    ]
+  },
+  {
+    "id": "cascade-debian",
+    "url": "https://www.debian.org/News/",
+    "split": "train",
+    "family": "releases",
+    "positive": "^/News/\\d{4}/\\d+",
+    "reason": "Publisher index scope annotated by URL role; weak labels, not independent human gold.",
+    "status": "captured",
+    "file": "data/cascade-sources/debian.html",
+    "sha256": "c28f54d7b74579571ded6ed4b02a774cb42c8bd1e14f14fa8b1de578c7d68cc8",
+    "rows": 69,
+    "expected_urls": [
+      "https://www.debian.org/News/2025/20250111",
+      "https://www.debian.org/News/2025/20250117",
+      "https://www.debian.org/News/2025/20250315",
+      "https://www.debian.org/News/2025/20250517",
+      "https://www.debian.org/News/2025/20250803",
+      "https://www.debian.org/News/2025/20250809",
+      "https://www.debian.org/News/2025/20250906",
+      "https://www.debian.org/News/2025/2025090602",
+      "https://www.debian.org/News/2025/20251115",
+      "https://www.debian.org/News/2026/20260110",
+      "https://www.debian.org/News/2026/2026011002",
+      "https://www.debian.org/News/2026/20260314",
+      "https://www.debian.org/News/2026/20260516",
+      "https://www.debian.org/News/2026/2026051602",
+      "https://www.debian.org/News/2026/20260711",
+      "https://www.debian.org/News/2026/2026071102",
+      "https://www.debian.org/News/2026/20260712",
+      "https://www.debian.org/News/2026/20260807",
+      "https://www.debian.org/News/2026/20260831",
+      "https://www.debian.org/News/2026/20260912"
+    ],
+    "samples": [
+      {
+        "url": "https://www.debian.org/News/2026/20260912",
+        "text": "Updated Debian 13: 13.7 released",
+        "label": 1
+      },
+      {
+        "url": "https://www.debian.org/News/2026/20260831",
+        "text": "Debian 11 Long Term Support reaches end-of-life",
+        "label": 1
+      },
+      {
+        "url": "https://www.debian.org/News/2026/20260807",
+        "text": "DebConf26 closes in Santa Fe and DebConf27 announced",
+        "label": 1
+      },
+      {
+        "url": "https://www.debian.org/News/2026/20260712",
+        "text": "Security support for Bookworm handed over to the LTS team",
+        "label": 1
+      },
+      {
+        "url": "https://www.debian.org/News/2026/20260711",
+        "text": "Updated Debian 13: 13.6 released",
+        "label": 1
+      }
+    ]
+  },
+  {
+    "id": "cascade-arch",
+    "url": "https://archlinux.org/news/",
+    "split": "train",
+    "family": "releases",
+    "positive": "^/news/[^/]+/?$",
+    "reason": "Publisher index scope annotated by URL role; weak labels, not independent human gold.",
+    "status": "captured",
+    "file": "data/cascade-sources/arch.html",
+    "sha256": "a3c45c3e2384e3c826b63920fe6527dac120970842fb5ed7b791c44b52628e51",
+    "rows": 88,
+    "expected_urls": [
+      "https://archlinux.org/news/active-aur-malicious-packages-incident",
+      "https://archlinux.org/news/ansible-core-2153-1-update-may-require-manual-intervention",
+      "https://archlinux.org/news/arch-linux-2024-leader-election-results",
+      "https://archlinux.org/news/arch-linux-2026-leader-election-results",
+      "https://archlinux.org/news/arch-linux-leader-election-results",
+      "https://archlinux.org/news/arch-linux-mailing-list-changes",
+      "https://archlinux.org/news/breaking-changes-for-all-users-of-varnish-which-is-renamed-to-vinyl-cache",
+      "https://archlinux.org/news/budgie-desktop-1072-6-update-requires-manual-intervention",
+      "https://archlinux.org/news/bugtracker-migration-to-gitlab-completed",
+      "https://archlinux.org/news/changes-to-default-password-hashing-algorithm-and-umask-settings",
+      "https://archlinux.org/news/cleaning-up-old-repositories",
+      "https://archlinux.org/news/critical-rsync-security-release-340",
+      "https://archlinux.org/news/debug-packages-and-debuginfod",
+      "https://archlinux.org/news/dovecot-24-requires-manual-intervention",
+      "https://archlinux.org/news/git-migration-announcement",
+      "https://archlinux.org/news/git-migration-completed",
+      "https://archlinux.org/news/glibc-241-corrupting-discord-installation",
+      "https://archlinux.org/news/grub-bootloader-upgrade-and-configuration-incompatibilities",
+      "https://archlinux.org/news/in-memory-of-jonathon-fernyhough",
+      "https://archlinux.org/news/incoming-changes-in-jdk-jre-21-packages-may-require-manual-intervention",
+      "https://archlinux.org/news/increasing-the-default-vmmax_map_count-value",
+      "https://archlinux.org/news/iptables-now-defaults-to-the-nft-backend",
+      "https://archlinux.org/news/kea-1303-6-update-requires-manual-intervention",
+      "https://archlinux.org/news/keycloak-1701-2-update-requires-manual-reconfiguration",
+      "https://archlinux.org/news/libxml22912-6-update-may-require-manual-intervention",
+      "https://archlinux.org/news/linux-firmware-202201190c6a7b3-2-requires-kernel-53-and-package-splitting",
+      "https://archlinux.org/news/linux-firmware-2025061312fe085f-5-upgrade-requires-manual-intervention",
+      "https://archlinux.org/news/making-dbus-broker-our-default-d-bus-daemon",
+      "https://archlinux.org/news/manual-intervention-for-pacman-700-and-local-repositories-required",
+      "https://archlinux.org/news/mkinitcpio-hook-migration-and-early-microcode",
+      "https://archlinux.org/news/net-packages-may-require-manual-intervention",
+      "https://archlinux.org/news/nvidia-590-driver-drops-pascal-support-main-packages-switch-to-open-kernel-modules",
+      "https://archlinux.org/news/openblas-0323-2-update-requires-manual-intervention",
+      "https://archlinux.org/news/php-82-update-and-introduction-of-legacy-branch",
+      "https://archlinux.org/news/plasma-640-will-need-manual-intervention-if-you-are-on-x11",
+      "https://archlinux.org/news/providing-a-license-for-package-sources",
+      "https://archlinux.org/news/qemu-700-changes-split-package-setup",
+      "https://archlinux.org/news/recent-services-outages",
+      "https://archlinux.org/news/removing-python2-from-the-repositories",
+      "https://archlinux.org/news/switch-to-the-base-devel-meta-package-requires-manual-intervention",
+      "https://archlinux.org/news/tex-live-package-reorganization",
+      "https://archlinux.org/news/the-sshd-service-needs-to-be-restarted-after-upgrading-to-openssh-98p1",
+      "https://archlinux.org/news/the-xz-package-has-been-backdoored",
+      "https://archlinux.org/news/transition-to-the-new-wow64-wine-and-wine-staging",
+      "https://archlinux.org/news/undone-replacement-of-pipewire-media-session-with-wireplumber",
+      "https://archlinux.org/news/valkey-to-replace-redis-in-the-extra-repository",
+      "https://archlinux.org/news/virtualbox-ext-vnc-7212-2-requires-manual-intervention",
+      "https://archlinux.org/news/waydroid-154-3-update-may-require-manual-intervention",
+      "https://archlinux.org/news/wxwidgets-32-update-may-need-manual-intervention",
+      "https://archlinux.org/news/zabbix-741-2-may-requires-manual-intervention"
+    ],
+    "samples": [
+      {
+        "url": "https://archlinux.org/news/virtualbox-ext-vnc-7212-2-requires-manual-intervention",
+        "text": "virtualbox-ext-vnc >= 7.2.12-2 requires manual intervention",
+        "label": 1
+      },
+      {
+        "url": "https://archlinux.org/news/active-aur-malicious-packages-incident",
+        "text": "Active AUR malicious packages incident",
+        "label": 1
+      },
+      {
+        "url": "https://archlinux.org/news/arch-linux-2026-leader-election-results",
+        "text": "Arch Linux 2026 Leader Election Results",
+        "label": 1
+      },
+      {
+        "url": "https://archlinux.org/news/breaking-changes-for-all-users-of-varnish-which-is-renamed-to-vinyl-cache",
+        "text": "Breaking changes for all users of `varnish`, which is renamed to `vinyl-cache`",
+        "label": 1
+      },
+      {
+        "url": "https://archlinux.org/news/kea-1303-6-update-requires-manual-intervention",
+        "text": "kea >= 1:3.0.3-6 update requires manual intervention",
+        "label": 1
+      }
+    ]
+  },
+  {
+    "id": "cascade-usenix",
+    "url": "https://www.usenix.org/conference/osdi25/technical-sessions",
+    "split": "train",
+    "family": "talks",
+    "positive": "^/conference/osdi25/presentation/[^/]+/?$",
+    "reason": "Publisher index scope annotated by URL role; weak labels, not independent human gold.",
+    "status": "captured",
+    "file": "data/cascade-sources/usenix.html",
+    "sha256": "acdb346177276dd2f38e231eed83dd327a6c7d56d00cd04d6f6e149f3c6ba45c",
+    "rows": 268,
+    "expected_urls": [
+      "https://www.usenix.org/conference/osdi25/presentation/adam",
+      "https://www.usenix.org/conference/osdi25/presentation/athlur",
+      "https://www.usenix.org/conference/osdi25/presentation/bhat",
+      "https://www.usenix.org/conference/osdi25/presentation/chai-siyuan",
+      "https://www.usenix.org/conference/osdi25/presentation/chai-xiaohu",
+      "https://www.usenix.org/conference/osdi25/presentation/cheng",
+      "https://www.usenix.org/conference/osdi25/presentation/cui",
+      "https://www.usenix.org/conference/osdi25/presentation/domingo",
+      "https://www.usenix.org/conference/osdi25/presentation/dong",
+      "https://www.usenix.org/conference/osdi25/presentation/frank",
+      "https://www.usenix.org/conference/osdi25/presentation/gao",
+      "https://www.usenix.org/conference/osdi25/presentation/giortamis",
+      "https://www.usenix.org/conference/osdi25/presentation/guan",
+      "https://www.usenix.org/conference/osdi25/presentation/guo",
+      "https://www.usenix.org/conference/osdi25/presentation/he",
+      "https://www.usenix.org/conference/osdi25/presentation/huang-songlin",
+      "https://www.usenix.org/conference/osdi25/presentation/huang-yibo",
+      "https://www.usenix.org/conference/osdi25/presentation/jeong",
+      "https://www.usenix.org/conference/osdi25/presentation/jiang",
+      "https://www.usenix.org/conference/osdi25/presentation/leblanc",
+      "https://www.usenix.org/conference/osdi25/presentation/li",
+      "https://www.usenix.org/conference/osdi25/presentation/lin-jinkun",
+      "https://www.usenix.org/conference/osdi25/presentation/liu",
+      "https://www.usenix.org/conference/osdi25/presentation/lou",
+      "https://www.usenix.org/conference/osdi25/presentation/lyerly",
+      "https://www.usenix.org/conference/osdi25/presentation/miemietz",
+      "https://www.usenix.org/conference/osdi25/presentation/mohoney",
+      "https://www.usenix.org/conference/osdi25/presentation/pan",
+      "https://www.usenix.org/conference/osdi25/presentation/park-sujin",
+      "https://www.usenix.org/conference/osdi25/presentation/park-yeonhong",
+      "https://www.usenix.org/conference/osdi25/presentation/pismenny",
+      "https://www.usenix.org/conference/osdi25/presentation/ren",
+      "https://www.usenix.org/conference/osdi25/presentation/schuermann",
+      "https://www.usenix.org/conference/osdi25/presentation/shen-weihai",
+      "https://www.usenix.org/conference/osdi25/presentation/shen-weihang",
+      "https://www.usenix.org/conference/osdi25/presentation/soleimani",
+      "https://www.usenix.org/conference/osdi25/presentation/sun",
+      "https://www.usenix.org/conference/osdi25/presentation/tao",
+      "https://www.usenix.org/conference/osdi25/presentation/wang-weitao",
+      "https://www.usenix.org/conference/osdi25/presentation/wang-xiaoyang",
+      "https://www.usenix.org/conference/osdi25/presentation/wang-yun",
+      "https://www.usenix.org/conference/osdi25/presentation/wang-zheng",
+      "https://www.usenix.org/conference/osdi25/presentation/wang-zhuang",
+      "https://www.usenix.org/conference/osdi25/presentation/wu-mengdi",
+      "https://www.usenix.org/conference/osdi25/presentation/wu-yuanpei",
+      "https://www.usenix.org/conference/osdi25/presentation/xu",
+      "https://www.usenix.org/conference/osdi25/presentation/yedidia",
+      "https://www.usenix.org/conference/osdi25/presentation/zhang-dingyan",
+      "https://www.usenix.org/conference/osdi25/presentation/zhang-tianren",
+      "https://www.usenix.org/conference/osdi25/presentation/zhang-tony",
+      "https://www.usenix.org/conference/osdi25/presentation/zheng-yusheng",
+      "https://www.usenix.org/conference/osdi25/presentation/zhu-jinhao",
+      "https://www.usenix.org/conference/osdi25/presentation/zhu-kan"
+    ],
+    "samples": [
+      {
+        "url": "https://www.usenix.org/conference/osdi25/presentation/zhang-tony",
+        "text": "Basilisk: Using Provenance Invariants to Automate Proofs of Undecidable Protocols",
+        "label": 1
+      },
+      {
+        "url": "https://www.usenix.org/conference/osdi25/presentation/zhang-tony",
+        "text": "",
+        "label": 1
+      },
+      {
+        "url": "https://www.usenix.org/conference/osdi25/presentation/zhang-tony",
+        "text": "",
+        "label": 1
+      },
+      {
+        "url": "https://www.usenix.org/conference/osdi25/presentation/lou",
+        "text": "Deriving Semantic Checkers from Tests to Detect Silent Failures in Production Distributed Systems",
+        "label": 1
+      },
+      {
+        "url": "https://www.usenix.org/conference/osdi25/presentation/lou",
+        "text": "",
+        "label": 1
+      }
+    ]
+  },
+  {
+    "id": "cascade-quanta",
+    "url": "https://www.quantamagazine.org/archive/",
+    "split": "train",
+    "family": "science",
+    "positive": "^/[^/]+-\\d{8}/?$",
+    "reason": "Publisher index scope annotated by URL role; weak labels, not independent human gold.",
+    "status": "captured",
+    "file": "data/cascade-sources/quanta.html",
+    "sha256": "37465fef74c531ad2ca011501be9606666ae0a2f03becdab5d18db4324d92ec7",
+    "rows": 482,
+    "expected_urls": [
+      "https://www.quantamagazine.org/ai-has-solved-one-of-maths-1-million-millennium-prize-problems-20260908",
+      "https://www.quantamagazine.org/black-holes-or-black-hole-stars-astronomers-spar-over-webb-telescopes-little-red-dots-20260914",
+      "https://www.quantamagazine.org/genome-duplication-is-a-radical-evolutionary-gamble-20260902",
+      "https://www.quantamagazine.org/graduate-student-proves-the-fractal-uncertainty-principle-20260812",
+      "https://www.quantamagazine.org/in-an-age-of-ai-a-physicist-seeks-what-endures-20260903",
+      "https://www.quantamagazine.org/in-hilbert-space-all-things-are-quantumly-possible-20260826",
+      "https://www.quantamagazine.org/live-from-icm-2026-what-is-math-for-in-the-age-of-ai-20260903",
+      "https://www.quantamagazine.org/stunning-percolation-proof-solves-decades-old-puzzle-about-phase-transitions-20260831",
+      "https://www.quantamagazine.org/the-four-color-theorem-gets-a-rare-new-proof-20260910",
+      "https://www.quantamagazine.org/theory-of-fluids-enters-the-21st-century-20260817",
+      "https://www.quantamagazine.org/what-is-maths-mysterious-langlands-program-really-about-20260909",
+      "https://www.quantamagazine.org/why-do-these-fossil-shells-flip-their-spirals-every-few-millennia-20260911"
+    ],
+    "samples": [
+      {
+        "url": "https://www.quantamagazine.org/black-holes-or-black-hole-stars-astronomers-spar-over-webb-telescopes-little-red-dots-20260914",
+        "text": "Black Holes or Black Hole Stars? Astronomers Spar Over Webb Telescope’s ‘Little Red Dots.’",
+        "label": 1
+      },
+      {
+        "url": "https://www.quantamagazine.org/black-holes-or-black-hole-stars-astronomers-spar-over-webb-telescopes-little-red-dots-20260914",
+        "text": "Black Holes or Black Hole Stars? Astronomers Spar Over Webb Telescope’s ‘Little Red Dots.’",
+        "label": 1
+      },
+      {
+        "url": "https://www.quantamagazine.org/black-holes-or-black-hole-stars-astronomers-spar-over-webb-telescopes-little-red-dots-20260914",
+        "text": "Comment",
+        "label": 1
+      },
+      {
+        "url": "https://www.quantamagazine.org/why-do-these-fossil-shells-flip-their-spirals-every-few-millennia-20260911",
+        "text": "Why Do These Fossil Shells Flip Their Spirals Every Few Millennia?",
+        "label": 1
+      },
+      {
+        "url": "https://www.quantamagazine.org/why-do-these-fossil-shells-flip-their-spirals-every-few-millennia-20260911",
+        "text": "Why Do These Fossil Shells Flip Their Spirals Every Few Millennia?",
+        "label": 1
+      }
+    ]
+  },
+  {
+    "id": "cascade-aeon",
+    "url": "https://aeon.co/essays",
+    "split": "train",
+    "family": "essays",
+    "positive": "^/essays/[^/]+/?$",
+    "reason": "Publisher index scope annotated by URL role; weak labels, not independent human gold.",
+    "status": "captured",
+    "file": "data/cascade-sources/aeon.html",
+    "sha256": "5acf17847ffb52b9a94257b12dfb4fbf89fbdfa1476cc8a351b223c40e6bca97",
+    "rows": 60,
+    "expected_urls": [
+      "https://aeon.co/essays/a-hungry-woman-is-easier-to-dismiss-than-a-well-fed-woman",
+      "https://aeon.co/essays/did-singapore-go-wrong-in-its-quest-for-food-security",
+      "https://aeon.co/essays/four-islamic-polymaths-prove-breadth-beats-specialisation",
+      "https://aeon.co/essays/italianness-is-a-state-of-travelling-in-both-directions",
+      "https://aeon.co/essays/its-not-just-screen-time-kids-are-bombarded-by-hectic-media",
+      "https://aeon.co/essays/neuroqueer-expression-and-the-limits-of-social-tolerance",
+      "https://aeon.co/essays/play-is-doing-its-work-even-if-were-not-keeping-score",
+      "https://aeon.co/essays/popular",
+      "https://aeon.co/essays/the-curio-cabinet-of-medieval-mental-health",
+      "https://aeon.co/essays/what-palmistry-and-medicine-have-always-had-in-common",
+      "https://aeon.co/essays/why-the-andoque-of-the-amazon-fear-the-seductive-dolphin",
+      "https://aeon.co/essays/why-the-pan-american-highway-only-half-exists",
+      "https://aeon.co/essays/why-western-democracy-is-ailing-and-how-to-fix-it"
+    ],
+    "samples": [
+      {
+        "url": "https://aeon.co/essays/popular",
+        "text": "Popular",
+        "label": 1
+      },
+      {
+        "url": "https://aeon.co/essays/italianness-is-a-state-of-travelling-in-both-directions",
+        "text": "Save essay Demography and migration Chasing la dolce vita Homecomings, fantasies, food and ghosts – how the myth of eternal return keeps the Italian diaspora in",
+        "label": 1
+      },
+      {
+        "url": "https://aeon.co/essays/its-not-just-screen-time-kids-are-bombarded-by-hectic-media",
+        "text": "Save essay Childhood and adolescence The bombarding of childhood It’s not just screen time: the problem with children’s media is that it has become relentlessly",
+        "label": 1
+      },
+      {
+        "url": "https://aeon.co/essays/four-islamic-polymaths-prove-breadth-beats-specialisation",
+        "text": "Save essay History of science Penchants of the polymaths The fathers of Islamic science hold lessons for students: breadth over specialisation, and never let co",
+        "label": 1
+      },
+      {
+        "url": "https://aeon.co/essays/the-curio-cabinet-of-medieval-mental-health",
+        "text": "Save essay History Medieval mental health Saffron and ostrich liver were prescribed but so were exercise, gardens, animals, socialising, and music Katherine Har",
+        "label": 1
+      }
+    ]
+  },
+  {
+    "id": "cascade-atlas",
+    "url": "https://www.atlasobscura.com/articles",
+    "split": "train",
+    "family": "travel",
+    "positive": "^/articles/[^/]+/?$",
+    "reason": "Publisher index scope annotated by URL role; weak labels, not independent human gold.",
+    "status": "captured",
+    "file": "data/cascade-sources/atlas.html",
+    "sha256": "c305fd91210846448f05082a86a24707c12ac5642ad14f076f609c8a36a3f285",
+    "rows": 95,
+    "expected_urls": [
+      "https://www.atlasobscura.com/articles/all-places-in-the-atlas-on-one-map",
+      "https://www.atlasobscura.com/articles/cryptid-tourism-across-america",
+      "https://www.atlasobscura.com/articles/fall-activities-sun-valley-idaho",
+      "https://www.atlasobscura.com/articles/illinois-spooky-places",
+      "https://www.atlasobscura.com/articles/sculptures-made-from-recycled-materials",
+      "https://www.atlasobscura.com/articles/spots-for-noodle-lovers-around-the-world",
+      "https://www.atlasobscura.com/articles/unique-us-camping-spots",
+      "https://www.atlasobscura.com/articles/unusual-picnic-places-around-the-world",
+      "https://www.atlasobscura.com/articles/unusual-sites-to-spend-a-night"
+    ],
+    "samples": [
+      {
+        "url": "https://www.atlasobscura.com/articles/all-places-in-the-atlas-on-one-map",
+        "text": "Places",
+        "label": 1
+      },
+      {
+        "url": "https://www.atlasobscura.com/articles/all-places-in-the-atlas-on-one-map",
+        "text": "Places",
+        "label": 1
+      },
+      {
+        "url": "https://www.atlasobscura.com/articles/cryptid-tourism-across-america",
+        "text": "Cryptid Tourism: The Best Museums, Destinations & Festivals Across America",
+        "label": 1
+      },
+      {
+        "url": "https://www.atlasobscura.com/articles/unique-us-camping-spots",
+        "text": "The Most Unique Camping Spots Across the U.S.",
+        "label": 1
+      },
+      {
+        "url": "https://www.atlasobscura.com/articles/unusual-sites-to-spend-a-night",
+        "text": "AO’s Favorite Unusual Sites to Spend a Night",
+        "label": 1
+      }
+    ]
+  },
+  {
+    "id": "cascade-laphams",
+    "url": "https://www.laphamsquarterly.org/roundtable",
+    "split": "train",
+    "family": "essays",
+    "positive": "^/roundtable/[^/]+/?$",
+    "reason": "Publisher index scope annotated by URL role; weak labels, not independent human gold.",
+    "status": "captured",
+    "file": "data/cascade-sources/laphams.html",
+    "sha256": "30f7fc22a8ad1ad4f066ec8374de02441d7851eb6dbe9e32e2c81cc18a95bd36",
+    "rows": 136,
+    "expected_urls": [
+      "https://www.laphamsquarterly.org/roundtable/artist-formerly-known-louis-rigaud",
+      "https://www.laphamsquarterly.org/roundtable/battle-fort-necessity",
+      "https://www.laphamsquarterly.org/roundtable/heart-phoenix",
+      "https://www.laphamsquarterly.org/roundtable/mystic-river-massacre",
+      "https://www.laphamsquarterly.org/roundtable/o-america",
+      "https://www.laphamsquarterly.org/roundtable/rest-history-07-10-26",
+      "https://www.laphamsquarterly.org/roundtable/rest-history-07-17-26",
+      "https://www.laphamsquarterly.org/roundtable/rest-history-07-24-26",
+      "https://www.laphamsquarterly.org/roundtable/revolution-around-star-place",
+      "https://www.laphamsquarterly.org/roundtable/sea-islands",
+      "https://www.laphamsquarterly.org/roundtable/tracing-shadows"
+    ],
+    "samples": [
+      {
+        "url": "https://www.laphamsquarterly.org/roundtable/tracing-shadows",
+        "text": "",
+        "label": 1
+      },
+      {
+        "url": "https://www.laphamsquarterly.org/roundtable/tracing-shadows",
+        "text": "",
+        "label": 1
+      },
+      {
+        "url": "https://www.laphamsquarterly.org/roundtable/tracing-shadows",
+        "text": "Tracing Shadows",
+        "label": 1
+      },
+      {
+        "url": "https://www.laphamsquarterly.org/roundtable/tracing-shadows",
+        "text": "Read More",
+        "label": 1
+      },
+      {
+        "url": "https://www.laphamsquarterly.org/roundtable/artist-formerly-known-louis-rigaud",
+        "text": "",
+        "label": 1
+      }
+    ]
+  },
+  {
+    "id": "cascade-met",
+    "url": "https://www.metmuseum.org/exhibitions",
+    "split": "train",
+    "family": "exhibitions",
+    "positive": "^/exhibitions/[^/]+/?$",
+    "reason": "No saved capture; excluded from training and evaluation.",
+    "status": "unavailable"
+  },
+  {
+    "id": "cascade-mitocw",
+    "url": "https://ocw.mit.edu/courses/",
+    "split": "train",
+    "family": "courses",
+    "positive": "^/courses/[^/]+/?$",
+    "reason": "cascade-mitocw needs label review",
+    "status": "unavailable"
+  },
+  {
+    "id": "cascade-smithsonian",
+    "url": "https://www.smithsonianmag.com/category/science-nature/",
+    "split": "train",
+    "family": "science",
+    "positive": "^/science-nature/[^/]+/?$",
+    "reason": "Publisher index scope annotated by URL role; weak labels, not independent human gold.",
+    "status": "captured",
+    "file": "data/cascade-sources/smithsonian.html",
+    "sha256": "2ba4c64df163acbae12a10218a81ad080bc4af1bd70cbbbaca61dd911149e387",
+    "rows": 149,
+    "expected_urls": [
+      "https://www.smithsonianmag.com/science-nature/20-playful-and-powerful-photos-to-celebrate-world-elephant-day-astounded-majestic-mammals-180984865",
+      "https://www.smithsonianmag.com/science-nature/africa-wild-dogs-most-hated-carnivores-continent-heres-why-conservationists-saving-them-anyway-180989287",
+      "https://www.smithsonianmag.com/science-nature/big-waves-meet-biodiversity-why-surfing-paradises-could-offer-a-key-opportunity-for-marine-conservation-180989119",
+      "https://www.smithsonianmag.com/science-nature/could-psilocybin-help-treat-anorexia-a-small-clinical-trial-suggests-the-psychedelic-may-make-patients-more-open-to-recovery-180989261",
+      "https://www.smithsonianmag.com/science-nature/earths-organisms-developed-via-evolution-some-theorists-wonder-what-if-the-entire-cosmos-did-too-180989338",
+      "https://www.smithsonianmag.com/science-nature/enchanting-colorful-photos-seashells-mollusks-who-create-them-have-you-marveling-at-natural-world-180989291",
+      "https://www.smithsonianmag.com/science-nature/journey-under-the-sea-with-20-amazing-photos-of-marine-life-180984184",
+      "https://www.smithsonianmag.com/science-nature/like-a-hole-in-the-universe-artemis-2-astronaut-victor-glover-reflects-on-seeing-a-total-solar-eclipse-while-flying-by-the-moon-180989284",
+      "https://www.smithsonianmag.com/science-nature/marine-biologists-solved-a-wildlife-mystery-from-the-walkway-of-the-golden-gate-bridge-how-the-harbor-porpoise-mates-180989163",
+      "https://www.smithsonianmag.com/science-nature/once-the-solar-systems-ninth-planet-pluto-was-reclassified-20-years-ago-heres-why-planetary-scientists-and-the-public-alike-love-the-small-icy-body-180989383",
+      "https://www.smithsonianmag.com/science-nature/peptides-are-all-the-rage-promising-miracle-cures-and-makeovers-delivered-by-injection-how-did-we-get-here-180989454",
+      "https://www.smithsonianmag.com/science-nature/reptiles-make-a-surprising-amount-of-noise-heres-what-those-sounds-might-mean-from-pops-to-hoots-to-bellows-180989422",
+      "https://www.smithsonianmag.com/science-nature/spain-white-headed-ducks-signature-color-right-name-that-isnt-even-most-remarkable-hue-180989289",
+      "https://www.smithsonianmag.com/science-nature/tennis-matches-are-heating-up-literally-heres-how-the-court-became-a-living-laboratory-for-managing-extreme-temperatures-180989399",
+      "https://www.smithsonianmag.com/science-nature/this-amazing-archive-of-animal-photography-reveals-18000-species-and-counting-heres-how-joel-sartore-built-his-photo-ark-180989282"
+    ],
+    "samples": [
+      {
+        "url": "https://www.smithsonianmag.com/science-nature/peptides-are-all-the-rage-promising-miracle-cures-and-makeovers-delivered-by-injection-how-did-we-get-here-180989454",
+        "text": "GLP-1 drugs, medications that are self-injected to support weight loss and lower blood sugar, helped peptides become mainstream.",
+        "label": 1
+      },
+      {
+        "url": "https://www.smithsonianmag.com/science-nature/peptides-are-all-the-rage-promising-miracle-cures-and-makeovers-delivered-by-injection-how-did-we-get-here-180989454",
+        "text": "Peptides Are All the Rage, Promising Miracle Cures and Makeovers Delivered by Injection. How Did We Get Here?",
+        "label": 1
+      },
+      {
+        "url": "https://www.smithsonianmag.com/science-nature/reptiles-make-a-surprising-amount-of-noise-heres-what-those-sounds-might-mean-from-pops-to-hoots-to-bellows-180989422",
+        "text": "In loud conditions, a tokay gecko adjusts its call, which is typically used to find a mate or defend territory.",
+        "label": 1
+      },
+      {
+        "url": "https://www.smithsonianmag.com/science-nature/reptiles-make-a-surprising-amount-of-noise-heres-what-those-sounds-might-mean-from-pops-to-hoots-to-bellows-180989422",
+        "text": "Reptiles Make a Surprising Amount of Noise. Here’s What Those Sounds Might Mean, From Pops to Hoots to Bellows",
+        "label": 1
+      },
+      {
+        "url": "https://www.smithsonianmag.com/science-nature/tennis-matches-are-heating-up-literally-heres-how-the-court-became-a-living-laboratory-for-managing-extreme-temperatures-180989399",
+        "text": "Tennis courts where the author played at Outbound Sedona in the Arizona heat",
+        "label": 1
+      }
+    ]
+  },
+  {
+    "id": "cascade-raspberrypi",
+    "url": "https://www.raspberrypi.com/news/",
+    "split": "validation",
+    "family": "projects",
+    "positive": "^/news/[^/]+/?$",
+    "reason": "No saved capture; excluded from training and evaluation.",
+    "status": "unavailable"
+  },
+  {
+    "id": "cascade-blender",
+    "url": "https://www.blender.org/news/",
+    "split": "validation",
+    "family": "releases",
+    "positive": ".",
+    "reason": "Publisher index scope annotated by URL role; weak labels, not independent human gold.",
+    "positive_selector": ".cards-item-content a[href]",
+    "external": true,
+    "status": "captured",
+    "file": "data/cascade-sources/blender.html",
+    "sha256": "ecfbd37045083d387359d89037fc6cd26c8dec09d4ce40890f52ae5ed6b2c49c",
+    "rows": 162,
+    "expected_urls": [
+      "https://code.blender.org/2023/10/node-tools",
+      "https://code.blender.org/2024/02/animation-2025-progress-planning",
+      "https://code.blender.org/2024/12/the-future-of-overrides",
+      "https://code.blender.org/2025/05/projects-update-q2-2025",
+      "https://studio.blender.org/blog/blender-fundamentals-training-update-3d-animation",
+      "https://studio.blender.org/blog/new-grease-pencil-texture-brushes",
+      "https://studio.blender.org/blog/overgrown-open-doors-week",
+      "https://studio.blender.org/blog/overgrown-teaser-premiere",
+      "https://www.blender.org/development/blender-lab-activity-report-q1-2026",
+      "https://www.blender.org/development/projects-to-look-forward-to-in-2026",
+      "https://www.blender.org/events/blender-at-siggraph-2026",
+      "https://www.blender.org/events/blender-in-annecy-2026",
+      "https://www.blender.org/events/blender-in-annecy-2026-recap",
+      "https://www.blender.org/events/media-creation-tools-at-fosdem-2026",
+      "https://www.blender.org/news/introducing-the-blender-roadmap",
+      "https://www.blender.org/news/upcoming-blender-development-fund-and-ai-policies",
+      "https://www.blender.org/press/blender-5-0-release",
+      "https://www.blender.org/press/blender-5-1-release",
+      "https://www.blender.org/press/blender-5-2-lts-release",
+      "https://www.blender.org/press/netflix-animation-studios-joins-the-blender-development-fund-as-corporate-patron",
+      "https://www.blender.org/user-stories/behind-the-scenes-nashville-international-airport",
+      "https://www.blender.org/user-stories/cosmology-with-geometry-nodes",
+      "https://www.blender.org/user-stories/creating-il-baracchino-italys-first-adult-animated-series-made-with-blender",
+      "https://www.blender.org/user-stories/making-flow-an-interview-with-director-gints-zilbalodis"
+    ],
+    "samples": [
+      {
+        "url": "https://www.blender.org/news/introducing-the-blender-roadmap",
+        "text": "Introducing the Blender Roadmap",
+        "label": 1
+      },
+      {
+        "url": "https://www.blender.org/news/introducing-the-blender-roadmap",
+        "text": "Introducing the Blender Roadmap",
+        "label": 1
+      },
+      {
+        "url": "https://www.blender.org/news/introducing-the-blender-roadmap",
+        "text": "See where Blender is heading next and how you can get involved.",
+        "label": 1
+      },
+      {
+        "url": "https://www.blender.org/news/upcoming-blender-development-fund-and-ai-policies",
+        "text": "Upcoming Blender Development Fund and AI Policies",
+        "label": 1
+      },
+      {
+        "url": "https://www.blender.org/news/upcoming-blender-development-fund-and-ai-policies",
+        "text": "Upcoming Blender Development Fund and AI Policies",
+        "label": 1
+      }
+    ]
+  },
+  {
+    "id": "cascade-who",
+    "url": "https://www.who.int/news",
+    "split": "validation",
+    "family": "health",
+    "positive": "^/news/item/[^/]+/?$",
+    "reason": "cascade-who needs label review",
+    "status": "unavailable"
+  },
+  {
+    "id": "cascade-imperial",
+    "url": "https://www.imperial.ac.uk/news/",
+    "split": "validation",
+    "family": "science",
+    "positive": "^/news/articles/(?:[^/]+/)*\\d{4}/[^/]+/?$",
+    "reason": "Publisher index scope annotated by URL role; weak labels, not independent human gold.",
+    "status": "captured",
+    "file": "data/cascade-sources/imperial.html",
+    "sha256": "c5b802a634367e6932b61ae7a297eaf0caef91058b1100a17f92bdd2b839b0ee",
+    "rows": 149,
+    "expected_urls": [
+      "https://www.imperial.ac.uk/news/articles/2026/a-brand-new-book-to-spark-the-imagination-of-tomorrows-scientists",
+      "https://www.imperial.ac.uk/news/articles/2026/brandon-baker-appointed-vice-president-advancement-at-imperial",
+      "https://www.imperial.ac.uk/news/articles/2026/cholesterol-and-blood-pressure-drugs-cut-heart-risk-for-over-40s-with-obesity",
+      "https://www.imperial.ac.uk/news/articles/2026/iit-bombay-and-imperial-college-london-launch-strategic-partnership-in-research-innovation-and-education",
+      "https://www.imperial.ac.uk/news/articles/2026/imperial-and-science-tokyopartnership-will-expand-research-and-education-links",
+      "https://www.imperial.ac.uk/news/articles/2026/imperial-and-sciopolis-launch-base-one",
+      "https://www.imperial.ac.uk/news/articles/2026/imperial-and-seoul-ai-hub-form-partnership-to-develop-ai-research-programme",
+      "https://www.imperial.ac.uk/news/articles/2026/imperial-and-thomson-reuters-pioneer-new-technical-approach-that-could-broaden-access-to-sovereign-ai",
+      "https://www.imperial.ac.uk/news/articles/2026/imperial-celebrates-annual-academic-and-teaching-promotions",
+      "https://www.imperial.ac.uk/news/articles/2026/imperial-hosts-capitals-top-early-stage-startups-for-london-demo-day-2026",
+      "https://www.imperial.ac.uk/news/articles/2026/imperial-inspires-scholarship-programme-launched-in-singapore-by-president-",
+      "https://www.imperial.ac.uk/news/articles/2026/imperial-launches-new-sustainability-strategy",
+      "https://www.imperial.ac.uk/news/articles/2026/imperial-launches-uks-first-masters-degree-focused-on-ais-economic-and-policy-impact",
+      "https://www.imperial.ac.uk/news/articles/2026/introduction-of-londons-ulez-linked-to-improved-lung-growth-in-children-",
+      "https://www.imperial.ac.uk/news/articles/2026/one-in-six-adults-in-england-report-persistent-loneliness-major-study-finds-",
+      "https://www.imperial.ac.uk/news/articles/admin-services/communications/2026/imperial-maths-school-celebrates-another-strong-set-of-a-level-results",
+      "https://www.imperial.ac.uk/news/articles/admin-services/enterprise/2026/imperial-energy-storage-spinout-certain-energy-raises-10m-from-investors",
+      "https://www.imperial.ac.uk/news/articles/admin-services/societal-engagement/2026/imperial-lates-returns-with-three-exciting-new-themes",
+      "https://www.imperial.ac.uk/news/articles/business-school/2026/expert-in-wealth-inequality-listed-among-the-worlds-top-40-business-academics-under-40-",
+      "https://www.imperial.ac.uk/news/articles/business-school/2026/imperial-economist-nominated-to-lead-uk-fiscal-watchdog",
+      "https://www.imperial.ac.uk/news/articles/engineering/materials/2026/126-million-programme-to-unlock-the-next-generation-of-photonics-and-quantum-technologies-",
+      "https://www.imperial.ac.uk/news/articles/grantham/2026/dangerous-overshoot-of-15c-warming-threshold-must-be-limited-imperial-scientist-warns-in-un-report",
+      "https://www.imperial.ac.uk/news/articles/natural-sciences/life-sciences/2026/lettuce-and-tobacco-plants-engineered-to-produce-muscle-protein-for-meat-alternatives",
+      "https://www.imperial.ac.uk/news/articles/natural-sciences/life-sciences/2026/new-study-finds-birds-in-warmer-climates-more-vulnerable-to-forest-loss-",
+      "https://www.imperial.ac.uk/news/articles/natural-sciences/physics/2026/dark-matter-hunt-takes-unexpected-turn-after-puzzling-signal-spotted-in-lz-detector",
+      "https://www.imperial.ac.uk/news/articles/natural-sciences/physics/2026/worlds-first-trial-to-test-if-flightpath-changes-could-cut-aviations-climate-impact-"
+    ],
+    "samples": [
+      {
+        "url": "https://www.imperial.ac.uk/news/articles/2026/imperial-hosts-capitals-top-early-stage-startups-for-london-demo-day-2026",
+        "text": "Read more",
+        "label": 1
+      },
+      {
+        "url": "https://www.imperial.ac.uk/news/articles/2026/a-brand-new-book-to-spark-the-imagination-of-tomorrows-scientists",
+        "text": "Cross-faculty A brand-new book to spark the imagination of tomorrow's scientists 10 September 2026",
+        "label": 1
+      },
+      {
+        "url": "https://www.imperial.ac.uk/news/articles/2026/imperial-and-sciopolis-launch-base-one",
+        "text": "Campus and community Imperial and Sciopolis launch Base One, London's newest science and technology hub 9 September 2026",
+        "label": 1
+      },
+      {
+        "url": "https://www.imperial.ac.uk/news/articles/2026/brandon-baker-appointed-vice-president-advancement-at-imperial",
+        "text": "Campus and community Brandon Baker appointed Vice-President (Advancement) at Imperial 9 September 2026",
+        "label": 1
+      },
+      {
+        "url": "https://www.imperial.ac.uk/news/articles/engineering/materials/2026/126-million-programme-to-unlock-the-next-generation-of-photonics-and-quantum-technologies-",
+        "text": "Engineering £12.6 million programme to unlock the next generation of photonics and quantum technologies 9 September 2026",
+        "label": 1
+      }
+    ]
+  },
+  {
+    "id": "cascade-nationalgallery",
+    "url": "https://www.nationalgallery.org.uk/exhibitions",
+    "split": "validation",
+    "family": "exhibitions",
+    "positive": "^/exhibitions/[^/]+/?$",
+    "reason": "Publisher index scope annotated by URL role; weak labels, not independent human gold.",
+    "positive_selector": ".exhibition-card a[href]",
+    "status": "captured",
+    "file": "data/cascade-sources/nationalgallery.html",
+    "sha256": "b31102574e64131d5a808cb99c08f00feccfa99bf106b87bbe71ed401f1366c1",
+    "rows": 84,
+    "expected_urls": [
+      "https://www.nationalgallery.org.uk/exhibitions/catharina-van-hemessen",
+      "https://www.nationalgallery.org.uk/exhibitions/german-expressionism-modern-painting-1900-1918",
+      "https://www.nationalgallery.org.uk/exhibitions/monet-and-renoir-painting-side-by-side",
+      "https://www.nationalgallery.org.uk/exhibitions/renoir-and-love",
+      "https://www.nationalgallery.org.uk/exhibitions/van-eyck-the-portraits",
+      "https://www.nationalgallery.org.uk/exhibitions/waldmüller-landscapes",
+      "https://www.nationalgallery.org.uk/exhibitions/yinka-shonibare-and-thomas-gainsborough-a-conversation"
+    ],
+    "samples": [
+      {
+        "url": "https://www.nationalgallery.org.uk/exhibitions/renoir-and-love",
+        "text": "",
+        "label": 1
+      },
+      {
+        "url": "https://www.nationalgallery.org.uk/exhibitions/renoir-and-love",
+        "text": "Find out more about Renoir and Love",
+        "label": 1
+      },
+      {
+        "url": "https://www.nationalgallery.org.uk/exhibitions/renoir-and-love",
+        "text": "Find out more",
+        "label": 1
+      },
+      {
+        "url": "https://www.nationalgallery.org.uk/exhibitions/waldmüller-landscapes",
+        "text": "Free Exhibition Waldmüller: Landscapes Until 20 September 2026 The National Gallery presents the first ever UK exhibition of paintings by Ferdinand Georg Waldmü",
+        "label": 1
+      },
+      {
+        "url": "https://www.nationalgallery.org.uk/exhibitions/monet-and-renoir-painting-side-by-side",
+        "text": "Free Exhibition Monet and Renoir:  Painting Side by Side Until 22 September 2026 See the reunion of two of Impressionism's most celebrated paintings",
+        "label": 1
+      }
+    ]
+  },
+  {
+    "id": "cascade-nist",
+    "url": "https://www.nist.gov/news-events/news",
+    "split": "test",
+    "family": "science",
+    "positive": "^/news-events/news/\\d{4}/\\d{2}/[^/]+/?$",
+    "reason": "Publisher index scope annotated by URL role; weak labels, not independent human gold.",
+    "status": "captured",
+    "file": "data/cascade-sources/nist.html",
+    "sha256": "60cdd9c0eaced5741f84517c1c54bb77f362112d8d41ba307878a59847782837",
+    "rows": 167,
+    "expected_urls": [
+      "https://www.nist.gov/news-events/news/2026/07/new-fabric-test-material-could-help-strengthen-domestic-supply-chain",
+      "https://www.nist.gov/news-events/news/2026/07/nist-announces-funding-opportunity-14-mep-centers-advance-small-and-medium",
+      "https://www.nist.gov/news-events/news/2026/07/nist-receives-new-patent-microbe-killing-water-heater",
+      "https://www.nist.gov/news-events/news/2026/08/nist-joins-national-genesis-mission-accelerate-ai-innovation",
+      "https://www.nist.gov/news-events/news/2026/08/nist-national-construction-safety-team-advisory-committee-meeting-scheduled",
+      "https://www.nist.gov/news-events/news/2026/08/nist-researchers-correct-common-error-confounding-nanotech-measurements",
+      "https://www.nist.gov/news-events/news/2026/08/nist-researchers-supersize-quantum-technology-help-detect-faint-photons",
+      "https://www.nist.gov/news-events/news/2026/08/spooky-particles-transit-dc-suburbs-step-toward-quantum-network",
+      "https://www.nist.gov/news-events/news/2026/09/department-commerce-announces-finalization-chips-rd-award-globalfoundries",
+      "https://www.nist.gov/news-events/news/2026/09/nist-awards-more-30-million-mep-centers-11-states-and-puerto-rico",
+      "https://www.nist.gov/news-events/news/2026/09/nist-developed-quantum-sensors-improve-nuclear-monitoring",
+      "https://www.nist.gov/news-events/news/2026/09/nist-finalizes-guidelines-protecting-online-identity-and-access-tokens"
+    ],
+    "samples": [
+      {
+        "url": "https://www.nist.gov/news-events/news/2026/09/nist-awards-more-30-million-mep-centers-11-states-and-puerto-rico",
+        "text": "Robotic tools hover above a surface of dark-metal microchips and other electronics being manufactured.",
+        "label": 1
+      },
+      {
+        "url": "https://www.nist.gov/news-events/news/2026/09/nist-awards-more-30-million-mep-centers-11-states-and-puerto-rico",
+        "text": "NIST Awards More Than $30 Million for MEP Centers in 11 States and Puerto Rico",
+        "label": 1
+      },
+      {
+        "url": "https://www.nist.gov/news-events/news/2026/09/nist-finalizes-guidelines-protecting-online-identity-and-access-tokens",
+        "text": "Illustration shows cloud, cybersecurity and identity icons floating over an open laptop with a person's hands at the keyboard.",
+        "label": 1
+      },
+      {
+        "url": "https://www.nist.gov/news-events/news/2026/09/nist-finalizes-guidelines-protecting-online-identity-and-access-tokens",
+        "text": "NIST Finalizes Guidelines on Protecting Online Identity and Access Tokens From Misuse",
+        "label": 1
+      },
+      {
+        "url": "https://www.nist.gov/news-events/news/2026/09/nist-developed-quantum-sensors-improve-nuclear-monitoring",
+        "text": "An array of sensors appear as a set of rectangles within a gold-colored metal frame.",
+        "label": 1
+      }
+    ]
+  },
+  {
+    "id": "cascade-cisa",
+    "url": "https://www.cisa.gov/news-events/alerts",
+    "split": "test",
+    "family": "alerts",
+    "positive": "^/news-events/alerts/\\d{4}/\\d{2}/\\d{2}/[^/]+/?$",
+    "reason": "No saved capture; excluded from training and evaluation.",
+    "status": "unavailable"
+  },
+  {
+    "id": "cascade-fsf",
+    "url": "https://www.fsf.org/news",
+    "split": "test",
+    "family": "announcements",
+    "positive": "^/news/[^/]+/?$",
+    "reason": "No saved capture; excluded from training and evaluation.",
+    "status": "unavailable"
+  },
+  {
+    "id": "cascade-britishmuseum",
+    "url": "https://www.britishmuseum.org/exhibitions-events",
+    "split": "test",
+    "family": "exhibitions",
+    "positive": "^/(?:exhibitions|events)/[^/]+/?$",
+    "reason": "Publisher index scope annotated by URL role; weak labels, not independent human gold.",
+    "positive_selector": ".teaser__title a[href]",
+    "status": "captured",
+    "file": "data/cascade-sources/britishmuseum.html",
+    "sha256": "0e67aa586bd512549ff73815579c2183670b83508f56868ebe5ace42c75be3b6",
+    "rows": 100,
+    "expected_urls": [
+      "https://www.britishmuseum.org/events/around-world-90-minutes-tour",
+      "https://www.britishmuseum.org/events/british-museum-sleepover-korea",
+      "https://www.britishmuseum.org/events/desire-love-identity-lgbtq-tour-british-museum",
+      "https://www.britishmuseum.org/events/kanata-indigenous-collections",
+      "https://www.britishmuseum.org/events/out-hours-tour-introduction-british-museum",
+      "https://www.britishmuseum.org/events/real-world-bayeux-tapestry",
+      "https://www.britishmuseum.org/exhibitions/bayeux-tapestry",
+      "https://www.britishmuseum.org/exhibitions/declaring-independence-usa-250",
+      "https://www.britishmuseum.org/exhibitions/early-netherlandish-drawings",
+      "https://www.britishmuseum.org/exhibitions/john-constable-views-nature",
+      "https://www.britishmuseum.org/exhibitions/korea"
+    ],
+    "samples": [
+      {
+        "url": "https://www.britishmuseum.org/exhibitions/bayeux-tapestry",
+        "text": "The Bayeux Tapestry .   Now open\n.",
+        "label": 1
+      },
+      {
+        "url": "https://www.britishmuseum.org/exhibitions/korea",
+        "text": "Korea .   Book now\n.",
+        "label": 1
+      },
+      {
+        "url": "https://www.britishmuseum.org/exhibitions/early-netherlandish-drawings",
+        "text": "Early Netherlandish drawings .   Final weeks\n.",
+        "label": 1
+      },
+      {
+        "url": "https://www.britishmuseum.org/exhibitions/john-constable-views-nature",
+        "text": "John Constable views of nature .   Final weeks\n.",
+        "label": 1
+      },
+      {
+        "url": "https://www.britishmuseum.org/exhibitions/declaring-independence-usa-250",
+        "text": "Declaring independence USA 250 .   Free\n.",
+        "label": 1
+      }
+    ]
+  },
+  {
+    "id": "cascade-jpl",
+    "url": "https://www.jpl.nasa.gov/news/",
+    "split": "test",
+    "family": "science",
+    "positive": "^/news/[^/]+/?$",
+    "reason": "Publisher index scope annotated by URL role; weak labels, not independent human gold.",
+    "status": "excluded: existing domain/platform family"
+  },
+  {
+    "id": "cascade-loc",
+    "url": "https://blogs.loc.gov/",
+    "split": "test",
+    "family": "blogs",
+    "positive": "^/[^/]+/\\d{4}/\\d{2}/[^/]+/?$",
+    "reason": "No saved capture; excluded from training and evaluation.",
+    "status": "unavailable"
+  }
+]

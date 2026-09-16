@@ -1,0 +1,765 @@
+{
+  "training_rows": 11944,
+  "calibration_groups": [
+    "cascade-blender",
+    "django",
+    "jvns",
+    "python-releases"
+  ],
+  "selection_groups": [
+    "cascade-imperial",
+    "cascade-nationalgallery",
+    "cloudflare",
+    "esa-gallery",
+    "go",
+    "hn",
+    "pythonbytes",
+    "realpython",
+    "records-lectures-0",
+    "records-lectures-1",
+    "records-lectures-2",
+    "records-lectures-3",
+    "records-lectures-4",
+    "records-lectures-5",
+    "records-lectures-6",
+    "records-lectures-7",
+    "records-reports-0",
+    "records-reports-1",
+    "records-reports-2",
+    "records-reports-3",
+    "records-reports-4",
+    "records-reports-5",
+    "records-reports-6",
+    "records-reports-7",
+    "table-layouts-validation"
+  ],
+  "dataset_hashes": {
+    "v3-dataset.jsonl": "5cd445174fb399122dda9bd738683e46222c04380fd5c6655700ef869a2b09a8",
+    "generalization.jsonl": "2f2857f8f94bfaa11ff0feab28189f238bd4bab7e45d2fad7de715eafc2e93ff",
+    "cascade-dataset.jsonl": "e1fd5a2b2e07f9b21f46996c61720c102dcfe05d33a78b87ebb8304f35d2d710"
+  },
+  "candidates": {
+    "linear": {
+      "selection": {
+        "threshold": 0.2,
+        "tp": 376,
+        "fp": 33,
+        "fn": 283,
+        "precision": 0.9193,
+        "recall": 0.5706,
+        "f1": 0.7041,
+        "by_source": {
+          "cascade-imperial": {
+            "tp": 26,
+            "fp": 11,
+            "fn": 0,
+            "precision": 0.7027,
+            "recall": 1.0,
+            "f1": 0.8254
+          },
+          "cascade-nationalgallery": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "cloudflare": {
+            "tp": 19,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "esa-gallery": {
+            "tp": 58,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "go": {
+            "tp": 10,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "hn": {
+            "tp": 3,
+            "fp": 2,
+            "fn": 27,
+            "precision": 0.6,
+            "recall": 0.1,
+            "f1": 0.1714
+          },
+          "pythonbytes": {
+            "tp": 239,
+            "fp": 0,
+            "fn": 256,
+            "precision": 1.0,
+            "recall": 0.4828,
+            "f1": 0.6512
+          },
+          "realpython": {
+            "tp": 14,
+            "fp": 19,
+            "fn": 0,
+            "precision": 0.4242,
+            "recall": 1.0,
+            "f1": 0.5957
+          }
+        },
+        "macro_f1": 0.7745
+      },
+      "seconds": 0.8406146999914199,
+      "converged": true,
+      "parameters": 469,
+      "bytes": 21751,
+      "export_max_error": 1.942890293094024e-15,
+      "calibration": [
+        1.0643184836171076,
+        0.4994438790536417
+      ]
+    },
+    "neural32": {
+      "selection": {
+        "threshold": 0.2,
+        "tp": 331,
+        "fp": 26,
+        "fn": 328,
+        "precision": 0.9272,
+        "recall": 0.5023,
+        "f1": 0.6516,
+        "by_source": {
+          "cascade-imperial": {
+            "tp": 26,
+            "fp": 11,
+            "fn": 0,
+            "precision": 0.7027,
+            "recall": 1.0,
+            "f1": 0.8254
+          },
+          "cascade-nationalgallery": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "cloudflare": {
+            "tp": 19,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "esa-gallery": {
+            "tp": 58,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "go": {
+            "tp": 10,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "hn": {
+            "tp": 5,
+            "fp": 1,
+            "fn": 25,
+            "precision": 0.8333,
+            "recall": 0.1667,
+            "f1": 0.2778
+          },
+          "pythonbytes": {
+            "tp": 192,
+            "fp": 0,
+            "fn": 303,
+            "precision": 1.0,
+            "recall": 0.3879,
+            "f1": 0.559
+          },
+          "realpython": {
+            "tp": 14,
+            "fp": 13,
+            "fn": 0,
+            "precision": 0.5185,
+            "recall": 1.0,
+            "f1": 0.6829
+          }
+        },
+        "macro_f1": 0.7872
+      },
+      "seconds": 10.22103309998056,
+      "converged": true,
+      "parameters": 15041,
+      "bytes": 337349,
+      "export_max_error": 1.0547118733938987e-15,
+      "calibration": [
+        2.1507878014500945,
+        2.0144863874331564
+      ]
+    },
+    "neural64x32": {
+      "selection": {
+        "threshold": 0.5,
+        "tp": 585,
+        "fp": 55,
+        "fn": 74,
+        "precision": 0.9141,
+        "recall": 0.8877,
+        "f1": 0.9007,
+        "by_source": {
+          "cascade-imperial": {
+            "tp": 26,
+            "fp": 9,
+            "fn": 0,
+            "precision": 0.7429,
+            "recall": 1.0,
+            "f1": 0.8525
+          },
+          "cascade-nationalgallery": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "cloudflare": {
+            "tp": 19,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "esa-gallery": {
+            "tp": 58,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "go": {
+            "tp": 10,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "hn": {
+            "tp": 5,
+            "fp": 31,
+            "fn": 25,
+            "precision": 0.1389,
+            "recall": 0.1667,
+            "f1": 0.1515
+          },
+          "pythonbytes": {
+            "tp": 446,
+            "fp": 0,
+            "fn": 49,
+            "precision": 1.0,
+            "recall": 0.901,
+            "f1": 0.9479
+          },
+          "realpython": {
+            "tp": 14,
+            "fp": 14,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6667
+          }
+        },
+        "macro_f1": 0.8214
+      },
+      "seconds": 18.31321629998274,
+      "converged": true,
+      "parameters": 56705,
+      "bytes": 1274555,
+      "export_max_error": 4.218847493575595e-15,
+      "calibration": [
+        0.34653459208891424,
+        0.8968939430086001
+      ]
+    }
+  },
+  "notes": "Existing test pages are regression holdouts; new extra test domains were excluded from fitting, calibration, and selection. Labels are scope annotations, not independent human gold.",
+  "cascade": {
+    "deep": "neural64x32",
+    "gate": [
+      0.05,
+      0.95
+    ],
+    "selection": {
+      "tp": 584,
+      "fp": 25,
+      "fn": 75,
+      "precision": 0.9589,
+      "recall": 0.8862,
+      "f1": 0.9211,
+      "by_source": {
+        "cascade-imperial": {
+          "tp": 26,
+          "fp": 9,
+          "fn": 0,
+          "precision": 0.7429,
+          "recall": 1.0,
+          "f1": 0.8525
+        },
+        "cascade-nationalgallery": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "cloudflare": {
+          "tp": 19,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "esa-gallery": {
+          "tp": 58,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "go": {
+          "tp": 10,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.9091,
+          "recall": 1.0,
+          "f1": 0.9524
+        },
+        "hn": {
+          "tp": 4,
+          "fp": 1,
+          "fn": 26,
+          "precision": 0.8,
+          "recall": 0.1333,
+          "f1": 0.2286
+        },
+        "pythonbytes": {
+          "tp": 446,
+          "fp": 0,
+          "fn": 49,
+          "precision": 1.0,
+          "recall": 0.901,
+          "f1": 0.9479
+        },
+        "realpython": {
+          "tp": 14,
+          "fp": 14,
+          "fn": 0,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6667
+        }
+      },
+      "macro_f1": 0.831
+    },
+    "selection_escalation": 0.23233178163351673,
+    "selection_baseline": {
+      "tp": 376,
+      "fp": 33,
+      "fn": 283,
+      "precision": 0.9193,
+      "recall": 0.5706,
+      "f1": 0.7041,
+      "by_source": {
+        "cascade-imperial": {
+          "tp": 26,
+          "fp": 11,
+          "fn": 0,
+          "precision": 0.7027,
+          "recall": 1.0,
+          "f1": 0.8254
+        },
+        "cascade-nationalgallery": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "cloudflare": {
+          "tp": 19,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "esa-gallery": {
+          "tp": 58,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "go": {
+          "tp": 10,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.9091,
+          "recall": 1.0,
+          "f1": 0.9524
+        },
+        "hn": {
+          "tp": 3,
+          "fp": 2,
+          "fn": 27,
+          "precision": 0.6,
+          "recall": 0.1,
+          "f1": 0.1714
+        },
+        "pythonbytes": {
+          "tp": 239,
+          "fp": 0,
+          "fn": 256,
+          "precision": 1.0,
+          "recall": 0.4828,
+          "f1": 0.6512
+        },
+        "realpython": {
+          "tp": 14,
+          "fp": 19,
+          "fn": 0,
+          "precision": 0.4242,
+          "recall": 1.0,
+          "f1": 0.5957
+        }
+      },
+      "macro_f1": 0.7745
+    }
+  },
+  "test": {
+    "linear": {
+      "seconds": 0.19554109999444336,
+      "tp": 1781,
+      "fp": 1564,
+      "fn": 19,
+      "precision": 0.5324,
+      "recall": 0.9894,
+      "f1": 0.6923,
+      "by_source": {
+        "cascade-britishmuseum": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "cascade-nist": {
+          "tp": 12,
+          "fp": 4,
+          "fn": 0,
+          "precision": 0.75,
+          "recall": 1.0,
+          "f1": 0.8571
+        },
+        "gutenberg": {
+          "tp": 25,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "smashing": {
+          "tp": 10,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "talkpython": {
+          "tp": 552,
+          "fp": 0,
+          "fn": 8,
+          "precision": 1.0,
+          "recall": 0.9857,
+          "f1": 0.9928
+        },
+        "w3c-standards": {
+          "tp": 1182,
+          "fp": 1559,
+          "fn": 0,
+          "precision": 0.4312,
+          "recall": 1.0,
+          "f1": 0.6026
+        }
+      },
+      "macro_f1": 0.7421
+    },
+    "neural32": {
+      "seconds": 0.2604283000109717,
+      "tp": 1705,
+      "fp": 1091,
+      "fn": 95,
+      "precision": 0.6098,
+      "recall": 0.9472,
+      "f1": 0.7419,
+      "by_source": {
+        "cascade-britishmuseum": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "cascade-nist": {
+          "tp": 12,
+          "fp": 3,
+          "fn": 0,
+          "precision": 0.8,
+          "recall": 1.0,
+          "f1": 0.8889
+        },
+        "gutenberg": {
+          "tp": 17,
+          "fp": 0,
+          "fn": 8,
+          "precision": 1.0,
+          "recall": 0.68,
+          "f1": 0.8095
+        },
+        "smashing": {
+          "tp": 10,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "talkpython": {
+          "tp": 484,
+          "fp": 0,
+          "fn": 76,
+          "precision": 1.0,
+          "recall": 0.8643,
+          "f1": 0.9272
+        },
+        "w3c-standards": {
+          "tp": 1182,
+          "fp": 1088,
+          "fn": 0,
+          "precision": 0.5207,
+          "recall": 1.0,
+          "f1": 0.6848
+        }
+      },
+      "macro_f1": 0.7184
+    },
+    "neural64x32": {
+      "seconds": 0.8041404000250623,
+      "tp": 1755,
+      "fp": 1470,
+      "fn": 45,
+      "precision": 0.5442,
+      "recall": 0.975,
+      "f1": 0.6985,
+      "by_source": {
+        "cascade-britishmuseum": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "cascade-nist": {
+          "tp": 12,
+          "fp": 3,
+          "fn": 0,
+          "precision": 0.8,
+          "recall": 1.0,
+          "f1": 0.8889
+        },
+        "gutenberg": {
+          "tp": 13,
+          "fp": 0,
+          "fn": 12,
+          "precision": 1.0,
+          "recall": 0.52,
+          "f1": 0.6842
+        },
+        "smashing": {
+          "tp": 10,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.9091,
+          "recall": 1.0,
+          "f1": 0.9524
+        },
+        "talkpython": {
+          "tp": 538,
+          "fp": 0,
+          "fn": 22,
+          "precision": 1.0,
+          "recall": 0.9607,
+          "f1": 0.98
+        },
+        "w3c-standards": {
+          "tp": 1182,
+          "fp": 1466,
+          "fn": 0,
+          "precision": 0.4464,
+          "recall": 1.0,
+          "f1": 0.6172
+        }
+      },
+      "macro_f1": 0.6871
+    },
+    "cascade": {
+      "seconds": 0.5775526000070386,
+      "tp": 1755,
+      "fp": 1470,
+      "fn": 45,
+      "precision": 0.5442,
+      "recall": 0.975,
+      "f1": 0.6985,
+      "by_source": {
+        "cascade-britishmuseum": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "cascade-nist": {
+          "tp": 12,
+          "fp": 3,
+          "fn": 0,
+          "precision": 0.8,
+          "recall": 1.0,
+          "f1": 0.8889
+        },
+        "gutenberg": {
+          "tp": 13,
+          "fp": 0,
+          "fn": 12,
+          "precision": 1.0,
+          "recall": 0.52,
+          "f1": 0.6842
+        },
+        "smashing": {
+          "tp": 10,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.9091,
+          "recall": 1.0,
+          "f1": 0.9524
+        },
+        "talkpython": {
+          "tp": 538,
+          "fp": 0,
+          "fn": 22,
+          "precision": 1.0,
+          "recall": 0.9607,
+          "f1": 0.98
+        },
+        "w3c-standards": {
+          "tp": 1182,
+          "fp": 1466,
+          "fn": 0,
+          "precision": 0.4464,
+          "recall": 1.0,
+          "f1": 0.6172
+        }
+      },
+      "macro_f1": 0.6871
+    },
+    "production": {
+      "seconds": 0.198515199997928,
+      "tp": 1796,
+      "fp": 188,
+      "fn": 4,
+      "precision": 0.9052,
+      "recall": 0.9978,
+      "f1": 0.9493,
+      "by_source": {
+        "cascade-britishmuseum": {
+          "tp": 11,
+          "fp": 3,
+          "fn": 0,
+          "precision": 0.7857,
+          "recall": 1.0,
+          "f1": 0.88
+        },
+        "cascade-nist": {
+          "tp": 12,
+          "fp": 6,
+          "fn": 0,
+          "precision": 0.6667,
+          "recall": 1.0,
+          "f1": 0.8
+        },
+        "gutenberg": {
+          "tp": 25,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "smashing": {
+          "tp": 10,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "talkpython": {
+          "tp": 560,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "w3c-standards": {
+          "tp": 1178,
+          "fp": 179,
+          "fn": 4,
+          "precision": 0.8681,
+          "recall": 0.9966,
+          "f1": 0.9279
+        }
+      },
+      "macro_f1": 0.9346
+    }
+  }
+}

@@ -1,0 +1,395 @@
+{
+  "python": "3.12.14 (main, Sep  1 2026, 00:10:07) [GCC 14.2.0]",
+  "repeats": 3,
+  "network": "disabled externally for container runs",
+  "models": {
+    "production": {
+      "model_id": "context-tables-gated-5cd445174fb3",
+      "pages": {
+        "nasa-index": {
+          "expected": 25,
+          "found": 43,
+          "correct": 19,
+          "unwanted": 24,
+          "missing": 6,
+          "dated": 15,
+          "times": [
+            0.5862592940684408,
+            0.549968049977906,
+            0.551643506041728
+          ],
+          "median_seconds": 0.551643506041728,
+          "output_sha256": "baf51cb9ca5a741821253d746528b49038ddde9056583c35d7328104dc750bc0"
+        },
+        "pmlr-volumes": {
+          "expected": 327,
+          "found": 209,
+          "correct": 206,
+          "unwanted": 3,
+          "missing": 121,
+          "dated": 0,
+          "times": [
+            0.6308436590479687,
+            0.6236764610512182,
+            0.620345838018693
+          ],
+          "median_seconds": 0.6236764610512182,
+          "output_sha256": "fabc259f55ea8d82348704fe5fd888232dc0023bcceac4095597df9337a26570"
+        },
+        "python-releases": {
+          "expected": 260,
+          "found": 260,
+          "correct": 260,
+          "unwanted": 0,
+          "missing": 0,
+          "dated": 107,
+          "times": [
+            0.9823226709850132,
+            0.96475653804373,
+            0.9680777330650017
+          ],
+          "median_seconds": 0.9680777330650017,
+          "output_sha256": "98c3b2620532970fb77423cd2fb762272e784ba8d26d414a46f74fb0bb655328"
+        },
+        "esa-gallery": {
+          "expected": 58,
+          "found": 58,
+          "correct": 58,
+          "unwanted": 0,
+          "missing": 0,
+          "dated": 57,
+          "times": [
+            0.2558989649405703,
+            0.25316955510061234,
+            0.23490275302901864
+          ],
+          "median_seconds": 0.25316955510061234,
+          "output_sha256": "413b00672c95ee537b6a6521181cb55c4392a9d9b13b142c22702c7fa339114b"
+        },
+        "w3c-standards": {
+          "expected": 1233,
+          "found": 1411,
+          "correct": 1233,
+          "unwanted": 178,
+          "missing": 0,
+          "dated": 1345,
+          "times": [
+            7.4741478690411896,
+            7.54175729106646,
+            7.4801521769259125
+          ],
+          "median_seconds": 7.4801521769259125,
+          "output_sha256": "0ee5bb702f3a29ecd349b2bd30f8bf9ec30e9b00c31e9268772c0243fdc21c46"
+        },
+        "cascade-eff": {
+          "expected": 14,
+          "found": 17,
+          "correct": 14,
+          "unwanted": 3,
+          "missing": 0,
+          "dated": 17,
+          "times": [
+            0.24245012493338436,
+            0.23932992899790406,
+            0.23831550788599998
+          ],
+          "median_seconds": 0.23932992899790406,
+          "output_sha256": "664419e05d77c04dc267653904cadf9f5bbb29610452b808274214c0e7f7d5e8"
+        },
+        "cascade-planetary": {
+          "expected": 11,
+          "found": 14,
+          "correct": 9,
+          "unwanted": 5,
+          "missing": 2,
+          "dated": 0,
+          "times": [
+            0.2678429080406204,
+            0.2641218799399212,
+            0.2771107730222866
+          ],
+          "median_seconds": 0.2678429080406204,
+          "output_sha256": "f0f0e31e977af24c821b5d10c670093051831ca53a2f33482c32781f21d5ccc4"
+        },
+        "cascade-freecodecamp": {
+          "expected": 64,
+          "found": 25,
+          "correct": 25,
+          "unwanted": 0,
+          "missing": 39,
+          "dated": 25,
+          "times": [
+            0.25441977800801396,
+            0.2501329940278083,
+            0.25264792097732425
+          ],
+          "median_seconds": 0.25264792097732425,
+          "output_sha256": "4fe80093caaaf8ac8f01b6f30e4825e922f24ef7345c44706a0de7fcba4f65e4"
+        }
+      }
+    },
+    "text-neural": {
+      "model_id": "cascade-research-neural64x32-69301824ec93",
+      "pages": {
+        "nasa-index": {
+          "expected": 25,
+          "found": 26,
+          "correct": 25,
+          "unwanted": 1,
+          "missing": 0,
+          "dated": 18,
+          "times": [
+            0.5775685459375381,
+            0.5604124530218542,
+            0.5602130569750443
+          ],
+          "median_seconds": 0.5604124530218542,
+          "output_sha256": "eac71c286d80f3a3bf5f0bedf3e9b00d077b2462e96782ea0aeb7d92b2627a22"
+        },
+        "pmlr-volumes": {
+          "expected": 327,
+          "found": 330,
+          "correct": 327,
+          "unwanted": 3,
+          "missing": 0,
+          "dated": 0,
+          "times": [
+            0.7158968009753153,
+            0.7177147039910778,
+            0.7180913740303367
+          ],
+          "median_seconds": 0.7177147039910778,
+          "output_sha256": "74b53a35a243b79f99c082a887c1de484d6f55d9bd5f0f2ae7464a415a15f17d"
+        },
+        "python-releases": {
+          "expected": 260,
+          "found": 262,
+          "correct": 260,
+          "unwanted": 2,
+          "missing": 0,
+          "dated": 107,
+          "times": [
+            1.3117542580002919,
+            1.2804469550028443,
+            1.2819403279572725
+          ],
+          "median_seconds": 1.2819403279572725,
+          "output_sha256": "f420871399603b3002de7782a79b703a8dde436bbc43e32feaa35499dbbbd6b6"
+        },
+        "esa-gallery": {
+          "expected": 58,
+          "found": 58,
+          "correct": 58,
+          "unwanted": 0,
+          "missing": 0,
+          "dated": 57,
+          "times": [
+            0.2732130700023845,
+            0.2518682419322431,
+            0.25247132300864905
+          ],
+          "median_seconds": 0.25247132300864905,
+          "output_sha256": "413b00672c95ee537b6a6521181cb55c4392a9d9b13b142c22702c7fa339114b"
+        },
+        "w3c-standards": {
+          "expected": 1233,
+          "found": 2699,
+          "correct": 1233,
+          "unwanted": 1466,
+          "missing": 0,
+          "dated": 2564,
+          "times": [
+            9.252067661029287,
+            9.320448247948661,
+            9.469788304995745
+          ],
+          "median_seconds": 9.320448247948661,
+          "output_sha256": "ee80ec588f35906866f83eb12915918f01a284b841cad83516fcc8deafe5271f"
+        },
+        "cascade-eff": {
+          "expected": 14,
+          "found": 15,
+          "correct": 12,
+          "unwanted": 3,
+          "missing": 2,
+          "dated": 15,
+          "times": [
+            0.2699151069391519,
+            0.2674637399613857,
+            0.263620603014715
+          ],
+          "median_seconds": 0.2674637399613857,
+          "output_sha256": "945d98257c2d2506ce30b65855aeebe732d421a7c5e9e6a2949d67cd64e0b47b"
+        },
+        "cascade-planetary": {
+          "expected": 11,
+          "found": 28,
+          "correct": 11,
+          "unwanted": 17,
+          "missing": 0,
+          "dated": 0,
+          "times": [
+            0.30181250802706927,
+            0.29771922901272774,
+            0.2933564630802721
+          ],
+          "median_seconds": 0.29771922901272774,
+          "output_sha256": "5dcc54b9f7fe9a33ef2c1de927f9c52672aac9d515138937dc43cf869277f2d4"
+        },
+        "cascade-freecodecamp": {
+          "expected": 64,
+          "found": 43,
+          "correct": 43,
+          "unwanted": 0,
+          "missing": 21,
+          "dated": 25,
+          "times": [
+            0.31610248901415616,
+            0.3166527249850333,
+            0.31586643389891833
+          ],
+          "median_seconds": 0.31610248901415616,
+          "output_sha256": "60c07889567e135c96ca11f66c50f4001aae8b1cb01bfd9f092dee2ea793d413"
+        }
+      }
+    },
+    "tree-neural-cascade": {
+      "model_id": "cascade-text-structure-v1-5b5866811488",
+      "pages": {
+        "nasa-index": {
+          "expected": 25,
+          "found": 39,
+          "correct": 20,
+          "unwanted": 19,
+          "missing": 5,
+          "dated": 16,
+          "times": [
+            0.5817862349795178,
+            0.5515199250075966,
+            0.5471379630034789
+          ],
+          "median_seconds": 0.5515199250075966,
+          "output_sha256": "21e6f873ee47a4fc06c4f5fe6075007fdc50b4e2398263037b454b7cccf374b7"
+        },
+        "pmlr-volumes": {
+          "expected": 327,
+          "found": 328,
+          "correct": 325,
+          "unwanted": 3,
+          "missing": 2,
+          "dated": 0,
+          "times": [
+            0.7001350740902126,
+            0.7036160589195788,
+            0.7099088509567082
+          ],
+          "median_seconds": 0.7036160589195788,
+          "output_sha256": "eee767e16eead7e70e70b42add35971b2ec1bfaa6aba7d0c4079acd128a832df"
+        },
+        "python-releases": {
+          "expected": 260,
+          "found": 260,
+          "correct": 260,
+          "unwanted": 0,
+          "missing": 0,
+          "dated": 107,
+          "times": [
+            0.9945561599452049,
+            0.9769873128971085,
+            0.9799970720196143
+          ],
+          "median_seconds": 0.9799970720196143,
+          "output_sha256": "98c3b2620532970fb77423cd2fb762272e784ba8d26d414a46f74fb0bb655328"
+        },
+        "esa-gallery": {
+          "expected": 58,
+          "found": 58,
+          "correct": 58,
+          "unwanted": 0,
+          "missing": 0,
+          "dated": 57,
+          "times": [
+            0.26148152293171734,
+            0.23601033503655344,
+            0.23539765109308064
+          ],
+          "median_seconds": 0.23601033503655344,
+          "output_sha256": "413b00672c95ee537b6a6521181cb55c4392a9d9b13b142c22702c7fa339114b"
+        },
+        "w3c-standards": {
+          "expected": 1233,
+          "found": 1411,
+          "correct": 1233,
+          "unwanted": 178,
+          "missing": 0,
+          "dated": 1345,
+          "times": [
+            7.527891478035599,
+            7.687916119932197,
+            7.690163441002369
+          ],
+          "median_seconds": 7.687916119932197,
+          "output_sha256": "0ee5bb702f3a29ecd349b2bd30f8bf9ec30e9b00c31e9268772c0243fdc21c46"
+        },
+        "cascade-eff": {
+          "expected": 14,
+          "found": 17,
+          "correct": 14,
+          "unwanted": 3,
+          "missing": 0,
+          "dated": 17,
+          "times": [
+            0.24678605503868312,
+            0.2369153939653188,
+            0.24099896592088044
+          ],
+          "median_seconds": 0.24099896592088044,
+          "output_sha256": "664419e05d77c04dc267653904cadf9f5bbb29610452b808274214c0e7f7d5e8"
+        },
+        "cascade-planetary": {
+          "expected": 11,
+          "found": 12,
+          "correct": 9,
+          "unwanted": 3,
+          "missing": 2,
+          "dated": 0,
+          "times": [
+            0.26479885494336486,
+            0.26142416801303625,
+            0.25932376191485673
+          ],
+          "median_seconds": 0.26142416801303625,
+          "output_sha256": "6e117aec225ba6c52441f5a7c3aa15a7a37a03bc27106afc93c1ff13620f2a76"
+        },
+        "cascade-freecodecamp": {
+          "expected": 64,
+          "found": 25,
+          "correct": 25,
+          "unwanted": 0,
+          "missing": 39,
+          "dated": 25,
+          "times": [
+            0.2818063150625676,
+            0.25519497401546687,
+            0.25271517399232835
+          ],
+          "median_seconds": 0.25519497401546687,
+          "output_sha256": "4fe80093caaaf8ac8f01b6f30e4825e922f24ef7345c44706a0de7fcba4f65e4"
+        }
+      }
+    }
+  },
+  "native_kernel": true,
+  "stress": {
+    "workers": 2,
+    "pages": 4,
+    "links_per_page": 4999,
+    "padding_bytes": 6000000,
+    "seconds": 20.82676852901932,
+    "output_sha256": "33b8567620d3582dcfd3a6959c109af1d8f828e6a923411d17ab3699d69207f8",
+    "identical": true,
+    "extracted_count": 4999
+  },
+  "container_peak_bytes": 382582784,
+  "native_disabled": false
+}

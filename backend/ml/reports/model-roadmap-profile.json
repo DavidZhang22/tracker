@@ -1,0 +1,371 @@
+{
+  "source": "https://www.w3.org/TR/",
+  "links": 1411,
+  "normal_parse_s": 9.3678,
+  "profile_top_own": [
+    {
+      "file": "css_match.py",
+      "line": 1422,
+      "function": "match_selectors",
+      "calls": 764458,
+      "own_s": 0.9489,
+      "cumulative_s": 6.388
+    },
+    {
+      "file": "element.py",
+      "line": 3090,
+      "function": "descendants",
+      "calls": 2125804,
+      "own_s": 0.5689,
+      "cumulative_s": 0.6731
+    },
+    {
+      "file": "context_model.py",
+      "line": 131,
+      "function": "score",
+      "calls": 7996,
+      "own_s": 0.5538,
+      "cumulative_s": 1.0729
+    },
+    {
+      "file": "css_match.py",
+      "line": 811,
+      "function": "match_tagname",
+      "calls": 996158,
+      "own_s": 0.5526,
+      "cumulative_s": 1.0932
+    },
+    {
+      "file": "css_match.py",
+      "line": 771,
+      "function": "match_namespace",
+      "calls": 996158,
+      "own_s": 0.5324,
+      "cumulative_s": 1.5502
+    },
+    {
+      "file": "css_match.py",
+      "line": 820,
+      "function": "match_tag",
+      "calls": 1096104,
+      "own_s": 0.4883,
+      "cumulative_s": 3.1317
+    },
+    {
+      "file": "record_context.py",
+      "line": 75,
+      "function": "snippets",
+      "calls": 17017,
+      "own_s": 0.4874,
+      "cumulative_s": 1.1168
+    },
+    {
+      "file": "css_match.py",
+      "line": 613,
+      "function": "get_tag",
+      "calls": 996158,
+      "own_s": 0.4332,
+      "cumulative_s": 0.5406
+    },
+    {
+      "file": "css_match.py",
+      "line": 832,
+      "function": "match_past_relations",
+      "calls": 49013,
+      "own_s": 0.3858,
+      "cumulative_s": 3.1561
+    },
+    {
+      "file": "record_context.py",
+      "line": 283,
+      "function": "candidates",
+      "calls": 24390,
+      "own_s": 0.2843,
+      "cumulative_s": 1.6946
+    },
+    {
+      "file": "record_context.py",
+      "line": 332,
+      "function": "regions",
+      "calls": 36017,
+      "own_s": 0.2841,
+      "cumulative_s": 3.4109
+    },
+    {
+      "file": "css_types.py",
+      "line": 129,
+      "function": "__getitem__",
+      "calls": 996158,
+      "own_s": 0.2777,
+      "cumulative_s": 0.2777
+    },
+    {
+      "file": "css_match.py",
+      "line": 593,
+      "function": "get_tag_ns",
+      "calls": 996158,
+      "own_s": 0.2557,
+      "cumulative_s": 0.3658
+    },
+    {
+      "file": "element.py",
+      "line": 2355,
+      "function": "get",
+      "calls": 865496,
+      "own_s": 0.2392,
+      "cumulative_s": 0.3815
+    },
+    {
+      "file": "filter.py",
+      "line": 130,
+      "function": "filter",
+      "calls": 53670,
+      "own_s": 0.2276,
+      "cumulative_s": 1.1871
+    },
+    {
+      "file": "filter.py",
+      "line": 378,
+      "function": "__init__",
+      "calls": 39770,
+      "own_s": 0.2212,
+      "cumulative_s": 0.7837
+    },
+    {
+      "file": "filter.py",
+      "line": 540,
+      "function": "matches_tag",
+      "calls": 262897,
+      "own_s": 0.2172,
+      "cumulative_s": 0.5404
+    },
+    {
+      "file": "element.py",
+      "line": 2068,
+      "function": "_all_strings",
+      "calls": 148272,
+      "own_s": 0.216,
+      "cumulative_s": 0.4535
+    },
+    {
+      "file": "link_context.py",
+      "line": 83,
+      "function": "context_candidates",
+      "calls": 3999,
+      "own_s": 0.2042,
+      "cumulative_s": 2.1845
+    },
+    {
+      "file": "urls.py",
+      "line": 84,
+      "function": "canonical_url",
+      "calls": 26962,
+      "own_s": 0.2023,
+      "cumulative_s": 1.4266
+    },
+    {
+      "file": "dates.py",
+      "line": 41,
+      "function": "node_dates",
+      "calls": 10375,
+      "own_s": 0.1983,
+      "cumulative_s": 0.9528
+    },
+    {
+      "file": "record_context.py",
+      "line": 257,
+      "function": "info",
+      "calls": 77845,
+      "own_s": 0.1955,
+      "cumulative_s": 2.0092
+    }
+  ],
+  "profile_top_cumulative": [
+    {
+      "file": "parser.py",
+      "line": 315,
+      "function": "parse_page",
+      "calls": 1,
+      "own_s": 0.0135,
+      "cumulative_s": 22.3914
+    },
+    {
+      "file": "parser.py",
+      "line": 338,
+      "function": "_parse_html",
+      "calls": 1,
+      "own_s": 0.1039,
+      "cumulative_s": 20.9204
+    },
+    {
+      "file": "css_match.py",
+      "line": 1607,
+      "function": "select",
+      "calls": 9134,
+      "own_s": 0.0131,
+      "cumulative_s": 7.5192
+    },
+    {
+      "file": "css_match.py",
+      "line": 1612,
+      "function": "iselect",
+      "calls": 28253,
+      "own_s": 0.0212,
+      "cumulative_s": 7.5061
+    },
+    {
+      "file": "element.py",
+      "line": 3126,
+      "function": "select",
+      "calls": 7944,
+      "own_s": 0.0117,
+      "cumulative_s": 7.4939
+    },
+    {
+      "file": "css.py",
+      "line": 162,
+      "function": "select",
+      "calls": 7944,
+      "own_s": 0.0135,
+      "cumulative_s": 7.4744
+    },
+    {
+      "file": "__init__.py",
+      "line": 135,
+      "function": "select",
+      "calls": 7944,
+      "own_s": 0.0085,
+      "cumulative_s": 7.4217
+    },
+    {
+      "file": "css_match.py",
+      "line": 1506,
+      "function": "select",
+      "calls": 28253,
+      "own_s": 0.0957,
+      "cumulative_s": 7.3383
+    },
+    {
+      "file": "dates.py",
+      "line": 87,
+      "function": "link_date",
+      "calls": 2439,
+      "own_s": 0.0613,
+      "cumulative_s": 6.7714
+    },
+    {
+      "file": "css_match.py",
+      "line": 1539,
+      "function": "match",
+      "calls": 255861,
+      "own_s": 0.1947,
+      "cumulative_s": 6.7251
+    },
+    {
+      "file": "css_match.py",
+      "line": 1422,
+      "function": "match_selectors",
+      "calls": 764458,
+      "own_s": 0.9489,
+      "cumulative_s": 6.388
+    },
+    {
+      "file": "record_context.py",
+      "line": 418,
+      "function": "text",
+      "calls": 2439,
+      "own_s": 0.0372,
+      "cumulative_s": 4.1597
+    },
+    {
+      "file": "record_context.py",
+      "line": 388,
+      "function": "region",
+      "calls": 4878,
+      "own_s": 0.0168,
+      "cumulative_s": 4.0575
+    },
+    {
+      "file": "record_context.py",
+      "line": 396,
+      "function": "_region",
+      "calls": 2439,
+      "own_s": 0.1012,
+      "cumulative_s": 4.0382
+    },
+    {
+      "file": "context_model.py",
+      "line": 182,
+      "function": "classify_context",
+      "calls": 1,
+      "own_s": 0.0236,
+      "cumulative_s": 3.4425
+    },
+    {
+      "file": "record_context.py",
+      "line": 332,
+      "function": "regions",
+      "calls": 36017,
+      "own_s": 0.2841,
+      "cumulative_s": 3.4109
+    },
+    {
+      "file": "css_match.py",
+      "line": 897,
+      "function": "match_relations",
+      "calls": 49013,
+      "own_s": 0.0663,
+      "cumulative_s": 3.2585
+    },
+    {
+      "file": "css_match.py",
+      "line": 832,
+      "function": "match_past_relations",
+      "calls": 49013,
+      "own_s": 0.3858,
+      "cumulative_s": 3.1561
+    },
+    {
+      "file": "css_match.py",
+      "line": 820,
+      "function": "match_tag",
+      "calls": 1096104,
+      "own_s": 0.4883,
+      "cumulative_s": 3.1317
+    },
+    {
+      "file": "element.py",
+      "line": 1266,
+      "function": "_find_all",
+      "calls": 39770,
+      "own_s": 0.1232,
+      "cumulative_s": 2.2141
+    },
+    {
+      "file": "link_context.py",
+      "line": 83,
+      "function": "context_candidates",
+      "calls": 3999,
+      "own_s": 0.2042,
+      "cumulative_s": 2.1845
+    },
+    {
+      "file": "record_context.py",
+      "line": 257,
+      "function": "info",
+      "calls": 77845,
+      "own_s": 0.1955,
+      "cumulative_s": 2.0092
+    }
+  ],
+  "html_characters": 1081910,
+  "html_bytes": 1106103,
+  "capture_sha256": "89045ff21087e0a1c68d209197d254e81197a17ed1b9dd0e5d29a54747691b03",
+  "capture_path": "backend/data/generalization/w3c.html",
+  "date": "2026-09-16",
+  "code_revision": "2a0e67b",
+  "python": "3.12.8",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "method": "One unprofiled parse_page run, then one cProfile run on the same saved HTML with default parser options. Offline, development machine; not a production-container benchmark. Cumulative times overlap and must not be added.",
+  "profiled_parse_s": 22.3914
+}

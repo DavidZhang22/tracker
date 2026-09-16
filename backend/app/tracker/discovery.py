@@ -36,7 +36,7 @@ from .urls import (
 )
 from .workers import run_blocking
 
-DISCOVERY_VERSION = "content-list-discovery-v1"
+DISCOVERY_VERSION = "shared-record-context-v2"
 DEEP_SCAN = ContextVar("deep_scan", default=False)
 
 

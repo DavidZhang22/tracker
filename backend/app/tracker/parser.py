@@ -580,13 +580,11 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
         if policy and policy["date_skip"]:
             date = {}  # Verified Astro publication metadata is applied below.
         elif policy and policy["date_node"] is not None:
-            from .dates import node_dates
-
-            date = node_dates(policy["date_node"])
+            date = record_context.page.node_dates(policy["date_node"])
             if date:
                 date.update(policy["date_metadata"])
         else:
-            date = link_date(a)
+            date = link_date(a, record_context.page)
         if not date:
             dated_path = re.search(
                 r"/((?:19|20)\d{2})[/-](\d{1,2})[/-](\d{1,2})(?:/|[-_])",

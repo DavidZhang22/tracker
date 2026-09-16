@@ -17,7 +17,6 @@ from markdown_it import MarkdownIt
 
 from .context_model import classify_context
 from .csv_import import decode, parse_csv, safe_link
-from .dates import node_dates
 from .keywords import matches, terms
 from .limits import MAX_CSV_BYTES, MAX_LINKS
 from .models import Entry, Scan, sequence_value, utcnow
@@ -454,9 +453,9 @@ def document_entries(markup, keywords, relevant=False):
                 else urlsplit(url).path.rstrip("/").rsplit("/", 1)[-1]
                 or urlsplit(url).hostname
             )
-        dates = node_dates(record)
+        dates = context.page.node_dates(record)
         if not dates and neighbor is not None:
-            dates = node_dates(neighbor)
+            dates = context.page.node_dates(neighbor)
         entry = Entry(
             url,
             label[:300],
