@@ -18,6 +18,7 @@ cannot raise them. No additional service or database is needed.
 | Individual source response | 8 MB after decompression |
 | Repeated source requests and matching scans | Reused for five minutes across libraries, including Full Refresh |
 | Unknown source URL probes | 20 per hostname per five minutes, shared across accounts |
+| Sandboxed JavaScript pagination | Up to 20 steps, 40 resources, 50 seconds, 5 MB total snapshots |
 | Refresh all | Sequential per account, stops after ten minutes and reports remaining items |
 
 Ignored records and Trash count toward storage limits. Existing libraries that
@@ -60,6 +61,15 @@ Trackify asks the user to retry after the remaining delay. Cache database failur
 stop uncached work. Private/no-store responses are not shared or retained as
 derived scans. Existing user progress and favorites remain in account libraries.
 See [cache design and profiling](../backend/ml/reports/source-cache.md).
+
+JavaScript pagination uses public GETs through the same fetcher and cache. The
+networkless browser cannot submit forms, fetch private addresses, or navigate
+to arbitrary articles. Explicit Next links may authorize same-origin page/cursor
+coordinates; unchanged link lists stop after two attempts. Hydrated JSON record
+lists are first matched to visible titles and links, allowing hidden dated rows
+to be read without running JavaScript. Published listings can still exceed the
+scan limits; results retain a partial-coverage notice rather than claiming the
+entire archive was found.
 
 Latest-entry shortcuts honor an adapter's explicit reading order when available
 (for example, Fenrir Realm's volume and chapter-part indexes). Otherwise they use

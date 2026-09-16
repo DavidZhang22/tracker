@@ -13,6 +13,7 @@ from .asura import enrich_asura_dates
 from .context_model import classify_context
 from .dates import DATE_TEXT, evidence, link_date
 from .documents import unpack
+from .embedded_lists import extract as embedded_list_entries
 from .embedded_series import embedded_series
 from .entry_identity import entry_key
 from .keywords import language_text
@@ -23,12 +24,49 @@ from .models import Entry, Scan, date_rank, date_value, sequence_value
 from .record_context import RecordContext
 from .suggestions import observed_sources
 from .tables import anchor_label, table_context
-from .urls import DiscoveryError, canonical_url
+from .urls import DiscoveryError, canonical_url, content_key
 
 SKIP = re.compile(
     r"(?:^|/)(?:login|sign-?up|register|privacy|terms|contact|about|search|tag|category|author|user|members|forum|reviews?|comments?|donate|shop|cart)(?:/|$)",
     re.IGNORECASE,
 )
+
+
+def has_dynamic_pagination(soup):
+    for node in soup.select(
+        "button,[role=button],a:not([href]),a[href='#'],a[href='']"
+    ):
+        if (
+            node.has_attr("disabled")
+            or node.get("aria-disabled") == "true"
+            or node.find_parent("form")
+        ):
+            continue
+        if any(
+            re.search(r"carousel|slider", " ".join(p.get("class", [])), re.I)
+            for p in [node, *node.parents]
+            if getattr(p, "attrs", None) is not None
+        ):
+            continue
+        name = node.get("aria-label") or node.get_text(" ", strip=True)
+        if re.fullmatch(
+            r"\s*(?:(?:load|show|view)\s+more(?:\s+(?:posts?|news|chapters?|entries|items|results|articles|episodes))?|older\s+(?:posts?|entries|news)|next\s+(?:page|posts?|results))\s*[↓→›»+]*\s*",
+            name,
+            re.I,
+        ):
+            return True
+        if re.fullmatch(r"\s*next\s*[→›»]*\s*", name, re.I) and any(
+            p.name == "nav"
+            or re.search(
+                r"pagin|pager",
+                " ".join(p.get("class", [])) + " " + str(p.get("aria-label", "")),
+                re.I,
+            )
+            for p in [node, *list(node.parents)[:3]]
+            if getattr(p, "attrs", None) is not None
+        ):
+            return True
+    return False
 
 
 def kind_for(url):
@@ -671,11 +709,22 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
             else strong or (strong_count < 3 and shapes[shape(e)] >= 3)
         )
     ]
+    visible_records = {}
+    for entry in scan.entries:
+        visible_records.setdefault(content_key(entry.url), []).append(entry.title)
+    hydrated_urls = set()
     for script in [] if selector or job_anchors else soup.select("script"):
         content = script.string or script.get_text()
         if not content or len(content) > 4_000_000:
             continue
         for root in json_objects(content):
+            hydrated = [
+                e
+                for e in embedded_list_entries(root, visible_records, source)
+                if not include_path or include_path in e.url
+            ]
+            hydrated_urls.update(content_key(e.url) for e in hydrated)
+            scan.entries.extend(hydrated)
             for obj in walk(root):
                 for key in ("nextPageUrl", "next_page_url"):
                     if isinstance(obj.get(key), str):
@@ -793,15 +842,14 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
         scan.methods.append("link classifier")
     if any(e.method == "embedded data" for e in scan.entries):
         scan.methods.append("embedded data")
+    if len(hydrated_urls - visible_records.keys()) >= max(2, len(visible_records)):
+        scan.methods.append("hydrated listing")
     if scan.kind == "website" and (feeds or soup.select_one("article")):
         scan.kind = "blog"
-    if not pages and re.search(
-        r"load\s+more|show\s+more\s+chapters",
-        soup.get_text(" ", strip=True),
-        re.IGNORECASE,
-    ):
+    if not pages and has_dynamic_pagination(soup):
+        scan.coverage = "partial"
         scan.warnings.append(
-            "This page has a load-more control. Content fetched only after a click may be missing; use a feed or a more complete archive URL."
+            "This page has a load-more control or JavaScript pagination. Older entries may require browser scanning."
         )
     # Follow one forward chain when available, rather than every numbered button.
     next_anchors = soup.select('a[rel~="next"],link[rel~="next"]')

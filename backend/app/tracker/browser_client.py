@@ -17,6 +17,16 @@ MUTATION = re.compile(
     r"(?:^|/)(?:logout|signout|delete|remove|unsubscribe|admin|login|account|checkout|purchase)(?:/|$)",
     re.I,
 )
+TELEMETRY_HOSTS = {
+    "googletagmanager.com",
+    "google-analytics.com",
+    "doubleclick.net",
+    "connect.facebook.net",
+    "datadoghq-browser-agent.com",
+    "visualwebsiteoptimizer.com",
+    "hotjar.com",
+    "clarity.ms",
+}
 
 
 def enabled():
@@ -29,6 +39,10 @@ def allowed_request(message, source):
     try:
         url = canonical_url(message.get("url"), preserve_slash=True)
         p = urlsplit(url)
+        if any(
+            p.hostname == h or p.hostname.endswith("." + h) for h in TELEMETRY_HOSTS
+        ):
+            return False
         if MUTATION.search(p.path) or any(
             PRIVATE_QUERY.search(k) for k, _ in parse_qsl(p.query)
         ):
@@ -38,6 +52,43 @@ def allowed_request(message, source):
         ):
             return False
         return url
+    except (ValueError, TypeError, UnicodeError):
+        return False
+
+
+def pagination_target(target, source):
+    """Only explicit listing page coordinates may authorize document navigation."""
+    try:
+        target, source = (
+            canonical_url(target, preserve_slash=True),
+            canonical_url(source, preserve_slash=True),
+        )
+        p, base = urlsplit(target), urlsplit(source)
+        if p.netloc != base.netloc or p.scheme != base.scheme or target == source:
+            return False
+        if not allowed_request(
+            {"method": "GET", "resource": "fetch", "url": target}, source
+        ):
+            return False
+        if p.path.rstrip("/") == base.path.rstrip("/"):
+            before, after = dict(parse_qsl(base.query)), dict(parse_qsl(p.query))
+            changed = {
+                k for k in before.keys() | after.keys() if before.get(k) != after.get(k)
+            }
+            return bool(changed) and changed <= {
+                "page",
+                "p",
+                "paged",
+                "offset",
+                "start",
+                "after",
+                "cursor",
+            }
+        prefix = re.sub(r"/page/\d+/?$", "", base.path.rstrip("/"))
+        return (
+            bool(re.fullmatch(re.escape(prefix) + r"/page/\d+/?", p.path))
+            and p.query == base.query
+        )
     except (ValueError, TypeError, UnicodeError):
         return False
 
@@ -52,6 +103,7 @@ async def render(fetcher, source, initial=None):
     reader = writer = None
     received = 0
     requests = 0
+    documents = {canonical_url(source, preserve_slash=True)}
     try:
         async with asyncio.timeout(55):
             reader, writer = await asyncio.open_unix_connection(path, limit=MAX_MESSAGE)
@@ -78,14 +130,38 @@ async def render(fetcher, source, initial=None):
                     snapshots = message.get("snapshots", [])
                     if (
                         not isinstance(snapshots, list)
-                        or len(snapshots) > 5
+                        or len(snapshots) > 21
                         or any(
                             not isinstance(s, str) or len(s) > 1_000_000
                             for s in snapshots
                         )
                     ):
                         raise DiscoveryError("Browser returned invalid page snapshots.")
+                    if sum(len(s.encode()) for s in snapshots) > 5_000_000:
+                        raise DiscoveryError(
+                            "Browser snapshots exceeded their total limit."
+                        )
+                    locations = message.get("snapshot_urls", [source] * len(snapshots))
+                    if (
+                        not isinstance(locations, list)
+                        or len(locations) != len(snapshots)
+                        or any(
+                            canonical_url(u, preserve_slash=True) not in documents
+                            for u in locations
+                        )
+                    ):
+                        raise DiscoveryError(
+                            "Browser returned an unapproved page location."
+                        )
+                    message["snapshot_urls"] = locations
                     return message | {"captured": captured}
+                if message.get("type") == "navigate":
+                    target = message.get("url")
+                    allowed = len(documents) < 21 and pagination_target(target, source)
+                    if allowed:
+                        documents.add(canonical_url(target, preserve_slash=True))
+                    await send({"allowed": bool(allowed)})
+                    continue
                 if message.get("type") == "error":
                     raise DiscoveryError(
                         "Browser scan could not finish. Try again later or select a public API/feed."
@@ -95,7 +171,9 @@ async def render(fetcher, source, initial=None):
                 requests += 1
                 if requests > 40:
                     raise DiscoveryError("Browser scan reached its 40-resource limit.")
-                url = allowed_request(message, source)
+                candidate = allowed_request({**message, "resource": "fetch"}, source)
+                document_source = candidate if candidate in documents else source
+                url = allowed_request(message, document_source)
                 reply = {"id": message.get("id"), "error": True}
                 if url:
                     try:

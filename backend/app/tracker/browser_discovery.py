@@ -27,14 +27,18 @@ async def scan_browser(
     rendered = await browser_client.render(discoverer.fetcher, source, initial)
     result = Scan(source, methods=["Browser JavaScript"], coverage="partial")
     first = None
-    for snapshot in rendered["snapshots"]:
+    for snapshot, location in zip(
+        rendered["snapshots"],
+        rendered.get("snapshot_urls", [source] * len(rendered["snapshots"])),
+        strict=True,
+    ):
         if discoverer.analyzer:
             part, _, _ = await discoverer.analyzer.analyze(
-                snapshot, source, selector, include_path
+                snapshot, location, selector, include_path
             )
         else:
             part, _, _ = await run_blocking(
-                parse_page, snapshot, source, selector, include_path
+                parse_page, snapshot, location, selector, include_path
             )
         if first is None:
             first = part
@@ -59,7 +63,7 @@ async def scan_browser(
             validated.methods.insert(0, "Browser JavaScript")
             return validated
     result.warnings.append(
-        "Browser scanning checked a limited number of load-more steps. Older entries may remain."
+        "Browser scanning followed a limited number of pagination steps. Older entries may remain."
     )
     if rendered.get("truncated"):
         result.warnings.append("The rendered page exceeded the browser snapshot limit.")

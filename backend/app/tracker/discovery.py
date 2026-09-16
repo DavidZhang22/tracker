@@ -38,7 +38,7 @@ from .urls import (
 )
 from .workers import run_blocking
 
-DISCOVERY_VERSION = "shared-record-context-v2"
+DISCOVERY_VERSION = "hydrated-pagination-v3"
 DEEP_SCAN = ContextVar("deep_scan", default=False)
 INITIAL_DOCUMENT = ContextVar("initial_document", default=None)
 
@@ -722,6 +722,7 @@ class Discoverer:
         if (
             browser_enabled()
             and result.kind != "youtube"
+            and ("hydrated listing" not in result.methods or DEEP_SCAN.get())
             and (
                 request_budget.get() is None
                 or request_budget.get().requests < request_budget.get().limit - 2
@@ -749,6 +750,9 @@ class Discoverer:
                     deep=DEEP_SCAN.get(),
                 )
                 rendered.entries = merge_entries(result.entries + rendered.entries)
+                rendered.methods = list(
+                    dict.fromkeys(result.methods + rendered.methods)
+                )
                 result = rendered
             except DiscoveryError as exc:
                 result.warnings.append(str(exc))

@@ -37,7 +37,7 @@ const hints = {
     "Lists the game’s official Steam announcements, with publication dates.",
   enma: "Uses the watch URL to request episode metadata without loading the player. Enma may restrict server access.",
   browser:
-    "Loads JavaScript and checks a limited number of load-more steps. Validated listing APIs are reused on lightweight refreshes.",
+    "Loads JavaScript and follows bounded Show more, Next, and scroll steps. Validated listing APIs are reused on lightweight refreshes.",
 };
 
 export default function SourceMethod({

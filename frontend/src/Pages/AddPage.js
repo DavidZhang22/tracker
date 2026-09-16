@@ -525,13 +525,6 @@ export default function AddPage() {
                   </button>
                 </div>
               )}
-              {!importId && (
-                <p className="hint" style={{ marginTop: 15 }}>
-                  Read-on-open is {preferences.auto_read ? "on" : "off"} for new
-                  items. Change defaults in <Link to="/settings">Settings</Link>
-                  .
-                </p>
-              )}
             </section>
           )}
         </div>

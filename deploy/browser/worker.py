@@ -8,16 +8,15 @@ import re
 import socket
 import struct
 import threading
+import time
 from pathlib import Path
+from urllib.parse import urljoin, urlsplit
 
 from playwright.async_api import async_playwright
 
 SOCKET = Path("/run/tracker-browser/worker.sock")
 LIMIT = 16_000_000
-MORE = re.compile(
-    r"^\s*(?:(?:load|show|view)\s+more(?:\s+(?:posts?|news|chapters?|entries|items|results|articles|episodes))?|older\s+(?:posts?|entries|news))\s*[↓›»]*\s*$",
-    re.I,
-)
+MAX_STEPS = 20
 EXPAND = re.compile(
     r"^\s*(?:show\s+)?(?:all\s+)?(?:chapters|episodes|table of contents)\s*$", re.I
 )
@@ -25,7 +24,23 @@ SNAPSHOT = """() => {
   const root = document.documentElement.cloneNode(true);
   root.querySelectorAll('script,style,iframe,object,embed,video,audio,canvas').forEach(n => n.remove());
   const html = root.outerHTML;
-  return {html:html.slice(0,1000000), truncated:html.length>1000000};
+  const links = [...document.querySelectorAll('a[href]')].map(n => [n.href,n.textContent.trim()]);
+  return {html:html.slice(0,1000000), truncated:html.length>1000000, links};
+}"""
+CONTROL = r"""() => {
+  const candidates = [...document.querySelectorAll('button,[role=button],a')].filter(n => {
+    if (!n.checkVisibility() || n.disabled || n.getAttribute('aria-disabled')==='true' ||
+        n.closest('form,[aria-roledescription=carousel],[class*=carousel],[class*=slider]')) return false;
+    const text = (n.getAttribute('aria-label') || n.textContent).trim();
+    const more = /^(?:(?:load|show|view)\s+more(?:\s+(?:posts?|news|chapters?|entries|items|results|articles|episodes))?|older\s+(?:posts?|entries|news))\s*[↓→›»+]*$/i.test(text);
+    const next = /^(?:next\s+(?:page|posts?|results))\s*[→›»]*$/i.test(text) ||
+      ((n.rel||'').split(/\s+/).includes('next')) ||
+      (/^next\s*[→›»]*$/i.test(text) && n.closest('nav,[class*=pagin],[class*=pager],[aria-label*=agination]'));
+    return more || next;
+  });
+  // Top and bottom pagers sometimes repeat an identical next link.
+  if (candidates.length > 1 && !candidates.every(n => n.href && n.href === candidates[0].href)) return null;
+  return candidates[0] || null;
 }"""
 
 
@@ -52,6 +67,10 @@ async def render(reader, writer, url):
     requests = 0
     pending = 0
     snapshots, fingerprints = [], set()
+    snapshot_urls = []
+    snapshot_bytes = 0
+    navigation = url
+    started = time.monotonic()
     truncated = False
     blocked = 0
     async with async_playwright() as pw:
@@ -87,7 +106,7 @@ async def render(reader, writer, url):
                     or req.frame != page.main_frame
                     or (
                         req.is_navigation_request()
-                        and req.url.rstrip("/") != url.rstrip("/")
+                        and req.url.rstrip("/") != navigation.rstrip("/")
                     )
                 ):
                     blocked += 1
@@ -140,23 +159,29 @@ async def render(reader, writer, url):
 
             await context.route("**/*", route)
 
-            async def settle():
+            async def settle(quiet_steps=4):
                 quiet = 0
-                for _ in range(120):
+                for _ in range(80):
                     await asyncio.sleep(0.25)
                     quiet = quiet + 1 if not pending else 0
-                    if quiet >= 6:
+                    if quiet >= quiet_steps or time.monotonic() - started > 43:
                         return
 
             async def collect():
-                nonlocal truncated
+                nonlocal truncated, snapshot_bytes
                 snap = await page.evaluate(SNAPSHOT)
                 truncated = truncated or snap["truncated"]
-                digest = hashlib.sha256(snap["html"].encode()).hexdigest()
+                digest = hashlib.sha256(json.dumps(snap["links"]).encode()).hexdigest()
                 if digest in fingerprints:
+                    return False
+                size = len(snap["html"].encode())
+                if snapshot_bytes + size > 5_000_000:
+                    truncated = True
                     return False
                 fingerprints.add(digest)
                 snapshots.append(snap["html"])
+                snapshot_urls.append(page.url)
+                snapshot_bytes += size
                 return True
 
             await page.goto(url, wait_until="domcontentloaded", timeout=30000)
@@ -165,46 +190,59 @@ async def render(reader, writer, url):
                 "nodes => nodes.slice(0,20).forEach(n => n.open = true)"
             )
             expand = page.get_by_role("button", name=EXPAND)
-            if await expand.count() == 1 and await expand.is_visible():
+            if (
+                await expand.count() == 1
+                and await expand.is_visible()
+                and not await expand.evaluate("n => !!n.closest('form')")
+            ):
                 await expand.click(timeout=1500)
                 await settle()
             await collect()
             unchanged = 0
             steps = 0
-            for _ in range(4):
-                more = page.locator(
-                    "button,[role=button],a:not([href]),a[href='#']"
-                ).filter(has_text=MORE)
-                if (
-                    await more.count() == 1
-                    and await more.is_visible()
-                    and await more.is_enabled()
-                ):
-                    # Avoid submitting forms even if their label resembles pagination.
-                    if await more.evaluate("n => !!n.closest('form')"):
-                        break
-                    await more.click(timeout=1500)
-                else:
-                    await page.evaluate(
-                        "window.scrollTo(0,document.documentElement.scrollHeight)"
-                    )
+            for _ in range(MAX_STEPS):
+                if time.monotonic() - started > 43 or truncated or requests >= 40:
+                    break
+                handle = await page.evaluate_handle(CONTROL)
+                more = handle.as_element()
+                try:
+                    if more:
+                        target = await more.get_attribute("href")
+                        if target and not target.startswith("#"):
+                            target = urljoin(page.url, target)
+                            if urlsplit(target).netloc != urlsplit(url).netloc:
+                                break
+                            async with io_lock:
+                                await send(writer, {"type": "navigate", "url": target})
+                                approval = await receive(reader)
+                            if not approval.get("allowed"):
+                                break
+                            navigation = target
+                        await more.click(timeout=1500)
+                    else:
+                        await page.evaluate(
+                            "window.scrollTo(0,document.documentElement.scrollHeight)"
+                        )
+                except Exception:
+                    break  # Preserve rows already rendered if a control disappears.
+                finally:
+                    await handle.dispose()
                 steps += 1
-                await settle()
+                await settle(2)
                 unchanged = 0 if await collect() else unchanged + 1
                 if unchanged >= 2:
                     break
-            await send(
-                writer,
-                {
-                    "type": "result",
-                    "snapshots": snapshots,
-                    "truncated": truncated,
-                    "steps": steps,
-                    "blocked": blocked,
-                },
-            )
+            result = {
+                "type": "result",
+                "snapshots": snapshots,
+                "snapshot_urls": snapshot_urls,
+                "truncated": truncated,
+                "steps": steps,
+                "blocked": blocked,
+            }
         finally:
             await asyncio.wait_for(browser.close(), 3)
+    await send(writer, result)
 
 
 async def main():
