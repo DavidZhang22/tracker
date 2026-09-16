@@ -18,6 +18,22 @@ docker compose --env-file deploy/.env -f deploy/compose.yaml ps
 
 Caddy obtains and renews certificates once DNS and ports are ready. Open `https://YOUR_DOMAIN`.
 
+When a release changes `deploy/Caddyfile`, recreate the web service after validating
+the new configuration. A single-file Docker bind mount can retain the old file
+after Git or archive extraction replaces it; reloading that mount can silently use
+old upload limits. Recreating attaches the current file and preserves the existing
+certificate volumes:
+
+```sh
+docker compose --env-file deploy/.env -f deploy/compose.yaml up -d --no-build --no-deps --force-recreate web
+docker compose --env-file deploy/.env -f deploy/compose.yaml exec web cat /etc/caddy/Caddyfile
+```
+
+Check `/api/ready` and the deployed asset manifest after updating. Both
+`/api/scans/csv` and `/api/scans/import` must allow 4 MB at the proxy and application
+guards. A permitted-size upload without a session should return 401; an oversized
+Content-Length should return 413 before its body is uploaded.
+
 ## Registration
 
 | Mode | Configuration |
