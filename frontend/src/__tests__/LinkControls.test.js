@@ -113,7 +113,9 @@ test("Search submits immediately and an obsolete response cannot replace newer r
   fireEvent.change(screen.getByLabelText("Search links"), {
     target: { value: "old" },
   });
-  await click(screen.getByRole("button", { name: "Search", exact: true }));
+  await act(async () =>
+    fireEvent.submit(screen.getByRole("search", { name: "Link search" })),
+  );
   await waitFor(() => expect(pending.has("old")).toBe(true));
   fireEvent.change(screen.getByLabelText("Search links"), {
     target: { value: "new" },
@@ -229,7 +231,7 @@ test("cached views are invalidated after a link changes", async () => {
   await waitFor(() => expect(requests()).toHaveLength(3));
 });
 
-test("Search retries a failed request without requiring a different query", async () => {
+test("Submitting the search field retries a failed request without requiring a different query", async () => {
   let fail = true;
   api.mockImplementation((path) => {
     if (!path.includes("/links?")) return Promise.resolve(item);
@@ -239,7 +241,9 @@ test("Search retries a failed request without requiring a different query", asyn
   view();
   await screen.findByText("Links unavailable");
   fail = false;
-  await click(screen.getByRole("button", { name: "Search", exact: true }));
+  await act(async () =>
+    fireEvent.submit(screen.getByRole("search", { name: "Link search" })),
+  );
   await screen.findByText("Chapter 1");
   expect(requests()).toHaveLength(2);
 });

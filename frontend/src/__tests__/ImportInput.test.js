@@ -6,16 +6,16 @@ import {
   waitFor,
 } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { api, post, uploadCsv } from "../api";
+import { api, post, uploadFile } from "../api";
 import { PreferencesProvider } from "../Contexts/Preferences";
 import AddPage from "../Pages/AddPage";
 import ItemPage from "../Pages/ItemPage";
-import { CsvDetails } from "../Components/CsvUpload";
+import { ImportDetails } from "../Components/ImportInput";
 
 jest.mock("../api", () => ({
   api: jest.fn(),
   post: jest.fn(),
-  uploadCsv: jest.fn(),
+  uploadFile: jest.fn(),
   examples: [],
   day: () => "Sep 1",
   checked: () => "Today",
@@ -77,7 +77,7 @@ beforeEach(() => {
         ? { links: [{ ...entry, id: "link" }], total: 1 }
         : item,
   );
-  uploadCsv.mockResolvedValue(preview);
+  uploadFile.mockResolvedValue(preview);
   post.mockResolvedValue({ id: "one" });
 });
 function setup(path = "/add") {
@@ -97,17 +97,20 @@ async function click(name) {
   await act(async () => fireEvent.click(button));
 }
 async function chooseFile() {
-  fireEvent.change(screen.getByLabelText("CSV file", { selector: "input" }), {
-    target: { files: [file] },
-  });
-  await click("Preview CSV");
+  fireEvent.change(
+    screen.getByLabelText("Import file", { selector: "input" }),
+    {
+      target: { files: [file] },
+    },
+  );
+  await click("Preview links");
 }
 
 test("CSV previews rows inside one item and uses existing read choices", async () => {
   setup();
-  await click("CSV file");
+  await click("File or text");
   await chooseFile();
-  expect(uploadCsv).toHaveBeenCalledWith(file, { keywords: "" });
+  expect(uploadFile).toHaveBeenCalledWith(file, { keywords: "" });
   expect(screen.getByLabelText("Link column")).toHaveValue("0");
   expect(screen.getByLabelText("Title column")).toHaveValue("1");
   expect(screen.getByText("1 links found")).toBeInTheDocument();
@@ -124,7 +127,7 @@ test("CSV previews rows inside one item and uses existing read choices", async (
     read_indices: [0],
   });
   expect(
-    await screen.findByRole("link", { name: "Upload CSV" }),
+    await screen.findByRole("link", { name: "Update import" }),
   ).toHaveAttribute("href", "/add?import=one");
   expect(
     screen.queryByRole("link", { name: /csv:test/ }),
@@ -133,7 +136,7 @@ test("CSV previews rows inside one item and uses existing read choices", async (
 
 test("changing columns or files invalidates the preview before saving", async () => {
   setup();
-  await click("CSV file");
+  await click("File or text");
   await chooseFile();
   fireEvent.change(screen.getByLabelText("Title column"), {
     target: { value: "-1" },
@@ -142,31 +145,37 @@ test("changing columns or files invalidates the preview before saving", async ()
     screen.queryByRole("button", { name: "Add to library" }),
   ).not.toBeInTheDocument();
   await click("Update preview");
-  expect(uploadCsv).toHaveBeenLastCalledWith(file, {
+  expect(uploadFile).toHaveBeenLastCalledWith(file, {
     title_column: -1,
     keywords: "",
   });
-  fireEvent.change(screen.getByLabelText("CSV file", { selector: "input" }), {
-    target: { files: [] },
-  });
+  fireEvent.change(
+    screen.getByLabelText("Import file", { selector: "input" }),
+    {
+      target: { files: [] },
+    },
+  );
   expect(
     screen.queryByRole("button", { name: "Add to library" }),
   ).not.toBeInTheDocument();
-  expect(screen.getByRole("button", { name: "Preview CSV" })).toBeDisabled();
+  expect(screen.getByRole("button", { name: "Preview links" })).toBeDisabled();
 });
 
 test("empty results and oversized files cannot be saved", async () => {
   setup();
-  await click("CSV file");
-  fireEvent.change(screen.getByLabelText("CSV file", { selector: "input" }), {
-    target: { files: [new File(["x".repeat(4000001)], "huge.csv")] },
-  });
+  await click("File or text");
+  fireEvent.change(
+    screen.getByLabelText("Import file", { selector: "input" }),
+    {
+      target: { files: [new File(["x".repeat(4000001)], "huge.csv")] },
+    },
+  );
   expect(
-    screen.getByText("Choose a non-empty CSV file up to 4 MB."),
+    screen.getByText("Choose a non-empty file up to 4 MB."),
   ).toBeInTheDocument();
-  expect(screen.getByRole("button", { name: "Preview CSV" })).toBeDisabled();
-  expect(uploadCsv).not.toHaveBeenCalled();
-  uploadCsv.mockResolvedValue({ ...preview, entries: [] });
+  expect(screen.getByRole("button", { name: "Preview links" })).toBeDisabled();
+  expect(uploadFile).not.toHaveBeenCalled();
+  uploadFile.mockResolvedValue({ ...preview, entries: [] });
   await chooseFile();
   expect(screen.getByRole("button", { name: "Add to library" })).toBeDisabled();
 });
@@ -175,11 +184,11 @@ test("reupload targets existing CSV item without resetting read selections", asy
   setup("/add?import=one");
   await waitFor(() =>
     expect(
-      screen.getByLabelText("CSV file", { selector: "input" }),
+      screen.getByLabelText("Import file", { selector: "input" }),
     ).not.toBeDisabled(),
   );
   await chooseFile();
-  expect(uploadCsv).toHaveBeenCalledWith(file, {
+  expect(uploadFile).toHaveBeenCalledWith(file, {
     item_id: "one",
     keywords: "",
   });
@@ -194,21 +203,82 @@ test("reupload targets existing CSV item without resetting read selections", asy
 
 test("CSV cells are displayed as text, including formulas and HTML", () => {
   const { container } = render(
-    <CsvDetails context={'<img src=x onerror="alert(1)">\n=SUM(1+1)'} />,
+    <ImportDetails context={'<img src=x onerror="alert(1)">\n=SUM(1+1)'} />,
   );
   expect(container.querySelector("img")).toBeNull();
   expect(container.textContent).toContain("=SUM(1+1)");
 });
 
 test("upload errors keep the file available for retry", async () => {
-  uploadCsv.mockRejectedValueOnce(new Error("Database unavailable"));
+  uploadFile.mockRejectedValueOnce(new Error("Database unavailable"));
   setup();
-  await click("CSV file");
+  await click("File or text");
   await chooseFile();
   expect(screen.getByText("Database unavailable")).toBeInTheDocument();
   expect(
-    screen.getByRole("button", { name: "Preview CSV" }),
+    screen.getByRole("button", { name: "Preview links" }),
   ).not.toBeDisabled();
-  await click("Preview CSV");
+  await click("Preview links");
   expect(screen.getByRole("button", { name: "Add to library" })).toBeEnabled();
+});
+
+test("pasted text previews one item and editing it invalidates the saved preview", async () => {
+  uploadFile.mockResolvedValue({
+    ...preview,
+    source_type: "document",
+    csv: undefined,
+    document: { format: "TXT", candidates: 1 },
+  });
+  setup();
+  await click("File or text");
+  await click("Paste text");
+  const input = screen.getByRole("textbox", { name: "Paste text" });
+  expect(input).toHaveAttribute("maxLength", "200000");
+  fireEvent.change(input, {
+    target: { value: "Engineer https://example.org/job" },
+  });
+  await click("Preview links");
+  const uploaded = uploadFile.mock.calls[0][0];
+  expect(uploaded.name).toBe("Pasted links.txt");
+  expect(uploaded.size).toBe(32);
+  expect(screen.getByRole("button", { name: "Add to library" })).toBeEnabled();
+  expect(screen.queryByLabelText("Link column")).not.toBeInTheDocument();
+  fireEvent.change(input, {
+    target: { value: "Other https://example.org/other" },
+  });
+  expect(
+    screen.queryByRole("button", { name: "Add to library" }),
+  ).not.toBeInTheDocument();
+});
+
+test("documents allow optional model filtering and never submit a website scan", async () => {
+  uploadFile.mockResolvedValue({
+    ...preview,
+    source_type: "document",
+    csv: undefined,
+    document: { format: "PDF", candidates: 1 },
+  });
+  setup();
+  await click("File or text");
+  const document = new File(["%PDF-fixture"], "reading.pdf", {
+    type: "application/pdf",
+  });
+  fireEvent.change(screen.getByLabelText("Import file"), {
+    target: { files: [document] },
+  });
+  fireEvent.change(screen.getByLabelText("Links to import"), {
+    target: { value: "content" },
+  });
+  await click("Preview links");
+  expect(uploadFile).toHaveBeenCalledWith(document, {
+    keywords: "",
+    link_filter: "content",
+  });
+  expect(post).not.toHaveBeenCalled();
+  fireEvent.change(screen.getByLabelText("Links to import"), {
+    target: { value: "all" },
+  });
+  expect(
+    screen.queryByRole("button", { name: "Add to library" }),
+  ).not.toBeInTheDocument();
 });

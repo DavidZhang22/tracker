@@ -19,6 +19,7 @@ from app.tracker.api import router
 from app.tracker.cache import FetchCache, cache_epochs
 from app.tracker.discovery import Discoverer
 from app.tracker.guards import ApiGuard, ScanGuard
+from app.tracker.import_pool import DocumentImporter
 from app.tracker.privacy import router as privacy_router
 from app.tracker.store import LibraryErased, Store
 from app.tracker.urls import SafeFetcher
@@ -71,6 +72,7 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
         openapi_url=None,
     )
     app.state.analyzer = analyzer
+    app.state.importer = DocumentImporter()
     app.state.store = Store(
         db_path
         or os.environ.get(

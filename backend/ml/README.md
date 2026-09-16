@@ -32,3 +32,5 @@ Training uses frozen feature rows. Full page replay additionally needs the ignor
 - [Response memory and throughput](docs/MEMORY_PIPELINE.md)
 - [Refresh profiling](docs/REFRESH_PERFORMANCE.md)
 - [Suggestions](docs/SUGGESTIONS.md)
+
+- [Document imports and expanded source evaluation](reports/generalization.md)

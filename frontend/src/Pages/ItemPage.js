@@ -1,4 +1,4 @@
-import { CsvDetails } from "../Components/CsvUpload";
+import { ImportDetails } from "../Components/ImportInput";
 import EntryLink from "../Components/EntryLink";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
@@ -229,9 +229,9 @@ export default function ItemPage() {
           <TypeIcon kind={item.kind} />
           <div>
             <h1>{item.title}</h1>
-            {item.source_type === "csv" ? (
+            {["csv", "document"].includes(item.source_type) ? (
               <span className="source-link">
-                {item.source_name || "CSV import"}
+                {item.source_name || "File import"}
               </span>
             ) : (
               <a
@@ -259,10 +259,10 @@ export default function ItemPage() {
             active={item.ignored}
             onClick={() => update({ ignored: !item.ignored })}
           />
-          {item.source_type === "csv" ? (
+          {["csv", "document"].includes(item.source_type) ? (
             !item.deleted && (
               <Link className="button primary" to={`/add?import=${id}`}>
-                Upload CSV
+                Update import
               </Link>
             )
           ) : (
@@ -396,9 +396,6 @@ export default function ItemPage() {
                 onChange={(e) => choose(setSearch, e.target.value)}
               />
             </label>
-            <button className="button" type="submit">
-              Search
-            </button>
           </form>
           <FilterOptions label="Sort">
             <select
@@ -514,8 +511,8 @@ export default function ItemPage() {
                   )}
                   {l.summary && <span>{l.summary}</span>}
                 </div>
-                {item.source_type === "csv" && (
-                  <CsvDetails context={l.context} />
+                {["csv", "document"].includes(item.source_type) && (
+                  <ImportDetails context={l.context} />
                 )}
               </div>
               <div className="entry-date">
@@ -587,10 +584,12 @@ export default function ItemPage() {
       </section>
       <details className="scan-details item-scan-summary">
         <summary>
-          {item.source_type === "csv" ? "Import details" : "Scan details"}
+          {["csv", "document"].includes(item.source_type)
+            ? "Import details"
+            : "Scan details"}
         </summary>
         <p>
-          {item.source_type === "csv"
+          {["csv", "document"].includes(item.source_type)
             ? item.source_name
             : `${item.pages_scanned} pages · ${item.methods.join(", ")}`}
         </p>

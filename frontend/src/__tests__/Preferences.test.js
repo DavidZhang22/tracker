@@ -241,14 +241,14 @@ test("a saved deep default still offers an explicit lightweight override", async
   const refresh = jest.fn();
   render(
     <PreferencesProvider>
-      <RefreshControl label="Refresh all" onRefresh={refresh} />
+      <RefreshControl label="Refresh" onRefresh={refresh} />
     </PreferencesProvider>,
   );
-  await click(await screen.findByRole("button", { name: "Refresh all" }));
+  await click(await screen.findByRole("button", { name: "Refresh" }));
   expect(refresh).toHaveBeenLastCalledWith(true);
-  await click(screen.getByRole("button", { name: "Options for refresh all" }));
+  await click(screen.getByRole("button", { name: "Options for refresh" }));
   await click(
-    await screen.findByRole("menuitem", { name: "Lightweight refresh all" }),
+    await screen.findByRole("menuitem", { name: "Lightweight Refresh" }),
   );
   expect(refresh).toHaveBeenLastCalledWith(false);
 });

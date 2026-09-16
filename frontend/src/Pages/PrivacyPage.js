@@ -79,10 +79,11 @@ export default function PrivacyPage({ terms = false }) {
                 Passwords and raw session tokens are not stored in the database.
               </p>
               <p>
-                CSV imports store the filename and each imported row’s links,
-                titles, dates and other details in your private library. The
-                original file is processed in memory and is not retained as a
-                file. Importing a CSV does not visit its links.
+                File and pasted-text imports store the source name and extracted
+                links, titles, dates and nearby details in your private library.
+                Files and pasted text are processed in memory on the Trackify
+                server; the original input is not retained as a file. Imports do
+                not visit their links or send content to an external AI service.
               </p>
               <p>
                 We use this data to provide the tracker you request, relying on
@@ -101,10 +102,10 @@ export default function PrivacyPage({ terms = false }) {
                 password to sources.
               </p>
               <p>
-                Local models classify public link metadata and rank suggestions
-                from your library. This does not make decisions with legal or
-                similarly significant effects. Your account and library are not
-                sent to an external AI service for these features.
+                Local models classify source and imported link metadata and rank
+                suggestions from your library. This does not make decisions with
+                legal or similarly significant effects. Your account and library
+                are not sent to an external AI service for these features.
               </p>
               <p>
                 YouTube sources are also subject to{" "}

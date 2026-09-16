@@ -1,6 +1,6 @@
 # Trackify frontend
 
-React renders the library, item views, CSV imports and account controls. The development server proxies `/api` to FastAPI at `127.0.0.1:8000`; production serves the built files through the backend.
+React renders the library, item views, file/text imports and account controls. The development server proxies `/api` to FastAPI at `127.0.0.1:8000`; production serves the built files through the backend.
 
 ```sh
 npm ci

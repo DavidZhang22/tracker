@@ -1,0 +1,5542 @@
+{
+  "model_id": "context-trees-numeric-ee402ce68da2",
+  "chosen": "trees-numeric",
+  "seed": 81,
+  "training_rows": 9950,
+  "validation_rows": 4106,
+  "vocabulary_size": 0,
+  "candidate_vocabulary_size": 512,
+  "numeric_features": 84,
+  "parameters": 3313,
+  "tree_count": 120,
+  "tree_nodes": 3312,
+  "export_error": 1.724730813723596e-08,
+  "validation": {
+    "tp": 1380,
+    "fp": 11,
+    "fn": 464,
+    "precision": 0.9921,
+    "recall": 0.7484,
+    "f1": 0.8532,
+    "by_source": {
+      "cloudflare": {
+        "tp": 9,
+        "fp": 0,
+        "fn": 10,
+        "precision": 1.0,
+        "recall": 0.4737,
+        "f1": 0.6429
+      },
+      "django": {
+        "tp": 10,
+        "fp": 1,
+        "fn": 0,
+        "precision": 0.9091,
+        "recall": 1.0,
+        "f1": 0.9524
+      },
+      "esa-gallery": {
+        "tp": 58,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "go": {
+        "tp": 9,
+        "fp": 1,
+        "fn": 1,
+        "precision": 0.9,
+        "recall": 0.9,
+        "f1": 0.9
+      },
+      "hn": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 28,
+        "precision": 1.0,
+        "recall": 0.0667,
+        "f1": 0.125
+      },
+      "jvns": {
+        "tp": 201,
+        "fp": 2,
+        "fn": 395,
+        "precision": 0.9901,
+        "recall": 0.3372,
+        "f1": 0.5031
+      },
+      "python-releases": {
+        "tp": 249,
+        "fp": 0,
+        "fn": 11,
+        "precision": 1.0,
+        "recall": 0.9577,
+        "f1": 0.9784
+      },
+      "pythonbytes": {
+        "tp": 477,
+        "fp": 0,
+        "fn": 18,
+        "precision": 1.0,
+        "recall": 0.9636,
+        "f1": 0.9815
+      },
+      "realpython": {
+        "tp": 13,
+        "fp": 7,
+        "fn": 1,
+        "precision": 0.65,
+        "recall": 0.9286,
+        "f1": 0.7647
+      },
+      "records-lectures-0": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "records-lectures-1": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "records-lectures-2": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "records-lectures-3": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "records-lectures-4": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "records-lectures-5": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "records-lectures-6": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "records-lectures-7": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "records-reports-0": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "records-reports-1": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "records-reports-2": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "records-reports-3": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "records-reports-4": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "records-reports-5": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "records-reports-6": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "records-reports-7": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "table-layouts-validation": {
+        "tp": 160,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "macro_f1": 0.9172
+  },
+  "candidates": [
+    {
+      "name": "trees-numeric",
+      "seconds": 6.821,
+      "selected": {
+        "threshold": 0.45,
+        "tp": 1380,
+        "fp": 11,
+        "fn": 464,
+        "precision": 0.9921,
+        "recall": 0.7484,
+        "f1": 0.8532,
+        "by_source": {
+          "cloudflare": {
+            "tp": 9,
+            "fp": 0,
+            "fn": 10,
+            "precision": 1.0,
+            "recall": 0.4737,
+            "f1": 0.6429
+          },
+          "django": {
+            "tp": 10,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "esa-gallery": {
+            "tp": 58,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "go": {
+            "tp": 9,
+            "fp": 1,
+            "fn": 1,
+            "precision": 0.9,
+            "recall": 0.9,
+            "f1": 0.9
+          },
+          "hn": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 28,
+            "precision": 1.0,
+            "recall": 0.0667,
+            "f1": 0.125
+          },
+          "jvns": {
+            "tp": 201,
+            "fp": 2,
+            "fn": 395,
+            "precision": 0.9901,
+            "recall": 0.3372,
+            "f1": 0.5031
+          },
+          "python-releases": {
+            "tp": 249,
+            "fp": 0,
+            "fn": 11,
+            "precision": 1.0,
+            "recall": 0.9577,
+            "f1": 0.9784
+          },
+          "pythonbytes": {
+            "tp": 477,
+            "fp": 0,
+            "fn": 18,
+            "precision": 1.0,
+            "recall": 0.9636,
+            "f1": 0.9815
+          },
+          "realpython": {
+            "tp": 13,
+            "fp": 7,
+            "fn": 1,
+            "precision": 0.65,
+            "recall": 0.9286,
+            "f1": 0.7647
+          },
+          "records-lectures-0": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-1": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-2": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-3": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-4": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-5": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-6": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-7": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-0": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-1": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-2": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-3": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-4": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-5": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-6": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-7": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "table-layouts-validation": {
+            "tp": 160,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "macro_f1": 0.9172
+      },
+      "thresholds": [
+        {
+          "threshold": 0.25,
+          "tp": 1787,
+          "fp": 176,
+          "fn": 57,
+          "precision": 0.9103,
+          "recall": 0.9691,
+          "f1": 0.9388,
+          "by_source": {
+            "cloudflare": {
+              "tp": 14,
+              "fp": 0,
+              "fn": 5,
+              "precision": 1.0,
+              "recall": 0.7368,
+              "f1": 0.8485
+            },
+            "django": {
+              "tp": 10,
+              "fp": 163,
+              "fn": 0,
+              "precision": 0.0578,
+              "recall": 1.0,
+              "f1": 0.1093
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 577,
+              "fp": 2,
+              "fn": 19,
+              "precision": 0.9965,
+              "recall": 0.9681,
+              "f1": 0.9821
+            },
+            "python-releases": {
+              "tp": 260,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "pythonbytes": {
+              "tp": 490,
+              "fp": 0,
+              "fn": 5,
+              "precision": 1.0,
+              "recall": 0.9899,
+              "f1": 0.9949
+            },
+            "realpython": {
+              "tp": 13,
+              "fp": 10,
+              "fn": 1,
+              "precision": 0.5652,
+              "recall": 0.9286,
+              "f1": 0.7027
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.9143
+        },
+        {
+          "threshold": 0.35,
+          "tp": 1698,
+          "fp": 79,
+          "fn": 146,
+          "precision": 0.9555,
+          "recall": 0.9208,
+          "f1": 0.9379,
+          "by_source": {
+            "cloudflare": {
+              "tp": 11,
+              "fp": 0,
+              "fn": 8,
+              "precision": 1.0,
+              "recall": 0.5789,
+              "f1": 0.7333
+            },
+            "django": {
+              "tp": 10,
+              "fp": 69,
+              "fn": 0,
+              "precision": 0.1266,
+              "recall": 1.0,
+              "f1": 0.2247
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 9,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.9,
+              "recall": 0.9,
+              "f1": 0.9
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 493,
+              "fp": 2,
+              "fn": 103,
+              "precision": 0.996,
+              "recall": 0.8272,
+              "f1": 0.9038
+            },
+            "python-releases": {
+              "tp": 259,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.9962,
+              "f1": 0.9981
+            },
+            "pythonbytes": {
+              "tp": 490,
+              "fp": 0,
+              "fn": 5,
+              "precision": 1.0,
+              "recall": 0.9899,
+              "f1": 0.9949
+            },
+            "realpython": {
+              "tp": 13,
+              "fp": 7,
+              "fn": 1,
+              "precision": 0.65,
+              "recall": 0.9286,
+              "f1": 0.7647
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.9116
+        },
+        {
+          "threshold": 0.45,
+          "tp": 1380,
+          "fp": 11,
+          "fn": 464,
+          "precision": 0.9921,
+          "recall": 0.7484,
+          "f1": 0.8532,
+          "by_source": {
+            "cloudflare": {
+              "tp": 9,
+              "fp": 0,
+              "fn": 10,
+              "precision": 1.0,
+              "recall": 0.4737,
+              "f1": 0.6429
+            },
+            "django": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 9,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.9,
+              "recall": 0.9,
+              "f1": 0.9
+            },
+            "hn": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 28,
+              "precision": 1.0,
+              "recall": 0.0667,
+              "f1": 0.125
+            },
+            "jvns": {
+              "tp": 201,
+              "fp": 2,
+              "fn": 395,
+              "precision": 0.9901,
+              "recall": 0.3372,
+              "f1": 0.5031
+            },
+            "python-releases": {
+              "tp": 249,
+              "fp": 0,
+              "fn": 11,
+              "precision": 1.0,
+              "recall": 0.9577,
+              "f1": 0.9784
+            },
+            "pythonbytes": {
+              "tp": 477,
+              "fp": 0,
+              "fn": 18,
+              "precision": 1.0,
+              "recall": 0.9636,
+              "f1": 0.9815
+            },
+            "realpython": {
+              "tp": 13,
+              "fp": 7,
+              "fn": 1,
+              "precision": 0.65,
+              "recall": 0.9286,
+              "f1": 0.7647
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.9172
+        },
+        {
+          "threshold": 0.5,
+          "tp": 1043,
+          "fp": 9,
+          "fn": 801,
+          "precision": 0.9914,
+          "recall": 0.5656,
+          "f1": 0.7203,
+          "by_source": {
+            "cloudflare": {
+              "tp": 6,
+              "fp": 0,
+              "fn": 13,
+              "precision": 1.0,
+              "recall": 0.3158,
+              "f1": 0.48
+            },
+            "django": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 8,
+              "fp": 1,
+              "fn": 2,
+              "precision": 0.8889,
+              "recall": 0.8,
+              "f1": 0.8421
+            },
+            "hn": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 28,
+              "precision": 1.0,
+              "recall": 0.0667,
+              "f1": 0.125
+            },
+            "jvns": {
+              "tp": 145,
+              "fp": 2,
+              "fn": 451,
+              "precision": 0.9864,
+              "recall": 0.2433,
+              "f1": 0.3903
+            },
+            "python-releases": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 260,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "pythonbytes": {
+              "tp": 450,
+              "fp": 0,
+              "fn": 45,
+              "precision": 1.0,
+              "recall": 0.9091,
+              "f1": 0.9524
+            },
+            "realpython": {
+              "tp": 12,
+              "fp": 5,
+              "fn": 2,
+              "precision": 0.7059,
+              "recall": 0.8571,
+              "f1": 0.7742
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.866
+        },
+        {
+          "threshold": 0.6,
+          "tp": 928,
+          "fp": 4,
+          "fn": 916,
+          "precision": 0.9957,
+          "recall": 0.5033,
+          "f1": 0.6686,
+          "by_source": {
+            "cloudflare": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 15,
+              "precision": 1.0,
+              "recall": 0.2105,
+              "f1": 0.3478
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 6,
+              "precision": 1.0,
+              "recall": 0.4,
+              "f1": 0.5714
+            },
+            "hn": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 28,
+              "precision": 1.0,
+              "recall": 0.0667,
+              "f1": 0.125
+            },
+            "jvns": {
+              "tp": 100,
+              "fp": 0,
+              "fn": 496,
+              "precision": 1.0,
+              "recall": 0.1678,
+              "f1": 0.2874
+            },
+            "python-releases": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 260,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "pythonbytes": {
+              "tp": 388,
+              "fp": 0,
+              "fn": 107,
+              "precision": 1.0,
+              "recall": 0.7838,
+              "f1": 0.8788
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 4,
+              "fn": 4,
+              "precision": 0.7143,
+              "recall": 0.7143,
+              "f1": 0.7143
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.8433
+        },
+        {
+          "threshold": 0.7,
+          "tp": 803,
+          "fp": 3,
+          "fn": 1041,
+          "precision": 0.9963,
+          "recall": 0.4355,
+          "f1": 0.606,
+          "by_source": {
+            "cloudflare": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 18,
+              "precision": 1.0,
+              "recall": 0.0526,
+              "f1": 0.1
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 10,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "hn": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 29,
+              "precision": 1.0,
+              "recall": 0.0333,
+              "f1": 0.0645
+            },
+            "jvns": {
+              "tp": 77,
+              "fp": 0,
+              "fn": 519,
+              "precision": 1.0,
+              "recall": 0.1292,
+              "f1": 0.2288
+            },
+            "python-releases": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 260,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "pythonbytes": {
+              "tp": 294,
+              "fp": 0,
+              "fn": 201,
+              "precision": 1.0,
+              "recall": 0.5939,
+              "f1": 0.7452
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 3,
+              "fn": 4,
+              "precision": 0.7692,
+              "recall": 0.7143,
+              "f1": 0.7407
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.803
+        },
+        {
+          "threshold": 0.8,
+          "tp": 655,
+          "fp": 1,
+          "fn": 1189,
+          "precision": 0.9985,
+          "recall": 0.3552,
+          "f1": 0.524,
+          "by_source": {
+            "cloudflare": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 18,
+              "precision": 1.0,
+              "recall": 0.0526,
+              "f1": 0.1
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 10,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "hn": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 30,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "jvns": {
+              "tp": 19,
+              "fp": 0,
+              "fn": 577,
+              "precision": 1.0,
+              "recall": 0.0319,
+              "f1": 0.0618
+            },
+            "python-releases": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 260,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "pythonbytes": {
+              "tp": 205,
+              "fp": 0,
+              "fn": 290,
+              "precision": 1.0,
+              "recall": 0.4141,
+              "f1": 0.5857
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 4,
+              "precision": 0.9091,
+              "recall": 0.7143,
+              "f1": 0.8
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.7903
+        }
+      ]
+    },
+    {
+      "name": "trees180-numeric",
+      "seconds": 11.216,
+      "selected": {
+        "threshold": 0.5,
+        "tp": 905,
+        "fp": 4,
+        "fn": 939,
+        "precision": 0.9956,
+        "recall": 0.4908,
+        "f1": 0.6575,
+        "by_source": {
+          "cloudflare": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 15,
+            "precision": 1.0,
+            "recall": 0.2105,
+            "f1": 0.3478
+          },
+          "django": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "esa-gallery": {
+            "tp": 58,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "go": {
+            "tp": 10,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "hn": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 27,
+            "precision": 1.0,
+            "recall": 0.1,
+            "f1": 0.1818
+          },
+          "jvns": {
+            "tp": 16,
+            "fp": 2,
+            "fn": 580,
+            "precision": 0.8889,
+            "recall": 0.0268,
+            "f1": 0.0521
+          },
+          "python-releases": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 260,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "pythonbytes": {
+            "tp": 442,
+            "fp": 0,
+            "fn": 53,
+            "precision": 1.0,
+            "recall": 0.8929,
+            "f1": 0.9434
+          },
+          "realpython": {
+            "tp": 10,
+            "fp": 1,
+            "fn": 4,
+            "precision": 0.9091,
+            "recall": 0.7143,
+            "f1": 0.8
+          },
+          "records-lectures-0": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-1": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-2": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-3": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-4": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-5": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-6": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-7": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-0": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-1": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-2": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-3": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-4": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-5": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-6": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-7": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "table-layouts-validation": {
+            "tp": 160,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "macro_f1": 0.8568
+      },
+      "thresholds": [
+        {
+          "threshold": 0.25,
+          "tp": 1063,
+          "fp": 231,
+          "fn": 781,
+          "precision": 0.8215,
+          "recall": 0.5765,
+          "f1": 0.6775,
+          "by_source": {
+            "cloudflare": {
+              "tp": 9,
+              "fp": 0,
+              "fn": 10,
+              "precision": 1.0,
+              "recall": 0.4737,
+              "f1": 0.6429
+            },
+            "django": {
+              "tp": 10,
+              "fp": 225,
+              "fn": 0,
+              "precision": 0.0426,
+              "recall": 1.0,
+              "f1": 0.0816
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 121,
+              "fp": 2,
+              "fn": 475,
+              "precision": 0.9837,
+              "recall": 0.203,
+              "f1": 0.3366
+            },
+            "python-releases": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 259,
+              "precision": 1.0,
+              "recall": 0.0038,
+              "f1": 0.0077
+            },
+            "pythonbytes": {
+              "tp": 489,
+              "fp": 0,
+              "fn": 6,
+              "precision": 1.0,
+              "recall": 0.9879,
+              "f1": 0.9939
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 3,
+              "fn": 4,
+              "precision": 0.7692,
+              "recall": 0.7143,
+              "f1": 0.7407
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.8438
+        },
+        {
+          "threshold": 0.35,
+          "tp": 977,
+          "fp": 153,
+          "fn": 867,
+          "precision": 0.8646,
+          "recall": 0.5298,
+          "f1": 0.657,
+          "by_source": {
+            "cloudflare": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 14,
+              "precision": 1.0,
+              "recall": 0.2632,
+              "f1": 0.4167
+            },
+            "django": {
+              "tp": 10,
+              "fp": 149,
+              "fn": 0,
+              "precision": 0.0629,
+              "recall": 1.0,
+              "f1": 0.1183
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 54,
+              "fp": 2,
+              "fn": 542,
+              "precision": 0.9643,
+              "recall": 0.0906,
+              "f1": 0.1656
+            },
+            "python-releases": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 260,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "pythonbytes": {
+              "tp": 475,
+              "fp": 0,
+              "fn": 20,
+              "precision": 1.0,
+              "recall": 0.9596,
+              "f1": 0.9794
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 4,
+              "precision": 0.9091,
+              "recall": 0.7143,
+              "f1": 0.8
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.8313
+        },
+        {
+          "threshold": 0.45,
+          "tp": 924,
+          "fp": 72,
+          "fn": 920,
+          "precision": 0.9277,
+          "recall": 0.5011,
+          "f1": 0.6507,
+          "by_source": {
+            "cloudflare": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 15,
+              "precision": 1.0,
+              "recall": 0.2105,
+              "f1": 0.3478
+            },
+            "django": {
+              "tp": 10,
+              "fp": 68,
+              "fn": 0,
+              "precision": 0.1282,
+              "recall": 1.0,
+              "f1": 0.2273
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 22,
+              "fp": 2,
+              "fn": 574,
+              "precision": 0.9167,
+              "recall": 0.0369,
+              "f1": 0.071
+            },
+            "python-releases": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 260,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "pythonbytes": {
+              "tp": 455,
+              "fp": 0,
+              "fn": 40,
+              "precision": 1.0,
+              "recall": 0.9192,
+              "f1": 0.9579
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 4,
+              "precision": 0.9091,
+              "recall": 0.7143,
+              "f1": 0.8
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.8284
+        },
+        {
+          "threshold": 0.5,
+          "tp": 905,
+          "fp": 4,
+          "fn": 939,
+          "precision": 0.9956,
+          "recall": 0.4908,
+          "f1": 0.6575,
+          "by_source": {
+            "cloudflare": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 15,
+              "precision": 1.0,
+              "recall": 0.2105,
+              "f1": 0.3478
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 16,
+              "fp": 2,
+              "fn": 580,
+              "precision": 0.8889,
+              "recall": 0.0268,
+              "f1": 0.0521
+            },
+            "python-releases": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 260,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "pythonbytes": {
+              "tp": 442,
+              "fp": 0,
+              "fn": 53,
+              "precision": 1.0,
+              "recall": 0.8929,
+              "f1": 0.9434
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 4,
+              "precision": 0.9091,
+              "recall": 0.7143,
+              "f1": 0.8
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.8568
+        },
+        {
+          "threshold": 0.6,
+          "tp": 873,
+          "fp": 2,
+          "fn": 971,
+          "precision": 0.9977,
+          "recall": 0.4734,
+          "f1": 0.6421,
+          "by_source": {
+            "cloudflare": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 15,
+              "precision": 1.0,
+              "recall": 0.2105,
+              "f1": 0.3478
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 9,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.9,
+              "recall": 0.9,
+              "f1": 0.9
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 11,
+              "fp": 0,
+              "fn": 585,
+              "precision": 1.0,
+              "recall": 0.0185,
+              "f1": 0.0362
+            },
+            "python-releases": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 260,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "pythonbytes": {
+              "tp": 416,
+              "fp": 0,
+              "fn": 79,
+              "precision": 1.0,
+              "recall": 0.8404,
+              "f1": 0.9133
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 4,
+              "precision": 0.9091,
+              "recall": 0.7143,
+              "f1": 0.8
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.853
+        },
+        {
+          "threshold": 0.7,
+          "tp": 794,
+          "fp": 2,
+          "fn": 1050,
+          "precision": 0.9975,
+          "recall": 0.4306,
+          "f1": 0.6015,
+          "by_source": {
+            "cloudflare": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 18,
+              "precision": 1.0,
+              "recall": 0.0526,
+              "f1": 0.1
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 6,
+              "fp": 1,
+              "fn": 4,
+              "precision": 0.8571,
+              "recall": 0.6,
+              "f1": 0.7059
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 586,
+              "precision": 1.0,
+              "recall": 0.0168,
+              "f1": 0.033
+            },
+            "python-releases": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 260,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "pythonbytes": {
+              "tp": 344,
+              "fp": 0,
+              "fn": 151,
+              "precision": 1.0,
+              "recall": 0.6949,
+              "f1": 0.82
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 4,
+              "precision": 0.9091,
+              "recall": 0.7143,
+              "f1": 0.8
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.8323
+        },
+        {
+          "threshold": 0.8,
+          "tp": 750,
+          "fp": 2,
+          "fn": 1094,
+          "precision": 0.9973,
+          "recall": 0.4067,
+          "f1": 0.5778,
+          "by_source": {
+            "cloudflare": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 18,
+              "precision": 1.0,
+              "recall": 0.0526,
+              "f1": 0.1
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 4,
+              "fp": 1,
+              "fn": 6,
+              "precision": 0.8,
+              "recall": 0.4,
+              "f1": 0.5333
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 586,
+              "precision": 1.0,
+              "recall": 0.0168,
+              "f1": 0.033
+            },
+            "python-releases": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 260,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "pythonbytes": {
+              "tp": 302,
+              "fp": 0,
+              "fn": 193,
+              "precision": 1.0,
+              "recall": 0.6101,
+              "f1": 0.7578
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 4,
+              "precision": 0.9091,
+              "recall": 0.7143,
+              "f1": 0.8
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.8233
+        }
+      ]
+    },
+    {
+      "name": "trees240-numeric",
+      "seconds": 16.487,
+      "selected": {
+        "threshold": 0.35,
+        "tp": 978,
+        "fp": 5,
+        "fn": 866,
+        "precision": 0.9949,
+        "recall": 0.5304,
+        "f1": 0.6919,
+        "by_source": {
+          "cloudflare": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 15,
+            "precision": 1.0,
+            "recall": 0.2105,
+            "f1": 0.3478
+          },
+          "django": {
+            "tp": 10,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "esa-gallery": {
+            "tp": 58,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "go": {
+            "tp": 10,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "hn": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 27,
+            "precision": 1.0,
+            "recall": 0.1,
+            "f1": 0.1818
+          },
+          "jvns": {
+            "tp": 77,
+            "fp": 2,
+            "fn": 519,
+            "precision": 0.9747,
+            "recall": 0.1292,
+            "f1": 0.2281
+          },
+          "python-releases": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 260,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "pythonbytes": {
+            "tp": 454,
+            "fp": 0,
+            "fn": 41,
+            "precision": 1.0,
+            "recall": 0.9172,
+            "f1": 0.9568
+          },
+          "realpython": {
+            "tp": 10,
+            "fp": 2,
+            "fn": 4,
+            "precision": 0.8333,
+            "recall": 0.7143,
+            "f1": 0.7692
+          },
+          "records-lectures-0": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-1": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-2": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-3": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-4": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-5": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-6": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-lectures-7": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-0": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-1": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-2": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-3": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-4": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-5": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-6": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "records-reports-7": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "table-layouts-validation": {
+            "tp": 160,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "macro_f1": 0.8629
+      },
+      "thresholds": [
+        {
+          "threshold": 0.25,
+          "tp": 1022,
+          "fp": 73,
+          "fn": 822,
+          "precision": 0.9333,
+          "recall": 0.5542,
+          "f1": 0.6955,
+          "by_source": {
+            "cloudflare": {
+              "tp": 5,
+              "fp": 0,
+              "fn": 14,
+              "precision": 1.0,
+              "recall": 0.2632,
+              "f1": 0.4167
+            },
+            "django": {
+              "tp": 10,
+              "fp": 67,
+              "fn": 0,
+              "precision": 0.1299,
+              "recall": 1.0,
+              "f1": 0.2299
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 105,
+              "fp": 2,
+              "fn": 491,
+              "precision": 0.9813,
+              "recall": 0.1762,
+              "f1": 0.2987
+            },
+            "python-releases": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 260,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "pythonbytes": {
+              "tp": 469,
+              "fp": 0,
+              "fn": 26,
+              "precision": 1.0,
+              "recall": 0.9475,
+              "f1": 0.973
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 3,
+              "fn": 4,
+              "precision": 0.7692,
+              "recall": 0.7143,
+              "f1": 0.7407
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.8382
+        },
+        {
+          "threshold": 0.35,
+          "tp": 978,
+          "fp": 5,
+          "fn": 866,
+          "precision": 0.9949,
+          "recall": 0.5304,
+          "f1": 0.6919,
+          "by_source": {
+            "cloudflare": {
+              "tp": 4,
+              "fp": 0,
+              "fn": 15,
+              "precision": 1.0,
+              "recall": 0.2105,
+              "f1": 0.3478
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 77,
+              "fp": 2,
+              "fn": 519,
+              "precision": 0.9747,
+              "recall": 0.1292,
+              "f1": 0.2281
+            },
+            "python-releases": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 260,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "pythonbytes": {
+              "tp": 454,
+              "fp": 0,
+              "fn": 41,
+              "precision": 1.0,
+              "recall": 0.9172,
+              "f1": 0.9568
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 2,
+              "fn": 4,
+              "precision": 0.8333,
+              "recall": 0.7143,
+              "f1": 0.7692
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.8629
+        },
+        {
+          "threshold": 0.45,
+          "tp": 914,
+          "fp": 4,
+          "fn": 930,
+          "precision": 0.9956,
+          "recall": 0.4957,
+          "f1": 0.6618,
+          "by_source": {
+            "cloudflare": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 16,
+              "precision": 1.0,
+              "recall": 0.1579,
+              "f1": 0.2727
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 45,
+              "fp": 2,
+              "fn": 551,
+              "precision": 0.9574,
+              "recall": 0.0755,
+              "f1": 0.14
+            },
+            "python-releases": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 260,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "pythonbytes": {
+              "tp": 423,
+              "fp": 0,
+              "fn": 72,
+              "precision": 1.0,
+              "recall": 0.8545,
+              "f1": 0.9216
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 4,
+              "precision": 0.9091,
+              "recall": 0.7143,
+              "f1": 0.8
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.8565
+        },
+        {
+          "threshold": 0.5,
+          "tp": 898,
+          "fp": 4,
+          "fn": 946,
+          "precision": 0.9956,
+          "recall": 0.487,
+          "f1": 0.654,
+          "by_source": {
+            "cloudflare": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 18,
+              "precision": 1.0,
+              "recall": 0.0526,
+              "f1": 0.1
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 37,
+              "fp": 2,
+              "fn": 559,
+              "precision": 0.9487,
+              "recall": 0.0621,
+              "f1": 0.1165
+            },
+            "python-releases": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 260,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "pythonbytes": {
+              "tp": 417,
+              "fp": 0,
+              "fn": 78,
+              "precision": 1.0,
+              "recall": 0.8424,
+              "f1": 0.9145
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 4,
+              "precision": 0.9091,
+              "recall": 0.7143,
+              "f1": 0.8
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.8487
+        },
+        {
+          "threshold": 0.6,
+          "tp": 804,
+          "fp": 4,
+          "fn": 1040,
+          "precision": 0.995,
+          "recall": 0.436,
+          "f1": 0.6063,
+          "by_source": {
+            "cloudflare": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 18,
+              "precision": 1.0,
+              "recall": 0.0526,
+              "f1": 0.1
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 15,
+              "fp": 2,
+              "fn": 581,
+              "precision": 0.8824,
+              "recall": 0.0252,
+              "f1": 0.0489
+            },
+            "python-releases": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 260,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "pythonbytes": {
+              "tp": 345,
+              "fp": 0,
+              "fn": 150,
+              "precision": 1.0,
+              "recall": 0.697,
+              "f1": 0.8214
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 4,
+              "precision": 0.9091,
+              "recall": 0.7143,
+              "f1": 0.8
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.8425
+        },
+        {
+          "threshold": 0.7,
+          "tp": 764,
+          "fp": 4,
+          "fn": 1080,
+          "precision": 0.9948,
+          "recall": 0.4143,
+          "f1": 0.585,
+          "by_source": {
+            "cloudflare": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 18,
+              "precision": 1.0,
+              "recall": 0.0526,
+              "f1": 0.1
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 0,
+              "precision": 0.9091,
+              "recall": 1.0,
+              "f1": 0.9524
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 12,
+              "fp": 2,
+              "fn": 584,
+              "precision": 0.8571,
+              "recall": 0.0201,
+              "f1": 0.0393
+            },
+            "python-releases": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 260,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "pythonbytes": {
+              "tp": 308,
+              "fp": 0,
+              "fn": 187,
+              "precision": 1.0,
+              "recall": 0.6222,
+              "f1": 0.7671
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 4,
+              "precision": 0.9091,
+              "recall": 0.7143,
+              "f1": 0.8
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.84
+        },
+        {
+          "threshold": 0.8,
+          "tp": 688,
+          "fp": 4,
+          "fn": 1156,
+          "precision": 0.9942,
+          "recall": 0.3731,
+          "f1": 0.5426,
+          "by_source": {
+            "cloudflare": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 18,
+              "precision": 1.0,
+              "recall": 0.0526,
+              "f1": 0.1
+            },
+            "django": {
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "esa-gallery": {
+              "tp": 58,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "go": {
+              "tp": 9,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.9,
+              "recall": 0.9,
+              "f1": 0.9
+            },
+            "hn": {
+              "tp": 3,
+              "fp": 0,
+              "fn": 27,
+              "precision": 1.0,
+              "recall": 0.1,
+              "f1": 0.1818
+            },
+            "jvns": {
+              "tp": 12,
+              "fp": 2,
+              "fn": 584,
+              "precision": 0.8571,
+              "recall": 0.0201,
+              "f1": 0.0393
+            },
+            "python-releases": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 260,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "pythonbytes": {
+              "tp": 233,
+              "fp": 0,
+              "fn": 262,
+              "precision": 1.0,
+              "recall": 0.4707,
+              "f1": 0.6401
+            },
+            "realpython": {
+              "tp": 10,
+              "fp": 1,
+              "fn": 4,
+              "precision": 0.9091,
+              "recall": 0.7143,
+              "f1": 0.8
+            },
+            "records-lectures-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-lectures-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-0": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-1": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-2": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-3": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-4": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-5": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-6": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "records-reports-7": {
+              "tp": 12,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "table-layouts-validation": {
+              "tp": 160,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1": 0.8331
+        }
+      ]
+    }
+  ],
+  "data_sha256": "ee402ce68da285944e2e070f49ff9b66eeb56af124e8677d1af95830b7b75c87",
+  "seconds": 36.332,
+  "origin_weights": {
+    "index": 0.75,
+    "cleaneval": 0.1,
+    "authored": 0.15
+  },
+  "promotion_ready": false,
+  "model_bytes": 103592
+}

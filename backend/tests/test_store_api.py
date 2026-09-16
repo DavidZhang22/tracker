@@ -174,9 +174,10 @@ def test_ignore_excludes_counts_restore_keeps_state(client):
     assert entries(client, item, filter="favorites")["total"] == 1
 
 
-def test_refresh_all_skips_ignored_items(client):
+@pytest.mark.parametrize("favorite", [False, True])
+def test_refresh_all_skips_ignored_items(client, favorite):
     item = add(client)
-    client.patch("/api/items/" + item["id"], json={"ignored": True})
+    client.patch("/api/items/" + item["id"], json={"ignored": True, "favorite": favorite})
     before = len(client.fake.calls)
     r = client.post("/api/refresh").json()
     assert r["checked"] == 0 and len(client.fake.calls) == before

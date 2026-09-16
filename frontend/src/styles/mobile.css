@@ -326,6 +326,7 @@ h1,
     height: 44px;
   }
   input:not([type="checkbox"]),
+  textarea,
   select,
   .search input {
     font-size: 16px;

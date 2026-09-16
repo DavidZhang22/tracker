@@ -15,6 +15,7 @@ uv run pytest -q
 | `app/tracker/store.py` | SQLite transactions and state-preserving merges |
 | `app/tracker/discovery.py` | Bounded scan orchestration |
 | `app/tracker/parser.py` | HTML link extraction |
+| `app/tracker/file_import.py`, `import_pool.py`, `import_worker.py` | Bounded document normalization and isolated parsing |
 | `app/tracker/urls.py` | URL validation, request pacing and safe fetching |
 | `app/tracker/*_model.py` and model JSON files | CPU inference |
 | `tests/` | Offline tests and small source fixtures |

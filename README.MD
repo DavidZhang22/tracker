@@ -10,19 +10,25 @@ Track blogs, chapters, videos, game updates, job listings and other public sourc
 - Mobile layouts, bulk actions, reading order preferences and optional mark-as-read on opening a link.
 - Keyword filtering using nearby record context, including language and location.
 - Lightweight refreshes with a full model scan available when a source changes.
-- Suggestions ranked locally using existing source metadata.
+- Suggestions ranked locally using existing source metadata (currently hidden in the interface).
 - Password-protected accounts, data export, session revocation and account deletion.
-- CSV uploads with column detection, preview and updates to one item.
+- File and pasted-text imports with link context, date detection, preview and updates to one item.
 
-## Import a CSV
+## Import files or text
 
-Choose **Add item → CSV file**, upload your file, and review the detected columns. Each row becomes a link within one item. Select a link column, an optional title, company/creator, content date, and chapter/episode number. Other cells stay searchable under each link’s Details. Reading progress can be selected before saving.
+Choose **Add item → File or text**, then upload a file or paste text. Supported formats are CSV, TSV, Excel (.xlsx), PowerPoint (.pptx), Word (.docx), PDF, HTML, Markdown and plain text. Preview the links, name the item, and choose reading progress before saving. Each import creates links within one item.
 
-CSV imports parse structured rows directly; the HTML link classifier does not discard explicit CSV records. Imports never fetch their links, execute formulas, or render cell contents as HTML. UTF-8, UTF-16 with a BOM, Windows-1252, comma, semicolon, tab and pipe exports are supported. Files are limited to 4 MB, 10,000 input rows, 64 columns and 4,999 saved unique links. Duplicate URLs use the same identity rules as web scans. Ambiguous numeric dates require an explicit day/month choice; verification dates are kept as details. Deadlines and updates are labeled separately from publication dates.
+Files are limited to **4 MB** and pasted text to **200,000 characters**. Office documents support up to 50 worksheets or 200 slides; PDFs support up to 200 pages. Import up to 10,000 candidate records and save up to 4,999 unique links. Image-only PDF text needs OCR before importing; embedded PDF hyperlinks are included. Export older .xls and .ppt files to their modern formats first. Password-protected files are unsupported.
 
-CSV items use **Upload CSV** to merge a revised file after preview. Matching links retain read, favorite, muted, Trash and grouping state. Missing rows stay saved. Refresh all skips CSV items. No database or external model service needs to be set up.
+All links are kept by default. For noisy documents, **Import options → Content links (model filtered)** uses the shared website classifier; review this optional filter because unfamiliar layouts can lose relevant links. Nearby titles, dates and keywords use the same record-context model as website scans. No website-specific document adapters or external model service are required.
 
-A local acceptance check of a 59-row, 19-column job CSV retained all 59 unique application URLs and all row details, associated 17 content dates, and preserved progress on re-upload. Its median parse time was 9.5 ms across five runs. A synthetic 4,999-link, 2.28 MB CSV peaked at 14.1 MiB of traced Python allocations; this excludes the application’s baseline memory. Permanent tests use synthetic records; the personal test file is not included.
+CSV and pasted spreadsheet rows offer column detection and manual correction. UTF-8, UTF-16 with a BOM, Windows-1252, comma, semicolon, tab and pipe exports are supported. Ambiguous numeric dates require an explicit day/month choice. Other cells stay searchable under each link's Details. Excel supports embedded hyperlinks, plain URLs, cached cell values and literal HYPERLINK formulas; it does not calculate formulas.
+
+**Update import** merges a revised file or pasted text after preview. Matching links retain read, favorite, muted, Trash and grouping state; missing links remain saved. Both Refresh and Full Refresh skip imported items and muted sources, including muted favorites.
+
+Uploads are processed on the Trackify server; the original file is not saved. Parsing does not visit imported URLs, execute scripts or macros, or load external document parts. CSV retains its bounded fast parser. Other formats use one isolated parser process at a time with a 20-second wall timeout; Linux adds a 384 MiB address-space cap and 12-second CPU cap. Office archive expansion is limited to 24 MB, and XML entity expansion is disabled. Existing authentication, origin checks, request limits, account isolation and safe URL validation also apply. No additional database or hosted parsing service needs setup.
+
+The [generalization evaluation](backend/ml/reports/generalization.md) records the new sources, model comparison and runtime checks.
 
 ## Organizing links
 

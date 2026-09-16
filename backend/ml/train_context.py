@@ -54,7 +54,7 @@ def main():
     path = args.dataset
     rows = [
         r
-        for line in path.read_text().splitlines()
+        for line in path.read_text(encoding="utf-8").splitlines()
         if (r := json.loads(line))["split"] != "test"
     ]
     train = [r for r in rows if r["split"] == "train"]

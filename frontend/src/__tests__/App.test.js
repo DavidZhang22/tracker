@@ -78,8 +78,8 @@ test("all items includes ignored last, favorites first, and excludes Trash", asy
       .map((row) => row.querySelector(".item-title").textContent);
   expect(titles()).toEqual([
     "Z favorite source",
-    "A normal source",
     "An ignored favorite",
+    "A normal source",
   ]);
   expect(
     screen.getByRole("button", { name: "All items 3" }),
@@ -89,10 +89,48 @@ test("all items includes ignored last, favorites first, and excludes Trash", asy
   });
   expect(titles()).toEqual([
     "Z favorite source",
-    "A normal source",
     "An ignored favorite",
+    "A normal source",
   ]);
   expect(screen.queryByText("Trashed source")).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole("button", { name: "Favorites 2" }));
+  expect(titles()).toEqual(["Z favorite source", "An ignored favorite"]);
+});
+
+test("library pattern selection combines intervals and ranges", async () => {
+  api.mockResolvedValue(
+    Array.from({ length: 7 }, (_, index) => ({
+      ...item,
+      id: String(index + 1),
+      title: `Source ${index + 1}`,
+    })),
+  );
+  render(
+    <MemoryRouter>
+      <Library />
+    </MemoryRouter>,
+  );
+  await screen.findByText("Source 1");
+  fireEvent.change(screen.getByLabelText("Sort items"), {
+    target: { value: "title" },
+  });
+  fireEvent.change(screen.getByLabelText("Selection options"), {
+    target: { value: "pattern" },
+  });
+  fireEvent.change(screen.getByLabelText("From position"), {
+    target: { value: "2" },
+  });
+  fireEvent.change(screen.getByLabelText("Through position"), {
+    target: { value: "5" },
+  });
+  fireEvent.click(screen.getByRole("button", { name: "Apply selection" }));
+  expect(screen.getByText("2 selected")).toBeInTheDocument();
+  expect(screen.getByLabelText("Select Source 3")).toBeChecked();
+  expect(screen.getByLabelText("Select Source 5")).toBeChecked();
+  expect(screen.getByLabelText("Select Source 1")).not.toBeChecked();
+  expect(
+    screen.queryByRole("button", { name: "Search" }),
+  ).not.toBeInTheDocument();
 });
 
 test("empty Trash has no example sources or refresh control", async () => {
@@ -105,7 +143,7 @@ test("empty Trash has no example sources or refresh control", async () => {
   expect(await screen.findByText("Trash is empty")).toBeInTheDocument();
   expect(screen.queryByText("Try a source")).not.toBeInTheDocument();
   expect(
-    screen.queryByRole("button", { name: "Refresh all" }),
+    screen.queryByRole("button", { name: "Refresh" }),
   ).not.toBeInTheDocument();
   expect(api).toHaveBeenCalledWith("/items?trash=true");
 });
@@ -121,10 +159,8 @@ test("library deep refresh reaches the streaming API", async () => {
     </MemoryRouter>,
   );
   await screen.findByText("My series");
-  await click(screen.getByRole("button", { name: "Options for refresh all" }));
-  await click(
-    await screen.findByRole("menuitem", { name: "Deep refresh all" }),
-  );
+  await click(screen.getByRole("button", { name: "Options for refresh" }));
+  await click(await screen.findByRole("menuitem", { name: "Full Refresh" }));
   expect(refreshLibrary).toHaveBeenCalledWith(
     expect.any(Function),
     expect.any(AbortSignal),
@@ -144,7 +180,7 @@ test.each([false, true])(
         screen.getByRole("button", { name: "Options for refresh item" }),
       );
       await click(
-        await screen.findByRole("menuitem", { name: "Deep refresh" }),
+        await screen.findByRole("menuitem", { name: "Full Refresh" }),
       );
     } else {
       await click(screen.getByRole("button", { name: "Refresh item" }));
@@ -176,7 +212,7 @@ test("each refresh completion updates its row before the batch finishes", async 
     </MemoryRouter>,
   );
   await screen.findByText("My series");
-  await click(screen.getByRole("button", { name: "Refresh all" }));
+  await click(screen.getByRole("button", { name: "Refresh" }));
   expect(screen.getByText("12 unread")).toBeInTheDocument();
   expect(
     screen.getByText("10 new links. 1 item checked. Refreshing…"),
@@ -189,7 +225,7 @@ test("each refresh completion updates its row before the batch finishes", async 
   expect(
     screen.getByText("10 new links. 2 items checked."),
   ).toBeInTheDocument();
-  expect(screen.getByRole("button", { name: "Refresh all" })).toBeEnabled();
+  expect(screen.getByRole("button", { name: "Refresh" })).toBeEnabled();
 });
 
 test("interrupted refresh keeps completed row updates and clears its busy status", async () => {
@@ -209,12 +245,12 @@ test("interrupted refresh keeps completed row updates and clears its busy status
     </MemoryRouter>,
   );
   await screen.findByText("My series");
-  await click(screen.getByRole("button", { name: "Refresh all" }));
+  await click(screen.getByRole("button", { name: "Refresh" }));
   expect(screen.getByText("8 unread")).toBeInTheDocument();
   expect(screen.getByRole("alert")).toHaveTextContent(
     "Completed updates were kept.",
   );
-  expect(screen.getByRole("button", { name: "Refresh all" })).toBeEnabled();
+  expect(screen.getByRole("button", { name: "Refresh" })).toBeEnabled();
   expect(screen.queryByText(/items checked/)).not.toBeInTheDocument();
 });
 async function click(element) {

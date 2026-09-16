@@ -107,6 +107,15 @@ export const uploadCsv = (file, options = {}) =>
       body: file,
     },
   );
+export const uploadFile = (file, options = {}) =>
+  api(
+    `/scans/import?${new URLSearchParams({ filename: file.name, ...options })}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": file.type || "application/octet-stream" },
+      body: file,
+    },
+  );
 export const examples = [
   { title: "xkcd", kind: "Comic archive", url: "https://xkcd.com/archive/" },
 ];

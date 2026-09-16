@@ -1,0 +1,45 @@
+{
+  "text_50": {
+    "bytes": 2430,
+    "median_seconds": 0.6325
+  },
+  "excel_50": {
+    "bytes": 970,
+    "median_seconds": 0.6271
+  },
+  "text_1000": {
+    "bytes": 50780,
+    "median_seconds": 1.1243
+  },
+  "excel_1000": {
+    "bytes": 6198,
+    "median_seconds": 1.0904
+  },
+  "html_filtered_1000": {
+    "bytes": 103793,
+    "median_seconds": 1.5231
+  },
+  "text_4999": {
+    "bytes": 262727,
+    "median_seconds": 3.1765
+  },
+  "excel_4999": {
+    "bytes": 29365,
+    "median_seconds": 3.0653
+  },
+  "csv_4999": {
+    "bytes": 262742,
+    "seconds": 0.5498
+  },
+  "peak_child_rss_mib": 76.61,
+  "peak_parent_rss_mib": 69.03,
+  "environment": {
+    "os": "Linux, Python 3.12",
+    "container_memory_mib": 1024,
+    "cpus": 2,
+    "network": "none",
+    "image": "sha256:ceda2aa064dada8fc50ffb582658c2bec36fbbd3baf30aa53e44cc79f853b5f6",
+    "iterations": 3,
+    "scope": "Synthetic imports. Includes process startup and model loading; excludes uploads and database writes. RSS is per-process peak, not total service memory."
+  }
+}

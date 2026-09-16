@@ -300,7 +300,7 @@ class Store:
             return [
                 dict(row)
                 for row in db.execute(
-                    "SELECT id,url FROM items WHERE ignored=0 AND deleted=0 AND source_type!='csv' ORDER BY created_at DESC"
+                    "SELECT id,url FROM items WHERE ignored=0 AND deleted=0 AND source_type NOT IN ('csv','document') ORDER BY created_at DESC"
                 )
             ]
 
@@ -370,9 +370,11 @@ class Store:
                 raise ValueError("This scan expired. Scan the source again.")
             scan = json.loads(row["payload"])
             if scan.get("import_item_id"):
-                raise ValueError("This preview updates an existing CSV item.")
-            if scan.get("source_type") == "csv" and not scan["entries"]:
-                raise ValueError("There are no links to import. Check the CSV columns.")
+                raise ValueError("This preview updates an existing imported item.")
+            if scan.get("source_type") in {"csv", "document"} and not scan["entries"]:
+                raise ValueError(
+                    "There are no links to import. Check the input and import options."
+                )
             selected = set(read_indices or [])
             if len(selected) > MAX_LINKS or any(
                 type(i) is not int or not 0 <= i < len(scan["entries"])
@@ -391,12 +393,12 @@ class Store:
             if any(
                 (
                     existing["url"]
-                    if existing["source_type"] == "csv"
+                    if existing["source_type"] in {"csv", "document"}
                     else canonical_url(existing["url"])
                 )
                 == (
                     scan["url"]
-                    if scan.get("source_type") == "csv"
+                    if scan.get("source_type") in {"csv", "document"}
                     else canonical_url(scan["url"])
                 )
                 for existing in db.execute("SELECT url,source_type FROM items")
@@ -454,22 +456,22 @@ class Store:
             ).fetchone()
             if not item:
                 raise KeyError("Item not found.")
-            if item["deleted"] or item["source_type"] != "csv":
-                raise ValueError("Choose a CSV item outside Trash to update.")
+            if item["deleted"] or item["source_type"] not in {"csv", "document"}:
+                raise ValueError("Choose an imported item outside Trash to update.")
             row = db.execute(
                 "SELECT payload FROM scans WHERE id=? AND created_at > strftime('%Y-%m-%dT%H:%M:%S','now','-1 hour')",
                 (scan_id,),
             ).fetchone()
             if not row:
-                raise ValueError("This preview expired. Upload the CSV again.")
+                raise ValueError("This preview expired. Import the file or text again.")
             scan = json.loads(row["payload"])
             if (
-                scan.get("source_type") != "csv"
+                scan.get("source_type") not in {"csv", "document"}
                 or scan.get("import_item_id") != iid
                 or not scan["entries"]
             ):
                 raise ValueError(
-                    "Upload a CSV for this item and review its links first."
+                    "Import a file or text for this item and review its links first."
                 )
             self._merge(db, iid, scan)
             db.execute(

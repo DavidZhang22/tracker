@@ -88,7 +88,10 @@ class ApiGuard:
             await response(scope, receive, send)
 
         ip = (scope.get("client") or ("unknown",))[0]
-        csv_upload = scope["path"] == "/api/scans/csv" and scope["method"] == "POST"
+        csv_upload = (
+            scope["path"] in {"/api/scans/csv", "/api/scans/import"}
+            and scope["method"] == "POST"
+        )
         try:
             self.rates.charge([("api:global", 1200, 60), (f"api:{ip}", 240, 60)])
             if csv_upload:

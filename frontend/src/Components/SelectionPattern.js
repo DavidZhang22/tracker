@@ -1,6 +1,12 @@
 import { useMemo, useState } from "react";
 
-export default function SelectionPattern({ total, busy, onApply, onClose }) {
+export default function SelectionPattern({
+  total,
+  busy,
+  onApply,
+  onClose,
+  noun = "links",
+}) {
   const [every, setEvery] = useState("2"),
     [starting, setStarting] = useState("1");
   const [first, setFirst] = useState("1"),
@@ -62,7 +68,7 @@ export default function SelectionPattern({ total, busy, onApply, onClose }) {
             value={every}
             onChange={(e) => setEvery(e.target.value)}
           />{" "}
-          links
+          {noun}
         </label>
         <label>
           Starting with{" "}
@@ -112,7 +118,7 @@ export default function SelectionPattern({ total, busy, onApply, onClose }) {
       </div>
       <p className="hint">
         Positions follow the current filtered order across all pages. Every 1
-        selects each link.
+        selects each {noun === "items" ? "item" : "link"}.
       </p>
       <p className="pattern-preview" aria-live="polite">
         {valid

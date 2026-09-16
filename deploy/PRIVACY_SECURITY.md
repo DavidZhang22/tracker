@@ -112,6 +112,12 @@ snapshots. Verify cloud retention and deletion terms with the provider.
   extractor without independently enforced egress isolation.
 - Models and extraction recipes are JSON/numeric data, not uploaded code or
   pickles. No API accepts a command, executable, model path or arbitrary regex.
+- File imports accept up to 4 MB. Non-CSV formats run one at a time in a
+  killable process with stripped environment variables, a 20-second wall timeout,
+  and Linux limits of 384 MiB address space and 12 CPU seconds. Office archive
+  expansion and XML entities are bounded or rejected; macros, document scripts,
+  external parts and imported URLs are not executed or fetched. Original uploads
+  are not written to disk; extracted metadata follows normal library retention.
 - The app container has a read-only root filesystem, all Linux capabilities
   dropped, no privilege escalation, a bounded non-executable temporary mount,
   and CPU/memory/process limits. Only its data volume is persistent/writable.

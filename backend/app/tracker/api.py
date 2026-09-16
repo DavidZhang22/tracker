@@ -214,10 +214,12 @@ def items(request: Request, trash: bool = False):
     return request.state.store.items(trash=trash)
 
 
+@router.post("/scans/import")
 @router.post("/scans/csv")
 async def csv_preview(
     request: Request,
     filename: str = Query("links.csv", max_length=255),
+    link_filter: Literal["all", "content"] = "all",
     url_column: int | None = Query(None, ge=0, le=63),
     title_column: int | None = Query(None, ge=-1, le=63),
     company_column: int | None = Query(None, ge=-1, le=63),
@@ -230,7 +232,8 @@ async def csv_preview(
     item_id: str | None = Query(None, min_length=1, max_length=64),
 ):
     mime = request.headers.get("content-type", "").split(";", 1)[0].strip().lower()
-    if mime not in {
+    general_import = request.url.path == "/api/scans/import"
+    if not general_import and mime not in {
         "text/csv",
         "text/tab-separated-values",
         "text/plain",
@@ -242,8 +245,10 @@ async def csv_preview(
         )
     store = request.state.store
     target = await run_blocking(store.refresh_source, item_id) if item_id else None
-    if target and (target["source_type"] != "csv" or target["deleted"]):
-        raise HTTPException(422, "Choose a CSV item outside Trash to update.")
+    if target and (
+        target["source_type"] not in {"csv", "document"} or target["deleted"]
+    ):
+        raise HTTPException(422, "Choose an imported item outside Trash to update.")
     columns = {
         field: value
         for field, value in zip(
@@ -254,16 +259,20 @@ async def csv_preview(
         if value is not None
     }
     with request.app.state.scan_guard.operation(store.path):
-        payload = await run_blocking(
-            parse_csv,
-            await request.body(),
-            filename,
+        options = dict(
             columns=columns,
             delimiter=delimiter,
             header=header,
             date_order=date_order,
             keywords=keywords,
         )
+        data = await request.body()
+        if general_import and not filename.lower().endswith((".csv", ".tsv")):
+            payload = await request.app.state.importer.parse(
+                data, filename, link_filter=link_filter, **options
+            )
+        else:
+            payload = await run_blocking(parse_csv, data, filename, **options)
         if target:
             payload.update(url=target["url"], import_item_id=item_id)
         sid = await run_blocking(store.save_scan, payload)
@@ -379,13 +388,15 @@ async def refresh_item(iid, app, store, skip_unavailable=False, deep=False):
     async with lock:
         item = await run_blocking(store.refresh_source, iid)
         if skip_unavailable and (
-            item["deleted"] or item["ignored"] or item.get("source_type") == "csv"
+            item["deleted"]
+            or item["ignored"]
+            or item.get("source_type") in {"csv", "document"}
         ):
             return {"id": iid, "new_count": 0, "ok": True, "skipped": True}
         if item["deleted"]:
             raise DiscoveryError("Restore this item from Trash before refreshing it.")
-        if item.get("source_type") == "csv":
-            raise DiscoveryError("Upload a CSV to update this item.")
+        if item.get("source_type") in {"csv", "document"}:
+            raise DiscoveryError("Upload a file or paste text to update this item.")
         try:
             async with app.state.scan_semaphore:
                 store.check_active()

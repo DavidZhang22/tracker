@@ -55,7 +55,7 @@ export function RefreshControl({
   const blocked = disabled || busy;
   const { preferences } = usePreferences();
   const defaultDeep = preferences.refresh_mode === "deep";
-  const alternateLabel = `${defaultDeep ? "Lightweight refresh" : "Deep refresh"}${label === "Refresh all" ? " all" : ""}`;
+  const alternateLabel = defaultDeep ? "Lightweight Refresh" : "Full Refresh";
   return (
     <div className={`refresh-control ${primary ? "primary" : ""}`}>
       <button
@@ -382,7 +382,9 @@ export function SelectionBar({
             </option>
             <option value="page">This page ({visible.length})</option>
             {onSelectAll && (
-              <option value="all">All matching links ({total})</option>
+              <option value="all">
+                All matching {links ? "links" : "items"} ({total})
+              </option>
             )}
             <option value="invert">Invert selection</option>
             <option value="none">Clear selection</option>
@@ -477,6 +479,7 @@ export function SelectionBar({
       {patternOpen && (
         <SelectionPattern
           total={total}
+          noun={links ? "links" : "items"}
           busy={busy}
           onApply={onSelectAll}
           onClose={() => setPatternOpen(false)}

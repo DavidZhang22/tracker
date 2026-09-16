@@ -1,0 +1,63 @@
+[
+  {
+    "id": "nasa-index",
+    "file": "nasa",
+    "url": "https://www.nasa.gov/news/recently-published/",
+    "split": "train",
+    "family": "science-news",
+    "positive_selector": "main .hds-content-item a[href]",
+    "external": true,
+    "reason": "Reviewed index scope; publisher detail links, excluding navigation and contributor pages.",
+    "sha256": "995dfbf0df4525c1314f35d1c51a9c2c443069bda0cf2560d94a5f934a4381a7",
+    "candidate_rows": 304,
+    "positive_urls": 25
+  },
+  {
+    "id": "pmlr-volumes",
+    "file": "pmlr",
+    "url": "https://proceedings.mlr.press/",
+    "split": "train",
+    "family": "proceedings",
+    "positive": "^/(?:v\\d+|r\\d+)/?$",
+    "reason": "Reviewed index scope; publisher detail links, excluding navigation and contributor pages.",
+    "sha256": "38dbc526c21c2d3406f54c30dd62ecfaf35d0a61f45cefac17f7c95048ed9882",
+    "candidate_rows": 353,
+    "positive_urls": 327
+  },
+  {
+    "id": "python-releases",
+    "file": "python-releases",
+    "url": "https://www.python.org/downloads/",
+    "split": "validation",
+    "family": "software",
+    "positive": "^/downloads/release/[^/]+/?$",
+    "reason": "Reviewed index scope; publisher detail links, excluding navigation and contributor pages.",
+    "sha256": "6ca4602bae3e9e235adb894286e96e86a35c6d16b176034a274a7de026740d0a",
+    "candidate_rows": 991,
+    "positive_urls": 260
+  },
+  {
+    "id": "esa-gallery",
+    "file": "esa-images",
+    "url": "https://www.esa.int/ESA_Multimedia/Images",
+    "split": "validation",
+    "family": "images",
+    "positive": "^/ESA_Multimedia/Images/\\d{4}/\\d{2}/[^/]+/?$",
+    "reason": "Reviewed index scope; publisher detail links, excluding navigation and contributor pages.",
+    "sha256": "f80021d32a706aa8dbde3cf9f2f8c131175e2057d5afc3e045c8025980089b3a",
+    "candidate_rows": 76,
+    "positive_urls": 58
+  },
+  {
+    "id": "w3c-standards",
+    "file": "w3c",
+    "url": "https://www.w3.org/TR/",
+    "split": "test",
+    "family": "standards",
+    "positive": "^/TR/[^/]+/?$",
+    "reason": "Reviewed index scope; publisher detail links, excluding navigation and contributor pages.",
+    "sha256": "89045ff21087e0a1c68d209197d254e81197a17ed1b9dd0e5d29a54747691b03",
+    "candidate_rows": 3998,
+    "positive_urls": 1233
+  }
+]

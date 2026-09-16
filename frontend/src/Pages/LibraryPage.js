@@ -153,7 +153,7 @@ export default function LibraryPage() {
       all: libraryItems.length,
       new: active.filter((i) => i.new_count > 0).length,
       unread: active.filter((i) => i.unread_count > 0).length,
-      favorites: active.filter((i) => i.favorite).length,
+      favorites: libraryItems.filter((i) => i.favorite).length,
       ignored: libraryItems.filter((i) => i.ignored).length,
     }),
     [libraryItems, active],
@@ -166,6 +166,7 @@ export default function LibraryPage() {
             ? i.deleted
             : !i.deleted &&
               (filter === "all" ||
+                filter === "favorites" ||
                 (filter === "ignored" ? i.ignored : !i.ignored)),
         )
         .filter((i) =>
@@ -186,8 +187,8 @@ export default function LibraryPage() {
         )
         .sort(
           (a, b) =>
-            Number(a.ignored) - Number(b.ignored) ||
             Number(b.favorite) - Number(a.favorite) ||
+            Number(a.ignored) - Number(b.ignored) ||
             (sort === "title"
               ? a.title.localeCompare(b.title)
               : sort === "unread"
@@ -215,10 +216,15 @@ export default function LibraryPage() {
         <div className="actions">
           {!trash && (
             <RefreshControl
-              label="Refresh all"
+              label="Refresh"
               onRefresh={refresh}
               busy={refreshing}
-              disabled={busy || !active.some((i) => i.source_type !== "csv")}
+              disabled={
+                busy ||
+                !active.some(
+                  (i) => !["csv", "document"].includes(i.source_type),
+                )
+              }
             />
           )}
           <Link className="button primary" to="/add">
@@ -296,9 +302,6 @@ export default function LibraryPage() {
                 onChange={(e) => setSearch(e.target.value)}
               />
             </label>
-            <button className="button" type="submit">
-              Search
-            </button>
           </form>
           <FilterOptions>
             <select
@@ -328,6 +331,19 @@ export default function LibraryPage() {
         <SelectionBar
           selection={selection}
           visible={visibleIds}
+          patternSelection
+          onSelectAll={(pattern, mode = "replace") => {
+            const matches = visibleIds.filter((id, index) => {
+              const position = index + 1;
+              return (
+                !pattern ||
+                (position >= pattern.first &&
+                  position <= (pattern.last ?? visibleIds.length) &&
+                  (position - pattern.starting) % pattern.every === 0)
+              );
+            });
+            selection.apply(matches, mode);
+          }}
           onAction={selectedAction}
           busy={busy}
           trash={trash}
@@ -374,12 +390,12 @@ export default function LibraryPage() {
                     </Link>
                     <div className="item-meta">
                       <span>
-                        {i.source_type === "csv"
-                          ? "CSV import"
+                        {["csv", "document"].includes(i.source_type)
+                          ? "File import"
                           : new URL(i.url).hostname.replace(/^www\./, "")}
                       </span>
                       <span className="kind-label">
-                        {i.source_type === "csv"
+                        {["csv", "document"].includes(i.source_type)
                           ? i.source_name
                           : i.kind === "youtube"
                             ? "YouTube"

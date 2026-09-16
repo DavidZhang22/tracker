@@ -243,7 +243,7 @@ function ItemSettings({ autoUpdate, settingsBusy, onBusy }) {
                 source_method: draft.source_method || "auto",
               });
               setMessage(
-                draft.source_type === "csv"
+                ["csv", "document"].includes(draft.source_type)
                   ? "Item settings saved."
                   : "Item settings saved. Refresh the item to apply detection changes.",
               );
@@ -264,7 +264,7 @@ function ItemSettings({ autoUpdate, settingsBusy, onBusy }) {
               />
               Mark as read when opened for this item
             </label>
-            {draft.source_type !== "csv" && (
+            {!["csv", "document"].includes(draft.source_type) && (
               <>
                 <SourceMethod
                   value={draft.source_method || "auto"}

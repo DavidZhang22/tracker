@@ -14,7 +14,7 @@ import { LinkDate } from "../Components/RowTools";
 import { orderedPreview, usePreferences } from "../Contexts/Preferences";
 import SourceMethod from "../Components/SourceMethod";
 import useSourceMethod from "../Hooks/useSourceMethod";
-import CsvUpload, { CsvDetails } from "../Components/CsvUpload";
+import ImportInput, { ImportDetails } from "../Components/ImportInput";
 
 export default function AddPage() {
   const { preferences } = usePreferences();
@@ -22,7 +22,7 @@ export default function AddPage() {
     navigate = useNavigate();
   const importId = params.get("import");
   const sourceUrl = params.get("url") || "";
-  const [mode, setMode] = useState(importId ? "csv" : "web");
+  const [mode, setMode] = useState(importId ? "import" : "web");
   const [target, setTarget] = useState(null);
   const [url, setUrl] = useState(params.get("url") || ""),
     [selector, setSelector] = useState(""),
@@ -72,7 +72,7 @@ export default function AddPage() {
   useEffect(() => {
     setUrl(sourceUrl);
     setResult(null);
-    if (importId) setMode("csv");
+    if (importId) setMode("import");
     else if (sourceUrl) setMode("web");
     setTarget(null);
     if (!importId) return;
@@ -80,8 +80,8 @@ export default function AddPage() {
     api(`/items/${importId}`)
       .then((item) => {
         if (!active) return;
-        if (item.source_type !== "csv" || item.deleted)
-          throw new Error("Choose a CSV item outside Trash to update.");
+        if (!["csv", "document"].includes(item.source_type) || item.deleted)
+          throw new Error("Choose an imported item outside Trash to update.");
         setTarget(item);
         setTitle(item.title);
         setKeywords(item.keywords || "");
@@ -121,7 +121,7 @@ export default function AddPage() {
   const save = async () => {
     if (
       !result ||
-      (mode === "csv" && !result.entries.length) ||
+      (mode === "import" && !result.entries.length) ||
       saving ||
       remaining > 0 ||
       (importId && !target)
@@ -165,13 +165,13 @@ export default function AddPage() {
         Library
       </Link>
       <div className="page-heading">
-        <h1>{importId ? "Update CSV item" : "Add item"}</h1>
+        <h1>{importId ? "Update imported item" : "Add item"}</h1>
       </div>
       {!importId && (
         <div className="source-tabs" role="group" aria-label="Item source">
           {[
             ["web", "Website"],
-            ["csv", "CSV file"],
+            ["import", "File or text"],
           ].map(([value, label]) => (
             <button
               key={value}
@@ -192,8 +192,8 @@ export default function AddPage() {
       <Notice error>{error}</Notice>
       <div className="add-layout">
         <div>
-          {mode === "csv" ? (
-            <CsvUpload
+          {mode === "import" ? (
+            <ImportInput
               key={importId || "new"}
               disabled={saving || Boolean(importId && !target)}
               itemId={importId}
@@ -332,7 +332,7 @@ export default function AddPage() {
                     busy ||
                     saving ||
                     remaining > 0 ||
-                    (mode === "csv" && !result.entries.length)
+                    (mode === "import" && !result.entries.length)
                   }
                   title={
                     remaining > 0
@@ -363,7 +363,9 @@ export default function AddPage() {
                       <span>
                         {result.csv
                           ? `${result.csv.rows} CSV rows`
-                          : `${result.pages_scanned} pages scanned`}
+                          : result.document
+                            ? `${result.document.format} - ${result.document.candidates} candidate links`
+                            : `${result.pages_scanned} pages scanned`}
                       </span>
                       <span>
                         {result.entries.filter((e) => e.published_at).length}{" "}
@@ -495,7 +497,9 @@ export default function AddPage() {
                       {e.summary && (
                         <span className="preview-context">{e.summary}</span>
                       )}
-                      {mode === "csv" && <CsvDetails context={e.context} />}
+                      {mode === "import" && (
+                        <ImportDetails context={e.context} />
+                      )}
                       <LinkDate entry={e} />
                     </div>
                   ))}
@@ -532,16 +536,16 @@ export default function AddPage() {
           )}
         </div>
         <aside className="help-panel">
-          {mode === "csv" ? (
+          {mode === "import" ? (
             <>
               <h2>Import links</h2>
               <p>
-                Use a column of complete website links. Titles, dates, and other
-                details come from the same row.
+                Import links from a file or pasted text into one item. Titles,
+                dates, and details stay with each record.
               </p>
               <p>
-                Review the detected columns before saving. Update this item
-                later by uploading a revised CSV.
+                Review the links before saving. Files are processed on the
+                server; imported URLs are not opened. Up to 4,999 unique links.
               </p>
               <a className="button" href="/examples/links.csv" download>
                 Download example CSV
