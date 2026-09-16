@@ -32,7 +32,8 @@ docker compose --env-file deploy/.env -f deploy/compose.yaml exec web cat /etc/c
 Check `/api/ready` and the deployed asset manifest after updating. Both
 `/api/scans/csv` and `/api/scans/import` must allow 4 MB at the proxy and application
 guards. A permitted-size upload without a session should return 401; an oversized
-Content-Length should return 413 before its body is uploaded.
+upload should return 413. Use a client that can read an early rejection while
+transmitting (for example, curl); sending only headers can wait for the body timeout.
 
 ## Registration
 

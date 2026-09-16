@@ -71,3 +71,11 @@ python ml/verify_document_runtime.py
 ```
 
 The last command is intended for Linux in the bounded production image. See [raw model comparison](generalization-evaluation.json) and [candidate training report](../experiments/generalization/training-report.json).
+
+## Deployment verification
+
+Application release `ef9f069` is deployed with required authentication and public
+signup. Its JavaScript and CSS hashes match the verified local build. The proxy
+was recreated to attach the current bind-mounted Caddyfile; a 300,000-byte
+unauthenticated upload returns 401 and a 4,000,001-byte upload returns 413. A
+database backup and the previous application image were retained for rollback.
