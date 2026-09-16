@@ -110,7 +110,7 @@ export default function ItemPage() {
       else
         setMessage(
           r.cached
-            ? `Using the recent scan from ${checked(r.checked_at)}. Sources are checked at most once every ten minutes.`
+            ? `Using the recent scan from ${checked(r.checked_at)}. Scans are shared across libraries for five minutes.`
             : `${r.new_count} new links found.`,
         );
       reload();

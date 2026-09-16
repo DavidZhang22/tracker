@@ -14,6 +14,7 @@ import httpx
 from .cache import FetchCache
 from .documents import MAX_RESPONSE, Document
 from .errors import DiscoveryError
+from .source_cache import REUSE_SECONDS, SharedWork
 from .workers import run_blocking
 
 
@@ -24,6 +25,7 @@ class RequestBudget:
     hits: int = 0
     received: int = 0
     byte_limit: int = 32_000_000
+    cacheable: bool = True
 
     def take_bytes(self, amount):
         if self.received + amount > self.byte_limit:
@@ -162,9 +164,9 @@ def permitted_address(value):
 class SafeFetcher:
     """Pin validated DNS results to the connection, including every redirect."""
 
-    def __init__(self, cache=None, interval=2.0, ttl=600):
+    def __init__(self, cache=None, interval=2.0, ttl=REUSE_SECONDS):
         self.cache = cache or FetchCache()
-        self.interval, self.ttl = interval, ttl
+        self.interval, self.ttl = interval, max(REUSE_SECONDS, ttl)
         self.locks = [asyncio.Lock() for _ in range(64)]
         self.network_locks = [asyncio.Lock() for _ in range(64)]
         self.last_requests = [0.0] * 64
@@ -178,6 +180,8 @@ class SafeFetcher:
         original = canonical_url(url, preserve_slash=True)
         if secret_query and urlsplit(original).scheme != "https":
             raise DiscoveryError("API credentials require HTTPS.")
+        if not secret_query:
+            original = await run_blocking(self.cache.coordinator.resolve, original)
         host = urlsplit(original).hostname
         slot = hash(host) % 64
         async with self.locks[slot]:
@@ -198,204 +202,261 @@ class SafeFetcher:
         self.cache.put(cache_key, cached)
         return cached, body
 
-    async def _get(self, original, slot, secret_query=None):
-        cache_key = (
-            original
+    def _keys(self, url, secret_query):
+        key = (
+            url
             if not secret_query
             else "credentialed:"
-            + hashlib.sha256((original + urlencode(secret_query)).encode()).hexdigest()
+            + hashlib.sha256((url + urlencode(secret_query)).encode()).hexdigest()
         )
-        legacy_key = cache_key
-        cache_key = response_key(cache_key)
-        cached, body = await run_blocking(self._cached_response, cache_key, legacy_key)
+        return response_key(key), key
+
+    def _fresh(self, cached, body):
+        if (
+            not cached
+            or min(cached.get("expires", 0), cached["checked"] + self.ttl)
+            <= time.time()
+        ):
+            return None
         budget = request_budget.get()
-        if cached and cached.get("expires", 0) > time.time():
-            if budget:
-                budget.hits += 1
-            if cached.get("error"):
-                raise DiscoveryError(cached["error"])
-            if budget:
-                budget.take_bytes(body.text_size)
-            return cached["final"], body
-        url = original
+        if budget:
+            budget.hits += 1
+        if cached.get("error"):
+            raise DiscoveryError(cached["error"])
+        if budget:
+            budget.take_bytes(body.text_size)
+        return cached["final"], body
+
+    async def _get(self, original, slot, secret_query=None):
+        url, seen = original, set()
         for _ in range(6):
             url = canonical_url(url, preserve_slash=True)
-            p = urlsplit(url)
-            addresses = await public_addresses(p.hostname)
-            ip = addresses[0]
-            netloc = f"[{ip}]" if ":" in ip else ip
-            target = urlunsplit((p.scheme, netloc, p.path, p.query, ""))
-            if secret_query:
-                target += ("&" if p.query else "?") + urlencode(secret_query)
-            backoff = await run_blocking(self.cache.get, "backoff:" + p.hostname)
-            if backoff and backoff["expires"] > time.time():
-                raise DiscoveryError(
-                    "This source requested a pause. Retry after "
-                    + time.strftime("%H:%M UTC", time.gmtime(backoff["expires"]))
-                    + "."
+            if not secret_query:
+                url = await run_blocking(self.cache.coordinator.resolve, url)
+            if url in seen:
+                raise DiscoveryError("The source has a redirect loop.")
+            seen.add(url)
+            cache_key, legacy_key = self._keys(url, secret_query)
+            cached, body = await run_blocking(
+                self._cached_response, cache_key, legacy_key
+            )
+            if hit := self._fresh(cached, body):
+                return hit
+            async with SharedWork(self.cache.coordinator, "fetch:" + cache_key) as work:
+                # Another library/process may have populated the body while we waited.
+                cached, body = await run_blocking(
+                    self._cached_response, cache_key, legacy_key
                 )
-            slot = hash(p.hostname) % 64
-            async with self.network_locks[slot]:
-                await asyncio.sleep(
-                    max(
-                        0, self.interval - (time.monotonic() - self.last_requests[slot])
-                    )
-                )
-                headers = {
-                    "Host": p.hostname,
-                    "User-Agent": "MediaTracker/1.0 (personal link index)",
-                    "Accept": "text/html,application/xml,application/json,*/*;q=0.5",
-                    "Accept-Encoding": "gzip, deflate",
-                }
-                if cached and not cached.get("error") and url == cached.get("final"):
-                    if cached.get("etag"):
-                        headers["If-None-Match"] = cached["etag"]
-                    if cached.get("modified"):
-                        headers["If-Modified-Since"] = cached["modified"]
+                if hit := self._fresh(cached, body):
+                    return hit
+                work.require_owner()
+                attempted = [False]
                 try:
-                    async with (
-                        self.fetch_slots,
-                        httpx.AsyncClient(
-                            timeout=20, trust_env=False, follow_redirects=False
-                        ) as client,
-                    ):
-                        if budget:
-                            budget.take()
-                        self.last_requests[slot] = time.monotonic()
-                        async with client.stream(
-                            "GET",
-                            target,
-                            headers=headers,
-                            extensions={"sni_hostname": p.hostname.encode()},
-                        ) as response:
-                            if (
-                                response.status_code == 304
-                                and cached
-                                and not cached.get("error")
-                            ):
-                                if budget:
-                                    budget.take_bytes(body.text_size)
-                                cached.update(
-                                    checked=time.time(), expires=time.time() + self.ttl
+                    async with asyncio.timeout(60):
+                        target, body, redirect_ttl = await self._request(
+                            url, cache_key, cached, body, secret_query, attempted
+                        )
+                    if redirect_ttl:
+                        # Persist only verified HTTP redirects, never HTML canonical hints.
+                        await public_addresses(urlsplit(target).hostname)
+                        await run_blocking(
+                            self.cache.coordinator.remember, url, target, redirect_ttl
+                        )
+                        url = target
+                    else:
+                        return target, body
+                except TimeoutError as exc:
+                    work.error = "The source request timed out. Retry later."
+                    raise DiscoveryError(work.error) from exc
+                except DiscoveryError as exc:
+                    work.error = str(exc)
+                    raise
+                finally:
+                    work.seconds = self.ttl if attempted[0] else 0
+        raise DiscoveryError("The source redirected too many times.")
+
+    async def _request(self, url, cache_key, cached, body, secret_query, attempted):
+        budget = request_budget.get()
+        p = urlsplit(url)
+        addresses = await public_addresses(p.hostname)
+        ip = addresses[0]
+        netloc = f"[{ip}]" if ":" in ip else ip
+        target = urlunsplit((p.scheme, netloc, p.path, p.query, ""))
+        if secret_query:
+            target += ("&" if p.query else "?") + urlencode(secret_query)
+        backoff = await run_blocking(self.cache.get, "backoff:" + p.hostname)
+        if backoff and backoff["expires"] > time.time():
+            raise DiscoveryError(
+                "This source requested a pause. Retry after "
+                + time.strftime("%H:%M UTC", time.gmtime(backoff["expires"]))
+                + "."
+            )
+        slot = hash(p.hostname) % 64
+        async with self.network_locks[slot]:
+            await asyncio.sleep(
+                max(0, self.interval - (time.monotonic() - self.last_requests[slot]))
+            )
+            headers = {
+                "Host": p.hostname,
+                "User-Agent": "MediaTracker/1.0 (personal link index)",
+                "Accept": "text/html,application/xml,application/json,*/*;q=0.5",
+                "Accept-Encoding": "gzip, deflate",
+            }
+            if cached and not cached.get("error") and url == cached.get("final"):
+                if cached.get("etag"):
+                    headers["If-None-Match"] = cached["etag"]
+                if cached.get("modified"):
+                    headers["If-Modified-Since"] = cached["modified"]
+            try:
+                async with (
+                    self.fetch_slots,
+                    httpx.AsyncClient(
+                        timeout=20, trust_env=False, follow_redirects=False
+                    ) as client,
+                ):
+                    if budget:
+                        budget.take()
+                    attempted[0] = True
+                    self.last_requests[slot] = time.monotonic()
+                    async with client.stream(
+                        "GET",
+                        target,
+                        headers=headers,
+                        extensions={"sni_hostname": p.hostname.encode()},
+                    ) as response:
+                        if (
+                            response.status_code == 304
+                            and cached
+                            and not cached.get("error")
+                        ):
+                            if budget:
+                                budget.take_bytes(body.text_size)
+                            cached.update(
+                                checked=time.time(), expires=time.time() + self.ttl
+                            )
+                            await run_blocking(self.cache.put, cache_key, cached)
+                            return cached["final"], body, 0
+                        if response.is_redirect:
+                            if secret_query:
+                                raise DiscoveryError(
+                                    "The API redirected. Credentials were not forwarded; check the configured API host."
                                 )
-                                await run_blocking(self.cache.put, cache_key, cached)
-                                return cached["final"], body
-                            if response.is_redirect:
-                                if secret_query:
-                                    raise DiscoveryError(
-                                        "The API redirected. Credentials were not forwarded; check the configured API host."
-                                    )
-                                url = canonical_url(
-                                    response.headers.get("location", ""),
-                                    url,
-                                    preserve_slash=True,
+                            url = canonical_url(
+                                response.headers.get("location", ""),
+                                url,
+                                preserve_slash=True,
+                            )
+                            return (
+                                url,
+                                None,
+                                86400
+                                if response.status_code in (301, 308)
+                                else REUSE_SECONDS,
+                            )
+                        if response.status_code in (401, 403, 429, 503):
+                            message = f"The source refused access (HTTP {response.status_code}). Retry later or supply a public feed URL."
+                            if response.headers.get("cf-mitigated") == "challenge":
+                                message = (
+                                    f"The source requires Cloudflare browser verification (HTTP {response.status_code}). "
+                                    "Trackify could not read its listing. Use an accessible feed or import a CSV; saved entries were kept."
                                 )
-                                continue
-                            if response.status_code in (401, 403, 429, 503):
-                                message = f"The source refused access (HTTP {response.status_code}). Retry later or supply a public feed URL."
-                                if response.headers.get("cf-mitigated") == "challenge":
-                                    message = (
-                                        f"The source requires Cloudflare browser verification (HTTP {response.status_code}). "
-                                        "Trackify could not read its listing. Use an accessible feed or import a CSV; saved entries were kept."
-                                    )
-                                delay = self.ttl
-                                retry = response.headers.get("Retry-After", "")
-                                try:
-                                    delay = max(
-                                        delay,
-                                        float(retry)
-                                        if retry.isdigit()
-                                        else parsedate_to_datetime(retry).timestamp()
-                                        - time.time(),
-                                    )
-                                except (ValueError, TypeError, OverflowError):
-                                    pass
-                                await run_blocking(
-                                    self.cache.put,
-                                    "backoff:" + p.hostname,
-                                    {"expires": time.time() + min(delay, 86400)},
+                            delay = self.ttl
+                            retry = response.headers.get("Retry-After", "")
+                            try:
+                                delay = max(
+                                    delay,
+                                    float(retry)
+                                    if retry.isdigit()
+                                    else parsedate_to_datetime(retry).timestamp()
+                                    - time.time(),
                                 )
-                                await run_blocking(
-                                    self.cache.put,
+                            except (ValueError, TypeError, OverflowError):
+                                pass
+                            await run_blocking(
+                                self.cache.put,
+                                "backoff:" + p.hostname,
+                                {"expires": time.time() + min(delay, 86400)},
+                            )
+                            await run_blocking(
+                                self.cache.put,
+                                cache_key,
+                                {
+                                    "error": message,
+                                    "expires": time.time() + min(delay, 86400),
+                                },
+                            )
+                            raise DiscoveryError(message)
+                        response.raise_for_status()
+                        encoding = (
+                            response.headers.get("Content-Encoding", "identity")
+                            .lower()
+                            .strip()
+                        )
+                        if encoding not in {"identity", "gzip", "deflate", ""}:
+                            raise DiscoveryError(
+                                "The source used unsupported response compression."
+                            )
+                        # Limit compressed bytes before decompression. httpx's
+                        # decoded iterator can allocate a zip bomb in one chunk.
+                        consumed = response.is_stream_consumed
+
+                        async def raw_chunks(raw_response=response, pre_read=consumed):
+                            if pre_read:  # Pre-read mock/custom transports.
+                                yield raw_response.content
+                            else:
+                                async for raw in raw_response.aiter_raw():
+                                    yield raw
+
+                        data = bytearray()
+                        async for chunk in raw_chunks():
+                            if budget:
+                                budget.take_bytes(len(chunk))
+                            data.extend(chunk)
+                            if len(data) > MAX_RESPONSE:
+                                raise DiscoveryError(
+                                    "The page exceeds the 8 MB scan limit."
+                                )
+                        compression = (
+                            "gzip"
+                            if data[:2] == b"\x1f\x8b"
+                            else encoding
+                            if not consumed and encoding in {"gzip", "deflate"}
+                            else "identity"
+                        )
+                        body = await run_blocking(
+                            Document.from_wire,
+                            data,
+                            compression,
+                            response.encoding or "utf-8",
+                        )
+                        del data
+                        if budget and compression != "identity":
+                            budget.take_bytes(body.expanded_size)
+                        control = response.headers.get("Cache-Control", "").lower()
+                        cacheable = not any(
+                            v in control for v in ("no-store", "private")
+                        )
+                        if budget and not cacheable:
+                            budget.cacheable = False
+                        if cacheable:
+
+                            def save_response(url=url, body=body, response=response):
+                                self.cache.put(
                                     cache_key,
                                     {
-                                        "error": message,
-                                        "expires": time.time() + min(delay, 86400),
+                                        "final": url,
+                                        "document": body.to_cache(),
+                                        "etag": response.headers.get("etag"),
+                                        "modified": response.headers.get(
+                                            "last-modified"
+                                        ),
+                                        "expires": time.time() + self.ttl,
                                     },
                                 )
-                                raise DiscoveryError(message)
-                            response.raise_for_status()
-                            encoding = (
-                                response.headers.get("Content-Encoding", "identity")
-                                .lower()
-                                .strip()
-                            )
-                            if encoding not in {"identity", "gzip", "deflate", ""}:
-                                raise DiscoveryError(
-                                    "The source used unsupported response compression."
-                                )
-                            # Limit compressed bytes before decompression. httpx's
-                            # decoded iterator can allocate a zip bomb in one chunk.
-                            consumed = response.is_stream_consumed
 
-                            async def raw_chunks(
-                                raw_response=response, pre_read=consumed
-                            ):
-                                if pre_read:  # Pre-read mock/custom transports.
-                                    yield raw_response.content
-                                else:
-                                    async for raw in raw_response.aiter_raw():
-                                        yield raw
-
-                            data = bytearray()
-                            async for chunk in raw_chunks():
-                                if budget:
-                                    budget.take_bytes(len(chunk))
-                                data.extend(chunk)
-                                if len(data) > MAX_RESPONSE:
-                                    raise DiscoveryError(
-                                        "The page exceeds the 8 MB scan limit."
-                                    )
-                            compression = (
-                                "gzip"
-                                if data[:2] == b"\x1f\x8b"
-                                else encoding
-                                if not consumed and encoding in {"gzip", "deflate"}
-                                else "identity"
-                            )
-                            body = await run_blocking(
-                                Document.from_wire,
-                                data,
-                                compression,
-                                response.encoding or "utf-8",
-                            )
-                            del data
-                            if budget and compression != "identity":
-                                budget.take_bytes(body.expanded_size)
-                            if "no-store" not in response.headers.get(
-                                "Cache-Control", ""
-                            ):
-
-                                def save_response(
-                                    url=url, body=body, response=response
-                                ):
-                                    self.cache.put(
-                                        cache_key,
-                                        {
-                                            "final": url,
-                                            "document": body.to_cache(),
-                                            "etag": response.headers.get("etag"),
-                                            "modified": response.headers.get(
-                                                "last-modified"
-                                            ),
-                                            "expires": time.time() + self.ttl,
-                                        },
-                                    )
-
-                                await run_blocking(save_response)
-                            return url, body
-                except httpx.HTTPError as exc:
-                    raise DiscoveryError(
-                        f"Could not load the source ({type(exc).__name__}). Retry later."
-                    ) from exc
-        raise DiscoveryError("The source redirected too many times.")
+                            await run_blocking(save_response)
+                        return url, body, 0
+            except httpx.HTTPError as exc:
+                raise DiscoveryError(
+                    f"Could not load the source ({type(exc).__name__}). Retry later."
+                ) from exc

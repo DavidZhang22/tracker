@@ -116,12 +116,15 @@ async def test_unchanged_page_reuses_parse_but_changed_content_and_options_do_no
     second.entries[0].title = "Changed in caller"
     second.warnings.append("Caller warning")
     second.methods.append("Caller method")
+    now = time.time()
+    monkeypatch.setattr("time.time", lambda: now + 301)
     again = await scanner.scan(source)
     assert again.entries == first.entries and again.warnings == first.warnings
     assert (
         "keyword context" not in again.methods and "Caller method" not in again.methods
     )
     fetcher.html = fetcher.html.replace("Chapter 1", "Chapter 1 revised")
+    monkeypatch.setattr("time.time", lambda: now + 602)
     assert (await scanner.scan(source)).entries[0].title == "Chapter 1 revised"
     assert len(calls) == 2
     await scanner.scan(source, selector="article a")

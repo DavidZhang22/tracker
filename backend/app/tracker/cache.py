@@ -36,6 +36,9 @@ class FetchCache:
                 db.execute(
                     "CREATE INDEX IF NOT EXISTS cache_eviction ON cache(checked DESC,key,size)"
                 )
+        from .source_cache import SourceCoordinator
+
+        self.coordinator = SourceCoordinator(self)
 
     def get(self, key):
         if not self.path:
@@ -56,6 +59,15 @@ class FetchCache:
             else None
         )
 
+    def contains(self, key):
+        if not self.path:
+            return self.get(key) is not None
+        with closing(sqlite3.connect(self.path)) as db:
+            return db.execute(
+                "SELECT 1 FROM cache WHERE key=? AND checked>?",
+                (key, time.time() - 7 * 86400),
+            ).fetchone() is not None
+
     def prune(self):
         with self.lock:
             if self.path:
@@ -64,6 +76,7 @@ class FetchCache:
                     db.execute(
                         "DELETE FROM cache WHERE checked<?", (time.time() - 7 * 86400,)
                     )
+            self.coordinator.prune()
 
     def put(self, key, value):
         with self.lock:
@@ -83,6 +96,7 @@ class FetchCache:
                 with closing(sqlite3.connect(self.path)) as db, db:
                     db.execute("PRAGMA secure_delete=ON")
                     db.execute("DELETE FROM cache")
+            self.coordinator.clear()
 
     def _put(self, key, value):
         value = dict(value)

@@ -1,0 +1,237 @@
+{
+  "native_inference": true,
+  "python": "3.12.14 (main, Sep  1 2026, 00:10:07) [GCC 14.2.0]",
+  "network": "mocked; 10 ms request delay, no external requests",
+  "rows": 250,
+  "cold_seconds": 0.9703402899904177,
+  "repeat_full_refresh": {
+    "seconds": [
+      0.9264200900215656,
+      0.8988934659864753,
+      0.8967552999965847,
+      0.9064248959766701
+    ],
+    "median_seconds": 0.9026591809815727,
+    "requests": 1,
+    "analyses": 5,
+    "identical": true
+  },
+  "aliases": {
+    "seconds": 5.52002802293282,
+    "requests": 7,
+    "destination_requests": 4,
+    "analyses": 7,
+    "identical": true
+  },
+  "concurrent_libraries": {
+    "seconds": 3.847694569034502,
+    "requests": 4,
+    "analyses": 4,
+    "identical": true
+  },
+  "warm_4999_links": {
+    "seconds": [
+      0.032759778085164726,
+      0.025684184045530856,
+      0.02566262404434383,
+      0.024841297999955714,
+      0.024816471035592258,
+      0.025211133994162083,
+      0.025696196942590177,
+      0.025262519950047135,
+      0.02581536106299609,
+      0.025468488922342658,
+      0.02513573202304542,
+      0.02596282900776714,
+      0.02552488399669528,
+      0.024842155980877578,
+      0.02551810198929161
+    ],
+    "median_seconds": 0.02551810198929161,
+    "p95_seconds": 0.032759778085164726
+  },
+  "warm_profile": [
+    {
+      "function": "base_events.py:1922:_run_once",
+      "calls": 29,
+      "self_seconds": 0.0023078120000000002,
+      "cumulative_seconds": 0.141447986
+    },
+    {
+      "function": "events.py:86:_run",
+      "calls": 40,
+      "self_seconds": 4.2349000000000004e-05,
+      "cumulative_seconds": 0.074526191
+    },
+    {
+      "function": "~:0:<method 'run' of '_contextvars.Context' objects>",
+      "calls": 40,
+      "self_seconds": 6.6727e-05,
+      "cumulative_seconds": 0.07448384200000001
+    },
+    {
+      "function": "benchmark_source_cache.py:20:measure",
+      "calls": 5,
+      "self_seconds": 0.001106222,
+      "cumulative_seconds": 0.073797585
+    },
+    {
+      "function": "discovery.py:184:scan",
+      "calls": 10,
+      "self_seconds": 7.764000000000001e-05,
+      "cumulative_seconds": 0.072883293
+    },
+    {
+      "function": "discovery.py:216:_cached_scan",
+      "calls": 10,
+      "self_seconds": 6.7834e-05,
+      "cumulative_seconds": 0.072357583
+    },
+    {
+      "function": "discovery.py:52:scan_from_dict",
+      "calls": 5,
+      "self_seconds": 0.048342817,
+      "cumulative_seconds": 0.071891314
+    },
+    {
+      "function": "selectors.py:451:select",
+      "calls": 25,
+      "self_seconds": 0.00019124900000000003,
+      "cumulative_seconds": 0.06456131100000001
+    },
+    {
+      "function": "thread.py:54:run",
+      "calls": 5,
+      "self_seconds": 0.0008811790000000001,
+      "cumulative_seconds": 0.064171377
+    },
+    {
+      "function": "cache.py:40:get",
+      "calls": 5,
+      "self_seconds": 7.2593e-05,
+      "cumulative_seconds": 0.06310123200000001
+    },
+    {
+      "function": "__init__.py:299:loads",
+      "calls": 5,
+      "self_seconds": 1.2494000000000001e-05,
+      "cumulative_seconds": 0.052908189
+    },
+    {
+      "function": "decoder.py:333:decode",
+      "calls": 5,
+      "self_seconds": 2.1288e-05,
+      "cumulative_seconds": 0.052891027
+    },
+    {
+      "function": "decoder.py:344:raw_decode",
+      "calls": 5,
+      "self_seconds": 0.0528449,
+      "cumulative_seconds": 0.0528449
+    },
+    {
+      "function": "<string>:2:__init__",
+      "calls": 24995,
+      "self_seconds": 0.023315938,
+      "cumulative_seconds": 0.023315938
+    },
+    {
+      "function": "~:0:<method 'execute' of 'sqlite3.Connection' objects>",
+      "calls": 5,
+      "self_seconds": 0.006283652000000001,
+      "cumulative_seconds": 0.006283652000000001
+    },
+    {
+      "function": "~:0:<method 'fetchone' of 'sqlite3.Cursor' objects>",
+      "calls": 5,
+      "self_seconds": 0.0029520590000000004,
+      "cumulative_seconds": 0.0029520590000000004
+    },
+    {
+      "function": "~:0:<built-in method _sqlite3.connect>",
+      "calls": 5,
+      "self_seconds": 0.000401205,
+      "cumulative_seconds": 0.000530689
+    },
+    {
+      "function": "contextlib.py:359:__exit__",
+      "calls": 5,
+      "self_seconds": 6.243e-06,
+      "cumulative_seconds": 0.000346404
+    },
+    {
+      "function": "~:0:<method 'close' of 'sqlite3.Connection' objects>",
+      "calls": 5,
+      "self_seconds": 0.000340161,
+      "cumulative_seconds": 0.000340161
+    },
+    {
+      "function": "urls.py:84:canonical_url",
+      "calls": 5,
+      "self_seconds": 7.901300000000001e-05,
+      "cumulative_seconds": 0.000285308
+    },
+    {
+      "function": "threads.py:12:to_thread",
+      "calls": 10,
+      "self_seconds": 2.5607e-05,
+      "cumulative_seconds": 0.000258666
+    },
+    {
+      "function": "base_events.py:853:run_in_executor",
+      "calls": 5,
+      "self_seconds": 1.7041e-05,
+      "cumulative_seconds": 0.000230353
+    },
+    {
+      "function": "copy.py:118:deepcopy",
+      "calls": 85,
+      "self_seconds": 0.00011994300000000001,
+      "cumulative_seconds": 0.000221308
+    },
+    {
+      "function": "futures.py:383:_set_state",
+      "calls": 5,
+      "self_seconds": 7.774e-06,
+      "cumulative_seconds": 0.00018377600000000002
+    },
+    {
+      "function": "futures.py:347:_copy_future_state",
+      "calls": 5,
+      "self_seconds": 3.3028e-05,
+      "cumulative_seconds": 0.000168939
+    },
+    {
+      "function": "_base.py:537:set_result",
+      "calls": 5,
+      "self_seconds": 2.3002e-05,
+      "cumulative_seconds": 0.000155933
+    },
+    {
+      "function": "workers.py:8:run_blocking",
+      "calls": 10,
+      "self_seconds": 1.8934000000000002e-05,
+      "cumulative_seconds": 0.00014963200000000002
+    },
+    {
+      "function": "thread.py:165:submit",
+      "calls": 5,
+      "self_seconds": 2.9698000000000003e-05,
+      "cumulative_seconds": 0.000130176
+    },
+    {
+      "function": "discovery.py:43:parser_version",
+      "calls": 5,
+      "self_seconds": 8.345e-06,
+      "cumulative_seconds": 0.00012940300000000002
+    },
+    {
+      "function": "link_model.py:284:model_cache_tag",
+      "calls": 5,
+      "self_seconds": 3.6634e-05,
+      "cumulative_seconds": 0.000121058
+    }
+  ],
+  "cache_file_bytes": 2560000,
+  "container_peak_bytes": 63713280
+}

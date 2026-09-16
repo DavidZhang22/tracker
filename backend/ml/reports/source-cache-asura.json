@@ -1,0 +1,35 @@
+{
+  "source": "https://asurascans.com/comics/surviving-the-game-as-a-barbarian-6f7fe6eb",
+  "alias": "https://asurascans.com/comics/surviving-the-game-as-a-barbarian-6f7fe6e",
+  "requests": [
+    "https://asurascans.com/comics/surviving-the-game-as-a-barbarian-6f7fe6eb",
+    "https://asurascans.com/comics/surviving-the-game-as-a-barbarian-6f7fe6e"
+  ],
+  "results": [
+    {
+      "title": "Surviving The Game as a Barbarian | Asura Scans",
+      "url": "https://asurascans.com/comics/surviving-the-game-as-a-barbarian-6f7fe6eb",
+      "links": 160,
+      "cached": false,
+      "requests_made": 1,
+      "checked_at": "2026-09-16T10:23:31.943100+00:00"
+    },
+    {
+      "title": "Surviving The Game as a Barbarian | Asura Scans",
+      "url": "https://asurascans.com/comics/surviving-the-game-as-a-barbarian-6f7fe6eb",
+      "links": 160,
+      "cached": true,
+      "requests_made": 1,
+      "checked_at": "2026-09-16T10:23:31.943100+00:00"
+    },
+    {
+      "title": "Surviving The Game as a Barbarian | Asura Scans",
+      "url": "https://asurascans.com/comics/surviving-the-game-as-a-barbarian-6f7fe6eb",
+      "links": 160,
+      "cached": true,
+      "requests_made": 0,
+      "checked_at": "2026-09-16T10:23:31.943100+00:00"
+    }
+  ],
+  "identical_entries": true
+}

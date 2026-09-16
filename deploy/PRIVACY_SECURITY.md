@@ -18,6 +18,13 @@ hourly quota, without a username or account ID; maintenance removes expired rows
 These counters survive restart and account deletion. Authentication and library
 isolation remain required when registration is open.
 
+Source-request limits also retain URL fingerprints, timestamps and aggregate
+unknown-source probe counts by hashed hostname for a five-minute window. These
+records contain no account ID, full URL or per-user association. They survive
+cache erasure so repeated account deletion cannot reset the fetch or host
+protection; expired records are removed during cache maintenance. Response
+bodies, scan results, redirect aliases and cached error details are cleared.
+
 Settings → Account offers JSON export, sign-out everywhere, and permanent account
 deletion. Each requires the current password. Deletion also requires typing
 `DELETE`. Export includes saved items/links, Trash, settings, suggestions, and

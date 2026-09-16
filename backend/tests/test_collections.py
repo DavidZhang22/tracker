@@ -232,7 +232,9 @@ def transport():
         yield calls, state
 
 
-async def test_cache_is_persistent_and_conditional_304_reuses_body(tmp_path, transport):
+async def test_cache_is_persistent_and_conditional_304_reuses_body(
+    tmp_path, transport, monkeypatch
+):
     calls, state = transport
     path = tmp_path / "cache.sqlite3"
     f = SafeFetcher(FetchCache(path), interval=0)
@@ -248,6 +250,8 @@ async def test_cache_is_persistent_and_conditional_304_reuses_body(tmp_path, tra
     old = f.cache.get(key)
     old["expires"] = 0
     f.cache.put(key, old)
+    now = time.time()
+    monkeypatch.setattr("time.time", lambda: now + 301)
     state.update(status=304, text="")
     assert await f.get("https://example.com/") == first
     assert calls[-1].headers["if-none-match"] == '"one"'

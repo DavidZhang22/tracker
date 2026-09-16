@@ -74,7 +74,7 @@ async def test_cancelled_analysis_retains_admission_until_process_finishes():
     await analyzer.aclose()
 
 
-async def test_full_page_cache_bypasses_analysis_but_source_is_still_checked():
+async def test_full_page_cache_bypasses_analysis_after_source_cooldown(monkeypatch):
     class Analyzer:
         calls = 0
 
@@ -97,6 +97,10 @@ async def test_full_page_cache_bypasses_analysis_but_source_is_still_checked():
     for key in list(fetcher.cache.memory):
         if key.startswith("scan:"):
             fetcher.cache.memory[key]["checked"] = 0
+    import time
+
+    now = time.time()
+    monkeypatch.setattr("time.time", lambda: now + 301)
     second = await scanner.scan("https://example.org/book")
     assert first.entries == second.entries
     assert fetcher.calls == 2 and analyzer.calls == 1

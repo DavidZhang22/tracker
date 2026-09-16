@@ -16,6 +16,8 @@ cannot raise them. No additional service or database is needed.
 | API request body | 64 KiB, including chunked requests; 10-second arrival deadline |
 | Collection scan | 40 fetch requests, 32 MB of response content total, three-minute deadline |
 | Individual source response | 8 MB after decompression |
+| Repeated source requests and matching scans | Reused for five minutes across libraries, including Full Refresh |
+| Unknown source URL probes | 20 per hostname per five minutes, shared across accounts |
 | Refresh all | Sequential per account, stops after ten minutes and reports remaining items |
 
 Ignored records and Trash count toward storage limits. Existing libraries that
@@ -38,11 +40,26 @@ its internal HTTP requests are not part of the fetcher's 40-request/32 MB budget
 Existing protections remain: rate-limited public or invite-only registration, login/password attempt
 limits, isolated account databases, HTTPS cookies and origin checks, private
 network/metadata-address rejection and DNS pinning on each fetch redirect,
-ten-minute source caching, source pacing, refusal backoff, bounded cache storage,
+five-minute shared source caching, verified redirect aliases, source pacing, refusal backoff, bounded cache storage,
 and database failure handling. Application admission limits are in memory and
 reset after restart. They assume the deployed single application process; use a
 shared limiter before adding workers or replicas. They do not provide protection
 against traffic that exhausts the VM's network connection.
+
+Source cooldowns, in-flight leases, redirect aliases and unknown-source probe
+counts use the existing SQLite cache and survive restart. A cached destination is
+not downloaded again when a new alias redirects to it. Previously unseen aliases
+can require one redirect probe, bounded by the hostname limit. A suffix alone is
+not an identity: Asura serves different series with the same suffix. Query values
+that may select different content are preserved. Full Refresh can run the model
+again after the five-minute window; it cannot override network or scan cooldowns.
+Changed filters have separate results but reuse the public response.
+
+Evicting a response does not remove its cooldown. If the body is unavailable,
+Trackify asks the user to retry after the remaining delay. Cache database failures
+stop uncached work. Private/no-store responses are not shared or retained as
+derived scans. Existing user progress and favorites remain in account libraries.
+See [cache design and profiling](../backend/ml/reports/source-cache.md).
 
 Latest-entry shortcuts honor an adapter's explicit reading order when available
 (for example, Fenrir Realm's volume and chapter-part indexes). Otherwise they use

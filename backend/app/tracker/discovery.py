@@ -24,6 +24,7 @@ from .mangadex import title_id as mangadex_title
 from .models import Entry, Scan, date_value, utcnow
 from .parser import kind_for, merge_entries, parse_page, relevant
 from .record_context import load_record_model
+from .source_cache import REUSE_SECONDS, SharedWork, SourceRedirect, cacheable
 from .source_methods import SourceMethod
 from .urls import (
     DiscoveryError,
@@ -33,11 +34,13 @@ from .urls import (
     content_key,
     fetch_document,
     request_budget,
+    response_key,
 )
 from .workers import run_blocking
 
 DISCOVERY_VERSION = "shared-record-context-v2"
 DEEP_SCAN = ContextVar("deep_scan", default=False)
+INITIAL_DOCUMENT = ContextVar("initial_document", default=None)
 
 
 def parser_version():
@@ -199,19 +202,40 @@ class Discoverer:
                 "CSS selectors apply to Automatic scans. Clear the selector to use an API or sitemap."
             )
         url = canonical_url(url, preserve_slash=True)
-        async with self.scan_locks[hash(url) % 64]:
-            token = DEEP_SCAN.set(deep)
-            cache = getattr(self.fetcher, "cache", None)
-            epoch = cache_epochs.set(
-                cache_epochs.get() or {id(cache): getattr(cache, "generation", 0)}
-            )
-            try:
-                return await self._cached_scan(
-                    url, selector, include_path, keywords, source_method
-                )
-            finally:
-                DEEP_SCAN.reset(token)
-                cache_epochs.reset(epoch)
+        cache = getattr(self.fetcher, "cache", None)
+        token = DEEP_SCAN.set(deep)
+        epoch = cache_epochs.set(
+            cache_epochs.get() or {id(cache): getattr(cache, "generation", 0)}
+        )
+        budget = RequestBudget(self.max_pages)
+        budget_token = request_budget.set(budget)
+        document_token = INITIAL_DOCUMENT.set(None)
+        seen = set()
+        try:
+            for _ in range(7):
+                if cache:
+                    url = await run_blocking(cache.coordinator.resolve, url)
+                if url in seen:
+                    raise DiscoveryError("The source has a redirect loop.")
+                seen.add(url)
+                try:
+                    async with self.scan_locks[hash(url) % 64]:
+                        result = await self._cached_scan(
+                            url, selector, include_path, keywords, source_method
+                        )
+                    result.requests_made = budget.requests
+                    if result.cached:
+                        result.cache_hits += budget.hits
+                    return result
+                except SourceRedirect as redirect:
+                    url = redirect.url
+                    INITIAL_DOCUMENT.set((url, redirect.document))
+            raise DiscoveryError("The source redirected too many times.")
+        finally:
+            DEEP_SCAN.reset(token)
+            cache_epochs.reset(epoch)
+            request_budget.reset(budget_token)
+            INITIAL_DOCUMENT.reset(document_token)
 
     async def _cached_scan(
         self, url, selector, include_path, keywords="", source_method="auto"
@@ -227,6 +251,8 @@ class Discoverer:
                         include_path,
                         keywords,
                         source_method,
+                        self.max_pages,
+                        "global-reuse-v1",
                         *(
                             parser_version()
                             if source_method == "auto"
@@ -236,13 +262,57 @@ class Discoverer:
                 ).encode()
             ).hexdigest()
         )
-        cached = await run_blocking(cache.get, key) if cache else None
-        if not DEEP_SCAN.get() and cached and time.time() - cached["checked"] < 600:
-            data = bounded_scan(cached["scan"])
-            result = scan_from_dict(data)
+        if not cache:
+            return await self._perform_scan(
+                url, selector, include_path, keywords, source_method, key
+            )
+        if result := await self._recent_scan(cache, key):
+            return result
+        async with SharedWork(cache.coordinator, key) as work:
+            if result := await self._recent_scan(cache, key):
+                return result
+            work.require_owner()
+            if isinstance(self.fetcher, SafeFetcher):
+
+                def known():
+                    initial = INITIAL_DOCUMENT.get()
+                    return (
+                        bool(initial and initial[0] == url)
+                        or cache.contains(key)
+                        or cache.contains(response_key(url))
+                    )
+
+                if not await run_blocking(known):
+                    await run_blocking(
+                        cache.coordinator.admit_source, urlsplit(url).hostname
+                    )
+            work.seconds = REUSE_SECONDS
+            try:
+                return await self._perform_scan(
+                    url, selector, include_path, keywords, source_method, key
+                )
+            except SourceRedirect:
+                work.seconds = 0
+                raise
+            except DiscoveryError as exc:
+                work.error = str(exc)
+                raise
+
+    async def _recent_scan(self, cache, key):
+        if not cacheable():
+            return None
+        cached = await run_blocking(cache.get, key)
+        if cached and time.time() - cached["checked"] < REUSE_SECONDS:
+            result = scan_from_dict(bounded_scan(cached["scan"]))
             result.cached, result.requests_made, result.cache_hits = True, 0, 1
             return result
-        budget = RequestBudget(self.max_pages)
+        return None
+
+    async def _perform_scan(
+        self, url, selector, include_path, keywords, source_method, key
+    ):
+        cache = getattr(self.fetcher, "cache", None)
+        budget = request_budget.get() or RequestBudget(self.max_pages)
         token = request_budget.set(budget)
         try:
             async with asyncio.timeout(180):
@@ -251,8 +321,20 @@ class Discoverer:
                 elif source_method == "browser":
                     from .browser_discovery import scan_browser
 
+                    prepared = INITIAL_DOCUMENT.get()
+                    final, initial = (
+                        prepared
+                        if prepared and prepared[0] == url
+                        else await self.fetcher.get(url)
+                    )
+                    if final != url:
+                        raise SourceRedirect(final, initial)
                     result = await scan_browser(
-                        self, url, keywords=keywords, deep=DEEP_SCAN.get()
+                        self,
+                        url,
+                        initial=initial,
+                        keywords=keywords,
+                        deep=DEEP_SCAN.get(),
                     )
                     if include_path:
                         result.entries = [
@@ -290,11 +372,7 @@ class Discoverer:
                     )
                 result.requests_made, result.cache_hits = budget.requests, budget.hits
                 result.checked_at = utcnow()
-                if cache and (
-                    result.entries
-                    or result.unfiltered_count
-                    or (result.coverage == "complete" and result.expected_count == 0)
-                ):
+                if cache and budget.cacheable:
                     await run_blocking(
                         lambda: cache.put(key, {"scan": result.to_dict()})
                     )
@@ -334,7 +412,7 @@ class Discoverer:
 
     def _cached_page(self, text, url, selector, include_path):
         cache = getattr(self.fetcher, "cache", None)
-        if cache is None:
+        if cache is None or not cacheable():
             return None, None
         key = (
             "parsed:"
@@ -405,12 +483,14 @@ class Discoverer:
         )
 
     def _recipe(self, url, selector, include_path):
-        if DEEP_SCAN.get():
+        if DEEP_SCAN.get() or not cacheable():
             return None
         cached = self.fetcher.cache.get(self._recipe_key(url, selector, include_path))
         return cached.get("recipe") if cached else None
 
     def _save_recipe(self, url, selector, include_path, recipe):
+        if not cacheable():
+            return
         self.fetcher.cache.put(
             self._recipe_key(url, selector, include_path), {"recipe": recipe}
         )
@@ -460,7 +540,12 @@ class Discoverer:
             if endpoint or chapter_endpoint:
                 final, text = await self.fetcher.get(endpoint or chapter_endpoint)
             else:
-                final, text = await fetch_document(self.fetcher, url)
+                prepared = INITIAL_DOCUMENT.get()
+                final, text = (
+                    prepared
+                    if prepared and prepared[0] == url
+                    else await fetch_document(self.fetcher, url)
+                )
         except DiscoveryError as exc:
             if kind_for(url) != "youtube":
                 raise
@@ -473,6 +558,8 @@ class Discoverer:
             final = url
             result, pages, feeds = codeforces_scan(text, url), [], []
         else:
+            if final != url:
+                raise SourceRedirect(final, text)
             text, readme_pages = await github_readme(
                 self.fetcher, final, text, self.analyzer
             )

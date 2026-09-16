@@ -132,8 +132,11 @@ export default function PrivacyPage({ terms = false }) {
                 them. Sessions expire after seven days. Authentication attempt
                 records are removed after 15 minutes by maintenance. Public
                 signup counters retain a hashed IP address and creation time for
-                up to one hour, with cleanup on the next maintenance run; other
-                rate limits are held temporarily in memory. Shared scan caches
+                up to one hour, with cleanup on the next maintenance run. Shared
+                source-request limits also retain URL and hostname hashes and
+                timestamps for five minutes, without account IDs or full URLs.
+                Expired limits are removed during maintenance; other rate limits are held in
+                memory. Shared scan caches
                 expire within seven days and are cleared on account deletion.
                 Application request-access logging is disabled in the hosted
                 deployment.

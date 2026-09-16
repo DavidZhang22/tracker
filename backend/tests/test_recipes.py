@@ -135,8 +135,9 @@ def test_explicit_selectors_do_not_reuse_or_expand_a_recipe(learned):
     assert not used and rebuilt is None and len(result[0].entries) == 1
 
 
-async def test_disk_recipe_survives_restart_and_deep_bypasses_all_analysis_caches(
+async def test_disk_recipe_survives_restart_and_deep_bypasses_analysis_after_cooldown(
     tmp_path,
+    monkeypatch,
 ):
     cache = FetchCache(tmp_path / "cache.db")
     fetcher = FakeFetcher({SOURCE: cards()})
@@ -152,6 +153,11 @@ async def test_disk_recipe_survives_restart_and_deep_bypasses_all_analysis_cache
     scanner = Discoverer(fetcher)
     quick = await scanner.scan(SOURCE, keywords="English")
     assert quick.analysis_mode == "light" and len(quick.entries) == 31
+    assert (await scanner.scan(SOURCE, keywords="English", deep=True)).cached
+    import time
+
+    now = time.time()
+    monkeypatch.setattr("time.time", lambda: now + 301)
     full = await scanner.scan(SOURCE, keywords="English", deep=True)
     assert (
         full.analysis_mode == "deep"
@@ -169,7 +175,7 @@ def cache_keys(cache):
         return [r[0] for r in db.execute("SELECT key FROM cache")]
 
 
-async def test_pagination_is_still_scanned_in_full_with_recipes():
+async def test_pagination_is_still_scanned_in_full_with_recipes(monkeypatch):
     second = SOURCE + "?page=2"
     first_html = cards() + '<a rel="next" href="?page=2">Next</a>'
     fetcher = FakeFetcher(
@@ -183,7 +189,13 @@ async def test_pagination_is_still_scanned_in_full_with_recipes():
     for key, value in list(fetcher.cache.memory.items()):
         if key.startswith("scan:"):
             value["checked"] = 0
+    import time
+
+    now = time.time()
+    monkeypatch.setattr("time.time", lambda: now + 301)
     quick = await scanner.scan(SOURCE)
+    assert (await scanner.scan(SOURCE, deep=True)).cached
+    monkeypatch.setattr("time.time", lambda: now + 602)
     full = await scanner.scan(SOURCE, deep=True)
     assert quick.entries == full.entries == initial.entries
     assert quick.pages_scanned == 2 and quick.analysis_mode == "light"

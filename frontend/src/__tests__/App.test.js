@@ -489,7 +489,7 @@ test("dates disclose scheduled meaning, origin and time zone", () => {
   expect(screen.getByText(/Starts ·/)).toBeInTheDocument();
 });
 
-test("a cached refresh explains the ten-minute reuse window", async () => {
+test("a cached refresh explains the shared five-minute reuse window", async () => {
   mockDetail();
   post.mockResolvedValue({
     ok: true,
@@ -501,7 +501,7 @@ test("a cached refresh explains the ten-minute reuse window", async () => {
   await screen.findByText("Chapter 1");
   await click(screen.getByRole("button", { name: "Refresh item" }));
   expect(
-    await screen.findByText(/at most once every ten minutes/),
+    await screen.findByText(/shared across libraries for five minutes/),
   ).toBeInTheDocument();
 });
 
