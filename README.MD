@@ -71,7 +71,7 @@ See the [frontend guide](frontend/README.md), [backend guide](backend/README.MD)
 
 ## Run locally
 
-Requires Python 3.12, uv and Node.js. From two terminals:
+Requires Python 3.12, uv and Node.js 24. From two terminals:
 
 ```sh
 cd backend
@@ -86,7 +86,7 @@ npm ci
 npm start
 ```
 
-Open http://localhost:3000. The development frontend proxies API requests to the backend. Local mode opens a personal library without accounts; bind it to localhost. SQLite files are created automatically in `backend/data` and must stay out of Git. No external database is required. Browser rendering is available with the Docker deployment.
+Open http://127.0.0.1:3000. The Vite development server binds to `127.0.0.1:3000` and proxies `/api` requests to `127.0.0.1:8000`. Local mode opens a personal library without accounts; bind it to localhost. SQLite files are created automatically in `backend/data` and must stay out of Git. No external database is required. Browser rendering is available with the Docker deployment.
 
 ## Test
 
@@ -97,11 +97,12 @@ uv run pytest -q
 
 ```sh
 cd frontend
-npm test -- --watchAll=false --runInBand
+npm run lint
+npm test
 npm run build
 ```
 
-Run the backend tests before the frontend production build; the build replaces the static directory used by backend route tests.
+`npm test` runs Vitest once; use `npm run test:watch` during development. Run the backend tests before the frontend production build; the build replaces the static directory used by backend route tests. Vite writes production files to `frontend/build`, with generated assets under `build/static`, for FastAPI and Docker.
 
 ## Deploy
 

@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import {
   act,
   fireEvent,
@@ -12,10 +13,10 @@ import AddPage from "../Pages/AddPage";
 import ItemPage from "../Pages/ItemPage";
 import { ImportDetails } from "../Components/ImportInput";
 
-jest.mock("../api", () => ({
-  api: jest.fn(),
-  post: jest.fn(),
-  uploadFile: jest.fn(),
+vi.mock("../api", () => ({
+  api: vi.fn(),
+  post: vi.fn(),
+  uploadFile: vi.fn(),
   examples: [],
   day: () => "Sep 1",
   checked: () => "Today",
@@ -69,7 +70,7 @@ const item = {
   auto_read: false,
 };
 beforeEach(() => {
-  jest.resetAllMocks();
+  vi.resetAllMocks();
   api.mockImplementation(async (path) =>
     path === "/settings"
       ? {}

@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import {
   act,
   fireEvent,
@@ -11,14 +12,14 @@ import { Shell } from "../Components/Shell";
 import { SelectionBar, useSelection } from "../Components/RowTools";
 import { api } from "../api";
 
-jest.mock("../api", () => ({
-  api: jest.fn(),
-  post: jest.fn(),
-  patch: jest.fn(),
+vi.mock("../api", () => ({
+  api: vi.fn(),
+  post: vi.fn(),
+  patch: vi.fn(),
   examples: [],
 }));
 
-beforeEach(() => jest.resetAllMocks());
+beforeEach(() => vi.resetAllMocks());
 
 test("navigation closes after choosing Account and Escape returns focus to Menu", async () => {
   api.mockImplementation((path) =>
@@ -86,7 +87,7 @@ function SelectionExample({ scope, onAction }) {
 }
 
 test("selection can be entered and cancelled before or after choosing links", () => {
-  const onAction = jest.fn();
+  const onAction = vi.fn();
   render(<SelectionExample scope="all" onAction={onAction} />);
   expect(
     screen.queryByLabelText("Select first chapter"),
@@ -112,7 +113,7 @@ test("selection can be entered and cancelled before or after choosing links", ()
 });
 
 test("moving to a different list exits selection mode and discards old IDs", () => {
-  const onAction = jest.fn();
+  const onAction = vi.fn();
   const { rerender } = render(
     <SelectionExample scope="all" onAction={onAction} />,
   );

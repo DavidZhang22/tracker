@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import { act, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import useLibrarySearch from "../Hooks/useLibrarySearch";
@@ -5,7 +6,7 @@ import Description from "../Components/Description";
 import { librarySearchIndex } from "../media";
 import { api } from "../api";
 
-jest.mock("../api", () => ({ api: jest.fn() }));
+vi.mock("../api", () => ({ api: vi.fn() }));
 const items = [
   {
     id: "a",
@@ -39,16 +40,16 @@ function Harness({ query, rows = items, trash = false }) {
   );
 }
 beforeEach(() => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
   api.mockReset();
 });
 afterEach(() => {
-  jest.clearAllTimers();
-  jest.useRealTimers();
+  vi.clearAllTimers();
+  vi.useRealTimers();
 });
 const tick = async () =>
   act(async () => {
-    jest.advanceTimersByTime(251);
+    vi.advanceTimersByTime(251);
   });
 
 test("debounces semantic requests and reuses completed queries", async () => {

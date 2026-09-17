@@ -1,12 +1,13 @@
+import { vi } from "vitest";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import SuggestionsPage from "../Pages/SuggestionsPage";
 import { api, patch, post } from "../api";
 
-jest.mock("../api", () => ({
-  api: jest.fn(),
-  patch: jest.fn(),
-  post: jest.fn(),
+vi.mock("../api", () => ({
+  api: vi.fn(),
+  patch: vi.fn(),
+  post: vi.fn(),
 }));
 const suggestion = {
   id: "rec1",
@@ -18,7 +19,7 @@ const suggestion = {
   source_title: "Magic School",
   reason: "From a favorite source",
 };
-beforeEach(() => jest.resetAllMocks());
+beforeEach(() => vi.resetAllMocks());
 function page() {
   render(
     <MemoryRouter>

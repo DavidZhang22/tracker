@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import { post, refreshLibrary } from "../api";
 import { TextDecoder, TextEncoder } from "util";
 
@@ -11,15 +12,15 @@ afterEach(() => {
 function streamingReader(chunks) {
   global.TextDecoder = TextDecoder;
   const reader = {
-    read: jest.fn(),
-    cancel: jest.fn().mockResolvedValue(),
-    releaseLock: jest.fn(),
+    read: vi.fn(),
+    cancel: vi.fn().mockResolvedValue(),
+    releaseLock: vi.fn(),
   };
   chunks.forEach((value) =>
     reader.read.mockResolvedValueOnce({ value, done: false }),
   );
   reader.read.mockResolvedValue({ done: true });
-  global.fetch = jest.fn().mockResolvedValue({
+  global.fetch = vi.fn().mockResolvedValue({
     ok: true,
     status: 200,
     body: { getReader: () => reader },
@@ -38,7 +39,7 @@ test("stream parser handles split UTF-8 and multiple updates per chunk", async (
   );
   const chunks = Array.from(bytes, (byte) => new Uint8Array([byte]));
   const reader = streamingReader(chunks),
-    receive = jest.fn();
+    receive = vi.fn();
   await refreshLibrary(receive);
   expect(receive.mock.calls.map(([event]) => event)).toEqual(events);
   expect(reader.cancel).toHaveBeenCalled();
@@ -48,7 +49,7 @@ test("stream parser handles split UTF-8 and multiple updates per chunk", async (
 test("incomplete stream reports interruption after delivering saved item updates", async () => {
   const event = { type: "item", item: { id: "done" } };
   streamingReader([new TextEncoder().encode(JSON.stringify(event) + "\n")]);
-  const receive = jest.fn();
+  const receive = vi.fn();
   await expect(refreshLibrary(receive)).rejects.toThrow(
     "Completed updates were kept",
   );
@@ -61,7 +62,7 @@ test.each([false, true])(
     streamingReader([
       new TextEncoder().encode('{"type":"complete","checked":0}\n'),
     ]);
-    await refreshLibrary(jest.fn(), undefined, deep);
+    await refreshLibrary(vi.fn(), undefined, deep);
     expect(global.fetch.mock.calls[0][0]).toBe(
       `/api/refresh?stream=true&deep=${deep}`,
     );
@@ -74,7 +75,7 @@ test("storage errors inside a stream keep the server's actionable message", asyn
       '{"type":"error","detail":"Storage unavailable. Completed updates were kept."}\n',
     ),
   ]);
-  await expect(refreshLibrary(jest.fn())).rejects.toThrow(
+  await expect(refreshLibrary(vi.fn())).rejects.toThrow(
     "Storage unavailable",
   );
 });
@@ -82,7 +83,7 @@ test("storage errors inside a stream keep the server's actionable message", asyn
 test.each(["8", "1"])(
   "API errors expose status and Retry-After %s",
   async (retry) => {
-    global.fetch = jest.fn().mockResolvedValue({
+    global.fetch = vi.fn().mockResolvedValue({
       ok: false,
       status: 429,
       headers: new Headers({ "Retry-After": retry }),
@@ -99,7 +100,7 @@ test.each(["8", "1"])(
 test.each(["", "bad", "-1", "Infinity"])(
   "invalid Retry-After %s keeps a normal error",
   async (retry) => {
-    global.fetch = jest.fn().mockResolvedValue({
+    global.fetch = vi.fn().mockResolvedValue({
       ok: false,
       status: 503,
       headers: new Headers({ "Retry-After": retry }),

@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import {
   act,
   fireEvent,
@@ -8,8 +9,8 @@ import {
 import { AuthBoundary, useAuth } from "../Auth/Auth";
 import { MemoryRouter } from "react-router-dom";
 import { api, post } from "../api";
-jest.mock("../api", () => ({ api: jest.fn(), post: jest.fn() }));
-beforeEach(() => jest.resetAllMocks());
+vi.mock("../api", () => ({ api: vi.fn(), post: vi.fn() }));
+beforeEach(() => vi.resetAllMocks());
 
 function PrivateContent() {
   const auth = useAuth();

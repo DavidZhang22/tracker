@@ -1,10 +1,11 @@
+import { vi } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import AccountData from "../Auth/AccountData";
 import PrivacyPage from "../Pages/PrivacyPage";
 import { api, post } from "../api";
-jest.mock("../api", () => ({ api: jest.fn(), post: jest.fn() }));
-beforeEach(() => jest.resetAllMocks());
+vi.mock("../api", () => ({ api: vi.fn(), post: vi.fn() }));
+beforeEach(() => vi.resetAllMocks());
 
 test("privacy notice is available without account context and shows the operator contact", async () => {
   api.mockResolvedValue({
@@ -28,7 +29,7 @@ test("privacy notice is available without account context and shows the operator
 });
 
 test("permanent deletion requires the password and exact confirmation", async () => {
-  const auth = { endSession: jest.fn() };
+  const auth = { endSession: vi.fn() };
   post.mockResolvedValue({ ok: true, cleanup_pending: false });
   render(<AccountData auth={auth} />);
   fireEvent.click(screen.getByText("Delete account", { selector: "summary" }));
@@ -55,7 +56,7 @@ test("permanent deletion requires the password and exact confirmation", async ()
 });
 
 test("failed deletion leaves the account visible and pending cleanup is explained", async () => {
-  const auth = { endSession: jest.fn() };
+  const auth = { endSession: vi.fn() };
   post.mockRejectedValueOnce(new Error("Storage unavailable"));
   render(<AccountData auth={auth} />);
   fireEvent.click(screen.getByText("Delete account", { selector: "summary" }));
@@ -82,7 +83,7 @@ test("failed deletion leaves the account visible and pending cleanup is explaine
 });
 
 test("export failures do not trigger a download or end the session", async () => {
-  const auth = { endSession: jest.fn() };
+  const auth = { endSession: vi.fn() };
   post.mockRejectedValue(new Error("Could not download data"));
   render(<AccountData auth={auth} />);
   fireEvent.change(screen.getByLabelText("Password for account controls"), {

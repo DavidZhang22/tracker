@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import {
   act,
   fireEvent,
@@ -9,10 +10,10 @@ import { Link, MemoryRouter, Route, Routes } from "react-router-dom";
 import ItemPage from "../Pages/ItemPage";
 import { api, post, patch } from "../api";
 
-jest.mock("../api", () => ({
-  api: jest.fn(),
-  post: jest.fn(),
-  patch: jest.fn(),
+vi.mock("../api", () => ({
+  api: vi.fn(),
+  post: vi.fn(),
+  patch: vi.fn(),
   checked: () => "Today",
   day: () => "Today",
   examples: [],
@@ -48,7 +49,7 @@ function view() {
   );
 }
 beforeEach(() => {
-  jest.resetAllMocks();
+  vi.resetAllMocks();
   api.mockImplementation((path) =>
     Promise.resolve(path.includes("/links?") ? result : item),
   );

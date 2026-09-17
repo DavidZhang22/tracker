@@ -1,10 +1,11 @@
+import { vi } from "vitest";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import AddPage from "../Pages/AddPage";
 import { post } from "../api";
 
-jest.mock("../api", () => ({
-  post: jest.fn(),
+vi.mock("../api", () => ({
+  post: vi.fn(),
   examples: [],
   day: () => "Today",
 }));
@@ -22,7 +23,7 @@ const preview = {
 const change = (label, value) =>
   fireEvent.change(screen.getByLabelText(label), { target: { value } });
 const tick = async () => {
-  await act(async () => jest.advanceTimersByTime(400));
+  await act(async () => vi.advanceTimersByTime(400));
 };
 const scan = async () => {
   await act(async () =>
@@ -37,13 +38,13 @@ function show(path = "/add") {
   );
 }
 beforeEach(() => {
-  jest.useFakeTimers();
-  jest.resetAllMocks();
+  vi.useFakeTimers();
+  vi.resetAllMocks();
   post.mockImplementation(async (path) =>
     path === "/scans" ? preview : detected,
   );
 });
-afterEach(() => jest.useRealTimers());
+afterEach(() => vi.useRealTimers());
 
 test("Steam news URLs automatically select the news API", async () => {
   post.mockResolvedValue({ source_method: "steam", note: "" });

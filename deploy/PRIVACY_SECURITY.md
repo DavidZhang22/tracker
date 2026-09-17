@@ -151,13 +151,11 @@ tunnels and unsafe URLs. Candidate images run `ml/verify_privacy_runtime.py`
 offline against disposable data before deployment; real user accounts are never
 deleted for testing.
 
-The Python runtime and browser runtime dependencies were audited against
-published advisories and patched. Create React App still has legacy **build/test
-tool** advisories. Its Node tools are not shipped in the production Python image
-and never process user HTML; builds must use trusted repository assets. A later
-build-tool migration should remove that development-only debt. Do not use
-`npm audit fix --force` to replace react-scripts with its nonfunctional `0.0.0`
-package.
+The frontend uses Vite, Vitest and ESLint for builds, tests and linting. Node build
+tools are not shipped in the production Python image; builds must use trusted
+repository assets. Review both `npm audit` and `npm audit --omit=dev` when updating
+frontend dependencies, along with Python and browser runtime advisories. Apply
+compatible fixes and verify lint, tests and the production build before release.
 
 References: [EDPB rights guidance](https://www.edpb.europa.eu/sme/be-compliant/respect-individuals-rights_en),
 [GDPR text](https://eur-lex.europa.eu/eli/reg/2016/679/oj),

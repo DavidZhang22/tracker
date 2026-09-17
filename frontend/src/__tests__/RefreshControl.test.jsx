@@ -1,8 +1,9 @@
+import { vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { RefreshControl } from "../Components/RowTools";
 
 test("refresh defaults to lightweight and exposes a separate deep action", async () => {
-  const refresh = jest.fn();
+  const refresh = vi.fn();
   render(<RefreshControl label="Refresh item" onRefresh={refresh} />);
   fireEvent.click(screen.getByRole("button", { name: "Refresh item" }));
   expect(refresh).toHaveBeenLastCalledWith(false);
@@ -17,7 +18,7 @@ test("refresh defaults to lightweight and exposes a separate deep action", async
 });
 
 test("both library refresh controls are disabled while working", () => {
-  render(<RefreshControl label="Refresh" onRefresh={jest.fn()} busy />);
+  render(<RefreshControl label="Refresh" onRefresh={vi.fn()} busy />);
   expect(screen.getByRole("button", { name: "Refreshing…" })).toBeDisabled();
   expect(
     screen.getByRole("button", { name: "Options for refresh" }),
@@ -25,7 +26,7 @@ test("both library refresh controls are disabled while working", () => {
 });
 
 test("library menu names the full-library operation", async () => {
-  const refresh = jest.fn();
+  const refresh = vi.fn();
   render(<RefreshControl label="Refresh" onRefresh={refresh} />);
   fireEvent.click(screen.getByRole("button", { name: "Options for refresh" }));
   fireEvent.click(

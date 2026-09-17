@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import {
   act,
   fireEvent,
@@ -17,10 +18,10 @@ import AddPage from "../Pages/AddPage";
 import ItemPage from "../Pages/ItemPage";
 import { RefreshControl } from "../Components/RowTools";
 
-jest.mock("../api", () => ({
-  api: jest.fn(),
-  patch: jest.fn(),
-  post: jest.fn(),
+vi.mock("../api", () => ({
+  api: vi.fn(),
+  patch: vi.fn(),
+  post: vi.fn(),
   examples: [],
   checked: () => "Today",
   day: () => "Sep 13",
@@ -43,7 +44,7 @@ const item = {
 };
 let saved;
 beforeEach(() => {
-  jest.resetAllMocks();
+  vi.resetAllMocks();
   saved = { ...defaults };
   api.mockImplementation(async (path) =>
     path === "/settings"
@@ -56,7 +57,8 @@ beforeEach(() => {
   );
   patch.mockImplementation(async (path, body) => {
     if (path === "/settings") {
-      const { apply_auto_read, ...values } = body;
+      const values = { ...body };
+      delete values.apply_auto_read;
       saved = { ...saved, ...values };
       return { ...saved };
     }
@@ -331,7 +333,7 @@ test("failed preference loading can retry without falling back to unsaved defaul
 
 test("a saved deep default still offers an explicit lightweight override", async () => {
   saved.refresh_mode = "deep";
-  const refresh = jest.fn();
+  const refresh = vi.fn();
   render(
     <PreferencesProvider>
       <RefreshControl label="Refresh" onRefresh={refresh} />

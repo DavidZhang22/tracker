@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import {
   render,
   screen,
@@ -12,11 +13,11 @@ import ItemPage from "../Pages/ItemPage";
 import { LinkDate } from "../Components/RowTools";
 import { Notice } from "../Components/Notice";
 import { api, patch, post, refreshLibrary } from "../api";
-jest.mock("../api", () => ({
-  api: jest.fn(),
-  patch: jest.fn(),
-  post: jest.fn(),
-  refreshLibrary: jest.fn(),
+vi.mock("../api", () => ({
+  api: vi.fn(),
+  patch: vi.fn(),
+  post: vi.fn(),
+  refreshLibrary: vi.fn(),
   examples: [],
   checked: () => "Today",
   day: () => "Sep 8, 2026",
@@ -51,7 +52,7 @@ const link = {
   is_new: true,
   number: 1,
 };
-beforeEach(() => jest.clearAllMocks());
+beforeEach(() => vi.clearAllMocks());
 
 test("all items includes ignored last, favorites first, and excludes Trash", async () => {
   api.mockResolvedValue([
@@ -82,7 +83,7 @@ test("all items includes ignored last, favorites first, and excludes Trash", asy
     "A normal source",
   ]);
   expect(
-    screen.getByRole("button", { name: "All items 3" }),
+    screen.getByRole("button", { name: /^All items\s*3$/ }),
   ).toBeInTheDocument();
   fireEvent.change(screen.getByLabelText("Sort items"), {
     target: { value: "title" },
@@ -93,7 +94,7 @@ test("all items includes ignored last, favorites first, and excludes Trash", asy
     "A normal source",
   ]);
   expect(screen.queryByText("Trashed source")).not.toBeInTheDocument();
-  fireEvent.click(screen.getByRole("button", { name: "Favorites 2" }));
+  fireEvent.click(screen.getByRole("button", { name: /^Favorites\s*2$/ }));
   expect(titles()).toEqual(["Z favorite source", "An ignored favorite"]);
 });
 
@@ -644,7 +645,7 @@ test("scan preview saves the actual server scan with preferences", async () => {
 });
 
 test("addition cooldown counts down without losing the preview or preferences", async () => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
   try {
     post
       .mockResolvedValueOnce({
@@ -684,11 +685,11 @@ test("addition cooldown counts down without losing the preview or preferences", 
     expect(screen.getByRole("button", { name: "Add in 8s" })).toBeDisabled();
     await click(screen.getByRole("button", { name: "Add in 8s" }));
     expect(post).toHaveBeenCalledTimes(2);
-    act(() => jest.advanceTimersByTime(7999));
+    act(() => vi.advanceTimersByTime(7999));
     expect(screen.getByRole("button", { name: "Add in 1s" })).toBeDisabled();
     expect(screen.getByLabelText("Item name")).toHaveValue("My title");
     expect(screen.getByLabelText("Reading progress")).toHaveValue("all");
-    act(() => jest.advanceTimersByTime(1));
+    act(() => vi.advanceTimersByTime(1));
     expect(
       screen.getByRole("button", { name: "Add to library" }),
     ).toBeEnabled();
@@ -701,9 +702,9 @@ test("addition cooldown counts down without losing the preview or preferences", 
       read_indices: [],
     });
     expect(screen.getByText("Saved item")).toBeInTheDocument();
-    expect(jest.getTimerCount()).toBe(0);
+    expect(vi.getTimerCount()).toBe(0);
   } finally {
-    jest.useRealTimers();
+    vi.useRealTimers();
   }
 });
 

@@ -5,14 +5,16 @@ phone landscape uses the same navigation and controls. Larger desktop screens
 keep the sidebar and inline filters. Inputs retain browser zoom, use a 16px
 minimum font on mobile, and allow safe-area spacing around screen cutouts.
 
-Build and run the fixture browser check:
+Build with Vite and run the fixture browser check from `frontend/`:
 
 ```sh
 npm run build
 node scripts/mobile-check.cjs
 ```
 
-The script needs Playwright with Chromium installed. `PLAYWRIGHT_MODULE` can
+The script serves the production files in `build/`, including generated assets
+under `build/static/`, and exercises lazy page loading through normal navigation.
+It needs Playwright with Chromium installed. `PLAYWRIGHT_MODULE` can
 point to an existing Playwright package; `BROWSER_CHANNEL=msedge` or `chrome`
 can use an installed browser. It starts a temporary loopback server and mocks
 every API and external destination. It never accesses a real library or scans

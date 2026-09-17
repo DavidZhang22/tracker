@@ -10,6 +10,7 @@ async function request(path, options = {}) {
     if (error.name === "AbortError") throw error;
     throw new Error(
       "Cannot reach the tracker. Check your connection and retry. Changes have not been confirmed.",
+      { cause: error },
     );
   }
   if (response.status === 401 && !path.startsWith("/auth/"))

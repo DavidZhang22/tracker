@@ -18,6 +18,14 @@ docker compose --env-file deploy/.env -f deploy/compose.yaml ps
 
 Caddy obtains and renews certificates once DNS and ports are ready. Open `https://YOUR_DOMAIN`.
 
+The frontend uses Vite to generate `frontend/build`, with JavaScript and CSS
+under `build/static`. Both Dockerfiles copy that directory to
+`/app/frontend/build`, where FastAPI serves `/static` and the application routes.
+The image build uses Node.js 24; the production Python image contains the built
+frontend files without the Node build tools. For the prebuilt image, run
+`npm ci` and `npm run build` in `frontend/` before building
+`deploy/Dockerfile.prebuilt`.
+
 When a release changes `deploy/Caddyfile`, recreate the web service after validating
 the new configuration. A single-file Docker bind mount can retain the old file
 after Git or archive extraction replaces it; reloading that mount can silently use
@@ -29,7 +37,9 @@ docker compose --env-file deploy/.env -f deploy/compose.yaml up -d --no-build --
 docker compose --env-file deploy/.env -f deploy/compose.yaml exec web cat /etc/caddy/Caddyfile
 ```
 
-Check `/api/ready` and the deployed asset manifest after updating. Both
+Check `/api/ready`, the application HTML and its referenced `/static/` assets
+after updating. Navigate to an item and settings to verify lazy page imports.
+Both
 `/api/scans/csv` and `/api/scans/import` must allow 4 MB at the proxy and application
 guards. A permitted-size upload without a session should return 401; an oversized
 upload should return 413. Use a client that can read an early rejection while
