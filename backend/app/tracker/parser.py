@@ -31,7 +31,13 @@ from .listing_structure import (
 )
 from .media_metadata import source_summary
 from .models import Entry, Scan, date_rank, date_value, sequence_value
-from .pagination import forward_pages
+from .pagination import (
+    auxiliary_region,
+    forward_pages,
+    text_expansion_control,
+    tracked_link_locations,
+    tracked_links_outside,
+)
 from .record_context import RecordContext
 from .suggestions import observed_sources
 from .tables import anchor_label, table_context
@@ -43,7 +49,8 @@ SKIP = re.compile(
 )
 
 
-def has_dynamic_pagination(soup):
+def has_dynamic_pagination(soup, source="", entries=()):
+    locations, checked_regions = None, {}
     for node in soup.select(
         "button,[role=button],a:not([href]),a[href='#'],a[href='']"
     ):
@@ -60,23 +67,39 @@ def has_dynamic_pagination(soup):
         ):
             continue
         name = node.get("aria-label") or node.get_text(" ", strip=True)
-        if re.fullmatch(
-            r"\s*(?:(?:load|show|view)\s+more(?:\s+(?:posts?|news|chapters?|entries|items|results|articles|episodes))?|older\s+(?:posts?|entries|news)|(?:go\s*to\s+)?next\s+(?:page|posts?|results))\s*[↓→›»+]*\s*",
-            name,
-            re.I,
-        ):
-            return True
-        if re.fullmatch(r"\s*next\s*[→›»]*\s*", name, re.I) and any(
-            p.name == "nav"
-            or re.search(
-                r"pagin|pager",
-                " ".join(p.get("class", [])) + " " + str(p.get("aria-label", "")),
+        candidate = (
+            re.fullmatch(
+                r"\s*(?:(?:load|show|view)\s+more(?:\s+(?:posts?|news|chapters?|entries|items|results|articles|episodes))?|older\s+(?:posts?|entries|news)|(?:go\s*to\s+)?next\s+(?:page|posts?|results))\s*[↓→›»+]*\s*",
+                name,
                 re.I,
             )
-            for p in [node, *list(node.parents)[:3]]
-            if getattr(p, "attrs", None) is not None
-        ):
-            return True
+            or re.fullmatch(r"\s*next\s*[→›»]*\s*", name, re.I)
+            and any(
+                p.name == "nav"
+                or re.search(
+                    r"pagin|pager",
+                    " ".join(p.get("class", [])) + " " + str(p.get("aria-label", "")),
+                    re.I,
+                )
+                for p in [node, *list(node.parents)[:3]]
+                if getattr(p, "attrs", None) is not None
+            )
+        )
+        if not candidate:
+            continue
+        if source and entries and (region := auxiliary_region(node)) is not None:
+            key = id(region)
+            if key not in checked_regions:
+                if not checked_regions:
+                    locations = tracked_link_locations(soup, source, entries)
+                checked_regions[key] = tracked_links_outside(region, locations)
+            if checked_regions[key]:
+                continue
+        if re.fullmatch(
+            r"\s*(?:load|show|view)\s+more\s*[↓→›»+]*\s*", name, re.I
+        ) and text_expansion_control(node, soup):
+            continue
+        return True
     return False
 
 
@@ -904,7 +927,9 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
         scan.methods.append("hydrated listing")
     if scan.kind == "website" and (feeds or soup.select_one("article")):
         scan.kind = "blog"
-    if not pages and has_dynamic_pagination(soup):
+    if not pages and has_dynamic_pagination(
+        soup, source, scan.entries if not selector else ()
+    ):
         scan.coverage = "partial"
         scan.warnings.append(
             "This page has a load-more control or JavaScript pagination. Older entries may require browser scanning."

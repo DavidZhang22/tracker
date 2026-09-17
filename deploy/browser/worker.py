@@ -28,10 +28,46 @@ SNAPSHOT = """() => {
   return {html:html.slice(0,1000000), truncated:html.length>1000000, links};
 }"""
 CONTROL = r"""() => {
+  const proseRegion = root => {
+    if (/^(HTML|BODY|MAIN)$/.test(root.tagName)) return false;
+    const nodes = [root];
+    const walker = document.createTreeWalker(root, 1);
+    while (walker.nextNode()) {
+      if (nodes.length === 128) return false;
+      nodes.push(walker.currentNode);
+    }
+    if (nodes.some(n => /^(UL|OL|TABLE|H[1-6])$/.test(n.tagName) ||
+        /^(list|listitem|grid|feed|tree)$/.test(n.getAttribute('role') || '') ||
+        /chapters?|episodes?|posts?|entries|results|articles|pagination|pager|(?:^|[\s_-])list(?:$|[\s_-])/i.test(`${n.id} ${n.getAttribute('class') || ''}`) ||
+        (n.tagName === 'A' && (n.getAttribute('href') || '').trim() && !(n.getAttribute('href') || '').trim().startsWith('#')))) return false;
+    const paragraphs = nodes.filter(n => n.tagName === 'P');
+    const marked = nodes.some(n => !/^(BUTTON|A|SCRIPT|STYLE)$/.test(n.tagName) &&
+      /description|synopsis|summary|abstract|biography|excerpt|overview|line-clamp/i.test(`${n.id} ${n.getAttribute('class') || ''} ${n.getAttribute('itemprop') || ''}`) &&
+      n.textContent.trim().length >= 40);
+    return marked || (paragraphs.length === 1 && paragraphs[0].textContent.trim().length >= 80);
+  };
+  const textExpansion = n => {
+    const targets = (n.getAttribute('aria-controls') || '').split(/\s+/).filter(Boolean);
+    for (const attribute of ['data-target', 'data-bs-target']) {
+      const value = n.getAttribute(attribute) || '';
+      if (/^#[\w-]+$/.test(value)) targets.push(value.slice(1));
+    }
+    if (targets.length) return targets.length <= 4 && targets.every(id => {
+      const root = document.getElementById(id);
+      return root && proseRegion(root);
+    });
+    let root = n.parentElement;
+    for (let depth = 0; root && depth < 3; depth++, root = root.parentElement) {
+      if (/^(HTML|BODY|MAIN)$/.test(root.tagName)) break;
+      if (proseRegion(root)) return true;
+    }
+    return false;
+  };
   const candidates = [...document.querySelectorAll('button,[role=button],a')].filter(n => {
     if (!n.checkVisibility() || n.disabled || n.getAttribute('aria-disabled')==='true' ||
         n.closest('form,[aria-roledescription=carousel],[class*=carousel],[class*=slider]')) return false;
     const text = (n.getAttribute('aria-label') || n.textContent).trim();
+    if (/^(?:load|show|view)\s+more\s*[↓→›»+]*$/i.test(text) && textExpansion(n)) return false;
     const more = /^(?:(?:load|show|view)\s+more(?:\s+(?:posts?|news|chapters?|entries|items|results|articles|episodes))?|older\s+(?:posts?|entries|news))\s*[↓→›»+]*$/i.test(text);
     const next = /^(?:go\s*to\s+)?next\s+(?:page|posts?|results)\s*[→›»]*$/i.test(text) ||
       ((n.rel||'').split(/\s+/).includes('next')) ||

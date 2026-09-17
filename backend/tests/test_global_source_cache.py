@@ -128,6 +128,73 @@ async def test_different_filters_reuse_body_without_sharing_selection(network):
     assert len(all_links.entries) == 2 and len(network[0]) == 1
 
 
+async def test_cached_source_does_not_wait_for_another_download_on_same_host(
+    monkeypatch,
+):
+    entered, release = asyncio.Event(), asyncio.Event()
+    calls = []
+    client = httpx.AsyncClient
+
+    async def respond(request):
+        calls.append(request.url.path)
+        if request.url.path == "/slow":
+            entered.set()
+            await release.wait()
+        return httpx.Response(200, text=HTML)
+
+    monkeypatch.setattr(
+        "app.tracker.urls.public_addresses", AsyncMock(return_value=["93.184.216.34"])
+    )
+    monkeypatch.setattr(
+        "app.tracker.urls.httpx.AsyncClient",
+        lambda **kwargs: client(transport=httpx.MockTransport(respond), **kwargs),
+    )
+    fetcher = SafeFetcher(interval=0)
+    expected = await fetcher.get(SOURCE)
+    slow = asyncio.create_task(fetcher.get("https://books.example/slow"))
+    try:
+        await asyncio.wait_for(entered.wait(), 2)
+        assert await asyncio.wait_for(fetcher.get(SOURCE), 1) == expected
+        assert not slow.done()
+        assert calls == ["/comics/story-6f7fe6eb", "/slow"]
+    finally:
+        release.set()
+        await slow
+
+
+async def test_queued_host_request_respects_new_backoff(monkeypatch):
+    entered, release = asyncio.Event(), asyncio.Event()
+    calls = []
+    client = httpx.AsyncClient
+
+    async def respond(request):
+        calls.append(request.url.path)
+        entered.set()
+        await release.wait()
+        return httpx.Response(429, headers={"Retry-After": "600"})
+
+    monkeypatch.setattr(
+        "app.tracker.urls.public_addresses", AsyncMock(return_value=["93.184.216.34"])
+    )
+    monkeypatch.setattr(
+        "app.tracker.urls.httpx.AsyncClient",
+        lambda **kwargs: client(transport=httpx.MockTransport(respond), **kwargs),
+    )
+    fetcher = SafeFetcher(interval=0)
+    first = asyncio.create_task(fetcher.get(SOURCE))
+    await asyncio.wait_for(entered.wait(), 2)
+    second = asyncio.create_task(fetcher.get("https://books.example/other"))
+    try:
+        await asyncio.sleep(0.03)
+        assert not second.done()
+    finally:
+        release.set()
+        results = await asyncio.gather(first, second, return_exceptions=True)
+    assert len(calls) == 1
+    assert all(isinstance(r, DiscoveryError) for r in results)
+    assert "HTTP 429" in str(results[0]) and "requested a pause" in str(results[1])
+
+
 async def test_same_suffix_different_series_and_query_variants_do_not_collide(network):
     scanner = Discoverer(SafeFetcher(interval=0))
     urls = [

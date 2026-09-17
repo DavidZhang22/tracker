@@ -24,7 +24,7 @@ from app.tracker.privacy import router as privacy_router
 from app.tracker.semantic_search import SearchAdmission, SemanticSearch
 from app.tracker.store import LibraryErased, Store
 from app.tracker.urls import SafeFetcher
-from app.tracker.workers import run_blocking
+from app.tracker.workers import KeyedLocks, run_blocking
 
 
 def create_app(db_path=None, discoverer=None, auth_config=None):
@@ -92,7 +92,7 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
     app.state.scan_guard = ScanGuard()
     app.state.semantic = SemanticSearch()
     app.state.search_guard = SearchAdmission()
-    app.state.refresh_locks = [asyncio.Lock() for _ in range(64)]
+    app.state.refresh_locks = KeyedLocks()
     config = (
         auth_config
         if auth_config is not None

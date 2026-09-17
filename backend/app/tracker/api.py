@@ -421,9 +421,7 @@ def acknowledge(iid: str, request: Request):
 
 
 async def refresh_item(iid, app, store, skip_unavailable=False, deep=False):
-    # Fixed-size lock striping avoids both overlapping merges and unbounded lock storage.
-    lock = app.state.refresh_locks[hash(iid) % 64]
-    async with lock:
+    async with app.state.refresh_locks.hold((store.path, iid)):
         item = await run_blocking(store.refresh_source, iid)
         if skip_unavailable and (
             item["deleted"]

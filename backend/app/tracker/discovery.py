@@ -37,9 +37,9 @@ from .urls import (
     request_budget,
     response_key,
 )
-from .workers import run_blocking
+from .workers import KeyedLocks, run_blocking
 
-DISCOVERY_VERSION = "listing-semantics-v5"
+DISCOVERY_VERSION = "listing-semantics-v7"
 DEEP_SCAN = ContextVar("deep_scan", default=False)
 INITIAL_DOCUMENT = ContextVar("initial_document", default=None)
 
@@ -183,7 +183,7 @@ class Discoverer:
         self.max_pages = max_pages
         self.youtube_loader = youtube_loader
         self.analyzer = analyzer
-        self.scan_locks = [asyncio.Lock() for _ in range(64)]
+        self.scan_locks = KeyedLocks()
 
     async def scan(
         self,
@@ -220,7 +220,7 @@ class Discoverer:
                     raise DiscoveryError("The source has a redirect loop.")
                 seen.add(url)
                 try:
-                    async with self.scan_locks[hash(url) % 64]:
+                    async with self.scan_locks.hold(url):
                         result = await self._cached_scan(
                             url, selector, include_path, keywords, source_method
                         )

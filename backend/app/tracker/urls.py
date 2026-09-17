@@ -173,7 +173,6 @@ class SafeFetcher:
     def __init__(self, cache=None, interval=2.0, ttl=REUSE_SECONDS):
         self.cache = cache or FetchCache()
         self.interval, self.ttl = interval, max(REUSE_SECONDS, ttl)
-        self.locks = [asyncio.Lock() for _ in range(64)]
         self.network_locks = [asyncio.Lock() for _ in range(64)]
         self.last_requests = [0.0] * 64
         self.fetch_slots = asyncio.Semaphore(4)
@@ -188,10 +187,9 @@ class SafeFetcher:
             raise DiscoveryError("API credentials require HTTPS.")
         if not secret_query:
             original = await run_blocking(self.cache.coordinator.resolve, original)
-        host = urlsplit(original).hostname
-        slot = hash(host) % 64
-        async with self.locks[slot]:
-            return await self._get(original, slot, secret_query)
+        # SharedWork coalesces identical URLs; only actual network requests need
+        # the host gate. Cached responses must not wait behind a slow download.
+        return await self._get(original, secret_query)
 
     def _cached_response(self, cache_key, legacy_key):
         cached = self.cache.get(cache_key)
@@ -233,7 +231,7 @@ class SafeFetcher:
             budget.take_bytes(body.text_size)
         return cached["final"], body
 
-    async def _get(self, original, slot, secret_query=None):
+    async def _get(self, original, secret_query=None):
         url, seen = original, set()
         for _ in range(6):
             url = canonical_url(url, preserve_slash=True)
@@ -290,15 +288,16 @@ class SafeFetcher:
         target = urlunsplit((p.scheme, netloc, p.path, p.query, ""))
         if secret_query:
             target += ("&" if p.query else "?") + urlencode(secret_query)
-        backoff = await run_blocking(self.cache.get, "backoff:" + p.hostname)
-        if backoff and backoff["expires"] > time.time():
-            raise DiscoveryError(
-                "This source requested a pause. Retry after "
-                + time.strftime("%H:%M UTC", time.gmtime(backoff["expires"]))
-                + "."
-            )
         slot = hash(p.hostname) % 64
         async with self.network_locks[slot]:
+            # A request ahead of this one may have asked us to pause.
+            backoff = await run_blocking(self.cache.get, "backoff:" + p.hostname)
+            if backoff and backoff["expires"] > time.time():
+                raise DiscoveryError(
+                    "This source requested a pause. Retry after "
+                    + time.strftime("%H:%M UTC", time.gmtime(backoff["expires"]))
+                    + "."
+                )
             await asyncio.sleep(
                 max(0, self.interval - (time.monotonic() - self.last_requests[slot]))
             )

@@ -11,6 +11,12 @@ The refresh pipeline keeps listing responses compressed until a parser worker is
 
 Refresh scheduling favors hosts with fewer active items, allowing a fast source to complete while another host waits. Each item is committed and emitted immediately. Trash and muted items remain excluded from refresh-all. Existing API authorization, account quotas, request/byte limits, 4,999-link caps, and deletion safeguards remain in place.
 
+Item and scan locks use exact keys, retaining only active holders and waiters, so
+unrelated sources cannot block each other through hash collisions. Cached responses
+bypass the network host gate; actual requests still keep the two-second interval.
+The [library refresh profile](../reports/library-refresh.md) measures the effect
+of these changes and avoiding browser scans for unrelated expansion controls.
+
 Compressed HTTP responses use a new cache-key namespace. Existing cached responses migrate without refetching; conditional requests and 304 handling still work. The previous application can ignore this namespace during rollback. The text digest stays identical, so parsed-page caches and existing recipes do not need global invalidation. Cache writes continue to respect account-deletion generation checks.
 
 ## Verification

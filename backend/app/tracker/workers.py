@@ -1,8 +1,39 @@
 """Run bounded blocking scan work without blocking the HTTP event loop."""
 
 import asyncio
+from contextlib import asynccontextmanager
+from dataclasses import dataclass
 
 from anyio import CancelScope
+
+
+@dataclass(slots=True)
+class _LockEntry:
+    lock: asyncio.Lock
+    users: int = 0
+
+
+class KeyedLocks:
+    """Serialize matching keys on one event loop; retain only holders and waiters."""
+
+    def __init__(self):
+        self._entries = {}
+
+    @asynccontextmanager
+    async def hold(self, key):
+        entry = self._entries.get(key)
+        if entry is None:
+            entry = self._entries[key] = _LockEntry(asyncio.Lock())
+        entry.users += 1
+        try:
+            async with entry.lock:
+                yield
+        finally:
+            # Include queued callers so releasing a holder cannot create a second
+            # lock for the same key before its existing waiters acquire it.
+            entry.users -= 1
+            if not entry.users:
+                del self._entries[key]
 
 
 async def run_blocking(function, *args, **kwargs):

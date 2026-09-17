@@ -1,5 +1,6 @@
 import asyncio
 import json
+from pathlib import Path
 
 import pytest
 from bs4 import BeautifulSoup
@@ -7,9 +8,14 @@ from bs4 import BeautifulSoup
 from app.tracker import browser_client
 from app.tracker.discovery import Discoverer
 from app.tracker.embedded_lists import extract
+from app.tracker.models import Entry
 from app.tracker.parser import has_dynamic_pagination, parse_page
 
 SOURCE = "https://publisher.example/news/"
+CONTROL_CASES = json.loads(
+    (Path(__file__).parent / "fixtures/pagination-controls.json").read_text()
+)
+CONTROL_HTML = {case["name"]: case["html"] for case in CONTROL_CASES}
 
 
 def rows(count=6):
@@ -99,6 +105,143 @@ def test_dynamic_control_detection(control):
 )
 def test_non_listing_controls_are_not_clicked(control):
     assert not has_dynamic_pagination(BeautifulSoup(control, "html.parser"))
+
+
+@pytest.mark.parametrize("case", CONTROL_CASES, ids=lambda case: case["name"])
+def test_prose_expansion_and_listing_controls(case):
+    assert (
+        has_dynamic_pagination(BeautifulSoup(case["html"], "html.parser"))
+        == case["pagination"]
+    )
+
+
+def chapter_listing(count=3):
+    return (
+        "<h1>A Traveler's Story</h1>"
+        + CONTROL_HTML["desktop prose with button wrapper"]
+        + CONTROL_HTML["anonymous mobile prose control"]
+        + "<section><h2>3 Chapters</h2>"
+        + "".join(
+            f'<article><a href="/series/story/chapter/{i}">Chapter {i}</a><time datetime="2026-09-01"></time></article>'
+            for i in range(1, count + 1)
+        )
+        + "</section>"
+    )
+
+
+def reviews():
+    return (
+        '<section id="reviews-pagination"><article><a class="review" href="/reviews/1">Reader review</a>'
+        '<a href="/series/story/chapter/1">A reference to Chapter 1</a></article>'
+        '<div><nav aria-label="Pagination"><div><button aria-label="Next page">Next</button>'
+        "</div></nav></div></section>"
+    )
+
+
+def test_auxiliary_pagination_requires_all_tracked_links_outside_its_region():
+    source = "https://publisher.example/series/story"
+    soup = BeautifulSoup(chapter_listing() + reviews(), "html.parser")
+    chapters = [Entry(f"{source}/chapter/{i}", f"Chapter {i}") for i in (1, 2, 3)]
+    review = Entry("https://publisher.example/reviews/1", "Reader review")
+    assert has_dynamic_pagination(soup)  # No selection context: remain conservative.
+    assert not has_dynamic_pagination(soup, source, chapters)
+    assert has_dynamic_pagination(soup, source, [review])
+    assert has_dynamic_pagination(soup, source, chapters + [review])
+    assert has_dynamic_pagination(soup, source, chapters + [Entry("", "Chapter 4")])
+    assert has_dynamic_pagination(soup, source, [Entry(source + "/unseen", "Unseen")])
+    assert has_dynamic_pagination(soup, source, [])
+
+
+@pytest.mark.parametrize("region", ["comments", "reader-reviews", "discussion"])
+async def test_complete_listing_skips_unrelated_reader_pagination(monkeypatch, region):
+    monkeypatch.setenv("TRACKER_BROWSER_SOCKET", "fixture")
+    source = "https://publisher.example/series/story"
+
+    class Fetcher:
+        async def get(self, url):
+            return url, chapter_listing() + reviews().replace(
+                "reviews-pagination", region
+            )
+
+    async def render(*args):
+        pytest.fail(
+            "Pagination of untracked reader responses must not start the browser"
+        )
+
+    monkeypatch.setattr(browser_client, "render", render)
+    result = await Discoverer(Fetcher()).scan(source)
+    assert len(result.entries) == result.expected_count == 3
+    assert result.coverage == "complete"
+
+
+def test_selectors_and_chapter_pagination_remain_eligible():
+    source = "https://publisher.example/series/story"
+    html = chapter_listing() + reviews()
+    selected, _, _ = parse_page(
+        html, source, selector="a[href*='/series/story/chapter/']"
+    )
+    assert len(selected.entries) == 3
+    assert any("load-more control" in warning for warning in selected.warnings)
+    chapters, _, _ = parse_page(
+        html.replace('id="reviews-pagination"', 'id="chapters"'), source
+    )
+    assert any("load-more control" in warning for warning in chapters.warnings)
+
+
+def test_auxiliary_pager_without_content_cannot_prove_selection_scope():
+    source = "https://publisher.example/series/story"
+    soup = BeautifulSoup(
+        chapter_listing()
+        + '<div id="comments-pager"><nav><button>Next page</button></nav></div>',
+        "html.parser",
+    )
+    assert has_dynamic_pagination(
+        soup, source, [Entry(source + "/chapter/1", "Chapter 1")]
+    )
+
+
+@pytest.mark.parametrize("deep", [False, True])
+async def test_complete_chapter_listing_with_synopsis_does_not_start_browser(
+    monkeypatch, deep
+):
+    monkeypatch.setenv("TRACKER_BROWSER_SOCKET", "fixture")
+    requests = []
+
+    class Fetcher:
+        async def get(self, url):
+            requests.append(url)
+            return url, chapter_listing()
+
+    async def render(*args):
+        pytest.fail(
+            "A prose expander must not start the browser for a complete listing"
+        )
+
+    monkeypatch.setattr(browser_client, "render", render)
+    source = "https://publisher.example/series/story"
+    result = await Discoverer(Fetcher()).scan(source, deep=deep)
+    assert len(result.entries) == result.expected_count == 3
+    assert result.coverage == "complete" and requests == [source]
+    assert not any("load-more control" in warning for warning in result.warnings)
+
+
+async def test_missing_chapters_still_use_browser_despite_synopsis_expanders(
+    monkeypatch,
+):
+    monkeypatch.setenv("TRACKER_BROWSER_SOCKET", "fixture")
+    calls = []
+
+    class Fetcher:
+        async def get(self, url):
+            return url, chapter_listing(2)
+
+    async def render(*args):
+        calls.append(True)
+        return {"snapshots": [chapter_listing()], "captured": []}
+
+    monkeypatch.setattr(browser_client, "render", render)
+    result = await Discoverer(Fetcher()).scan("https://publisher.example/series/story")
+    assert calls == [True] and len(result.entries) == 3
 
 
 @pytest.mark.parametrize(
