@@ -1,0 +1,948 @@
+{
+  "split": "development",
+  "candidate_sha256": "73047b221545de7021bdc8a329e0f7ad6ee73e08cf931883fc4d4663b99150dd",
+  "repeats": 1,
+  "pages": {
+    "asura": {
+      "expected": 140,
+      "capture_sha256": "df54ea4009a17441f2c41277932a6164fc39bb022738211e8e2f1a95913e8cd4",
+      "baseline": {
+        "correct": 140,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.4738805000670254
+      },
+      "candidate": {
+        "correct": 140,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.41952180000953376
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "royalroad": {
+      "expected": 109,
+      "capture_sha256": "d12408a0578c0615f2c2be4d724ceee1df9d8b33a6561582a9aae7298f666d48",
+      "baseline": {
+        "correct": 109,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.5441475999541581
+      },
+      "candidate": {
+        "correct": 109,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.5476584000280127
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "github": {
+      "expected": 10,
+      "capture_sha256": "5ef7a5dbdc1c398e17348a4e21ac5f798204491a9517b25852837cbd2b13687a",
+      "baseline": {
+        "correct": 10,
+        "unwanted": 1,
+        "missing": 0,
+        "median_seconds": 1.3503933999454603
+      },
+      "candidate": {
+        "correct": 10,
+        "unwanted": 1,
+        "missing": 0,
+        "median_seconds": 1.4282042999984697
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "codeforces": {
+      "expected": 100,
+      "capture_sha256": "2cff84f0593e00476df149907807e9dfd0adbfcbfaa63cac4c14724e24824009",
+      "baseline": {
+        "correct": 0,
+        "unwanted": 1,
+        "missing": 100,
+        "median_seconds": 0.989004599978216
+      },
+      "candidate": {
+        "correct": 0,
+        "unwanted": 1,
+        "missing": 100,
+        "median_seconds": 0.994847199996002
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "python": {
+      "expected": 9,
+      "capture_sha256": "e0c435b5e6ac00f6b3a9c35a4ba373d0a8723c343aa4d12797ec416410c57131",
+      "baseline": {
+        "correct": 9,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.07224050001241267
+      },
+      "candidate": {
+        "correct": 9,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.07265940005891025
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "rust": {
+      "expected": 391,
+      "capture_sha256": "92872b83d7a0cd953b3e9751be7f36699cf36d6aa7c1cb8b3eb19aeee91ca5de",
+      "baseline": {
+        "correct": 391,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.9632617000024766
+      },
+      "candidate": {
+        "correct": 391,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.9923781000543386
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "paulgraham": {
+      "expected": 236,
+      "capture_sha256": "6061dfb160109ba93d574ae768087c200b4f1f347ff24a6914773a18792f91e7",
+      "baseline": {
+        "correct": 234,
+        "unwanted": 0,
+        "missing": 2,
+        "median_seconds": 0.6424299000063911
+      },
+      "candidate": {
+        "correct": 234,
+        "unwanted": 0,
+        "missing": 2,
+        "median_seconds": 0.6549752000719309
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "cloudflare": {
+      "expected": 91,
+      "capture_sha256": "aace073b77798a1b93fad1929caeb0bdf32f112e69612d38363f71e7e6031f7e",
+      "baseline": {
+        "correct": 19,
+        "unwanted": 0,
+        "missing": 72,
+        "median_seconds": 0.30153250007424504
+      },
+      "candidate": {
+        "correct": 19,
+        "unwanted": 0,
+        "missing": 72,
+        "median_seconds": 0.2999564999481663
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "hn": {
+      "expected": 30,
+      "capture_sha256": "5c71acfcde0ee258d9c2032a6f30fcfcb08a8961cbdb1a1a4d3aea722a0e2825",
+      "baseline": {
+        "correct": 30,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.27848269999958575
+      },
+      "candidate": {
+        "correct": 30,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.2914684999268502
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "django": {
+      "expected": 10,
+      "capture_sha256": "1c6a3d14e333fdf172b5ee6afa5fe52d1425a85c952959f5d20213a77d2749b4",
+      "baseline": {
+        "correct": 10,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.3489759999793023
+      },
+      "candidate": {
+        "correct": 10,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.35142680001445115
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "pythonbytes": {
+      "expected": 495,
+      "capture_sha256": "c45030699e638e06c42f4d829df1c0e80f8ba7f164448f39104ab0516c04e6c8",
+      "baseline": {
+        "correct": 495,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 1.9464442000025883
+      },
+      "candidate": {
+        "correct": 495,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 1.9582571999635547
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "hackaday": {
+      "expected": 18,
+      "capture_sha256": "23801ff8714a5beceb0a6963a7c92e743a53efea8d476030f2b4684706842553",
+      "baseline": {
+        "correct": 10,
+        "unwanted": 0,
+        "missing": 8,
+        "median_seconds": 0.25458279997110367
+      },
+      "candidate": {
+        "correct": 10,
+        "unwanted": 0,
+        "missing": 8,
+        "median_seconds": 0.26835510006640106
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "lobsters": {
+      "expected": 25,
+      "capture_sha256": "cad55acc4909a166b1318516d22e15d7a93fe35a4f6276da06b959f4e0d743cb",
+      "baseline": {
+        "correct": 25,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.2974293999141082
+      },
+      "candidate": {
+        "correct": 25,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.30696040007751435
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "changelog": {
+      "expected": 13,
+      "capture_sha256": "ab26260ff85521cb73062c6a8dd6c54da9fb0726b2e3807dbd42cef4b25b6a58",
+      "baseline": {
+        "correct": 13,
+        "unwanted": 17,
+        "missing": 0,
+        "median_seconds": 0.3936572999227792
+      },
+      "candidate": {
+        "correct": 13,
+        "unwanted": 17,
+        "missing": 0,
+        "median_seconds": 0.4160578000592068
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 24
+    },
+    "wordpress": {
+      "expected": 10,
+      "capture_sha256": "c52f365653c384594b99f19a8dc1c1e14e1353a1a31555c78d6f7e5d7f838e79",
+      "baseline": {
+        "correct": 5,
+        "unwanted": 0,
+        "missing": 5,
+        "median_seconds": 0.22541029995772988
+      },
+      "candidate": {
+        "correct": 5,
+        "unwanted": 0,
+        "missing": 5,
+        "median_seconds": 0.2075001000193879
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "simonwillison": {
+      "expected": 70,
+      "capture_sha256": "f3b3a0cf4932857bb3b8b800078b976281304a3ab26a434d6f52feb13b8d193f",
+      "baseline": {
+        "correct": 70,
+        "unwanted": 1,
+        "missing": 0,
+        "median_seconds": 0.4828912999946624
+      },
+      "candidate": {
+        "correct": 70,
+        "unwanted": 1,
+        "missing": 0,
+        "median_seconds": 0.49743820005096495
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "lwn": {
+      "expected": 48,
+      "capture_sha256": "87ba36695f4734a8d2c8d7a373fb046c2b274bd304a91cbfd2e54cddebbbcd9d",
+      "baseline": {
+        "correct": 20,
+        "unwanted": 0,
+        "missing": 28,
+        "median_seconds": 0.17413290007971227
+      },
+      "candidate": {
+        "correct": 21,
+        "unwanted": 0,
+        "missing": 27,
+        "median_seconds": 0.175592300016433
+      },
+      "lost_expected": [],
+      "gained_expected": [
+        "https://lwn.net/Articles/1034684"
+      ],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 13
+    },
+    "schneier": {
+      "expected": 11,
+      "capture_sha256": "50caf21e7ad77bda531748a7f69e0154cf16df6cf639ae8108a4618760418206",
+      "baseline": {
+        "correct": 11,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.2037341999821365
+      },
+      "candidate": {
+        "correct": 11,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.20356739999260753
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "jvns": {
+      "expected": 596,
+      "capture_sha256": "dea169dbc1841a5903f8db288a8505379fe4731c63407a225dcdf575d987ca16",
+      "baseline": {
+        "correct": 544,
+        "unwanted": 2,
+        "missing": 52,
+        "median_seconds": 1.169505099998787
+      },
+      "candidate": {
+        "correct": 594,
+        "unwanted": 2,
+        "missing": 2,
+        "median_seconds": 1.2401203999761492
+      },
+      "lost_expected": [],
+      "gained_expected": [
+        "https://jvns.ca/blog/2013/09/30/hacker-school-day-1-messing-around-with-the-stack-in-c",
+        "https://jvns.ca/blog/2013/09/30/hacker-school-day-2-what-does-a-shell-even-do",
+        "https://jvns.ca/blog/2013/10/02/day-3-what-does-the-linux-kernel-even-do",
+        "https://jvns.ca/blog/2013/10/04/day-4-processes-vs-threads",
+        "https://jvns.ca/blog/2013/10/06/where-to-find-the-bixi-xml-data-feed",
+        "https://jvns.ca/blog/2013/10/07/day-5-i-wrote-a-kernel-module",
+        "https://jvns.ca/blog/2013/10/08/day-6-i-wrote-a-rootkit",
+        "https://jvns.ca/blog/2013/10/09/day-7-an-echo-server-in-clojure",
+        "https://jvns.ca/blog/2013/10/12/day-8-julia-writes-julia-and-open-source",
+        "https://jvns.ca/blog/2013/10/14/day-9-bytecode-is-made-of-bytes",
+        "https://jvns.ca/blog/2013/10/16/day-10-goals",
+        "https://jvns.ca/blog/2013/10/16/day-11-how-does-gzip-work",
+        "https://jvns.ca/blog/2013/10/17/day-12-julia-reflects-on-julia",
+        "https://jvns.ca/blog/2013/10/21/day-13-off-by-one-errors",
+        "https://jvns.ca/blog/2013/10/23/day-15-how-gzip-works",
+        "https://jvns.ca/blog/2013/10/24/day-16-gzip-plus-poetry-equals-awesome",
+        "https://jvns.ca/blog/2013/10/24/do-rails-programmers-use-node-visualizing-correlations-in-command-usage",
+        "https://jvns.ca/blog/2013/10/28/day-17-buffer-overflows",
+        "https://jvns.ca/blog/2013/12/10/day-40-12-things-i-learned-today-about-linkers",
+        "https://jvns.ca/blog/2013/12/10/day-40-learning-about-linkers",
+        "https://jvns.ca/blog/2015/11/21/why-you-should-understand-a-little-about-tcp",
+        "https://jvns.ca/blog/2015/12/30/do-the-math-on-your-stock-options",
+        "https://jvns.ca/blog/2016/01/06/talking-about-stock-options",
+        "https://jvns.ca/blog/2016/01/23/sendfile-a-new-to-me-system-call",
+        "https://jvns.ca/blog/2016/09/15/whats-up-with-containers-docker-and-rkt",
+        "https://jvns.ca/blog/2016/11/10/a-few-drawings-about-linux",
+        "https://jvns.ca/blog/2016/12/21/what-s-interesting-about-udp",
+        "https://jvns.ca/blog/2017/01/20/a-tiny-zine-about-machine-learning",
+        "https://jvns.ca/blog/2017/06/04/learning-about-kubernetes",
+        "https://jvns.ca/blog/2017/09/17/how-i-spent-my-time-at-the-recurse-center",
+        "https://jvns.ca/blog/2017/09/24/profiling-go-with-pprof",
+        "https://jvns.ca/blog/2017/10/10/operating-a-kubernetes-network",
+        "https://jvns.ca/blog/2018/03/05/things-ive-learned-networking",
+        "https://jvns.ca/blog/2018/03/26/rbspy-docs",
+        "https://jvns.ca/blog/2019/02/16/--con-2019--submit-a-talk-",
+        "https://jvns.ca/blog/2020/11/30/implement-char-rnn-in-pytorch",
+        "https://jvns.ca/blog/2021/04/03/what-problems-do-people-solve-with-strace",
+        "https://jvns.ca/blog/2021/05/24/blog-about-what-you-ve-struggled-with",
+        "https://jvns.ca/blog/2022/02/23/getaddrinfo-is-kind-of-weird",
+        "https://jvns.ca/blog/2022/07/28/toy-remote-login-server",
+        "https://jvns.ca/blog/2022/09/06/send-network-packets-python-tun-tap",
+        "https://jvns.ca/blog/2022/12/02/a-couple-of-rust-error-messages",
+        "https://jvns.ca/blog/2023/03/31/zine-feedback-site",
+        "https://jvns.ca/blog/2024/04/10/notes-on-git-error-messages",
+        "https://jvns.ca/blog/2024/04/25/new-zine--how-git-works-",
+        "https://jvns.ca/blog/2024/07/08/readline",
+        "https://jvns.ca/blog/2024/08/06/go-structs-copied-on-assignment",
+        "https://jvns.ca/blog/2024/10/27/asn-ip-address-memory",
+        "https://jvns.ca/blog/2024/11/09/new-microblog",
+        "https://jvns.ca/blog/2025/03/07/escape-code-standards"
+      ],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 507
+    },
+    "realpython": {
+      "expected": 46,
+      "capture_sha256": "504dfe3b16befa4ecd783b3deb34d7b2f582962de0b37bf1b5cdfe1107d284fa",
+      "baseline": {
+        "correct": 34,
+        "unwanted": 0,
+        "missing": 12,
+        "median_seconds": 0.35901329992339015
+      },
+      "candidate": {
+        "correct": 37,
+        "unwanted": 0,
+        "missing": 9,
+        "median_seconds": 0.3733483999967575
+      },
+      "lost_expected": [],
+      "gained_expected": [
+        "https://realpython.com/learning-paths",
+        "https://realpython.com/mentor",
+        "https://realpython.com/office-hours"
+      ],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 29
+    },
+    "pmlr-volumes": {
+      "expected": 327,
+      "capture_sha256": "38dbc526c21c2d3406f54c30dd62ecfaf35d0a61f45cefac17f7c95048ed9882",
+      "baseline": {
+        "correct": 325,
+        "unwanted": 3,
+        "missing": 2,
+        "median_seconds": 0.7902711000060663
+      },
+      "candidate": {
+        "correct": 325,
+        "unwanted": 3,
+        "missing": 2,
+        "median_seconds": 0.8181980999652296
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "python-releases": {
+      "expected": 260,
+      "capture_sha256": "6ca4602bae3e9e235adb894286e96e86a35c6d16b176034a274a7de026740d0a",
+      "baseline": {
+        "correct": 260,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 1.1952919999603182
+      },
+      "candidate": {
+        "correct": 260,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 1.1707598000066355
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "esa-gallery": {
+      "expected": 58,
+      "capture_sha256": "f80021d32a706aa8dbde3cf9f2f8c131175e2057d5afc3e045c8025980089b3a",
+      "baseline": {
+        "correct": 57,
+        "unwanted": 0,
+        "missing": 1,
+        "median_seconds": 0.28973769990261644
+      },
+      "candidate": {
+        "correct": 57,
+        "unwanted": 0,
+        "missing": 1,
+        "median_seconds": 0.286676499992609
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "cascade-sqlite": {
+      "expected": 262,
+      "capture_sha256": "777c0f9da22605d6b47786de36918a576108f65c6e64bdbfe7a10f4fe0bc1488",
+      "baseline": {
+        "correct": 262,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.9739928999915719
+      },
+      "candidate": {
+        "correct": 262,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.9617798000108451
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "cascade-debian": {
+      "expected": 20,
+      "capture_sha256": "c28f54d7b74579571ded6ed4b02a774cb42c8bd1e14f14fa8b1de578c7d68cc8",
+      "baseline": {
+        "correct": 0,
+        "unwanted": 2,
+        "missing": 20,
+        "median_seconds": 0.0687055999878794
+      },
+      "candidate": {
+        "correct": 20,
+        "unwanted": 2,
+        "missing": 0,
+        "median_seconds": 0.08601830003317446
+      },
+      "lost_expected": [],
+      "gained_expected": [
+        "https://www.debian.org/News/2025/20250111",
+        "https://www.debian.org/News/2025/20250117",
+        "https://www.debian.org/News/2025/20250315",
+        "https://www.debian.org/News/2025/20250517",
+        "https://www.debian.org/News/2025/20250803",
+        "https://www.debian.org/News/2025/20250809",
+        "https://www.debian.org/News/2025/20250906",
+        "https://www.debian.org/News/2025/2025090602",
+        "https://www.debian.org/News/2025/20251115",
+        "https://www.debian.org/News/2026/20260110",
+        "https://www.debian.org/News/2026/2026011002",
+        "https://www.debian.org/News/2026/20260314",
+        "https://www.debian.org/News/2026/20260516",
+        "https://www.debian.org/News/2026/2026051602",
+        "https://www.debian.org/News/2026/20260711",
+        "https://www.debian.org/News/2026/2026071102",
+        "https://www.debian.org/News/2026/20260712",
+        "https://www.debian.org/News/2026/20260807",
+        "https://www.debian.org/News/2026/20260831",
+        "https://www.debian.org/News/2026/20260912"
+      ],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 1
+    },
+    "cascade-arch": {
+      "expected": 50,
+      "capture_sha256": "a3c45c3e2384e3c826b63920fe6527dac120970842fb5ed7b791c44b52628e51",
+      "baseline": {
+        "correct": 50,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.18315059994347394
+      },
+      "candidate": {
+        "correct": 50,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.17245680000633
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "cascade-usenix": {
+      "expected": 53,
+      "capture_sha256": "acdb346177276dd2f38e231eed83dd327a6c7d56d00cd04d6f6e149f3c6ba45c",
+      "baseline": {
+        "correct": 53,
+        "unwanted": 1,
+        "missing": 0,
+        "median_seconds": 0.8164772999007255
+      },
+      "candidate": {
+        "correct": 53,
+        "unwanted": 1,
+        "missing": 0,
+        "median_seconds": 0.8286336000310257
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "cascade-quanta": {
+      "expected": 12,
+      "capture_sha256": "37465fef74c531ad2ca011501be9606666ae0a2f03becdab5d18db4324d92ec7",
+      "baseline": {
+        "correct": 9,
+        "unwanted": 0,
+        "missing": 3,
+        "median_seconds": 0.6399465999566019
+      },
+      "candidate": {
+        "correct": 9,
+        "unwanted": 0,
+        "missing": 3,
+        "median_seconds": 0.7103503999533132
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "cascade-aeon": {
+      "expected": 13,
+      "capture_sha256": "5acf17847ffb52b9a94257b12dfb4fbf89fbdfa1476cc8a351b223c40e6bca97",
+      "baseline": {
+        "correct": 13,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.1590430000796914
+      },
+      "candidate": {
+        "correct": 13,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.13958040007855743
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "cascade-atlas": {
+      "expected": 9,
+      "capture_sha256": "c305fd91210846448f05082a86a24707c12ac5642ad14f076f609c8a36a3f285",
+      "baseline": {
+        "correct": 8,
+        "unwanted": 10,
+        "missing": 1,
+        "median_seconds": 0.229159300099127
+      },
+      "candidate": {
+        "correct": 8,
+        "unwanted": 10,
+        "missing": 1,
+        "median_seconds": 0.22101269999984652
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "cascade-laphams": {
+      "expected": 11,
+      "capture_sha256": "30f7fc22a8ad1ad4f066ec8374de02441d7851eb6dbe9e32e2c81cc18a95bd36",
+      "baseline": {
+        "correct": 11,
+        "unwanted": 1,
+        "missing": 0,
+        "median_seconds": 0.2448209000285715
+      },
+      "candidate": {
+        "correct": 11,
+        "unwanted": 1,
+        "missing": 0,
+        "median_seconds": 0.2451710000168532
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "cascade-smithsonian": {
+      "expected": 15,
+      "capture_sha256": "2ba4c64df163acbae12a10218a81ad080bc4af1bd70cbbbaca61dd911149e387",
+      "baseline": {
+        "correct": 9,
+        "unwanted": 5,
+        "missing": 6,
+        "median_seconds": 0.2158842000644654
+      },
+      "candidate": {
+        "correct": 15,
+        "unwanted": 5,
+        "missing": 0,
+        "median_seconds": 0.2191791000077501
+      },
+      "lost_expected": [],
+      "gained_expected": [
+        "https://www.smithsonianmag.com/science-nature/20-playful-and-powerful-photos-to-celebrate-world-elephant-day-astounded-majestic-mammals-180984865",
+        "https://www.smithsonianmag.com/science-nature/africa-wild-dogs-most-hated-carnivores-continent-heres-why-conservationists-saving-them-anyway-180989287",
+        "https://www.smithsonianmag.com/science-nature/enchanting-colorful-photos-seashells-mollusks-who-create-them-have-you-marveling-at-natural-world-180989291",
+        "https://www.smithsonianmag.com/science-nature/journey-under-the-sea-with-20-amazing-photos-of-marine-life-180984184",
+        "https://www.smithsonianmag.com/science-nature/spain-white-headed-ducks-signature-color-right-name-that-isnt-even-most-remarkable-hue-180989289",
+        "https://www.smithsonianmag.com/science-nature/this-amazing-archive-of-animal-photography-reveals-18000-species-and-counting-heres-how-joel-sartore-built-his-photo-ark-180989282"
+      ],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 12
+    },
+    "cascade-blender": {
+      "expected": 24,
+      "capture_sha256": "ecfbd37045083d387359d89037fc6cd26c8dec09d4ce40890f52ae5ed6b2c49c",
+      "baseline": {
+        "correct": 8,
+        "unwanted": 2,
+        "missing": 16,
+        "median_seconds": 0.18464779993519187
+      },
+      "candidate": {
+        "correct": 20,
+        "unwanted": 2,
+        "missing": 4,
+        "median_seconds": 0.2164232999784872
+      },
+      "lost_expected": [],
+      "gained_expected": [
+        "https://www.blender.org/events/blender-at-siggraph-2026",
+        "https://www.blender.org/events/blender-in-annecy-2026",
+        "https://www.blender.org/events/blender-in-annecy-2026-recap",
+        "https://www.blender.org/events/media-creation-tools-at-fosdem-2026",
+        "https://www.blender.org/press/blender-5-0-release",
+        "https://www.blender.org/press/blender-5-1-release",
+        "https://www.blender.org/press/blender-5-2-lts-release",
+        "https://www.blender.org/press/netflix-animation-studios-joins-the-blender-development-fund-as-corporate-patron",
+        "https://www.blender.org/user-stories/behind-the-scenes-nashville-international-airport",
+        "https://www.blender.org/user-stories/cosmology-with-geometry-nodes",
+        "https://www.blender.org/user-stories/creating-il-baracchino-italys-first-adult-animated-series-made-with-blender",
+        "https://www.blender.org/user-stories/making-flow-an-interview-with-director-gints-zilbalodis"
+      ],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 8
+    },
+    "cascade-imperial": {
+      "expected": 26,
+      "capture_sha256": "c5b802a634367e6932b61ae7a297eaf0caef91058b1100a17f92bdd2b839b0ee",
+      "baseline": {
+        "correct": 26,
+        "unwanted": 10,
+        "missing": 0,
+        "median_seconds": 0.2891013999469578
+      },
+      "candidate": {
+        "correct": 26,
+        "unwanted": 10,
+        "missing": 0,
+        "median_seconds": 0.27206200000364333
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "cascade-nationalgallery": {
+      "expected": 7,
+      "capture_sha256": "b31102574e64131d5a808cb99c08f00feccfa99bf106b87bbe71ed401f1366c1",
+      "baseline": {
+        "correct": 7,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.14076560002285987
+      },
+      "candidate": {
+        "correct": 7,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.13497810007538646
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "review-julia": {
+      "expected": 158,
+      "capture_sha256": "dcb3810d98856931c4449322f3ae59bb4a2b3aecde0f956d65a49527f675aa85",
+      "baseline": {
+        "correct": 158,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.4026575000025332
+      },
+      "candidate": {
+        "correct": 158,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.4080900000408292
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "review-aclanthology": {
+      "expected": 2270,
+      "capture_sha256": "2be506a943155ee4356a4eb21a84759540fd32b0d9e92bdc8a49e26ae888ad37",
+      "baseline": {
+        "correct": 2270,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 3.590907200006768
+      },
+      "candidate": {
+        "correct": 2270,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 3.66253129998222
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "review-gentoo": {
+      "expected": 71,
+      "capture_sha256": "2f4350a1f913b90fa8157df152cc06ff3a00461c1679f281eab65c937b151607",
+      "baseline": {
+        "correct": 71,
+        "unwanted": 13,
+        "missing": 0,
+        "median_seconds": 0.548590200021863
+      },
+      "candidate": {
+        "correct": 71,
+        "unwanted": 13,
+        "missing": 0,
+        "median_seconds": 0.5528883000370115
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "review-kde": {
+      "expected": 10,
+      "capture_sha256": "0bf1ff7ad461051ce518ccc13c9d8994ebf72067a29ef5a7fea11fde341a7eef",
+      "baseline": {
+        "correct": 10,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.13330419990234077
+      },
+      "candidate": {
+        "correct": 10,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.13455019996035844
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 0
+    },
+    "review-publicdomainreview": {
+      "expected": 13,
+      "capture_sha256": "6d5d205f95b2a918656022132d4c1cfd467b42804697d5ff655094c2eab7ddd5",
+      "baseline": {
+        "correct": 13,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.19273360003717244
+      },
+      "candidate": {
+        "correct": 13,
+        "unwanted": 0,
+        "missing": 0,
+        "median_seconds": 0.2100209000054747
+      },
+      "lost_expected": [],
+      "gained_expected": [],
+      "removed_unwanted": 0,
+      "added_unwanted": 0,
+      "changed_entry_fields_including_position": 2
+    }
+  },
+  "skipped": [
+    "nasa-index"
+  ]
+}

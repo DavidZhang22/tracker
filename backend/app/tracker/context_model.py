@@ -149,11 +149,15 @@ class ContextModel:
             return self.fallback.score(numeric, words)
         numeric = numeric[: self.numeric_count]
         sparse = [(i, value) for i, value in enumerate(numeric) if value]
-        text = [
-            self.vocabulary[word]
-            for word in model_tokens(words, self.token_mode)
-            if word in self.vocabulary
-        ]
+        text = (
+            [
+                self.vocabulary[word]
+                for word in model_tokens(words, self.token_mode)
+                if word in self.vocabulary
+            ]
+            if self.vocabulary
+            else []
+        )
         norm = math.sqrt(sum(value * value for _, value in text)) or 1
         sparse += [(i, value / norm) for i, value in text]
         if self.trees is not None:
@@ -189,7 +193,7 @@ class ContextModel:
         return 1 / (1 + math.exp(-max(-60, min(60, value))))
 
     def score_many(self, rows):
-        from .native_model import predict
+        from .native_model import predict_validated
 
         if any(
             len(row["features"]) not in (self.numeric_count, len(NUMERIC_FEATURES))
@@ -198,7 +202,7 @@ class ContextModel:
         ):
             raise ValueError("Invalid context features")
         if self.fallback is None:
-            return predict(self, rows)
+            return predict_validated(self, rows)
         gate = NUMERIC_FEATURES.index("job_table")
         groups = [[], []]
         for i, row in enumerate(rows):
@@ -206,7 +210,7 @@ class ContextModel:
         scores = [0.0] * len(rows)
         for model, group in zip((self.fallback, self), groups, strict=True):
             for (i, _), score in zip(
-                group, predict(model, [row for _, row in group]), strict=True
+                group, predict_validated(model, [row for _, row in group]), strict=True
             ):
                 scores[i] = score
         return scores

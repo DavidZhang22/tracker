@@ -18,6 +18,11 @@ ACTION = re.compile(
 )
 ROLE = re.compile(r"\b(?:role|position|job|title|opportunity)\b", re.I)
 COMPANY = re.compile(r"\b(?:company|employer|organization|organisation)\b", re.I)
+PRIMARY = re.compile(
+    r"^(?:(?:article|paper|chapter|episode|problem|talk|course|lesson|release|book)\s+)?"
+    r"(?:title|name)$|^(?:problem|paper|chapter|episode|talk|lesson)$",
+    re.I,
+)
 
 
 def anchor_label(anchor):
@@ -41,6 +46,18 @@ def table_context(soup):
         companies = [i for i, name in enumerate(names) if COMPANY.search(name)]
         actions = [i for i, name in enumerate(names) if ACTION.search(name)]
         is_job = bool(roles and companies and actions)
+        primary_columns = [
+            i for i, name in enumerate(names) if PRIMARY.fullmatch(name.strip())
+        ]
+        primary_column = (
+            primary_columns[0]
+            if len(primary_columns) == 1
+            and not is_job
+            and headers
+            and all(cell.name == "th" for cell in headers)
+            and not any(cell.get("colspan") or cell.get("rowspan") for cell in headers)
+            else None
+        )
         company = ""
         for row in table.find_all("tr", limit=5001):
             remaining -= 1
@@ -59,7 +76,11 @@ def table_context(soup):
                 if current not in {"", "↳", "↪", "→", "〃", '"'}:
                     company = current
             for column, cell in enumerate(cells):
-                for anchor in cell.find_all("a", href=True, limit=20):
+                anchors = cell.find_all("a", href=True, limit=20)
+                targets = {a["href"] for a in anchors if not a["href"].startswith("#")}
+                for anchor in anchors:
+                    if anchor.find_parent("table") is not table:
+                        continue
                     label = anchor_label(anchor)
                     target = column in actions
                     title = (
@@ -82,6 +103,9 @@ def table_context(soup):
                     result[id(anchor)] = dict(
                         job=is_job,
                         action=target,
+                        primary=column == primary_column
+                        and len(targets) == 1
+                        and anchor["href"] in targets,
                         title=title[:1000],
                         summary=" · ".join(metadata)[:1000],
                         features=[

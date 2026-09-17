@@ -1,0 +1,70 @@
+{
+  "repeats": 3,
+  "pages": {
+    "asura": {
+      "expected": 140,
+      "correct": 140,
+      "unwanted": 0,
+      "missing": 0,
+      "median_seconds": 0.4556322089629248,
+      "capture_sha256": "df54ea4009a17441f2c41277932a6164fc39bb022738211e8e2f1a95913e8cd4",
+      "output_sha256": "67011a51088c9ccbe4a474268ce5f6a02dc4b31e13ba2732af4a07cc50da7c5a"
+    },
+    "royalroad": {
+      "expected": 109,
+      "correct": 109,
+      "unwanted": 0,
+      "missing": 0,
+      "median_seconds": 0.5885092270327732,
+      "capture_sha256": "d12408a0578c0615f2c2be4d724ceee1df9d8b33a6561582a9aae7298f666d48",
+      "output_sha256": "4f3f8fcccc30a4f893d8af0dbeb5d16d0bc32b87514fefd9325fdeecebafceb8"
+    },
+    "xkcd": {
+      "expected": 3294,
+      "correct": 3276,
+      "unwanted": 0,
+      "missing": 18,
+      "median_seconds": 3.7916514850221574,
+      "capture_sha256": "8e1e7e937098943203f36fb8671eaa28eddd81cfb25a339dcac44f5d50c39703",
+      "output_sha256": "60521f975e52a7462dfd358d7eb3042d576b2e271e4bfe39325e588880a4a946"
+    },
+    "w3c-standards": {
+      "expected": 1233,
+      "correct": 1233,
+      "unwanted": 178,
+      "missing": 0,
+      "median_seconds": 8.868675692006946,
+      "capture_sha256": "89045ff21087e0a1c68d209197d254e81197a17ed1b9dd0e5d29a54747691b03",
+      "output_sha256": "2d6367cfa61f75315736e790b2b30e4ae09912b02f3b444c3b03c95b44f9a898"
+    },
+    "review-aclanthology": {
+      "expected": 2270,
+      "correct": 2270,
+      "unwanted": 0,
+      "missing": 0,
+      "median_seconds": 3.785635086009279,
+      "capture_sha256": "2be506a943155ee4356a4eb21a84759540fd32b0d9e92bdc8a49e26ae888ad37",
+      "output_sha256": "95d44a9e2ec9b1da9a373af8f85f9710972a291f7e2ceb4fea6143548da38f41"
+    },
+    "review-gentoo": {
+      "expected": 71,
+      "correct": 71,
+      "unwanted": 13,
+      "missing": 0,
+      "median_seconds": 0.5819924549432471,
+      "capture_sha256": "2f4350a1f913b90fa8157df152cc06ff3a00461c1679f281eab65c937b151607",
+      "output_sha256": "72d051e47c0cb81f5c64004eb52026c59584e9fd53f9c272f2f280d7e1601ad9"
+    },
+    "review-projecteuler": {
+      "expected": 50,
+      "correct": 50,
+      "unwanted": 0,
+      "missing": 0,
+      "median_seconds": 0.18861032999120653,
+      "capture_sha256": "1df4e3303779499195ee0b973d1fdfa8a4ceb6f7719d3708ed4a0c4e8fd3c2dc",
+      "output_sha256": "ad84be2553d299e3eaf78372ecca3c70ed9e0ff90ebf99dd8245c16b844f9db1"
+    }
+  },
+  "skipped": [],
+  "container_peak_bytes": 113647616
+}

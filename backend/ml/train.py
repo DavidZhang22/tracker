@@ -25,39 +25,7 @@ from threadpoolctl import threadpool_limits
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from app.tracker.link_model import FEATURES, VERSION, LinkModel
-
-
-def metrics(rows, predictions):
-    # Count each URL once, accepting it when any of its anchors is accepted.
-    grouped = {}
-    for row, prediction in zip(rows, predictions, strict=True):
-        key = (row["source_id"], row["url"])
-        old = grouped.setdefault(key, [row["label"], False])
-        old[1] |= bool(prediction)
-
-    def score(pairs):
-        tp = sum(y and p for y, p in pairs)
-        fp = sum(not y and p for y, p in pairs)
-        fn = sum(y and not p for y, p in pairs)
-        precision, recall = tp / max(tp + fp, 1), tp / max(tp + fn, 1)
-        return dict(
-            tp=tp,
-            fp=fp,
-            fn=fn,
-            precision=round(precision, 4),
-            recall=round(recall, 4),
-            f1=round(2 * precision * recall / max(precision + recall, 1e-12), 4),
-        )
-
-    result = score(list(grouped.values()))
-    result["by_source"] = {
-        source: score([v for (s, _), v in grouped.items() if s == source])
-        for source in sorted({r["source_id"] for r in rows})
-    }
-    result["macro_f1"] = round(
-        float(np.mean([r["f1"] for r in result["by_source"].values()])), 4
-    )
-    return result
+from ml.evaluation import metrics as metrics
 
 
 def export(estimator, thresholds, model_id):

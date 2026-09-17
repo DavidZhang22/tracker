@@ -9,6 +9,7 @@ from urllib.parse import parse_qsl, unquote, urlsplit
 from bs4 import Tag
 
 from .dom import HEADINGS, first_tag, tags
+from .link_model import FEATURES
 from .link_model import candidates as base_candidates
 from .tables import TABLE_FEATURES, table_context
 
@@ -260,6 +261,10 @@ def context_candidates(soup, source, limit=4000, *, tables=None):
         display = (
             htext if GENERIC.fullmatch(label) and htext and distance < 80 else label
         )
+        if tables.get(id(a), {}).get("primary"):
+            # A verified title-column header supplies the same semantic evidence
+            # as a title class. Older models do not have the table feature tail.
+            features[FEATURES.index("semantic_title")] = 1.0
         yield dict(
             anchor=a,
             url=url,

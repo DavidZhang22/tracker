@@ -65,8 +65,8 @@ def pack(model):
     return doubles(weights), doubles(bias), (ctypes.c_int * len(widths))(*widths)
 
 
-def predict(model, rows):
-    """Only validated ContextModel instances reach the memory-unsafe kernel."""
+def predict_validated(model, rows):
+    """Internal inference after ContextModel validates every vector and model shape."""
     lib = kernel() if os.environ.get("TRACKER_NATIVE_MODEL", "on") != "off" else None
     if lib is None:
         return [model.score(row["features"], row["tokens"]) for row in rows]
@@ -79,17 +79,17 @@ def predict(model, rows):
         vectors = (ctypes.c_double * (len(batch) * width))()
         for i, row in enumerate(batch):
             numeric = row["features"]
-            if len(numeric) < model.numeric_count or not all(
-                math.isfinite(v) and 0 <= v <= 1 for v in numeric
-            ):
-                raise ValueError("Invalid context features")
             for j, value in enumerate(numeric[: model.numeric_count]):
                 vectors[i * width + j] = value
-            text = [
-                model.vocabulary[t]
-                for t in model_tokens(row["tokens"], model.token_mode)
-                if t in model.vocabulary
-            ]
+            text = (
+                [
+                    model.vocabulary[t]
+                    for t in model_tokens(row["tokens"], model.token_mode)
+                    if t in model.vocabulary
+                ]
+                if model.vocabulary
+                else []
+            )
             norm = math.sqrt(sum(value * value for _, value in text)) or 1
             for j, value in text:
                 vectors[i * width + j] = value / norm

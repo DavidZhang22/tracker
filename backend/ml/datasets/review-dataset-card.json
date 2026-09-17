@@ -1,0 +1,28 @@
+{
+  "created": "2026-09-17",
+  "rows": 4039,
+  "sha256": "9e68d36e25e7b7ac8a85c5ba524c0094fab4fe6b5bb8d796cab19aa5cfced785",
+  "splits": {
+    "train": 2503,
+    "validation": 709,
+    "test": 827
+  },
+  "labels": {
+    "0": 1039,
+    "1": 3000
+  },
+  "sources_with_rows": 8,
+  "attempted_sources": 12,
+  "captured_sources": 10,
+  "feature_contract": "84 context features, captured before listing-semantics-v8 table-title projection. Frozen historical rows; rebuilding under newer feature code intentionally changes the rows.",
+  "annotation": "Agent-reviewed primary listing scopes from saved public HTML before model output inspection. URL-level weak labels, not independent human gold. All anchors to a scoped URL share its label.",
+  "partition": "Sources were assigned to train/validation/test before collection. Public source hosts do not overlap partitions. Synthetic legacy layout rows remain development evidence, not independent website tests.",
+  "acquisition": "One listing per configured source through SafeFetcher, including verified redirects. No detail crawling, no access-control bypass. HTTP-rejected sites retained as unavailable. HTML is ignored local data, not redistributed.",
+  "limitations": [
+    "Only eight linked inventories, with new training rows from two hosts; large ACL archive must not dominate by row count.",
+    "Primarily English/technical sources, with some translated Julia titles. No claim of broad multilingual generalization.",
+    "NumPy unlinked headings and CERN JavaScript listing were excluded from link labels; these are acquisition gaps.",
+    "Godot, Signal and Project Euler were not used for fitting or threshold selection. The later Project Euler preprocessing repair used its observed failure, so it is now a regression fixture rather than an untouched test.",
+    "No private account libraries, uploads, passwords, or user corrections were used for training."
+  ]
+}
