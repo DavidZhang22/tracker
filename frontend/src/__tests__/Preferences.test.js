@@ -137,6 +137,53 @@ test("per-item read-on-open and detection settings are saved in one place", asyn
   });
 });
 
+test("manual media type saves independently of the scraping method and can return to automatic", async () => {
+  settings("/settings?item=one");
+  await screen.findByLabelText("Media type");
+  change("Media type", "comic");
+  await click(screen.getByRole("button", { name: "Save item settings" }));
+  expect(patch).toHaveBeenLastCalledWith(
+    "/items/one",
+    expect.objectContaining({ kind_override: "comic", source_method: "auto" }),
+  );
+  expect(screen.getByLabelText("Media type")).toHaveValue("comic");
+  change("Media type", "");
+  await click(screen.getByRole("button", { name: "Save item settings" }));
+  expect(patch).toHaveBeenLastCalledWith(
+    "/items/one",
+    expect.objectContaining({ kind_override: "" }),
+  );
+});
+
+test("preview media type is saved and reset when scanning another source", async () => {
+  post.mockResolvedValue({
+    ...item,
+    kind: "comic",
+    detected_kind: "comic",
+    scan_id: "media-preview",
+    entries: [],
+    warnings: [],
+  });
+  render(
+    <MemoryRouter>
+      <AddPage />
+    </MemoryRouter>,
+  );
+  change(/Source URL/, "https://example.org/series");
+  await click(screen.getByRole("button", { name: "Scan links" }));
+  expect(
+    await screen.findByRole("option", { name: "Automatic (Manga & comics)" }),
+  ).toBeInTheDocument();
+  change("Media type", "novel");
+  await click(screen.getByRole("button", { name: "Add to library" }));
+  expect(post).toHaveBeenLastCalledWith(
+    "/items",
+    expect.objectContaining({ kind_override: "novel" }),
+  );
+  await click(screen.getByRole("button", { name: "Scan links" }));
+  expect(screen.getByLabelText("Media type")).toHaveValue("");
+});
+
 test("source method defaults persist and item methods save independently", async () => {
   settings("/settings?item=one");
   await screen.findByLabelText("Source method");

@@ -9,6 +9,7 @@ Track blogs, chapters, videos, game updates, job listings and other public sourc
 - Dated and numbered links, unread filters, favorites, muted items and Trash.
 - Mobile layouts, bulk actions, reading order preferences and optional mark-as-read on opening a link.
 - Keyword filtering using nearby record context, including language and location.
+- Automatic media types with manual overrides in item settings, plus hidden descriptors for library similarity search.
 - Lightweight refreshes with a full model scan available when a source changes.
 - Suggestions ranked locally using existing source metadata (currently hidden in the interface).
 - Password-protected accounts, data export, session revocation and account deletion.

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { librarySearchIndex, mediaLabel, mediaTypes } from "../media";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   CollectionIcon,
@@ -158,6 +159,11 @@ export default function LibraryPage() {
     }),
     [libraryItems, active],
   );
+  const searchIndex = useMemo(() => librarySearchIndex(items), [items]);
+  const searchScores = useMemo(
+    () => searchIndex(search),
+    [searchIndex, search],
+  );
   const visible = useMemo(
     () =>
       items
@@ -179,16 +185,14 @@ export default function LibraryPage() {
                 : true,
         )
         .filter((i) => kind === "all" || i.kind === kind)
-        .filter((i) =>
-          `${i.title} ${i.url} ${i.source_name || ""}`
-            .normalize("NFKC")
-            .toLowerCase()
-            .includes(search.trim().normalize("NFKC").toLowerCase()),
-        )
+        .filter((i) => searchScores.get(i.id) > 0)
         .sort(
           (a, b) =>
             Number(b.favorite) - Number(a.favorite) ||
             Number(a.ignored) - Number(b.ignored) ||
+            (search.trim()
+              ? searchScores.get(b.id) - searchScores.get(a.id)
+              : 0) ||
             (sort === "title"
               ? a.title.localeCompare(b.title)
               : sort === "unread"
@@ -197,7 +201,7 @@ export default function LibraryPage() {
                     a.latest_discovered_at || a.created_at,
                   )),
         ),
-    [items, trash, filter, kind, search, sort],
+    [items, trash, filter, kind, search, sort, searchScores],
   );
   const visibleIds = useMemo(() => visible.map((i) => i.id), [visible]);
   return (
@@ -310,12 +314,11 @@ export default function LibraryPage() {
               onChange={(e) => setKind(e.target.value)}
             >
               <option value="all">All media</option>
-              <option value="comic">Comics</option>
-              <option value="novel">Novels</option>
-              <option value="youtube">YouTube</option>
-              <option value="blog">Blogs & feeds</option>
-              <option value="website">Websites</option>
-              <option value="events">Events</option>
+              {mediaTypes.map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
             </select>
             <select
               aria-label="Sort items"
@@ -391,16 +394,10 @@ export default function LibraryPage() {
                     <div className="item-meta">
                       <span>
                         {["csv", "document"].includes(i.source_type)
-                          ? "File import"
+                          ? i.source_name || "File import"
                           : new URL(i.url).hostname.replace(/^www\./, "")}
                       </span>
-                      <span className="kind-label">
-                        {["csv", "document"].includes(i.source_type)
-                          ? i.source_name
-                          : i.kind === "youtube"
-                            ? "YouTube"
-                            : i.kind}
-                      </span>
+                      <span className="kind-label">{mediaLabel(i.kind)}</span>
                       {i.new_count > 0 && (
                         <span className="badge">{i.new_count} new</span>
                       )}

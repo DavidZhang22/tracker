@@ -37,5 +37,6 @@ Training uses frozen feature rows. Full page replay additionally needs the ignor
 - [Hydrated listings and JavaScript pagination](reports/javascript-pagination.md)
 - [General listing acquisition and source diversity evaluation](reports/acquisition-methodology.md)
 - [Suggestions](docs/SUGGESTIONS.md)
+- [Media classification, hidden descriptors and model comparison](docs/MEDIA_CLASSIFICATION.md)
 
 - [Document imports and expanded source evaluation](reports/generalization.md)

@@ -14,6 +14,7 @@ from starlette.background import BackgroundTask
 from .csv_import import parse_csv
 from .keywords import terms
 from .limits import MAX_ITEMS, MAX_LINKS, bounded_scan
+from .media_metadata import MediaOverride, annotate
 from .preferences import PreferencesPatch
 from .source_methods import SourceMethod, detect_source_method
 from .store import ItemAdditionCooldown
@@ -38,6 +39,7 @@ class ScanRequest(SourceDetectionRequest):
 
 
 class CreateRequest(BaseModel):
+    kind_override: MediaOverride = ""
     scan_id: str = Field(min_length=1, max_length=64)
     title: str | None = Field(default=None, max_length=300)
     mark_read: bool = False
@@ -61,6 +63,7 @@ def update_settings(body: PreferencesPatch, request: Request):
 
 
 class ItemPatch(BaseModel):
+    kind_override: MediaOverride | None = None
     favorite: bool | None = None
     ignored: bool | None = None
     auto_read: bool | None = None
@@ -205,6 +208,7 @@ async def scan(body: ScanRequest, request: Request):
         "keywords": body.keywords,
         "source_method": method,
     }
+    payload = await run_blocking(annotate, payload)
     sid = await run_blocking(request.state.store.save_scan, payload)
     return payload | {"scan_id": sid}
 
@@ -275,6 +279,7 @@ async def csv_preview(
             payload = await run_blocking(parse_csv, data, filename, **options)
         if target:
             payload.update(url=target["url"], import_item_id=item_id)
+        payload = await run_blocking(annotate, payload)
         sid = await run_blocking(store.save_scan, payload)
     return payload | {"scan_id": sid}
 
@@ -305,7 +310,12 @@ def link_bulk(body: BulkRequest, request: Request):
 def create(body: CreateRequest, request: Request):
     try:
         return request.state.store.create(
-            body.scan_id, body.title, body.mark_read, body.auto_read, body.read_indices
+            body.scan_id,
+            body.title,
+            body.mark_read,
+            body.auto_read,
+            body.read_indices,
+            body.kind_override,
         )
     except ItemAdditionCooldown as exc:
         raise HTTPException(

@@ -39,7 +39,7 @@ from .urls import (
 )
 from .workers import run_blocking
 
-DISCOVERY_VERSION = "listing-semantics-v4"
+DISCOVERY_VERSION = "listing-semantics-v5"
 DEEP_SCAN = ContextVar("deep_scan", default=False)
 INITIAL_DOCUMENT = ContextVar("initial_document", default=None)
 

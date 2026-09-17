@@ -271,7 +271,9 @@ def ranked_suggestions(store, limit=40):
             if row["item_id"] in active:
                 sources.setdefault(row["suggestion_id"], []).append(row["item_id"])
     documents = [
-        tokens(i["title"] + " " + i.get("keywords", "")) for i in active.values()
+        tokens(i["title"] + " " + i.get("keywords", ""))
+        | {t for tag in i.get("search_tags", []) for t in tokens(tag)}
+        for i in active.values()
     ]
     documents += [tokens(c["title"] + " " + c["summary"]) for c in candidates]
     frequency = Counter(t for doc in documents for t in doc)

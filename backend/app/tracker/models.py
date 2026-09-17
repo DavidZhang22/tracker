@@ -115,6 +115,7 @@ class Scan:
     unfiltered_count: int | None = None
     suggestions: list[dict] | None = None
     analysis_mode: str = "deep"
+    source_summary: str = ""
 
     def to_dict(self):
         return asdict(self)

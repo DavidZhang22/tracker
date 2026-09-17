@@ -15,6 +15,7 @@ import { orderedPreview, usePreferences } from "../Contexts/Preferences";
 import SourceMethod from "../Components/SourceMethod";
 import useSourceMethod from "../Hooks/useSourceMethod";
 import ImportInput, { ImportDetails } from "../Components/ImportInput";
+import MediaType from "../Components/MediaType";
 
 export default function AddPage() {
   const { preferences } = usePreferences();
@@ -40,6 +41,7 @@ export default function AddPage() {
   );
   const sourceMethod = source.method;
   const [title, setTitle] = useState(""),
+    [kindOverride, setKindOverride] = useState(""),
     [readMode, setReadMode] = useState("unread"),
     [selectedRead, setSelectedRead] = useState(new Set()),
     [page, setPage] = useState(0);
@@ -111,6 +113,7 @@ export default function AddPage() {
       });
       source.accept(r);
       setResult(r);
+      setKindOverride("");
       setTitle(r.title);
     } catch (e) {
       setError(e.message);
@@ -135,6 +138,7 @@ export default function AddPage() {
         {
           scan_id: result.scan_id,
           title: title.trim() || result.title,
+          ...(!importId && kindOverride ? { kind_override: kindOverride } : {}),
           ...(!importId
             ? {
                 mark_read: readMode === "all",
@@ -204,6 +208,7 @@ export default function AddPage() {
               onInvalidate={() => setResult(null)}
               onPreview={(r) => {
                 setResult(r);
+                setKindOverride("");
                 setPage(0);
                 setReadMode("unread");
                 setSelectedRead(new Set());
@@ -352,7 +357,7 @@ export default function AddPage() {
               </div>
               <div className="preview-head">
                 <div className="item-identity">
-                  <TypeIcon kind={result.kind} />
+                  <TypeIcon kind={kindOverride || result.kind} />
                   <div>
                     <h2>
                       {result.entries.length}{" "}
@@ -404,6 +409,14 @@ export default function AddPage() {
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </label>
+              {!importId && (
+                <MediaType
+                  value={kindOverride}
+                  detected={result.detected_kind || result.kind}
+                  onChange={setKindOverride}
+                  disabled={saving}
+                />
+              )}
               <div>
                 {!importId && (
                   <div className="preview-reading">

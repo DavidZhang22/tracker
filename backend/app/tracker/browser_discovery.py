@@ -43,6 +43,7 @@ async def scan_browser(
         if first is None:
             first = part
         result.title, result.kind = part.title or result.title, part.kind
+        result.source_summary = result.source_summary or part.source_summary
         result.entries = merge_entries(result.entries + part.entries)[:MAX_LINKS]
         result.pages_scanned += 1
     if not result.entries:

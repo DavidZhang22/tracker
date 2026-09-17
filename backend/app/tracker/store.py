@@ -20,6 +20,8 @@ from .limits import (
     MAX_PREVIEWS,
     bounded_scan,
 )
+from .media_metadata import MEDIA_TYPES, annotate
+from .media_metadata import VERSION as MEDIA_VERSION
 from .models import date_rank, utcnow
 from .preferences import Preferences
 from .suggestions import save_observations
@@ -104,6 +106,11 @@ class Store:
                     "source_method": "TEXT NOT NULL DEFAULT 'auto'",
                     "source_type": "TEXT NOT NULL DEFAULT 'web'",
                     "source_name": "TEXT NOT NULL DEFAULT ''",
+                    "detected_kind": "TEXT NOT NULL DEFAULT ''",
+                    "kind_override": "TEXT NOT NULL DEFAULT ''",
+                    "search_tags": "TEXT NOT NULL DEFAULT '[]'",
+                    "source_summary": "TEXT NOT NULL DEFAULT ''",
+                    "media_version": "INTEGER NOT NULL DEFAULT 0",
                 },
                 "links": {
                     "merged_into": "TEXT",
@@ -131,8 +138,45 @@ class Store:
             if db.execute("PRAGMA user_version").fetchone()[0] < 8:
                 self._migrate_link_identities(db)
             link_groups.install_view(db)
-            db.execute("PRAGMA user_version=10")
+            for item in db.execute(
+                "SELECT id FROM items WHERE media_version<?", (MEDIA_VERSION,)
+            ).fetchall():
+                self._refresh_media(db, item["id"])
+            db.execute("PRAGMA user_version=11")
         marker.touch(exist_ok=True)
+
+    @staticmethod
+    def _refresh_media(db, iid, scan=None):
+        item = dict(db.execute("SELECT * FROM items WHERE id=?", (iid,)).fetchone())
+        evidence = item | {
+            "kind": item["detected_kind"] or item["kind"],
+            "detected_kind": "",
+        }
+        if scan is not None:
+            evidence.update(scan)
+            evidence["source_summary"] = (
+                scan.get("source_summary") or item["source_summary"]
+            )
+        else:
+            evidence["entries"] = [
+                dict(row)
+                for row in db.execute(
+                    "SELECT title,url,language FROM links WHERE item_id=? AND deleted=0 ORDER BY position LIMIT 32",
+                    (iid,),
+                )
+            ]
+        metadata = annotate(evidence, item["kind_override"])
+        db.execute(
+            "UPDATE items SET kind=?,detected_kind=?,search_tags=?,source_summary=?,media_version=? WHERE id=?",
+            (
+                metadata["kind"],
+                metadata["detected_kind"],
+                json.dumps(metadata["search_tags"]),
+                metadata["source_summary"],
+                MEDIA_VERSION,
+                iid,
+            ),
+        )
 
     @staticmethod
     def _migrate_link_identities(db):
@@ -232,7 +276,7 @@ class Store:
         for k in ("favorite", "ignored", "auto_read", "read", "is_new", "deleted"):
             if k in r:
                 r[k] = bool(r[k])
-        for k in ("warnings", "methods"):
+        for k in ("warnings", "methods", "search_tags"):
             if k in r:
                 r[k] = json.loads(r[k])
         return r
@@ -305,7 +349,7 @@ class Store:
             ]
 
     def save_scan(self, payload):
-        payload = bounded_scan(payload)
+        payload = annotate(bounded_scan(payload))
         encoded = json.dumps(payload)
         if len(encoded.encode()) > MAX_PREVIEW_BYTES:
             raise ValueError(
@@ -353,8 +397,16 @@ class Store:
             return saved
 
     def create(
-        self, scan_id, title=None, mark_read=False, auto_read=None, read_indices=None
+        self,
+        scan_id,
+        title=None,
+        mark_read=False,
+        auto_read=None,
+        read_indices=None,
+        kind_override="",
     ):
+        if kind_override and kind_override not in MEDIA_TYPES:
+            raise ValueError("Choose a supported media type.")
         iid = uuid.uuid4().hex
         with self.connection() as db:
             db.execute("BEGIN IMMEDIATE")
@@ -430,6 +482,9 @@ class Store:
                     scan.get("source_type", "web"),
                     scan.get("source_name", ""),
                 ),
+            )
+            db.execute(
+                "UPDATE items SET kind_override=? WHERE id=?", (kind_override, iid)
             )
             self._merge(
                 db,
@@ -682,6 +737,7 @@ class Store:
             ),
         )
         save_observations(db, iid, scan.get("suggestions"))
+        self._refresh_media(db, iid, scan)
         return added
 
     def merge(self, iid, scan):
@@ -715,6 +771,7 @@ class Store:
                 "include_path",
                 "keywords",
                 "source_method",
+                "kind_override",
             },
             "links": {"favorite", "ignored", "read"},
         }
@@ -737,6 +794,11 @@ class Store:
                 )
                 if not cur.rowcount:
                     raise KeyError("Record not found.")
+                if (
+                    table == "items"
+                    and {"kind_override", "title", "keywords"} & values.keys()
+                ):
+                    self._refresh_media(db, row_id)
 
     def bulk(self, iid, action):
         self.item(iid)

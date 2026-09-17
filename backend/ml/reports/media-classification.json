@@ -1,0 +1,490 @@
+{
+  "profiles": 47,
+  "domains": 46,
+  "class_counts": {
+    "comic": 2,
+    "novel": 2,
+    "software": 6,
+    "events": 3,
+    "blog": 23,
+    "website": 4,
+    "podcast": 3,
+    "course": 1,
+    "research": 2,
+    "video": 1
+  },
+  "evaluation": "Five-fold domain-grouped cross-validation; one listing per observation, no network requests.",
+  "metrics": {
+    "previous": {
+      "accuracy": 0.4468,
+      "macro_f1": 0.2106,
+      "train_seconds": 0,
+      "batch_inference_ms": 0,
+      "errors": [
+        {
+          "source": "github",
+          "expected": "software",
+          "actual": "website"
+        },
+        {
+          "source": "codeforces",
+          "expected": "events",
+          "actual": "website"
+        },
+        {
+          "source": "rust",
+          "expected": "blog",
+          "actual": "website"
+        },
+        {
+          "source": "paulgraham",
+          "expected": "blog",
+          "actual": "website"
+        },
+        {
+          "source": "hn",
+          "expected": "website",
+          "actual": "blog"
+        },
+        {
+          "source": "pythonbytes",
+          "expected": "podcast",
+          "actual": "blog"
+        },
+        {
+          "source": "xkcd",
+          "expected": "comic",
+          "actual": "blog"
+        },
+        {
+          "source": "go",
+          "expected": "blog",
+          "actual": "website"
+        },
+        {
+          "source": "planetpython",
+          "expected": "website",
+          "actual": "blog"
+        },
+        {
+          "source": "lobsters",
+          "expected": "website",
+          "actual": "blog"
+        },
+        {
+          "source": "changelog",
+          "expected": "podcast",
+          "actual": "blog"
+        },
+        {
+          "source": "simonwillison",
+          "expected": "blog",
+          "actual": "website"
+        },
+        {
+          "source": "realpython",
+          "expected": "course",
+          "actual": "website"
+        },
+        {
+          "source": "gutenberg",
+          "expected": "novel",
+          "actual": "website"
+        },
+        {
+          "source": "talkpython",
+          "expected": "podcast",
+          "actual": "blog"
+        },
+        {
+          "source": "pmlr-volumes",
+          "expected": "research",
+          "actual": "blog"
+        },
+        {
+          "source": "python-releases",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "w3c-standards",
+          "expected": "research",
+          "actual": "website"
+        },
+        {
+          "source": "cascade-sqlite",
+          "expected": "software",
+          "actual": "website"
+        },
+        {
+          "source": "cascade-debian",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-arch",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-usenix",
+          "expected": "video",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-quanta",
+          "expected": "blog",
+          "actual": "website"
+        },
+        {
+          "source": "cascade-blender",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-nationalgallery",
+          "expected": "events",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-britishmuseum",
+          "expected": "events",
+          "actual": "website"
+        }
+      ]
+    },
+    "evidence_classifier": {
+      "accuracy": 0.7234,
+      "macro_f1": 0.5565,
+      "train_seconds": 0,
+      "batch_inference_ms": 0,
+      "errors": [
+        {
+          "source": "hn",
+          "expected": "website",
+          "actual": "blog"
+        },
+        {
+          "source": "pythonbytes",
+          "expected": "podcast",
+          "actual": "blog"
+        },
+        {
+          "source": "planetpython",
+          "expected": "website",
+          "actual": "blog"
+        },
+        {
+          "source": "lobsters",
+          "expected": "website",
+          "actual": "blog"
+        },
+        {
+          "source": "simonwillison",
+          "expected": "blog",
+          "actual": "website"
+        },
+        {
+          "source": "realpython",
+          "expected": "course",
+          "actual": "website"
+        },
+        {
+          "source": "talkpython",
+          "expected": "podcast",
+          "actual": "blog"
+        },
+        {
+          "source": "w3c-standards",
+          "expected": "research",
+          "actual": "website"
+        },
+        {
+          "source": "cascade-debian",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-arch",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-usenix",
+          "expected": "video",
+          "actual": "events"
+        },
+        {
+          "source": "cascade-blender",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-nationalgallery",
+          "expected": "events",
+          "actual": "blog"
+        }
+      ]
+    },
+    "logistic": {
+      "accuracy": 0.4255,
+      "macro_f1": 0.3452,
+      "train_seconds": 0.0145,
+      "batch_inference_ms": 0.674,
+      "errors": [
+        {
+          "source": "asura",
+          "expected": "comic",
+          "actual": "website"
+        },
+        {
+          "source": "python",
+          "expected": "blog",
+          "actual": "website"
+        },
+        {
+          "source": "rust",
+          "expected": "blog",
+          "actual": "website"
+        },
+        {
+          "source": "paulgraham",
+          "expected": "blog",
+          "actual": "software"
+        },
+        {
+          "source": "hn",
+          "expected": "website",
+          "actual": "blog"
+        },
+        {
+          "source": "django",
+          "expected": "blog",
+          "actual": "software"
+        },
+        {
+          "source": "xkcd",
+          "expected": "comic",
+          "actual": "website"
+        },
+        {
+          "source": "go",
+          "expected": "blog",
+          "actual": "software"
+        },
+        {
+          "source": "planetpython",
+          "expected": "website",
+          "actual": "blog"
+        },
+        {
+          "source": "hackaday",
+          "expected": "blog",
+          "actual": "website"
+        },
+        {
+          "source": "changelog",
+          "expected": "podcast",
+          "actual": "software"
+        },
+        {
+          "source": "simonwillison",
+          "expected": "blog",
+          "actual": "website"
+        },
+        {
+          "source": "lwn",
+          "expected": "blog",
+          "actual": "course"
+        },
+        {
+          "source": "schneier",
+          "expected": "blog",
+          "actual": "website"
+        },
+        {
+          "source": "jvns",
+          "expected": "blog",
+          "actual": "website"
+        },
+        {
+          "source": "realpython",
+          "expected": "course",
+          "actual": "blog"
+        },
+        {
+          "source": "pmlr-volumes",
+          "expected": "research",
+          "actual": "events"
+        },
+        {
+          "source": "w3c-standards",
+          "expected": "research",
+          "actual": "website"
+        },
+        {
+          "source": "cascade-debian",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-arch",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-usenix",
+          "expected": "video",
+          "actual": "events"
+        },
+        {
+          "source": "cascade-laphams",
+          "expected": "blog",
+          "actual": "course"
+        },
+        {
+          "source": "cascade-smithsonian",
+          "expected": "blog",
+          "actual": "events"
+        },
+        {
+          "source": "cascade-blender",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-nationalgallery",
+          "expected": "events",
+          "actual": "website"
+        },
+        {
+          "source": "cascade-nist",
+          "expected": "blog",
+          "actual": "software"
+        },
+        {
+          "source": "cascade-eff",
+          "expected": "blog",
+          "actual": "course"
+        }
+      ]
+    },
+    "neural_24": {
+      "accuracy": 0.5532,
+      "macro_f1": 0.3155,
+      "train_seconds": 0.935,
+      "batch_inference_ms": 1.668,
+      "errors": [
+        {
+          "source": "asura",
+          "expected": "comic",
+          "actual": "blog"
+        },
+        {
+          "source": "hn",
+          "expected": "website",
+          "actual": "blog"
+        },
+        {
+          "source": "django",
+          "expected": "blog",
+          "actual": "software"
+        },
+        {
+          "source": "xkcd",
+          "expected": "comic",
+          "actual": "blog"
+        },
+        {
+          "source": "go",
+          "expected": "blog",
+          "actual": "software"
+        },
+        {
+          "source": "planetpython",
+          "expected": "website",
+          "actual": "blog"
+        },
+        {
+          "source": "lobsters",
+          "expected": "website",
+          "actual": "blog"
+        },
+        {
+          "source": "changelog",
+          "expected": "podcast",
+          "actual": "blog"
+        },
+        {
+          "source": "realpython",
+          "expected": "course",
+          "actual": "blog"
+        },
+        {
+          "source": "talkpython",
+          "expected": "podcast",
+          "actual": "blog"
+        },
+        {
+          "source": "pmlr-volumes",
+          "expected": "research",
+          "actual": "blog"
+        },
+        {
+          "source": "esa-gallery",
+          "expected": "website",
+          "actual": "blog"
+        },
+        {
+          "source": "w3c-standards",
+          "expected": "research",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-sqlite",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-debian",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-arch",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-usenix",
+          "expected": "video",
+          "actual": "events"
+        },
+        {
+          "source": "cascade-blender",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-nationalgallery",
+          "expected": "events",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-nist",
+          "expected": "blog",
+          "actual": "software"
+        },
+        {
+          "source": "cascade-eff",
+          "expected": "blog",
+          "actual": "software"
+        }
+      ]
+    }
+  },
+  "metadata_ms_per_item_median": 1.889,
+  "metadata_ms_per_item_max_batch_mean": 2.017,
+  "decision": "Keep the bounded evidence classifier in production. Learned models remain an experiment: several media classes have fewer than five independent domains, and jobs/music are absent. Expand independently labeled source coverage before a learned rollout.",
+  "limitations": "Exploratory comparison on existing development fixtures, not a blind generalization estimate. All models see the same 45 bounded evidence features; no domain names or source-family labels are input features."
+}

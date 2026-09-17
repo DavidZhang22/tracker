@@ -29,6 +29,7 @@ from .listing_structure import (
     observed_identifiers,
     repeated_cards,
 )
+from .media_metadata import source_summary
 from .models import Entry, Scan, date_rank, date_value, sequence_value
 from .pagination import forward_pages
 from .record_context import RecordContext
@@ -409,9 +410,11 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
         else urlsplit(source).hostname
     )
     scan = Scan(source, title, kind, methods=["page"])
+    scan.source_summary = source_summary(soup)
     scan.suggestions = observed_sources(soup, source, kind)
     if not selector and (embedded := embedded_series(soup, source, title)):
         embedded.suggestions = scan.suggestions
+        embedded.source_summary = scan.source_summary
         if include_path:
             embedded.entries = [e for e in embedded.entries if include_path in e.url]
             if len(embedded.entries) < embedded.expected_count:

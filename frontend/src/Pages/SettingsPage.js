@@ -5,6 +5,7 @@ import { AccountPage } from "../Auth/Auth";
 import { Notice } from "../Components/Notice";
 import { linkSortOptions, usePreferences } from "../Contexts/Preferences";
 import SourceMethod from "../Components/SourceMethod";
+import MediaType from "../Components/MediaType";
 
 export default function SettingsPage() {
   const { hash } = useLocation();
@@ -232,7 +233,10 @@ function ItemSettings({ autoUpdate, settingsBusy, onBusy }) {
             setError("");
             setMessage("");
             try {
-              await patch(`/items/${id}`, {
+              const saved = await patch(`/items/${id}`, {
+                ...(draft.kind_override !== undefined
+                  ? { kind_override: draft.kind_override }
+                  : {}),
                 auto_read: draft.auto_read,
                 keywords: draft.keywords || "",
                 selector:
@@ -242,11 +246,11 @@ function ItemSettings({ autoUpdate, settingsBusy, onBusy }) {
                 include_path: draft.include_path,
                 source_method: draft.source_method || "auto",
               });
-              setMessage(
-                ["csv", "document"].includes(draft.source_type)
-                  ? "Item settings saved."
-                  : "Item settings saved. Refresh the item to apply detection changes.",
+              setDraft(saved);
+              setItems((rows) =>
+                rows.map((row) => (row.id === id ? saved : row)),
               );
+              setMessage("Item settings saved.");
             } catch (e) {
               setError(e.message);
             } finally {
@@ -256,6 +260,11 @@ function ItemSettings({ autoUpdate, settingsBusy, onBusy }) {
           }}
         >
           <fieldset disabled={busy || settingsBusy || draft.deleted}>
+            <MediaType
+              value={draft.kind_override}
+              detected={draft.detected_kind || draft.kind}
+              onChange={(value) => change("kind_override", value)}
+            />
             <label className="checkbox">
               <input
                 type="checkbox"
