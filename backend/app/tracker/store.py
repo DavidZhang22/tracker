@@ -270,6 +270,11 @@ class Store:
         finally:
             db.close()
 
+    def check_ready(self):
+        with self.connection() as db:
+            db.execute("SELECT id FROM items LIMIT 1").fetchone()
+            db.execute("SELECT id FROM scans LIMIT 1").fetchone()
+
     def check_active(self):
         if not self.allow_erased and self.erased_marker.exists():
             raise LibraryErased("This account's library has been deleted.")

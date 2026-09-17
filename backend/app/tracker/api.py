@@ -92,8 +92,8 @@ async def rebuild_suggestions(request: Request):
     )
     # Reuse bounded account/global work admission, including its hourly quota.
     with request.app.state.scan_guard.operation(store.path):
-        info = await asyncio.to_thread(collect_cached, store, cache)
-        return await asyncio.to_thread(ranked_suggestions, store) | info
+        info = await run_blocking(collect_cached, store, cache)
+        return await run_blocking(ranked_suggestions, store) | info
 
 
 @router.patch("/suggestions/{sid}")
@@ -171,8 +171,7 @@ def health():
 
 @router.get("/ready")
 def ready(request: Request):
-    with request.app.state.store.connection() as db:
-        db.execute("SELECT id FROM items LIMIT 1").fetchone()
+    request.app.state.store.check_ready()
     if request.app.state.accounts:
         with request.app.state.accounts.connection() as db:
             db.execute("SELECT id FROM users LIMIT 1").fetchone()
@@ -191,8 +190,7 @@ async def scan(body: ScanRequest, request: Request):
     method = body.source_method
     if method == "auto" and body.detect_api and not selector:
         method = detect_source_method(body.url)["source_method"]
-    with request.state.store.connection() as db:
-        db.execute("SELECT id FROM scans LIMIT 1").fetchone()
+    await run_blocking(request.state.store.check_ready)
     with request.app.state.scan_guard.operation(request.state.store.path):
         async with request.app.state.scan_semaphore:
             result = await request.app.state.discoverer.scan(

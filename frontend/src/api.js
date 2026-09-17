@@ -98,15 +98,6 @@ export const post = (path, body = {}) =>
   api(path, { method: "POST", body: JSON.stringify(body) });
 export const patch = (path, body) =>
   api(path, { method: "PATCH", body: JSON.stringify(body) });
-export const uploadCsv = (file, options = {}) =>
-  api(
-    `/scans/csv?${new URLSearchParams({ filename: file.name, ...options })}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "text/csv" },
-      body: file,
-    },
-  );
 export const uploadFile = (file, options = {}) =>
   api(
     `/scans/import?${new URLSearchParams({ filename: file.name, ...options })}`,

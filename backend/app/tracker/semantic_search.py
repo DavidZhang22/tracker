@@ -132,7 +132,7 @@ def corrected_query(query, rows, model):
     return re.sub(r"[^\W_]+", correct, query)
 
 
-def rank(query, rows, vector=None, *, floor=0.30):
+def rank(query, rows, vector=None, *, alternate_query=None, floor=0.30):
     ranked = []
     concepts = {
         tag for tag, pattern in CONCEPTS.items() if re.search(pattern, query, re.I)
@@ -140,6 +140,10 @@ def rank(query, rows, vector=None, *, floor=0.30):
     best_dense = 0
     for row in rows:
         lexical = lexical_score(query, row)
+        if alternate_query and alternate_query != query:
+            # A spelling suggestion must not replace an exact title, URL or source
+            # match. Keep suggestions below the original query's direct matches.
+            lexical = max(lexical, min(2.0, lexical_score(alternate_query, row)))
         dense = 0
         blob = row.get("semantic_vector")
         if vector is not None and blob and len(blob) == DIMENSIONS * 4:
@@ -193,6 +197,7 @@ class SemanticSearch:
                 key = PROFILE_VERSION + ":" + version + ":" + signature
                 if row.get("semantic_key") == key or (
                     model is None
+                    and row.get("semantic_key", "").startswith(PROFILE_VERSION + ":")
                     and row.get("semantic_key", "").endswith(":" + signature)
                 ):
                     continue
@@ -239,9 +244,10 @@ class SemanticSearch:
         except EncoderUnavailable:
             model, vector = None, None
         scores = rank(
-            corrected,
+            query,
             rows,
             vector,
+            alternate_query=corrected,
             floor=0.48 if model and model.name == "bge-small" else 0.30,
         )
         store.check_active()

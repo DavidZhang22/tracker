@@ -76,7 +76,9 @@ def annotated_index(soup, source):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", type=Path, default=ROOT / "ml/datasets/v2-dataset.jsonl")
+    parser.add_argument(
+        "--output", type=Path, default=ROOT / "ml/datasets/v2-dataset.jsonl"
+    )
     args = parser.parse_args()
     sources = json.loads((ROOT / "ml/datasets/sources.json").read_text())
     validation = {"hn", "django", "pythonbytes", "go", "cloudflare"}

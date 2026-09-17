@@ -5,7 +5,7 @@ import {
   screen,
   waitFor,
 } from "@testing-library/react";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { Link, MemoryRouter, Route, Routes } from "react-router-dom";
 import { api, patch, post } from "../api";
 import {
   defaults,
@@ -272,6 +272,52 @@ test("failed settings save retains edits and never claims success", async () => 
   expect(screen.getByLabelText("Default link order")).toHaveValue("asc");
   expect(screen.queryByText("Preferences saved.")).not.toBeInTheDocument();
   expect(saved.link_direction).toBe("desc");
+});
+
+test("a pending item settings save cannot replace the next item's draft", async () => {
+  const second = { ...item, id: "two", title: "Second item", auto_read: false };
+  let finishSave;
+  api.mockImplementation(async (path) =>
+    path === "/settings"
+      ? { ...saved }
+      : path === "/items"
+        ? [item, second]
+        : path === "/items/two"
+          ? second
+          : item,
+  );
+  patch.mockImplementation(
+    () =>
+      new Promise((resolve) => {
+        finishSave = resolve;
+      }),
+  );
+  render(
+    <MemoryRouter initialEntries={["/settings?item=one"]}>
+      <Link to="/settings?item=two">Open second settings</Link>
+      <PreferencesProvider>
+        <SettingsPage />
+      </PreferencesProvider>
+    </MemoryRouter>,
+  );
+  await screen.findByLabelText("Mark as read when opened for this item");
+  await click(screen.getByRole("button", { name: "Save item settings" }));
+  await click(screen.getByRole("link", { name: "Open second settings" }));
+  await waitFor(() =>
+    expect(
+      screen.getByLabelText("Mark as read when opened for this item"),
+    ).not.toBeChecked(),
+  );
+  await act(async () => finishSave(item));
+  expect(screen.getByLabelText("Choose an item")).toHaveValue("two");
+  expect(
+    screen.getByLabelText("Mark as read when opened for this item"),
+  ).not.toBeChecked();
+  expect(screen.getByRole("link", { name: "Back to item" })).toHaveAttribute(
+    "href",
+    "/items/two",
+  );
+  expect(screen.queryByText("Item settings saved.")).not.toBeInTheDocument();
 });
 
 test("failed preference loading can retry without falling back to unsaved defaults", async () => {

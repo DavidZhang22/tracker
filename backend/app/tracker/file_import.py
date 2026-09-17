@@ -188,12 +188,19 @@ def office_html(data, extension):
         ]
         if len(slide_ids) > MAX_PAGES:
             raise DiscoveryError("Import up to 200 slides at a time.")
-        slides = []
+        slides, markup_size = [], 0
         for slide in slide_ids:
             path = package.internal_target(
                 name, relations.get(slide.get(NS_REL + "id"))
             )
-            slides.append(paragraphs(package.xml(path), package.relationships(path)))
+            markup = paragraphs(package.xml(path), package.relationships(path))
+            # Several slide references can reuse the same compressed XML part.
+            markup_size += len(markup)
+            if markup_size > 2 * MAX_TEXT:
+                raise DiscoveryError(
+                    "The extracted document is too large. Split it into smaller files."
+                )
+            slides.append(markup)
         return "".join(
             f'<section data-unit="{i + 1}">{s}</section>' for i, s in enumerate(slides)
         ), {"format": "PowerPoint", "units": len(slides)}
@@ -228,7 +235,7 @@ def office_html(data, extension):
     sheets = [s for s in workbook.iter() if local_name(s.tag) == "sheet"]
     if len(sheets) > 50:
         raise DiscoveryError("Import up to 50 worksheets at a time.")
-    tables, row_count = [], 0
+    tables, row_count, text_size = [], 0, 0
     for sheet in sheets:
         path = package.internal_target(name, relations.get(sheet.get(NS_REL + "id")))
         root = package.xml(path)
@@ -250,6 +257,10 @@ def office_html(data, extension):
             for cell in row:
                 if local_name(cell.tag) != "c":
                     continue
+                if len(cells) >= 64:
+                    raise DiscoveryError(
+                        "Import up to 64 spreadsheet columns at a time."
+                    )
                 value = text_content(cell)
                 if cell.get("t") == "s":
                     try:
@@ -282,13 +293,18 @@ def office_html(data, extension):
                         )
                     ):
                         url, value = literal.groups()
+                # Shared strings can repeat a large value in thousands of cells;
+                # bound expanded text before duplicating it into the HTML buffer.
+                text_size += len(value or url or "")
+                if text_size > MAX_TEXT:
+                    raise DiscoveryError(
+                        "The extracted document is too large. Split it into smaller files."
+                    )
                 cells.append(
                     "<td>"
                     + (link_markup(url, value or url) if url else escape(value))
                     + "</td>"
                 )
-            if len(cells) > 64:
-                raise DiscoveryError("Import up to 64 spreadsheet columns at a time.")
             rows.append("<tr>" + "".join(cells) + "</tr>")
         tables.append(
             "<section><h2>"

@@ -12,6 +12,7 @@ from fastapi.testclient import TestClient
 class Listing:
     async def scan(self, url, *args, **kwargs):
         from app.tracker.models import Entry, Scan
+
         return Scan(
             url,
             "Example",
@@ -26,6 +27,7 @@ def main():
     from app.main import create_app
     from app.tracker.models import Entry, Scan
     from app.tracker.store import Store
+
     with (
         tempfile.TemporaryDirectory() as tmp,
         patch("app.tracker.store.time", side_effect=range(1000, 100000, 8)),

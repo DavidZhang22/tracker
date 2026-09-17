@@ -10,6 +10,7 @@ Track blogs, chapters, videos, game updates, job listings and other public sourc
 - Mobile layouts, bulk actions, reading order preferences and optional mark-as-read on opening a link.
 - Keyword filtering using nearby record context, including language and location.
 - Automatic media types with manual overrides in item settings, plus hidden descriptors for library similarity search.
+- Local semantic library search with typo tolerance, and editable descriptions extracted from scanned source text.
 - Lightweight refreshes with a full model scan available when a source changes.
 - Suggestions ranked locally using existing source metadata (currently hidden in the interface).
 - Password-protected accounts, data export, session revocation and account deletion.
@@ -33,7 +34,7 @@ The [generalization evaluation](backend/ml/reports/generalization.md) records th
 
 ## Organizing links
 
-Search matches titles, URLs and saved metadata. Results stay visible while a search runs, with recent views cached briefly in the current tab.
+Library search combines title and URL matches, typo tolerance and local sentence embeddings of saved metadata and descriptions. Item link search matches text within that item's entries. Results stay visible while a search runs, with recent views cached briefly in the current tab; selection waits for the current results.
 
 Use Selection → Choose a pattern to combine an interval with a position range. For example, every 2 links, starting with 1, within positions 1–49 selects positions 1, 3, 5 … 49 in the current filtered order. Selection can be replaced, extended, reduced or inverted; Shift-click selects a range on the current page.
 
@@ -47,10 +48,11 @@ Chapter and episode lists can also contain titles without links. Trackify stores
 
 Initial scans can learn validated extraction recipes for subsequent refreshes. A bounded, isolated Chromium worker handles JavaScript listings and can learn reusable public JSON listing requests. All browser network requests pass through the application's URL validation, cache and request limits. There is no hosted AI service or GPU requirement.
 
-The models train offline and load numeric JSON weights in production without NumPy or scikit-learn. In a saved four-page, two-CPU benchmark, reusable analysis processes reduced batch time from 9.21 to 6.70 seconds with identical scan output. This measures that fixture workload, not every website.
+The link classifiers train offline and load numeric JSON weights without scikit-learn. Semantic library search uses a quantized MiniLM encoder through ONNX Runtime and NumPy, with text search as a fallback. Descriptions select sentences from the source rather than inventing information. In a saved four-page, two-CPU benchmark, reusable analysis processes reduced batch time from 9.21 to 6.70 seconds with identical scan output. This measures that fixture workload, not every website.
 
 - [Model training and evaluation](backend/ml/docs/LINK_CLASSIFIER.md)
 - [Record context network](backend/ml/docs/RECORD_CONTEXT.md)
+- [Semantic search and descriptions](backend/ml/docs/SEMANTIC_SEARCH.md)
 - [Parallel analysis benchmark](backend/ml/docs/PARALLEL_ANALYSIS.md)
 - [Response memory and refresh throughput](backend/ml/docs/MEMORY_PIPELINE.md)
 - [Lightweight refresh design](backend/ml/docs/LIGHTWEIGHT_REFRESH.md)

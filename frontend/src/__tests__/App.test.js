@@ -133,6 +133,40 @@ test("library pattern selection combines intervals and ranges", async () => {
   ).not.toBeInTheDocument();
 });
 
+test("library search keeps rows visible but blocks selection until the current query settles", async () => {
+  let finishSearch;
+  api.mockImplementation((path) =>
+    path === "/search"
+      ? new Promise((resolve) => {
+          finishSearch = resolve;
+        })
+      : Promise.resolve([item]),
+  );
+  render(
+    <MemoryRouter>
+      <Library />
+    </MemoryRouter>,
+  );
+  await screen.findByText("My series");
+  fireEvent.change(screen.getByLabelText("Selection options"), {
+    target: { value: "pattern" },
+  });
+  fireEvent.change(screen.getByLabelText("Search library"), {
+    target: { value: "series" },
+  });
+  expect(screen.getByLabelText("Select My series")).toBeDisabled();
+  expect(screen.getByLabelText("Select this page")).toBeDisabled();
+  expect(
+    screen.getByRole("button", { name: "Apply selection" }),
+  ).toBeDisabled();
+  expect(screen.getByText("Searching…")).toBeInTheDocument();
+  await waitFor(() => expect(finishSearch).toBeDefined());
+  await act(async () => finishSearch({ scores: [{ id: item.id, score: 1 }] }));
+  expect(screen.getByLabelText("Select My series")).toBeEnabled();
+  expect(screen.getByRole("button", { name: "Apply selection" })).toBeEnabled();
+  expect(screen.queryByText("Searching…")).not.toBeInTheDocument();
+});
+
 test("empty Trash has no example sources or refresh control", async () => {
   api.mockResolvedValue([]);
   render(

@@ -1,6 +1,6 @@
 import { act, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import useLibrarySearch from "../useLibrarySearch";
+import useLibrarySearch from "../Hooks/useLibrarySearch";
 import Description from "../Components/Description";
 import { librarySearchIndex } from "../media";
 import { api } from "../api";
@@ -28,9 +28,9 @@ const deferred = () => {
   return { resolve, promise };
 };
 function Harness({ query, rows = items, trash = false }) {
-  const scores = useLibrarySearch(rows, query, trash);
+  const { scores, updating } = useLibrarySearch(rows, query, trash);
   return (
-    <output>
+    <output aria-busy={updating}>
       {rows
         .filter((row) => scores.get(row.id) > 0)
         .map((row) => row.title)
@@ -63,6 +63,7 @@ test("debounces semantic requests and reuses completed queries", async () => {
     trash: false,
   });
   expect(screen.getByRole("status")).toHaveTextContent("Grand Blue");
+  expect(screen.getByRole("status")).toHaveAttribute("aria-busy", "false");
   view.rerender(<Harness query="" />);
   view.rerender(<Harness query="underwater" />);
   await tick();
@@ -81,6 +82,7 @@ test("retains completed results while typing and discards stale responses", asyn
   view.rerender(<Harness query="news" />);
   await tick();
   expect(screen.getByRole("status")).toHaveTextContent("Grand Blue");
+  expect(screen.getByRole("status")).toHaveAttribute("aria-busy", "true");
   view.rerender(<Harness query="listen" />);
   expect(api.mock.calls[1][1].signal.aborted).toBe(true);
   await tick();
@@ -112,8 +114,17 @@ test("server failure keeps local typo matching available", async () => {
   render(<Harness query="grnad blue" />);
   await tick();
   expect(screen.getByRole("status")).toHaveTextContent("Grand Blue");
+  expect(screen.getByRole("status")).toHaveAttribute("aria-busy", "false");
   expect(librarySearchIndex(items)("pyhton bytes").get("b")).toBeGreaterThan(0);
   expect(librarySearchIndex(items)("scuba diving").get("a")).toBeGreaterThan(0);
+});
+
+test("malformed search responses settle on local matches instead of leaving selection pending", async () => {
+  api.mockResolvedValue({ scores: null });
+  render(<Harness query="grand blue" />);
+  await tick();
+  expect(screen.getByRole("status")).toHaveTextContent("Grand Blue");
+  expect(screen.getByRole("status")).toHaveAttribute("aria-busy", "false");
 });
 
 test("descriptions are plain text with an accessible edit link", () => {

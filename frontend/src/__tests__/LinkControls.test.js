@@ -5,7 +5,7 @@ import {
   screen,
   waitFor,
 } from "@testing-library/react";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { Link, MemoryRouter, Route, Routes } from "react-router-dom";
 import ItemPage from "../Pages/ItemPage";
 import { api, post, patch } from "../api";
 
@@ -187,6 +187,59 @@ test("shift selection and merge send the selected rows in the current view", asy
       direction: "desc",
     }),
   );
+});
+
+test("canceling selection resets the anchor for a later Shift-click", async () => {
+  view();
+  await screen.findByText("Chapter 1");
+  await click(screen.getByLabelText("Select link: Chapter 1"));
+  await click(screen.getByRole("button", { name: "Cancel selection" }));
+  await click(screen.getByLabelText("Select link: Chapter 3"), {
+    shiftKey: true,
+  });
+  expect(screen.getByText("1 selected")).toBeInTheDocument();
+  expect(screen.getByLabelText("Select link: Chapter 1")).not.toBeChecked();
+});
+
+test("changing items isolates the old item's pending updates and search state", async () => {
+  let finishUpdate, finishLoad;
+  patch.mockImplementation(
+    () =>
+      new Promise((resolve) => {
+        finishUpdate = resolve;
+      }),
+  );
+  api.mockImplementation((path) => {
+    if (path === "/items/two")
+      return new Promise((resolve) => {
+        finishLoad = resolve;
+      });
+    return Promise.resolve(path.includes("/links?") ? result : item);
+  });
+  render(
+    <MemoryRouter initialEntries={["/items/one"]}>
+      <Link to="/items/two?search=second">Open second item</Link>
+      <Routes>
+        <Route path="/items/:id" element={<ItemPage />} />
+      </Routes>
+    </MemoryRouter>,
+  );
+  await screen.findByText("Chapter 1");
+  await click(screen.getByLabelText("Favorite item"));
+  await click(screen.getByRole("link", { name: "Open second item" }));
+  expect(
+    screen.queryByRole("heading", { name: "Series" }),
+  ).not.toBeInTheDocument();
+  expect(screen.queryByLabelText("Favorite item")).not.toBeInTheDocument();
+  await act(async () =>
+    finishLoad({ ...item, id: "two", title: "Second series" }),
+  );
+  expect(screen.getByLabelText("Search links")).toHaveValue("second");
+  await act(async () => finishUpdate({ ...item, favorite: true }));
+  expect(
+    screen.getByRole("heading", { name: "Second series" }),
+  ).toBeInTheDocument();
+  expect(screen.getByLabelText("Favorite item")).toBeInTheDocument();
 });
 
 test("a merged row exposes every URL, supports separation and uses Muted wording", async () => {

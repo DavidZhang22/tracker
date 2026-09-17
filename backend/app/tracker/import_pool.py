@@ -10,6 +10,7 @@ from fastapi import HTTPException
 
 from .limits import MAX_CSV_BYTES, MAX_PREVIEW_BYTES
 from .urls import DiscoveryError
+from .workers import await_worker
 
 
 class DocumentImporter:
@@ -73,10 +74,14 @@ class DocumentImporter:
                 "The document could not be processed. Try again or paste its text."
             ) from exc
         finally:
-            if process and process.returncode is None:
-                try:
-                    process.kill()
-                except ProcessLookupError:
-                    pass
-                await process.wait()
-            self.busy = False
+            try:
+                if process and process.returncode is None:
+                    try:
+                        process.kill()
+                    except ProcessLookupError:
+                        pass
+                    # Request disconnects use level cancellation. Retain admission
+                    # until the child is reaped even if cancellation repeats here.
+                    await await_worker(asyncio.create_task(process.wait()))
+            finally:
+                self.busy = False

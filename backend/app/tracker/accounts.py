@@ -195,7 +195,7 @@ class Accounts:
             ) from exc
         return {"id": uid, "username": name, "legacy_library": claim_existing}
 
-    def login(self, name, password):
+    def _credentials(self, name, password):
         with self.connection() as db:
             row = db.execute(
                 "SELECT * FROM users WHERE username=?", (name.strip().lower(),)
@@ -203,17 +203,38 @@ class Accounts:
         valid = matches(row["password_hash"] if row else DUMMY_HASH, password)
         if not row or not valid:
             raise HTTPException(401, "Username or password is incorrect.")
+        row = dict(row)
         if HASHER.check_needs_rehash(row["password_hash"]):
+            encoded = hash_password(password)
             with self.connection() as db:
-                db.execute(
-                    "UPDATE users SET password_hash=? WHERE id=?",
-                    (hash_password(password), row["id"]),
+                changed = db.execute(
+                    "UPDATE users SET password_hash=? WHERE id=? AND password_hash=?",
+                    (encoded, row["id"], row["password_hash"]),
                 )
+                if not changed.rowcount:
+                    raise HTTPException(401, "Your credentials changed. Sign in again.")
+            row["password_hash"] = encoded
+        return row
+
+    def login(self, name, password):
+        row = self._credentials(name, password)
         return {k: row[k] for k in ("id", "username", "legacy_library")}
 
-    def new_session(self, uid):
+    def login_session(self, name, password):
+        row = self._credentials(name, password)
+        token = self.new_session(row["id"], row["password_hash"])
+        return {k: row[k] for k in ("id", "username", "legacy_library")}, token
+
+    def new_session(self, uid, expected_hash):
         token, now = secrets.token_urlsafe(32), time.time()
         with self.connection() as db:
+            # Fence session creation against a reset after password verification.
+            db.execute("BEGIN IMMEDIATE")
+            row = db.execute(
+                "SELECT password_hash FROM users WHERE id=?", (uid,)
+            ).fetchone()
+            if not row or row["password_hash"] != expected_hash:
+                raise HTTPException(401, "Your credentials changed. Sign in again.")
             db.execute("DELETE FROM sessions WHERE expires<?", (now,))
             db.execute(
                 "DELETE FROM sessions WHERE user_id=? AND token_hash NOT IN (SELECT token_hash FROM sessions WHERE user_id=? ORDER BY created DESC LIMIT 4)",
@@ -241,11 +262,29 @@ class Accounts:
                 "DELETE FROM sessions WHERE token_hash=?", (digest(token or ""),)
             )
 
-    def password(self, uid, new_password):
+    def password(self, uid, new_password, *, expected_hash=None):
         encoded = hash_password(new_password)
         with self.connection() as db:
-            db.execute("UPDATE users SET password_hash=? WHERE id=?", (encoded, uid))
+            changed = db.execute(
+                "UPDATE users SET password_hash=? WHERE id=?"
+                + (" AND password_hash=?" if expected_hash is not None else ""),
+                (encoded, uid, expected_hash)
+                if expected_hash is not None
+                else (encoded, uid),
+            )
+            if not changed.rowcount:
+                raise HTTPException(401, "Your credentials changed. Sign in again.")
             db.execute("DELETE FROM sessions WHERE user_id=?", (uid,))
+        return encoded
+
+    def change_password(self, user, current_password, new_password):
+        verified = self._credentials(user["username"], current_password)
+        if verified["id"] != user["id"]:
+            raise HTTPException(401, "Sign in to continue.")
+        encoded = self.password(
+            user["id"], new_password, expected_hash=verified["password_hash"]
+        )
+        return self.new_session(user["id"], encoded)
 
     def store(self, user):
         # IDs are generated on the server, never supplied as a library path.
@@ -362,7 +401,9 @@ def reauthenticate(request, password):
     auth.throttle(
         request.client.host if request.client else "unknown", user["username"]
     )
-    auth.login(user["username"], password)
+    verified = auth.login(user["username"], password)
+    if verified["id"] != user["id"]:
+        raise HTTPException(401, "Sign in to continue.")
     return auth, user
 
 
@@ -476,8 +517,7 @@ def cookie_name(request):
     return COOKIE if request.app.state.secure_cookies else LOCAL_COOKIE
 
 
-def set_session(request, response, uid):
-    token = manager(request).new_session(uid)
+def set_session(request, response, token):
     response.set_cookie(
         cookie_name(request),
         token,
@@ -511,8 +551,8 @@ def status(request: Request, response: Response):
 def login(body: Credentials, request: Request, response: Response):
     auth = manager(request)
     auth.throttle(request.client.host if request.client else "unknown", body.username)
-    user = auth.login(body.username, body.password)
-    set_session(request, response, user["id"])
+    user, token = auth.login_session(body.username, body.password)
+    set_session(request, response, token)
     return {"user": public_user(user)}
 
 
@@ -526,12 +566,13 @@ def register(body: Signup, request: Request, response: Response):
         or not hmac.compare_digest(digest(body.invite_code), digest(auth.signup_code))
     ):
         raise HTTPException(403, "A valid invite code is required.")
-    user = auth.create(
+    auth.create(
         body.username,
         body.password,
         signup_address=address if auth.public_signup else None,
     )
-    set_session(request, response, user["id"])
+    user, token = auth.login_session(body.username, body.password)
+    set_session(request, response, token)
     return {"user": public_user(user)}
 
 
@@ -557,9 +598,8 @@ def password(body: PasswordChange, request: Request, response: Response):
     auth.throttle(
         request.client.host if request.client else "unknown", user["username"]
     )
-    auth.login(user["username"], body.current_password)
-    auth.password(user["id"], body.new_password)
-    set_session(request, response, user["id"])
+    token = auth.change_password(user, body.current_password, body.new_password)
+    set_session(request, response, token)
     return {"ok": True}
 
 

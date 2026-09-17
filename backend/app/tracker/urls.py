@@ -91,10 +91,16 @@ def canonical_url(value, base="", preserve_slash=False):
         raise DiscoveryError("URL is too long or contains unsafe characters.")
     if raw.startswith("#"):
         raise DiscoveryError("Fragment-only links are not content.")
-    p = urlsplit(urljoin(base, raw))
+    try:
+        p = urlsplit(urljoin(base, raw))
+    except ValueError as exc:
+        raise DiscoveryError("Enter a valid public http or https URL.") from exc
     if p.scheme not in ("http", "https") or not p.hostname or p.username or p.password:
         raise DiscoveryError("Enter a public http or https URL without credentials.")
-    host = p.hostname.lower().encode("idna").decode()
+    try:
+        host = p.hostname.lower().encode("idna").decode()
+    except UnicodeError as exc:
+        raise DiscoveryError("The source hostname is invalid.") from exc
     try:
         port = p.port
     except ValueError as exc:

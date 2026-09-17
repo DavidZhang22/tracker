@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { api, patch } from "../api";
 import { AccountPage } from "../Auth/Auth";
@@ -161,6 +161,8 @@ export default function SettingsPage() {
 function ItemSettings({ autoUpdate, settingsBusy, onBusy }) {
   const [params, setParams] = useSearchParams(),
     id = params.get("item") || "";
+  const currentId = useRef(id);
+  currentId.current = id;
   const [items, setItems] = useState([]),
     [draft, setDraft] = useState(null);
   const [busy, setBusy] = useState(false),
@@ -224,7 +226,7 @@ function ItemSettings({ autoUpdate, settingsBusy, onBusy }) {
       </label>
       <Notice error>{error}</Notice>
       <Notice>{message}</Notice>
-      {draft && (
+      {draft?.id === id && (
         <form
           onSubmit={async (e) => {
             e.preventDefault();
@@ -249,13 +251,14 @@ function ItemSettings({ autoUpdate, settingsBusy, onBusy }) {
                 include_path: draft.include_path,
                 source_method: draft.source_method || "auto",
               });
+              if (currentId.current !== id) return;
               setDraft(saved);
               setItems((rows) =>
                 rows.map((row) => (row.id === id ? saved : row)),
               );
               setMessage("Item settings saved.");
             } catch (e) {
-              setError(e.message);
+              if (currentId.current === id) setError(e.message);
             } finally {
               setBusy(false);
               onBusy(false);

@@ -1,6 +1,6 @@
 # Library search and descriptions
 
-Trackify combines lexical matches, Damerau–Levenshtein typo correction, topic hints and cosine similarity from a quantized `all-MiniLM-L6-v2` sentence encoder. Exact names, URLs and filenames retain priority. This indexes library items, not every individual chapter or external page. Existing per-item link filtering remains text-based.
+Trackify combines lexical matches, Damerau–Levenshtein typo correction, topic hints and cosine similarity from a quantized `all-MiniLM-L6-v2` sentence encoder. Exact names, URLs and filenames retain priority, including when spelling correction suggests a different word. This indexes library items, not every individual chapter or external page. Existing per-item link filtering remains text-based.
 
 The CPU encoder produces 384-dimensional normalized vectors. It uses the upstream verified ONNX INT8 export, at most 192 wordpieces, batches of eight, and two inference threads. One lazy encoder serves the API process; parser workers do not load it. No GPU, external vector database, inference API key or additional scraping is needed. Weights are downloaded only during installation/build, pinned by revision and verified against checksums. ONNX telemetry is disabled.
 
@@ -31,7 +31,7 @@ For Windows use `.venv/Scripts/python.exe`. Alternative candidate weights requir
 ## Storage, refresh and failure behavior
 
 - Each account's SQLite database stores its own vectors (1,536 bytes per item, about 300 KiB for 200 items), source excerpts and descriptions. No account text enters a global search cache. Account deletion removes these records; export includes the underlying text and description overrides rather than rebuildable binary vectors.
-- A versioned fingerprint covers title, media type, summary, tags, filename and the user's description. An unchanged item skips inference. Inference happens outside transactions; conditional writes reject stale results after a concurrent edit or deletion. Trash is excluded from indexing. Existing valid vectors can still search Trash.
+- A versioned fingerprint covers title, media type, summary, tags, filename and the user's description. An unchanged item skips inference. Text-only fallback preserves current profiles and rebuilds obsolete profile versions. Inference happens outside transactions; conditional writes reject stale results after a concurrent edit or deletion. Trash is excluded from indexing. Existing valid vectors can still search Trash.
 - Search requests use POST, a 200-character limit, four active searches maximum, and per-account/global rate limits. Cancellation holds admission until the worker actually ends. Queries are not stored server-side. Production access logging is disabled.
 - The browser debounces by 250 ms, cancels outdated requests, caches 24 completed queries in component memory and keeps results visible during updates. Exact/typo text search continues when model files or inference are unavailable. Database failures retain the app's explicit service-unavailable handling; they are never reported as a successful empty library.
 - `TRACKER_SEMANTIC_SEARCH=0` disables the encoder. Restore it and restart after repairing model files. Local setup runs `uv run python ml/fetch_semantic_model.py`; Docker installs the verified model and license automatically.

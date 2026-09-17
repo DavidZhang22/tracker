@@ -9,7 +9,7 @@ from pypdf.annotations import Link
 from pypdf.generic import DecodedStreamObject, DictionaryObject, NameObject
 
 from app.main import create_app
-from app.tracker.file_import import MAX_EXPANDED_BYTES, Package, parse_file
+from app.tracker.file_import import MAX_EXPANDED_BYTES, Package, office_html, parse_file
 from app.tracker.import_pool import DocumentImporter
 from app.tracker.urls import DiscoveryError
 from tests.test_accounts import CONFIG, sign_up
@@ -239,6 +239,35 @@ def test_zip_expansion_and_path_controls():
         Package(archive({"huge.xml": "x" * (MAX_EXPANDED_BYTES + 1)}))
 
 
+def test_spreadsheet_shared_strings_are_bounded_during_expansion(monkeypatch):
+    monkeypatch.setattr("app.tracker.file_import.MAX_TEXT", 1000)
+    data = archive(
+        {
+            "xl/workbook.xml": f'<workbook {REL}><sheets><sheet name="Links" r:id="one"/></sheets></workbook>',
+            "xl/_rels/workbook.xml.rels": '<Relationships><Relationship Id="one" Target="worksheets/sheet1.xml"/></Relationships>',
+            "xl/sharedStrings.xml": "<sst><si><t>" + "x" * 600 + "</t></si></sst>",
+            "xl/worksheets/sheet1.xml": '<worksheet><sheetData><row><c t="s"><v>0</v></c><c t="s"><v>0</v></c></row></sheetData></worksheet>',
+        }
+    )
+    with pytest.raises(DiscoveryError, match="extracted document"):
+        office_html(data, ".xlsx")
+
+
+def test_repeated_slides_are_bounded_during_expansion(monkeypatch):
+    monkeypatch.setattr("app.tracker.file_import.MAX_TEXT", 1000)
+    data = archive(
+        {
+            "ppt/presentation.xml": f'<presentation {REL}><sldIdLst><sldId r:id="one"/><sldId r:id="one"/></sldIdLst></presentation>',
+            "ppt/_rels/presentation.xml.rels": '<Relationships><Relationship Id="one" Target="slides/slide1.xml"/></Relationships>',
+            "ppt/slides/slide1.xml": "<sld><p><r><t>"
+            + "x" * 1100
+            + "</t></r></p></sld>",
+        }
+    )
+    with pytest.raises(DiscoveryError, match="extracted document"):
+        office_html(data, ".pptx")
+
+
 def test_xml_entities_never_expand_or_fetch():
     data = archive(
         {
@@ -348,3 +377,41 @@ async def test_cancelled_import_releases_worker_and_admission():
         await running
     assert not importer.busy
     assert (await importer.parse(docx(), "links.docx"))["entries"]
+
+
+@pytest.mark.asyncio
+async def test_import_disconnect_reaps_worker_before_releasing_admission(monkeypatch):
+    import asyncio
+
+    from anyio import CancelScope
+
+    importer = DocumentImporter()
+
+    class Process:
+        returncode = None
+        killed = False
+        reaped = False
+
+        async def communicate(self, message):
+            scope.cancel()
+            await asyncio.sleep(0)
+
+        def kill(self):
+            self.killed = True
+
+        async def wait(self):
+            await asyncio.sleep(0)
+            assert importer.busy
+            self.returncode = -1
+            self.reaped = True
+
+    process = Process()
+
+    async def spawn(*args, **kwargs):
+        return process
+
+    monkeypatch.setattr(asyncio, "create_subprocess_exec", spawn)
+    with CancelScope() as scope:
+        await importer.parse(b"https://example.org/one", "links.txt")
+    assert process.killed and process.reaped
+    assert not importer.busy

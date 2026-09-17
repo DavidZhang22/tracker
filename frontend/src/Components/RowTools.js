@@ -260,6 +260,7 @@ export function useSelection(scope) {
     clear: () => {
       setIds([]);
       setSelecting(false);
+      anchor.current = null;
     },
     toggle: (id, shift = false, visible = []) => {
       const previous = anchor.current;

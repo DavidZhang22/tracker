@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { mediaLabel, mediaTypes } from "../media";
-import useLibrarySearch from "../useLibrarySearch";
+import useLibrarySearch from "../Hooks/useLibrarySearch";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   CollectionIcon,
@@ -160,7 +160,11 @@ export default function LibraryPage() {
     }),
     [libraryItems, active],
   );
-  const searchScores = useLibrarySearch(items, search, trash);
+  const { scores: searchScores, updating: searching } = useLibrarySearch(
+    items,
+    search,
+    trash,
+  );
   const visible = useMemo(
     () =>
       items
@@ -345,7 +349,7 @@ export default function LibraryPage() {
             selection.apply(matches, mode);
           }}
           onAction={selectedAction}
-          busy={busy}
+          busy={busy || searching}
           trash={trash}
         />
         {error && !items.length && !loading ? (
@@ -378,9 +382,9 @@ export default function LibraryPage() {
                     <input
                       type="checkbox"
                       aria-label={`Select ${i.title}`}
-                      checked={selection.ids.includes(i.id)}
+                      checked={selection.has(i.id)}
                       onChange={() => selection.toggle(i.id)}
-                      disabled={busy}
+                      disabled={busy || searching}
                     />
                   </label>
                   <TypeIcon kind={i.kind} />
@@ -455,7 +459,7 @@ export default function LibraryPage() {
                   />
                   <ActionMenu
                     record={i}
-                    disabled={busy}
+                    disabled={busy || searching}
                     onAction={(action) => selectedAction(action, [i.id])}
                   />
                 </div>
@@ -490,7 +494,11 @@ export default function LibraryPage() {
           </div>
         )}
         <div className="panel-footer">
-          <span>{visible.length} items</span>
+          <span role="status">
+            {searching
+              ? "Searching…"
+              : `${visible.length} ${visible.length === 1 ? "item" : "items"}`}
+          </span>
         </div>
       </div>
       {!trash && !items.length && !loading && !error && (

@@ -53,9 +53,10 @@ def main():
             corrected = corrected_query(query, rows, model)
             vector = model.encode([corrected], query=True)[0] if model else None
             scores = rank(
-                corrected,
+                query,
                 rows,
                 vector,
+                alternate_query=corrected,
                 floor=0.48 if args.model == "bge-small" else 0.30,
             )
             timings.append((time.perf_counter() - started) * 1000)

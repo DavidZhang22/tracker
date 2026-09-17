@@ -8,7 +8,7 @@ from app.tracker.cache import FetchCache
 from app.tracker.discovery import Discoverer
 from app.tracker.listing_recipes import cache_key, cached_listing, infer, learn
 from app.tracker.models import Entry, Scan
-from app.tracker.urls import DiscoveryError, SafeFetcher
+from app.tracker.urls import DiscoveryError, RequestBudget, SafeFetcher, request_budget
 
 SOURCE = "https://example.org/series"
 API = "https://example.org/api/chapters?page=1"
@@ -81,6 +81,44 @@ async def test_changed_layout_invalidates_recipe_instead_of_saving_bad_links():
     f.pages[API] = {"error": "API has changed"}
     assert await cached_listing(f, SOURCE, 40) is None
     assert not f.cache.get(cache_key(SOURCE)).get("recipe")
+
+
+@pytest.mark.asyncio
+async def test_private_browser_page_does_not_learn_or_reuse_shared_listing():
+    f = Listings({API: payload()})
+    token = request_budget.set(RequestBudget(cacheable=False))
+    try:
+        assert (
+            await learn(f, SOURCE, [{"url": API, "data": payload()}], rendered(), 40)
+            is None
+        )
+        assert not f.cache.get(cache_key(SOURCE))
+        recipe = infer({"url": API, "data": payload()}, SOURCE, rendered().entries)
+        f.cache.put(cache_key(SOURCE), {"recipe": recipe})
+        assert await cached_listing(f, SOURCE, 40) is None
+        assert f.calls == []
+    finally:
+        request_budget.reset(token)
+
+
+@pytest.mark.asyncio
+async def test_private_listing_page_prevents_saving_derived_recipe():
+    page2 = "https://example.org/api/chapters?page=2"
+    first = payload(following=page2)
+
+    class PrivateListings(Listings):
+        async def get(self, url, **kwargs):
+            request_budget.get().cacheable = False
+            return await super().get(url, **kwargs)
+
+    f = PrivateListings({page2: payload(3)})
+    token = request_budget.set(RequestBudget())
+    try:
+        result = await learn(f, SOURCE, [{"url": API, "data": first}], rendered(), 40)
+        assert len(result.entries) == 4
+        assert not f.cache.get(cache_key(SOURCE))
+    finally:
+        request_budget.reset(token)
 
 
 @pytest.mark.parametrize(

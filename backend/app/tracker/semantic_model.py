@@ -98,15 +98,24 @@ class Encoder:
                 output = self.session.run(
                     None, {k: v for k, v in arrays.items() if k in self.inputs}
                 )[0]
+                if output.shape != (*arrays["input_ids"].shape, DIMENSIONS):
+                    raise ValueError("Invalid encoder output dimensions")
+                if not np.isfinite(output).all():
+                    raise ValueError("Invalid encoder output values")
                 mask = arrays["attention_mask"][..., None]
                 pooled = (
                     output[:, 0]
                     if self.pooling == "cls"
                     else (output * mask).sum(axis=1) / np.maximum(mask.sum(axis=1), 1)
                 )
-                pooled /= np.maximum(
-                    np.linalg.norm(pooled, axis=1, keepdims=True), 1e-12
-                )
+                norms = np.linalg.norm(pooled, axis=1, keepdims=True)
+                if (
+                    not np.isfinite(pooled).all()
+                    or not np.isfinite(norms).all()
+                    or (norms <= 1e-12).any()
+                ):
+                    raise ValueError("Invalid encoder output values")
+                pooled /= norms
                 result.extend(pooled.astype(np.float32).tolist())
         return result
 

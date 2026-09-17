@@ -17,6 +17,7 @@ from app.tracker.semantic_profile import (
 from app.tracker.semantic_search import (
     SearchAdmission,
     SemanticSearch,
+    corrected_query,
     lexical_score,
     rank,
 )
@@ -79,6 +80,31 @@ def test_typo_search_and_generic_titles_do_not_match_partial_stop_words():
     assert lexical_score("astronomy and planets", rows[1]) < 1
 
 
+@pytest.mark.parametrize(
+    "field,value,query,suggestion",
+    [
+        ("title", "Share", "Share", "shark"),
+        ("source_name", "Hacker", "Hacker", "hacked"),
+        ("url", "https://hacker.example/", "Hacker", "hacked"),
+    ],
+)
+def test_spelling_suggestions_preserve_exact_matches(
+    monkeypatch, field, value, query, suggestion
+):
+    rows = [
+        {"id": "original", "title": "Space Digest", field: value},
+        {"id": "suggestion", "title": suggestion},
+    ]
+    assert corrected_query(query, rows, None) == suggestion
+    store = Mock()
+    store.semantic_records.return_value = rows
+    service = SemanticSearch(lambda: None)
+    monkeypatch.setattr(service, "enrich", lambda store: None)
+    result = service.search(store, query)
+    assert [row["id"] for row in result["scores"]] == ["original", "suggestion"]
+    assert result["scores"][0]["score"] > result["scores"][1]["score"]
+
+
 def test_dense_matches_without_shared_words_and_ignores_bad_vector():
     blob = array("f", [1] + [0] * (DIMENSIONS - 1)).tobytes()
     rows = [
@@ -112,6 +138,32 @@ def test_persisted_index_skips_repeated_inference_and_survives_restart(client):
     store.update("items", item["id"], {"title": "Changed title"})
     service.enrich(store)
     assert len(model.calls) > count
+
+
+def test_text_fallback_updates_old_profiles_but_keeps_current_vectors(client):
+    client.fake.result = manga()
+    item = add(client)
+    store = client.app.state.store
+    SemanticSearch(FakeEncoder).enrich(store)
+    current = store.semantic_records()[0]
+    fallback = SemanticSearch(lambda: None)
+    fallback.enrich(store)
+    assert store.semantic_records()[0] == current
+    with store.connection() as db:
+        db.execute(
+            "UPDATE items SET semantic_key=?,description_auto='Obsolete excerpt' WHERE id=?",
+            ("profile-v0:" + MODEL_VERSION + ":" + fingerprint(current), item["id"]),
+        )
+    fallback.enrich(store)
+    updated = store.semantic_records()[0]
+    assert updated["semantic_key"] == PROFILE_VERSION + ":text-fallback:" + fingerprint(
+        updated
+    )
+    assert updated["semantic_vector"] is None
+    assert (
+        updated["description_auto"]
+        == describe(updated["title"], updated["source_summary"])[0]
+    )
 
 
 def test_manual_description_survives_refresh_and_null_resets(client):

@@ -193,20 +193,27 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
                 "/api/auth/logout",
             }
         ):
-            user = app.state.accounts.user(request.cookies.get(cookie_name(request)))
-            if not user:
-                return JSONResponse(
-                    {"detail": "Sign in to continue."},
-                    status_code=401,
-                    headers={"Cache-Control": "no-store"},
+            try:
+                user = await run_blocking(
+                    app.state.accounts.user, request.cookies.get(cookie_name(request))
                 )
-            request.state.user = user
-            # Account recovery/deletion must remain possible if its library is down.
-            request.state.store = (
-                app.state.store
-                if request.url.path.startswith("/api/auth/")
-                else app.state.accounts.store(user)
-            )
+                if not user:
+                    raise HTTPException(401, "Sign in to continue.")
+                request.state.user = user
+                # Account recovery/deletion must remain possible if its library is down.
+                request.state.store = (
+                    app.state.store
+                    if request.url.path.startswith("/api/auth/")
+                    else await run_blocking(app.state.accounts.store, user)
+                )
+            except HTTPException as exc:
+                # Middleware runs outside the route exception handlers. Deletion
+                # can revoke the account between session lookup and library access.
+                return JSONResponse(
+                    {"detail": exc.detail},
+                    status_code=exc.status_code,
+                    headers={**(exc.headers or {}), "Cache-Control": "no-store"},
+                )
         else:
             request.state.store = app.state.store
         cache = getattr(getattr(app.state.discoverer, "fetcher", None), "cache", None)

@@ -12,13 +12,14 @@ from .browser_client import allowed_request
 from .dates import evidence
 from .limits import MAX_LINKS
 from .models import Entry, Scan
+from .source_cache import cacheable
 from .urls import DiscoveryError, canonical_url, content_key
 from .workers import run_blocking
 
 
 def cache_key(source):
     return (
-        "listing-recipe-v1:"
+        "listing-recipe-v2:"
         + hashlib.sha256(canonical_url(source).encode()).hexdigest()
     )
 
@@ -215,6 +216,8 @@ async def replay(fetcher, source, recipe, max_pages=40, first=None):
 
 
 async def cached_listing(fetcher, source, max_pages):
+    if not cacheable():
+        return None
     cache = getattr(fetcher, "cache", None)
     saved = await run_blocking(cache.get, cache_key(source)) if cache else None
     recipe = (saved or {}).get("recipe")
@@ -228,7 +231,7 @@ async def cached_listing(fetcher, source, max_pages):
 
 async def learn(fetcher, source, observations, rendered, max_pages):
     cache = getattr(fetcher, "cache", None)
-    if not cache:
+    if not cache or not cacheable():
         return None
     for observation in observations:
         recipe = await run_blocking(infer, observation, source, rendered.entries)
@@ -239,7 +242,8 @@ async def learn(fetcher, source, observations, rendered, max_pages):
             result = await replay(
                 fetcher, source, recipe, max_pages, first=observation["data"]
             )
-            await run_blocking(cache.put, cache_key(source), {"recipe": recipe})
+            if cacheable():
+                await run_blocking(cache.put, cache_key(source), {"recipe": recipe})
             return result
         except (DiscoveryError, ValueError, TypeError, KeyError):
             pass

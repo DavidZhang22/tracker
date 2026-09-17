@@ -63,10 +63,13 @@ class FetchCache:
         if not self.path:
             return self.get(key) is not None
         with closing(sqlite3.connect(self.path)) as db:
-            return db.execute(
-                "SELECT 1 FROM cache WHERE key=? AND checked>?",
-                (key, time.time() - 7 * 86400),
-            ).fetchone() is not None
+            return (
+                db.execute(
+                    "SELECT 1 FROM cache WHERE key=? AND checked>?",
+                    (key, time.time() - 7 * 86400),
+                ).fetchone()
+                is not None
+            )
 
     def prune(self):
         with self.lock:

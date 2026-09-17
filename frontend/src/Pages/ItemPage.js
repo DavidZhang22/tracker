@@ -14,7 +14,7 @@ import { Icon, TypeIcon, IconButton } from "../Components/Icons";
 import { Notice } from "../Components/Notice";
 import Description from "../Components/Description";
 import { api, patch, post, checked } from "../api";
-import { usePreferences } from "../Contexts/Preferences";
+import { linkSortOptions, usePreferences } from "../Contexts/Preferences";
 import { useLinkResults } from "../Hooks/useLinkResults";
 import {
   ActionMenu,
@@ -27,8 +27,12 @@ import {
 } from "../Components/RowTools";
 
 export default function ItemPage() {
-  const { preferences } = usePreferences();
   const { id } = useParams();
+  return <ItemDetail key={id} id={id} />;
+}
+
+function ItemDetail({ id }) {
+  const { preferences } = usePreferences();
   const [params] = useSearchParams();
   const [item, setItem] = useState(null),
     [filter, setFilter] = useState("all"),
@@ -279,7 +283,7 @@ export default function ItemPage() {
       </div>
       <Notice
         error
-        resetKey={`${id}:${error}:${item.error}:${item.last_attempt_at}`}
+        resetKey={`${id}:${error}:${searchError}:${item.error}:${item.last_attempt_at}`}
       >
         {error || searchError || item.error}
       </Notice>
@@ -405,12 +409,11 @@ export default function ItemPage() {
               value={sort}
               onChange={(e) => choose(setSort, e.target.value)}
             >
-              <option value="auto">Automatic order</option>
-              <option value="number">Chapter / episode number</option>
-              <option value="date">Content date</option>
-              <option value="source">Source order</option>
-              <option value="discovered">Date discovered</option>
-              <option value="title">Title</option>
+              {linkSortOptions.map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
             </select>
             <select
               aria-label="Order direction"
