@@ -21,6 +21,7 @@ from app.tracker.discovery import Discoverer
 from app.tracker.guards import ApiGuard, ScanGuard
 from app.tracker.import_pool import DocumentImporter
 from app.tracker.privacy import router as privacy_router
+from app.tracker.semantic_search import SearchAdmission, SemanticSearch
 from app.tracker.store import LibraryErased, Store
 from app.tracker.urls import SafeFetcher
 from app.tracker.workers import run_blocking
@@ -89,6 +90,8 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
     )
     app.state.scan_semaphore = asyncio.Semaphore(6)
     app.state.scan_guard = ScanGuard()
+    app.state.semantic = SemanticSearch()
+    app.state.search_guard = SearchAdmission()
     app.state.refresh_locks = [asyncio.Lock() for _ in range(64)]
     config = (
         auth_config

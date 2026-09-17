@@ -16,6 +16,7 @@ import SourceMethod from "../Components/SourceMethod";
 import useSourceMethod from "../Hooks/useSourceMethod";
 import ImportInput, { ImportDetails } from "../Components/ImportInput";
 import MediaType from "../Components/MediaType";
+import Description from "../Components/Description";
 
 export default function AddPage() {
   const { preferences } = usePreferences();
@@ -418,6 +419,7 @@ export default function AddPage() {
                 />
               )}
               <div>
+                {!importId && <Description item={result} preview />}
                 {!importId && (
                   <div className="preview-reading">
                     <label className="field">

@@ -63,6 +63,7 @@ def update_settings(body: PreferencesPatch, request: Request):
 
 
 class ItemPatch(BaseModel):
+    description_override: str | None = Field(default=None, max_length=1200)
     kind_override: MediaOverride | None = None
     favorite: bool | None = None
     ignored: bool | None = None
@@ -209,6 +210,7 @@ async def scan(body: ScanRequest, request: Request):
         "source_method": method,
     }
     payload = await run_blocking(annotate, payload)
+    payload = await run_blocking(request.app.state.semantic.preview, payload)
     sid = await run_blocking(request.state.store.save_scan, payload)
     return payload | {"scan_id": sid}
 
@@ -216,6 +218,22 @@ async def scan(body: ScanRequest, request: Request):
 @router.get("/items")
 def items(request: Request, trash: bool = False):
     return request.state.store.items(trash=trash)
+
+
+class SearchRequest(BaseModel):
+    query: str = Field(min_length=1, max_length=200)
+    trash: bool = False
+
+
+@router.post("/search")
+async def search_library(body: SearchRequest, request: Request):
+    with request.app.state.search_guard.operation(request.state.store.path):
+        return await run_blocking(
+            request.app.state.semantic.search,
+            request.state.store,
+            body.query,
+            body.trash,
+        )
 
 
 @router.post("/scans/import")
@@ -280,6 +298,7 @@ async def csv_preview(
         if target:
             payload.update(url=target["url"], import_item_id=item_id)
         payload = await run_blocking(annotate, payload)
+        payload = await run_blocking(request.app.state.semantic.preview, payload)
         sid = await run_blocking(store.save_scan, payload)
     return payload | {"scan_id": sid}
 
@@ -291,7 +310,9 @@ class CsvImportRequest(BaseModel):
 
 @router.post("/items/{iid}/import")
 def import_csv(iid: str, body: CsvImportRequest, request: Request):
-    return request.state.store.import_csv(iid, body.scan_id, body.title)
+    request.state.store.import_csv(iid, body.scan_id, body.title)
+    request.app.state.semantic.enrich(request.state.store, [iid])
+    return request.state.store.item(iid)
 
 
 @router.post("/items/bulk")
@@ -309,7 +330,7 @@ def link_bulk(body: BulkRequest, request: Request):
 @router.post("/items", status_code=201)
 def create(body: CreateRequest, request: Request):
     try:
-        return request.state.store.create(
+        created = request.state.store.create(
             body.scan_id,
             body.title,
             body.mark_read,
@@ -317,6 +338,8 @@ def create(body: CreateRequest, request: Request):
             body.read_indices,
             body.kind_override,
         )
+        request.app.state.semantic.enrich(request.state.store, [created["id"]])
+        return request.state.store.item(created["id"])
     except ItemAdditionCooldown as exc:
         raise HTTPException(
             429, str(exc), headers={"Retry-After": str(exc.retry_after)}
@@ -327,6 +350,8 @@ def create(body: CreateRequest, request: Request):
 
 @router.get("/items/{iid}")
 def item(iid: str, request: Request):
+    request.state.store.refresh_source(iid)
+    request.app.state.semantic.enrich(request.state.store, [iid])
     return request.state.store.item(iid)
 
 
@@ -336,7 +361,12 @@ def update_item(iid: str, body: ItemPatch, request: Request):
         terms(body.keywords)
     store = request.state.store
     store.item(iid)
-    store.update("items", iid, body.model_dump(exclude_none=True))
+    values = body.model_dump(exclude_none=True)
+    if "description_override" in body.model_fields_set:
+        values["description_override"] = body.description_override
+    store.update("items", iid, values)
+    if {"title", "kind_override", "description_override", "keywords"} & values.keys():
+        request.app.state.semantic.enrich(store, [iid])
     return store.item(iid)
 
 
@@ -433,6 +463,7 @@ async def refresh_item(iid, app, store, skip_unavailable=False, deep=False):
                     + " ".join(result.warnings)
                 )
             added = await run_blocking(lambda: store.merge(iid, result.to_dict()))
+            await run_blocking(app.state.semantic.enrich, store, [iid])
             return {
                 "id": iid,
                 "new_count": added,

@@ -399,7 +399,11 @@ def export_account(body: ConfirmAccount, request: Request):
                     store.check_active()
                     if time.monotonic() - started > 120:
                         raise TimeoutError("Export timed out")
-                    yield ("" if first else ",") + json.dumps(dict(row))
+                    record = dict(row)
+                    # Derived search vectors are rebuildable; export all source and user text.
+                    record.pop("semantic_vector", None)
+                    record.pop("semantic_key", None)
+                    yield ("" if first else ",") + json.dumps(record)
                     first = False
                 yield "]"
         yield "}"

@@ -26,6 +26,7 @@ yarn-error.log*
 
 backend/.venv/
 backend/data/
+backend/models/
 backend/tests/live/
 .pytest_cache/
 *.sqlite3-wal

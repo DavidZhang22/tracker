@@ -12,6 +12,7 @@ import {
 } from "@heroicons/react/outline";
 import { Icon, TypeIcon, IconButton } from "../Components/Icons";
 import { Notice } from "../Components/Notice";
+import Description from "../Components/Description";
 import { api, patch, post, checked } from "../api";
 import { usePreferences } from "../Contexts/Preferences";
 import { useLinkResults } from "../Hooks/useLinkResults";
@@ -283,6 +284,7 @@ export default function ItemPage() {
         {error || searchError || item.error}
       </Notice>
       <Notice>{message}</Notice>
+      <Description item={item} />
       {item.deleted && (
         <Notice>
           This item is in Trash.{" "}

@@ -24,6 +24,7 @@ from .media_metadata import MEDIA_TYPES, annotate
 from .media_metadata import VERSION as MEDIA_VERSION
 from .models import date_rank, utcnow
 from .preferences import Preferences
+from .semantic_profile import fingerprint
 from .suggestions import save_observations
 from .urls import DiscoveryError, canonical_url, content_key
 
@@ -111,6 +112,11 @@ class Store:
                     "search_tags": "TEXT NOT NULL DEFAULT '[]'",
                     "source_summary": "TEXT NOT NULL DEFAULT ''",
                     "media_version": "INTEGER NOT NULL DEFAULT 0",
+                    "description_auto": "TEXT NOT NULL DEFAULT ''",
+                    "description_override": "TEXT",
+                    "description_method": "TEXT NOT NULL DEFAULT ''",
+                    "semantic_key": "TEXT NOT NULL DEFAULT ''",
+                    "semantic_vector": "BLOB",
                 },
                 "links": {
                     "merged_into": "TEXT",
@@ -142,7 +148,7 @@ class Store:
                 "SELECT id FROM items WHERE media_version<?", (MEDIA_VERSION,)
             ).fetchall():
                 self._refresh_media(db, item["id"])
-            db.execute("PRAGMA user_version=11")
+            db.execute("PRAGMA user_version=12")
         marker.touch(exist_ok=True)
 
     @staticmethod
@@ -273,6 +279,14 @@ class Store:
         if row is None:
             return None
         r = dict(row)
+        r.pop("semantic_vector", None)
+        r.pop("semantic_key", None)
+        if "description_auto" in r:
+            r["description"] = (
+                r["description_override"]
+                if r["description_override"] is not None
+                else r["description_auto"]
+            )
         for k in ("favorite", "ignored", "auto_read", "read", "is_new", "deleted"):
             if k in r:
                 r[k] = bool(r[k])
@@ -280,6 +294,31 @@ class Store:
             if k in r:
                 r[k] = json.loads(r[k])
         return r
+
+    def semantic_records(self, ids=None, trash=False):
+        with self.connection() as db:
+            rows = [
+                dict(row)
+                for row in db.execute(
+                    "SELECT * FROM items WHERE deleted=? ORDER BY id LIMIT ?",
+                    (bool(trash), MAX_ITEMS),
+                )
+            ]
+        return rows if ids is None else [row for row in rows if row["id"] in ids]
+
+    def save_semantic(self, iid, signature, key, description, method, vector):
+        with self.connection() as db:
+            db.execute("BEGIN IMMEDIATE")
+            row = db.execute(
+                "SELECT * FROM items WHERE id=? AND deleted=0", (iid,)
+            ).fetchone()
+            if row is None or fingerprint(dict(row)) != signature:
+                return False
+            db.execute(
+                "UPDATE items SET description_auto=?,description_method=?,semantic_key=?,semantic_vector=? WHERE id=?",
+                (description, method, key, vector, iid),
+            )
+            return True
 
     def items(self, item_id=None, trash=False):
         with self.connection() as db:
@@ -772,6 +811,7 @@ class Store:
                 "keywords",
                 "source_method",
                 "kind_override",
+                "description_override",
             },
             "links": {"favorite", "ignored", "read"},
         }

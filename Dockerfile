@@ -16,6 +16,9 @@ COPY backend/pyproject.toml backend/uv.lock backend/README.MD ./
 RUN uv sync --frozen --no-dev
 COPY backend/app/main.py ./app/main.py
 COPY backend/app/tracker ./app/tracker
+COPY backend/ml/fetch_semantic_model.py ./ml/fetch_semantic_model.py
+COPY backend/ml/licenses ./ml/licenses
+RUN .venv/bin/python ml/fetch_semantic_model.py --model minilm-l6
 COPY --from=inference /model_native.so ./app/tracker/_model_native.so
 COPY --from=frontend /src/frontend/build /app/frontend/build
 RUN useradd --create-home tracker && mkdir -p /data && chown tracker:tracker /data && chmod 700 /data

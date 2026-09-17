@@ -5,6 +5,7 @@ frontend/node_modules
 backend/.venv
 backend/data
 backend/tests
+backend/models
 **/__pycache__
 **/.env
 **/.env.*

@@ -1,5 +1,7 @@
 # Models and discovery tools
 
+Library search and source descriptions use a local quantized sentence encoder. See [semantic search](docs/SEMANTIC_SEARCH.md) for installation, evaluation, privacy and resource limits.
+
 Production loads bounded numeric JSON models in [`app/tracker`](../app/tracker). The optional light/deep cascade adds a small neural rescue pass to the existing link classifier. Docker builds compile a fixed C inference kernel; Python remains the fallback. Training and benchmarking are offline tools, excluded from the production image.
 
 | Location | Purpose |

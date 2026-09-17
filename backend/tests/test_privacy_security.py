@@ -17,6 +17,7 @@ from app.tracker.cache import FetchCache, cache_epochs
 from app.tracker.discovery import youtube_archive
 from app.tracker.erasure import apply_erasure, ledger
 from app.tracker.models import Entry, Scan
+from app.tracker.semantic_search import SemanticSearch
 from app.tracker.store import LibraryErased, Store
 from app.tracker.urls import (
     DiscoveryError,
@@ -25,6 +26,7 @@ from app.tracker.urls import (
     public_addresses,
 )
 from tests.test_accounts import CONFIG, PASSWORD, add, client, sign_up
+from tests.test_semantic_search import FakeEncoder
 from tests.test_store_api import FakeDiscoverer
 
 
@@ -38,6 +40,14 @@ def test_export_is_reauthenticated_scoped_complete_and_rate_limited(app):
     sign_up(alice, "alice")
     sign_up(bob, "bob")
     item = add(alice)
+    store = app.state.accounts.store(app.state.accounts.user(alice.cookies.get(COOKIE)))
+    store.update("items", item["id"], {"description_override": "Private description"})
+    SemanticSearch(FakeEncoder).enrich(store)
+    assert store.semantic_records()[0]["semantic_vector"]
+    assert (
+        bob.post("/api/search", json={"query": "Private description"}).json()["scores"]
+        == []
+    )
     assert (
         alice.post("/api/auth/export", json={"current_password": "wrong"}).status_code
         == 401
@@ -49,6 +59,8 @@ def test_export_is_reauthenticated_scoped_complete_and_rate_limited(app):
         data["account"]["username"] == "alice" and data["items"][0]["id"] == item["id"]
     )
     assert "password_hash" not in response.text and "token_hash" not in response.text
+    assert data["items"][0]["description_override"] == "Private description"
+    assert "semantic_vector" not in data["items"][0]
     assert "attachment" in response.headers["content-disposition"]
     assert response.headers["cache-control"] == "no-store"
     assert (

@@ -234,6 +234,9 @@ function ItemSettings({ autoUpdate, settingsBusy, onBusy }) {
             setMessage("");
             try {
               const saved = await patch(`/items/${id}`, {
+                ...(draft.description_override !== undefined
+                  ? { description_override: draft.description_override }
+                  : {}),
                 ...(draft.kind_override !== undefined
                   ? { kind_override: draft.kind_override }
                   : {}),
@@ -265,6 +268,36 @@ function ItemSettings({ autoUpdate, settingsBusy, onBusy }) {
               detected={draft.detected_kind || draft.kind}
               onChange={(value) => change("kind_override", value)}
             />
+            <label className="field">
+              Description
+              <textarea
+                rows={5}
+                maxLength={1200}
+                value={
+                  draft.description_override ??
+                  draft.description_auto ??
+                  draft.description ??
+                  ""
+                }
+                onChange={(e) => change("description_override", e.target.value)}
+              />
+            </label>
+            <div className="description-source">
+              <span className="hint">
+                {draft.description_override == null
+                  ? "Selected from the scanned source. Updates on refresh."
+                  : "Your description is kept when this item refreshes."}
+              </span>
+              {draft.description_override != null && (
+                <button
+                  className="text-button"
+                  type="button"
+                  onClick={() => change("description_override", null)}
+                >
+                  Use source description
+                </button>
+              )}
+            </div>
             <label className="checkbox">
               <input
                 type="checkbox"

@@ -4,6 +4,7 @@ See the [project README](../README.MD) for setup and deployment.
 
 ```powershell
 uv sync
+uv run python ml/fetch_semantic_model.py
 uv run uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 uv run pytest -q
 ```

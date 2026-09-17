@@ -1,0 +1,25 @@
+{
+  "bge-small": {
+    "repository": "Xenova/bge-small-en-v1.5",
+    "revision": "ea104dacec62c0de699686887e3f920caeb4f3e3",
+    "model": "onnx/model_quantized.onnx",
+    "sha256": "6c9c6101a956d62dfb5e7190c538226c0c5bb9cb27b651234b6df063ee7dbfe4",
+    "tokenizer_git_blob": "688882a79f44442ddc1f60d70334a7ff5df0fb47",
+    "pooling": "cls",
+    "query_prefix": "Represent this sentence for searching relevant passages: "
+  },
+  "minilm-l6": {
+    "repository": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "model": "onnx/model_quint8_avx2.onnx",
+    "sha256": "b941bf19f1f1283680f449fa6a7336bb5600bdcd5f84d10ddc5cd72218a0fd21",
+    "tokenizer_git_blob": "cb202bfe2e3c98645018a6d12f182a434c9d3e02"
+  },
+  "minilm-l3": {
+    "repository": "sentence-transformers/paraphrase-MiniLM-L3-v2",
+    "revision": "4ca70771034acceecb2e72475f72050fcdde4ddc",
+    "model": "onnx/model_quint8_avx2.onnx",
+    "sha256": "7b411e18f5974428b388be5667cf76d57c2a52968e1d6b0153a30a8ccfb34204",
+    "tokenizer_git_blob": "13a88ab79464a6da029fce1e5be0c663cf988234"
+  }
+}

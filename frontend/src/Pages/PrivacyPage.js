@@ -80,8 +80,9 @@ export default function PrivacyPage({ terms = false }) {
                 We store your username, an Argon2id password hash, account
                 creation time, hashed session tokens and their expiry, your
                 source URLs, saved link metadata, reading progress, favorites,
-                muted items, Trash, settings and temporary scan previews.
-                Passwords and raw session tokens are not stored in the database.
+                muted items, Trash, settings, descriptions, derived search
+                vectors and temporary scan previews. Passwords and raw session
+                tokens are not stored in the database.
               </p>
               <p>
                 File and pasted-text imports store the source name and extracted
@@ -108,9 +109,14 @@ export default function PrivacyPage({ terms = false }) {
               </p>
               <p>
                 Local models classify source and imported link metadata and rank
-                suggestions from your library. This does not make decisions with
-                legal or similarly significant effects. Your account and library
-                are not sent to an external AI service for these features.
+                suggestions from your library. A local sentence model selects
+                descriptions from source text and matches library searches by
+                meaning. Search vectors stay in your account's database and are
+                erased with the account; exports include the source text and
+                descriptions needed to rebuild them. Queries are processed in
+                memory. This does not make decisions with legal or similarly
+                significant effects. Your account and library are not sent to an
+                external AI service for these features.
               </p>
               <p>
                 YouTube sources are also subject to{" "}

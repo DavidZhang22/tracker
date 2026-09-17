@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { librarySearchIndex, mediaLabel, mediaTypes } from "../media";
+import { mediaLabel, mediaTypes } from "../media";
+import useLibrarySearch from "../useLibrarySearch";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   CollectionIcon,
@@ -159,11 +160,7 @@ export default function LibraryPage() {
     }),
     [libraryItems, active],
   );
-  const searchIndex = useMemo(() => librarySearchIndex(items), [items]);
-  const searchScores = useMemo(
-    () => searchIndex(search),
-    [searchIndex, search],
-  );
+  const searchScores = useLibrarySearch(items, search, trash);
   const visible = useMemo(
     () =>
       items
@@ -299,8 +296,8 @@ export default function LibraryPage() {
               <Icon as={SearchIcon} />
               <input
                 aria-label="Search library"
+                maxLength={200}
                 type="search"
-                maxLength={300}
                 placeholder="Search your library"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}

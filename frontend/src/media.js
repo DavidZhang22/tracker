@@ -26,6 +26,23 @@ const words = (text) =>
       .match(/[\p{L}\p{N}]{2,}/gu) || [],
   );
 
+const near = (a, b) => {
+  if (Math.min(a.length, b.length) < 4 || Math.abs(a.length - b.length) > 1)
+    return false;
+  let i = 0;
+  while (i < a.length && a[i] === b[i]) i++;
+  if (a.length === b.length)
+    return (
+      a.slice(i + 1) === b.slice(i + 1) ||
+      (a[i] === b[i + 1] &&
+        a[i + 1] === b[i] &&
+        a.slice(i + 2) === b.slice(i + 2))
+    );
+  return a.length > b.length
+    ? a.slice(i + 1) === b.slice(i)
+    : a.slice(i) === b.slice(i + 1);
+};
+
 // Rebuild sparse TF-IDF vectors only when library metadata changes.
 export function librarySearchIndex(items) {
   const frequency = new Map();
@@ -36,6 +53,7 @@ export function librarySearchIndex(items) {
       [exact, 1],
       [item.title, 3],
       [(item.search_tags || []).join(" "), 2],
+      [item.description || item.source_summary, 1],
     ]) {
       for (const word of words(text))
         weights.set(word, Math.max(weight, weights.get(word) || 0));
@@ -61,12 +79,22 @@ export function librarySearchIndex(items) {
       terms = [...words(text)];
     const queryNorm =
       Math.hypot(...terms.map((word) => idf.get(word) || 1)) || 1;
+    const alternatives = new Map(
+      terms.map((term) => [
+        term,
+        frequency.has(term)
+          ? [term]
+          : [...frequency.keys()].filter((word) => near(term, word)),
+      ]),
+    );
     return new Map(
       vectors.map(({ id, exact, vector, norm }) => {
-        const complete =
-          terms.length && terms.every((word) => vector.has(word));
+        const matched = terms.map((word) =>
+          alternatives.get(word).find((candidate) => vector.has(candidate)),
+        );
+        const complete = terms.length && matched.every(Boolean);
         const cosine = complete
-          ? terms.reduce(
+          ? matched.reduce(
               (sum, word) => sum + vector.get(word) * idf.get(word),
               0,
             ) /

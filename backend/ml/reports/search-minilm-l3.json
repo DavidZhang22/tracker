@@ -1,0 +1,405 @@
+{
+  "model": "minilm-l3",
+  "profiles": 47,
+  "queries": 34,
+  "load_ms": 358.22,
+  "index_ms": 1975.57,
+  "query_p50_ms": 8.38,
+  "query_p95_ms": 9.73,
+  "rss_mb": 113.5,
+  "groups": {
+    "exact": {
+      "total": 6,
+      "top1": 5,
+      "recall3": 5,
+      "empty": 1
+    },
+    "typo": {
+      "total": 8,
+      "top1": 8,
+      "recall3": 8,
+      "empty": 0
+    },
+    "meaning": {
+      "total": 16,
+      "top1": 13,
+      "recall3": 13,
+      "empty": 2
+    },
+    "negative": {
+      "total": 4,
+      "top1": 0,
+      "recall3": 0,
+      "empty": 4
+    }
+  },
+  "results": [
+    {
+      "query": "mohter of learnign",
+      "expected": [
+        "royalroad"
+      ],
+      "group": "typo",
+      "top3": [
+        "royalroad"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "pyhton bytes",
+      "expected": [
+        "pythonbytes"
+      ],
+      "group": "typo",
+      "top3": [
+        "pythonbytes",
+        "python"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "clouflare",
+      "expected": [
+        "cloudflare"
+      ],
+      "group": "typo",
+      "top3": [
+        "cloudflare"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "codefroces",
+      "expected": [
+        "codeforces"
+      ],
+      "group": "typo",
+      "top3": [
+        "codeforces"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "gutenbrg",
+      "expected": [
+        "gutenberg"
+      ],
+      "group": "typo",
+      "top3": [
+        "gutenberg"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "blennder",
+      "expected": [
+        "cascade-blender"
+      ],
+      "group": "typo",
+      "top3": [
+        "cascade-blender"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "real pyhton",
+      "expected": [
+        "realpython"
+      ],
+      "group": "typo",
+      "top3": [
+        "realpython"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "smashng magazne",
+      "expected": [
+        "smashing"
+      ],
+      "group": "typo",
+      "top3": [
+        "smashing"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "a young wizard studying magic",
+      "expected": [
+        "royalroad"
+      ],
+      "group": "meaning",
+      "top3": [
+        "royalroad"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "listen to software developer interviews",
+      "expected": [
+        "changelog",
+        "talkpython"
+      ],
+      "group": "meaning",
+      "top3": [
+        "changelog",
+        "talkpython",
+        "cascade-usenix"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "coding competitions",
+      "expected": [
+        "codeforces"
+      ],
+      "group": "meaning",
+      "top3": [
+        "codeforces"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "digital books for my ereader",
+      "expected": [
+        "gutenberg"
+      ],
+      "group": "meaning",
+      "top3": [
+        "gutenberg"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "learn to code with practical exercises",
+      "expected": [
+        "realpython",
+        "cascade-freecodecamp"
+      ],
+      "group": "meaning",
+      "top3": [
+        "cascade-freecodecamp"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "astronomy and exploring other planets",
+      "expected": [
+        "cascade-planetary",
+        "cascade-quanta"
+      ],
+      "group": "meaning",
+      "top3": [
+        "cascade-planetary",
+        "esa-gallery",
+        "cascade-smithsonian"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "essays about philosophy and human society",
+      "expected": [
+        "cascade-aeon"
+      ],
+      "group": "meaning",
+      "top3": [
+        "cascade-aeon"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "art shows and paintings",
+      "expected": [
+        "cascade-nationalgallery"
+      ],
+      "group": "meaning",
+      "top3": [
+        "cascade-nationalgallery"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "machine learning conference papers",
+      "expected": [
+        "pmlr-volumes"
+      ],
+      "group": "meaning",
+      "top3": [
+        "pmlr-volumes"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "unusual destinations and local culture",
+      "expected": [
+        "cascade-atlas"
+      ],
+      "group": "meaning",
+      "top3": [
+        "cascade-atlas"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "make web interfaces accessible",
+      "expected": [
+        "smashing",
+        "w3c-standards"
+      ],
+      "group": "meaning",
+      "top3": [],
+      "rank": 0
+    },
+    {
+      "query": "internet privacy and civil liberties",
+      "expected": [
+        "cascade-eff",
+        "schneier"
+      ],
+      "group": "meaning",
+      "top3": [
+        "cascade-eff"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "3d animation software updates",
+      "expected": [
+        "cascade-blender"
+      ],
+      "group": "meaning",
+      "top3": [
+        "changelog",
+        "python-releases"
+      ],
+      "rank": 0
+    },
+    {
+      "query": "formatting code automatically",
+      "expected": [
+        "github"
+      ],
+      "group": "meaning",
+      "top3": [],
+      "rank": 0
+    },
+    {
+      "query": "systems design research symposium",
+      "expected": [
+        "cascade-usenix"
+      ],
+      "group": "meaning",
+      "top3": [
+        "cascade-usenix",
+        "pmlr-volumes",
+        "w3c-standards"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "museum family activities",
+      "expected": [
+        "cascade-britishmuseum"
+      ],
+      "group": "meaning",
+      "top3": [
+        "cascade-britishmuseum"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "Python Insider",
+      "expected": [
+        "python"
+      ],
+      "group": "exact",
+      "top3": [
+        "python",
+        "python-releases",
+        "talkpython"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "Schneier on Security",
+      "expected": [
+        "schneier"
+      ],
+      "group": "exact",
+      "top3": [
+        "schneier"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "SQLite",
+      "expected": [
+        "cascade-sqlite"
+      ],
+      "group": "exact",
+      "top3": [
+        "cascade-sqlite"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "WordPress",
+      "expected": [
+        "wordpress"
+      ],
+      "group": "exact",
+      "top3": [
+        "wordpress"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "rust-lang.org",
+      "expected": [
+        "rust"
+      ],
+      "group": "exact",
+      "top3": [
+        "rust"
+      ],
+      "rank": 1
+    },
+    {
+      "query": "PMLR",
+      "expected": [
+        "pmlr-volumes"
+      ],
+      "group": "exact",
+      "top3": [],
+      "rank": 0
+    },
+    {
+      "query": "sourdough bread recipes",
+      "expected": [],
+      "group": "negative",
+      "top3": [],
+      "rank": 0
+    },
+    {
+      "query": "knitting wool socks",
+      "expected": [],
+      "group": "negative",
+      "top3": [],
+      "rank": 0
+    },
+    {
+      "query": "veterinary dentistry for cats",
+      "expected": [],
+      "group": "negative",
+      "top3": [],
+      "rank": 0
+    },
+    {
+      "query": "discount hotel reservations",
+      "expected": [],
+      "group": "negative",
+      "top3": [],
+      "rank": 0
+    }
+  ]
+}

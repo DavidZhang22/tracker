@@ -74,6 +74,7 @@ Requires Python 3.12, uv and Node.js. From two terminals:
 ```sh
 cd backend
 uv sync
+uv run python ml/fetch_semantic_model.py
 uv run uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
