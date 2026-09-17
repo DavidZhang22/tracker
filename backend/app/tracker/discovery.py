@@ -14,6 +14,7 @@ from urllib.parse import parse_qs, urlsplit
 from .adapters import codeforces_endpoint, codeforces_scan, wetried_scan, wetried_series
 from .cache import cache_epochs
 from .documents import Document, unpack
+from .entry_identity import entry_key
 from .fenrir import fenrir_endpoint, fenrir_scan
 from .github import github_readme
 from .keywords import matches, terms
@@ -38,7 +39,7 @@ from .urls import (
 )
 from .workers import run_blocking
 
-DISCOVERY_VERSION = "hydrated-pagination-v3"
+DISCOVERY_VERSION = "listing-semantics-v4"
 DEEP_SCAN = ContextVar("deep_scan", default=False)
 INITIAL_DOCUMENT = ContextVar("initial_document", default=None)
 
@@ -608,6 +609,7 @@ class Discoverer:
                     )
                 )
         attempted = result.pages_scanned
+        page_records = {frozenset(entry_key(e) for e in result.entries)}
         while queue and attempted < self.max_pages and len(result.entries) < MAX_LINKS:
             target, is_feed = queue.pop(0)
             if target in seen:
@@ -671,6 +673,19 @@ class Discoverer:
                 result.entries = merge_entries(result.entries + incoming)
                 result.methods = list(dict.fromkeys(result.methods + part.methods))
                 result.warnings += part.warnings
+                fingerprint = frozenset(entry_key(e) for e in incoming)
+                if (
+                    not is_feed
+                    and more
+                    and (not fingerprint or fingerprint in page_records)
+                ):
+                    result.coverage = "partial"
+                    result.warnings.append(
+                        "Pagination stopped because the next page added no different records."
+                    )
+                    continue
+                if not is_feed:
+                    page_records.add(fingerprint)
                 queue.extend((u, is_feed) for u in more if u not in seen)
             except DiscoveryError as exc:
                 result.coverage = "partial"

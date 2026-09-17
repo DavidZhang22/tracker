@@ -9,7 +9,7 @@ from .models import date_value
 
 DATE_TEXT = re.compile(
     r"\d{4}[-/]\d{1,2}[-/]\d{1,2}(?:[T ]\d{2}:\d{2}(?::[\d.]+)?(?:Z|[+-]\d{2}:?\d{2})?)?"
-    r"|(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)[ /]+\d{1,2}[ ,/]+\d{4}(?: \d{2}:\d{2})?"
+    r"|(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\.?[ /]+\d{1,2}[ ,/]+\d{4}(?: \d{2}:\d{2})?"
     r"|\d{1,2} (?:Jan\w*|Feb\w*|Mar\w*|Apr\w*|May|Jun\w*|Jul\w*|Aug\w*|Sep\w*|Oct\w*|Nov\w*|Dec\w*) \d{4}",
     re.I,
 )
@@ -76,6 +76,31 @@ def node_dates(node):
                 if d := evidence(t.get_text(" ", strip=True), t.name):
                     found.append(d)
     if not found:
+        # Publication metadata outranks dates mentioned in a headline or summary.
+        for tag in [node, *node.find_all(["span", "p", "div"], limit=100)]:
+            text = tag.get_text(" ", strip=True)
+            if len(text) > 350:
+                continue
+            if DATE_TEXT.fullmatch(text.strip(" .,:;()")):
+                if d := evidence(text.strip(" .,:;()"), "record date"):
+                    labeled.append(d)
+                continue
+            classes = " ".join(tag.get("class", []))
+            if not (
+                re.search(r"\b(?:published|released|posted)\b", text, re.I)
+                or re.search(
+                    r"(?:^|[-_ ])(?:pubdate|published|release-date|post-date)(?:$|[-_ ])",
+                    classes,
+                    re.I,
+                )
+            ):
+                continue
+            candidates = [
+                evidence(m[0], "publication metadata") for m in DATE_TEXT.finditer(text)
+            ]
+            unique_labeled = {d["published_at"]: d for d in candidates if d}
+            if len(unique_labeled) == 1:
+                labeled.extend(unique_labeled.values())
         for m in DATE_TEXT.finditer(node.get_text(" ", strip=True)):
             if d := evidence(m[0], "record text"):
                 found.append(d)
@@ -90,7 +115,8 @@ def link_date(anchor, context=None):
     context = context or PageContext()
     dates = context.node_dates
     # Archive anchors often carry their own date (e.g. xkcd).
-    if own := dates(anchor):
+    own = dates(anchor)
+    if own and own.get("date_source") != "record text":
         return own
     row = anchor.find_parent("tr")
     if row:
@@ -109,7 +135,7 @@ def link_date(anchor, context=None):
                     "date_kind": "listed",
                     "date_source": "following metadata row",
                 }
-        return {}
+        return own or {}
     for depth, parent in enumerate(anchor.parents):
         if depth > 5 or parent.name in {"body", "html", "main", "table"}:
             break
@@ -119,10 +145,12 @@ def link_date(anchor, context=None):
         if len(parent.find_all(["article", "li"], recursive=False)) > 1:
             break
         if d := dates(parent):
-            return d
+            if d.get("date_source") != "record text":
+                return d
+            own = own or d
         if parent.name in {"article", "li"}:
             break
         # Repeated cards are boundaries even when one card has no date.
         if context.sibling_boundary(parent):
             break
-    return {}
+    return own or {}

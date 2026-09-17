@@ -105,10 +105,6 @@ export default function AccountData({ auth }) {
           </button>
         </details>
       </fieldset>
-      <p className="hint">
-        <a href="/privacy">Privacy and data rights</a> ·{" "}
-        <a href="/terms">Terms</a>
-      </p>
     </section>
   );
 }

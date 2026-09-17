@@ -33,7 +33,7 @@ CONTROL = r"""() => {
         n.closest('form,[aria-roledescription=carousel],[class*=carousel],[class*=slider]')) return false;
     const text = (n.getAttribute('aria-label') || n.textContent).trim();
     const more = /^(?:(?:load|show|view)\s+more(?:\s+(?:posts?|news|chapters?|entries|items|results|articles|episodes))?|older\s+(?:posts?|entries|news))\s*[↓→›»+]*$/i.test(text);
-    const next = /^(?:next\s+(?:page|posts?|results))\s*[→›»]*$/i.test(text) ||
+    const next = /^(?:go\s*to\s+)?next\s+(?:page|posts?|results)\s*[→›»]*$/i.test(text) ||
       ((n.rel||'').split(/\s+/).includes('next')) ||
       (/^next\s*[→›»]*$/i.test(text) && n.closest('nav,[class*=pagin],[class*=pager],[aria-label*=agination]'));
     return more || next;

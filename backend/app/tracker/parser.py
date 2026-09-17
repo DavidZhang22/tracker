@@ -4,6 +4,7 @@ import json
 import re
 import xml.etree.ElementTree as ET
 from collections import Counter
+from itertools import chain
 from types import SimpleNamespace
 from urllib.parse import parse_qs, urlsplit
 
@@ -20,7 +21,16 @@ from .keywords import language_text
 from .limits import MAX_LINKS
 from .link_model import load_model, page_scores
 from .list_entries import extract_list_entries
+from .listing_structure import (
+    GENERIC_TITLE,
+    definition_entries,
+    joined_metadata,
+    navigation_links,
+    observed_identifiers,
+    repeated_cards,
+)
 from .models import Entry, Scan, date_rank, date_value, sequence_value
+from .pagination import forward_pages
 from .record_context import RecordContext
 from .suggestions import observed_sources
 from .tables import anchor_label, table_context
@@ -50,7 +60,7 @@ def has_dynamic_pagination(soup):
             continue
         name = node.get("aria-label") or node.get_text(" ", strip=True)
         if re.fullmatch(
-            r"\s*(?:(?:load|show|view)\s+more(?:\s+(?:posts?|news|chapters?|entries|items|results|articles|episodes))?|older\s+(?:posts?|entries|news)|next\s+(?:page|posts?|results))\s*[↓→›»+]*\s*",
+            r"\s*(?:(?:load|show|view)\s+more(?:\s+(?:posts?|news|chapters?|entries|items|results|articles|episodes))?|older\s+(?:posts?|entries|news)|(?:go\s*to\s+)?next\s+(?:page|posts?|results))\s*[↓→›»+]*\s*",
             name,
             re.I,
         ):
@@ -98,7 +108,7 @@ def relevant(
 ):
     p, root = urlsplit(url), urlsplit(source)
     if (
-        url == source
+        url.rstrip("/") == source.rstrip("/")
         or (p.hostname != root.hostname and not external)
         or (
             SKIP.search(p.path)
@@ -161,11 +171,19 @@ def merge_entries(entries):
         else:
             old.url = entry.url or old.url
             old.source_id = entry.source_id or old.source_id
-            if old.title.lower() in {
-                "first chapter",
-                "start reading",
-                "read more",
-            } or re.search(r"\bago$", old.title):
+            if (
+                old.title.lower()
+                in {
+                    "first chapter",
+                    "start reading",
+                    "read more",
+                }
+                or re.search(r"\bago$", old.title)
+                or (
+                    GENERIC_TITLE.fullmatch(old.title)
+                    and not GENERIC_TITLE.fullmatch(entry.title)
+                )
+            ):
                 old.title = entry.title
                 old.number = entry.number
             if entry.published_at and date_rank(entry) >= date_rank(old):
@@ -534,7 +552,10 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
     traced = {}
     assisted_urls = set()
     has_chapters = kind == "novel" and soup.select_one("#chapters") is not None
+    navigation = navigation_links(soup) if not selector and kind == "website" else set()
     for a in anchors:
+        if id(a) in navigation:
+            continue
         table = tables.get(id(a), {})
         if job_anchors and not selector and id(a) not in job_anchors:
             continue
@@ -606,7 +627,7 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
             continue
         if (
             not selector
-            and not (context_model and model_accepts)
+            and (kind == "website" or not (context_model and model_accepts))
             and (
                 a.find_parent(["nav", "footer", "aside"])
                 or (a.find_parent("header") and not a.find_parent("article"))
@@ -713,8 +734,19 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
     for entry in scan.entries:
         visible_records.setdefault(content_key(entry.url), []).append(entry.title)
     hydrated_urls = set()
-    for script in [] if selector or job_anchors else soup.select("script"):
-        content = script.string or script.get_text()
+    identifiers = observed_identifiers(scan.entries)
+    payloads = chain(
+        (script.string or script.get_text() for script in soup.find_all("script")),
+        (
+            node.get(attr)
+            for node in soup.find_all(
+                lambda node: node.has_attr("data-props") or node.has_attr("data-page")
+            )
+            for attr in ("data-props", "data-page")
+            if node.get(attr)
+        ),
+    )
+    for content in [] if selector or job_anchors else payloads:
         if not content or len(content) > 4_000_000:
             continue
         for root in json_objects(content):
@@ -726,6 +758,8 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
             hydrated_urls.update(content_key(e.url) for e in hydrated)
             scan.entries.extend(hydrated)
             for obj in walk(root):
+                if metadata := joined_metadata(obj, identifiers):
+                    scan.entries.append(metadata)
                 for key in ("nextPageUrl", "next_page_url"):
                     if isinstance(obj.get(key), str):
                         next_url = candidate_url(obj[key], source)
@@ -793,7 +827,28 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
                         ),
                     )
                 )
+    if not selector and not job_anchors:
+        cards = [
+            e
+            for e in repeated_cards(
+                soup, source, scan.entries, record_context.page, navigation
+            )
+            if relevant(e.url, source, e.title, kind, external=True)
+            and (not include_path or include_path in e.url)
+        ]
+        if cards:
+            scan.entries.extend(cards)
+            scan.methods.append("repeated cards")
+        definitions = [
+            e
+            for e in definition_entries(soup, source)
+            if not include_path or include_path in e.url
+        ]
+        if definitions:
+            scan.entries.extend(definitions)
+            scan.methods.append("definition list")
     listed = extract_list_entries(soup, source, selector, include_path)
+    scan.entries = merge_entries(scan.entries)
     linked = {e.url: e for e in scan.entries if e.url}
     ordered_list = []
     for entry in listed:
@@ -851,21 +906,7 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
         scan.warnings.append(
             "This page has a load-more control or JavaScript pagination. Older entries may require browser scanning."
         )
-    # Follow one forward chain when available, rather than every numbered button.
-    next_anchors = soup.select('a[rel~="next"],link[rel~="next"]')
-    forward = [candidate_url(a.get("href"), source) for a in next_anchors]
-    if not forward:
-        forward = [
-            candidate_url(a.get("href"), source)
-            for a in soup.select("a[href]")
-            if re.fullmatch(
-                r"(?:Next|Older)(?:\s+(?:page|posts?))?\s*[→»›]?",
-                a.get_text(" ", strip=True),
-                re.I,
-            )
-        ]
-    if any(u in pages for u in forward):
-        pages = [u for u in forward if u in pages]
+    pages = forward_pages(soup, source, pages, same_path=kind == "novel")
     if len(feeds) > 1:
         matched = [
             u

@@ -1,0 +1,128 @@
+[
+  {
+    "name": "arxiv",
+    "source": "https://arxiv.org/list/cs.AI/recent",
+    "sha256": "ae2f1b7882db6696c78a1d725259d13fd4eca30155558f4b2fb1b9c71df1a5a5",
+    "expected": 50,
+    "entries": 0,
+    "correct": 0,
+    "missed": 50,
+    "unrelated": 0,
+    "dated_relevant": 0,
+    "median_ms": 403.34,
+    "next_pages": [],
+    "warnings": [],
+    "peak_rss_mib": 50.0
+  },
+  {
+    "name": "python",
+    "source": "https://www.python.org/downloads/",
+    "sha256": "6ca4602bae3e9e235adb894286e96e86a35c6d16b176034a274a7de026740d0a",
+    "expected": 260,
+    "entries": 260,
+    "correct": 260,
+    "missed": 0,
+    "unrelated": 0,
+    "dated_relevant": 107,
+    "median_ms": 999.5,
+    "next_pages": [],
+    "warnings": [],
+    "peak_rss_mib": 57.4
+  },
+  {
+    "name": "django",
+    "source": "https://www.djangoproject.com/weblog/",
+    "sha256": "84fc37e2ab150a24dc1dce862e2833c1dbda67256ed294f3ba077e1f1fa7dab4",
+    "expected": 10,
+    "entries": 10,
+    "correct": 10,
+    "missed": 0,
+    "unrelated": 0,
+    "dated_relevant": 1,
+    "median_ms": 293.05,
+    "next_pages": [
+      "https://www.djangoproject.com/weblog?page=2"
+    ],
+    "warnings": [],
+    "peak_rss_mib": 57.4
+  },
+  {
+    "name": "nasa",
+    "source": "https://www.nasa.gov/news/recently-published/",
+    "sha256": "759caea75b053e6f3d987a4585b8f70a59b547c0129eb30fde017a27895f44ee",
+    "expected": 25,
+    "entries": 45,
+    "correct": 22,
+    "missed": 3,
+    "unrelated": 23,
+    "dated_relevant": 16,
+    "median_ms": 595.44,
+    "next_pages": [],
+    "warnings": [],
+    "peak_rss_mib": 58.4
+  },
+  {
+    "name": "huggingface",
+    "source": "https://huggingface.co/papers",
+    "sha256": "4842dbb274d897ab47461d08e2c793bf603ecb479fad42815d2b3f94d64527bf",
+    "expected": 25,
+    "entries": 25,
+    "correct": 25,
+    "missed": 0,
+    "unrelated": 0,
+    "dated_relevant": 0,
+    "median_ms": 525.3,
+    "next_pages": [],
+    "warnings": [],
+    "peak_rss_mib": 59.1
+  },
+  {
+    "name": "gutenberg",
+    "source": "https://www.gutenberg.org/ebooks/search/?sort_order=release_date",
+    "sha256": "841cde41a459f22298fb349bdd0d90b6fe6d77cb6a85174a68b7f63ab20cdf2e",
+    "expected": 25,
+    "entries": 25,
+    "correct": 25,
+    "missed": 0,
+    "unrelated": 0,
+    "dated_relevant": 25,
+    "median_ms": 104.36,
+    "next_pages": [
+      "https://www.gutenberg.org/ebooks/search?start_index=26"
+    ],
+    "warnings": [],
+    "peak_rss_mib": 59.1
+  },
+  {
+    "name": "rust",
+    "source": "https://blog.rust-lang.org/",
+    "sha256": "92872b83d7a0cd953b3e9751be7f36699cf36d6aa7c1cb8b3eb19aeee91ca5de",
+    "expected": 391,
+    "entries": 391,
+    "correct": 391,
+    "missed": 0,
+    "unrelated": 0,
+    "dated_relevant": 391,
+    "median_ms": 892.02,
+    "next_pages": [],
+    "warnings": [],
+    "peak_rss_mib": 59.1
+  },
+  {
+    "name": "smashing",
+    "source": "https://www.smashingmagazine.com/articles/",
+    "sha256": "1a3be4495f94c05465776a07ea2dc75ea2482f103dbbc0cd763f211a7599b855",
+    "expected": 10,
+    "entries": 10,
+    "correct": 10,
+    "missed": 0,
+    "unrelated": 0,
+    "dated_relevant": 10,
+    "median_ms": 175.91,
+    "next_pages": [
+      "https://www.smashingmagazine.com/articles/page/2"
+    ],
+    "warnings": [],
+    "peak_rss_mib": 59.1
+  }
+]

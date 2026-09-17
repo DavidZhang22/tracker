@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { api } from "../api";
 import { Notice } from "../Components/Notice";
 
 export default function PrivacyPage({ terms = false }) {
   const [details, setDetails] = useState(null);
   const [error, setError] = useState("");
+  const { hash } = useLocation();
+  useEffect(() => {
+    if (details && hash === "#contact")
+      document.getElementById("contact")?.scrollIntoView?.();
+  }, [details, hash]);
   useEffect(() => {
     api("/privacy")
       .then(setDetails)
@@ -21,7 +26,7 @@ export default function PrivacyPage({ terms = false }) {
       {details && (
         <>
           <p className="muted">Updated {details.updated}</p>
-          <p>
+          <p id="contact">
             Operator: {details.operator}.{" "}
             {details.contact ? (
               <>
@@ -135,11 +140,10 @@ export default function PrivacyPage({ terms = false }) {
                 up to one hour, with cleanup on the next maintenance run. Shared
                 source-request limits also retain URL and hostname hashes and
                 timestamps for five minutes, without account IDs or full URLs.
-                Expired limits are removed during maintenance; other rate limits are held in
-                memory. Shared scan caches
-                expire within seven days and are cleared on account deletion.
-                Application request-access logging is disabled in the hosted
-                deployment.
+                Expired limits are removed during maintenance; other rate limits
+                are held in memory. Shared scan caches expire within seven days
+                and are cleared on account deletion. Application request-access
+                logging is disabled in the hosted deployment.
               </p>
               <p>
                 Account deletion immediately revokes sessions and removes the

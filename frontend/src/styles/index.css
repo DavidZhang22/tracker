@@ -646,7 +646,7 @@ progress::-moz-progress-bar {
   border-radius: var(--radius);
   background: white;
 }
-.form-panel label.field {
+.form-panel .field {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-content: start;
@@ -1319,10 +1319,115 @@ a.entry-title:hover {
   line-height: 1.6;
   margin-top: 8px;
 }
-.form-panel input[type="file"] {
-  max-width: 100%;
+.file-picker {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--canvas);
+  position: relative;
   min-width: 0;
-  padding: 10px;
+}
+.file-picker .file-picker-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+.file-picker-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 10px 15px;
+  border: 1px solid var(--accent);
+  border-radius: 7px;
+  background: white;
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.file-picker-trigger:hover {
+  background: var(--mint);
+}
+.file-picker-input:focus-visible + .file-picker-trigger {
+  outline: 3px solid #24b7a8;
+  outline-offset: 3px;
+}
+.file-picker.is-disabled {
+  opacity: 0.6;
+}
+.file-picker.is-disabled .file-picker-trigger {
+  cursor: default;
+  pointer-events: none;
+}
+.file-picker-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--muted);
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+.file-picker-name small {
+  display: block;
+  margin-top: 4px;
+}
+.site-frame {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.site-frame > :first-child {
+  flex: 1;
+}
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 32px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+.site-footer nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+}
+.site-footer a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.footer-brand {
+  font-weight: 650;
+}
+.site-frame > .auth-page {
+  min-height: calc(100vh - 72px);
+}
+@media (max-width: 600px) {
+  .file-picker {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .file-picker-name {
+    text-align: center;
+  }
+  .site-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px;
+  }
 }
 
 .entry-preview .preview-title {

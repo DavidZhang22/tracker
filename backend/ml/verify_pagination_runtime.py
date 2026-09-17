@@ -39,7 +39,7 @@ class Fixture:
                 else ""
             )
             return url, "<main>" + cards(page) + "</main>" + pager
-        name = 'aria-label="Next page"' if self.mode == "next" else ""
+        name = 'aria-label="Goto Next Page"' if self.mode == "next" else ""
         text = "→" if self.mode == "next" else "SHOW MORE"
         assignment = "=" if self.mode == "next" else "+="
         script = f"""let page=1; document.querySelector('#more').onclick=async()=>{{

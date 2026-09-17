@@ -6,6 +6,7 @@ import {
   waitFor,
 } from "@testing-library/react";
 import { AuthBoundary, useAuth } from "../Auth/Auth";
+import { MemoryRouter } from "react-router-dom";
 import { api, post } from "../api";
 jest.mock("../api", () => ({ api: jest.fn(), post: jest.fn() }));
 beforeEach(() => jest.resetAllMocks());
@@ -26,9 +27,11 @@ function PrivateContent() {
 }
 function view() {
   render(
-    <AuthBoundary>
-      <PrivateContent />
-    </AuthBoundary>,
+    <MemoryRouter>
+      <AuthBoundary>
+        <PrivateContent />
+      </AuthBoundary>
+    </MemoryRouter>,
   );
 }
 

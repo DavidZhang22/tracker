@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useId, useState } from "react";
+import { UploadIcon, DocumentTextIcon } from "@heroicons/react/outline";
+import { Icon } from "./Icons";
 import { uploadFile } from "../api";
 
 export function ImportDetails({ context }) {
@@ -21,6 +23,7 @@ export default function ImportInput({
   onInvalidate,
 }) {
   const [file, setFile] = useState(null);
+  const fileId = useId();
   const [inputMode, setInputMode] = useState("file");
   const [text, setText] = useState("");
   const [reviewed, setReviewed] = useState(false);
@@ -89,31 +92,58 @@ export default function ImportInput({
         ))}
       </div>
       {inputMode === "file" ? (
-        <label className="field">
-          File
-          <input
-            type="file"
-            aria-label="Import file"
-            accept=".csv,.tsv,.txt,.md,.html,.htm,.pdf,.xlsx,.pptx,.docx"
-            disabled={disabled || busy}
-            onChange={(event) => {
-              const next = event.target.files?.[0];
-              setMetadata(null);
-              setOptions({});
-              setReviewed(false);
-              onInvalidate();
-              onError("");
-              if (next && (!next.size || next.size > 4000000)) {
-                setFile(null);
-                onError("Choose a non-empty file up to 4 MB.");
-              } else setFile(next || null);
-            }}
-          />
-          <span className="hint">
+        <div className="field">
+          <label htmlFor={fileId}>File</label>
+          <div
+            className={`file-picker ${disabled || busy ? "is-disabled" : ""}`}
+          >
+            <input
+              id={fileId}
+              className="file-picker-input"
+              type="file"
+              aria-label="Import file"
+              aria-describedby={`${fileId}-help ${fileId}-name`}
+              accept=".csv,.tsv,.txt,.md,.html,.htm,.pdf,.xlsx,.pptx,.docx"
+              disabled={disabled || busy}
+              onChange={(event) => {
+                const next = event.target.files?.[0];
+                setMetadata(null);
+                setOptions({});
+                setReviewed(false);
+                onInvalidate();
+                onError("");
+                if (next && (!next.size || next.size > 4000000)) {
+                  setFile(null);
+                  onError("Choose a non-empty file up to 4 MB.");
+                } else setFile(next || null);
+              }}
+            />
+            <label htmlFor={fileId} className="file-picker-trigger">
+              <Icon as={file ? DocumentTextIcon : UploadIcon} />
+              <span>{file ? "Change file" : "Choose file"}</span>
+            </label>
+            <span
+              className="file-picker-name"
+              id={`${fileId}-name`}
+              aria-live="polite"
+            >
+              {file ? file.name : "No file selected"}
+              {file && (
+                <small>
+                  {file.size < 1000
+                    ? `${file.size} bytes`
+                    : file.size < 1000000
+                      ? `${(file.size / 1000).toFixed(1)} KB`
+                      : `${(file.size / 1000000).toFixed(2)} MB`}
+                </small>
+              )}
+            </span>
+          </div>
+          <span className="hint" id={`${fileId}-help`}>
             CSV, Excel (.xlsx), PowerPoint (.pptx), Word (.docx), PDF, HTML,
             Markdown, or text. Up to 4 MB.
           </span>
-        </label>
+        </div>
       ) : (
         <label className="field">
           Paste text

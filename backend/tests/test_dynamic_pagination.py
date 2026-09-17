@@ -79,6 +79,7 @@ def test_hydration_requires_multiple_matching_visible_titles_and_valid_records()
         "<nav><button>Next</button></nav>",
         '<button aria-label="Next page">→</button>',
         '<a role="button" href="#">View more</a>',
+        '<nav><a href="#" aria-label="Goto Next Page">Next</a></nav>',
     ],
 )
 def test_dynamic_control_detection(control):

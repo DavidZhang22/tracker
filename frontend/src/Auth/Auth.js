@@ -180,10 +180,12 @@ function SignIn({ registration, inviteRequired, onSignedIn, notice }) {
             Forgot your password? <a href="/privacy">Contact the operator</a>.
           </p>
         )}
-        <p className="hint">
-          {create && "By creating an account, you agree to the terms. "}
-          <a href="/privacy">Privacy</a> · <a href="/terms">Terms of use</a>
-        </p>
+        {create && (
+          <p className="hint">
+            By creating an account, you agree to the{" "}
+            <Link to="/terms">terms of use</Link>.
+          </p>
+        )}
       </form>
     </main>
   );
