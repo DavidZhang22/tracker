@@ -50,3 +50,12 @@ test("search keeps exact filenames, punctuation and legacy items working", () =>
   expect(search("zzzzzzz").get("manga")).toBe(0);
   expect(mediaLabel("comic")).toBe("Manga & comics");
 });
+
+test("repeated queries reuse bounded result maps and normalize spacing", () => {
+  const search = librarySearchIndex(items);
+  expect(search(" college   comedy ")).toBe(search("COLLEGE COMEDY"));
+  const saved = search("scuba");
+  for (let i = 0; i < 30; i++) search(`unmatched ${i}`);
+  expect(search("scuba")).not.toBe(saved);
+  expect(search("scuba")).toEqual(saved);
+});

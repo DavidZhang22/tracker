@@ -463,6 +463,7 @@ def export_account(body: ConfirmAccount, request: Request):
                 "items",
                 "links",
                 "preferences",
+                "saved_views",
                 "suggestions",
                 "suggestion_sources",
                 "scans",

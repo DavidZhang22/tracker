@@ -5,6 +5,7 @@ import useLibrarySearch from "../Hooks/useLibrarySearch";
 import Description from "../Components/Description";
 import { librarySearchIndex } from "../media";
 import { api } from "../api";
+import { createSearchHandler } from "../Search/workerHandler";
 
 vi.mock("../api", () => ({ api: vi.fn() }));
 const items = [
@@ -28,8 +29,8 @@ const deferred = () => {
   });
   return { resolve, promise };
 };
-function Harness({ query, rows = items, trash = false }) {
-  const { scores, updating } = useLibrarySearch(rows, query, trash);
+function Harness({ query, rows = items, trash = false, mode = "semantic" }) {
+  const { scores, updating } = useLibrarySearch(rows, query, trash, mode);
   return (
     <output aria-busy={updating}>
       {rows
@@ -45,6 +46,7 @@ beforeEach(() => {
 });
 afterEach(() => {
   vi.clearAllTimers();
+  vi.unstubAllGlobals();
   vi.useRealTimers();
 });
 const tick = async () =>
@@ -141,4 +143,129 @@ test("descriptions are plain text with an accessible edit link", () => {
     "href",
     "/settings?item=a#item-settings",
   );
+});
+
+test("normalized equivalent queries and reading changes reuse one semantic request", async () => {
+  api.mockResolvedValue({ scores: [{ id: "a", score: 1 }] });
+  const view = render(<Harness query="grand blue" />);
+  await tick();
+  view.rerender(
+    <Harness
+      query="  ＧＲＡＮＤ   BLUE  "
+      rows={items.map((row) => ({ ...row, favorite: true, unread_count: 8 }))}
+    />,
+  );
+  await tick();
+  expect(api).toHaveBeenCalledTimes(1);
+  expect(screen.getByRole("status")).toHaveAttribute("aria-busy", "false");
+});
+
+test("quick search uses current local typo and description matches without a request", async () => {
+  const view = render(<Harness query="pyhton bytes" mode="local" />);
+  expect(screen.getByRole("status")).toHaveTextContent("Python Bytes");
+  expect(screen.getByRole("status")).toHaveAttribute("aria-busy", "false");
+  view.rerender(<Harness query="scuba diving" mode="local" />);
+  expect(screen.getByRole("status")).toHaveTextContent("Grand Blue");
+  await tick();
+  expect(api).not.toHaveBeenCalled();
+});
+
+test("single-character prefixes stay local while two-character concepts can use semantic search", async () => {
+  api.mockResolvedValue({ scores: [] });
+  const view = render(<Harness query="p" />);
+  await tick();
+  expect(api).not.toHaveBeenCalled();
+  expect(screen.getByRole("status")).toHaveTextContent("Python Bytes");
+  view.rerender(<Harness query="AI" />);
+  await tick();
+  expect(api).toHaveBeenCalledTimes(1);
+});
+
+test("current local matches appear before semantic refinement completes", async () => {
+  const next = deferred();
+  api
+    .mockResolvedValueOnce({ scores: [{ id: "a", score: 1 }] })
+    .mockReturnValueOnce(next.promise);
+  const view = render(<Harness query="ocean" />);
+  await tick();
+  view.rerender(<Harness query="python" />);
+  expect(screen.getByRole("status")).toHaveTextContent("Python Bytes");
+  expect(screen.getByRole("status")).not.toHaveTextContent("Grand Blue");
+  expect(screen.getByRole("status")).toHaveAttribute("aria-busy", "true");
+  await tick();
+  await act(async () => next.resolve({ scores: [{ id: "b", score: 1 }] }));
+  expect(screen.getByRole("status")).toHaveAttribute("aria-busy", "false");
+});
+
+test("large-library workers survive reading updates and are discarded after metadata changes or unmount", async () => {
+  const workers = [];
+  class SearchWorker {
+    messages = [];
+    terminate = vi.fn();
+    constructor() {
+      workers.push(this);
+      this.handle = createSearchHandler((data) =>
+        Promise.resolve().then(() => this.onmessage?.({ data })),
+      );
+    }
+    postMessage(message) {
+      this.messages.push(message);
+      this.handle(message);
+    }
+  }
+  vi.stubGlobal("Worker", SearchWorker);
+  const rows = Array.from({ length: 50 }, (_, index) => ({
+    ...items[index % 2],
+    id: String(index),
+    favorite: false,
+  }));
+  const view = render(<Harness query="scuba" rows={rows} mode="local" />);
+  await act(async () => {});
+  expect(screen.getByRole("status")).toHaveTextContent("Grand Blue");
+  expect(screen.getByRole("status")).toHaveAttribute("aria-busy", "false");
+  expect(workers).toHaveLength(1);
+  expect(workers[0].messages[0].items[0]).not.toHaveProperty("favorite");
+  view.rerender(
+    <Harness
+      query="scuba"
+      rows={rows.map((row) => ({ ...row, favorite: true, unread_count: 2 }))}
+      mode="local"
+    />,
+  );
+  await act(async () => {});
+  expect(workers).toHaveLength(1);
+  expect(workers[0].messages).toHaveLength(2);
+  view.rerender(
+    <Harness
+      query="scuba"
+      rows={rows.map((row) => ({ ...row, title: "Edited" }))}
+      mode="local"
+    />,
+  );
+  await act(async () => {});
+  expect(workers).toHaveLength(2);
+  expect(workers[0].terminate).toHaveBeenCalledTimes(1);
+  view.unmount();
+  expect(workers[1].terminate).toHaveBeenCalledTimes(1);
+  expect(api).not.toHaveBeenCalled();
+});
+
+test("a stalled semantic request releases selection using current local results and ignores its late response", async () => {
+  const stalled = deferred();
+  api
+    .mockResolvedValueOnce({ scores: [{ id: "a", score: 1 }] })
+    .mockReturnValueOnce(stalled.promise);
+  const view = render(<Harness query="ocean" />);
+  await tick();
+  view.rerender(<Harness query="unmatched words" />);
+  await tick();
+  expect(screen.getByRole("status")).toHaveTextContent("Grand Blue");
+  await act(async () => {
+    vi.advanceTimersByTime(8000);
+  });
+  expect(api.mock.calls[1][1].signal.aborted).toBe(true);
+  expect(screen.getByRole("status")).not.toHaveTextContent("Grand Blue");
+  expect(screen.getByRole("status")).toHaveAttribute("aria-busy", "false");
+  await act(async () => stalled.resolve({ scores: [{ id: "a", score: 1 }] }));
+  expect(screen.getByRole("status")).not.toHaveTextContent("Grand Blue");
 });

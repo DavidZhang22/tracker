@@ -26,7 +26,8 @@ from threadpoolctl import threadpool_limits
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from app.tracker.media_metadata import annotate, classify, features, source_summary
+from app.tracker.media_metadata import annotate, features, source_summary
+from app.tracker.media_metadata import baseline_classify as classify
 from app.tracker.parser import kind_for
 
 LABELS = {

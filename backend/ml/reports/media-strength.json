@@ -1,0 +1,758 @@
+{
+  "development": 52,
+  "validation": 4,
+  "test": 8,
+  "authored": 210,
+  "classes": {
+    "comic": 3,
+    "novel": 4,
+    "software": 6,
+    "events": 3,
+    "blog": 26,
+    "website": 4,
+    "podcast": 4,
+    "course": 3,
+    "research": 4,
+    "video": 2,
+    "jobs": 3,
+    "music": 2
+  },
+  "baseline": {
+    "development": {
+      "accuracy": 0.6923,
+      "macro_f1": 0.5772,
+      "errors": [
+        {
+          "source": "hn",
+          "expected": "website",
+          "actual": "blog"
+        },
+        {
+          "source": "pythonbytes",
+          "expected": "podcast",
+          "actual": "blog"
+        },
+        {
+          "source": "planetpython",
+          "expected": "website",
+          "actual": "blog"
+        },
+        {
+          "source": "lobsters",
+          "expected": "website",
+          "actual": "blog"
+        },
+        {
+          "source": "simonwillison",
+          "expected": "blog",
+          "actual": "website"
+        },
+        {
+          "source": "realpython",
+          "expected": "course",
+          "actual": "website"
+        },
+        {
+          "source": "talkpython",
+          "expected": "podcast",
+          "actual": "blog"
+        },
+        {
+          "source": "w3c-standards",
+          "expected": "research",
+          "actual": "website"
+        },
+        {
+          "source": "cascade-debian",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-arch",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-usenix",
+          "expected": "video",
+          "actual": "events"
+        },
+        {
+          "source": "cascade-blender",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-nationalgallery",
+          "expected": "events",
+          "actual": "blog"
+        },
+        {
+          "source": "media-cs50",
+          "expected": "course",
+          "actual": "website"
+        },
+        {
+          "source": "media-ccctalks",
+          "expected": "video",
+          "actual": "blog"
+        },
+        {
+          "source": "media-jmlr",
+          "expected": "research",
+          "actual": "blog"
+        }
+      ]
+    },
+    "validation": {
+      "accuracy": 0.75,
+      "macro_f1": 0.6,
+      "errors": [
+        {
+          "source": "media-ninjatune",
+          "expected": "music",
+          "actual": "software"
+        }
+      ]
+    }
+  },
+  "candidates": {
+    "linear:0.2": {
+      "grouped_cross_validation": {
+        "accuracy": 0.7692,
+        "macro_f1": 0.8274,
+        "errors": [
+          {
+            "source": "rust",
+            "expected": "blog",
+            "actual": "website"
+          },
+          {
+            "source": "hackaday",
+            "expected": "blog",
+            "actual": "website"
+          },
+          {
+            "source": "simonwillison",
+            "expected": "blog",
+            "actual": "website"
+          },
+          {
+            "source": "lwn",
+            "expected": "blog",
+            "actual": "website"
+          },
+          {
+            "source": "realpython",
+            "expected": "course",
+            "actual": "video"
+          },
+          {
+            "source": "esa-gallery",
+            "expected": "website",
+            "actual": "course"
+          },
+          {
+            "source": "cascade-debian",
+            "expected": "software",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-arch",
+            "expected": "software",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-laphams",
+            "expected": "blog",
+            "actual": "course"
+          },
+          {
+            "source": "cascade-smithsonian",
+            "expected": "blog",
+            "actual": "website"
+          },
+          {
+            "source": "cascade-blender",
+            "expected": "software",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-eff",
+            "expected": "blog",
+            "actual": "website"
+          }
+        ]
+      },
+      "validation": {
+        "accuracy": 0.75,
+        "macro_f1": 0.6,
+        "errors": [
+          {
+            "source": "media-ninjatune",
+            "expected": "music",
+            "actual": "software"
+          }
+        ]
+      }
+    },
+    "linear:1": {
+      "grouped_cross_validation": {
+        "accuracy": 0.8077,
+        "macro_f1": 0.8529,
+        "errors": [
+          {
+            "source": "rust",
+            "expected": "blog",
+            "actual": "website"
+          },
+          {
+            "source": "simonwillison",
+            "expected": "blog",
+            "actual": "website"
+          },
+          {
+            "source": "lwn",
+            "expected": "blog",
+            "actual": "website"
+          },
+          {
+            "source": "realpython",
+            "expected": "course",
+            "actual": "video"
+          },
+          {
+            "source": "cascade-debian",
+            "expected": "software",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-arch",
+            "expected": "software",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-laphams",
+            "expected": "blog",
+            "actual": "course"
+          },
+          {
+            "source": "cascade-smithsonian",
+            "expected": "blog",
+            "actual": "website"
+          },
+          {
+            "source": "cascade-blender",
+            "expected": "software",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-eff",
+            "expected": "blog",
+            "actual": "website"
+          }
+        ]
+      },
+      "validation": {
+        "accuracy": 0.75,
+        "macro_f1": 0.6,
+        "errors": [
+          {
+            "source": "media-ninjatune",
+            "expected": "music",
+            "actual": "software"
+          }
+        ]
+      }
+    },
+    "linear:5": {
+      "grouped_cross_validation": {
+        "accuracy": 0.7885,
+        "macro_f1": 0.8408,
+        "errors": [
+          {
+            "source": "rust",
+            "expected": "blog",
+            "actual": "website"
+          },
+          {
+            "source": "simonwillison",
+            "expected": "blog",
+            "actual": "website"
+          },
+          {
+            "source": "lwn",
+            "expected": "blog",
+            "actual": "website"
+          },
+          {
+            "source": "realpython",
+            "expected": "course",
+            "actual": "video"
+          },
+          {
+            "source": "esa-gallery",
+            "expected": "website",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-debian",
+            "expected": "software",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-arch",
+            "expected": "software",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-laphams",
+            "expected": "blog",
+            "actual": "course"
+          },
+          {
+            "source": "cascade-smithsonian",
+            "expected": "blog",
+            "actual": "website"
+          },
+          {
+            "source": "cascade-blender",
+            "expected": "software",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-eff",
+            "expected": "blog",
+            "actual": "website"
+          }
+        ]
+      },
+      "validation": {
+        "accuracy": 0.75,
+        "macro_f1": 0.6,
+        "errors": [
+          {
+            "source": "media-ninjatune",
+            "expected": "music",
+            "actual": "software"
+          }
+        ]
+      }
+    },
+    "neural:32:1": {
+      "grouped_cross_validation": {
+        "accuracy": 0.8077,
+        "macro_f1": 0.6991,
+        "errors": [
+          {
+            "source": "hn",
+            "expected": "website",
+            "actual": "blog"
+          },
+          {
+            "source": "changelog",
+            "expected": "podcast",
+            "actual": "blog"
+          },
+          {
+            "source": "realpython",
+            "expected": "course",
+            "actual": "video"
+          },
+          {
+            "source": "esa-gallery",
+            "expected": "website",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-debian",
+            "expected": "software",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-arch",
+            "expected": "software",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-laphams",
+            "expected": "blog",
+            "actual": "course"
+          },
+          {
+            "source": "cascade-blender",
+            "expected": "software",
+            "actual": "blog"
+          },
+          {
+            "source": "media-pythonjobs",
+            "expected": "jobs",
+            "actual": "blog"
+          },
+          {
+            "source": "media-cs50",
+            "expected": "course",
+            "actual": "website"
+          }
+        ]
+      },
+      "validation": {
+        "accuracy": 0.75,
+        "macro_f1": 0.6,
+        "errors": [
+          {
+            "source": "media-ninjatune",
+            "expected": "music",
+            "actual": "software"
+          }
+        ]
+      }
+    },
+    "neural:64:1": {
+      "grouped_cross_validation": {
+        "accuracy": 0.8077,
+        "macro_f1": 0.6991,
+        "errors": [
+          {
+            "source": "hn",
+            "expected": "website",
+            "actual": "blog"
+          },
+          {
+            "source": "changelog",
+            "expected": "podcast",
+            "actual": "blog"
+          },
+          {
+            "source": "realpython",
+            "expected": "course",
+            "actual": "video"
+          },
+          {
+            "source": "esa-gallery",
+            "expected": "website",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-debian",
+            "expected": "software",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-arch",
+            "expected": "software",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-laphams",
+            "expected": "blog",
+            "actual": "course"
+          },
+          {
+            "source": "cascade-blender",
+            "expected": "software",
+            "actual": "blog"
+          },
+          {
+            "source": "media-pythonjobs",
+            "expected": "jobs",
+            "actual": "blog"
+          },
+          {
+            "source": "media-cs50",
+            "expected": "course",
+            "actual": "website"
+          }
+        ]
+      },
+      "validation": {
+        "accuracy": 0.75,
+        "macro_f1": 0.6667,
+        "errors": [
+          {
+            "source": "media-ninjatune",
+            "expected": "music",
+            "actual": "blog"
+          }
+        ]
+      }
+    },
+    "neural:64:5": {
+      "grouped_cross_validation": {
+        "accuracy": 0.6923,
+        "macro_f1": 0.4332,
+        "errors": [
+          {
+            "source": "asura",
+            "expected": "comic",
+            "actual": "website"
+          },
+          {
+            "source": "royalroad",
+            "expected": "novel",
+            "actual": "blog"
+          },
+          {
+            "source": "hn",
+            "expected": "website",
+            "actual": "blog"
+          },
+          {
+            "source": "xkcd",
+            "expected": "comic",
+            "actual": "blog"
+          },
+          {
+            "source": "planetpython",
+            "expected": "website",
+            "actual": "blog"
+          },
+          {
+            "source": "lobsters",
+            "expected": "website",
+            "actual": "blog"
+          },
+          {
+            "source": "changelog",
+            "expected": "podcast",
+            "actual": "blog"
+          },
+          {
+            "source": "realpython",
+            "expected": "course",
+            "actual": "blog"
+          },
+          {
+            "source": "esa-gallery",
+            "expected": "website",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-debian",
+            "expected": "software",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-arch",
+            "expected": "software",
+            "actual": "blog"
+          },
+          {
+            "source": "cascade-usenix",
+            "expected": "video",
+            "actual": "research"
+          },
+          {
+            "source": "cascade-blender",
+            "expected": "software",
+            "actual": "blog"
+          },
+          {
+            "source": "media-pythonjobs",
+            "expected": "jobs",
+            "actual": "blog"
+          },
+          {
+            "source": "media-cs50",
+            "expected": "course",
+            "actual": "blog"
+          },
+          {
+            "source": "media-ccctalks",
+            "expected": "video",
+            "actual": "blog"
+          }
+        ]
+      },
+      "validation": {
+        "accuracy": 0.5,
+        "macro_f1": 0.3333,
+        "errors": [
+          {
+            "source": "media-ninjatune",
+            "expected": "music",
+            "actual": "software"
+          },
+          {
+            "source": "media-weworkremotely",
+            "expected": "jobs",
+            "actual": "blog"
+          }
+        ]
+      }
+    }
+  },
+  "selected": {
+    "domain_grouped_development": {
+      "accuracy": 0.8654,
+      "macro_f1": 0.8148,
+      "errors": [
+        {
+          "source": "simonwillison",
+          "expected": "blog",
+          "actual": "website"
+        },
+        {
+          "source": "realpython",
+          "expected": "course",
+          "actual": "website"
+        },
+        {
+          "source": "cascade-debian",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-arch",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "cascade-blender",
+          "expected": "software",
+          "actual": "blog"
+        },
+        {
+          "source": "media-cs50",
+          "expected": "course",
+          "actual": "website"
+        },
+        {
+          "source": "media-ccctalks",
+          "expected": "video",
+          "actual": "blog"
+        }
+      ]
+    },
+    "validation": {
+      "baseline": {
+        "accuracy": 0.75,
+        "macro_f1": 0.6,
+        "errors": [
+          {
+            "source": "media-ninjatune",
+            "expected": "music",
+            "actual": "software"
+          }
+        ]
+      },
+      "deployed": {
+        "accuracy": 0.75,
+        "macro_f1": 0.6,
+        "errors": [
+          {
+            "source": "media-ninjatune",
+            "expected": "music",
+            "actual": "software"
+          }
+        ]
+      },
+      "profiles": 4
+    },
+    "initial_source_holdout": {
+      "baseline": {
+        "accuracy": 0.375,
+        "macro_f1": 0.2667,
+        "errors": [
+          {
+            "source": "media-monstercat",
+            "expected": "music",
+            "actual": "blog"
+          },
+          {
+            "source": "media-questionablecontent",
+            "expected": "comic",
+            "actual": "website"
+          },
+          {
+            "source": "media-wanderinginn",
+            "expected": "novel",
+            "actual": "blog"
+          },
+          {
+            "source": "media-20k",
+            "expected": "podcast",
+            "actual": "blog"
+          },
+          {
+            "source": "media-arxiv",
+            "expected": "research",
+            "actual": "website"
+          }
+        ]
+      },
+      "deployed": {
+        "accuracy": 0.5,
+        "macro_f1": 0.3778,
+        "errors": [
+          {
+            "source": "media-monstercat",
+            "expected": "music",
+            "actual": "blog"
+          },
+          {
+            "source": "media-wanderinginn",
+            "expected": "novel",
+            "actual": "blog"
+          },
+          {
+            "source": "media-20k",
+            "expected": "podcast",
+            "actual": "blog"
+          },
+          {
+            "source": "media-arxiv",
+            "expected": "research",
+            "actual": "website"
+          }
+        ]
+      },
+      "profiles": 8
+    },
+    "final_fresh_source_holdout": {
+      "baseline": {
+        "accuracy": 0.4,
+        "macro_f1": 0.2381,
+        "errors": [
+          {
+            "source": "media-subpop",
+            "expected": "music",
+            "actual": "software"
+          },
+          {
+            "source": "media-darknetdiaries",
+            "expected": "podcast",
+            "actual": "blog"
+          },
+          {
+            "source": "media-neurips",
+            "expected": "research",
+            "actual": "website"
+          }
+        ]
+      },
+      "deployed": {
+        "accuracy": 0.8,
+        "macro_f1": 0.6667,
+        "errors": [
+          {
+            "source": "media-subpop",
+            "expected": "music",
+            "actual": "software"
+          }
+        ]
+      },
+      "profiles": 5
+    }
+  },
+  "runtime": {
+    "numeric_parameters": 1044,
+    "numeric_bytes": 4176,
+    "artifact_bytes": 12314,
+    "float32_probability_max_error": 2.0876208373099558e-07,
+    "baseline_classification_ms_per_item_median": 1.3034043477618715,
+    "learned_classification_ms_per_item_median": 2.0456478262043465,
+    "complete_metadata_ms_per_item_median": 3.2403666664849617
+  },
+  "limitations": "Development folds informed feature and threshold selection. Initial held-out sources were inspected for labels before feature work; no claim of blindness. Five final sources were collected after candidate freeze. Small English-heavy samples and partially synthetic training limit generalization; acquisition failures remain separate from classification. Neural candidates are evaluated only, not shipped."
+}

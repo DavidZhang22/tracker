@@ -26,7 +26,7 @@ MediaOverride = Literal[
     "research",
 ]
 MEDIA_TYPES = set(get_args(MediaOverride)) - {""}
-VERSION = 1
+VERSION = 2
 MAX_TAGS = 48
 MAX_SUMMARY = 2400
 MAX_SAMPLE = 32
@@ -167,8 +167,9 @@ def source_summary(soup):
     return clean(" ".join(dict.fromkeys(fragments)))
 
 
-def evidence_text(scan):
-    entries = sample_entries(scan.get("entries", []))
+def evidence_text(scan, entries=None):
+    if entries is None:
+        entries = sample_entries(scan.get("entries", []))
     title = clean(scan.get("title"), 300).casefold()
     summary = clean(scan.get("source_summary") or scan.get("summary")).casefold()
     path = (
@@ -183,8 +184,10 @@ def evidence_text(scan):
     return title, summary, path, rows
 
 
-def features(scan):
-    title, summary, path, rows = evidence_text(scan)
+def features(scan, *, evidence=None):
+    title, summary, path, rows = (
+        evidence if evidence is not None else evidence_text(scan)
+    )
     result = []
     for signal in SIGNALS.values():
         result.extend(
@@ -199,9 +202,9 @@ def features(scan):
     return result
 
 
-def classify(scan):
+def baseline_classify(scan, *, evidence=None):
     """Conservative baseline; uncertain evidence keeps the acquisition type."""
-    values = features(scan)
+    values = features(scan, evidence=evidence)
     scores = {}
     for i, kind in enumerate(SIGNALS):
         title, summary, path, entries = values[i * 4 : i * 4 + 4]
@@ -225,9 +228,23 @@ def classify(scan):
     return fallback
 
 
-def search_tags(scan, kind):
-    title, summary, _, _ = evidence_text(scan)
-    entries = sample_entries(scan.get("entries", []))
+def classify(scan, *, evidence=None, entries=None):
+    from .media_classifier import classify as learned_classify
+
+    if entries is None:
+        entries = sample_entries(scan.get("entries", []))
+    if evidence is None:
+        evidence = evidence_text(scan, entries)
+    baseline = baseline_classify(scan, evidence=evidence)
+    return learned_classify(scan, evidence, entries, baseline)
+
+
+def search_tags(scan, kind, *, evidence=None, entries=None):
+    if entries is None:
+        entries = sample_entries(scan.get("entries", []))
+    title, summary, _, _ = (
+        evidence if evidence is not None else evidence_text(scan, entries)
+    )
     fragments = [title, summary, clean(scan.get("keywords"), 300).casefold()]
     fragments += [clean(e.get("title"), 140).casefold() for e in entries[:12]]
     fragments += [clean(e.get("language"), 40).casefold() for e in entries]
@@ -254,11 +271,13 @@ def search_tags(scan, kind):
 def annotate(scan, override=""):
     if override not in get_args(MediaOverride):
         raise ValueError("Choose a supported media type.")
-    detected = classify(scan)
+    entries = sample_entries(scan.get("entries", []))
+    evidence = evidence_text(scan, entries)
+    detected = classify(scan, evidence=evidence, entries=entries)
     kind = override or detected
     return scan | {
         "kind": kind,
         "detected_kind": detected,
         "source_summary": clean(scan.get("source_summary") or scan.get("summary")),
-        "search_tags": search_tags(scan, kind),
+        "search_tags": search_tags(scan, kind, evidence=evidence, entries=entries),
     }

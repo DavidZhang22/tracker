@@ -1,0 +1,55 @@
+{
+  "runtime": "v24.11.1",
+  "note": "Synthetic public-style metadata; 200 is the account limit. Pure JS timings exclude worker startup and browser rendering.",
+  "queries": 144,
+  "results": [
+    {
+      "items": 50,
+      "metadata_bytes": 26897,
+      "max_score_error": 0,
+      "changed_membership": 0,
+      "before": {
+        "build_ms": 2.8186999999999927,
+        "queries_ms": 3.565400000000011,
+        "repeated_queries_ms": 5.8501999999999725
+      },
+      "after": {
+        "build_ms": 1.9005999999999972,
+        "queries_ms": 2.1539000000000215,
+        "repeated_queries_ms": 0.4048000000000229
+      }
+    },
+    {
+      "items": 200,
+      "metadata_bytes": 108072,
+      "max_score_error": 0,
+      "changed_membership": 0,
+      "before": {
+        "build_ms": 7.499499999999955,
+        "queries_ms": 8.770199999999988,
+        "repeated_queries_ms": 18.662599999999998
+      },
+      "after": {
+        "build_ms": 5.744800000000055,
+        "queries_ms": 5.592200000000048,
+        "repeated_queries_ms": 0.37990000000002055
+      }
+    },
+    {
+      "items": 2000,
+      "metadata_bytes": 1088736,
+      "max_score_error": 0,
+      "changed_membership": 0,
+      "before": {
+        "build_ms": 65.99160000000029,
+        "queries_ms": 201.77869999999984,
+        "repeated_queries_ms": 668.2049000000006
+      },
+      "after": {
+        "build_ms": 63.528299999999945,
+        "queries_ms": 79.34190000000126,
+        "repeated_queries_ms": 0.41049999999995634
+      }
+    }
+  ]
+}

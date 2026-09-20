@@ -34,7 +34,13 @@ The [generalization evaluation](backend/ml/reports/generalization.md) records th
 
 ## Organizing links
 
-Library search combines title and URL matches, typo tolerance and local sentence embeddings of saved metadata and descriptions. Item link search matches text within that item's entries. Results stay visible while a search runs, with recent views cached briefly in the current tab; selection waits for the current results.
+Library search combines title and URL matches, typo tolerance and local sentence embeddings of saved metadata and descriptions. **Quick search** uses only browser-side text and typo matching; **Smart search** adds server semantic matching. Larger libraries move lexical ranking into a background worker. Indexes survive progress/favorite updates, remain in memory, and are discarded when the page closes. Item link search matches text within that item's entries. Selection waits for current results.
+
+**Saved views** stores a search, status filter, media type, sort order and search mode together. Save up to 12 private views, rename/update them, or delete a view without deleting its items. Browser back/forward restores Library controls. Saved views are included in account exports and deletion.
+
+**Continue** opens the next unread entry in detected number/date/source order, honoring the item's read-on-open preference. Muted/trashed entries and future scheduled releases are skipped. Merged or linkless entries open the unread list without changing their progress. **Latest** remains available for jumping to the newest entry.
+
+See the [feature-depth plan and verification](backend/ml/reports/feature-depth.md) for scope, tradeoffs and performance measurements.
 
 Use Selection → Choose a pattern to combine an interval with a position range. For example, every 2 links, starting with 1, within positions 1–49 selects positions 1, 3, 5 … 49 in the current filtered order. Selection can be replaced, extended, reduced or inverted; Shift-click selects a range on the current page.
 

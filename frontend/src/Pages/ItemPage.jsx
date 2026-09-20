@@ -1,7 +1,13 @@
 import { ImportDetails } from "../Components/ImportInput";
 import EntryLink from "../Components/EntryLink";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import ContinueLink from "../Components/ContinueLink";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  Link,
+  useLocation,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import {
   ArrowLeftIcon,
   StarIcon,
@@ -33,15 +39,59 @@ export default function ItemPage() {
 
 function ItemDetail({ id }) {
   const { preferences } = usePreferences();
-  const [params] = useSearchParams();
-  const [item, setItem] = useState(null),
-    [filter, setFilter] = useState("all"),
-    [sort, setSort] = useState(preferences.link_sort),
-    [direction, setDirection] = useState(preferences.link_direction),
-    [search, setSearch] = useState(() =>
-      (params.get("search") || "").slice(0, 300),
-    ),
-    [offset, setOffset] = useState(0);
+  const location = useLocation();
+  const lastLanding = useRef(null);
+  const [params, setParams] = useSearchParams();
+  const setParamsRef = useRef(setParams);
+  setParamsRef.current = setParams;
+  const filters = [
+    "all",
+    "unread",
+    "new",
+    "favorites",
+    "read",
+    "ignored",
+    "upcoming",
+    "trash",
+  ];
+  const filter = filters.includes(params.get("filter"))
+    ? params.get("filter")
+    : "all";
+  const sort = linkSortOptions.some(([value]) => value === params.get("sort"))
+    ? params.get("sort")
+    : preferences.link_sort;
+  const direction = ["asc", "desc"].includes(params.get("direction"))
+    ? params.get("direction")
+    : preferences.link_direction;
+  const search = (params.get("search") || "").slice(0, 300);
+  const position = Number(params.get("offset"));
+  const offset =
+    Number.isInteger(position) &&
+    position >= 0 &&
+    position <= 4950 &&
+    position % 50 === 0
+      ? position
+      : 0;
+  const setOffset = useCallback(
+    (value) =>
+      setParamsRef.current(
+        (previous) => {
+          const next = new URLSearchParams(previous);
+          const raw = Number(previous.get("offset"));
+          const current =
+            Number.isInteger(raw) && raw >= 0 && raw <= 4950 && raw % 50 === 0
+              ? raw
+              : 0;
+          const result = typeof value === "function" ? value(current) : value;
+          if (result) next.set("offset", String(result));
+          else next.delete("offset");
+          return next;
+        },
+        { replace: true },
+      ),
+    [],
+  );
+  const [item, setItem] = useState(null);
   const [error, setError] = useState(""),
     [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false),
@@ -85,6 +135,19 @@ function ItemDetail({ id }) {
     () => data.links.map((link) => link.id),
     [data.links],
   );
+  useEffect(() => {
+    const landing = `${location.key}:${location.hash}`;
+    if (initialLoading || loading || !item || lastLanding.current === landing)
+      return;
+    const target = data.links.find(
+      (link) => location.hash === `#entry-${encodeURIComponent(link.id)}`,
+    );
+    if (!target) return;
+    const row = document.getElementById(`entry-${target.id}`);
+    if (!row) return;
+    row.scrollIntoView?.({ block: "center" });
+    lastLanding.current = landing;
+  }, [data.links, initialLoading, loading, item, location.key, location.hash]);
   const update = async (body) => {
     setError("");
     try {
@@ -203,9 +266,17 @@ function ItemDetail({ id }) {
     if (item.auto_read && !link.read && (e.type === "click" || e.button === 1))
       updateLink(link.id, { read: true });
   };
-  const choose = (setter, value) => {
-    setter(value);
-    setOffset(0);
+  const choose = (key, value) => {
+    setParams(
+      (previous) => {
+        const next = new URLSearchParams(previous);
+        if (value) next.set(key, value);
+        else next.delete(key);
+        next.delete("offset");
+        return next;
+      },
+      { replace: key === "search" },
+    );
   };
   if (!item)
     return (
@@ -252,6 +323,14 @@ function ItemDetail({ id }) {
           </div>
         </div>
         <div className="actions">
+          {filter !== "trash" && (
+            <ContinueLink
+              item={item}
+              onRead={reload}
+              onError={setError}
+              className="button"
+            />
+          )}
           <IconButton
             icon={StarIcon}
             label={item.favorite ? "Unfavorite item" : "Favorite item"}
@@ -320,15 +399,15 @@ function ItemDetail({ id }) {
         </Notice>
       )}
       <div className="summary-strip">
-        <button onClick={() => choose(setFilter, "unread")}>
+        <button onClick={() => choose("filter", "unread")}>
           <span className="summary-number">{item.unread_count}</span>
           <span>Unread</span>
         </button>
-        <button onClick={() => choose(setFilter, "new")}>
+        <button onClick={() => choose("filter", "new")}>
           <span className="summary-number teal">{item.new_count}</span>
           <span>New links</span>
         </button>
-        <button onClick={() => choose(setFilter, "read")}>
+        <button onClick={() => choose("filter", "read")}>
           <span className="summary-number">{item.read_count}</span>
           <span>Read of {item.total_count - item.ignored_count}</span>
         </button>
@@ -375,7 +454,7 @@ function ItemDetail({ id }) {
               key={key}
               aria-pressed={filter === key}
               className={filter === key ? "selected" : ""}
-              onClick={() => choose(setFilter, key)}
+              onClick={() => choose("filter", key)}
             >
               {label}
             </button>
@@ -399,7 +478,7 @@ function ItemDetail({ id }) {
                 maxLength={300}
                 placeholder="Search links"
                 value={search}
-                onChange={(e) => choose(setSearch, e.target.value)}
+                onChange={(e) => choose("search", e.target.value)}
               />
             </label>
           </form>
@@ -407,7 +486,7 @@ function ItemDetail({ id }) {
             <select
               aria-label="Order links by"
               value={sort}
-              onChange={(e) => choose(setSort, e.target.value)}
+              onChange={(e) => choose("sort", e.target.value)}
             >
               {linkSortOptions.map(([value, label]) => (
                 <option key={value} value={value}>
@@ -418,7 +497,7 @@ function ItemDetail({ id }) {
             <select
               aria-label="Order direction"
               value={direction}
-              onChange={(e) => choose(setDirection, e.target.value)}
+              onChange={(e) => choose("direction", e.target.value)}
             >
               <option value="desc">Newest to oldest</option>
               <option value="asc">Oldest to newest</option>
@@ -446,6 +525,7 @@ function ItemDetail({ id }) {
           data.links.map((l, index) => (
             <article
               key={l.id}
+              id={`entry-${l.id}`}
               onContextMenu={openRowMenu}
               className={`entry-row ${l.is_new && !l.read && !l.ignored ? "is-new" : ""} ${l.read ? "is-read" : ""}`}
             >

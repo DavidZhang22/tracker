@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { mediaLabel, mediaTypes } from "../media";
 import useLibrarySearch from "../Hooks/useLibrarySearch";
+import SavedViews from "../Components/SavedViews";
+import ContinueLink from "../Components/ContinueLink";
+import { libraryView, libraryViewParams } from "../libraryViews";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   CollectionIcon,
@@ -27,11 +30,21 @@ export default function LibraryPage() {
   const [items, setItems] = useState([]),
     [loading, setLoading] = useState(true),
     [params, setParams] = useSearchParams();
-  const filter = params.get("filter") || "all";
+  const currentView = libraryView(params, preferences.library_sort);
+  const {
+    query: search,
+    filter,
+    kind,
+    sort,
+    search_mode: searchMode,
+  } = currentView;
   const trash = filter === "trash";
-  const [search, setSearch] = useState(""),
-    [kind, setKind] = useState("all"),
-    [sort, setSort] = useState(preferences.library_sort);
+  const chooseView = (changes, replace = false) =>
+    setParams(
+      (previous) =>
+        libraryViewParams(previous, changes, preferences.library_sort),
+      { replace },
+    );
   const [busy, setBusy] = useState(false),
     [refreshing, setRefreshing] = useState(false),
     [error, setError] = useState(""),
@@ -47,7 +60,9 @@ export default function LibraryPage() {
     },
     [],
   );
-  const selection = useSelection(`${filter}:${search}:${kind}`);
+  const selection = useSelection(
+    `${filter}:${search}:${kind}:${sort}:${searchMode}`,
+  );
   const load = useCallback(async () => {
     const version = ++loadVersion.current;
     try {
@@ -132,6 +147,7 @@ export default function LibraryPage() {
   const openLatest = async (event, item) => {
     if (
       !item.auto_read ||
+      (item.latest_link.link_count || 1) > 1 ||
       item.latest_link.read ||
       (event.type !== "click" && event.button !== 1)
     )
@@ -174,6 +190,7 @@ export default function LibraryPage() {
     items,
     search,
     trash,
+    searchMode,
   );
   const visible = useMemo(
     () =>
@@ -229,11 +246,11 @@ export default function LibraryPage() {
           </h1>
           {!trash && (
             <div className="library-totals" aria-label="Library link totals">
-              <button onClick={() => setParams({ filter: "unread" })}>
+              <button onClick={() => chooseView({ filter: "unread" })}>
                 <strong>{totals.unread}</strong> unread{" "}
                 {totals.unread === 1 ? "link" : "links"}
               </button>
-              <button onClick={() => setParams({ filter: "new" })}>
+              <button onClick={() => chooseView({ filter: "new" })}>
                 <strong>{totals.new}</strong> new{" "}
                 {totals.new === 1 ? "link" : "links"}
               </button>
@@ -278,7 +295,7 @@ export default function LibraryPage() {
               key={key}
               className={filter === key ? "selected" : ""}
               aria-pressed={filter === key}
-              onClick={() => setParams(key === "all" ? {} : { filter: key })}
+              onClick={() => chooseView({ filter: key })}
             >
               {label}
               {counts[key] != null && <span>{counts[key]}</span>}
@@ -292,7 +309,7 @@ export default function LibraryPage() {
             aria-label="Library search"
             onSubmit={(event) => {
               event.preventDefault();
-              setSearch((value) => value.trim());
+              chooseView({ query: search.trim() }, true);
             }}
           >
             <label className="search">
@@ -303,15 +320,25 @@ export default function LibraryPage() {
                 type="search"
                 placeholder="Search your library"
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => chooseView({ query: e.target.value }, true)}
               />
             </label>
           </form>
           <FilterOptions>
             <select
+              aria-label="Search mode"
+              value={searchMode}
+              onChange={(event) =>
+                chooseView({ search_mode: event.target.value })
+              }
+            >
+              <option value="semantic">Smart search</option>
+              <option value="local">Quick search</option>
+            </select>
+            <select
               aria-label="Media type"
               value={kind}
-              onChange={(e) => setKind(e.target.value)}
+              onChange={(e) => chooseView({ kind: e.target.value })}
             >
               <option value="all">All media</option>
               {mediaTypes.map(([value, label]) => (
@@ -323,7 +350,7 @@ export default function LibraryPage() {
             <select
               aria-label="Sort items"
               value={sort}
-              onChange={(e) => setSort(e.target.value)}
+              onChange={(e) => chooseView({ sort: e.target.value })}
             >
               <option value="recent">Recently added</option>
               <option value="unread">Most unread</option>
@@ -331,6 +358,10 @@ export default function LibraryPage() {
             </select>
           </FilterOptions>
         </div>
+        <SavedViews
+          current={currentView}
+          onApply={(view) => chooseView(view)}
+        />
         <SelectionBar
           selection={selection}
           visible={visibleIds}
@@ -411,8 +442,10 @@ export default function LibraryPage() {
                       {i.new_count > 0 && (
                         <span className="badge">{i.new_count} new</span>
                       )}
+                      <ContinueLink item={i} onRead={load} onError={setError} />
                       {i.latest_link &&
-                        (i.latest_link.url ? (
+                        (i.latest_link.url &&
+                        (i.latest_link.link_count || 1) === 1 ? (
                           <a
                             className="latest-link"
                             href={i.latest_link.url}

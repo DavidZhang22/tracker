@@ -1,0 +1,34 @@
+{
+  "profiles": 69,
+  "numeric_bytes": 4176,
+  "float32_probability_max_error": 1.7881393432617188e-07,
+  "changed_decisions_from_float64": 0,
+  "encoder_loaded": false,
+  "timing_ms_per_item_median": {
+    "baseline_classification": 1.1515246376908128,
+    "learned_classification": 2.1713057971994756,
+    "complete_metadata": 4.235642028937076
+  },
+  "accuracy_counts": {
+    "training_replay": {
+      "profiles": 52,
+      "baseline_correct": 36,
+      "deployed_correct": 48
+    },
+    "validation": {
+      "profiles": 4,
+      "baseline_correct": 3,
+      "deployed_correct": 3
+    },
+    "initial_source_holdout": {
+      "profiles": 8,
+      "baseline_correct": 3,
+      "deployed_correct": 4
+    },
+    "final_fresh_source_holdout": {
+      "profiles": 5,
+      "baseline_correct": 2,
+      "deployed_correct": 4
+    }
+  }
+}

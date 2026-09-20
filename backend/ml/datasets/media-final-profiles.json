@@ -1,0 +1,619 @@
+[
+  {
+    "source_id": "media-subpop",
+    "url": "https://www.subpop.com/releases",
+    "label": "music",
+    "split": "final",
+    "sha256": "f1daefabedba298307b27b423799666cacb272d1536b2b62d5d7110eef7f41a9",
+    "title": "Sub Pop Records Discography",
+    "source_summary": "",
+    "kind": "blog",
+    "entries": [
+      {
+        "title": "ULTIMATE LOVE FOREVER",
+        "url": "https://www.subpop.com/releases/lex_walton/ultimate_love_forever"
+      },
+      {
+        "title": "Splendor & Misery (Anniversary X)",
+        "url": "https://www.subpop.com/releases/clipping/splendor_and_misery_anniversary_x"
+      },
+      {
+        "title": "The Holy Cross Tigers",
+        "url": "https://www.subpop.com/releases/twisted_teens/the_holy_cross_tigers"
+      },
+      {
+        "title": "you made me / skin on linen",
+        "url": "https://www.subpop.com/releases/piss/you_made_me_skin_on_linen"
+      },
+      {
+        "title": "It's a Style Sport",
+        "url": "https://www.subpop.com/releases/shabazz_palaces/its_a_style_sport"
+      },
+      {
+        "title": "Hen's Teeth (Deluxe Edition)",
+        "url": "https://www.subpop.com/releases/iron_and_wine/hens_teeth_deluxe_edition"
+      },
+      {
+        "title": "Belinda",
+        "url": "https://www.subpop.com/releases/stella/belinda"
+      },
+      {
+        "title": "Free Electricity",
+        "url": "https://www.subpop.com/releases/the_go/free_electricity"
+      },
+      {
+        "title": "I'll Believe in Anything (Trixie Mattel Remix)",
+        "url": "https://www.subpop.com/releases/wolf_parade/ill_believe_in_anything_trixie_mattel_remix"
+      },
+      {
+        "title": "I've Missed You All These Years",
+        "url": "https://www.subpop.com/releases/sera_cahoone/ive_missed_you_all_these_years"
+      },
+      {
+        "title": "You Say I Romanticize",
+        "url": "https://www.subpop.com/releases/sweeping_promises/you_say_i_romanticize"
+      },
+      {
+        "title": "Live at Neumos (2011)",
+        "url": "https://www.subpop.com/releases/the_head_and_the_heart/live_at_neumos_2011"
+      },
+      {
+        "title": "The Head and the Heart",
+        "url": "https://www.subpop.com/artists/the_head_and_the_heart"
+      },
+      {
+        "title": "Public Luxury",
+        "url": "https://www.subpop.com/releases/downtown_boys/public_luxury"
+      },
+      {
+        "title": "Hell + It's Dead",
+        "url": "https://www.subpop.com/releases/girl_and_girl/hell_its_dead"
+      },
+      {
+        "title": "EVIDENT 2 ME (with Jide)",
+        "url": "https://www.subpop.com/releases/cartel_madras/evident_2_me_with_jide"
+      },
+      {
+        "title": "Tougher Than the Rest",
+        "url": "https://www.subpop.com/releases/nation_of_language/tougher_than_the_rest"
+      },
+      {
+        "title": "Nation of Language",
+        "url": "https://www.subpop.com/artists/nation_of_language"
+      },
+      {
+        "title": "Every Single Muscle",
+        "url": "https://www.subpop.com/releases/the_bug_club/every_single_muscle"
+      },
+      {
+        "title": "Green World Image",
+        "url": "https://www.subpop.com/releases/telehealth/green_world_image"
+      },
+      {
+        "title": "Say Something",
+        "url": "https://www.subpop.com/releases/sera_cahoone/say_something"
+      },
+      {
+        "title": "Hoopla",
+        "url": "https://www.subpop.com/releases/weird_nightmare/hoopla"
+      },
+      {
+        "title": "sunn O)))",
+        "url": "https://www.subpop.com/releases/sunn_o/sunn_o"
+      },
+      {
+        "title": "So It Goes (Fingers & The Outlaws)",
+        "url": "https://www.subpop.com/releases/man_man/so_it_goes_fingers_and_the_outlaws"
+      },
+      {
+        "title": "Out of the Shadow (Deluxe Edition)",
+        "url": "https://www.subpop.com/releases/rogue_wave/out_of_the_shadow_deluxe_edition"
+      },
+      {
+        "title": "Descended Like Vultures (20th Anniversary Director's Cut)",
+        "url": "https://www.subpop.com/releases/rogue_wave/descended_like_vultures_20th_anniversary_directors_cut"
+      },
+      {
+        "title": "Memory Be a Blade",
+        "url": "https://www.subpop.com/releases/waterbaby/memory_be_a_blade"
+      },
+      {
+        "title": "Trickle Down",
+        "url": "https://www.subpop.com/releases/sprints/trickle_down"
+      },
+      {
+        "title": "Heaven 2",
+        "url": "https://www.subpop.com/releases/lala_lala/heaven_2"
+      },
+      {
+        "title": "Hen's Teeth",
+        "url": "https://www.subpop.com/releases/iron_and_wine/hens_teeth"
+      },
+      {
+        "title": "I'll Believe in Anything (2026 Solo Piano Version)",
+        "url": "https://www.subpop.com/releases/spencer_krug/ill_believe_in_anything_2026_solo_piano_version"
+      },
+      {
+        "title": "\u00a1Simpatico! (Remastered and Expanded)",
+        "url": "https://www.subpop.com/releases/velocity_girl/simpatico_remastered_and_expanded"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-darknetdiaries",
+    "url": "https://darknetdiaries.com/episode/",
+    "label": "podcast",
+    "split": "final",
+    "sha256": "cad2e8015180d91897a7e27c5a98827514edd07f353086803c701b449759f078",
+    "title": "Episodes \u2013 Darknet Diaries",
+    "source_summary": "A podcast featuring true stories from the dark side of the Internet. In this episode we follow up with Gabby and Justin from Episode 59 - two seasoned penetration testers who tell us a story about the time when they tried to break into a courthouse but it went all wrong, and what happened in the aftermath. Nickolas Sharp worked for Ubiquiti, a company that makes networking equipment. He noticed that there were some security problems at work. He tried to point them out, but didn't feel like he was being listened to enough. What do you do when the com... This is the story of the hacker known as USDoD. When he was young he had a vengeance on the US, and this lead him down a road of continual data breaches, until he hacked into National Public Data, which is when his spree went one step too far. One day Nick got a visit from the FBI demanding he give them data on one of his customers. They asked for it in the form of a National Security Letter or NSL. Something wasn't right about this letter. It seemed to violate the constituion. So he se... It started with a fake car listing on eBay. What looked like a simple online scam quietly grew, over more than a decade, into one of the most sophisticated cybercrime operations the FBI had ever traced. Custom malware. Opsec off the charts. Fleets... For six years, Sophos fought a secret cyber war against a state-backed hacking group targeting its firewalls. This forced Sophos to drastically change tactics to properly secure their firewalls. Was it ethical? Was it effective? They disrupted nin... In the streets of the Dominican Republic, a new economy thrives in the shadows. It's built not on tourism or sugar, but on stolen data. They call them tarjeteros. And they are making a lot of money from stolen credit cards. This is a story about o... What if there was a device which gave you endless movies and TV shows without ads? Ok great sign me up! In this episode we interview D3ada55, who found such a device, but as she gazed into it, she discovered it gazing back at her. What if the music charts you see aren't real? What if the numbers that define success can be manufactured? We talked to Andrew, a man who has spent his career on both sides of this battle. He once profited from the loopholes in streaming platforms... Phrack is legendary. It is the oldest, and arguably the most prestigious, underground hacking magazine in the w",
+    "kind": "blog",
+    "entries": [
+      {
+        "title": "EP 179: The Courthouse - Revisited",
+        "url": "https://darknetdiaries.com/episode/179"
+      },
+      {
+        "title": "EP 178: Ubiquiti",
+        "url": "https://darknetdiaries.com/episode/178"
+      },
+      {
+        "title": "EP 177: National Public Data",
+        "url": "https://darknetdiaries.com/episode/177"
+      },
+      {
+        "title": "EP 176: NSL",
+        "url": "https://darknetdiaries.com/episode/176"
+      },
+      {
+        "title": "EP 175: Bayrob",
+        "url": "https://darknetdiaries.com/episode/175"
+      },
+      {
+        "title": "EP 174: Pacific Rim",
+        "url": "https://darknetdiaries.com/episode/174"
+      },
+      {
+        "title": "EP 173: Tarjeteros",
+        "url": "https://darknetdiaries.com/episode/173"
+      },
+      {
+        "title": "EP 172: SuperBox",
+        "url": "https://darknetdiaries.com/episode/172"
+      },
+      {
+        "title": "EP 171: Melody Fraud",
+        "url": "https://darknetdiaries.com/episode/171"
+      },
+      {
+        "title": "EP 170: Phrack",
+        "url": "https://darknetdiaries.com/episode/170"
+      },
+      {
+        "title": "EP 169: MoD",
+        "url": "https://darknetdiaries.com/episode/169"
+      },
+      {
+        "title": "EP 168: LoD",
+        "url": "https://darknetdiaries.com/episode/168"
+      },
+      {
+        "title": "EP 167: Threatlocker",
+        "url": "https://darknetdiaries.com/episode/167"
+      },
+      {
+        "title": "EP 166: Maxie",
+        "url": "https://darknetdiaries.com/episode/166"
+      },
+      {
+        "title": "EP 165: Tanya",
+        "url": "https://darknetdiaries.com/episode/165"
+      },
+      {
+        "title": "EP 164: Oak Cliff Swipers",
+        "url": "https://darknetdiaries.com/episode/164"
+      },
+      {
+        "title": "EP 163: Ola",
+        "url": "https://darknetdiaries.com/episode/163"
+      },
+      {
+        "title": "EP 162: Hieu",
+        "url": "https://darknetdiaries.com/episode/162"
+      },
+      {
+        "title": "EP 161: MG",
+        "url": "https://darknetdiaries.com/episode/161"
+      },
+      {
+        "title": "EP 160: Greg",
+        "url": "https://darknetdiaries.com/episode/160"
+      },
+      {
+        "title": "EP 159: Vastaamo",
+        "url": "https://darknetdiaries.com/episode/159"
+      },
+      {
+        "title": "EP 158: MalwareTech",
+        "url": "https://darknetdiaries.com/episode/158"
+      },
+      {
+        "title": "EP 157: Grifter",
+        "url": "https://darknetdiaries.com/episode/157"
+      },
+      {
+        "title": "EP 156: Kill List",
+        "url": "https://darknetdiaries.com/episode/156"
+      },
+      {
+        "title": "EP 155: Kingpin",
+        "url": "https://darknetdiaries.com/episode/155"
+      },
+      {
+        "title": "EP 154: Hijacked Line",
+        "url": "https://darknetdiaries.com/episode/154"
+      },
+      {
+        "title": "EP 153: Bike Index",
+        "url": "https://darknetdiaries.com/episode/153"
+      },
+      {
+        "title": "EP 152: Stacc Attack",
+        "url": "https://darknetdiaries.com/episode/152"
+      },
+      {
+        "title": "EP 151: Chris Rock",
+        "url": "https://darknetdiaries.com/episode/151"
+      },
+      {
+        "title": "EP 150: mobman 2",
+        "url": "https://darknetdiaries.com/episode/150"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-neurips",
+    "url": "https://proceedings.neurips.cc/paper_files/paper/2025",
+    "label": "research",
+    "split": "final",
+    "sha256": "1446710adc827afbcbb8e247055908c5967a9dea6e44a40849ff22ebb50018a5",
+    "title": "Advances in Neural Information Processing Systems 38 Creative AI",
+    "source_summary": "Requests for name changes in the electronic proceedings will be accepted with no questions asked. However name changes may cause bibliographic tracking issues. Authors are asked to consider this carefully and discuss it with their co-authors prior to requesting a name change in the electronic proceedings.",
+    "kind": "website",
+    "entries": [
+      {
+        "title": "Gaze to the Stars: AI and Public Art from Personal Affect and Collective Empathy",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/04440b43c10100305d21cdeb60262e98-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Learning to Move with Style: Few-Shot Cross-Modal Style Transfer for Creative Robot Motion Generation",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/137298d9e40c90a36a29616d82e0e5a5-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Roulettective: Repurposing a Vintage Slide Projector into an AI-Driven Physical Detective Game",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/2491a3e3d3762e82f0d9bfd10b4aa8be-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Green Topics, Deep Roots: Energy-Aware Topic Modelling of Multilingual Nigerian Lyrics",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/3503be50156ebf28a1fa4ebea4113dd4-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Artism: AI-Driven Dual-Engine System for Art Generation and Critique",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/3d2c2f19aa4ca9493813f13aa044f926-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "SPICE: A Synergistic, Precise, Iterative, and Customizable Image Editing Workflow",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/4051771acaf5ba90abe0539e1dc2821e-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Prompt-Character Divergence: A Responsibility Compass for Human-AI Creative Collaboration",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/474a1cf382031a7d5f69cf06ed23bf01-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Craving Checkpoint: An Interactive Fridge Lock for Mindful Eating",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/4dee9f370ea18236c3f4c17c3d8015cd-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "BioArtlas: Computational Clustering of Multi-Dimensional Complexity in Bioart",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/51803731112cde21f6aaf207d0cd9e16-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Large-Scale Training Data Attribution for Music Generative Models via Unlearning",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/5392d643eccfce4025f6dd567af05a16-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "A(I)nimism: Re-enchanting the World Through AI-Mediated Object Interaction",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b5e910744ca0e2471af69bf25b2ae6c-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Writing in Symbiosis: Mapping Human Creative Agency in the AI Era",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/615229550c97d1c4d006a4bf6b54590e-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Live Music Models",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/6a2b9382fa7c131ed57aa7e6b2587e5e-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "TinyTim: a family of language models for divergent generation",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/7bb16375f9d6dedde526511a6ca6ad4e-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "From Movement Memories to Robotic Dialogue: A Language-Mediated Pipeline for Somatic Machine Translation",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/87fc2e7defe37cbfc803f06d2bcd922e-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "MCP2OSC: Parametric Control by Natural Language",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/8a70a1b21bd31d2a68c87aed4f901036-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "CraftGraffiti: Exploring Human Identity with Custom Graffiti Art via Facial-Preserving Diffusion Models",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/919c7c8884daf4268bfe108c31d19784-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Visualizing Our Changing Earth: A Creative AI Framework for Democratizing Environmental Storytelling Through Satellite Imagery",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/9c6f6aefb8aa4feb0567e2d163c3ac27-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Echoes of Humanity: Exploring the Perceived Humanness of AI Music",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/9ff8d77c980a61f762a8026463267ecf-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Real-Time Intuitive AI Drawing System for Collaboration: Enhancing Human Creativity through Formal and Contextual Intent Integration",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/a437837e45f570ffb4ca39b8ec71c028-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "An Inference Zoo for Real-Time Media Arts: Avendish as a Bridge Between AI and Creative Environments",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/a617e1ea2ff32758595d4f01142a7d67-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Creative Synthesis of Kinematic Mechanisms",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/adc67a34eb47147e37229543df7b5b26-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Interactive Artistic Text-To-Voice: Tungna\u00e1 and Bla Blavatar vs Jaap Blonk",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/b017db8ecfe8c0b3be8e292c2cb95896-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Human-AI Co-Development of a Geometric Algorithm for Infinite Shuriken Artwork Design Generation",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/b503f1c395086eab9ce95050df7b75cc-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "MambaKit: Towards Modular Intelligence - Cognitive Scaffolding in Next-Generation Drum Synthesis",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/b66a278b71f56c5eb763240fc02057cb-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Scene-Aware Urban Design: A Human\u2013AI Recommendation Framework Using Co-Occurrence Embeddings and Vision-Language Models",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/bf24636574309c92f5ea2b0c55e8c23a-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Encoding Values: Injecting Morality into Machines via Prompt-Conditioned Moral Frames",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/c8adc62d2e6cede16ed806f58a6cfc16-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "EMPATHIA: Multi-Faceted Human-AI Collaboration for Refugee Integration",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/d1e99f3594c49ed80014c5212b223b0e-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "ProGress: Structured Music Generation via Graph Diffusion and Hierarchical Music Analysis",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/d9dbd63fac1856eb10d14e22d6898205-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Sensorium Arc: AI Agent System for Oceanic Data Exploration and Interactive Eco-Art",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/e37ba633f46635915994bd99db474305-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "Text to Robotic Assembly of Multi Component Objects using 3D Generative AI and Vision Language Models",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/e7d712cef7adb2c0d3917b3b9c09cfcd-Abstract-Creative_AI_Track.html"
+      },
+      {
+        "title": "AI as intermediary in modern-day ritual: An immersive, interactive production of the roller disco musical Xanadu at UCLA",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/fddf15bf1e988d1e2e86a24afe8e9052-Abstract-Creative_AI_Track.html"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-stereogum",
+    "url": "https://www.stereogum.com/category/news/",
+    "label": "blog",
+    "split": "final",
+    "sha256": "6479e3fb50d61ac25cc8b5876d0673e229e86be68533781922df7cb632a7393e",
+    "title": "News Archives - Stereogum",
+    "source_summary": "",
+    "kind": "blog",
+    "entries": [
+      {
+        "title": "Lizzy McAlpine Got Stella Lefty\u2019d Over Nick Drake Soundalike On Her New Album",
+        "url": "https://stereogum.com/2511966/lizzy-mcalpine-got-stella-leftyd-over-nick-drake-soundalike-on-her-new-album/news"
+      },
+      {
+        "title": "The Weeknd Debuts New Song \u201cTokyo\u201d With Yoko Takahashi At Asian Tour Kickoff",
+        "url": "https://stereogum.com/2511960/the-weeknd-debuts-new-song-tokyo-with-yoko-takahashi-at-asian-tour-kickoff/news"
+      },
+      {
+        "title": "Brew Ha Ha Details First Punk Festival Since Cancellations Over Owner\u2019s Trump Support",
+        "url": "https://stereogum.com/2511919/brew-ha-ha-details-first-punk-festival-since-cancellations-over-owners-trump-support/news"
+      },
+      {
+        "title": "Animal Collective Announce Additional Feels Shows After Ticketing Issues",
+        "url": "https://stereogum.com/2511920/animal-collective-announce-additional-feels-shows-after-ticketing-issues/news"
+      },
+      {
+        "title": "Duncan Sheik Dead At 56",
+        "url": "https://stereogum.com/2511881/duncan-sheik-dead-at-56/news"
+      },
+      {
+        "title": "Hayley Williams Sings \u201cAirplanes\u201d For The First Time In 16 Years",
+        "url": "https://stereogum.com/2511862/hayley-williams-sings-airplanes-for-the-first-time-in-16-years/news"
+      },
+      {
+        "title": "Sylvan Esso Return To Spotify",
+        "url": "https://stereogum.com/2511856/sylvan-esso-return-to-spotify/news"
+      },
+      {
+        "title": "New Radicals Ready First New Album Since 1998",
+        "url": "https://stereogum.com/2511796/new-radicals-ready-first-new-album-since-1998/news"
+      },
+      {
+        "title": "Guitar Center\u2019s Contest To Open For Ed Sheeran Is Real",
+        "url": "https://stereogum.com/2511757/guitar-centers-contest-to-open-for-ed-sheeran-is-real/news"
+      },
+      {
+        "title": "Japanese Breakfast\u2019s Michelle Zauner Announces Second Book Thank You For Your Suffering",
+        "url": "https://stereogum.com/2511729/japanese-breakfasts-michelle-zauner-announces-second-book-thank-you-for-your-suffering/news"
+      },
+      {
+        "title": "The Heartbreakers Reunite And Perform With Stan Lynch For The First Time In 24 Years",
+        "url": "https://stereogum.com/2511722/the-heartbreakers-reunite-and-perform-with-stan-lynch-for-the-first-time-in-24-years/news"
+      },
+      {
+        "title": "Hayley Williams\u2019 Forest Hills Pre-Show Playlist Featured All The Acts Who Exited Ed Sheeran\u2019s Tour",
+        "url": "https://stereogum.com/2511718/hayley-williams-forest-hills-pre-show-playlist-featured-all-the-acts-who-exited-ed-sheerans-tour/news"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-practicalguide",
+    "url": "https://practicalguidetoevil.wordpress.com/table-of-contents/",
+    "label": "novel",
+    "split": "final",
+    "sha256": "ce5dc7033dce9f7abc446545fe34e9e7fce69f2bdd37daddab50a2aca9f578dc",
+    "title": "Table of Contents",
+    "source_summary": "Book 1 The first book is now for sale on Amazon! Book 2 Prologue Chapter 1: Supply Chapter 2: Demand Chapter 3: Cost Heroic Interlude: Balestra Chapter 4: Return Chapter 5: Recognition Chapter ... Book 1 The first book is now for sale on Amazon! https://www.amazon.com/Practical-Guide-Evil-I-ebook/dp/B0F2549NHK Book 2 Prologue Chapter 1: Supply Chapter 2: Demand Chapter 3: Cost Heroic Interlude: Balestra Chapter 4: Return Chapter 5: Recognition Chapter 6: Rapport Chapter 7: Reception Chapter 8: Reversal Chapter 9: Rematch Chapter 10: Release Chapter 11: Report Chapter 12:...",
+    "kind": "blog",
+    "entries": [
+      {
+        "title": "Prologue",
+        "url": "https://practicalguidetoevil.wordpress.com/2015/11/04/prologue-2"
+      },
+      {
+        "title": "Chapter 16: Trust",
+        "url": "https://practicalguidetoevil.wordpress.com/2016/03/16/chapter-16-trust"
+      },
+      {
+        "title": "Chapter 32: Draw",
+        "url": "https://practicalguidetoevil.wordpress.com/2016/07/27/chapter-31-draw"
+      },
+      {
+        "title": "Chapter 47: And Justice For All",
+        "url": "https://practicalguidetoevil.wordpress.com/2016/12/07/chapter-47-and-justice-for-all"
+      },
+      {
+        "title": "Chapter 11: Swerve",
+        "url": "https://practicalguidetoevil.wordpress.com/2017/05/24/chapter-11-swerve"
+      },
+      {
+        "title": "Chapter 24: Vanguard",
+        "url": "https://practicalguidetoevil.wordpress.com/2017/08/16/chapter-24-vanguard"
+      },
+      {
+        "title": "Chapter 37: Procedures",
+        "url": "https://practicalguidetoevil.wordpress.com/2017/10/23/chapter-37-procedures"
+      },
+      {
+        "title": "Chapter 55: Reunion",
+        "url": "https://practicalguidetoevil.wordpress.com/2017/12/31/chapter-55-reunion"
+      },
+      {
+        "title": "Chapter 69: Swan Song",
+        "url": "https://practicalguidetoevil.wordpress.com/2018/02/26/chapter-69-swan-song"
+      },
+      {
+        "title": "Chapter 12: Cambr\u00e9",
+        "url": "https://practicalguidetoevil.wordpress.com/2018/05/11/chapter-12-cambre"
+      },
+      {
+        "title": "Chapter 23: Recoup",
+        "url": "https://practicalguidetoevil.wordpress.com/2018/06/27/chapter-23-recoup"
+      },
+      {
+        "title": "Chapter 42: The Skein\u2019s Plan",
+        "url": "https://practicalguidetoevil.wordpress.com/2018/08/10/chapter-42-the-skeins-plan"
+      },
+      {
+        "title": "Chapter 60: Profiteers",
+        "url": "https://practicalguidetoevil.wordpress.com/2018/09/24/chapter-60-profiteers"
+      },
+      {
+        "title": "Chapter 69: Peerage",
+        "url": "https://practicalguidetoevil.wordpress.com/2018/11/09/chapter-69-peerage"
+      },
+      {
+        "title": "Chapter 3: Orison",
+        "url": "https://practicalguidetoevil.wordpress.com/2019/01/21/chapter-3-orison"
+      },
+      {
+        "title": "Interlude: Congregation III",
+        "url": "https://practicalguidetoevil.wordpress.com/2019/03/06/interlude-congregation-iii"
+      },
+      {
+        "title": "Interlude: When Iron Rests",
+        "url": "https://practicalguidetoevil.wordpress.com/2019/04/22/interlude-when-iron-rests"
+      },
+      {
+        "title": "Interlude: Reckoning",
+        "url": "https://practicalguidetoevil.wordpress.com/2019/06/05/interlude-reckoning"
+      },
+      {
+        "title": "Chapter 58: Prolong",
+        "url": "https://practicalguidetoevil.wordpress.com/2019/07/19/chapter-58-prolong"
+      },
+      {
+        "title": "Interlude: And Yet We Stand",
+        "url": "https://practicalguidetoevil.wordpress.com/2019/09/04/interlude-and-yet-we-stand"
+      },
+      {
+        "title": "Interlude: A Hundred Battles",
+        "url": "https://practicalguidetoevil.wordpress.com/2019/10/18/interlude-a-hundred-battles"
+      },
+      {
+        "title": "Chapter 11: Veer",
+        "url": "https://practicalguidetoevil.wordpress.com/2020/02/14/chapter-11-veer"
+      },
+      {
+        "title": "Interlude: Knock Them Down",
+        "url": "https://practicalguidetoevil.wordpress.com/2020/04/24/interlude-knock-them-down"
+      },
+      {
+        "title": "Chapter 39: Transliteration",
+        "url": "https://practicalguidetoevil.wordpress.com/2020/06/30/chapter-39-transliteration"
+      },
+      {
+        "title": "Chapter 56: Repertoires",
+        "url": "https://practicalguidetoevil.wordpress.com/2020/09/04/chapter-56-repertoires"
+      },
+      {
+        "title": "Chapter 72: Omen",
+        "url": "https://practicalguidetoevil.wordpress.com/2020/11/13/chapter-72-omen"
+      },
+      {
+        "title": "Chapter 4: Stock",
+        "url": "https://practicalguidetoevil.wordpress.com/2021/03/16/chapter-4-stock"
+      },
+      {
+        "title": "Chapter 19: Vivienne\u2019s Plan (Redux)",
+        "url": "https://practicalguidetoevil.wordpress.com/2021/05/21/chapter-19-viviennes-plan-redux"
+      },
+      {
+        "title": "Interlude: End Times",
+        "url": "https://practicalguidetoevil.wordpress.com/2021/07/30/interlude-end-times"
+      },
+      {
+        "title": "Chapter 40: Resolutions",
+        "url": "https://practicalguidetoevil.wordpress.com/2021/10/05/chapter-40-resolutions"
+      },
+      {
+        "title": "Chapter 56: Brink",
+        "url": "https://practicalguidetoevil.wordpress.com/2021/12/17/chapter-56-brink"
+      },
+      {
+        "title": "Epilogue II",
+        "url": "https://practicalguidetoevil.wordpress.com/2022/02/26/epilogue-ii"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  }
+]

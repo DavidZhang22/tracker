@@ -37,6 +37,7 @@ def wipe_library(path):
                 "items",
                 "scans",
                 "preferences",
+                "saved_views",
                 "addition_cooldown",
             ):
                 if db.execute(

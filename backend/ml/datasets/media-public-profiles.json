@@ -1,0 +1,1637 @@
+[
+  {
+    "source_id": "media-nin",
+    "url": "https://www.nin.com/music/",
+    "label": "music",
+    "split": "train",
+    "sha256": "472f807ff7dd981567c92990dd6b4284929545c3126245fecf169d83062d6b5a",
+    "title": "THE MUSIC IN KEN BURNS' THE VIETNAM WAR IS REMARKABLE.",
+    "source_summary": "HERE\u2019S HOW IT WAS CHOSEN. Reznor and Ross\u2019s score serves to root The Vietnam War in the present rather than the past\u2014to reiterate that the documentary is a reflection and assessment of the events it examines. READ MORE FROM ESQUIRE.COM HERE Reznor and Ross\u2019s score serves to root The Vietnam War in the present rather than the past\u2014to reiterate that the documentary is a reflection and assessment of the events it examines.",
+    "kind": "blog",
+    "entries": [],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched",
+    "excluded_reason": "Requested music inventory redirected to a single news article; not an inventory observation."
+  },
+  {
+    "source_id": "media-ninjatune",
+    "url": "https://ninjatune.net/releases",
+    "label": "music",
+    "split": "validation",
+    "sha256": "362cf9747b4d5481c4f2ac19db0bc0427d7776ebf702ab8ea019bdff9cbcde0f",
+    "title": "Ninja Tune",
+    "source_summary": "Ninja Tune, home of Coldcut, Bonobo, Cinematic Orchestra, Floating Points, Roots Manuva, Sampa The Great, Young Fathers, Bicep, Helena Hauff, Actress and more... Home of Ninja Tune, Coldcut, Bonobo, Cinematic Orchestra, Roots Manuva, Young Fathers, The Bug, Actress and more You appear to have cookies blocked for ninjatune.net, you will be unable to login into your account or make purchases from the Ninjashop Sign up to our newsletter for the latest releases, news and events.",
+    "kind": "website",
+    "entries": [
+      {
+        "title": "Ninja Tune",
+        "url": "https://ninjatune.net/releases/ninja-tune"
+      },
+      {
+        "title": "Counter Records",
+        "url": "https://ninjatune.net/releases/counter"
+      },
+      {
+        "title": "Big Dada",
+        "url": "https://ninjatune.net/releases/big-dada"
+      },
+      {
+        "title": "Technicolour",
+        "url": "https://ninjatune.net/releases/technicolour"
+      },
+      {
+        "title": "Brainfeeder",
+        "url": "https://ninjatune.net/releases/brainfeeder"
+      },
+      {
+        "title": "Ahead Of Our Time",
+        "url": "https://ninjatune.net/releases/ahead-of-our-time"
+      },
+      {
+        "title": "OUTLIER",
+        "url": "https://ninjatune.net/releases/outlier"
+      },
+      {
+        "title": "CHROMA",
+        "url": "https://ninjatune.net/releases/chroma"
+      },
+      {
+        "title": "Foreign Family Collective",
+        "url": "https://ninjatune.net/releases/foreign-family-collective"
+      },
+      {
+        "title": "R'COUP'D",
+        "url": "https://ninjatune.net/releases/rcoupd"
+      },
+      {
+        "title": "Ntone",
+        "url": "https://ninjatune.net/releases/ntone"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-monstercat",
+    "url": "https://www.monstercat.com/music",
+    "label": "music",
+    "split": "test",
+    "sha256": "fc47d84ed4f18356621e798d8ebe7c410c04a9ae65b2c2fc777d67cd76713b54",
+    "title": "Monstercat",
+    "source_summary": "Explore the latest EDM tracks from top DJs & producers from Monstercat. Stream new releases, exclusive remixes, and chart-topping hits\u2014all in one place!",
+    "kind": "blog",
+    "entries": [
+      {
+        "title": "Album art of Set Me Free",
+        "url": "https://www.monstercat.com/release/742779554147"
+      },
+      {
+        "title": "Adventure Club",
+        "url": "https://www.monstercat.com/artist/adventure-club"
+      },
+      {
+        "title": "Kompany",
+        "url": "https://www.monstercat.com/artist/kompany"
+      },
+      {
+        "title": "Sara Benyo",
+        "url": "https://www.monstercat.com/artist/sara-benyo"
+      },
+      {
+        "title": "Album art of Polarised",
+        "url": "https://www.monstercat.com/release/742779554659"
+      },
+      {
+        "title": "Koven",
+        "url": "https://www.monstercat.com/artist/koven"
+      },
+      {
+        "title": "\u00c6ON:MODE",
+        "url": "https://www.monstercat.com/artist/aeonmode"
+      },
+      {
+        "title": "Album art of Money",
+        "url": "https://www.monstercat.com/release/742779552815"
+      },
+      {
+        "title": "Slushii",
+        "url": "https://www.monstercat.com/artist/slushii"
+      },
+      {
+        "title": "HYO",
+        "url": "https://www.monstercat.com/artist/hyo"
+      },
+      {
+        "title": "WANNA SEE UR FACE AGAIN",
+        "url": "https://www.monstercat.com/release/742779566003"
+      },
+      {
+        "title": "NCS vs Monstercat: 15 Year Anniversary",
+        "url": "https://www.monstercat.com/release/742779566966"
+      },
+      {
+        "title": "Cape Calm",
+        "url": "https://www.monstercat.com/release/742779565396"
+      },
+      {
+        "title": "movements / trouble sound",
+        "url": "https://www.monstercat.com/release/742779565792"
+      },
+      {
+        "title": "1-2 Finish",
+        "url": "https://www.monstercat.com/release/742779565716"
+      },
+      {
+        "title": "Fade To Blue",
+        "url": "https://www.monstercat.com/release/742779564016"
+      },
+      {
+        "title": "Logo Uncaged",
+        "url": "https://www.monstercat.com/uncaged"
+      },
+      {
+        "title": "Logo Uncaged",
+        "url": "https://www.monstercat.com/instinct"
+      },
+      {
+        "title": "Logo Uncaged",
+        "url": "https://www.monstercat.com/silk"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-pythonjobs",
+    "url": "https://www.python.org/jobs/",
+    "label": "jobs",
+    "split": "train",
+    "sha256": "7b067c009b9a1c0c841719d75fde5ee08664b7b23006bc0e15a40b58b5a04c83",
+    "title": "Welcome to Python.org",
+    "source_summary": "The official home of the Python Programming Language Notice: This page displays a fallback because interactive scripts did not run. Possible causes include disabled JavaScript or failure to load scripts or stylesheets.",
+    "kind": "blog",
+    "entries": [
+      {
+        "title": "Django Developer",
+        "url": "https://www.python.org/jobs/8137"
+      },
+      {
+        "title": "ML Engineer",
+        "url": "https://www.python.org/jobs/8136"
+      },
+      {
+        "title": "Remote, Worlwide, Worldwide",
+        "url": "https://www.python.org/jobs/location/remote-worlwide-worldwide"
+      },
+      {
+        "title": "Software Engineer, Full Stack (Python, Java, Rust, C#, C++)",
+        "url": "https://www.python.org/jobs/8135"
+      },
+      {
+        "title": "Remote, Remote, Worldwide",
+        "url": "https://www.python.org/jobs/location/remote-remote-worldwide"
+      },
+      {
+        "title": "Remote, Remote/Worldwide, Remote/Worldwide, Remote",
+        "url": "https://www.python.org/jobs/location/remote-remoteworldwide-remoteworldwide-remote"
+      },
+      {
+        "title": "Software Engineer",
+        "url": "https://www.python.org/jobs/8132"
+      },
+      {
+        "title": "Remote, United States of America",
+        "url": "https://www.python.org/jobs/location/remote-united-states-of-america"
+      },
+      {
+        "title": "Senior Python Developer",
+        "url": "https://www.python.org/jobs/8131"
+      },
+      {
+        "title": "Agentic Python Engineer",
+        "url": "https://www.python.org/jobs/8130"
+      },
+      {
+        "title": "Python developer",
+        "url": "https://www.python.org/jobs/8129"
+      },
+      {
+        "title": "Poland, Lviv, Ivano-Frankivsk, Ternopil, Uzhhorod, Chernivtsi or Kyiv, Ukraine/Poland",
+        "url": "https://www.python.org/jobs/location/poland-lviv-ivano-frankivsk-ternopil-uzhhorod-chernivtsi-or-kyiv-ukrainepoland"
+      },
+      {
+        "title": "Python/DevOps Engineer",
+        "url": "https://www.python.org/jobs/8128"
+      },
+      {
+        "title": "Vilnius / Kaunas / Warsaw, Lithuania/Poland",
+        "url": "https://www.python.org/jobs/location/vilnius-kaunas-warsaw-lithuaniapoland"
+      },
+      {
+        "title": "Panama City Beach, Florida, United States",
+        "url": "https://www.python.org/jobs/location/panama-city-beach-florida-united-states"
+      },
+      {
+        "title": "Agentic Python Engineer",
+        "url": "https://www.python.org/jobs/8125"
+      },
+      {
+        "title": "Remote, Remote/Worldwide, Remote/Worldwide",
+        "url": "https://www.python.org/jobs/location/remote-remoteworldwide-remoteworldwide"
+      },
+      {
+        "title": "Backend Software Engineer (FastAPI) -Onsite in Katy, Texas",
+        "url": "https://www.python.org/jobs/8123"
+      },
+      {
+        "title": "Warsaw (fully remote), Poland",
+        "url": "https://www.python.org/jobs/location/warsaw-fully-remote-poland"
+      },
+      {
+        "title": "Senior Python Backend Engineer",
+        "url": "https://www.python.org/jobs/8121"
+      },
+      {
+        "title": "Python Backend Engineer",
+        "url": "https://www.python.org/jobs/8120"
+      },
+      {
+        "title": "Senior Full-Stack Engineer [Full Time; 100% remote; US-only]",
+        "url": "https://www.python.org/jobs/8119"
+      },
+      {
+        "title": "Python Developer",
+        "url": "https://www.python.org/jobs/8118"
+      },
+      {
+        "title": "Senior Python Engineer",
+        "url": "https://www.python.org/jobs/8117"
+      },
+      {
+        "title": "Senior Python Engineer",
+        "url": "https://www.python.org/jobs/8116"
+      },
+      {
+        "title": "Senior Python/DevOps Engineer (100% Remote - USA Only)",
+        "url": "https://www.python.org/jobs/8113"
+      },
+      {
+        "title": "100% Remote, USA Only",
+        "url": "https://www.python.org/jobs/location/100-remote-usa-only"
+      },
+      {
+        "title": "Remote (US Based), Any US State, US",
+        "url": "https://www.python.org/jobs/location/remote-us-based-any-us-state-us"
+      },
+      {
+        "title": "Senior AI-Augmented Full Stack Developer",
+        "url": "https://www.python.org/jobs/8110"
+      },
+      {
+        "title": "Senior Backend Python Engineer",
+        "url": "https://www.python.org/jobs/8109"
+      },
+      {
+        "title": "Full-Stack Engineer",
+        "url": "https://www.python.org/jobs/8108"
+      },
+      {
+        "title": "Worldwide, Worldwide, Worldwide",
+        "url": "https://www.python.org/jobs/location/worldwide-worldwide-worldwide"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-weworkremotely",
+    "url": "https://weworkremotely.com/categories/remote-programming-jobs",
+    "label": "jobs",
+    "split": "validation",
+    "sha256": "dab611bdfe9da41f018bbab4e7e0efc0fe9706224a4a78ade20ff3ca9a93af6f",
+    "title": "Remote Full-Stack Programming Jobs | We Work Remotely",
+    "source_summary": "One of our most popular job categories and in-demand skills in the job market right now \ud83d\udcbb Find new and exciting remote full-stack programming and engineering job opportunities below! Work from home as a Customer Support Specialist - earn $20/hr+ with full-time & part-time remote opportunities. Metana's partner companies are hiring AI, Web3, Software & Security talent right now.",
+    "kind": "blog",
+    "entries": [
+      {
+        "title": "Senior Integration Engineer for Enterprise API & Integration Products New Toptal Featured Top 100 Full-Time North America Only",
+        "url": "https://weworkremotely.com/remote-jobs/toptal-senior-integration-engineer-for-enterprise-api-integration-products"
+      },
+      {
+        "title": "Staff Software Engineer 4d Samsara Remote Featured Full-Time $100,000 or more USD \ud83c\uddfa\ud83c\uddf8 United States of America",
+        "url": "https://weworkremotely.com/remote-jobs/samsara-staff-software-engineer"
+      },
+      {
+        "title": "Promoted Remote Customer Support - $20/hr+ Remote Talent Cloud Work from home as a Customer Support Specialist - earn $20/hr+ with full-time & part-time remote opportunities. Remote Full-Time/Part-Time $20/hr+",
+        "url": "https://weworkremotely.com/listing_ads/13/click?pk=e5463902465f5adb54cbbefdd45440e129acc76c8714ea6ad060824d4a493a58&t=eyJfcmFpbHMiOnsiZGF0YSI6eyJsaXN0aW5nX2FkX2lkIjoxMywiZXZlbnQiOiJjbGljayIsInRhcmdldCI6Im1haW4iLCJ0cmFja2VyX2RpZ2VzdCI6ImEyNDY2NmE4MDMwZTMzNDczNGVjOWE0NDUxOWExNTY3MjFjOWViZjAzMjA4MGY1M2UxMDU1MTI4ZjlhZTI5M2EiLCJwYWdlX2tleSI6ImU1NDYzOTAyNDY1ZjVhZGI1NGNiYmVmZGQ0NTQ0MGUxMjlhY2M3NmM4NzE0ZWE2YWQwNjA4MjRkNGE0OTNhNTgiLCJub25jZSI6IjA5ZjdhZTc3NGNhNzQwYTNiMDdmOGUzNjI0NDc3MDE3In0sImV4cCI6IjIwMjYtMDktMjBUMTg6MzI6MTEuNzA2WiIsInB1ciI6Imxpc3RpbmdfYWRfdHJhY2tpbmc6Y2xpY2sifX0%3D--95faf3114b58d3678c5bbd779661c3c12b2be982&target=main"
+      },
+      {
+        "title": "Senior Software Engineer 5d AccuLynx Beloit, WI Featured Full-Time $100,000 or more USD \ud83c\uddfa\ud83c\uddf8 United States of America",
+        "url": "https://weworkremotely.com/remote-jobs/acculynx-senior-software-engineer"
+      },
+      {
+        "title": "Senior Data Engineer \u2013 AWS Data Lake & Pipeline Architecture 5d Toptal Featured Top 100 Full-Time Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/toptal-senior-data-engineer-aws-data-lake-pipeline-architecture"
+      },
+      {
+        "title": "Senior Fullstack Developer (React.js / Node.js) 5d Boosted listing Proxify AB Sweden Boosted Featured Top 100 Full-Time Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/proxify-ab-senior-fullstack-developer-react-js-node-js-4"
+      },
+      {
+        "title": "Senior Full Stack 23d Boosted listing Toggl Tallinn, Estonia Boosted Featured Top 100 Full-Time $75,000 - $99,999 USD Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/toggl-senior-full-stack"
+      },
+      {
+        "title": "Senior Independent AI Engineer / Architect 15d A.Team NYC and TLV Contract Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/a-team-senior-independent-ai-engineer-architect"
+      },
+      {
+        "title": "Senior Shopify Developer (Remote + Flexible) 20d Storetasker Brooklyn, NY Contract Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/storetasker-senior-shopify-developer-remote-flexible-3"
+      },
+      {
+        "title": "Cloud Security Engineer New Hex Technologies SF, NYC or Remote Full-Time Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/hex-technologies-cloud-security-engineer"
+      },
+      {
+        "title": "Senior Software Engineer, remote 3d Edfinity Austin, TX Full-Time $100,000 or more USD \ud83c\uddfa\ud83c\uddf8 United States of America",
+        "url": "https://weworkremotely.com/remote-jobs/edfinity-senior-software-engineer-remote"
+      },
+      {
+        "title": "Data Scientist II, ML Infrastructure 7d Pinterest San Francisco, California, USA Full-Time Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/pinterest-data-scientist-ii-ml-infrastructure"
+      },
+      {
+        "title": "Software engineer 9d Boosted listing Sticker Mule New York, NY Boosted Top 100 Full-Time $100,000 or more USD Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/sticker-mule-software-engineer-3"
+      },
+      {
+        "title": "Solutions Architect -Spanish Speaking 9d Fin NYC, Remote; San Francisco, California Full-Time Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/fin-solutions-architect-spanish-speaking"
+      },
+      {
+        "title": "Power Platform Solutions Architect 9d Toptal Top 100 Full-Time North America Only",
+        "url": "https://weworkremotely.com/remote-jobs/toptal-power-platform-solutions-architect"
+      },
+      {
+        "title": "Commercial Account Manager 11d Salesloft United States, Remote Full-Time \ud83c\uddfa\ud83c\uddf8 United States of America",
+        "url": "https://weworkremotely.com/remote-jobs/salesloft-commercial-account-manager"
+      },
+      {
+        "title": "Senior .NET Full-stack Developer 12d Lemon.io New York, NY Top 100 Full-Time Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/lemon-io-senior-net-full-stack-developer-1"
+      },
+      {
+        "title": "Senior Java & React Developer 12d Lemon.io New York, NY Top 100 Full-Time \ud83c\udde6\ud83c\udde9 Andorra \ud83c\udde6\ud83c\uddf7 Argentina \ud83c\udde6\ud83c\uddf9 Austria \ud83c\udde6\ud83c\uddfa Australia \ud83c\udde7\ud83c\udde6 Bosnia and Herzegovina \ud83c\udde7\ud83c\uddea Belgium \ud83c\udde7\ud83c\uddec Bulgaria \ud83c\udde7\ud83c\uddf4 Bolivia (Plurinational State of) \ud83c\udde7\ud83c\uddf7 Brazil \ud83c\udde7\ud83c\uddff Belize \ud83c\udde8\ud83c\udde6 Canada \ud83c\udde8\ud83c\udded Switzerland \ud83c\udde8\ud83c\uddf1 Chile \ud83c\udde8\ud83c\uddf4 Colombia \ud83c\udde8\ud83c\uddf7 Costa Rica \ud83c\udde8\ud83c\uddfe Cyprus \ud83c\udde8\ud83c\uddff Czechia \ud83c\udde9\ud83c\uddea Germany \ud83c\udde9\ud83c\uddf0 Denmark \ud83c\udde9\ud83c\uddf4 Dominican Republic \ud83c\uddea\ud83c\udde8 Ecuador \ud83c\uddea\ud83c\uddea Estonia \ud83c\uddea\ud83c\uddf8 Spain \ud83c\uddeb\ud83c\uddee Finland \ud83c\uddeb\ud83c\uddf7 France \ud83c\uddec\ud83c\udde7 United Kingdom of Great Britain and Northern Ireland \ud83c\uddec\ud83c\uddf7 Greece \ud83c\uddec\ud83c\uddf9 Guatemala \ud83c\udded\ud83c\uddf3 Honduras \ud83c\udded\ud83c\uddf7 Cr",
+        "url": "https://weworkremotely.com/remote-jobs/lemon-io-senior-java-react-developer"
+      },
+      {
+        "title": "Director of Production Engineering 13d Legion Remote, United States Full-Time \ud83c\uddfa\ud83c\uddf8 United States of America",
+        "url": "https://weworkremotely.com/remote-jobs/legion-director-of-production-engineering"
+      },
+      {
+        "title": "Chief Architect 13d Legion Remote, United States Full-Time \ud83c\uddfa\ud83c\uddf8 United States of America",
+        "url": "https://weworkremotely.com/remote-jobs/legion-chief-architect"
+      },
+      {
+        "title": "Senior React Native Developer 16d Lemon.io New York, NY Top 100 Full-Time \ud83c\udde6\ud83c\udde9 Andorra \ud83c\udde6\ud83c\uddf1 Albania \ud83c\udde6\ud83c\uddf7 Argentina \ud83c\udde6\ud83c\uddf9 Austria \ud83c\udde6\ud83c\uddfa Australia \ud83c\udde7\ud83c\udde6 Bosnia and Herzegovina \ud83c\udde7\ud83c\uddea Belgium \ud83c\udde7\ud83c\uddec Bulgaria \ud83c\udde7\ud83c\uddf4 Bolivia (Plurinational State of) \ud83c\udde7\ud83c\uddf7 Brazil \ud83c\udde7\ud83c\uddff Belize \ud83c\udde8\ud83c\udde6 Canada \ud83c\udde8\ud83c\udded Switzerland \ud83c\udde8\ud83c\uddf1 Chile \ud83c\udde8\ud83c\uddf4 Colombia \ud83c\udde8\ud83c\uddf7 Costa Rica \ud83c\udde8\ud83c\uddfe Cyprus \ud83c\udde8\ud83c\uddff Czechia \ud83c\udde9\ud83c\uddea Germany \ud83c\udde9\ud83c\uddf0 Denmark \ud83c\udde9\ud83c\uddf4 Dominican Republic \ud83c\uddea\ud83c\udde8 Ecuador \ud83c\uddea\ud83c\uddea Estonia \ud83c\uddea\ud83c\uddf8 Spain \ud83c\uddeb\ud83c\uddee Finland \ud83c\uddeb\ud83c\uddf7 France \ud83c\uddec\ud83c\udde7 United Kingdom of Great Britain and Northern Ireland \ud83c\uddec\ud83c\uddf7 Greece \ud83c\uddec\ud83c\uddf9 Guatemala \ud83c\udded\ud83c\uddf3 Hon",
+        "url": "https://weworkremotely.com/remote-jobs/lemon-io-senior-react-native-developer-1"
+      },
+      {
+        "title": "Senior Solutions Engineer- LATAM 16d Fin NYC, Remote; San Francisco, California Full-Time Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/fin-senior-solutions-engineer-latam"
+      },
+      {
+        "title": "FULL TIME: Software Engineer Position - React and Rest 16d Yooli Australia Full-Time Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/yooli-full-time-software-engineer-position-react-and-rest-1"
+      },
+      {
+        "title": "Senior Data Scientist, Guest & Host 17d Airbnb Remote Full-Time Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/airbnb-senior-data-scientist-guest-host"
+      },
+      {
+        "title": "Smartsheet Expert for Integrated Project Planning 19d Toptal Top 100 Full-Time Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/toptal-smartsheet-expert-for-integrated-project-planning"
+      },
+      {
+        "title": "Power Platform Solutions Architect for Global Pharmaceutical Company 19d Toptal Top 100 Full-Time North America Only",
+        "url": "https://weworkremotely.com/remote-jobs/toptal-power-platform-solutions-architect-for-global-pharmaceutical-company"
+      },
+      {
+        "title": "Customer Support Manager 21d Cribl San Francisco USA Full-Time Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/cribl-customer-support-manager"
+      },
+      {
+        "title": "[PT/FT] Senior Roblox Developer & Game Designer 22d Toptal Top 100 Full-Time Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/toptal-pt-ft-senior-roblox-developer-game-designer"
+      },
+      {
+        "title": "Senior React Full-stack Developer 24d Lemon.io New York, NY Top 100 Full-Time \ud83c\udde6\ud83c\udde9 Andorra \ud83c\udde6\ud83c\uddf1 Albania \ud83c\udde6\ud83c\uddf7 Argentina \ud83c\udde6\ud83c\uddf9 Austria \ud83c\udde6\ud83c\uddfa Australia \ud83c\udde7\ud83c\udde6 Bosnia and Herzegovina \ud83c\udde7\ud83c\uddea Belgium \ud83c\udde7\ud83c\uddec Bulgaria \ud83c\udde7\ud83c\uddf4 Bolivia (Plurinational State of) \ud83c\udde7\ud83c\uddf7 Brazil \ud83c\udde7\ud83c\uddff Belize \ud83c\udde8\ud83c\udde6 Canada \ud83c\udde8\ud83c\udded Switzerland \ud83c\udde8\ud83c\uddf1 Chile \ud83c\udde8\ud83c\uddf4 Colombia \ud83c\udde8\ud83c\uddf7 Costa Rica \ud83c\udde8\ud83c\uddfe Cyprus \ud83c\udde8\ud83c\uddff Czechia \ud83c\udde9\ud83c\uddea Germany \ud83c\udde9\ud83c\uddf0 Denmark \ud83c\udde9\ud83c\uddf4 Dominican Republic \ud83c\uddea\ud83c\udde8 Ecuador \ud83c\uddea\ud83c\uddea Estonia \ud83c\uddea\ud83c\uddf8 Spain \ud83c\uddeb\ud83c\uddee Finland \ud83c\uddeb\ud83c\uddf7 France \ud83c\uddec\ud83c\udde7 United Kingdom of Great Britain and Northern Ireland \ud83c\uddec\ud83c\uddf7 Greece \ud83c\uddec\ud83c\uddf9 Guatemala \ud83c\udded\ud83c\uddf3",
+        "url": "https://weworkremotely.com/remote-jobs/lemon-io-senior-react-full-stack-developer-6"
+      },
+      {
+        "title": "Mechanical Engineer 25d Toptal Top 100 Full-Time Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/toptal-mechanical-engineer"
+      },
+      {
+        "title": "Software Development Engineer II Full Stack - Business (Remote @ Colombia) 25d OfferUp Remote @ Colombia Full-Time Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/offerup-software-development-engineer-ii-full-stack-business-remote-colombia"
+      },
+      {
+        "title": "Medical Licensing Specialist (Contract) 30d Galileo Remote, United States Full-Time Anywhere in the World",
+        "url": "https://weworkremotely.com/remote-jobs/galileo-medical-licensing-specialist-contract"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-mozillajobs",
+    "url": "https://www.mozilla.org/en-US/careers/listings/",
+    "label": "jobs",
+    "split": "test",
+    "sha256": "b7b6b731ff9728559771b573a92a35857ae594eaa63e9a7385b5afa900308970",
+    "title": "Mozilla Careers \u2014 All open positions at Mozilla",
+    "source_summary": "We have a mighty mandate, serving hundreds of millions of people. Add a culture of exploration, and there is always a new way to learn and grow here.",
+    "kind": "blog",
+    "entries": [
+      {
+        "title": "Staff Data Scientist, Ads",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/7137777"
+      },
+      {
+        "title": "Senior Software Engineer, Add-Ons",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/8188873"
+      },
+      {
+        "title": "Senior Strategic Account Executive, Firefox Enterprise (DACH)",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/7622995"
+      },
+      {
+        "title": "Senior Security Engineer, Bug Bounty",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/8064613"
+      },
+      {
+        "title": "Senior Solutions Engineer (DACH), Firefox Enterprise",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/7921645"
+      },
+      {
+        "title": "Front End Engineering Manager, Firefox Desktop",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/8153321"
+      },
+      {
+        "title": "Staff Operations Engineer",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/7997152"
+      },
+      {
+        "title": "Senior Software Engineer, Cloud Engineering",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/8035891"
+      },
+      {
+        "title": "Senior Backend Engineer, Ecosystems",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/8089818"
+      },
+      {
+        "title": "Staff Designer, Rapid Prototyping",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/8162972"
+      },
+      {
+        "title": "Staff Security GRC Engineer",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/8107442"
+      },
+      {
+        "title": "Senior Mobile Engineer, iOS",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/8112211"
+      },
+      {
+        "title": "Staff Product Manager, Search Experiences",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/8155198"
+      },
+      {
+        "title": "Senior Staff Performance Engineer, Firefox",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/8122131"
+      },
+      {
+        "title": "Marketing Data Science Manager",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/8139403"
+      },
+      {
+        "title": "Senior Staff Product Manager, Browser Control Platform",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/8170952"
+      },
+      {
+        "title": "Senior Lead, Enterprise Partnerships & Strategy",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/8144651"
+      },
+      {
+        "title": "Director, Portfolio Management (Mozilla.org)",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/8167254"
+      },
+      {
+        "title": "Senior Accounting Manager",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/8172267"
+      },
+      {
+        "title": "Staff Product Engineer, Enterprise AI",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/8185984"
+      },
+      {
+        "title": "Major Gifts Officer",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/8177406"
+      },
+      {
+        "title": "Senior Staff Data Engineer",
+        "url": "https://www.mozilla.org/en-US/careers/position/gh/8180982"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-questionablecontent",
+    "url": "https://www.questionablecontent.net/archive.php",
+    "label": "comic",
+    "split": "test",
+    "sha256": "bbc182278fb84ba8c3470c9fe141d05023c0e57f57866613294aee8061441c14",
+    "title": "Questionable Content - Archive",
+    "source_summary": "Questionable Content is an internet comic strip created by Jeph Jacques about friendship, romance, and robots. QC began on August 1, 2003.",
+    "kind": "website",
+    "entries": [
+      {
+        "title": "See #5920: \"Once More With Feeling\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=5920"
+      },
+      {
+        "title": "See #5793: \"Seabreeze No!\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=5793"
+      },
+      {
+        "title": "See #5665: \"Careful Who You Talk To\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=5665"
+      },
+      {
+        "title": "See #5537: \"Exceptional Circumstances\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=5537"
+      },
+      {
+        "title": "See #5409: \"The Rise Of Darkness\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=5409"
+      },
+      {
+        "title": "See #5281: \"Willow Gear Rising: Revengeance\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=5281"
+      },
+      {
+        "title": "See #5153: \"Goo Girl\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=5153"
+      },
+      {
+        "title": "See #5025: \"Personal Records\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=5025"
+      },
+      {
+        "title": "See #4897: \"Sleepless In Northampton\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=4897"
+      },
+      {
+        "title": "See #4769: \"Ring-Tailed\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=4769"
+      },
+      {
+        "title": "See #4641: \"All These Worlds Are Yours\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=4641"
+      },
+      {
+        "title": "See #4513: \"Eh\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=4513"
+      },
+      {
+        "title": "See #4385: \"Elliot Blows It\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=4385"
+      },
+      {
+        "title": "See #4257: \"How To Party\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=4257"
+      },
+      {
+        "title": "See #4129: \"Can't Stay Mad Forever\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=4129"
+      },
+      {
+        "title": "See #4001: \"First Contact\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=4001"
+      },
+      {
+        "title": "See #3874: \"He's The Mayor, You See\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=3874"
+      },
+      {
+        "title": "See #3746: \"Once In A Lifetime\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=3746"
+      },
+      {
+        "title": "See #3618: \"Terms And Conditions\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=3618"
+      },
+      {
+        "title": "See #3490: \"The Invisible Hand\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=3490"
+      },
+      {
+        "title": "See #3362: \"Clear And Imminent Threat\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=3362"
+      },
+      {
+        "title": "See #3234: \"Sweet Truck\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=3234"
+      },
+      {
+        "title": "See #3106: \"Free Smoothies\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=3106"
+      },
+      {
+        "title": "See #2979: \"Empathy\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=2979"
+      },
+      {
+        "title": "See #2850: \"The Metamorphosis\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=2850"
+      },
+      {
+        "title": "See #2722: \"You Shouldn't Have To Ask\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=2722"
+      },
+      {
+        "title": "See #2594: \"100 Jiganerds\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=2594"
+      },
+      {
+        "title": "See #2466: \"Highway To It\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=2466"
+      },
+      {
+        "title": "See #2338: \"A Kinder, Gentler Yelling Bird\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=2338"
+      },
+      {
+        "title": "See #2210: \"Everything Looks Like A Nail\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=2210"
+      },
+      {
+        "title": "See #2082: \"Worry Town\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=2082"
+      },
+      {
+        "title": "See #500: \"The Talk, Part 1\" with newspost",
+        "url": "https://www.questionablecontent.net/view.php?comic=500"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-standardebooks",
+    "url": "https://standardebooks.org/ebooks",
+    "label": "novel",
+    "split": "validation",
+    "sha256": "dd3834d2ee59f3919cf7cbfcc46e3a504df5b696ead4df644983b924e27d40ce",
+    "title": "Browse Standard Ebooks",
+    "source_summary": "Page 1 of the Standard Ebooks free ebook library",
+    "kind": "blog",
+    "entries": [],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-wanderinginn",
+    "url": "https://wanderinginn.com/table-of-contents/",
+    "label": "novel",
+    "split": "test",
+    "sha256": "b981f3c2bff0a612146ef65fb6b6759328235cc35cde2890d2e16c8224ce8403",
+    "title": "Table of Contents",
+    "source_summary": "We use cookies to improve your browsing experience, serve personalized content, and analyze our traffic. You can accept all, manage preferences, or reject all non-essential cookies. You can enable or disable certain types of cookies. Functional and security cookies are always on. We use cookies to improve your browsing experience, serve personalized content, and analyze our traffic. You can accept all, manage your preferences, or reject all non-essential cookies.",
+    "kind": "blog",
+    "entries": [
+      {
+        "title": "Physical Books",
+        "url": "https://beacons.ai/wanderinginn/buyyourprintedition"
+      },
+      {
+        "title": "1.22",
+        "url": "https://wanderinginn.com/2017/03/03/rw1-22"
+      },
+      {
+        "title": "1.48 R",
+        "url": "https://wanderinginn.com/2017/03/04/rw1-48-r"
+      },
+      {
+        "title": "2.09",
+        "url": "https://wanderinginn.com/2017/04/12/2-10"
+      },
+      {
+        "title": "2.33",
+        "url": "https://wanderinginn.com/2017/06/07/2-27"
+      },
+      {
+        "title": "3.06 L",
+        "url": "https://wanderinginn.com/2017/08/22/3-06-l"
+      },
+      {
+        "title": "Interlude \u2013 Wistram Days (Pt. 2)",
+        "url": "https://wanderinginn.com/2017/11/10/s03-wistram-days-pt-2"
+      },
+      {
+        "title": "4.09",
+        "url": "https://wanderinginn.com/2018/02/03/4-09"
+      },
+      {
+        "title": "4.31",
+        "url": "https://wanderinginn.com/2018/04/24/4-31"
+      },
+      {
+        "title": "5.00",
+        "url": "https://wanderinginn.com/2018/07/10/5-00"
+      },
+      {
+        "title": "5.26 L",
+        "url": "https://wanderinginn.com/2018/10/06/5-26-l"
+      },
+      {
+        "title": "Interlude \u2013 Bird",
+        "url": "https://wanderinginn.com/2018/12/30/interlude-bird"
+      },
+      {
+        "title": "6.10",
+        "url": "https://wanderinginn.com/2019/04/23/6-10"
+      },
+      {
+        "title": "Interlude \u2013 Numbtongue (Pt.2)",
+        "url": "https://wanderinginn.com/2019/08/03/interlude-numbtongue-pt-2"
+      },
+      {
+        "title": "6.58",
+        "url": "https://wanderinginn.com/2019/11/19/6-58"
+      },
+      {
+        "title": "Interlude \u2013 Dancing and Brawling",
+        "url": "https://wanderinginn.com/2020/03/03/interlude-dancing-and-brawling"
+      },
+      {
+        "title": "Interlude \u2013 The Gecko of Illusions",
+        "url": "https://wanderinginn.com/2020/06/07/interlude-the-gecko-of-illusions"
+      },
+      {
+        "title": "7.49",
+        "url": "https://wanderinginn.com/2020/09/23/7-49"
+      },
+      {
+        "title": "8.00",
+        "url": "https://wanderinginn.com/2021/01/10/8-00"
+      },
+      {
+        "title": "Interlude \u2013 Senior Guardsman Relc",
+        "url": "https://wanderinginn.com/2021/05/16/interlude-senior-guardsman-relc"
+      },
+      {
+        "title": "8.44 O",
+        "url": "https://wanderinginn.com/2021/09/26/8-44-o"
+      },
+      {
+        "title": "Interlude \u2013 Satar",
+        "url": "https://wanderinginn.com/2022/02/20/interlude-satar"
+      },
+      {
+        "title": "Interlude \u2013 Singing Ships",
+        "url": "https://wanderinginn.com/2022/06/18/interlude-singing-ships"
+      },
+      {
+        "title": "9.23 GGGGGGGGG",
+        "url": "https://wanderinginn.com/2022/11/02/9-23-ggggggggg"
+      },
+      {
+        "title": "Interlude \u2013 Brewing Sariants",
+        "url": "https://wanderinginn.com/2023/03/19/interlude-brewing-sariants"
+      },
+      {
+        "title": "Interlude \u2013 The Library",
+        "url": "https://wanderinginn.com/2023/10/03/interlude-the-library"
+      },
+      {
+        "title": "10.08 (Pt. 2)",
+        "url": "https://wanderinginn.com/2024/03/20/10-08-pt-2"
+      },
+      {
+        "title": "The Roots (Pt. 2b)",
+        "url": "https://wanderinginn.com/2024/08/11/the-roots-pt-2-2"
+      },
+      {
+        "title": "10.33 MNK",
+        "url": "https://wanderinginn.com/2025/02/08/10-33-mnk"
+      },
+      {
+        "title": "10.45 L",
+        "url": "https://wanderinginn.com/2025/08/23/10-45-l"
+      },
+      {
+        "title": "10.56 F",
+        "url": "https://wanderinginn.com/2026/02/15/10-56-f"
+      },
+      {
+        "title": "Tales of Innworld #8",
+        "url": "https://wanderinginn.com/2026/09/19/tales-of-innworld-8"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-cs50",
+    "url": "https://cs50.harvard.edu/x/weeks/",
+    "label": "course",
+    "split": "train",
+    "sha256": "59a4cbf9e012ab8ce75ae828c7fc3b1e9667f6a561612342c3dbfb3c36ca7370",
+    "title": "Weeks - CS50x 2026",
+    "source_summary": "",
+    "kind": "website",
+    "entries": [
+      {
+        "title": "a verified certificate, a professional certificate, or transfer credit and accreditation",
+        "url": "https://cs50.harvard.edu/x"
+      },
+      {
+        "title": "Week 0",
+        "url": "https://cs50.harvard.edu/x/weeks/0"
+      },
+      {
+        "title": "Week 1",
+        "url": "https://cs50.harvard.edu/x/weeks/1"
+      },
+      {
+        "title": "Week 2",
+        "url": "https://cs50.harvard.edu/x/weeks/2"
+      },
+      {
+        "title": "Week 3",
+        "url": "https://cs50.harvard.edu/x/weeks/3"
+      },
+      {
+        "title": "Week 4",
+        "url": "https://cs50.harvard.edu/x/weeks/4"
+      },
+      {
+        "title": "Week 5",
+        "url": "https://cs50.harvard.edu/x/weeks/5"
+      },
+      {
+        "title": "Week 6",
+        "url": "https://cs50.harvard.edu/x/weeks/6"
+      },
+      {
+        "title": "Week 7",
+        "url": "https://cs50.harvard.edu/x/weeks/7"
+      },
+      {
+        "title": "Artificial Intelligence",
+        "url": "https://cs50.harvard.edu/x/weeks/ai"
+      },
+      {
+        "title": "Week 8",
+        "url": "https://cs50.harvard.edu/x/weeks/8"
+      },
+      {
+        "title": "Week 9",
+        "url": "https://cs50.harvard.edu/x/weeks/9"
+      },
+      {
+        "title": "Week 10",
+        "url": "https://cs50.harvard.edu/x/weeks/10"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-mitocw",
+    "url": "https://ocw.mit.edu/courses/",
+    "label": "course",
+    "split": "test",
+    "sha256": "88854ac4f1724df76724cb28265910f8f31cb5f7b21b99fd4445956fd0cc4f78",
+    "title": "Search | MIT OpenCourseWare | Free Online Course Materials",
+    "source_summary": "MIT OpenCourseWare is a web based publication of virtually all MIT course content. OCW is open and available to the world and is a permanent MIT activity",
+    "kind": "website",
+    "entries": [],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-ccctalks",
+    "url": "https://media.ccc.de/c/38c3",
+    "label": "video",
+    "split": "train",
+    "sha256": "bd3677ef38deb2043c0cd59db67022e2de234a5b507e2bf486e242f539611414",
+    "title": "38C3: Illegal Instructions",
+    "source_summary": "Video Streaming Portal des Chaos Computer Clubs",
+    "kind": "blog",
+    "entries": [
+      {
+        "title": "Video",
+        "url": "https://media.ccc.de/v/38c3-rekordbox-gib-mir-meine-daten-berblick-von-datenzugriff-in-dj-software-hardware/playlist"
+      },
+      {
+        "title": "58 min",
+        "url": "https://media.ccc.de/v/38c3-hacking-yourself-a-satellite-recovering-beesat-1"
+      },
+      {
+        "title": "61 min",
+        "url": "https://media.ccc.de/v/38c3-blinkencity-radio-controlling-street-lamps-and-power-plants"
+      },
+      {
+        "title": "Saal GLITCH",
+        "url": "https://media.ccc.de/c/38c3/Saal%20GLITCH"
+      },
+      {
+        "title": "43 min",
+        "url": "https://media.ccc.de/v/38c3-decentralize-your-internet-with-self-hosting"
+      },
+      {
+        "title": "45 min",
+        "url": "https://media.ccc.de/v/38c3-fearsome-file-formats"
+      },
+      {
+        "title": "39 min",
+        "url": "https://media.ccc.de/v/38c3-databroker-files-wie-uns-apps-und-datenhndler-der-massenberwachung-ausliefern"
+      },
+      {
+        "title": "40 min",
+        "url": "https://media.ccc.de/v/38c3-5-jahre-nach-ibiza"
+      },
+      {
+        "title": "61 min",
+        "url": "https://media.ccc.de/v/38c3-investigating-the-iridium-satellite-network"
+      },
+      {
+        "title": "45 min",
+        "url": "https://media.ccc.de/v/38c3-ki-karma-next-level-spiritueller-it-vertrieb"
+      },
+      {
+        "title": "52 min",
+        "url": "https://media.ccc.de/v/38c3-operation-mindfuck-vol-7"
+      },
+      {
+        "title": "37 min",
+        "url": "https://media.ccc.de/v/38c3-erpressung-aus-dem-internet-auf-den-spuren-der-cybermafia"
+      },
+      {
+        "title": "42 min",
+        "url": "https://media.ccc.de/v/38c3-hacker-s-guide-to-meshtastic-off-grid-encrypted-lora-meshnets-for-cheap"
+      },
+      {
+        "title": "42 min",
+        "url": "https://media.ccc.de/v/38c3-transitous-offener-routingdienst-fr-ffentliche-verkehrsmittel"
+      },
+      {
+        "title": "41 min",
+        "url": "https://media.ccc.de/v/38c3-einstieg-in-den-amateurfunk"
+      },
+      {
+        "title": "39 min",
+        "url": "https://media.ccc.de/v/38c3-von-augustus-bis-trump-warum-desinformation-ein-problem-bleibt-und-was-wir-trotzdem-dagegen-tun-knnen"
+      },
+      {
+        "title": "51 min",
+        "url": "https://media.ccc.de/v/38c3-lokalnews-mining"
+      },
+      {
+        "title": "38 min",
+        "url": "https://media.ccc.de/v/38c3-7-years-later-why-and-how-to-make-portable-open-hardware-computers"
+      },
+      {
+        "title": "61 min",
+        "url": "https://media.ccc.de/v/38c3-klarheit-als-waffe"
+      },
+      {
+        "title": "32 min",
+        "url": "https://media.ccc.de/v/38c3-prototypes-to-props-how-to-build-and-hack-in-the-film-tv-industry"
+      },
+      {
+        "title": "41 min",
+        "url": "https://media.ccc.de/v/38c3-die-faszination-des-echten-kugelspiels"
+      },
+      {
+        "title": "39 min",
+        "url": "https://media.ccc.de/v/38c3-sacrificing-chickens-properly-why-magical-thinking-is-both-the-problem-and-the-solution"
+      },
+      {
+        "title": "38 min",
+        "url": "https://media.ccc.de/v/38c3-wie-man-auch-mit-foss-katastrophen-warnungen-bekommt"
+      },
+      {
+        "title": "42 min",
+        "url": "https://media.ccc.de/v/38c3-is-green-methanol-the-missing-piece-for-the-energy-transition"
+      },
+      {
+        "title": "85 min",
+        "url": "https://media.ccc.de/v/38c3-lightning-talks-tag-3"
+      },
+      {
+        "title": "40 min",
+        "url": "https://media.ccc.de/v/38c3-vom-betrieb-bis-ins-netz-gewerkschaften-als-vorbild-fr-modernen-widerstand"
+      },
+      {
+        "title": "90 min",
+        "url": "https://media.ccc.de/v/38c3-wisspod-jahresrckblick-2024-oder-reichweite-my-ass"
+      },
+      {
+        "title": "40 min",
+        "url": "https://media.ccc.de/v/38c3-philosophical-ethical-and-legal-aspects-of-brain-computer-interfaces"
+      },
+      {
+        "title": "44 min",
+        "url": "https://media.ccc.de/v/38c3-let-s-build-dodos-how-generative-ai-is-upturning-the-world-of-synthetic-biology-and-hopelessly-overwhelming-traditional-governance-instruments"
+      },
+      {
+        "title": "Robot Uprising: a story-driven AI robotics experience",
+        "url": "https://media.ccc.de/v/38c3-robot-uprising-a-story-driven-ai-robotics-experience"
+      },
+      {
+        "title": "Navigating the grey",
+        "url": "https://media.ccc.de/v/38c3-navigating-the-grey"
+      },
+      {
+        "title": "Aufr\u00e4umen Podcast",
+        "url": "https://media.ccc.de/v/38c3-aufrumen-podcast"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-20k",
+    "url": "https://www.20k.org/episodes",
+    "label": "podcast",
+    "split": "test",
+    "sha256": "f76cf67ed07a0a18dcc2569faeb8ea1a6255589e91e8bd487477f43ba2a5f725",
+    "title": "Episodes list \u2014 Twenty Thousand Hertz - The stories behind the world's most recognizable and interesting sounds.",
+    "source_summary": "The \u201cI\u2019m Lovin\u2019 It\u201d jingle is one of the most recognizable melodies on Earth. But the story behind it involves a global competition, thousands of mixes, a Trojan Horse pop song, and a surprising amount of celebrity beef. In this updated version of one of our favorite episodes, we trace how a five-note jingle became a worldwide phenomenon, and the controversy over who actually wrote it. Featuring Tom Batoy and Franco Tortora of Mona Davis Music . Our 2026 Listener Story competition continues with five more incredible listener-made pieces. In this Silver collection, you\u2019ll hear the surprising craft behind mechanical keyboards, the natural sounds hidden in Indian ragas, and how learning a new language can transform noise into belonging. Mixing music for Late Night television means working fast, putting artists at ease, and delivering polished mixes under immense pressure. In this episode, the Music Mixers of The Late Show with Stephen Colbert and The Tonight Show Starring Jimmy Fallon swap stories from decades behind the console. They reveal performances that went sideways, why backing tracks can actually make their jobs harder, and what it\u2019s like mixing everyone from Cynthia Erivo to Paul McCartney. Featuring Harvey Goldberg and Lawrence Manchester . Twenty Thousand Hertz proudly presents the first five selections from our 2026 Listener Story competition. From AI-generated music, to the hidden crackle of coral reefs, to historic birdsong recordings, these bite-sized stories are crafted with curiosity and care. For millions of people, Eurovision is a cultural institution, and one of the biggest live television events on Earth. But for many Americans, it remains a complete mystery. In this episode, producer Andrew Anderson takes Dallas and Grace on a joyful crash course through the history, music, controversies, and glorious absurdity of the Eurovision Song Contest. Along the way, they discover which music superstars got their start in Eurovision, how receiving \u201cnul points\u201d can ruin or launch a career, and what this competition reveals about Europe itself. Featuring \u201cDoctor Eurovision\u201d Paul Jordan . In our last episode, we followed composer John Williams from his childhood to his 1970s run with Steven Spielberg and George Lucas. Now, we pick up the story as John enters an era of seemingly impossible success... from Raiders of the Lost Ark to Home Alone , Jurassi",
+    "kind": "blog",
+    "entries": [
+      {
+        "title": "September  7, 2026",
+        "url": "https://www.20k.org/episodes/im-lovin-it-remix"
+      },
+      {
+        "title": "Kelly Nowels",
+        "url": "https://www.20k.org/episodes?author=50aab281e4b05c22b5f1642f"
+      },
+      {
+        "title": "August 24, 2026",
+        "url": "https://www.20k.org/episodes/listener-stories-2026-silver"
+      },
+      {
+        "title": "August 10, 2026",
+        "url": "https://www.20k.org/episodes/colbert-fallon"
+      },
+      {
+        "title": "July 27, 2026",
+        "url": "https://www.20k.org/episodes/listener-stories-2026-bronze"
+      },
+      {
+        "title": "July 13, 2026",
+        "url": "https://www.20k.org/episodes/eurovision"
+      },
+      {
+        "title": "June 15, 2026",
+        "url": "https://www.20k.org/episodes/john-williams-2"
+      },
+      {
+        "title": "June  1, 2026",
+        "url": "https://www.20k.org/episodes/john-williams-1"
+      },
+      {
+        "title": "May 25, 2026",
+        "url": "https://www.20k.org/episodes/age-of-audio-2"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-jmlr",
+    "url": "https://www.jmlr.org/papers/",
+    "label": "research",
+    "split": "train",
+    "sha256": "10d3caf1436a9a7e4967e252a0a96146f095a7eeb29b85598698ce8ca0d08ca6",
+    "title": "JMLR Papers",
+    "source_summary": "Select a volume number to see its table of contents with links to the papers.",
+    "kind": "blog",
+    "entries": [
+      {
+        "title": "Volume 26",
+        "url": "https://www.jmlr.org/papers/v26"
+      },
+      {
+        "title": "Volume 25",
+        "url": "https://www.jmlr.org/papers/v25"
+      },
+      {
+        "title": "Volume 24",
+        "url": "https://www.jmlr.org/papers/v24"
+      },
+      {
+        "title": "Volume 23",
+        "url": "https://www.jmlr.org/papers/v23"
+      },
+      {
+        "title": "Volume 21",
+        "url": "https://www.jmlr.org/papers/v21"
+      },
+      {
+        "title": "Volume 20",
+        "url": "https://www.jmlr.org/papers/v20"
+      },
+      {
+        "title": "Volume 19",
+        "url": "https://www.jmlr.org/papers/v19"
+      },
+      {
+        "title": "Volume 18",
+        "url": "https://www.jmlr.org/papers/v18"
+      },
+      {
+        "title": "Volume 16",
+        "url": "https://www.jmlr.org/papers/v16"
+      },
+      {
+        "title": "Volume 15",
+        "url": "https://www.jmlr.org/papers/v15"
+      },
+      {
+        "title": "Volume 14",
+        "url": "https://www.jmlr.org/papers/v14"
+      },
+      {
+        "title": "Volume 13",
+        "url": "https://www.jmlr.org/papers/v13"
+      },
+      {
+        "title": "Volume 11",
+        "url": "https://www.jmlr.org/papers/v11"
+      },
+      {
+        "title": "Volume 10",
+        "url": "https://www.jmlr.org/papers/v10"
+      },
+      {
+        "title": "Bayesian Optimization",
+        "url": "https://www.jmlr.org/papers/topic/bayesian_optimization.html"
+      },
+      {
+        "title": "Learning from Electronic Health Data",
+        "url": "https://www.jmlr.org/papers/topic/2016-Learning-from-Electronic-Health-Data.html"
+      },
+      {
+        "title": "Large Scale Learning",
+        "url": "https://www.jmlr.org/papers/topic/large_scale_learning.html"
+      },
+      {
+        "title": "Mining and Learning with Graphs and Relations",
+        "url": "https://www.jmlr.org/papers/topic/graphs_relations.html"
+      },
+      {
+        "title": "Grammar Induction, Representation of Language and Language Learning",
+        "url": "https://www.jmlr.org/papers/topic/language.html"
+      },
+      {
+        "title": "Model Selection",
+        "url": "https://www.jmlr.org/papers/topic/model_selection.html"
+      },
+      {
+        "title": "Machine Learning for Computer Security",
+        "url": "https://www.jmlr.org/papers/topic/ml_sec.html"
+      },
+      {
+        "title": "Machine Learning and Large Scale Optimization",
+        "url": "https://www.jmlr.org/papers/topic/ml_opt.html"
+      },
+      {
+        "title": "Approaches and Applications of Inductive Programming",
+        "url": "https://www.jmlr.org/papers/topic/inductive_programming.html"
+      },
+      {
+        "title": "Learning Theory",
+        "url": "https://www.jmlr.org/papers/topic/learning_theory.html"
+      },
+      {
+        "title": "Independent Components Analysis",
+        "url": "https://www.jmlr.org/papers/special/ica03.html"
+      },
+      {
+        "title": "Learning Theory",
+        "url": "https://www.jmlr.org/papers/special/learning_theory03.html"
+      },
+      {
+        "title": "Inductive Logic Programming",
+        "url": "https://www.jmlr.org/papers/special/ilp03.html"
+      },
+      {
+        "title": "Fusion of Domain Knowledge with Data for Decision Support",
+        "url": "https://www.jmlr.org/papers/special/kdfusion03.html"
+      },
+      {
+        "title": "Machine Learning Methods for Text and Images",
+        "url": "https://www.jmlr.org/papers/special/text_images03.html"
+      },
+      {
+        "title": "Eighteenth International Conference on Machine Learning (ICML2001)",
+        "url": "https://www.jmlr.org/papers/special/icml01.html"
+      },
+      {
+        "title": "Computational Learning Theory",
+        "url": "https://www.jmlr.org/papers/special/colt02.html"
+      },
+      {
+        "title": "Kernel Methods",
+        "url": "https://www.jmlr.org/papers/special/kernel01.html"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-arxiv",
+    "url": "https://arxiv.org/list/cs.AI/recent",
+    "label": "research",
+    "split": "test",
+    "sha256": "b2ed85ca4cb44d811b6aa39b4d745888f5fe8429a0f4d9a4cc18f84ce1b2f7ed",
+    "title": "Artificial Intelligence",
+    "source_summary": "",
+    "kind": "website",
+    "entries": [
+      {
+        "title": "An Empirical Study of Harness Design for Coding Agents",
+        "url": "https://arxiv.org/abs/2609.20804"
+      },
+      {
+        "title": "RAFT: A Stateful Retrieval-Augmented Framework for Troubleshooting Agents",
+        "url": "https://arxiv.org/abs/2609.20754"
+      },
+      {
+        "title": "Deep Noir: Autonomous Steering Discovery via Architectural Chronometry in Transformer Models",
+        "url": "https://arxiv.org/abs/2609.20722"
+      },
+      {
+        "title": "Ownership in AI-Assisted Everyday Tasks",
+        "url": "https://arxiv.org/abs/2609.20658"
+      },
+      {
+        "title": "Limits of Confidence in Diffusion",
+        "url": "https://arxiv.org/abs/2609.20581"
+      },
+      {
+        "title": "Language-model groups overstate consensus when replaying human deliberation on a reasoning task",
+        "url": "https://arxiv.org/abs/2609.20543"
+      },
+      {
+        "title": "FreqCondNorm: Towards Cross-domain Predictive Maintenance through a Frequency-Conditioned Transformer Foundation Model",
+        "url": "https://arxiv.org/abs/2609.20535"
+      },
+      {
+        "title": "How Do Agent Harnesses Create Value? Planning Information and Release Control in Stateful LLM Agents",
+        "url": "https://arxiv.org/abs/2609.20474"
+      },
+      {
+        "title": "SkillAA: Attribution-Guided Skill-Graph Updating with Targeted Validation and Rollback",
+        "url": "https://arxiv.org/abs/2609.20455"
+      },
+      {
+        "title": "Generating Heterogeneous 3D Geological Microstructures from 2D Images via a Stable Diffusion-Adversarial Model",
+        "url": "https://arxiv.org/abs/2609.20358"
+      },
+      {
+        "title": "A Qualitative Model for Reasoning about Path and Support",
+        "url": "https://arxiv.org/abs/2609.20349"
+      },
+      {
+        "title": "NeuSOGA3D: A Neuro-Symbolic Framework for Explainable 3D Geometric Reconstruction",
+        "url": "https://arxiv.org/abs/2609.20323"
+      },
+      {
+        "title": "Diagnose, Recover, Certify: Task Readiness under Hidden Dynamics Changes",
+        "url": "https://arxiv.org/abs/2609.20304"
+      },
+      {
+        "title": "JEPA-WAM: Connecting Generated Visual Instructions to World Action Models through JEPA Latent Representations",
+        "url": "https://arxiv.org/abs/2609.20277"
+      },
+      {
+        "title": "When AI Agents Commit: Cognitive Serializability Across Data, Evidence, Policy, and Authority",
+        "url": "https://arxiv.org/abs/2609.20261"
+      },
+      {
+        "title": "JointMatch: A Unified Heterogeneous Graph Neural Solver for Large-Scale Ride-Sharing Matching",
+        "url": "https://arxiv.org/abs/2609.20200"
+      },
+      {
+        "title": "PaGNet: A Panel-Aware GBDT--Neural Network for Multi-Target Corporate Tax Avoidance Proxy Forecasting",
+        "url": "https://arxiv.org/abs/2609.20177"
+      },
+      {
+        "title": "MTVA-Bench: Evaluating the Language Model Inside Cascaded Voice Agents",
+        "url": "https://arxiv.org/abs/2609.20152"
+      },
+      {
+        "title": "Solving Minimum Span Antibandwidth and Cyclic Antibandwidth Labeling Problems",
+        "url": "https://arxiv.org/abs/2609.20091"
+      },
+      {
+        "title": "A Proposal for an Agentic AI Architecture to Support Multi-Domain Decision-Making in the Brazilian Armed Forces",
+        "url": "https://arxiv.org/abs/2609.20080"
+      },
+      {
+        "title": "Tailored to you: longitudinal effects of personalising language models",
+        "url": "https://arxiv.org/abs/2609.20077"
+      },
+      {
+        "title": "FCA-Guided Counterfactual Explanations for Multi-Modal Breast Cancer Diagnosis: A Framework Achieving Perfect Validity with Emergent Sparsity",
+        "url": "https://arxiv.org/abs/2609.20067"
+      },
+      {
+        "title": "WiCleanData: Guaranteeing the Type Consistency of Wikidata by Taxonomy Refinement and Constraint Enforcement",
+        "url": "https://arxiv.org/abs/2609.20057"
+      },
+      {
+        "title": "DART: Distillation-Aware Reparameterization for Training-Free LoRA Reuse in Few-Step Video Diffusion Models",
+        "url": "https://arxiv.org/abs/2609.20051"
+      },
+      {
+        "title": "Can Data Attribution Filter Out Subliminal Learning? Not Reliably",
+        "url": "https://arxiv.org/abs/2609.20027"
+      },
+      {
+        "title": "Geopolitical Divisions Across Languages in Large Language Models",
+        "url": "https://arxiv.org/abs/2609.20005"
+      },
+      {
+        "title": "Customizable and Jointly Optimized Route Planning: A Deep Architecture Enabling Differentiable Shortest-Path Search",
+        "url": "https://arxiv.org/abs/2609.19996"
+      },
+      {
+        "title": "Neuro-Symbolic Agentic AI for Networked Low-Altitude UAVs",
+        "url": "https://arxiv.org/abs/2609.19961"
+      },
+      {
+        "title": "MaSCoD: A Multi-Agent Framework for Structural-Context-Guided Candidate Causal Graph Generation",
+        "url": "https://arxiv.org/abs/2609.19944"
+      },
+      {
+        "title": "Beyond Depth Truncation: Controlled Evaluation of Depth Utilization in Recursive Language Models",
+        "url": "https://arxiv.org/abs/2609.19934"
+      },
+      {
+        "title": "TRACE: Accountable Agentic Retrieval for Source Discovery in Digital Archives",
+        "url": "https://arxiv.org/abs/2609.19897"
+      },
+      {
+        "title": "Reproducibility is not construct validity: LLM measurement of institutionally situated communication",
+        "url": "https://arxiv.org/abs/2609.19866"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-pitchfork",
+    "url": "https://pitchfork.com/news/",
+    "label": "blog",
+    "split": "train",
+    "sha256": "208193e6203f8aa8261aefc4a0b49ce9a617ad63dd87606f1b2bd8d53eb0d428",
+    "title": "Music News & Releases",
+    "source_summary": "Breaking news about the most exciting and important music being released today",
+    "kind": "blog",
+    "entries": [
+      {
+        "title": "Tune-Yards Line Up U.S. Tour",
+        "url": "https://pitchfork.com/story/tune-yards-are-touring-the-score-of-boots-riley-film-i-love-boosters"
+      },
+      {
+        "title": "11 Albums Out This Week You Should Listen to Now",
+        "url": "https://pitchfork.com/story/11-new-albums-you-should-listen-to-now-carly-rae-jepsen-empress-of-miley-cyrus"
+      },
+      {
+        "title": "Miley Cyrus Hits the Chateau Marmont in New \u201cLet\u2019s Get Married\u201d Video",
+        "url": "https://pitchfork.com/story/miley-cyrus-lets-get-married-video"
+      },
+      {
+        "title": "Death Cab for Cutie Plot 2027 Tour",
+        "url": "https://pitchfork.com/story/death-cab-for-cutie-plot-2027-tour"
+      },
+      {
+        "title": "GTA VI Debuts Six New Songs: Travis Scott, PinkPantheress, Yung Lean, More",
+        "url": "https://pitchfork.com/story/gta-vi-debuts-six-new-songs-travis-scott-pinkpantheress-yung-lean-more"
+      },
+      {
+        "title": "Porridge Radio\u2019s Dana Margolin Launches Debut Solo Single",
+        "url": "https://pitchfork.com/story/porridge-radios-dana-margolin-launches-debut-solo-single"
+      },
+      {
+        "title": "Kevin Morby Drops New Song \u201cPBJ\u201d and Van Leeuwen Ice Cream Flavor",
+        "url": "https://pitchfork.com/story/kevin-morby-drops-new-song-pbj-and-van-leeuwen-ice-cream-flavor"
+      },
+      {
+        "title": "Charlotte Adig\u00e9ry and Bolis Pupul Return With New Song \u201cGoogoo Gaga\u201d",
+        "url": "https://pitchfork.com/story/charlotte-adigery-and-bolis-pupul-return-with-new-song-googoo-gaga"
+      },
+      {
+        "title": "New Order\u2019s Gillian Gilbert Reveals Cancer Diagnosis",
+        "url": "https://pitchfork.com/story/new-orders-gillian-gilbert-reveals-cancer-diagnosis"
+      },
+      {
+        "title": "9 Songs You Should Listen to Now: This Week\u2019s Pitchfork Selects Playlist",
+        "url": "https://pitchfork.com/story/m83-o-slow-angela-autumn-and-more-this-weeks-pitchfork-selects-playlist"
+      },
+      {
+        "title": "Wednesday Announce Bleeds Deluxe Featuring DJ Sabrina the Teenage DJ, Avey Tare",
+        "url": "https://pitchfork.com/story/wednesday-announce-bleeds-deluxe-featuring-dj-sabrina-the-teenage-dj-avey-tare"
+      },
+      {
+        "title": "Lambrini Girls Promise No Refunds on New Album and Song",
+        "url": "https://pitchfork.com/story/lambrini-girls-promise-no-refunds-on-new-album-and-song"
+      },
+      {
+        "title": "Macklemore Kicked Off Ed Sheeran Tour for Pro-Palestine Comments",
+        "url": "https://pitchfork.com/story/macklemore-kicked-off-ed-sheeran-tour-for-pro-palestine-comments"
+      },
+      {
+        "title": "Chief Keef Postpones First Chicago Show in Over a Decade",
+        "url": "https://pitchfork.com/story/chief-keef-postpones-first-chicago-show-in-over-a-decade"
+      },
+      {
+        "title": "Lil Durk Acquitted in Murder-for-Hire Trial",
+        "url": "https://pitchfork.com/story/lil-durk-acquitted-in-murder-for-hire-plot"
+      },
+      {
+        "title": "Brent Hinds Estate Sues Mastodon",
+        "url": "https://pitchfork.com/story/brent-hinds-estate-sues-mastodon"
+      },
+      {
+        "title": "10 Albums Out This Week You Should Listen to Now",
+        "url": "https://pitchfork.com/story/10-new-albums-you-should-listen-to-now-this-is-lorelei-alex-g-and-more"
+      },
+      {
+        "title": "N.O.R.E. Sued for Sexual Assault",
+        "url": "https://pitchfork.com/story/nore-sued-for-sexual-assault"
+      },
+      {
+        "title": "MTV VMAs 2026 Nominees Announced: See the Full List Here",
+        "url": "https://pitchfork.com/story/madonna-taylor-swift-lead-vma-2026-nominations"
+      },
+      {
+        "title": "Geese Finally Respond to \u201cPsyop\u201d Allegations",
+        "url": "https://pitchfork.com/story/geese-finally-respond-to-psyop-allegations"
+      },
+      {
+        "title": "Harry Styles Reveals 2027 Tour Dates",
+        "url": "https://pitchfork.com/story/harry-styles-reveals-2027-tour-dates"
+      },
+      {
+        "title": "Bootsy Collins\u2019 First Memoir is Called Funked Around, Found Out",
+        "url": "https://pitchfork.com/story/bootsy-collins-memoir-is-called-funked-around-found-out"
+      },
+      {
+        "title": "Conor Oberst Made a Short Film Featuring Phoebe Bridgers",
+        "url": "https://pitchfork.com/story/conor-oberst-made-a-short-film-featuring-phoebe-bridgers"
+      },
+      {
+        "title": "Beirut Plots First North American Tour in Eight Years",
+        "url": "https://pitchfork.com/story/beirut-plots-first-north-american-tour-in-eight-years"
+      },
+      {
+        "title": "D\u2019Angelo\u2019s Son to Play Biggie Smalls in Snoop Dogg Biopic",
+        "url": "https://pitchfork.com/story/dangelos-son-to-play-biggie-smalls-in-snoop-dogg-biopic"
+      },
+      {
+        "title": "Stevie Wonder Announces Songs in the Key of Life Anniversary Tour",
+        "url": "https://pitchfork.com/story/stevie-wonder-songs-in-the-key-of-life-tour"
+      },
+      {
+        "title": "Bad Bunny Wins His First Emmy Award",
+        "url": "https://pitchfork.com/story/bad-bunny-wins-emmy-awards"
+      },
+      {
+        "title": "Yeat Appears to Diss Travis Scott on New Track \u201cOn Nothing\u201d",
+        "url": "https://pitchfork.com/story/yeat-appears-to-diss-travis-scott-on-new-track-on-nothing"
+      },
+      {
+        "title": "Miley Wants You Dancing in New \u201cBass Persuades\u201d Video",
+        "url": "https://pitchfork.com/story/miley-wants-you-dancing-in-new-bass-persuades-video"
+      },
+      {
+        "title": "Neil Peart Documentary No One\u2019s Disciple Gets First Trailer",
+        "url": "https://pitchfork.com/story/neil-peart-documentary-no-ones-disciple-gets-first-trailer"
+      },
+      {
+        "title": "Andy Stott Returns With First Album in Five Years",
+        "url": "https://pitchfork.com/story/andy-stott-returns-with-first-album-in-five-years"
+      },
+      {
+        "title": "Oso Oso Announce Album on Mark Quinlan\u2019s New Label",
+        "url": "https://pitchfork.com/story/oso-oso-announce-album-on-mark-quinlans-new-label"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-animenews",
+    "url": "https://www.animenewsnetwork.com/news/",
+    "label": "blog",
+    "split": "validation",
+    "sha256": "a8477f11d660cdf0700de2660398206e7576d47eef3e408e30323e4965ec069b",
+    "title": "News \u2014 Archives \u2014",
+    "source_summary": "",
+    "kind": "blog",
+    "entries": [],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  },
+  {
+    "source_id": "media-musicbusiness",
+    "url": "https://www.musicbusinessworldwide.com/",
+    "label": "blog",
+    "split": "test",
+    "sha256": "cefde82362a9d2c07fe1cc8eee96e627e302d2f7dcb741089dfe081804e9f14b",
+    "title": "Music Business Worldwide - News, jobs and analysis for the global music industry",
+    "source_summary": "",
+    "kind": "blog",
+    "entries": [
+      {
+        "title": "News Universal and Sony sue Suno for a second time, claiming platform's v6 models are 'the fruit of the same poisoned tree'",
+        "url": "https://www.musicbusinessworldwide.com/universal-and-sony-sue-suno-for-a-second-time-claiming-platforms-v6-models-are-the-fruit-of-the-same-poisoned-tree"
+      },
+      {
+        "title": "News Fever raises $250M",
+        "url": "https://www.musicbusinessworldwide.com/dice-owner-fever-raises-250m-led-by-eqt-in-what-it-calls-the-largest-ever-round-for-a-live-entertainment-tech-company"
+      },
+      {
+        "title": "News UMG sues DistroKid",
+        "url": "https://www.musicbusinessworldwide.com/universal-music-group-sues-distrokid-ai-generated-slop"
+      },
+      {
+        "title": "From Universal suing DistroKid (for the first time) to UMG and Sony suing Suno (again)\u2026 it\u2019s MBW\u2019s Weekly Round-Up",
+        "url": "https://www.musicbusinessworldwide.com/from-universal-suing-distrokid-for-the-first-time-to-umg-and-sony-suing-suno-again-its-mbws-weekly-round-up"
+      },
+      {
+        "title": "No one\u2019s \u2018Part of the Queue\u2019: Oasis have scrapped the general onsale for Live \u201927. Here\u2019s 5 things to know.",
+        "url": "https://www.musicbusinessworldwide.com/no-ones-part-of-the-queue-oasis-have-scrapped-the-general-onsale-for-live-27-heres-5-things-to-know"
+      },
+      {
+        "title": "Sound designers and SFX libraries launch Professional Sound Alliance to fight AI scraping: \u2018Now sound will have protection of our own\u2019",
+        "url": "https://www.musicbusinessworldwide.com/sound-designers-and-sfx-libraries-launch-professional-sound-alliance-to-fight-ai-scraping-now-sound-will-have-protection-of-our-own"
+      },
+      {
+        "title": "SoundExchange strikes reciprocal agreement with the UAE\u2019s MusicNation, opening neighboring rights royalty flows in both markets",
+        "url": "https://www.musicbusinessworldwide.com/soundexchange-strikes-reciprocal-agreement-with-the-uaes-musicnation-opening-neighboring-rights-royalty-flows-in-both-markets"
+      },
+      {
+        "title": "Symphonic adds MassiveMusic audio delivery to its TransferTrack migration tech, removing what it calls one of the last manual steps for labels switching distributors",
+        "url": "https://www.musicbusinessworldwide.com/symphonic-adds-massivemusic-audio-delivery-to-its-transfertrack-migration-tech-removing-what-it-calls-one-of-the-last-manual-steps-for-labels-switching-distributors"
+      },
+      {
+        "title": "Atlantic Records to release Grand Theft Auto VI: The Album, featuring Travis Scott, PinkPantheress, Morgan Wallen, and Keith Richards",
+        "url": "https://www.musicbusinessworldwide.com/atlantic-records-to-release-grand-theft-auto-vi-the-album-featuring-travis-scott-pinkpantheress-morgan-wallen-and-keith-richards"
+      },
+      {
+        "title": "AI artists will somehow play \u2018live\u2019 at their own awards ceremony in November",
+        "url": "https://www.musicbusinessworldwide.com/ai-artists-will-somehow-play-live-at-their-own-awards-ceremony-in-november"
+      },
+      {
+        "title": "\u2018You want your songs playing everywhere in 50 years \u2013 not just 50 weeks.\u2019",
+        "url": "https://www.musicbusinessworldwide.com/you-want-your-songs-playing-everywhere-in-50-years-not-just-50-weeks"
+      },
+      {
+        "title": "Apollo invests $1.25B in BMG subsidiary behind legacy Concord bonds, taking a minority stake",
+        "url": "https://www.musicbusinessworldwide.com/bmg-and-concord-apollo-bond-debt"
+      },
+      {
+        "title": "Stem co-founder Tim Luckow raises $5M for royalty platform Notes.fm; Zach Bryan, Benny Blanco and Ari Emanuel among the backers",
+        "url": "https://www.musicbusinessworldwide.com/stem-co-founder-tim-luckow-raises-5m-for-royalty-platform-notes-fm-zach-bryan-benny-blanco-and-ari-emanuel-among-the-backers"
+      },
+      {
+        "title": "Spotify to induct 10,000 indie artists a year into \u2018Fresh Finds Forward\u2019 program, with benefits including free studio time, software, and therapy sessions",
+        "url": "https://www.musicbusinessworldwide.com/spotify-to-induct-10000-indie-artists-a-year-into-fresh-finds-program-with-benefits-including-free-studio-time-software-and-therapy-sessions"
+      },
+      {
+        "title": "MAIN Event Ticketing Act clears House committee 36-0 \u2013 as Live Nation fights an FTC lawsuit under the law it would strengthen",
+        "url": "https://www.musicbusinessworldwide.com/main-event-ticketing-act-clears-house-committee-36-0-as-live-nation-fights-an-ftc-lawsuit-under-the-law-it-would-strengthen"
+      },
+      {
+        "title": "All 58 Taylor Swift music videos land on Spotify, seven months after \u2018Opalite\u2019 skipped YouTube for two days",
+        "url": "https://www.musicbusinessworldwide.com/all-58-taylor-swift-music-videos-land-on-spotify-seven-months-after-opalite-skipped-youtube-for-two-days"
+      },
+      {
+        "title": "Suno hit with another proposed class action over data breach that leaked information of 55M users",
+        "url": "https://www.musicbusinessworldwide.com/suno-hit-with-another-proposed-class-action-over-data-breach-that-leaked-information-of-55m-users"
+      },
+      {
+        "title": "Believe France launches ALL IN, a new pop entity uniting na\u00efve, Animal63, All Night Long, and Jo&Co",
+        "url": "https://www.musicbusinessworldwide.com/believe-france-launches-all-in-a-new-pop-entity-uniting-naive-animal63-all-night-long-and-joco"
+      },
+      {
+        "title": "Universal and Warner press court to end US musicians\u2019 lawsuit over Udio, Suno deals",
+        "url": "https://www.musicbusinessworldwide.com/universal-and-warner-press-court-to-end-us-musicians-lawsuit-over-udio-suno-deals"
+      },
+      {
+        "title": "BMG deepens Jean-Michel Jarre partnership, licensing his recorded music catalog",
+        "url": "https://www.musicbusinessworldwide.com/bmg-deepens-jean-michel-jarre-partnership-licensing-his-recorded-music-catalog"
+      },
+      {
+        "title": "Anthropic bought songbooks, scanned them, and destroyed them, music publishers allege \u2013 now they want to know which songs were in them.",
+        "url": "https://www.musicbusinessworldwide.com/anthropic-bought-songbooks-scanned-them-and-destroyed-them-music-publishers-allege-now-they-want-to-know-which-songs-were-in-them"
+      }
+    ],
+    "provenance": "public listing; bounded deployed parser output; no detail pages fetched"
+  }
+]

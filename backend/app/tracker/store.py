@@ -82,6 +82,9 @@ class Store:
             CREATE TABLE IF NOT EXISTS preferences (
               id INTEGER PRIMARY KEY CHECK(id=1), payload TEXT NOT NULL
             );
+            CREATE TABLE IF NOT EXISTS saved_views (
+              id TEXT PRIMARY KEY, name TEXT NOT NULL, payload TEXT NOT NULL, created_at TEXT NOT NULL
+            );
             CREATE TABLE IF NOT EXISTS suggestions (
               id TEXT PRIMARY KEY, url TEXT NOT NULL UNIQUE, title TEXT NOT NULL,
               summary TEXT NOT NULL DEFAULT '', kind TEXT NOT NULL DEFAULT 'website',
@@ -148,7 +151,7 @@ class Store:
                 "SELECT id FROM items WHERE media_version<?", (MEDIA_VERSION,)
             ).fetchall():
                 self._refresh_media(db, item["id"])
-            db.execute("PRAGMA user_version=12")
+            db.execute("PRAGMA user_version=13")
         marker.touch(exist_ok=True)
 
     @staticmethod
@@ -327,8 +330,17 @@ class Store:
 
     def items(self, item_id=None, trash=False):
         with self.connection() as db:
+            db.execute("BEGIN")
+            grouped = (
+                db.execute(
+                    "SELECT 1 FROM links WHERE merged_into IS NOT NULL LIMIT 1"
+                ).fetchone()
+                is not None
+            )
+            source = "link_entries" if grouped else "links"
+            link_count = "link_count" if grouped else "1 AS link_count"
             rows = db.execute(
-                """SELECT i.*, count(l.id) total_count,
+                f"""SELECT i.*, count(l.id) total_count,
               coalesce(sum(l.ignored),0) ignored_count,
               coalesce(sum(l.read=1 AND l.ignored=0),0) read_count,
               coalesce(sum(l.read=0 AND l.ignored=0),0) unread_count,
@@ -339,7 +351,7 @@ class Store:
               coalesce(sum(l.published_at IS NOT NULL AND l.ignored=0),0) active_dated,
               coalesce(sum(l.date_kind='scheduled' AND l.published_at > strftime('%Y-%m-%dT%H:%M:%S','now') AND l.ignored=0),0) upcoming_count,
               max(l.discovered_at) latest_discovered_at
-              FROM items i LEFT JOIN link_entries l ON l.item_id=i.id AND l.deleted=0 """
+              FROM items i LEFT JOIN {source} l ON l.item_id=i.id AND l.deleted=0 """
                 + ("WHERE i.id=? " if item_id else "WHERE i.deleted=? ")
                 + "GROUP BY i.id ORDER BY i.created_at DESC",
                 (item_id,) if item_id else (trash,),
@@ -358,15 +370,46 @@ class Store:
                     if count == dated
                     else "position"
                 )
-                latest = (
-                    None
-                    if item["deleted"] or not count
-                    else db.execute(
-                        f"SELECT id,url,title,read,number,published_at FROM link_entries WHERE item_id=? AND ignored=0 AND deleted=0 ORDER BY {order} DESC,position DESC,id DESC LIMIT 1",
-                        (item["id"],),
-                    ).fetchone()
-                )
-                item["latest_link"] = self.decode(latest)
+                next_unread = latest = None
+                if not item["deleted"] and count:
+                    picks = db.execute(
+                        f"""WITH active AS MATERIALIZED (
+                            SELECT id,url,title,read,number,published_at,position,date_kind,{link_count}
+                            FROM {source} WHERE item_id=? AND ignored=0 AND deleted=0
+                        ), unread AS (
+                            SELECT *,row_number() OVER (
+                                ORDER BY {order} IS NULL,{order} ASC,position ASC,id ASC
+                            )-1 AS landing_position FROM active WHERE read=0
+                        )
+                        SELECT * FROM (
+                            SELECT 'latest' AS pick,id,url,title,read,number,published_at,link_count,0 AS landing_position
+                            FROM active ORDER BY {order} DESC,position DESC,id DESC LIMIT 1
+                        )
+                        UNION ALL
+                        SELECT * FROM (
+                            SELECT 'next' AS pick,id,url,title,read,number,published_at,link_count,landing_position
+                            FROM unread WHERE ?=0
+                            AND (date_kind!='scheduled' OR published_at IS NULL OR published_at <= strftime('%Y-%m-%dT%H:%M:%S','now'))
+                            ORDER BY {order} IS NULL,{order} ASC,position ASC,id ASC LIMIT 1
+                        )""",
+                        (item["id"], item["ignored"]),
+                    ).fetchall()
+                    for row in picks:
+                        entry = self.decode(row)
+                        pick = entry.pop("pick")
+                        landing_position = entry.pop("landing_position")
+                        if pick == "latest":
+                            latest = entry
+                        else:
+                            entry["offset"] = (landing_position // 50) * 50
+                            entry["sort"] = {
+                                "number": "number",
+                                "published_at": "date",
+                                "position": "source",
+                            }[order]
+                            next_unread = entry
+                item["latest_link"] = latest
+                item["next_unread"] = next_unread
         return items
 
     def item(self, item_id):
