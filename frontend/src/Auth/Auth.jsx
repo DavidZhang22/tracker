@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { api, post } from "../api";
 import { Notice } from "../Components/Notice";
 import AccountData from "./AccountData";
+import RecoveryEmail from "./RecoveryEmail";
 
 const AuthContext = createContext({ required: false, user: null });
 export const useAuth = () => useContext(AuthContext);
@@ -110,7 +111,7 @@ function SignIn({ registration, inviteRequired, onSignedIn, notice }) {
         </div>
         <h1>{create ? "Create account" : "Sign in"}</h1>
         <p className="muted">
-          Your media and reading progress, saved to your account.
+          Media and reading progress, saved to your account.
         </p>
         <Notice error>{error}</Notice>
         <Notice>{notice}</Notice>
@@ -177,7 +178,7 @@ function SignIn({ registration, inviteRequired, onSignedIn, notice }) {
         )}
         {!create && (
           <p className="hint">
-            Forgot your password? <a href="/privacy">Contact the operator</a>.
+            <Link to="/account/recover">Forgot your password?</Link>
           </p>
         )}
         {create && (
@@ -276,6 +277,7 @@ export function AccountPage({ embedded = false }) {
               Change password
             </button>
           </form>
+          <RecoveryEmail />
           <AccountData auth={auth} />
         </>
       ) : (

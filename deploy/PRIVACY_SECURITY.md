@@ -1,13 +1,14 @@
 # Privacy and security operations
 
 Public contact: **mediatrackify@gmail.com**. `/privacy`, `/terms`, and
-`/.well-known/security.txt` are available before sign-in. Set the real controller
+`/.well-known/security.txt` are available before sign-in. Set the operator
 identity with `TRACKER_OPERATOR_NAME`, the public email with
 `TRACKER_PRIVACY_EMAIL`, and the actual provider/region with
 `TRACKER_HOSTING_DESCRIPTION`. Update these when migrating hosts.
 
-These controls support GDPR obligations; code changes are not a certification of
-legal compliance or a guarantee that exploitation is impossible.
+The public notice describes current collection, use, sharing and retention in
+plain language for a U.S. service. Keep these statements aligned with actual
+operations; a privacy notice alone does not establish legal compliance.
 
 ## Account controls
 
@@ -49,9 +50,9 @@ identity evidence longer than justified by the request and applicable law.
 
 ## Requests arriving by email
 
-Monitor the configured mailbox. The site does not send email or verify that this
-mailbox is monitored. Respond to data-rights requests within one month, with any
-lawful extension explained within that month. Verify identity proportionately;
+Monitor the configured contact mailbox. Optional recovery email delivery is
+configured separately; see [Email recovery](EMAIL_RECOVERY.md). Respond to
+privacy requests within the deadlines required by applicable U.S. law. Verify identity proportionately;
 never request a password over email. Do not disclose a library merely because
 someone knows a username. Prefer the authenticated export/delete controls.
 
@@ -68,8 +69,6 @@ sudo docker compose --env-file deploy/.env -f deploy/compose.yaml exec app \
   /app/backend/.venv/bin/python -m app.tracker.accounts rename USERNAME --new-username CORRECTED_NAME
 ```
 
-Restriction/objection requests need an operator response: suspend access or
-processing as appropriate, rather than deleting data the person asked to retain.
 The application has no automatic background source scans; ordinary scans require
 user action. Keep a limited request log recording the decision and completion.
 
@@ -133,14 +132,11 @@ snapshots. Verify cloud retention and deletion terms with the provider.
   frame blocking, restrictive browser permissions and no-store API responses
   complement input validation and React's escaping.
 
-Before accepting broader public use, verify the operator's legal identity,
-provider processing agreement and EEA transfer safeguards for US hosting, the
-lawful bases and retention schedule, security incident handling, and whether a
-DPIA is needed for any expanded use. Keep OS/container dependencies patched and
-monitor backup and privacy-maintenance failures. Review `security.txt` before
-its March 2027 expiry. Investigate suspected breaches promptly; assess GDPR's
-72-hour supervisory notification requirement and communication duties where
-applicable. The contact mailbox alone does not implement those procedures.
+Review applicable federal and state privacy and breach-notification requirements
+when the service or its data practices change. Keep dependencies patched, monitor
+backup and deletion failures, and investigate suspected incidents promptly.
+Review `security.txt` before its March 2027 expiry. The contact mailbox alone
+does not implement an incident response process.
 
 ## Verification
 
@@ -157,7 +153,11 @@ repository assets. Review both `npm audit` and `npm audit --omit=dev` when updat
 frontend dependencies, along with Python and browser runtime advisories. Apply
 compatible fixes and verify lint, tests and the production build before release.
 
-References: [EDPB rights guidance](https://www.edpb.europa.eu/sme/be-compliant/respect-individuals-rights_en),
-[GDPR text](https://eur-lex.europa.eu/eli/reg/2016/679/oj),
-[OWASP SSRF guidance](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html),
-[OWASP REST security](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html).
+References: [FTC privacy and security guidance](https://www.ftc.gov/business-guidance/privacy-security),
+[California privacy notice guidance](https://oag.ca.gov/sites/all/files/agweb/pdfs/cybersecurity/making_your_privacy_practices_public.pdf),
+[OWASP password recovery](https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html),
+[OWASP SSRF guidance](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html).
+
+The notice's short, topic-based format takes inspiration from
+[Mozilla's website privacy notice](https://www.mozilla.org/en-US/privacy/websites/).
+Its wording and data practices describe Trackify, not Mozilla.

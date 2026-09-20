@@ -1,0 +1,31 @@
+{
+  "documents": {
+    "count": 47,
+    "before_s": 2.882868700005929,
+    "after_s": 2.85307689999172,
+    "max_abs_error": 0.0
+  },
+  "queries": {
+    "count": 34,
+    "before_s": 0.08599589999357704,
+    "after_s": 0.0767201999988174,
+    "max_abs_error": 0.0
+  },
+  "top3_order_equal": true,
+  "pooling": {
+    "before_ms": 4.054300006828271,
+    "after_ms": 1.225300002261065,
+    "before_peak_bytes": 4848960,
+    "after_peak_bytes": 155115,
+    "exact": true
+  },
+  "checksum": {
+    "file_bytes": 23046789,
+    "before_peak_bytes": 23055455,
+    "after_peak_bytes": 271537
+  },
+  "load_s": {
+    "before": 0.7513811999961035,
+    "after": 0.30590099999972153
+  }
+}

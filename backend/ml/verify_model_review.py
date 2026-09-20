@@ -1,6 +1,7 @@
 """Offline production-model replay against frozen public source scopes."""
 
 import argparse
+import cProfile
 import hashlib
 import json
 import os
@@ -18,6 +19,10 @@ def main():
     parser.add_argument("--app-root", type=Path, default=ROOT)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--entries", type=Path)
+    parser.add_argument(
+        "--outputs", type=Path, help="Save complete scans, pagination and feeds"
+    )
+    parser.add_argument("--profile", type=Path, help="Instrument only parser calls")
     parser.add_argument("--only", nargs="+")
     parser.add_argument("--inference-only", action="store_true")
     parser.add_argument("--repeats", type=int, default=3)
@@ -86,7 +91,8 @@ def main():
         ):
             sources[source["id"]] = source
     report = dict(repeats=args.repeats, pages={}, skipped=[])
-    entries = {}
+    entries, outputs = {}, {}
+    profiler = cProfile.Profile() if args.profile else None
     for source in sources.values():
         if args.only and source["id"] not in args.only:
             continue
@@ -103,10 +109,18 @@ def main():
         elapsed = []
         for _ in range(args.repeats):
             start = time.perf_counter()
-            scan = parse_page(html, source["url"])[0]
+            if profiler:
+                profiler.enable()
+            try:
+                scan, pages, feeds = parse_page(html, source["url"])
+            finally:
+                if profiler:
+                    profiler.disable()
             elapsed.append(time.perf_counter() - start)
         actual = {entry.url for entry in scan.entries}
         entries[source["id"]] = {entry.url: asdict(entry) for entry in scan.entries}
+        complete = [asdict(scan), pages, feeds]
+        outputs[source["id"]] = complete
         page = dict(
             expected=len(expected),
             correct=len(actual & expected),
@@ -114,6 +128,9 @@ def main():
             missing=len(expected - actual),
             median_seconds=statistics.median(elapsed),
             capture_sha256=hashlib.sha256(file.read_bytes()).hexdigest(),
+            scan_output_sha256=hashlib.sha256(
+                json.dumps(complete, sort_keys=True).encode()
+            ).hexdigest(),
             output_sha256=hashlib.sha256(
                 json.dumps(entries[source["id"]], sort_keys=True).encode()
             ).hexdigest(),
@@ -140,6 +157,10 @@ def main():
     args.output.write_text(json.dumps(report, indent=2) + "\n")
     if args.entries:
         args.entries.write_text(json.dumps(entries, separators=(",", ":")) + "\n")
+    if args.outputs:
+        args.outputs.write_text(json.dumps(outputs, separators=(",", ":")) + "\n")
+    if profiler:
+        profiler.dump_stats(args.profile)
 
 
 if __name__ == "__main__":

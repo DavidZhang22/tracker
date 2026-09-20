@@ -21,6 +21,8 @@ from app.tracker.discovery import Discoverer
 from app.tracker.guards import ApiGuard, ScanGuard
 from app.tracker.import_pool import DocumentImporter
 from app.tracker.privacy import router as privacy_router
+from app.tracker.recovery import PUBLIC_PATHS, Recovery
+from app.tracker.recovery import router as recovery_router
 from app.tracker.semantic_search import SearchAdmission, SemanticSearch
 from app.tracker.store import LibraryErased, Store
 from app.tracker.urls import SafeFetcher
@@ -134,6 +136,11 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
         if config.get("required")
         else None
     )
+    app.state.recovery = (
+        Recovery(app.state.accounts, origin, mailer=config.get("mailer"))
+        if app.state.accounts
+        else None
+    )
     app.state.secure_cookies = origin.startswith("https://")
     hosts = os.environ.get(
         "TRACKER_HOSTS", "localhost,127.0.0.1,[::1],testserver"
@@ -182,6 +189,7 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
         if (
             app.state.accounts
             and request.url.path.startswith("/api/")
+            and request.url.path not in PUBLIC_PATHS
             and request.url.path
             not in {
                 "/api/privacy",
@@ -224,6 +232,12 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
             cache_epochs.reset(epoch)
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        if (
+            request.url.path in {"/account/recover", "/account/verify-email"}
+            or request.url.path in PUBLIC_PATHS
+        ):
+            response.headers["Referrer-Policy"] = "no-referrer"
+            response.headers["Cache-Control"] = "no-store"
         response.headers["X-Frame-Options"] = "DENY"
         response.headers["Permissions-Policy"] = (
             "camera=(), microphone=(), geolocation=(), payment=()"
@@ -274,6 +288,7 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
 
     app.include_router(router)
     app.include_router(account_router)
+    app.include_router(recovery_router)
     app.include_router(privacy_router)
     build = Path(__file__).resolve().parents[2] / "frontend" / "build"
     if build.exists():

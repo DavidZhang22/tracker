@@ -1,0 +1,26 @@
+.recovery-email fieldset {
+  border: 0;
+  padding: 0;
+  margin: 20px 0 0;
+  min-width: 0;
+}
+.recovery-email > p {
+  overflow-wrap: anywhere;
+}
+.recovery-email .actions {
+  flex-wrap: wrap;
+}
+.recovery-card > .auth-brand {
+  display: block;
+}
+.recovery-card > .text-button {
+  display: block;
+  margin-top: 20px;
+}
+.recovery-card > p:not(.notice) {
+  line-height: 1.6;
+}
+.recovery-card > p a {
+  color: var(--accent);
+  text-decoration: underline;
+}

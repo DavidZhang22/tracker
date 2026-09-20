@@ -27,15 +27,21 @@ export default function PrivacyPage({ terms = false }) {
         <>
           <p className="muted">Updated {details.updated}</p>
           <p id="contact">
-            Operator: {details.operator}.{" "}
-            {details.contact ? (
+            Trackify is operated by{" "}
+            {details.operator === details.contact ? (
+              <a href={`mailto:${details.contact}`}>{details.contact}</a>
+            ) : (
+              details.operator
+            )}
+            .
+            {details.contact && details.operator !== details.contact && (
               <>
-                Privacy, account and security requests:{" "}
+                {" "}
+                Contact:{" "}
                 <a href={`mailto:${details.contact}`}>{details.contact}</a>.
               </>
-            ) : (
-              "The operator has not configured a public contact yet."
-            )}
+            )}{" "}
+            Contact us for privacy, account or security help.
           </p>
           {terms ? (
             <>
@@ -75,51 +81,40 @@ export default function PrivacyPage({ terms = false }) {
             </>
           ) : (
             <>
-              <h2>What we store and why</h2>
+              <h2>Information we collect</h2>
               <p>
-                We store your username, an Argon2id password hash, account
-                creation time, hashed session tokens and their expiry, your
-                source URLs, saved link metadata, reading progress, favorites,
-                muted items, Trash, settings, descriptions, derived search
-                vectors and temporary scan previews. Passwords and raw session
-                tokens are not stored in the database.
+                We save your username, a protected password hash, and the items,
+                links, reading progress and settings in your account. If you add
+                a recovery email, we use it only to verify your address and help
+                you recover your account, including password-reset notices.
               </p>
               <p>
-                File and pasted-text imports store the source name and extracted
-                links, titles, dates and nearby details in your private library.
-                Files and pasted text are processed in memory on the Trackify
-                server; the original input is not retained as a file. Imports do
-                not visit their links or send content to an external AI service.
+                Files and text you import are processed on our server. We save
+                the extracted links and details you choose to keep, not the
+                original upload. We also process IP addresses and keep temporary
+                security records to limit abuse and troubleshoot failures.
+              </p>
+              <h2>How we use and share information</h2>
+              <p>
+                We use this information to run and secure Trackify, save your
+                progress, and find and search content. Our models run on our
+                server; we do not send your library or imports to an external AI
+                service. We do not sell personal information or share it for
+                targeted advertising.
               </p>
               <p>
-                We use this data to provide the tracker you request, relying on
-                performance of the service agreement where GDPR applies. We use
-                short-lived abuse counters and security records for our
-                legitimate interest in protecting the service and its users. We
-                do not sell account data, show targeted advertising or use
-                advertising/analytics cookies.
-              </p>
-              <h2>Fetching and suggestions</h2>
-              <p>
-                Scans contact the public sites or APIs you select, which receive
-                the server’s IP address and requested URL. Opening a saved link
-                contacts that site directly from your browser and is subject to
-                its privacy policy. The tracker does not send your login
-                password to sources.
+                Hosting: {details.hosting}. The operator and hosting provider
+                can access data as needed to operate the service. If you use
+                email recovery, our email provider processes your address and
+                recovery messages to deliver them. We may also disclose
+                information when required by law or necessary to investigate
+                abuse or protect users.
               </p>
               <p>
-                Local models classify source and imported link metadata and rank
-                suggestions from your library. A local sentence model selects
-                descriptions from source text and matches library searches by
-                meaning. Search vectors stay in your account's database and are
-                erased with the account; exports include the source text and
-                descriptions needed to rebuild them. Queries are processed in
-                memory. This does not make decisions with legal or similarly
-                significant effects. Your account and library are not sent to an
-                external AI service for these features.
-              </p>
-              <p>
-                YouTube sources are also subject to{" "}
+                Scans send the requested URL and our server’s IP address to the
+                source website or API. Opening a saved link connects your
+                browser to that website. Its own privacy policy applies. YouTube
+                sources are also subject to{" "}
                 <a href="https://www.youtube.com/t/terms">YouTube’s terms</a>{" "}
                 and{" "}
                 <a href="https://policies.google.com/privacy">
@@ -127,64 +122,49 @@ export default function PrivacyPage({ terms = false }) {
                 </a>
                 .
               </p>
-              <h2>Storage and recipients</h2>
+              <h2>Cookies and tracking</h2>
               <p>
-                Hosting: {details.hosting}. The operator and hosting provider
-                may access data as needed to run, secure or recover the service.
-                Requested source/API providers process their own request logs.
-                Hosting outside your country can involve international
-                transfers; contact the operator for applicable provider
-                agreements and transfer safeguards.
+                We use an essential cookie to keep you signed in for up to seven
+                days, and a short-lived cookie during password recovery. We do
+                not use advertising or analytics cookies or track you across
+                other websites. We do not change these practices in response to
+                a browser’s Do Not Track signal.
               </p>
-              <h2>Retention and deletion</h2>
+              <h2>How long we keep information</h2>
               <p>
-                Account data and saved library content, including Trash, remain
-                until you delete your account or ask the operator to remove
-                them. Sessions expire after seven days. Authentication attempt
-                records are removed after 15 minutes by maintenance. Public
-                signup counters retain a hashed IP address and creation time for
-                up to one hour, with cleanup on the next maintenance run. Shared
-                source-request limits also retain URL and hostname hashes and
-                timestamps for five minutes, without account IDs or full URLs.
-                Expired limits are removed during maintenance; other rate limits
-                are held in memory. Shared scan caches expire within seven days
-                and are cleared on account deletion. Application request-access
-                logging is disabled in the hosted deployment.
+                Your account and saved library, including Trash, remain until
+                you remove them. Temporary scan caches expire within seven days.
+                Short-lived abuse limits expire automatically; diagnostic logs
+                rotate to limit retention.
               </p>
               <p>
-                Account deletion immediately revokes sessions and removes the
-                account login. Active library cleanup normally completes in the
-                same request; failed cleanup is retried every five minutes.
-                Managed backups are scrubbed at the next daily backup run and
-                retained for at most seven days under normal operation. A
-                minimal deletion ledger containing a random account ID and
-                deletion dates is retained to prevent restoration. It contains
-                no username, password or library content. Independent copies you
-                download are under your control.
+                Deleting your account immediately disables sign-in and starts
+                removal of its data. Failed cleanup is retried. Managed backups
+                are cleaned at the next daily backup run and normally expire
+                within seven days; outages can delay cleanup. We keep a minimal
+                record of the deleted account’s random ID and deletion dates to
+                prevent it from being restored. Copies you download remain under
+                your control.
               </p>
-              <h2>Your controls and rights</h2>
+              <h2>Your choices</h2>
               <p>
-                Settings → Account lets you download your data, sign out all
-                sessions, or permanently delete your account after confirming
-                your password. You can update saved items and reading progress
-                directly.
+                In <Link to="/settings#account">Settings → Account</Link>, you
+                can manage your recovery email, change your password, download
+                your data, sign out other sessions, or delete your account. You
+                can edit items and reading progress in your library.
               </p>
               <p>
-                You can request access, correction (including your username),
-                erasure, restriction of processing, portability, or object to
-                processing based on legitimate interests by contacting the
-                operator. If you cannot sign in, use the same contact; identity
-                may need to be verified without asking you to send your
-                password. Requests are normally answered within one month,
-                subject to applicable law. You may complain to your local data
-                protection authority.
+                To request access, correction or deletion, or if you cannot sign
+                in, contact us above. We may need to verify your identity; never
+                send us your password. We respond as required by applicable U.S.
+                privacy law.
               </p>
-              <h2>Essential browser storage</h2>
+              <h2>Children and policy updates</h2>
               <p>
-                The secure, HttpOnly session cookie keeps you signed in for up
-                to seven days. It is essential for accounts. No optional
-                tracking cookies are currently used.{" "}
-                <Link to="/terms">Terms of use</Link>.
+                Trackify is not intended for children under 16. Contact us if
+                you believe a child has provided personal information. We will
+                post changes to this notice here, update the date, and announce
+                material changes on the site before they take effect.
               </p>
             </>
           )}

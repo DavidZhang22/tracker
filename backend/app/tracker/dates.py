@@ -5,6 +5,7 @@ from itertools import islice
 
 from bs4 import Tag
 
+from .dom import first_parent
 from .models import date_value
 
 DATE_TEXT = re.compile(
@@ -118,7 +119,7 @@ def link_date(anchor, context=None):
     own = dates(anchor)
     if own and own.get("date_source") != "record text":
         return own
-    row = anchor.find_parent("tr")
+    row = first_parent(anchor, {"tr"})
     if row:
         if d := dates(row):
             return d

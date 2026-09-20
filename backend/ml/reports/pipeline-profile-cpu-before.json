@@ -1,0 +1,104 @@
+{
+  "label": "before",
+  "kind": "cProfile parser-only; attribution only, not wall-clock speed benchmark",
+  "functions": [
+    {
+      "file": "parser.py",
+      "function": "parse_page",
+      "calls": 56,
+      "own_seconds": 0.1146051,
+      "cumulative_seconds": 143.67770420000002
+    },
+    {
+      "file": "element.py",
+      "function": "_find_all",
+      "calls": 300532,
+      "own_seconds": 1.2718868,
+      "cumulative_seconds": 28.493100600000002
+    },
+    {
+      "file": "css_match.py",
+      "function": "select",
+      "calls": 11263,
+      "own_seconds": 0.0388355,
+      "cumulative_seconds": 22.844225
+    },
+    {
+      "file": "css_match.py",
+      "function": "select",
+      "calls": 77707,
+      "own_seconds": 0.39318580000000003,
+      "cumulative_seconds": 22.485459600000002
+    },
+    {
+      "file": "record_context.py",
+      "function": "text",
+      "calls": 13115,
+      "own_seconds": 0.3796061,
+      "cumulative_seconds": 22.196939800000003
+    },
+    {
+      "file": "context_model.py",
+      "function": "classify_context",
+      "calls": 54,
+      "own_seconds": 0.14164960000000001,
+      "cumulative_seconds": 21.353914900000003
+    },
+    {
+      "file": "list_entries.py",
+      "function": "extract_list_entries",
+      "calls": 56,
+      "own_seconds": 0.20894490000000002,
+      "cumulative_seconds": 18.9449162
+    },
+    {
+      "file": "link_context.py",
+      "function": "context_candidates",
+      "calls": 24198,
+      "own_seconds": 1.6404744,
+      "cumulative_seconds": 18.374539600000002
+    },
+    {
+      "file": "element.py",
+      "function": "select",
+      "calls": 346,
+      "own_seconds": 0.0023141000000000004,
+      "cumulative_seconds": 18.0244174
+    },
+    {
+      "file": "urls.py",
+      "function": "canonical_url",
+      "calls": 207230,
+      "own_seconds": 2.2013577,
+      "cumulative_seconds": 14.915776900000001
+    },
+    {
+      "file": "dates.py",
+      "function": "link_date",
+      "calls": 13115,
+      "own_seconds": 0.22313500000000003,
+      "cumulative_seconds": 10.9613209
+    },
+    {
+      "file": "keywords.py",
+      "function": "normalize",
+      "calls": 658511,
+      "own_seconds": 0.8071832000000001,
+      "cumulative_seconds": 2.9125809
+    },
+    {
+      "file": "cascade_model.py",
+      "function": "score_many",
+      "calls": 54,
+      "own_seconds": 0.0120747,
+      "cumulative_seconds": 1.5860793000000002
+    },
+    {
+      "file": "context_model.py",
+      "function": "score_many",
+      "calls": 108,
+      "own_seconds": 0.0355422,
+      "cumulative_seconds": 1.5682582
+    }
+  ]
+}

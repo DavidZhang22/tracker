@@ -36,6 +36,7 @@ Training uses frozen feature rows. Full page replay additionally needs the ignor
 - [Model improvement roadmap](docs/MODEL_ROADMAP.md)
 - [Neural cascade, native inference, and measured release results](reports/model-pipeline.md)
 - [Model review, expanded data, table features and inference optimization](reports/model-review.md)
+- [Scraping and model deployment performance profile](reports/pipeline-profile.md)
 - [Shared scan cooldown, redirect reuse, and cache profiles](reports/source-cache.md)
 - [Hydrated listings and JavaScript pagination](reports/javascript-pagination.md)
 - [General listing acquisition and source diversity evaluation](reports/acquisition-methodology.md)

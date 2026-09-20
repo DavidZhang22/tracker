@@ -14,6 +14,7 @@ from .asura import enrich_asura_dates
 from .context_model import classify_context
 from .dates import DATE_TEXT, evidence, link_date
 from .documents import unpack
+from .dom import first_parent, tags
 from .embedded_lists import extract as embedded_list_entries
 from .embedded_series import embedded_series
 from .entry_identity import entry_key
@@ -41,7 +42,7 @@ from .pagination import (
 from .record_context import RecordContext
 from .suggestions import observed_sources
 from .tables import anchor_label, table_context
-from .urls import DiscoveryError, canonical_url, content_key
+from .urls import DiscoveryError, canonical_url, canonical_url_cache, content_key
 
 SKIP = re.compile(
     r"(?:^|/)(?:login|sign-?up|register|privacy|terms|contact|about|search|tag|category|author|user|members|forum|reviews?|comments?|donate|shop|cart)(?:/|$)",
@@ -49,15 +50,24 @@ SKIP = re.compile(
 )
 
 
+PAGER_CLASS = re.compile(r"pag(?:ination|er)")
+TITLE_CLASS = re.compile(r"titleline|headline|entry-title")
+
+
 def has_dynamic_pagination(soup, source="", entries=()):
     locations, checked_regions = None, {}
-    for node in soup.select(
-        "button,[role=button],a:not([href]),a[href='#'],a[href='']"
-    ):
+    for node in tags(soup, None):
+        if not (
+            node.name == "button"
+            or node.get("role") == "button"
+            or node.name == "a"
+            and node.get("href") in (None, "#", "")
+        ):
+            continue
         if (
             node.has_attr("disabled")
             or node.get("aria-disabled") == "true"
-            or node.find_parent("form")
+            or first_parent(node, {"form"})
         ):
             continue
         if any(
@@ -408,7 +418,8 @@ def parse_page(text, source, selector="", include_path="", *, learned=None, trac
     soup = BeautifulSoup(text, "html.parser")
     del text
     try:
-        return _parse_html(soup, source, selector, include_path, learned, trace)
+        with canonical_url_cache():
+            return _parse_html(soup, source, selector, include_path, learned, trace)
     finally:
         if trace is None or trace.get("soup") is not soup:
             soup.clear(decompose=True)
@@ -461,7 +472,7 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
         if m:
             scan.expected_count = int(m[1].replace(",", ""))
     pages, feeds, raw = [], [], []
-    for link in soup.select("link[href]"):
+    for link in tags(soup, {"link"}, attribute="href"):
         u = candidate_url(link.get("href"), source)
         if not u:
             continue
@@ -472,7 +483,7 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
         ):
             feeds.append(u)
     try:
-        anchors = soup.select("a[href]")
+        anchors = list(tags(soup, {"a"}, attribute="href"))
         if selector:
             anchors = [
                 a
@@ -540,12 +551,12 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
     if bindings is not None:
         anchors = [a for a in anchors if bindings.get(id(a))]
     # Pagination is independent of a custom content selector.
-    for a in soup.select("a[href]"):
+    for a in tags(soup, {"a"}, attribute="href"):
         u = candidate_url(a.get("href"), source)
         if not u or urlsplit(u).hostname != urlsplit(source).hostname:
             continue
         label = a.get_text(" ", strip=True)
-        is_pager = bool(a.find_parent(class_=re.compile(r"pag(?:ination|er)")))
+        is_pager = bool(first_parent(a, class_pattern=PAGER_CLASS))
         if "next" in a.get("rel", []) or (
             is_pager
             and (
@@ -607,10 +618,9 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
             re.IGNORECASE,
         ):
             continue
-        container = a.find_parent(["tr", "article", "li"]) or a
+        container = first_parent(a, {"tr", "article", "li"}) or a
         primary = bool(
-            a.find_parent(["h2", "h3"])
-            or a.find_parent(class_=re.compile(r"titleline|headline|entry-title"))
+            first_parent(a, {"h2", "h3"}) or first_parent(a, class_pattern=TITLE_CLASS)
         )
         if not selector and kind == "website" and not (context_model and model_accepts):
             if id(container) not in record_cache:
@@ -655,8 +665,8 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
             not selector
             and (kind == "website" or not (context_model and model_accepts))
             and (
-                a.find_parent(["nav", "footer", "aside"])
-                or (a.find_parent("header") and not a.find_parent("article"))
+                first_parent(a, {"nav", "footer", "aside"})
+                or (first_parent(a, {"header"}) and not first_parent(a, {"article"}))
             )
         ):
             continue
@@ -698,8 +708,8 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
             or (table.get("job") and table.get("action"))
             or primary
             or kind != "website"
-            or a.find_parent("article")
-            or a.find_parent(["h2", "h3"])
+            or first_parent(a, {"article"})
+            or first_parent(a, {"h2", "h3"})
             or date
             or e.number is not None
             or re.search(
@@ -873,7 +883,9 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
         if definitions:
             scan.entries.extend(definitions)
             scan.methods.append("definition list")
-    listed = extract_list_entries(soup, source, selector, include_path)
+    listed = extract_list_entries(
+        soup, source, selector, include_path, page_context=record_context.page
+    )
     scan.entries = merge_entries(scan.entries)
     linked = {e.url: e for e in scan.entries if e.url}
     ordered_list = []

@@ -69,3 +69,30 @@ def test_masked_pooling_normalizes_vectors_and_respects_batch_limit():
         call.args[1]["input_ids"].shape[0] for call in model.session.run.call_args_list
     ] == [MAX_BATCH, 1]
     assert model.encode([]) == []
+
+
+def test_native_pooling_matches_reference_without_mutating_model_output():
+    rng = np.random.default_rng(19)
+    values = rng.normal(size=(8, 192, DIMENSIONS)).astype(np.float32)
+    masks = rng.integers(0, 2, size=(8, 192), dtype=np.int64)
+    expected = (values * masks[..., None]).sum(axis=1) / np.maximum(
+        masks.sum(axis=1, keepdims=True), 1
+    )
+    expected /= np.linalg.norm(expected, axis=1, keepdims=True)
+    original = values.copy()
+    model = stub_encoder(lambda size: values[:size])
+    model.tokenizer.encode_batch.side_effect = lambda texts: [
+        SimpleNamespace(ids=[1] * 192, attention_mask=mask.tolist(), type_ids=[0] * 192)
+        for mask in masks[: len(texts)]
+    ]
+    actual = model.encode(["Example"] * 8)
+    np.testing.assert_array_equal(actual, expected.astype(np.float32))
+    np.testing.assert_array_equal(values, original)
+    model.pooling = "cls"
+    actual = model.encode(["Example"] * 8)
+    np.testing.assert_allclose(
+        actual,
+        original[:, 0] / np.linalg.norm(original[:, 0], axis=1, keepdims=True),
+        atol=1e-7,
+    )
+    np.testing.assert_array_equal(values, original)

@@ -16,7 +16,7 @@ def privacy_details():
         "hosting": os.environ.get(
             "TRACKER_HOSTING_DESCRIPTION", "The site operator's hosting provider"
         ),
-        "updated": "2026-09-15",
+        "updated": "2026-09-19",
     }
 
 

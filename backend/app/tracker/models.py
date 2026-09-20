@@ -4,6 +4,11 @@ from datetime import UTC, datetime
 
 from dateutil import parser
 
+ISO_DATE = re.compile(
+    r"(?:19|20)\d{2}-\d{2}-\d{2}"
+    r"(?:[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d{1,6})?)?(?:Z|[+-]\d{2}:?\d{2})?)?"
+)
+
 
 def utcnow():
     return datetime.now(UTC).isoformat()
@@ -48,7 +53,15 @@ def date_value(value):
             str(value),
         ):
             return None
-        d = parser.parse(str(value), fuzzy=False)
+        text = str(value)
+        # The common ISO path is implemented in C; retain dateutil for the full
+        # range of human-readable source dates and for malformed ISO inputs.
+        try:
+            d = datetime.fromisoformat(text) if ISO_DATE.fullmatch(text) else None
+        except ValueError:
+            d = None
+        if d is None:
+            d = parser.parse(text, fuzzy=False)
         return (d if d.tzinfo else d.replace(tzinfo=UTC)).astimezone(UTC).isoformat()
     except (ValueError, TypeError, OverflowError):
         return None

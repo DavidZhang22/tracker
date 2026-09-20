@@ -4,8 +4,11 @@ import re
 from itertools import chain, islice
 from urllib.parse import parse_qs, urlsplit
 
+from .dom import first_parent
 from .limits import MAX_LINKS
 from .urls import DiscoveryError, canonical_url, content_key
+
+PAGER_CLASS = re.compile(r"pag(?:ing|ination|er)|page-numbers", re.I)
 
 POSITIONS = {
     "page",
@@ -156,9 +159,11 @@ def forward_pages(soup, source, fallback=(), *, same_path=False):
     ):
         name = (node.get("aria-label") or node.get_text(" ", strip=True)).strip()
         explicit = "next" in node.get("rel", ()) or bool(FORWARD.fullmatch(name))
-        pager = node.find_parent(
-            class_=re.compile(r"pag(?:ing|ination|er)|page-numbers", re.I)
-        )
+        # Most links are neither directional nor numbered pagination controls.
+        # Avoid walking their ancestors just to reject their labels afterward.
+        if not explicit and not re.fullmatch(r"\d+(?:\s*[-–]\s*\d+)?", name):
+            continue
+        pager = first_parent(node, class_pattern=PAGER_CLASS) if not explicit else None
         if not explicit and not (
             pager and re.fullmatch(r"\d+(?:\s*[-–]\s*\d+)?", name)
         ):

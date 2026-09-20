@@ -5,12 +5,11 @@ import { Link, useSearchParams } from "react-router-dom";
 import {
   CollectionIcon,
   StarIcon,
-  EyeOffIcon,
   PlusIcon,
   SearchIcon,
   ExternalLinkIcon,
-  ArrowRightIcon,
 } from "@heroicons/react/outline";
+import "../styles/library.css";
 import { api, patch, post, examples, checked, refreshLibrary } from "../api";
 import { usePreferences } from "../Contexts/Preferences";
 import { Notice, ScanNote } from "../Components/Notice";
@@ -160,6 +159,17 @@ export default function LibraryPage() {
     }),
     [libraryItems, active],
   );
+  const totals = useMemo(
+    () =>
+      active.reduce(
+        (sum, item) => ({
+          unread: sum.unread + item.unread_count,
+          new: sum.new + item.new_count,
+        }),
+        { unread: 0, new: 0 },
+      ),
+    [active],
+  );
   const { scores: searchScores, updating: searching } = useLibrarySearch(
     items,
     search,
@@ -207,7 +217,7 @@ export default function LibraryPage() {
   const visibleIds = useMemo(() => visible.map((i) => i.id), [visible]);
   return (
     <>
-      <div className="page-heading">
+      <div className="page-heading library-heading">
         <div>
           <h1>
             {trash ? "Trash" : "Library"}{" "}
@@ -217,6 +227,18 @@ export default function LibraryPage() {
                 : libraryItems.length}
             </span>
           </h1>
+          {!trash && (
+            <div className="library-totals" aria-label="Library link totals">
+              <button onClick={() => setParams({ filter: "unread" })}>
+                <strong>{totals.unread}</strong> unread{" "}
+                {totals.unread === 1 ? "link" : "links"}
+              </button>
+              <button onClick={() => setParams({ filter: "new" })}>
+                <strong>{totals.new}</strong> new{" "}
+                {totals.new === 1 ? "link" : "links"}
+              </button>
+            </div>
+          )}
         </div>
         <div className="actions">
           {!trash && (
@@ -240,31 +262,8 @@ export default function LibraryPage() {
       </div>
       <Notice error>{error}</Notice>
       <Notice>{message}</Notice>
-      {!trash && (
-        <div className="summary-strip">
-          <button onClick={() => setParams({ filter: "unread" })}>
-            <span className="summary-number">
-              {active.reduce((s, i) => s + i.unread_count, 0)}
-            </span>
-            <span>Unread</span>
-            <Icon as={ArrowRightIcon} />
-          </button>
-          <button onClick={() => setParams({ filter: "new" })}>
-            <span className="summary-number teal">
-              {active.reduce((s, i) => s + i.new_count, 0)}
-            </span>
-            <span>New</span>
-            <Icon as={ArrowRightIcon} />
-          </button>
-          <button onClick={() => setParams({ filter: "favorites" })}>
-            <span className="summary-number">{counts.favorites}</span>
-            <span>Favorites</span>
-            <Icon as={StarIcon} />
-          </button>
-        </div>
-      )}
       <div
-        className={`collection-panel ${selection.selecting ? "is-selecting" : ""}`}
+        className={`collection-panel library-panel ${selection.selecting ? "is-selecting" : ""}`}
       >
         <div className="tabs" aria-label="Library filters">
           {[
@@ -368,7 +367,6 @@ export default function LibraryPage() {
             <div className="list-heading">
               <span>ITEM</span>
               <span>PROGRESS</span>
-              <span>LAST CHECKED</span>
               <span />
             </div>
             {visible.map((i) => (
@@ -399,6 +397,17 @@ export default function LibraryPage() {
                           : new URL(i.url).hostname.replace(/^www\./, "")}
                       </span>
                       <span className="kind-label">{mediaLabel(i.kind)}</span>
+                      {i.ignored && (
+                        <button
+                          className="muted-label"
+                          aria-label={`Unmute ${i.title}`}
+                          title="Unmute"
+                          disabled={busy || searching}
+                          onClick={() => update(i.id, { ignored: false })}
+                        >
+                          Muted
+                        </button>
+                      )}
                       {i.new_count > 0 && (
                         <span className="badge">{i.new_count} new</span>
                       )}
@@ -442,20 +451,16 @@ export default function LibraryPage() {
                     max={Math.max(i.total_count - i.ignored_count, 1)}
                     aria-label={`Reading progress for ${i.title}`}
                   />
+                  <span className="last-checked">
+                    Checked {checked(i.last_checked_at)}
+                  </span>
                 </div>
-                <div className="last-checked">{checked(i.last_checked_at)}</div>
                 <div className="row-actions">
                   <IconButton
                     icon={StarIcon}
                     label={`${i.favorite ? "Unfavorite" : "Favorite"} ${i.title}`}
                     active={i.favorite}
                     onClick={() => update(i.id, { favorite: !i.favorite })}
-                  />
-                  <IconButton
-                    icon={EyeOffIcon}
-                    label={`${i.ignored ? "Unmute" : "Mute"} ${i.title}`}
-                    active={i.ignored}
-                    onClick={() => update(i.id, { ignored: !i.ignored })}
                   />
                   <ActionMenu
                     record={i}

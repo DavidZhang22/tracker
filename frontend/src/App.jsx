@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthBoundary } from "./Auth/Auth";
 import { PreferencesProvider } from "./Contexts/Preferences";
 import PrivacyPage from "./Pages/PrivacyPage";
+import RecoveryPage from "./Auth/RecoveryPage";
 import { Shell } from "./Components/Shell";
 import Footer from "./Components/Footer";
 export default function App() {
@@ -14,6 +15,14 @@ export default function App() {
         <Routes>
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<PrivacyPage terms />} />
+          <Route
+            path="/account/recover"
+            element={<RecoveryPage key="recover" />}
+          />
+          <Route
+            path="/account/verify-email"
+            element={<RecoveryPage key="verify" verify />}
+          />
           <Route
             path="*"
             element={

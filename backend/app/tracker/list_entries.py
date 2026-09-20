@@ -5,6 +5,7 @@ from collections import Counter
 from itertools import islice
 
 from .dates import DATE_TEXT, node_dates
+from .dom import first_parent, tags
 from .entry_identity import normalized, record_id
 from .limits import MAX_LINKS
 from .models import Entry, sequence_value
@@ -30,6 +31,20 @@ LABEL = (
 )
 ROWS = 'li,tr,article,[role="listitem"],[data-chapter-id],[data-episode-id]'
 MAX_CANDIDATES = MAX_LINKS * 4
+LABEL_CLASSES = {"chapter-title", "episode-title", "entry-title", "title"}
+
+
+def label_node(row):
+    return next(
+        (
+            node
+            for node in tags(row, None)
+            if node.name in {"h2", "h3", "h4", "h5"}
+            or node.get("itemprop") == "name"
+            or LABEL_CLASSES.intersection(node.get("class", ()))
+        ),
+        None,
+    )
 
 
 def safe_target(value, source):
@@ -46,11 +61,11 @@ def safe_target(value, source):
 
 
 def label_text(row):
-    node = row.select_one(LABEL) or row
+    node = label_node(row) or row
     text = " ".join(
         value.strip()
         for value in islice(node.strings, 100)
-        if not value.find_parent(["time", "relative-time"])
+        if not first_parent(value, {"time", "relative-time"})
     )
     if not 2 <= len(text) <= 1000:
         return ""
@@ -89,7 +104,19 @@ def candidates(soup, selector):
             if len(rows) >= MAX_CANDIDATES:
                 break
         return rows[:MAX_CANDIDATES]
-    rows = soup.select(ROWS)[:MAX_CANDIDATES]
+    rows = list(
+        islice(
+            (
+                node
+                for node in tags(soup, None)
+                if node.name in {"li", "tr", "article"}
+                or node.get("role") == "listitem"
+                or node.has_attr("data-chapter-id")
+                or node.has_attr("data-episode-id")
+            ),
+            MAX_CANDIDATES,
+        )
+    )
     # Some JavaScript frontends use divs for every row, even in their rendered DOM.
     rows.extend(
         node
@@ -99,7 +126,9 @@ def candidates(soup, selector):
     return rows[:MAX_CANDIDATES]
 
 
-def extract_list_entries(soup, source, selector="", include_path=""):
+def extract_list_entries(
+    soup, source, selector="", include_path="", *, page_context=None
+):
     """Explicit selectors may choose arbitrary records; automatic lists need evidence.
 
     A missing URL remains empty. Fragment/JavaScript handlers are never turned into
@@ -160,9 +189,13 @@ def extract_list_entries(soup, source, selector="", include_path=""):
                 COLLECTION.search(previous.get_text(" ", strip=True))
             )
         number = sequence_value(title)
-        date = node_dates(row)
+        date = (
+            page_context.node_dates(row)
+            if page_context is not None
+            else node_dates(row)
+        )
         numbered = bool(NUMBERED.match(title))
-        article = row.name == "article" and row.select_one(LABEL) and date
+        article = row.name == "article" and label_node(row) and date
         if not selector and not (semantic or numbered or article):
             continue
         anchor_nodes = [row] if row.name == "a" else row.find_all("a", limit=20)

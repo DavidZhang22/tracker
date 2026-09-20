@@ -64,19 +64,24 @@ def terms(value):
     return result
 
 
+def _language_aliases():
+    aliases = {}
+    for code, name in LANGUAGES.items():
+        words = {normalize(code), normalize(name)}
+        for family in ("spanish", "portuguese", "chinese"):
+            if normalize(name).startswith(family + " "):
+                words.add(family)
+        for word in words:
+            aliases.setdefault(word, []).append(code)
+    return aliases
+
+
+_LANGUAGE_CODES = _language_aliases()
+
+
 @lru_cache(maxsize=256)
 def language_codes(keyword):
-    word = normalize(keyword)
-    return [
-        code
-        for code, name in LANGUAGES.items()
-        if word == normalize(code)
-        or word == normalize(name)
-        or (
-            word in {"spanish", "portuguese", "chinese"}
-            and normalize(name).startswith(word + " ")
-        )
-    ]
+    return list(_LANGUAGE_CODES.get(normalize(keyword), ()))
 
 
 def language_text(value):

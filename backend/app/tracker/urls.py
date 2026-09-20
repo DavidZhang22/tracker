@@ -4,6 +4,7 @@ import ipaddress
 import re
 import socket
 import time
+from contextlib import contextmanager
 from contextvars import ContextVar
 from dataclasses import dataclass
 from email.utils import parsedate_to_datetime
@@ -41,6 +42,17 @@ class RequestBudget:
 
 
 request_budget = ContextVar("request_budget", default=None)
+_url_cache = ContextVar("canonical_url_cache", default=None)
+
+
+@contextmanager
+def canonical_url_cache():
+    """Memoize only pure URL normalization during one synchronous page analysis."""
+    token = _url_cache.set([{}, 0])
+    try:
+        yield
+    finally:
+        _url_cache.reset(token)
 
 
 def response_key(key):
@@ -84,6 +96,26 @@ def content_key(url):
 
 
 def canonical_url(value, base="", preserve_slash=False):
+    cache = _url_cache.get()
+    if cache is None or not (
+        isinstance(value, str)
+        and len(value) <= 4096
+        and isinstance(base, str)
+        and isinstance(preserve_slash, bool)
+    ):
+        return _canonical_url(value, base, preserve_slash)
+    key = value, base, preserve_slash
+    if key in cache[0]:
+        return cache[0][key]
+    result = _canonical_url(value, base, preserve_slash)
+    size = len(value) + len(base) + len(result)
+    if len(cache[0]) < 4096 and cache[1] + size <= 2_000_000:
+        cache[0][key] = result
+        cache[1] += size
+    return result
+
+
+def _canonical_url(value, base="", preserve_slash=False):
     if not isinstance(value, str) or not value.strip():
         raise DiscoveryError("Enter a public http or https URL.")
     raw = value.strip()

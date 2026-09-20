@@ -12,7 +12,7 @@ def tags(node, names, *, attribute=None, limit=None):
         child
         for child in node.descendants
         if isinstance(child, Tag)
-        and child.name in names
+        and (names is None or child.name in names)
         and (attribute is None or child.get(attribute) is not None)
     )
     return islice(matches, limit) if limit is not None else matches
@@ -20,3 +20,18 @@ def tags(node, names, *, attribute=None, limit=None):
 
 def first_tag(node, names, *, attribute=None):
     return next(tags(node, names, attribute=attribute), None)
+
+
+def first_parent(node, names=None, *, class_pattern=None):
+    """Nearest matching ancestor without constructing a SoupStrainer per link."""
+    for parent in node.parents:
+        if names is not None and parent.name not in names:
+            continue
+        if class_pattern is not None:
+            classes = parent.get("class", [])
+            if not any(class_pattern.search(value) for value in classes) and not (
+                len(classes) > 1 and class_pattern.search(" ".join(classes))
+            ):
+                continue
+        return parent
+    return None

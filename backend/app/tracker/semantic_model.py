@@ -33,7 +33,9 @@ class Encoder:
         )[name]
         root = Path(root or Path(__file__).resolve().parents[2] / "models" / name)
         model = root / "model.onnx"
-        if hashlib.sha256(model.read_bytes()).hexdigest() != manifest["sha256"]:
+        with model.open("rb") as model_file:
+            checksum = hashlib.file_digest(model_file, "sha256").hexdigest()
+        if checksum != manifest["sha256"]:
             raise ValueError("Encoder checksum mismatch")
         data = (root / "tokenizer.json").read_bytes()
         if (
@@ -102,11 +104,14 @@ class Encoder:
                     raise ValueError("Invalid encoder output dimensions")
                 if not np.isfinite(output).all():
                     raise ValueError("Invalid encoder output values")
-                mask = arrays["attention_mask"][..., None]
+                mask = arrays["attention_mask"]
+                # NumPy's native reduction avoids a batch × tokens × dimensions
+                # float64 multiplication buffer while preserving accumulation precision.
                 pooled = (
-                    output[:, 0]
+                    output[:, 0].copy()
                     if self.pooling == "cls"
-                    else (output * mask).sum(axis=1) / np.maximum(mask.sum(axis=1), 1)
+                    else np.einsum("bsd,bs->bd", output, mask, dtype=np.float64)
+                    / np.maximum(mask.sum(axis=1, keepdims=True), 1)
                 )
                 norms = np.linalg.norm(pooled, axis=1, keepdims=True)
                 if (

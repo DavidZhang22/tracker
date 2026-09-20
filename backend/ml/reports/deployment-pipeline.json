@@ -1,0 +1,109 @@
+{
+  "method": "Offline replay of saved 14-source library; simulated 50ms source latency; normal host pacing; no external network; isolated 1GiB, 2CPU containers. Browser fallback uses captured failure sequences, not real browser timing. Stage durations overlap; do not sum them for wall time.",
+  "entries": 2597,
+  "exact_entries_and_request_counts": true,
+  "before": {
+    "runs": [
+      {
+        "mode": "cold",
+        "seconds": 27.381064653978683,
+        "requests": 25,
+        "items": 14
+      },
+      {
+        "mode": "warm",
+        "seconds": 0.43639986705966294,
+        "requests": 0,
+        "items": 14
+      }
+    ],
+    "peak_mib": 299.765625,
+    "memory_events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\n",
+    "stages": {
+      "fetch_including_pacing": {
+        "calls": 18,
+        "sum_s": 76.8439,
+        "max_s": 14.6372,
+        "median_s": 1.9875
+      },
+      "analysis_including_queue": {
+        "calls": 13,
+        "sum_s": 13.1931,
+        "max_s": 2.2725,
+        "median_s": 1.2329
+      },
+      "merge": {
+        "calls": 28,
+        "sum_s": 1.3653,
+        "max_s": 0.1911,
+        "median_s": 0.0336
+      },
+      "semantic_enrichment": {
+        "calls": 28,
+        "sum_s": 0.0519,
+        "max_s": 0.0051,
+        "median_s": 0.0015
+      },
+      "item_read": {
+        "calls": 28,
+        "sum_s": 0.6811,
+        "max_s": 0.0518,
+        "median_s": 0.0229
+      }
+    },
+    "analysis_cpu_s": 13.059108478000002,
+    "max_queue_s": 6.612972356379032e-06
+  },
+  "after": {
+    "runs": [
+      {
+        "mode": "cold",
+        "seconds": 27.11288523802068,
+        "requests": 25,
+        "items": 14
+      },
+      {
+        "mode": "warm",
+        "seconds": 0.47924211993813515,
+        "requests": 0,
+        "items": 14
+      }
+    ],
+    "peak_mib": 296.05078125,
+    "memory_events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\n",
+    "stages": {
+      "fetch_including_pacing": {
+        "calls": 18,
+        "sum_s": 79.9099,
+        "max_s": 15.3949,
+        "median_s": 1.5622
+      },
+      "analysis_including_queue": {
+        "calls": 13,
+        "sum_s": 10.905,
+        "max_s": 1.712,
+        "median_s": 0.9277
+      },
+      "merge": {
+        "calls": 28,
+        "sum_s": 1.5049,
+        "max_s": 0.4507,
+        "median_s": 0.0195
+      },
+      "semantic_enrichment": {
+        "calls": 28,
+        "sum_s": 0.051,
+        "max_s": 0.0065,
+        "median_s": 0.0013
+      },
+      "item_read": {
+        "calls": 28,
+        "sum_s": 0.6625,
+        "max_s": 0.0621,
+        "median_s": 0.0197
+      }
+    },
+    "analysis_cpu_s": 9.853108590000001,
+    "max_queue_s": 0.609195512952283
+  }
+}

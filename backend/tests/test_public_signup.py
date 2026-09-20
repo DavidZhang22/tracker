@@ -28,6 +28,7 @@ def test_public_signup_needs_no_invite_and_keeps_libraries_private(app):
     alice, bob = client(app), client(app)
     assert alice.get("/api/auth/status").json() == {
         "required": True,
+        "recovery_available": False,
         "registration": True,
         "invite_required": False,
         "user": None,

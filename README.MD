@@ -13,7 +13,7 @@ Track blogs, chapters, videos, game updates, job listings and other public sourc
 - Local semantic library search with typo tolerance, and editable descriptions extracted from scanned source text.
 - Lightweight refreshes with a full model scan available when a source changes.
 - Suggestions ranked locally using existing source metadata (currently hidden in the interface).
-- Password-protected accounts, data export, session revocation and account deletion.
+- Password-protected accounts, optional verified recovery emails, data export, session revocation and account deletion.
 - File and pasted-text imports with link context, date detection, preview and updates to one item.
 
 ## Import files or text
@@ -108,6 +108,6 @@ npm run build
 
 The application uses React, FastAPI and SQLite behind Caddy HTTPS. Docker Compose runs the app and a separate network-isolated browser worker on a Linux VM. Keep one application worker: shared scan pacing and local storage target a single VM, not multiple replicas.
 
-[Deployment instructions](deploy/README.md) cover public, invited and closed registration. [Azure operations](deploy/AZURE.md) cover the current server, backups and migration. [Privacy and security operations](deploy/PRIVACY_SECURITY.md) document data requests and restoration safeguards.
+[Deployment instructions](deploy/README.md) cover public, invited and closed registration. [Azure operations](deploy/AZURE.md) cover the current server, backups and migration. [Privacy and security operations](deploy/PRIVACY_SECURITY.md) document data requests and restoration safeguards. [Email recovery setup](deploy/EMAIL_RECOVERY.md) explains how to enable optional SMTP delivery; it remains disabled until configured.
 
 The existing Compose project, session cookies and backup service retain their internal `catchup` names to preserve installed volumes and active sessions. All visible branding is Trackify.

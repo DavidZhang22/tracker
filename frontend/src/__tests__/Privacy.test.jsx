@@ -23,7 +23,7 @@ test("privacy notice is available without account context and shows the operator
     await screen.findByRole("link", { name: "privacy@example.com" }),
   ).toHaveAttribute("href", "mailto:privacy@example.com");
   expect(
-    screen.getByRole("heading", { name: "Your controls and rights" }),
+    screen.getByRole("heading", { name: "Your choices" }),
   ).toBeInTheDocument();
   expect(post).not.toHaveBeenCalled();
 });

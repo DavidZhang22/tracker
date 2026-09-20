@@ -65,6 +65,7 @@ def test_all_private_routes_require_session_before_any_scan(app):
     assert c.get("/api/health").status_code == 200
     assert c.get("/api/auth/status").json() == {
         "required": True,
+        "recovery_available": False,
         "registration": True,
         "invite_required": True,
         "user": None,

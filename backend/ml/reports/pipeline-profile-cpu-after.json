@@ -1,0 +1,111 @@
+{
+  "label": "after",
+  "kind": "cProfile parser-only; attribution only, not wall-clock speed benchmark",
+  "functions": [
+    {
+      "file": "parser.py",
+      "function": "parse_page",
+      "calls": 56,
+      "own_seconds": 0.1072487,
+      "cumulative_seconds": 88.105074
+    },
+    {
+      "file": "record_context.py",
+      "function": "text",
+      "calls": 13115,
+      "own_seconds": 0.3195103,
+      "cumulative_seconds": 19.0828895
+    },
+    {
+      "file": "context_model.py",
+      "function": "classify_context",
+      "calls": 54,
+      "own_seconds": 0.1204762,
+      "cumulative_seconds": 17.449922700000002
+    },
+    {
+      "file": "link_context.py",
+      "function": "context_candidates",
+      "calls": 24198,
+      "own_seconds": 1.4297254000000001,
+      "cumulative_seconds": 14.7792825
+    },
+    {
+      "file": "element.py",
+      "function": "_find_all",
+      "calls": 123369,
+      "own_seconds": 0.5989648000000001,
+      "cumulative_seconds": 11.401614400000001
+    },
+    {
+      "file": "dates.py",
+      "function": "link_date",
+      "calls": 13115,
+      "own_seconds": 0.1698356,
+      "cumulative_seconds": 8.7013491
+    },
+    {
+      "file": "css_match.py",
+      "function": "select",
+      "calls": 3007,
+      "own_seconds": 0.006443900000000001,
+      "cumulative_seconds": 6.121936300000001
+    },
+    {
+      "file": "css_match.py",
+      "function": "select",
+      "calls": 6216,
+      "own_seconds": 0.11783750000000001,
+      "cumulative_seconds": 6.0384766
+    },
+    {
+      "file": "urls.py",
+      "function": "canonical_url",
+      "calls": 207230,
+      "own_seconds": 0.43296300000000004,
+      "cumulative_seconds": 4.553673600000001
+    },
+    {
+      "file": "list_entries.py",
+      "function": "extract_list_entries",
+      "calls": 56,
+      "own_seconds": 0.14855010000000002,
+      "cumulative_seconds": 4.313621700000001
+    },
+    {
+      "file": "element.py",
+      "function": "select",
+      "calls": 86,
+      "own_seconds": 0.0005794,
+      "cumulative_seconds": 4.141519000000001
+    },
+    {
+      "file": "urls.py",
+      "function": "_canonical_url",
+      "calls": 65375,
+      "own_seconds": 0.5983096,
+      "cumulative_seconds": 3.9600462000000003
+    },
+    {
+      "file": "cascade_model.py",
+      "function": "score_many",
+      "calls": 54,
+      "own_seconds": 0.0105427,
+      "cumulative_seconds": 1.423362
+    },
+    {
+      "file": "context_model.py",
+      "function": "score_many",
+      "calls": 108,
+      "own_seconds": 0.0372837,
+      "cumulative_seconds": 1.4078099000000002
+    },
+    {
+      "file": "keywords.py",
+      "function": "normalize",
+      "calls": 8130,
+      "own_seconds": 0.0182099,
+      "cumulative_seconds": 0.0717586
+    }
+  ]
+}

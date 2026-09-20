@@ -89,6 +89,19 @@ class Accounts:
                   token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
                   expires REAL NOT NULL, created REAL NOT NULL);
                 CREATE INDEX IF NOT EXISTS sessions_user ON sessions(user_id);
+                CREATE TABLE IF NOT EXISTS recovery_emails (
+                  user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+                  email TEXT COLLATE NOCASE UNIQUE NOT NULL, verified REAL NOT NULL);
+                CREATE TABLE IF NOT EXISTS recovery_tokens (
+                  token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                  purpose TEXT NOT NULL, email TEXT NOT NULL, expires REAL NOT NULL, created REAL NOT NULL);
+                CREATE INDEX IF NOT EXISTS recovery_tokens_user ON recovery_tokens(user_id);
+                CREATE TABLE IF NOT EXISTS recovery_sessions (
+                  token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                  expires REAL NOT NULL, created REAL NOT NULL);
+                CREATE INDEX IF NOT EXISTS recovery_sessions_user ON recovery_sessions(user_id);
+                CREATE TABLE IF NOT EXISTS recovery_limits (key TEXT NOT NULL, created REAL NOT NULL);
+                CREATE INDEX IF NOT EXISTS recovery_limits_key_created ON recovery_limits(key,created);
                 CREATE TABLE IF NOT EXISTS attempts (key TEXT NOT NULL, created REAL NOT NULL);
                 CREATE INDEX IF NOT EXISTS attempts_key_created ON attempts(key,created);
                 CREATE TABLE IF NOT EXISTS registrations (address_hash TEXT NOT NULL, created REAL NOT NULL);
@@ -274,7 +287,8 @@ class Accounts:
             )
             if not changed.rowcount:
                 raise HTTPException(401, "Your credentials changed. Sign in again.")
-            db.execute("DELETE FROM sessions WHERE user_id=?", (uid,))
+            for table in ("sessions", "recovery_tokens", "recovery_sessions"):
+                db.execute(f"DELETE FROM {table} WHERE user_id=?", (uid,))
         return encoded
 
     def change_password(self, user, current_password, new_password):
@@ -305,10 +319,16 @@ class Accounts:
                     del self.stores[next(iter(self.stores))]
             return self.stores[user["id"]]
 
-    def delete(self, user):
+    def delete(self, user, *, expected_hash=None):
         # Commit revocation before disk cleanup. A crash leaves a durable retry job.
         with self.lock, self.connection() as db:
             db.execute("BEGIN IMMEDIATE")
+            if expected_hash is not None:
+                row = db.execute(
+                    "SELECT password_hash FROM users WHERE id=?", (user["id"],)
+                ).fetchone()
+                if not row or row[0] != expected_hash:
+                    raise HTTPException(401, "Your credentials changed. Sign in again.")
             db.execute(
                 "INSERT OR IGNORE INTO erasures(user_id,legacy_library,requested) VALUES (?,?,?)",
                 (user["id"], user["legacy_library"], time.time()),
@@ -357,6 +377,11 @@ class Accounts:
                 "DELETE FROM registrations WHERE created<=?", (time.time() - 3600,)
             )
             db.execute("DELETE FROM sessions WHERE expires<?", (time.time(),))
+            db.execute("DELETE FROM recovery_tokens WHERE expires<=?", (time.time(),))
+            db.execute("DELETE FROM recovery_sessions WHERE expires<=?", (time.time(),))
+            db.execute(
+                "DELETE FROM recovery_limits WHERE created<?", (time.time() - 3600,)
+            )
             cache_pending = db.execute(
                 "SELECT 1 FROM erasures WHERE cache_cleared=0 LIMIT 1"
             ).fetchone()
@@ -401,10 +426,10 @@ def reauthenticate(request, password):
     auth.throttle(
         request.client.host if request.client else "unknown", user["username"]
     )
-    verified = auth.login(user["username"], password)
+    verified = auth._credentials(user["username"], password)
     if verified["id"] != user["id"]:
         raise HTTPException(401, "Sign in to continue.")
-    return auth, user
+    return auth, verified
 
 
 @router.post("/export")
@@ -419,10 +444,18 @@ def export_account(body: ConfirmAccount, request: Request):
             "SELECT created FROM users WHERE id=?", (user["id"],)
         ).fetchone()[0]
 
+        email = db.execute(
+            "SELECT email FROM recovery_emails WHERE user_id=?", (user["id"],)
+        ).fetchone()
+
     def export():
         started = time.monotonic()
         yield '{"format_version":1,"account":' + json.dumps(
-            {"username": user["username"], "created": created}
+            {
+                "username": user["username"],
+                "created": created,
+                "recovery_email": email[0] if email else None,
+            }
         )
         with store.connection() as db:
             db.execute("BEGIN")
@@ -462,7 +495,7 @@ def export_account(body: ConfirmAccount, request: Request):
 @router.post("/delete")
 def delete_account(body: DeleteAccount, request: Request, response: Response):
     auth, user = reauthenticate(request, body.current_password)
-    complete = auth.delete(user)
+    complete = auth.delete(user, expected_hash=user["password_hash"])
     cache = (
         getattr(request.app.state.discoverer.fetcher, "cache", None)
         if hasattr(request.app.state.discoverer, "fetcher")
@@ -496,7 +529,14 @@ def delete_account(body: DeleteAccount, request: Request, response: Response):
 def logout_all(body: ConfirmAccount, request: Request, response: Response):
     auth, user = reauthenticate(request, body.current_password)
     with auth.connection() as db:
-        db.execute("DELETE FROM sessions WHERE user_id=?", (user["id"],))
+        db.execute("BEGIN IMMEDIATE")
+        row = db.execute(
+            "SELECT password_hash FROM users WHERE id=?", (user["id"],)
+        ).fetchone()
+        if not row or row[0] != user["password_hash"]:
+            raise HTTPException(401, "Your credentials changed. Sign in again.")
+        for table in ("sessions", "recovery_tokens", "recovery_sessions"):
+            db.execute(f"DELETE FROM {table} WHERE user_id=?", (user["id"],))
     response.delete_cookie(
         cookie_name(request),
         path="/",
@@ -539,6 +579,9 @@ def status(request: Request, response: Response):
     auth = request.app.state.accounts
     return {
         "required": bool(auth),
+        "recovery_available": bool(
+            auth and request.app.state.recovery.mailer.available
+        ),
         "registration": bool(auth and (auth.public_signup or auth.signup_code)),
         "invite_required": bool(auth and auth.signup_code and not auth.public_signup),
         "user": public_user(auth.user(request.cookies.get(cookie_name(request))))
