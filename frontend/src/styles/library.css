@@ -134,7 +134,7 @@
 .continue-link {
   font-weight: 600;
 }
-.library-limit {
-  color: var(--muted);
-  font-size: 0.75rem;
+
+.library-panel .panel-footer {
+  justify-content: flex-end;
 }

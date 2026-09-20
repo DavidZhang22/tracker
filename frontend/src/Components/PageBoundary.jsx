@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { useLocation } from "react-router-dom";
 import "../styles/loading.css";
+import PublicLayout from "./PublicLayout";
 
 class PageErrorBoundary extends Component {
   state = { failed: false };
@@ -17,7 +18,7 @@ class PageErrorBoundary extends Component {
   render() {
     if (!this.state.failed) return this.props.children;
     const Container = this.props.embedded ? "section" : "main";
-    return (
+    const message = (
       <Container
         className="page-load-error"
         id={this.props.embedded ? undefined : "main"}
@@ -30,6 +31,11 @@ class PageErrorBoundary extends Component {
           Reload page
         </button>
       </Container>
+    );
+    return this.props.embedded ? (
+      message
+    ) : (
+      <PublicLayout>{message}</PublicLayout>
     );
   }
 }

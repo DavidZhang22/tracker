@@ -66,6 +66,10 @@ test("document startup keeps a responsive shell while auth and settings resolve"
     container.querySelector(".startup-shell.app-shell"),
   ).toBeInTheDocument();
   expect(container.querySelector(".auth-page")).toBeNull();
+  expect(screen.getAllByRole("contentinfo")).toHaveLength(1);
+  expect(screen.getByRole("contentinfo").parentElement).toHaveClass(
+    "workspace",
+  );
   await act(async () =>
     authenticate({ required: true, user: { username: "david" } }),
   );
@@ -74,6 +78,10 @@ test("document startup keeps a responsive shell while auth and settings resolve"
   await act(async () => preferences(defaults));
   await screen.findByText("A series");
   expect(container.querySelector(".startup-shell")).toBeNull();
+  expect(screen.getAllByRole("contentinfo")).toHaveLength(1);
+  expect(screen.getByRole("contentinfo").parentElement).toHaveClass(
+    "workspace",
+  );
 });
 
 test("background Library refresh keeps mounted rows and does not reload auth or preferences", async () => {

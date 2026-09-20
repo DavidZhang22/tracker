@@ -1,10 +1,16 @@
 import { lazy, Suspense, useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Outlet,
+  useLocation,
+} from "react-router-dom";
 import { AuthBoundary } from "./Auth/Auth";
 import { PreferencesProvider } from "./Contexts/Preferences";
 import { StartupDataProvider } from "./Contexts/StartupData";
 import { preloadPage } from "./pageLoaders";
-import Footer from "./Components/Footer";
+import PublicLayout from "./Components/PublicLayout";
 import AppLoading from "./Components/AppLoading";
 import PageBoundary from "./Components/PageBoundary";
 
@@ -40,16 +46,32 @@ export default function App() {
         <PageBoundary>
           <Suspense fallback={<AppLoading />}>
             <Routes>
-              <Route path="/privacy" element={<PrivacyPage />} />
-              <Route path="/terms" element={<PrivacyPage terms />} />
               <Route
-                path="/account/recover"
-                element={<RecoveryPage key="recover" />}
-              />
+                element={
+                  <PublicLayout>
+                    <Outlet />
+                  </PublicLayout>
+                }
+              >
+                <Route path="/privacy" element={<PrivacyPage />} />
+                <Route path="/terms" element={<PrivacyPage terms />} />
+              </Route>
               <Route
-                path="/account/verify-email"
-                element={<RecoveryPage key="verify" verify />}
-              />
+                element={
+                  <PublicLayout compact>
+                    <Outlet />
+                  </PublicLayout>
+                }
+              >
+                <Route
+                  path="/account/recover"
+                  element={<RecoveryPage key="recover" />}
+                />
+                <Route
+                  path="/account/verify-email"
+                  element={<RecoveryPage key="verify" verify />}
+                />
+              </Route>
               <Route
                 path="*"
                 element={
@@ -61,7 +83,6 @@ export default function App() {
             </Routes>
           </Suspense>
         </PageBoundary>
-        <Footer />
       </div>
     </BrowserRouter>
   );

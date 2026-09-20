@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { api, post } from "../api";
 import { Notice } from "../Components/Notice";
 import AppLoading from "../Components/AppLoading";
+import PublicLayout from "../Components/PublicLayout";
 
 const AuthContext = createContext({ required: false, user: null });
 export const useAuth = () => useContext(AuthContext);
@@ -45,12 +46,14 @@ export function AuthBoundary({ children }) {
     );
   if (status.required && !status.user)
     return (
-      <SignIn
-        notice={sessionNotice}
-        registration={status.registration}
-        inviteRequired={status.invite_required ?? true}
-        onSignedIn={(user) => setStatus({ ...status, user })}
-      />
+      <PublicLayout compact>
+        <SignIn
+          notice={sessionNotice}
+          registration={status.registration}
+          inviteRequired={status.invite_required ?? true}
+          onSignedIn={(user) => setStatus({ ...status, user })}
+        />
+      </PublicLayout>
     );
   return (
     <AuthContext.Provider

@@ -335,9 +335,11 @@ test("a saved deep default still offers an explicit lightweight override", async
   saved.refresh_mode = "deep";
   const refresh = vi.fn();
   render(
-    <PreferencesProvider>
-      <RefreshControl label="Refresh" onRefresh={refresh} />
-    </PreferencesProvider>,
+    <MemoryRouter>
+      <PreferencesProvider>
+        <RefreshControl label="Refresh" onRefresh={refresh} />
+      </PreferencesProvider>
+    </MemoryRouter>,
   );
   await click(await screen.findByRole("button", { name: "Refresh" }));
   expect(refresh).toHaveBeenLastCalledWith(true);

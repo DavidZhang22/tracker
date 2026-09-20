@@ -120,21 +120,34 @@ test("footer keeps privacy, terms, contact and the library route available", () 
   );
 });
 
-test("Library shows the account item limit once without Saved views", async () => {
-  api.mockResolvedValue([item]);
+test("Library shows its count and limit in the heading while Trash keeps its own count", async () => {
+  api.mockImplementation(async (path) =>
+    path === "/items?trash=true"
+      ? [{ ...item, id: "deleted", title: "Deleted series", deleted: true }]
+      : [item],
+  );
   render(
     <MemoryRouter>
       <LibraryPage />
     </MemoryRouter>,
   );
+  expect(
+    screen.getByRole("heading", { name: "Library", exact: true }),
+  ).toBeInTheDocument();
   await screen.findByText("A series");
   expect(
-    screen.getAllByText("Up to 500 items per account, including Trash."),
-  ).toHaveLength(1);
+    screen.getByRole("heading", { name: "Library 1/500", exact: true }),
+  ).toBeInTheDocument();
+  expect(screen.getAllByText("1/500")).toHaveLength(1);
+  expect(
+    screen.queryByText("Up to 500 items per account, including Trash."),
+  ).not.toBeInTheDocument();
   expect(screen.queryByText("Saved views")).not.toBeInTheDocument();
   expect(api).not.toHaveBeenCalledWith("/views");
   fireEvent.click(screen.getByRole("button", { name: "Trash", exact: true }));
+  await screen.findByText("Deleted series");
   expect(
-    screen.getAllByText("Up to 500 items per account, including Trash."),
-  ).toHaveLength(1);
+    screen.getByRole("heading", { name: "Trash 1", exact: true }),
+  ).toBeInTheDocument();
+  expect(screen.queryByText("1/500")).not.toBeInTheDocument();
 });

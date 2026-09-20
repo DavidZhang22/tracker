@@ -244,11 +244,13 @@ export default function LibraryPage() {
         <div>
           <h1>
             {trash ? "Trash" : "Library"}{" "}
-            <span className="heading-count">
-              {trash
-                ? items.filter((i) => i.deleted).length
-                : libraryItems.length}
-            </span>
+            {!loading && (
+              <span className="heading-count">
+                {trash
+                  ? items.filter((i) => i.deleted).length
+                  : `${libraryItems.length}/500`}
+              </span>
+            )}
           </h1>
           {!trash && (
             <div className="library-totals" aria-label="Library link totals">
@@ -534,9 +536,6 @@ export default function LibraryPage() {
           </div>
         )}
         <div className="panel-footer">
-          <span className="library-limit">
-            Up to 500 items per account, including Trash.
-          </span>
           <span role="status">
             {searching
               ? "Searching…"

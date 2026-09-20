@@ -1,56 +1,78 @@
-.site-footer.page-footer {
-  display: block;
-  padding: 0 42px;
-  border: 0;
-  background: var(--canvas);
-  color: var(--muted);
+.workspace,
+.public-layout {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
-.page-footer .footer-content {
-  max-width: 1416px;
+.workspace > main {
+  width: 100%;
+  flex: 1;
   margin: 0 auto;
-  padding: 14px 0;
+}
+.public-layout {
+  --page-width: 760px;
+  --page-gutter: 20px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+}
+.public-layout > main {
+  width: 100%;
+  flex: 1;
+}
+.public-layout--compact {
+  --page-gutter: 18px;
+  --page-width: calc(420px + 2 * var(--page-gutter));
+}
+.public-layout > .auth-page {
+  min-height: 0;
+  max-width: none;
+  margin: 0;
+}
+.site-footer {
+  flex-shrink: 0;
+  padding-inline: max(var(--page-gutter), env(safe-area-inset-left))
+    max(var(--page-gutter), env(safe-area-inset-right));
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+.footer-content {
+  max-width: calc(var(--page-width) - 2 * var(--page-gutter));
+  margin: 0 auto;
+  padding: 12px 0 max(12px, env(safe-area-inset-bottom));
   border-top: 1px solid var(--line);
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 8px 24px;
-  font-size: 0.75rem;
-}
-.page-footer .footer-brand {
-  color: var(--ink);
-  font-weight: 600;
-}
-.page-footer .footer-content a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 32px;
-}
-.page-footer .footer-content nav {
   gap: 4px 24px;
 }
-.site-frame:has(.app-shell) > .page-footer {
-  padding-left: 266px;
+.footer-brand {
+  font-weight: 600;
 }
-@media (max-width: 1150px) {
-  .site-frame:has(.app-shell) > .page-footer {
-    padding-left: 217px;
-    padding-right: 25px;
-  }
+.site-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  line-height: 1.5;
+}
+.site-footer nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+}
+.site-footer a:hover,
+.site-footer a[aria-current] {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 @media (max-width: 800px), (max-width: 1000px) and (pointer: coarse) {
-  .site-footer.page-footer,
-  .site-frame:has(.app-shell) > .page-footer {
-    padding: 0 max(var(--page-gutter, 16px), env(safe-area-inset-right)) 0
-      max(var(--page-gutter, 16px), env(safe-area-inset-left));
+  .public-layout--compact {
+    --page-gutter: 16px;
   }
-  .page-footer .footer-content {
-    padding-bottom: max(12px, env(safe-area-inset-bottom));
-  }
-  .page-footer .footer-content a {
-    min-height: 44px;
-  }
-  .page-footer .footer-content nav {
+  .site-footer nav {
     gap: 4px 18px;
   }
 }

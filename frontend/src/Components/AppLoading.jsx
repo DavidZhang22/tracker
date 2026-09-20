@@ -1,6 +1,7 @@
 import { CollectionIcon } from "@heroicons/react/outline";
 import { Icon } from "./Icons";
 import "../styles/loading.css";
+import Footer from "./Footer";
 
 export default function AppLoading({ label = "Loading…", children }) {
   return (
@@ -29,6 +30,7 @@ export default function AppLoading({ label = "Loading…", children }) {
             </div>
           )}
         </main>
+        <Footer />
       </div>
     </div>
   );

@@ -220,7 +220,8 @@ h1,
     --page-gutter: 16px;
   }
   .app-shell {
-    display: block;
+    display: flex;
+    flex-direction: column;
     min-height: 100dvh;
   }
   .sidebar {

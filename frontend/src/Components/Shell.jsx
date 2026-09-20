@@ -16,6 +16,7 @@ import PageBoundary from "./PageBoundary";
 import { Icon } from "./Icons";
 import LibraryPage from "../Pages/LibraryPage";
 import { pageLoaders } from "../pageLoaders";
+import Footer from "./Footer";
 export function Shell() {
   const auth = useAuth();
   const location = useLocation();
@@ -219,6 +220,7 @@ export function Shell() {
             </Routes>
           </PageBoundary>
         </main>
+        <Footer />
       </div>
     </div>
   );

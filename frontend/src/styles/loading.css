@@ -38,6 +38,7 @@
 
 .page-load-error {
   display: grid;
+  align-content: start;
   justify-items: start;
   gap: 16px;
 }
