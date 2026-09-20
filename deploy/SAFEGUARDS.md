@@ -62,6 +62,14 @@ stop uncached work. Private/no-store responses are not shared or retained as
 derived scans. Existing user progress and favorites remain in account libraries.
 See [cache design and profiling](../backend/ml/reports/source-cache.md).
 
+Source requests identify themselves as
+`Trackify/1.0 (+https://mediatrackify.duckdns.org; contact: mediatrackify@gmail.com)`.
+The same identity is used by HTTP fetching, browser contexts, and sitemap robots
+matching. It identifies the service and its public contact without impersonating
+another browser or crawler. The optional YouTube archive extractor receives this
+as its default user agent; yt-dlp may override it for client-specific API requests.
+That extractor is disabled by default.
+
 JavaScript pagination uses public GETs through the same fetcher and cache. The
 networkless browser cannot submit forms, fetch private addresses, or navigate
 to arbitrary articles. Explicit Next links may authorize same-origin page/cursor

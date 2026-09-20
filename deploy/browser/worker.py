@@ -14,6 +14,12 @@ from urllib.parse import urljoin, urlsplit
 
 from playwright.async_api import async_playwright
 
+# This standalone image uses the same public identity as app.tracker.http_identity.
+USER_AGENT = (
+    "Trackify/1.0 (+https://mediatrackify.duckdns.org; "
+    "contact: mediatrackify@gmail.com)"
+)
+
 SOCKET = Path("/run/tracker-browser/worker.sock")
 LIMIT = 16_000_000
 MAX_STEPS = 20
@@ -123,6 +129,7 @@ async def render(reader, writer, url):
         )
         try:
             context = await browser.new_context(
+                user_agent=USER_AGENT,
                 service_workers="block",
                 accept_downloads=False,
                 viewport={"width": 1280, "height": 900},

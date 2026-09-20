@@ -7,6 +7,7 @@ from urllib.robotparser import RobotFileParser
 from xml.etree import ElementTree as ET
 
 from .dates import evidence
+from .http_identity import USER_AGENT
 from .limits import MAX_LINKS
 from .models import Entry, Scan
 from .urls import DiscoveryError, canonical_url
@@ -94,7 +95,7 @@ async def scan_sitemap(fetcher, source, max_pages):
         if (
             robots
             and urlsplit(url).hostname == parts.hostname
-            and not robots.can_fetch("MediaTracker", url)
+            and not robots.can_fetch(USER_AGENT, url)
         ):
             result.coverage = "partial"
             result.warnings.append("A sitemap was excluded by robots.txt.")
@@ -134,7 +135,7 @@ async def scan_sitemap(fetcher, source, max_pages):
                 r"\.(?:png|jpe?g|gif|webp|svg|ico|mp4|mp3|zip|pdf)$", path, re.I
             ):
                 continue
-            if robots and not robots.can_fetch("MediaTracker", target):
+            if robots and not robots.can_fetch(USER_AGENT, target):
                 continue
             label = (
                 unquote(path.rstrip("/").rsplit("/", 1)[-1])

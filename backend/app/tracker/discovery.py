@@ -17,6 +17,7 @@ from .documents import Document, unpack
 from .entry_identity import entry_key
 from .fenrir import fenrir_endpoint, fenrir_scan
 from .github import github_readme
+from .http_identity import USER_AGENT
 from .keywords import matches, terms
 from .limits import MAX_LINKS, bounded_scan
 from .link_model import model_cache_tag
@@ -96,6 +97,8 @@ def youtube_archive(url):
                 "-m",
                 "yt_dlp",
                 "--ignore-config",
+                "--user-agent",
+                USER_AGENT,
                 "--no-cache-dir",
                 "--flat-playlist",
                 "--dump-single-json",

@@ -173,3 +173,25 @@ article listings. No individual article, video, or chapter body was requested.
 - [YouTube playlist items](https://developers.google.com/youtube/v3/docs/playlistItems/list)
 - [Ghost Content API](https://docs.ghost.org/content-api/)
 - [Sitemap protocol](https://www.sitemaps.org/protocol.html)
+
+
+## arXiv API access investigation (2026-09-20)
+
+The official API returns Atom metadata; paper pages and PDFs are unnecessary for tracking. Existing feed parsing supports its abstract-page links and publication dates, but automatic search translation and arXiv offset pagination remain unenabled because the requested search could not be fetched reliably.
+
+Six sequential HTTPS GETs from the deployed Azure host requested at most one result each. All used the identifying Trackify User-Agent and accepted Atom/XML. A diagnostic guard enforced a six-request ceiling and at least 3.2 seconds between requests; actual intervals exceeded 20 seconds. No browser impersonation, IP rotation, automatic retries, HTML searches, paper pages, or PDFs were used.
+
+| Query | Sorting | Status | Response |
+| --- | --- | --- | --- |
+| `all:domain AND all:specific AND all:language` | submitted date, descending | 406 | Empty |
+| `all:electron` | default | 200 | 2,938-byte Atom feed |
+| `all:electron`, percent-encoded colon | default | 200 | 2,938-byte Atom feed |
+| `all:domain AND all:specific AND all:language` | default | 406 | Empty |
+| `all:electron` | submitted date, descending | 406 | Empty |
+| `all:"domain specific language"` | default | 406 | Empty |
+
+The 200 responses contain actual paper entries, include an intermediate cache hit, and carry Google Frontend and `via: 1.1 google` headers. Every 406 has `cache-control: private, no-store`, cache misses, and only Varnish hops in Via. This is consistent with a difference between cached and uncached API handling, but does not distinguish CDN filtering, origin access policy, or an upstream failure. It does not establish a blanket IP ban. Normal hostname requests fail too, so Trackify's DNS pinning is not required to reproduce the issue. Percent-encoding the query colon succeeds for the sample and is not the cause. Neither dropping sorting nor changing to an exact phrase fixes the user's topic.
+
+No automatic API adapter was enabled: silently dropping filters or relying on one cached sample would not resolve the requested search. The next step is to provide arXiv support with the working/failing URLs, UTC timestamps, response headers, source IP, and client identity. Raw diagnostic details are retained locally under ignored `backend/data/arxiv-review/`; no support message was sent. A future integration needs strict search conversion, explicit OpenSearch pagination and partial-coverage reporting, one shared connection with at least three seconds between requests, and daily query reuse.
+
+References: [API manual](https://info.arxiv.org/help/api/user-manual.html), [API access limits](https://info.arxiv.org/help/api/tou.html).

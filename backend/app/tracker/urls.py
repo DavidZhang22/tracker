@@ -15,6 +15,7 @@ import httpx
 from .cache import FetchCache
 from .documents import MAX_RESPONSE, Document
 from .errors import DiscoveryError
+from .http_identity import USER_AGENT
 from .source_cache import REUSE_SECONDS, SharedWork
 from .workers import run_blocking
 
@@ -361,7 +362,7 @@ class SafeFetcher:
             )
             headers = {
                 "Host": p.hostname,
-                "User-Agent": "MediaTracker/1.0 (personal link index)",
+                "User-Agent": USER_AGENT,
                 "Accept": "text/html,application/xml,application/json,*/*;q=0.5",
                 "Accept-Encoding": "gzip, deflate",
             }
