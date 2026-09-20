@@ -8,6 +8,7 @@ import {
   RefreshIcon,
 } from "@heroicons/react/outline";
 import { day } from "../api";
+import { dateTime } from "../dates";
 import { usePreferences } from "../Contexts/Preferences";
 import SelectionPattern from "./SelectionPattern";
 
@@ -502,7 +503,8 @@ export function LinkDate({ entry }) {
       deadline: "Deadline",
       inferred: entry.method === "CSV import" ? "Approximate" : "Date in URL",
     }[entry.date_kind] || "Date";
-  if (!value) return <span className="link-date">Date unavailable</span>;
+  if (!value || Number.isNaN(new Date(value).getTime()))
+    return <span className="link-date">Date unavailable</span>;
   const origin = `${entry.date_source || "Source page"}${precise ? ` · ${new Date(value).toISOString()} (shown in your time zone)` : " · Date only"}`;
   return (
     <details className="link-date" title={`${label} · ${origin}`}>
@@ -510,13 +512,7 @@ export function LinkDate({ entry }) {
         <time dateTime={value || undefined}>
           {value
             ? precise
-              ? new Date(value).toLocaleString(undefined, {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                  hour: "numeric",
-                  minute: "2-digit",
-                })
+              ? dateTime(value)
               : day(value)
             : "Date unavailable"}
         </time>

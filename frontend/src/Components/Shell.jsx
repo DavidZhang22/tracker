@@ -10,8 +10,9 @@ import {
   ClockIcon,
   CogIcon,
 } from "@heroicons/react/outline";
-import { AccountPage, useAuth } from "../Auth/Auth";
+import { useAuth } from "../Auth/Auth";
 import { Notice } from "./Notice";
+import PageBoundary from "./PageBoundary";
 import { Icon } from "./Icons";
 import LibraryPage from "../Pages/LibraryPage";
 export function Shell() {
@@ -142,62 +143,80 @@ export function Shell() {
       </aside>
       <div className="workspace">
         <main id="main" ref={main} tabIndex={-1}>
-          <Routes>
-            <Route path="/" element={<LibraryPage />} />
-            <Route path="/account" element={<AccountPage />} />
-            <Route
-              path="/settings"
-              element={
-                <React.Suspense
-                  fallback={
-                    <p className="page-loading" role="status">
-                      Loading page…
-                    </p>
-                  }
-                >
-                  <SettingsPage />
-                </React.Suspense>
-              }
-            />
-            <Route path="/suggestions" element={<Navigate to="/" replace />} />
-            <Route
-              path="/add"
-              element={
-                <React.Suspense
-                  fallback={
-                    <p className="page-loading" role="status">
-                      Loading page…
-                    </p>
-                  }
-                >
-                  <AddPage />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/items/:id"
-              element={
-                <React.Suspense
-                  fallback={
-                    <p className="page-loading" role="status">
-                      Loading page…
-                    </p>
-                  }
-                >
-                  <ItemPage />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="*"
-              element={
-                <div className="empty">
-                  <h1>Page not found</h1>
-                  <Link to="/">Back to library</Link>
-                </div>
-              }
-            />
-          </Routes>
+          <PageBoundary embedded>
+            <Routes>
+              <Route path="/" element={<LibraryPage />} />
+              <Route
+                path="/account"
+                element={
+                  <React.Suspense
+                    fallback={
+                      <p className="page-loading" role="status">
+                        Loading page…
+                      </p>
+                    }
+                  >
+                    <AccountPage />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/settings"
+                element={
+                  <React.Suspense
+                    fallback={
+                      <p className="page-loading" role="status">
+                        Loading page…
+                      </p>
+                    }
+                  >
+                    <SettingsPage />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/suggestions"
+                element={<Navigate to="/" replace />}
+              />
+              <Route
+                path="/add"
+                element={
+                  <React.Suspense
+                    fallback={
+                      <p className="page-loading" role="status">
+                        Loading page…
+                      </p>
+                    }
+                  >
+                    <AddPage />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/items/:id"
+                element={
+                  <React.Suspense
+                    fallback={
+                      <p className="page-loading" role="status">
+                        Loading page…
+                      </p>
+                    }
+                  >
+                    <ItemPage />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="*"
+                element={
+                  <div className="empty">
+                    <h1>Page not found</h1>
+                    <Link to="/">Back to library</Link>
+                  </div>
+                }
+              />
+            </Routes>
+          </PageBoundary>
         </main>
       </div>
     </div>
@@ -206,3 +225,5 @@ export function Shell() {
 const AddPage = React.lazy(() => import("../Pages/AddPage"));
 const ItemPage = React.lazy(() => import("../Pages/ItemPage"));
 const SettingsPage = React.lazy(() => import("../Pages/SettingsPage"));
+
+const AccountPage = React.lazy(() => import("../Auth/AccountPage"));

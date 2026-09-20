@@ -58,20 +58,22 @@ export default function SelectionPattern({
     >
       <div className="pattern-fields">
         <label>
-          Every{" "}
-          <input
-            type="number"
-            aria-label="Select every"
-            min="1"
-            max="4999"
-            required
-            value={every}
-            onChange={(e) => setEvery(e.target.value)}
-          />{" "}
-          {noun}
+          <span>Every</span>
+          <span className="pattern-interval">
+            <input
+              type="number"
+              aria-label="Select every"
+              min="1"
+              max="4999"
+              required
+              value={every}
+              onChange={(e) => setEvery(e.target.value)}
+            />{" "}
+            {noun}
+          </span>
         </label>
         <label>
-          Starting with{" "}
+          <span>Starting with</span>
           <input
             type="number"
             aria-label="Starting with position"
@@ -83,7 +85,7 @@ export default function SelectionPattern({
           />
         </label>
         <label>
-          Within positions{" "}
+          <span>From position</span>
           <input
             type="number"
             aria-label="From position"
@@ -95,7 +97,7 @@ export default function SelectionPattern({
           />
         </label>
         <label>
-          to{" "}
+          <span>Through position</span>
           <input
             type="number"
             aria-label="Through position"

@@ -35,3 +35,13 @@
   color: var(--muted);
   line-height: 1.6;
 }
+
+.page-load-error {
+  display: grid;
+  justify-items: start;
+  gap: 16px;
+}
+.page-load-error p {
+  color: var(--muted);
+  line-height: 1.6;
+}

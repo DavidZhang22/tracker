@@ -7,7 +7,12 @@ export default function Description({ item, preview = false }) {
       <div className="description-heading">
         <h2>Description</h2>
         {!preview && !item.deleted && (
-          <Link to={`/settings?item=${item.id}#item-settings`}>Edit</Link>
+          <Link
+            className="text-button"
+            to={`/settings?item=${item.id}#item-settings`}
+          >
+            Edit
+          </Link>
         )}
       </div>
       {item.description ? (

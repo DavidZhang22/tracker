@@ -1,0 +1,98 @@
+{
+  "environment": {
+    "node": "v24.11.1",
+    "platform": "win32",
+    "architecture": "x64",
+    "timing": "Local single process, warm synthetic operations; medians of 100 iterations, not browser page-load timings."
+  },
+  "fixture": {
+    "items": 500,
+    "source_summary_chars": 7799,
+    "link_page_rows": 50,
+    "link_context_chars": 4000,
+    "private_or_live_data": false
+  },
+  "initial_bundle": {
+    "before": {
+      "static_javascript": [
+        {
+          "file": "static/index-TWc9j097.js",
+          "raw_bytes": 353779,
+          "gzip_bytes": 95783
+        }
+      ],
+      "raw_bytes": 353779,
+      "gzip_bytes": 95783
+    },
+    "after": {
+      "static_javascript": [
+        {
+          "file": "static/index-CqL6RlDS.js",
+          "raw_bytes": 141960,
+          "gzip_bytes": 46038
+        },
+        {
+          "file": "static/rolldown-runtime-CbXtAM7H.js",
+          "raw_bytes": 589,
+          "gzip_bytes": 368
+        },
+        {
+          "file": "static/Notice-B1k9Xw5H.js",
+          "raw_bytes": 145389,
+          "gzip_bytes": 30360
+        },
+        {
+          "file": "static/AppLoading-D6KDe32e.js",
+          "raw_bytes": 1438,
+          "gzip_bytes": 616
+        }
+      ],
+      "raw_bytes": 289376,
+      "gzip_bytes": 77382
+    },
+    "raw_reduction_percent": 18.2,
+    "gzip_reduction_percent": 19.21,
+    "note": "Sums all static JS imports of entry, separately gzipped. Deferred private/public routes are excluded until visited."
+  },
+  "unchanged_metadata_refresh": {
+    "before": {
+      "median_ms": 8.014,
+      "p95_ms": 12.0073
+    },
+    "after": {
+      "median_ms": 0.1032,
+      "p95_ms": 0.1406
+    }
+  },
+  "changed_metadata_refresh": {
+    "before": {
+      "median_ms": 9.8997,
+      "p95_ms": 12.6661
+    },
+    "after": {
+      "median_ms": 0.4134,
+      "p95_ms": 0.5342
+    }
+  },
+  "retained_metadata_heap_bytes": {
+    "before": 8434600,
+    "after": 64184,
+    "note": "GC-based approximate retained V8 heap above the existing API rows; excludes worker heap and DOM."
+  },
+  "repeated_link_page_comparison": {
+    "before": {
+      "median_ms": 0.5081,
+      "p95_ms": 0.5785
+    },
+    "after": {
+      "median_ms": 0.0433,
+      "p95_ms": 0.0581
+    }
+  },
+  "link_cache": {
+    "before_page_count": 8,
+    "after_page_count": 2,
+    "estimate_limit_bytes": 1048576,
+    "note": "Retained-size estimate is conservative UTF16 text plus structural overhead, not a browser heap guarantee. Oversized pages render but are not cached."
+  }
+}

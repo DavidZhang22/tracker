@@ -41,3 +41,5 @@ Tests use two VM workers with a fresh context and DOM per file. Workers recycle 
 Run backend tests before the production build, which replaces the static files used by backend route tests. Vite writes to `build/`, with generated JavaScript and CSS under `build/static/`; FastAPI and both Docker build paths use these locations. Files in `public/` are copied to the build root. The application is hosted at `/`, including lazy page imports and `/examples/links.csv`. See [mobile checks](MOBILE_QA.md) and the [project setup](../README.MD).
 
 Run `npm audit` and `npm audit --omit=dev` when updating dependencies. Review advisories in both the build tools and browser runtime dependencies, then rerun lint, tests and the production build after changes. Keep the development server local and use the production build for hosting.
+
+See the [visual and frontend performance review](UI_REVIEW.md) for responsive screenshots, loading measurements, bounded client caches, and the offline Chromium harness.

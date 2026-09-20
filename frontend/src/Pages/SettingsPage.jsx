@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { ArrowLeftIcon } from "@heroicons/react/outline";
+import { Icon } from "../Components/Icons";
 import { api, patch } from "../api";
-import { AccountPage } from "../Auth/Auth";
+import AccountPage from "../Auth/AccountPage";
 import { Notice } from "../Components/Notice";
 import { linkSortOptions, usePreferences } from "../Contexts/Preferences";
 import SourceMethod from "../Components/SourceMethod";
@@ -47,7 +49,8 @@ export default function SettingsPage() {
   return (
     <>
       <Link className="back-link" to="/">
-        ← Library
+        <Icon as={ArrowLeftIcon} />
+        Library
       </Link>
       <div className="page-heading">
         <h1>Settings</h1>
@@ -362,7 +365,9 @@ function ItemSettings({ autoUpdate, settingsBusy, onBusy }) {
               <button className="button" type="submit">
                 {busy ? "Saving…" : "Save item settings"}
               </button>
-              <Link to={`/items/${id}`}>Back to item</Link>
+              <Link className="text-button" to={`/items/${id}`}>
+                Back to item
+              </Link>
             </div>
           </fieldset>
         </form>

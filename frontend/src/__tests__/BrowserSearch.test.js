@@ -117,3 +117,13 @@ test("malformed worker scores fall back instead of stranding selection", async (
   expect(vi.getTimerCount()).toBe(0);
   client.dispose();
 });
+
+test("an unused library does not start a worker or construct a search index", async () => {
+  const client = createLocalSearch(rows);
+  expect(instances).toHaveLength(0);
+  const result = client.query("grand");
+  expect(instances).toHaveLength(1);
+  instances[0].reply(1, [["a", 1]]);
+  await result;
+  client.dispose();
+});

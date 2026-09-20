@@ -1,4 +1,5 @@
 import { librarySearchIndex } from "../media.js";
+import { workerSearchRows } from "./snapshot.js";
 
 export const WORKER_THRESHOLD = 50;
 
@@ -8,6 +9,7 @@ export function createLocalSearch(items) {
   let pending = null;
   let sequence = 0;
   let disposed = false;
+  let started = false;
   const abort = () => {
     if (!pending) return;
     clearTimeout(pending.timer);
@@ -24,40 +26,44 @@ export function createLocalSearch(items) {
     fallback ||= librarySearchIndex(items);
     request.resolve(fallback(request.query));
   };
-  try {
-    worker = new Worker(new URL("./library.worker.js", import.meta.url), {
-      type: "module",
-      name: "library-search",
-    });
-    worker.onmessage = ({ data }) => {
-      if (!pending || data?.id !== pending.id) return;
-      if (
-        !Array.isArray(data.scores) ||
-        data.scores.some(
-          (entry) =>
-            !Array.isArray(entry) ||
-            entry.length !== 2 ||
-            typeof entry[0] !== "string" ||
-            !Number.isFinite(entry[1]),
+  const start = () => {
+    started = true;
+    try {
+      worker = new Worker(new URL("./library.worker.js", import.meta.url), {
+        type: "module",
+        name: "library-search",
+      });
+      worker.onmessage = ({ data }) => {
+        if (!pending || data?.id !== pending.id) return;
+        if (
+          !Array.isArray(data.scores) ||
+          data.scores.some(
+            (entry) =>
+              !Array.isArray(entry) ||
+              entry.length !== 2 ||
+              typeof entry[0] !== "string" ||
+              !Number.isFinite(entry[1]),
+          )
         )
-      )
-        return fail();
-      clearTimeout(pending.timer);
-      pending.resolve(new Map(data.scores));
-      pending = null;
-    };
-    worker.onerror = fail;
-    worker.onmessageerror = fail;
-    worker.postMessage({ type: "index", items });
-  } catch {
-    worker?.terminate();
-    worker = null;
-  }
+          return fail();
+        clearTimeout(pending.timer);
+        pending.resolve(new Map(data.scores));
+        pending = null;
+      };
+      worker.onerror = fail;
+      worker.onmessageerror = fail;
+      worker.postMessage({ type: "index", items: workerSearchRows(items) });
+    } catch {
+      worker?.terminate();
+      worker = null;
+    }
+  };
   return {
     query(query) {
       abort();
       if (disposed)
         return Promise.reject(new DOMException("Search closed", "AbortError"));
+      if (!started) start();
       if (!worker) {
         fallback ||= librarySearchIndex(items);
         return Promise.resolve(fallback(query));

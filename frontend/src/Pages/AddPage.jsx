@@ -249,7 +249,7 @@ export default function AddPage() {
                 }}
               />
               {source.note && (
-                <p className="hint" role="status">
+                <p className="hint source-method-note" role="status">
                   {source.note}
                 </p>
               )}

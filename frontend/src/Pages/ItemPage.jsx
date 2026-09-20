@@ -413,7 +413,9 @@ function ItemDetail({ id }) {
         </button>
       </div>
       <div className="detail-controls">
-        <Link to={`/settings?item=${id}#item-settings`}>Item settings</Link>
+        <Link className="text-button" to={`/settings?item=${id}#item-settings`}>
+          Item settings
+        </Link>
         <div className="actions">
           {item.new_count > 0 && (
             <button

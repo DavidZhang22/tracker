@@ -1,0 +1,10 @@
+{
+  "baseline_commit": "f2d546d",
+  "runtime": "v24.11.1",
+  "rows": 500,
+  "formats_per_row": 3,
+  "parity": true,
+  "baseline_ms": 121.1685,
+  "reuse_ms": 3.0833999999999833,
+  "scope": "Synthetic date-formatting microbenchmark; excludes browser rendering and network. Three formatter objects, no per-item cache."
+}

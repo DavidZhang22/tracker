@@ -317,7 +317,7 @@ export default function LibraryPage() {
                 aria-label="Search library"
                 maxLength={200}
                 type="search"
-                placeholder="Search your library"
+                placeholder="Search library"
                 value={search}
                 onChange={(e) => chooseView({ query: e.target.value }, true)}
               />

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { api } from "../api";
 import { librarySearchIndex, normalizeLibraryQuery } from "../media";
 import { createLocalSearch, WORKER_THRESHOLD } from "../Search/localSearch";
+import { searchSnapshot } from "../Search/snapshot";
 
 export default function useLibrarySearch(
   items,
@@ -9,35 +10,29 @@ export default function useLibrarySearch(
   trash,
   mode = "semantic",
 ) {
-  const revision = useMemo(
-    () =>
-      JSON.stringify(
-        items.map((item) => ({
-          id: item.id,
-          title: item.title,
-          url: item.url,
-          source_name: item.source_name,
-          kind: item.kind,
-          description: item.description,
-          source_summary: item.source_summary,
-          search_tags: item.search_tags,
-          deleted: item.deleted,
-        })),
-      ),
-    [items],
-  );
-  // Read counts and favorite changes do not invalidate an expensive text index.
-  const rows = useMemo(() => JSON.parse(revision), [revision]);
+  const snapshot = useRef(null);
+  const rows = useMemo(() => {
+    snapshot.current = searchSnapshot(items, snapshot.current);
+    return snapshot.current;
+  }, [items]);
+  const revision = rows;
   const key = normalizeLibraryQuery(query);
   const remote = mode !== "local" && key.length >= 2 && rows.length > 0;
   const threaded =
     rows.length >= WORKER_THRESHOLD && typeof Worker !== "undefined";
-  const index = useMemo(
-    () => (threaded ? null : librarySearchIndex(rows)),
-    [rows, threaded],
-  );
+  const inlineSearch = useMemo(() => {
+    let index;
+    return (query) => {
+      if (!query) return null;
+      index ||= librarySearchIndex(rows);
+      return index(query);
+    };
+  }, [rows]);
   const all = useMemo(() => new Map(rows.map(({ id }) => [id, 1])), [rows]);
-  const inline = useMemo(() => index?.(key), [index, key]);
+  const inline = useMemo(
+    () => (threaded ? null : inlineSearch(key)),
+    [inlineSearch, key, threaded],
+  );
   const client = useRef(null);
   const [local, setLocal] = useState(null);
   useEffect(() => {

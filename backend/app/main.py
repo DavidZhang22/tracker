@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import os
+import re
 import sqlite3
 from contextlib import asynccontextmanager, suppress
 from pathlib import Path
@@ -244,6 +245,11 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
         )
         if request.url.path.startswith("/api/"):
             response.headers["Cache-Control"] = "no-store"
+        elif response.status_code in {200, 304} and re.fullmatch(
+            r"/static/[A-Za-z0-9_.-]+-[A-Za-z0-9_-]{8}\.(?:js|css)",
+            request.url.path,
+        ):
+            response.headers["Cache-Control"] = "public, max-age=31536000, immutable"
         return response
 
     @app.middleware("http")

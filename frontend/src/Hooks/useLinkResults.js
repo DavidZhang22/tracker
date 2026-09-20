@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { api } from "../api";
+import { createLinkCache, sameResult } from "./linkCache";
 
 const EMPTY = { links: [], total: 0 };
 
@@ -19,7 +20,8 @@ export function useLinkResults({
   const [pending, setPending] = useState(true);
   const [error, setError] = useState("");
   const [retry, setRetry] = useState(0);
-  const cache = useRef(new Map());
+  const cache = useRef(null);
+  if (!cache.current) cache.current = createLinkCache();
   const epoch = useRef("");
   const scope = `${id}:${version}`;
   if (epoch.current !== scope) {
@@ -46,8 +48,7 @@ export function useLinkResults({
         path,
         scope,
         data:
-          previous?.id === id &&
-          JSON.stringify(previous.data) === JSON.stringify(data)
+          previous?.id === id && sameResult(previous.data, data)
             ? previous.data
             : data,
       }));
@@ -61,9 +62,7 @@ export function useLinkResults({
       api(path, { signal: controller.signal })
         .then((data) => {
           if (!active || epoch.current !== scope) return;
-          cache.current.set(path, { data, time: Date.now() });
-          if (cache.current.size > 8)
-            cache.current.delete(cache.current.keys().next().value);
+          cache.current.set(path, data, Date.now());
           receive(data);
         })
         .catch((e) => {

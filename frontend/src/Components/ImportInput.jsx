@@ -292,7 +292,7 @@ export default function ImportInput({
                   value={options.date_order || "auto"}
                   onChange={(event) => change("date_order", event.target.value)}
                 >
-                  <option value="auto">Leave ambiguous dates unset</option>
+                  <option value="auto">Skip ambiguous dates</option>
                   <option value="month_first">Month / day / year</option>
                   <option value="day_first">Day / month / year</option>
                 </select>

@@ -111,21 +111,4 @@ export const uploadFile = (file, options = {}) =>
 export const examples = [
   { title: "xkcd", kind: "Comic archive", url: "https://xkcd.com/archive/" },
 ];
-export const day = (value) =>
-  value
-    ? new Date(value).toLocaleDateString(undefined, {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-        timeZone: "UTC",
-      })
-    : "Date unavailable";
-export const checked = (value) =>
-  value
-    ? new Date(value).toLocaleString(undefined, {
-        month: "short",
-        day: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-      })
-    : "Not checked";
+export { day, checked } from "./dates";
