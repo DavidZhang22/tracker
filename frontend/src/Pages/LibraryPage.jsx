@@ -310,7 +310,26 @@ export default function LibraryPage() {
             </button>
           ))}
         </div>
-        <div className="toolbar">
+        <SelectionBar
+          selection={selection}
+          visible={visibleIds}
+          patternSelection
+          onSelectAll={(pattern, mode = "replace") => {
+            const matches = visibleIds.filter((id, index) => {
+              const position = index + 1;
+              return (
+                !pattern ||
+                (position >= pattern.first &&
+                  position <= (pattern.last ?? visibleIds.length) &&
+                  (position - pattern.starting) % pattern.every === 0)
+              );
+            });
+            selection.apply(matches, mode);
+          }}
+          onAction={selectedAction}
+          busy={busy || searching}
+          trash={trash}
+        >
           <form
             className="search-form"
             role="search"
@@ -326,23 +345,13 @@ export default function LibraryPage() {
                 aria-label="Search library"
                 maxLength={200}
                 type="search"
-                placeholder="Search library"
+                placeholder="Search"
                 value={search}
                 onChange={(e) => chooseView({ query: e.target.value }, true)}
               />
             </label>
           </form>
           <FilterOptions>
-            <select
-              aria-label="Search mode"
-              value={searchMode}
-              onChange={(event) =>
-                chooseView({ search_mode: event.target.value })
-              }
-            >
-              <option value="semantic">Smart search</option>
-              <option value="local">Quick search</option>
-            </select>
             <select
               aria-label="Media type"
               value={kind}
@@ -365,27 +374,8 @@ export default function LibraryPage() {
               <option value="title">Title A–Z</option>
             </select>
           </FilterOptions>
-        </div>
-        <SelectionBar
-          selection={selection}
-          visible={visibleIds}
-          patternSelection
-          onSelectAll={(pattern, mode = "replace") => {
-            const matches = visibleIds.filter((id, index) => {
-              const position = index + 1;
-              return (
-                !pattern ||
-                (position >= pattern.first &&
-                  position <= (pattern.last ?? visibleIds.length) &&
-                  (position - pattern.starting) % pattern.every === 0)
-              );
-            });
-            selection.apply(matches, mode);
-          }}
-          onAction={selectedAction}
-          busy={busy || searching}
-          trash={trash}
-        />
+        </SelectionBar>
+
         {error && !items.length && !loading ? (
           <div className="empty">
             <h2>Library unavailable</h2>
@@ -520,13 +510,13 @@ export default function LibraryPage() {
                   ? "Trash is empty"
                   : "Start your collection"}
             </h2>
-            <p>
-              {viewItems.length
-                ? "Try another filter or search."
-                : trash
-                  ? "Deleted items appear here."
+            {(viewItems.length > 0 || !trash) && (
+              <p>
+                {viewItems.length
+                  ? "Try another filter or search."
                   : "Add a series, channel, blog, or feed to keep track of new releases."}
-            </p>
+              </p>
+            )}
             {!trash && (
               <Link className="button primary" to="/add">
                 <Icon as={PlusIcon} />

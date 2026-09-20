@@ -92,22 +92,22 @@ test("selection can be entered and cancelled before or after choosing links", ()
   expect(
     screen.queryByLabelText("Select first chapter"),
   ).not.toBeInTheDocument();
-  fireEvent.click(
-    screen.getByRole("button", { name: "Select links", exact: true }),
-  );
+  fireEvent.change(screen.getByLabelText("Selection options"), {
+    target: { value: "manual" },
+  });
   expect(screen.getByLabelText("Select first chapter")).not.toBeChecked();
   fireEvent.click(screen.getByRole("button", { name: "Cancel selection" }));
   expect(
     screen.queryByLabelText("Select first chapter"),
   ).not.toBeInTheDocument();
-  fireEvent.click(
-    screen.getByRole("button", { name: "Select links", exact: true }),
-  );
+  fireEvent.change(screen.getByLabelText("Selection options"), {
+    target: { value: "manual" },
+  });
   fireEvent.click(screen.getByLabelText("Select first chapter"));
   fireEvent.click(screen.getByRole("button", { name: "Cancel selection" }));
-  fireEvent.click(
-    screen.getByRole("button", { name: "Select links", exact: true }),
-  );
+  fireEvent.change(screen.getByLabelText("Selection options"), {
+    target: { value: "manual" },
+  });
   expect(screen.getByLabelText("Select first chapter")).not.toBeChecked();
   expect(onAction).not.toHaveBeenCalled();
 });
@@ -117,17 +117,17 @@ test("moving to a different list exits selection mode and discards old IDs", () 
   const { rerender } = render(
     <SelectionExample scope="all" onAction={onAction} />,
   );
-  fireEvent.click(
-    screen.getByRole("button", { name: "Select links", exact: true }),
-  );
+  fireEvent.change(screen.getByLabelText("Selection options"), {
+    target: { value: "manual" },
+  });
   fireEvent.click(screen.getByLabelText("Select first chapter"));
   rerender(<SelectionExample scope="unread" onAction={onAction} />);
   expect(
     screen.queryByRole("button", { name: "Cancel selection" }),
   ).not.toBeInTheDocument();
-  fireEvent.click(
-    screen.getByRole("button", { name: "Select links", exact: true }),
-  );
+  fireEvent.change(screen.getByLabelText("Selection options"), {
+    target: { value: "manual" },
+  });
   expect(screen.getByLabelText("Select first chapter")).not.toBeChecked();
   expect(onAction).not.toHaveBeenCalled();
 });

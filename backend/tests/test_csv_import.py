@@ -126,7 +126,7 @@ def test_job_shape_preserves_row_context_without_inventing_dates_or_numbers():
     ]
     assert entries[1]["published_at"].startswith("2026-09-03")
     assert all(
-        entry["title"] == "Example Labs — ML Engineer" and entry["number"] is None
+        entry["title"] == "Example Labs · ML Engineer" and entry["number"] is None
         for entry in entries
     )
     assert all(

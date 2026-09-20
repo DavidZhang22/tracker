@@ -442,3 +442,61 @@ async def test_cancelled_waiter_does_not_release_another_owner(tmp_path):
     with pytest.raises(asyncio.CancelledError):
         await waiter
     assert coordinator.claim("key", "third")[0] == "busy"
+
+
+@pytest.mark.parametrize(
+    "status, message",
+    [
+        (400, "HTTP 400"),
+        (404, "HTTP 404: page not found"),
+        (406, "refused access (HTTP 406)"),
+        (410, "HTTP 410: page no longer available"),
+        (500, "server returned an error (HTTP 500)"),
+        (502, "server returned an error (HTTP 502)"),
+    ],
+)
+async def test_http_errors_preserve_status_and_shared_cooldown(
+    tmp_path, network, status, message
+):
+    calls, state = network
+    state.update(status=status, body="")
+    path = tmp_path / "cache.db"
+    for _ in range(2):
+        with pytest.raises(DiscoveryError) as error:
+            await SafeFetcher(FetchCache(path), interval=0).get(SOURCE)
+        assert message in str(error.value)
+        assert "HTTPStatusError" not in str(error.value)
+    assert len(calls) == 1
+
+
+@pytest.mark.parametrize(
+    "source, guidance",
+    [
+        (
+            "https://arxiv.org/search/?searchtype=all&query=domain+specific+language&abstracts=show&size=200&order=",
+            "Automated access should use its official API or RSS feed",
+        ),
+        (
+            "https://export.arxiv.org/api/query?search_query=all:language",
+            "The arXiv API refused this request",
+        ),
+        ("https://arxiv.org.unrelated.example/search/", "The source refused access"),
+    ],
+)
+async def test_arxiv_denial_guidance_does_not_retry_or_assume_api_access(
+    network, source, guidance
+):
+    calls, state = network
+    state.update(status=406, body="")
+    fetcher = SafeFetcher(interval=0)
+    for _ in range(2):
+        with pytest.raises(DiscoveryError) as error:
+            await fetcher.get(source)
+        assert "HTTP 406" in str(error.value)
+        assert guidance in str(error.value)
+    assert len(calls) == 1
+    if "unrelated" not in source:
+        assert "import links from a file" in str(error.value)
+    with pytest.raises(DiscoveryError, match="requested a pause"):
+        await fetcher.get(source + "&another=1")
+    assert len(calls) == 1

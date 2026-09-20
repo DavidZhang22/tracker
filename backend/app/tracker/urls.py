@@ -59,6 +59,32 @@ def response_key(key):
     return "response-v1:" + hashlib.sha256(key.encode()).hexdigest()
 
 
+def http_status_message(url, status):
+    if status in (401, 403, 406, 429, 503):
+        source = urlsplit(url)
+        if source.hostname in {"arxiv.org", "www.arxiv.org", "export.arxiv.org"}:
+            if source.path.rstrip("/") == "/api/query":
+                return (
+                    f"The arXiv API refused this request (HTTP {status}). "
+                    "Retry later or import links from a file."
+                )
+            return (
+                f"arXiv refused this request (HTTP {status}). "
+                "Automated access should use its official API or RSS feed. "
+                "If those are also unavailable, import links from a file."
+            )
+        return (
+            f"The source refused access (HTTP {status}). "
+            "Retry later or supply a public feed URL."
+        )
+    if status in (404, 410):
+        reason = "page not found" if status == 404 else "page no longer available"
+        return f"Could not load the source (HTTP {status}: {reason}). Check the source URL."
+    if status >= 500:
+        return f"The source server returned an error (HTTP {status}). Retry later."
+    return f"Could not load the source (HTTP {status}). Check the URL or use a public feed."
+
+
 async def fetch_document(fetcher, url):
     # Respect injected fetchers and request auditing overrides.
     if (
@@ -390,8 +416,8 @@ class SafeFetcher:
                                 if response.status_code in (301, 308)
                                 else REUSE_SECONDS,
                             )
-                        if response.status_code in (401, 403, 429, 503):
-                            message = f"The source refused access (HTTP {response.status_code}). Retry later or supply a public feed URL."
+                        if response.status_code in (401, 403, 406, 429, 503):
+                            message = http_status_message(url, response.status_code)
                             if response.headers.get("cf-mitigated") == "challenge":
                                 message = (
                                     f"The source requires Cloudflare browser verification (HTTP {response.status_code}). "
@@ -493,6 +519,10 @@ class SafeFetcher:
 
                             await run_blocking(save_response)
                         return url, body, 0
+            except httpx.HTTPStatusError as exc:
+                raise DiscoveryError(
+                    http_status_message(url, exc.response.status_code)
+                ) from exc
             except httpx.HTTPError as exc:
                 raise DiscoveryError(
                     f"Could not load the source ({type(exc).__name__}). Retry later."

@@ -352,7 +352,7 @@ def parse_csv(
         )
         company = value("company")
         if company and company.casefold() not in label.casefold():
-            label = company + " — " + label
+            label = company + " · " + label
         context = "\n".join(
             f"{labels[i]}: {cell}"
             for i, cell in enumerate(row)

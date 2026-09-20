@@ -464,7 +464,19 @@ function ItemDetail({ id }) {
             </button>
           ))}
         </div>
-        <div className="toolbar">
+        <SelectionBar
+          selection={selection}
+          total={data.total}
+          onSelectAll={selectAllMatching}
+          rangeActions={filter !== "trash" && filter !== "ignored"}
+          visible={visibleIds}
+          patternSelection
+          mergeActions={!item.deleted && filter !== "trash"}
+          onAction={selectedAction}
+          busy={busy || loading}
+          trash={filter === "trash"}
+          links
+        >
           <form
             className="search-form"
             role="search"
@@ -480,7 +492,7 @@ function ItemDetail({ id }) {
                 aria-label="Search links"
                 type="search"
                 maxLength={300}
-                placeholder="Search links"
+                placeholder="Search"
                 value={search}
                 onChange={(e) => choose("search", e.target.value)}
               />
@@ -507,20 +519,8 @@ function ItemDetail({ id }) {
               <option value="asc">Oldest to newest</option>
             </select>
           </FilterOptions>
-        </div>
-        <SelectionBar
-          selection={selection}
-          total={data.total}
-          onSelectAll={selectAllMatching}
-          rangeActions={filter !== "trash" && filter !== "ignored"}
-          visible={visibleIds}
-          patternSelection
-          mergeActions={!item.deleted && filter !== "trash"}
-          onAction={selectedAction}
-          busy={busy || loading}
-          trash={filter === "trash"}
-          links
-        />
+        </SelectionBar>
+
         {initialLoading ? (
           <div className="empty" role="status">
             Loading links…

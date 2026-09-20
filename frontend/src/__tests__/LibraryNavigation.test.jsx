@@ -127,7 +127,7 @@ test("Library controls follow URLs and browser history without losing other crit
   expect(screen.getByLabelText("Search library")).toHaveValue("series");
   expect(screen.getByLabelText("Media type")).toHaveValue("novel");
   expect(screen.getByLabelText("Sort items")).toHaveValue("title");
-  expect(screen.getByLabelText("Search mode")).toHaveValue("local");
+  expect(screen.queryByLabelText("Search mode")).not.toBeInTheDocument();
   fireEvent.click(screen.getByRole("button", { name: /^Favorites\s*1$/ }));
   expect(screen.getByTestId("location")).toHaveTextContent(
     "q=series&filter=favorites&kind=novel&sort=title&mode=local",

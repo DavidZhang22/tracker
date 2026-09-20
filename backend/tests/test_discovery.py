@@ -488,3 +488,51 @@ async def test_mixed_public_private_dns_blocked():
         pytest.raises(DiscoveryError),
     ):
         await public_addresses("site.example")
+
+
+async def test_arxiv_atom_feed_uses_abstract_links_and_publication_dates_only():
+    source = canonical_url(
+        "https://export.arxiv.org/api/query?search_query=all:language&max_results=2"
+    )
+    feed = """<?xml version="1.0" encoding="UTF-8"?>
+    <feed xmlns="http://www.w3.org/2005/Atom"
+          xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/">
+      <id>http://arxiv.org/api/example</id>
+      <title>ArXiv Query: search_query=all:language</title>
+      <link href="https://export.arxiv.org/api/query?search_query=all:language"
+            rel="self" type="application/atom+xml"/>
+      <opensearch:totalResults>1200</opensearch:totalResults>
+      <entry>
+        <id>http://arxiv.org/abs/2609.12345v1</id>
+        <updated>2026-09-19T12:00:00Z</updated>
+        <published>2026-09-17T09:00:00Z</published>
+        <title>A synthetic language study</title>
+        <summary>Publication metadata for feed parser regression coverage.</summary>
+        <link title="pdf" href="http://arxiv.org/pdf/2609.12345v1"
+              rel="related" type="application/pdf"/>
+        <link href="http://arxiv.org/abs/2609.12345v1" rel="alternate"
+              type="text/html"/>
+      </entry>
+      <entry>
+        <id>http://arxiv.org/abs/2609.10001v2</id>
+        <updated>2026-09-20T12:00:00Z</updated>
+        <published>2026-09-16T10:30:00Z</published>
+        <title>A synthetic compiler study</title>
+        <link href="http://arxiv.org/abs/2609.10001v2" rel="alternate"
+              type="text/html"/>
+        <link title="pdf" href="http://arxiv.org/pdf/2609.10001v2"
+              rel="related" type="application/pdf"/>
+      </entry>
+    </feed>"""
+    fetcher = FakeFetcher({source: feed})
+    result = await Discoverer(fetcher).scan(source)
+    assert result.methods == ["feed"]
+    assert [(entry.url, entry.published_at) for entry in result.entries] == [
+        ("http://arxiv.org/abs/2609.10001v2", "2026-09-16T10:30:00+00:00"),
+        ("http://arxiv.org/abs/2609.12345v1", "2026-09-17T09:00:00+00:00"),
+    ]
+    assert all(entry.date_kind == "published" for entry in result.entries)
+    assert fetcher.calls == [source]
+    assert any(
+        "full historical archive is not guaranteed" in w for w in result.warnings
+    )

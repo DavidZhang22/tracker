@@ -1054,6 +1054,52 @@ a.entry-title:hover {
 .danger-text {
   color: #a13b32;
 }
+.selection-toolbar {
+  padding-block: 14px;
+}
+.selection-toolbar .selection-control {
+  flex-wrap: nowrap;
+  flex: 0 0 auto;
+}
+.selection-toolbar .selection-control select {
+  width: 96px;
+  height: var(--control-height);
+  padding: 8px 4px 8px 10px;
+}
+.selection-toolbar .checkbox {
+  min-height: var(--control-height);
+  padding-right: 4px;
+}
+@media (min-width: 801px) and (max-width: 1150px) {
+  .selection-toolbar {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+  .selection-toolbar .search-form {
+    grid-column: 2;
+  }
+  .selection-toolbar .filter-options-toggle {
+    display: inline-flex;
+    grid-column: 3;
+  }
+  .selection-toolbar .filter-options {
+    display: none;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .selection-toolbar .filter-options.is-open {
+    display: grid;
+  }
+  .selection-toolbar .filter-options select {
+    min-width: 0;
+    width: 100%;
+  }
+}
+.selection-count {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
 .selection-bar {
   display: flex;
   flex-wrap: wrap;

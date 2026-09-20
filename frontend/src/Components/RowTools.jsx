@@ -29,11 +29,12 @@ export function FilterOptions({ children, label = "Filter" }) {
       <button
         className="button filter-options-toggle"
         aria-expanded={open}
+        aria-label={label}
         aria-controls="filter-options"
         onClick={() => setOpen((value) => !value)}
       >
         <AdjustmentsIcon className="icon" aria-hidden="true" />
-        {label}
+        <span className="filter-options-label">{label}</span>
       </button>
       <div
         id="filter-options"
@@ -325,6 +326,7 @@ export function SelectionBar({
   rangeActions = false,
   mergeActions = false,
   patternSelection = false,
+  children,
 }) {
   const check = useRef();
   const [patternOpen, setPatternOpen] = useState(false);
@@ -340,16 +342,7 @@ export function SelectionBar({
   }, [onPage.length, visible.length]);
   return (
     <>
-      <div
-        className={`selection-bar ${selected.length ? "has-selection" : ""} ${selection.selecting ? "is-selecting" : ""}`}
-      >
-        <button
-          className="text-button mobile-select-toggle"
-          disabled={busy || !visible.length}
-          onClick={selection.start}
-        >
-          Select {links ? "links" : "items"}
-        </button>
+      <div className="toolbar selection-toolbar">
         <div className="selection-control select-all">
           <label className="checkbox">
             <input
@@ -360,14 +353,14 @@ export function SelectionBar({
               checked={!!visible.length && onPage.length === visible.length}
               onChange={() => selection.all(visible)}
             />
-            {selected.length ? `${selected.length} selected` : null}
           </label>
           <select
             aria-label="Selection options"
             value=""
             disabled={busy || !visible.length}
             onChange={(e) => {
-              if (e.target.value === "all") onSelectAll();
+              if (e.target.value === "manual") selection.start();
+              else if (e.target.value === "all") onSelectAll();
               else if (e.target.value === "invert")
                 onSelectAll
                   ? onSelectAll(undefined, "invert")
@@ -380,8 +373,9 @@ export function SelectionBar({
             }}
           >
             <option value="" disabled>
-              Select…
+              Select
             </option>
+            <option value="manual">Choose {links ? "links" : "items"}</option>
             <option value="page">This page ({visible.length})</option>
             {onSelectAll && (
               <option value="all">
@@ -395,7 +389,13 @@ export function SelectionBar({
             )}
           </select>
         </div>
-        {(!!selected.length || selection.selecting) && (
+        {children}
+      </div>
+      {(!!selected.length || selection.selecting) && (
+        <div
+          className={`selection-bar ${selected.length ? "has-selection" : ""} ${selection.selecting ? "is-selecting" : ""}`}
+        >
+          <span className="selection-count">{selected.length} selected</span>
           <div className="actions">
             {!!selected.length && (
               <>
@@ -476,8 +476,8 @@ export function SelectionBar({
               Cancel
             </button>
           </div>
-        )}
-      </div>
+        </div>
+      )}
       {patternOpen && (
         <SelectionPattern
           total={total}
