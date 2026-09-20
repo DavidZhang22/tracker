@@ -44,3 +44,5 @@ Training uses frozen feature rows. Full page replay additionally needs the ignor
 - [Media classification, hidden descriptors and model comparison](docs/MEDIA_CLASSIFICATION.md)
 
 - [Document imports and expanded source evaluation](reports/generalization.md)
+
+- [Fresh extraction/media/search audit, UI and description screening](reports/ui-model-review.md)

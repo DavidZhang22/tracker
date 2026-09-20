@@ -1,0 +1,141 @@
+.entry-row {
+  align-items: start;
+}
+.entry-summary {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.entry-details {
+  grid-column: 2 / -1;
+  min-width: 0;
+}
+.entry-details .csv-details,
+.entry-details .merged-links {
+  margin: 0;
+}
+.csv-details > summary,
+.merged-links > summary {
+  width: fit-content;
+  min-height: 36px;
+  padding: 8px 0;
+  color: var(--muted);
+  cursor: pointer;
+  line-height: 1.5;
+}
+.csv-details[open] > summary,
+.merged-links[open] > summary {
+  color: var(--ink);
+}
+.import-detail-content {
+  display: grid;
+  gap: 0;
+  margin: 4px 0 10px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--canvas);
+  color: var(--ink);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.import-detail-field {
+  display: grid;
+  grid-template-columns: minmax(100px, 26%) minmax(0, 1fr);
+  gap: 4px 16px;
+  margin: 0;
+  padding: 9px 0;
+}
+.import-detail-field + .import-detail-field {
+  border-top: 1px solid var(--line);
+}
+.import-detail-field dt {
+  color: var(--muted);
+  font-weight: 500;
+}
+.import-detail-field dd {
+  min-width: 0;
+  margin: 0;
+  white-space: pre-wrap;
+}
+.csv-details .import-detail-content p {
+  margin: 0;
+  padding: 9px 0;
+  white-space: pre-wrap;
+}
+.merged-links > ul {
+  margin: 4px 0 10px;
+  padding-left: 14px;
+  border-left: 2px solid var(--line);
+  gap: 12px;
+}
+.scan-results .entry-preview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px;
+  align-items: start;
+  gap: 8px 16px;
+}
+.scan-results .entry-preview > .preview-read {
+  grid-row: 1;
+}
+.entry-preview-content {
+  min-width: 0;
+}
+.entry-preview-content > .preview-title {
+  display: block;
+  line-height: 1.6;
+}
+.entry-preview-content > span,
+.entry-preview-content .preview-context {
+  white-space: normal;
+}
+.scan-results .entry-preview > .link-date {
+  grid-column: 2;
+}
+.scan-results .entry-preview:has(.preview-read) {
+  grid-template-columns: 64px minmax(0, 1fr) 150px;
+}
+.entry-preview:has(.preview-read) > .entry-preview-content {
+  grid-column: 2;
+}
+.scan-results .entry-preview:has(.preview-read) > .link-date {
+  grid-column: 3;
+}
+@media (max-width: 800px), (max-width: 1000px) and (pointer: coarse) {
+  .entry-details {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+  .is-selecting .entry-details {
+    grid-column: 2 / -1;
+  }
+  .csv-details > summary,
+  .merged-links > summary {
+    min-height: 44px;
+    padding: 11px 0;
+  }
+  .scan-results .entry-preview {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .scan-results .entry-preview > .link-date {
+    grid-column: 1;
+  }
+  .scan-results .entry-preview:has(.preview-read) {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
+  .scan-results .entry-preview:has(.preview-read) > .link-date {
+    grid-column: 2;
+  }
+  .scan-results .entry-preview > .preview-read {
+    grid-row: 1 / span 2;
+  }
+}
+@media (max-width: 480px) {
+  .import-detail-field {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+}

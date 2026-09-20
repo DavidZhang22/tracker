@@ -2,14 +2,43 @@ import { useId, useState } from "react";
 import { UploadIcon, DocumentTextIcon } from "@heroicons/react/outline";
 import { Icon } from "./Icons";
 import { uploadFile } from "../api";
+import "../styles/entry-details.css";
 
-export function ImportDetails({ context }) {
-  return context ? (
+export function ImportDetails({ context, title }) {
+  if (typeof context !== "string" || !context.trim()) return null;
+  const lines = context
+    .trim()
+    .split(/\r?\n|\r|;[ \t]+(?=[\p{L}\p{N}][\p{L}\p{N} _()/&.-]{0,59}:[ \t])/u);
+  const records = lines
+    .filter((line) => line.trim())
+    .map((line) => {
+      const field =
+        /^([\p{L}\p{N}][\p{L}\p{N} _()/&.-]{0,59}):[ \t]+([\s\S]*)$/u.exec(
+          line.trim(),
+        );
+      return field
+        ? { label: field[1], value: field[2] }
+        : { value: line.trim() };
+    });
+  return (
     <details className="csv-details">
-      <summary>Details</summary>
-      <p>{context}</p>
+      <summary aria-label={title ? `Details for ${title}` : undefined}>
+        Details
+      </summary>
+      <div className="import-detail-content">
+        {records.map((record, index) =>
+          record.label ? (
+            <dl className="import-detail-field" key={index}>
+              <dt>{record.label}</dt>
+              <dd>{record.value}</dd>
+            </dl>
+          ) : (
+            <p key={index}>{record.value}</p>
+          ),
+        )}
+      </div>
     </details>
-  ) : null;
+  );
 }
 
 export default function ImportInput({

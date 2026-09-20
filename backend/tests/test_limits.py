@@ -9,7 +9,7 @@ from fastapi.testclient import TestClient
 from app.main import create_app
 from app.tracker.cache import FetchCache
 from app.tracker.guards import ApiGuard, RateLimits, ScanGuard
-from app.tracker.limits import MAX_LINKS, MAX_PREVIEWS
+from app.tracker.limits import MAX_ITEMS, MAX_LINKS, MAX_PREVIEWS
 from app.tracker.models import Entry, Scan
 from app.tracker.store import Store
 from app.tracker.urls import DiscoveryError, RequestBudget, SafeFetcher, request_budget
@@ -162,11 +162,13 @@ def test_scan_quota_rejects_before_discovery_and_refresh_all_charges_each_item(
         monkeypatch.setattr("app.tracker.store.time", lambda: now)
         add(client)
         guard = app.state.scan_guard
-        guard.rates.charge([(f"scan:{app.state.store.path}", 200, 3600)], 197)
+        guard.rates.charge(
+            [(f"scan:{app.state.store.path}", MAX_ITEMS, 3600)], MAX_ITEMS - 3
+        )
         calls = len(fake.calls)
         assert client.post("/api/refresh").status_code == 429
         assert len(fake.calls) == calls
-        guard.rates.charge([(f"scan:{app.state.store.path}", 200, 3600)])
+        guard.rates.charge([(f"scan:{app.state.store.path}", MAX_ITEMS, 3600)])
         response = client.post("/api/scans", json={"url": ROOT})
         assert response.status_code == 429 and "retry-after" in response.headers
         assert len(fake.calls) == calls
@@ -276,3 +278,41 @@ def test_oversized_refresh_rolls_back_without_changing_progress(tmp_path, monkey
     with pytest.raises(DiscoveryError, match="too large"):
         store.merge(item["id"], scan([Entry(ROOT + "one", "Replacement")]).to_dict())
     assert store.item(item["id"])["latest_link"]["title"] == "Original"
+
+
+def test_real_item_limit_includes_trash_and_allows_500th_item(tmp_path):
+    store = Store(tmp_path / "item-cap.sqlite3")
+    with store.connection() as db:
+        db.executemany(
+            "INSERT INTO items(id,url,title,kind,created_at,deleted,media_version) VALUES (?,?,?,?,?,?,999)",
+            [
+                (
+                    f"old-{i}",
+                    f"https://example.org/{i}",
+                    f"Item {i}",
+                    "website",
+                    "2026-01-01",
+                    i % 2,
+                )
+                for i in range(499)
+            ],
+        )
+    last = create(store, [], ROOT + "last")
+    assert MAX_ITEMS == 500 and last["id"]
+    with pytest.raises(ValueError, match="500-item limit"):
+        create(store, [], ROOT + "excess")
+    with store.connection() as db:
+        assert db.execute("SELECT count(*) FROM items").fetchone()[0] == 500
+    assert len(store.semantic_records()) == 251
+
+
+def test_full_library_refresh_fits_account_quota_but_remains_bounded():
+    guard = ScanGuard()
+    with guard.operation("one", cost=MAX_ITEMS):
+        pass
+    with pytest.raises(HTTPException):
+        with guard.operation("one"):
+            pytest.fail("Account allowance bypassed")
+    with pytest.raises(HTTPException):
+        with guard.operation("two", cost=MAX_ITEMS):
+            pytest.fail("Global allowance bypassed")

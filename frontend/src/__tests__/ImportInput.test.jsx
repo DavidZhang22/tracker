@@ -115,7 +115,9 @@ test("CSV previews rows inside one item and uses existing read choices", async (
   expect(screen.getByLabelText("Link column")).toHaveValue("0");
   expect(screen.getByLabelText("Title column")).toHaveValue("1");
   expect(screen.getByText("1 links found")).toBeInTheDocument();
-  expect(screen.getByText("Location: Remote")).toBeInTheDocument();
+  fireEvent.click(screen.getByLabelText("Details for Example — Engineer"));
+  expect(screen.getByText("Location", { selector: "dt" })).toBeInTheDocument();
+  expect(screen.getByText("Remote", { selector: "dd" })).toBeInTheDocument();
   fireEvent.change(screen.getByLabelText("Reading progress"), {
     target: { value: "choose" },
   });
@@ -282,4 +284,91 @@ test("documents allow optional model filtering and never submit a website scan",
   expect(
     screen.queryByRole("button", { name: "Add to library" }),
   ).not.toBeInTheDocument();
+});
+
+test("import details separate labeled fields without splitting URLs or free text", () => {
+  const { container } = render(
+    <ImportDetails
+      title="Job"
+      context={
+        "Company: Example; Location: Remote\nApply: https://example.org/job?a=1;b=2\nNotes: Bring ID; arrive at 10:30\nAdditional information without a label."
+      }
+    />,
+  );
+  fireEvent.click(screen.getByLabelText("Details for Job"));
+  expect(
+    [...container.querySelectorAll("dt")].map((node) => node.textContent),
+  ).toEqual(["Company", "Location", "Apply", "Notes"]);
+  expect(
+    [...container.querySelectorAll("dd")].map((node) => node.textContent),
+  ).toEqual([
+    "Example",
+    "Remote",
+    "https://example.org/job?a=1;b=2",
+    "Bring ID; arrive at 10:30",
+  ]);
+  expect(
+    screen.getByText("Additional information without a label."),
+  ).toBeVisible();
+  expect(container.querySelector("details")).toHaveAttribute("open");
+  expect(container.querySelector("a")).toBeNull();
+});
+
+test("empty detail context does not create an empty disclosure", () => {
+  const { container } = render(<ImportDetails context={" \n \t"} />);
+  expect(container).toBeEmptyDOMElement();
+});
+
+test("merged imported entries keep every member's fields outside the title row", async () => {
+  const members = [
+    { ...entry, id: "link", title: "First job", context: "Location: Boston" },
+    {
+      ...entry,
+      id: "other",
+      title: "Second job",
+      url: "https://example.org/second",
+      context: "Location: Seattle",
+      summary_suppressed: true,
+    },
+  ];
+  api.mockImplementation(async (path) =>
+    path === "/settings"
+      ? {}
+      : path.includes("/links")
+        ? {
+            links: [{ ...members[0], members, summary_suppressed: true }],
+            total: 1,
+          }
+        : item,
+  );
+  setup("/items/one");
+  const grouped = await screen.findByText("2 links in this entry");
+  fireEvent.click(grouped);
+  fireEvent.click(screen.getByLabelText("Details for First job"));
+  fireEvent.click(screen.getByLabelText("Details for Second job"));
+  expect(screen.getByText("Boston")).toBeVisible();
+  expect(screen.getByText("Seattle")).toBeVisible();
+  expect(screen.getAllByText("Automatic summary hidden.")).toHaveLength(2);
+  expect(grouped.closest(".entry-details").parentElement).toHaveClass(
+    "entry-row",
+  );
+  expect(grouped.closest(".entry-content")).toBeNull();
+});
+
+test("preview keeps imported fields when an automatic summary is suppressed", async () => {
+  uploadFile.mockResolvedValue({
+    ...preview,
+    description_suppressed: true,
+    entries: [{ ...entry, summary_suppressed: true }],
+  });
+  setup();
+  await click("File or text");
+  await chooseFile();
+  fireEvent.click(screen.getByLabelText("Details for Example — Engineer"));
+  expect(screen.getByText("Automatic summary hidden.")).toBeVisible();
+  expect(screen.getByText("Automatic description hidden.")).toBeVisible();
+  expect(screen.getByText("Remote", { selector: "dd" })).toBeVisible();
+  expect(
+    screen.getByRole("link", { name: "Example — Engineer" }),
+  ).toHaveAttribute("href", entry.url);
 });

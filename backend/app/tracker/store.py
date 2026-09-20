@@ -10,6 +10,7 @@ from pathlib import Path
 from time import time
 
 from . import link_groups
+from .content_safety import public_metadata
 from .entry_identity import entry_key
 from .limits import (
     ITEM_ADD_INTERVAL_SECONDS,
@@ -301,7 +302,7 @@ class Store:
         for k in ("warnings", "methods", "search_tags"):
             if k in r:
                 r[k] = json.loads(r[k])
-        return r
+        return public_metadata(r)
 
     def semantic_records(self, ids=None, trash=False):
         with self.connection() as db:

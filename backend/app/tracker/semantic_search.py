@@ -11,6 +11,7 @@ from fastapi import HTTPException
 from rapidfuzz import process
 from rapidfuzz.distance import DamerauLevenshtein
 
+from .content_safety import item_risk
 from .guards import RateLimits
 from .media_metadata import CONCEPTS, STOP, clean
 from .semantic_model import DIMENSIONS, MODEL_VERSION, EncoderUnavailable, encoder
@@ -174,14 +175,24 @@ class SemanticSearch:
         self.profile_lock = Lock()
 
     def preview(self, payload):
+        if item_risk(payload):
+            return payload | {
+                "description": "",
+                "description_method": "safety-filtered",
+            }
         model = self.get_encoder()
         try:
             description, method = describe(
-                payload.get("title", ""), payload.get("source_summary", ""), model
+                payload.get("title", ""),
+                payload.get("source_summary", ""),
+                model,
+                url=payload.get("url", ""),
             )
         except EncoderUnavailable:
             description, method = describe(
-                payload.get("title", ""), payload.get("source_summary", "")
+                payload.get("title", ""),
+                payload.get("source_summary", ""),
+                url=payload.get("url", ""),
             )
         return payload | {"description": description, "description_method": method}
 
@@ -201,13 +212,31 @@ class SemanticSearch:
                     and row.get("semantic_key", "").endswith(":" + signature)
                 ):
                     continue
+                previous_key = row.get("semantic_key", "")
+                legacy_key = (
+                    "profile-v1:" + version + ":" + fingerprint(row, legacy=True)
+                )
+                if previous_key == legacy_key and not item_risk(row):
+                    # Screening does not change safe text or vectors. Upgrade the
+                    # cache signature without re-encoding every saved item.
+                    store.save_semantic(
+                        row["id"],
+                        signature,
+                        key,
+                        row["description_auto"],
+                        row["description_method"],
+                        row.get("semantic_vector"),
+                    )
+                    continue
                 try:
                     automatic, method = describe(
-                        row["title"], row["source_summary"], model
+                        row["title"], row["source_summary"], model, url=row["url"]
                     )
                 except EncoderUnavailable:
                     model = None
-                    automatic, method = describe(row["title"], row["source_summary"])
+                    automatic, method = describe(
+                        row["title"], row["source_summary"], url=row["url"]
+                    )
                 effective = (
                     row["description_override"]
                     if row["description_override"] is not None

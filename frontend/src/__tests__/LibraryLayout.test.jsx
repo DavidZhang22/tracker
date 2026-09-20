@@ -119,3 +119,22 @@ test("footer keeps privacy, terms, contact and the library route available", () 
     "/privacy#contact",
   );
 });
+
+test("Library shows the account item limit once without Saved views", async () => {
+  api.mockResolvedValue([item]);
+  render(
+    <MemoryRouter>
+      <LibraryPage />
+    </MemoryRouter>,
+  );
+  await screen.findByText("A series");
+  expect(
+    screen.getAllByText("Up to 500 items per account, including Trash."),
+  ).toHaveLength(1);
+  expect(screen.queryByText("Saved views")).not.toBeInTheDocument();
+  expect(api).not.toHaveBeenCalledWith("/views");
+  fireEvent.click(screen.getByRole("button", { name: "Trash", exact: true }));
+  expect(
+    screen.getAllByText("Up to 500 items per account, including Trash."),
+  ).toHaveLength(1);
+});

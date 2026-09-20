@@ -11,12 +11,12 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 from starlette.background import BackgroundTask
 
+from .content_safety import public_scan
 from .csv_import import parse_csv
 from .keywords import terms
 from .limits import MAX_ITEMS, MAX_LINKS, bounded_scan
 from .media_metadata import MediaOverride, annotate
 from .preferences import PreferencesPatch
-from .saved_views import SavedViewInput, delete_view, list_views, save_view
 from .source_methods import SourceMethod, detect_source_method
 from .store import ItemAdditionCooldown
 from .suggestions import collect_cached, ranked_suggestions
@@ -61,26 +61,6 @@ def update_settings(body: PreferencesPatch, request: Request):
         body.model_dump(exclude_none=True, exclude={"apply_auto_read"}),
         body.apply_auto_read,
     )
-
-
-@router.get("/views")
-def views(request: Request):
-    return list_views(request.state.store)
-
-
-@router.post("/views", status_code=201)
-def create_view(body: SavedViewInput, request: Request):
-    return save_view(request.state.store, body.model_dump())
-
-
-@router.patch("/views/{view_id}")
-def update_view(view_id: str, body: SavedViewInput, request: Request):
-    return save_view(request.state.store, body.model_dump(), view_id)
-
-
-@router.delete("/views/{view_id}")
-def remove_view(view_id: str, request: Request):
-    return delete_view(request.state.store, view_id)
 
 
 class ItemPatch(BaseModel):
@@ -231,7 +211,7 @@ async def scan(body: ScanRequest, request: Request):
     payload = await run_blocking(annotate, payload)
     payload = await run_blocking(request.app.state.semantic.preview, payload)
     sid = await run_blocking(request.state.store.save_scan, payload)
-    return payload | {"scan_id": sid}
+    return public_scan(payload) | {"scan_id": sid}
 
 
 @router.get("/items")
@@ -319,7 +299,7 @@ async def csv_preview(
         payload = await run_blocking(annotate, payload)
         payload = await run_blocking(request.app.state.semantic.preview, payload)
         sid = await run_blocking(store.save_scan, payload)
-    return payload | {"scan_id": sid}
+    return public_scan(payload) | {"scan_id": sid}
 
 
 class CsvImportRequest(BaseModel):

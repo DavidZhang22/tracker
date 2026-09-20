@@ -1,0 +1,213 @@
+{
+  "provenance": "Authored relevance judgments fixed before model outputs; not real user query logs. Queries whose expected source could not be collected are excluded and counted.",
+  "queries": [
+    [
+      "creepy fictional small town radio",
+      [
+        "audit-nightvale"
+      ],
+      "meaning"
+    ],
+    [
+      "paranormal archival horror narration",
+      [
+        "audit-magnus"
+      ],
+      "meaning"
+    ],
+    [
+      "electronic dance record label",
+      [
+        "audit-anjunabeats"
+      ],
+      "meaning"
+    ],
+    [
+      "independent rock album releases",
+      [
+        "audit-matador"
+      ],
+      "meaning"
+    ],
+    [
+      "mind bending speculative fiction",
+      [
+        "audit-qntm"
+      ],
+      "meaning"
+    ],
+    [
+      "short fantasy and science fiction stories",
+      [
+        "audit-qntm",
+        "audit-lightspeed"
+      ],
+      "meaning"
+    ],
+    [
+      "music journalism album recommendations",
+      [
+        "audit-bandcampdaily"
+      ],
+      "meaning"
+    ],
+    [
+      "borrow popular books",
+      [
+        "audit-openlibrary"
+      ],
+      "meaning"
+    ],
+    [
+      "game art production interviews",
+      [
+        "audit-eighty"
+      ],
+      "meaning"
+    ],
+    [
+      "recent machine learning papers",
+      [
+        "audit-hfpapers"
+      ],
+      "meaning"
+    ],
+    [
+      "qntm",
+      [
+        "audit-qntm"
+      ],
+      "exact"
+    ],
+    [
+      "night vale",
+      [
+        "audit-nightvale"
+      ],
+      "exact"
+    ],
+    [
+      "Anjunabeats",
+      [
+        "audit-anjunabeats"
+      ],
+      "exact"
+    ],
+    [
+      "maguns archives",
+      [
+        "audit-magnus"
+      ],
+      "typo"
+    ],
+    [
+      "anjunabets",
+      [
+        "audit-anjunabeats"
+      ],
+      "typo"
+    ],
+    [
+      "open libary",
+      [
+        "audit-openlibrary"
+      ],
+      "typo"
+    ],
+    [
+      "live airline ticket bookings",
+      [],
+      "negative"
+    ],
+    [
+      "local plumber phone number",
+      [],
+      "negative"
+    ],
+    [
+      "pizza delivery menu",
+      [],
+      "negative"
+    ],
+    [
+      "ficción científica",
+      [
+        "audit-qntm",
+        "audit-lightspeed"
+      ],
+      "multilingual"
+    ],
+    [
+      "podcasts de terror",
+      [
+        "audit-nightvale",
+        "audit-magnus"
+      ],
+      "multilingual"
+    ],
+    [
+      "musique électronique",
+      [
+        "audit-anjunabeats"
+      ],
+      "multilingual"
+    ],
+    [
+      "radiohead",
+      [
+        "audit-radiohead"
+      ],
+      "exact"
+    ],
+    [
+      "wilco records",
+      [
+        "audit-wilco"
+      ],
+      "exact"
+    ],
+    [
+      "alternative rock albums",
+      [
+        "audit-radiohead",
+        "audit-wilco"
+      ],
+      "meaning"
+    ],
+    [
+      "javascript web development podcast",
+      [
+        "audit-syntax"
+      ],
+      "meaning"
+    ],
+    [
+      "long form scientist interviews",
+      [
+        "audit-lexfridman"
+      ],
+      "meaning"
+    ],
+    [
+      "biblical mystical fantasy serial",
+      [
+        "audit-unsong"
+      ],
+      "meaning"
+    ],
+    [
+      "synatx podcast",
+      [
+        "audit-syntax"
+      ],
+      "typo"
+    ],
+    [
+      "Unsong",
+      [
+        "audit-unsong"
+      ],
+      "exact"
+    ]
+  ]
+}

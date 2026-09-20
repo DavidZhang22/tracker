@@ -1,0 +1,140 @@
+{
+  "repeats": 3,
+  "pages": {
+    "audit-mit-course": {
+      "expected": 11,
+      "correct": 10,
+      "missing": 1,
+      "unwanted": 0,
+      "accepted_auxiliary": 0,
+      "entries": 10,
+      "median_seconds": 0.027663303073495626,
+      "dates": 0,
+      "warnings": [],
+      "missing_examples": [
+        "https://missing.csail.mit.edu/2020/potpourri"
+      ],
+      "unwanted_examples": [],
+      "output_sha256": "5e7776153fdd9db24954b3518989b1f7c9c0a5964495aa9ad8e8f500d63e5d45"
+    },
+    "audit-cses": {
+      "expected": 400,
+      "correct": 0,
+      "missing": 400,
+      "unwanted": 0,
+      "accepted_auxiliary": 0,
+      "entries": 0,
+      "median_seconds": 0.27283014892600477,
+      "dates": 0,
+      "warnings": [],
+      "missing_examples": [
+        "https://cses.fi/problemset/task/1068",
+        "https://cses.fi/problemset/task/1069",
+        "https://cses.fi/problemset/task/1070",
+        "https://cses.fi/problemset/task/1071",
+        "https://cses.fi/problemset/task/1072",
+        "https://cses.fi/problemset/task/1073",
+        "https://cses.fi/problemset/task/1074",
+        "https://cses.fi/problemset/task/1075"
+      ],
+      "unwanted_examples": [],
+      "output_sha256": "50cf4a511c366fdb3833a7d4712196f3010fa6f12dbecf956de700a7ba6be2f6"
+    },
+    "audit-syntax": {
+      "expected": 10,
+      "correct": 10,
+      "missing": 0,
+      "unwanted": 0,
+      "accepted_auxiliary": 0,
+      "entries": 10,
+      "median_seconds": 0.1093569309450686,
+      "dates": 10,
+      "warnings": [],
+      "missing_examples": [],
+      "unwanted_examples": [],
+      "output_sha256": "f598484cd39150b0aed969ee1a6195ba6611c84dbb15ca787bdf256e3dd2ecb1"
+    },
+    "audit-lexfridman": {
+      "expected": 501,
+      "correct": 501,
+      "missing": 0,
+      "unwanted": 0,
+      "accepted_auxiliary": 174,
+      "entries": 675,
+      "median_seconds": 2.4073654370149598,
+      "dates": 0,
+      "warnings": [],
+      "missing_examples": [],
+      "unwanted_examples": [],
+      "output_sha256": "85d694646d79e6c2060d65273505ebcca1077c146ef0f17dabfb6659e04cf6b0"
+    },
+    "audit-standardebooks": {
+      "expected": 12,
+      "correct": 0,
+      "missing": 12,
+      "unwanted": 0,
+      "accepted_auxiliary": 0,
+      "entries": 0,
+      "median_seconds": 0.10087816405575722,
+      "dates": 0,
+      "warnings": [],
+      "missing_examples": [
+        "https://standardebooks.org/ebooks/arthur-conan-doyle/brigadier-gerard-stories",
+        "https://standardebooks.org/ebooks/c-h-spurgeon/the-art-of-illustration",
+        "https://standardebooks.org/ebooks/dorothy-m-richardson/the-trap",
+        "https://standardebooks.org/ebooks/edmund-burke/reflections-on-the-revolution-in-france",
+        "https://standardebooks.org/ebooks/george-macdonald/within-and-without",
+        "https://standardebooks.org/ebooks/gustave-flaubert/sentimental-education/m-walter-dunne",
+        "https://standardebooks.org/ebooks/h-c-mcneile/the-final-count",
+        "https://standardebooks.org/ebooks/h-g-wells/the-wheels-of-chance"
+      ],
+      "unwanted_examples": [],
+      "output_sha256": "4cfe349dc2299f3bb44a344583911f06f65f3901ee3fc04cf06ca8797a10fbf5"
+    },
+    "audit-zig": {
+      "expected": 29,
+      "correct": 28,
+      "missing": 1,
+      "unwanted": 0,
+      "accepted_auxiliary": 0,
+      "entries": 28,
+      "median_seconds": 0.0781335539650172,
+      "dates": 28,
+      "warnings": [],
+      "missing_examples": [
+        "https://ziglang.org/news/welcoming-new-team-members"
+      ],
+      "unwanted_examples": [],
+      "output_sha256": "fb18fd4baf44c9d5f615df3fca5b3fcff050133f7b20c1b967d8e01edf9b7a1f"
+    },
+    "audit-unsong": {
+      "expected": 95,
+      "correct": 4,
+      "missing": 91,
+      "unwanted": 0,
+      "accepted_auxiliary": 0,
+      "entries": 4,
+      "median_seconds": 0.10403530008625239,
+      "dates": 0,
+      "warnings": [],
+      "missing_examples": [
+        "https://unsongbook.com/chapter-1-dark-satanic-mills",
+        "https://unsongbook.com/chapter-10-bring-the-swift-arrows-of-light",
+        "https://unsongbook.com/chapter-11-drive-the-just-man-into-barren-climes",
+        "https://unsongbook.com/chapter-12-borne-on-angels-wings",
+        "https://unsongbook.com/chapter-13-the-image-of-eternal-death",
+        "https://unsongbook.com/chapter-14-cruelty-has-a-human-heart",
+        "https://unsongbook.com/chapter-15-o-where-shall-i-hide-my-face",
+        "https://unsongbook.com/chapter-16-if-perchance-with-iron-power-he-might-avert-his-own-despair"
+      ],
+      "unwanted_examples": [],
+      "output_sha256": "20d06b7bd079a5da409258192e390c58cd27c349c1e7562ca93f3a0fa9ea36cf"
+    }
+  },
+  "max_links": 4999,
+  "total_median_seconds": 3.1002628380665556,
+  "memory": {
+    "container_peak_bytes": 60510208,
+    "process_peak_bytes": 73662464
+  }
+}

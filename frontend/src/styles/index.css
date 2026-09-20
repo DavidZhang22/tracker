@@ -1142,10 +1142,6 @@ a.entry-title:hover {
 .settings-account .account-card {
   max-width: none;
 }
-.preferences-loading {
-  max-width: 480px;
-  margin: 48px auto;
-}
 .preview-reading {
   display: flex;
   align-items: center;

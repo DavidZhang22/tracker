@@ -6,11 +6,13 @@ import math
 import re
 import unicodedata
 
+from .content_safety import excerpt_risk, item_risk
 from .media_metadata import STOP, TYPE_TAGS, clean
 
 MAX_DESCRIPTION = 700
-PROFILE_VERSION = "profile-v1"
+PROFILE_VERSION = "profile-v2-safety"
 FIELDS = (
+    "url",
     "title",
     "kind",
     "source_summary",
@@ -26,10 +28,12 @@ PROMOTION = re.compile(
 )
 
 
-def fingerprint(row):
+def fingerprint(row, *, legacy=False):
     return hashlib.sha256(
         json.dumps(
-            {key: row.get(key) for key in FIELDS}, sort_keys=True, ensure_ascii=True
+            {key: row.get(key) for key in FIELDS if not legacy or key != "url"},
+            sort_keys=True,
+            ensure_ascii=True,
         ).encode()
     ).hexdigest()
 
@@ -69,7 +73,9 @@ def dot(a, b):
     return sum(x * y for x, y in zip(a, b, strict=True))
 
 
-def describe(title, source, model=None):
+def describe(title, source, model=None, *, url=""):
+    if excerpt_risk(title, source, url):
+        return "", "safety-filtered"
     sentences = description_sentences(source)
     if not sentences:
         return "", "unavailable"
@@ -120,6 +126,9 @@ def document(row, description=None):
         description = row.get("description_override")
         if description is None:
             description = row.get("description_auto", "")
+    source = description or row.get("source_summary")
+    if row.get("description_override") is None and item_risk(row):
+        source = ""
     tags = row.get("search_tags", [])
     if isinstance(tags, str):
         tags = json.loads(tags)
@@ -127,7 +136,7 @@ def document(row, description=None):
         [
             clean(row.get("title"), 300),
             " ".join(TYPE_TAGS.get(row.get("kind"), [])),
-            clean(description or row.get("source_summary"), 1200),
+            clean(source, 1200),
             " ".join(tags[:12])[:300],
         ]
     )[:2000]

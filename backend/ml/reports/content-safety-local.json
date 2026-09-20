@@ -1,0 +1,9 @@
+{
+  "benign_profiles": 70,
+  "flagged_benign_profiles": [],
+  "median_ms": {
+    "500_item_library": 39.375,
+    "4999_job_summaries": 54.218
+  },
+  "scope": "Local text screening only; no malware/legality/content-body guarantee"
+}

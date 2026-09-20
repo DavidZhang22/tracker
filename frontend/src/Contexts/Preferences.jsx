@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { api, patch } from "../api";
 import { Notice } from "../Components/Notice";
+import AppLoading from "../Components/AppLoading";
 
 export const defaults = {
   link_sort: "auto",
@@ -28,7 +29,7 @@ export function PreferencesProvider({ children }) {
   }, [attempt]);
   if (!preferences)
     return (
-      <div className="form-panel preferences-loading">
+      <AppLoading label="Loading preferences…">
         {error ? (
           <>
             <Notice error>{error}</Notice>
@@ -42,10 +43,8 @@ export function PreferencesProvider({ children }) {
               Retry settings
             </button>
           </>
-        ) : (
-          <p role="status">Loading preferences…</p>
-        )}
-      </div>
+        ) : null}
+      </AppLoading>
     );
   return (
     <PreferencesContext.Provider

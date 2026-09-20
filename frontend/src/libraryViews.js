@@ -43,9 +43,3 @@ export function libraryViewParams(current, changes, defaultSort = "recent") {
   }
   return next;
 }
-
-export function sameLibraryView(a, b) {
-  return ["query", "filter", "kind", "sort", "search_mode"].every((key) =>
-    key === "query" ? a[key].trim() === b[key].trim() : a[key] === b[key],
-  );
-}

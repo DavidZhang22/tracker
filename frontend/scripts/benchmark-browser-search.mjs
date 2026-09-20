@@ -61,11 +61,11 @@ const measure = (operation) => {
 };
 const report = {
   runtime: process.version,
-  note: "Synthetic public-style metadata; 200 is the account limit. Pure JS timings exclude worker startup and browser rendering.",
+  note: "Synthetic public-style metadata; 500 is the account limit. Pure JS timings exclude worker startup and browser rendering.",
   queries: queries.length,
   results: [],
 };
-for (const count of [50, 200, 2000]) {
+for (const count of [50, 200, 500, 2000]) {
   const rows = makeRows(count);
   const oldSearch = baseline(rows),
     newSearch = current(rows);

@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { mediaLabel, mediaTypes } from "../media";
 import useLibrarySearch from "../Hooks/useLibrarySearch";
-import SavedViews from "../Components/SavedViews";
 import ContinueLink from "../Components/ContinueLink";
 import { libraryView, libraryViewParams } from "../libraryViews";
 import { Link, useSearchParams } from "react-router-dom";
@@ -358,10 +357,6 @@ export default function LibraryPage() {
             </select>
           </FilterOptions>
         </div>
-        <SavedViews
-          current={currentView}
-          onApply={(view) => chooseView(view)}
-        />
         <SelectionBar
           selection={selection}
           visible={visibleIds}
@@ -532,6 +527,9 @@ export default function LibraryPage() {
           </div>
         )}
         <div className="panel-footer">
+          <span className="library-limit">
+            Up to 500 items per account, including Trash.
+          </span>
           <span role="status">
             {searching
               ? "Searching…"

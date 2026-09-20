@@ -10,6 +10,7 @@ import { api, post } from "../api";
 import { Notice } from "../Components/Notice";
 import AccountData from "./AccountData";
 import RecoveryEmail from "./RecoveryEmail";
+import AppLoading from "../Components/AppLoading";
 
 const AuthContext = createContext({ required: false, user: null });
 export const useAuth = () => useContext(AuthContext);
@@ -33,21 +34,16 @@ export function AuthBoundary({ children }) {
   }, [load]);
   if (!status)
     return (
-      <div className="auth-page">
-        <div className="form-panel">
-          <h1>Trackify</h1>
-          {error ? (
-            <>
-              <Notice error>{error}</Notice>
-              <button className="button" onClick={load}>
-                Retry
-              </button>
-            </>
-          ) : (
-            <p role="status">Loading…</p>
-          )}
-        </div>
-      </div>
+      <AppLoading>
+        {error && (
+          <>
+            <Notice error>{error}</Notice>
+            <button className="button" onClick={load}>
+              Retry
+            </button>
+          </>
+        )}
+      </AppLoading>
     );
   if (status.required && !status.user)
     return (

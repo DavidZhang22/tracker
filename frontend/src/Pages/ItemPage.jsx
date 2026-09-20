@@ -553,27 +553,6 @@ function ItemDetail({ id }) {
                   onClick={(e) => openLink(e, l)}
                   onAuxClick={(e) => openLink(e, l)}
                 />
-                {l.members?.length > 1 && (
-                  <details className="merged-links">
-                    <summary>{l.members.length} links in this entry</summary>
-                    <ul>
-                      {l.members.map((member) => (
-                        <li key={member.id}>
-                          <EntryLink
-                            entry={member}
-                            onClick={(event) => openLink(event, l)}
-                            onAuxClick={(event) => openLink(event, l)}
-                          />
-                          <span className="muted">
-                            {member.url
-                              ? new URL(member.url).hostname
-                              : "No link"}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                )}
                 <div className="entry-subtitle">
                   {selection.selecting && (
                     <span>Position {offset + index + 1}</span>
@@ -594,10 +573,11 @@ function ItemDetail({ id }) {
                   {l.availability === "paid" && (
                     <span className="access-label">Paid access</span>
                   )}
-                  {l.summary && <span>{l.summary}</span>}
                 </div>
-                {["csv", "document"].includes(item.source_type) && (
-                  <ImportDetails context={l.context} />
+                {l.summary_suppressed ? (
+                  <p className="entry-summary">Automatic summary hidden.</p>
+                ) : (
+                  l.summary && <p className="entry-summary">{l.summary}</p>
                 )}
               </div>
               <div className="entry-date">
@@ -625,6 +605,57 @@ function ItemDetail({ id }) {
                   onAction={(action) => selectedAction(action, [l.id])}
                 />
               </div>
+              {(l.members?.length > 1 ||
+                (["csv", "document"].includes(item.source_type) &&
+                  l.context?.trim())) && (
+                <div className="entry-details">
+                  {l.members?.length > 1 && (
+                    <details className="merged-links">
+                      <summary>{l.members.length} links in this entry</summary>
+                      <ul>
+                        {l.members.map((member) => (
+                          <li key={member.id}>
+                            <EntryLink
+                              entry={member}
+                              onClick={(event) => openLink(event, l)}
+                              onAuxClick={(event) => openLink(event, l)}
+                            />
+                            <span className="muted">
+                              {member.url
+                                ? new URL(member.url).hostname
+                                : "No link"}
+                            </span>
+                            {member.id !== l.id &&
+                              (member.summary_suppressed ? (
+                                <p className="entry-summary">
+                                  Automatic summary hidden.
+                                </p>
+                              ) : (
+                                member.summary && (
+                                  <p className="entry-summary">
+                                    {member.summary}
+                                  </p>
+                                )
+                              ))}
+                            {member.id !== l.id &&
+                              ["csv", "document"].includes(
+                                item.source_type,
+                              ) && (
+                                <ImportDetails
+                                  context={member.context}
+                                  title={member.title}
+                                />
+                              )}
+                          </li>
+                        ))}
+                      </ul>
+                    </details>
+                  )}
+                  {["csv", "document"].includes(item.source_type) && (
+                    <ImportDetails context={l.context} title={l.title} />
+                  )}
+                </div>
+              )}
             </article>
           ))
         ) : (

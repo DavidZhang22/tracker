@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "fixed_before_evaluation": true,
+  "partition": "additional_source_holdout",
+  "model_sha256": "08dc42d54bb989f0f061cae7710b057f20dc8d2c9a44523b6691527d485a3417",
+  "sources": [
+    {
+      "source_id": "audit-matador",
+      "url": "https://matadorrecords.com/releases",
+      "label": "music",
+      "rationale": "Record-label release inventory."
+    },
+    {
+      "source_id": "audit-anjunabeats",
+      "url": "https://music.anjunabeats.com/",
+      "label": "music",
+      "rationale": "Record-label music catalog."
+    },
+    {
+      "source_id": "audit-nightvale",
+      "url": "https://www.welcometonightvale.com/episodes",
+      "label": "podcast",
+      "rationale": "Fictional radio podcast episode archive."
+    },
+    {
+      "source_id": "audit-magnus",
+      "url": "https://rustyquill.com/show/the-magnus-archives/",
+      "label": "podcast",
+      "rationale": "Narrated horror podcast series."
+    },
+    {
+      "source_id": "audit-qntm",
+      "url": "https://qntm.org/fiction",
+      "label": "novel",
+      "rationale": "Short fiction and novels; Books & novels is the available fiction type."
+    },
+    {
+      "source_id": "audit-lightspeed",
+      "url": "https://www.lightspeedmagazine.com/category/fiction/",
+      "label": "novel",
+      "rationale": "Published short fiction inventory; adjacent magazine articles are not the intended inventory."
+    },
+    {
+      "source_id": "audit-bandcampdaily",
+      "url": "https://daily.bandcamp.com/",
+      "label": "blog",
+      "rationale": "Music journalism, not an album catalog."
+    },
+    {
+      "source_id": "audit-openlibrary",
+      "url": "https://openlibrary.org/trending/daily",
+      "label": "novel",
+      "rationale": "Catalog of books rather than a serial chapter list."
+    },
+    {
+      "source_id": "audit-eighty",
+      "url": "https://80.lv/articles/",
+      "label": "blog",
+      "rationale": "Game-art articles rather than playable games or videos."
+    },
+    {
+      "source_id": "audit-hfpapers",
+      "url": "https://huggingface.co/papers/trending",
+      "label": "research",
+      "rationale": "Research-paper listing."
+    },
+    {
+      "source_id": "audit-radiohead",
+      "url": "https://www.radiohead.com/library/",
+      "label": "music",
+      "rationale": "Band archive organized around album releases and recordings."
+    },
+    {
+      "source_id": "audit-wilco",
+      "url": "https://wilcoworld.net/records/",
+      "label": "music",
+      "rationale": "Band album discography."
+    },
+    {
+      "source_id": "audit-syntax",
+      "url": "https://syntax.fm/",
+      "label": "podcast",
+      "rationale": "Web-development podcast episode listing.",
+      "shared_capture": "data/extraction-audit/syntax.html"
+    },
+    {
+      "source_id": "audit-lexfridman",
+      "url": "https://lexfridman.com/podcast/",
+      "label": "podcast",
+      "rationale": "Long-form interview podcast archive.",
+      "shared_capture": "data/extraction-audit/lexfridman.html"
+    },
+    {
+      "source_id": "audit-unsong",
+      "url": "https://unsongbook.com/",
+      "label": "novel",
+      "rationale": "Web serial novel chapter index.",
+      "shared_capture": "data/extraction-audit/unsong.html"
+    }
+  ]
+}

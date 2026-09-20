@@ -1,0 +1,58 @@
+[
+  {
+    "id": "mit-course",
+    "file": "mit-course.html",
+    "reduction": "First three matched listing regions, serialized by BeautifulSoup; wrapper retained where relevant. Navigation elsewhere, scripts and styles omitted. Not used for full-page accuracy or timing.",
+    "source": "https://missing.csail.mit.edu/2020/",
+    "capture_sha256": "ee4d41b03c67c3e773b055ca0a6de0df297eff98e61cc91bc6e9434410f907e7",
+    "captured": "2026-09-20"
+  },
+  {
+    "id": "cses",
+    "file": "cses.html",
+    "reduction": "First three matched listing regions, serialized by BeautifulSoup; wrapper retained where relevant. Navigation elsewhere, scripts and styles omitted. Not used for full-page accuracy or timing.",
+    "source": "https://cses.fi/problemset/",
+    "capture_sha256": "13219b24a3c11cce7d8c074eec00485658b4eadc78acc2b994acb45d6fa78204",
+    "captured": "2026-09-20"
+  },
+  {
+    "id": "syntax",
+    "file": "syntax.html",
+    "reduction": "First three matched listing regions, serialized by BeautifulSoup; wrapper retained where relevant. Navigation elsewhere, scripts and styles omitted. Not used for full-page accuracy or timing.",
+    "source": "https://syntax.fm/",
+    "capture_sha256": "8895dbd1b7061de7609cb60afe62d0a2a9238e3687d32674ad2806f485b05167",
+    "captured": "2026-09-20"
+  },
+  {
+    "id": "lexfridman",
+    "file": "lexfridman.html",
+    "reduction": "First three matched listing regions, serialized by BeautifulSoup; wrapper retained where relevant. Navigation elsewhere, scripts and styles omitted. Not used for full-page accuracy or timing.",
+    "source": "https://lexfridman.com/podcast/",
+    "capture_sha256": "5cb4d300b6cff1382793413d377bd71b76290f5c482da8af57e975cf2a8c62e3",
+    "captured": "2026-09-20"
+  },
+  {
+    "id": "standardebooks",
+    "file": "standardebooks.html",
+    "reduction": "First three matched listing regions, serialized by BeautifulSoup; wrapper retained where relevant. Navigation elsewhere, scripts and styles omitted. Not used for full-page accuracy or timing.",
+    "source": "https://standardebooks.org/ebooks/",
+    "capture_sha256": "c1070cc3bc4a397b573210691bde13c2cfa1c14ee0a5846b7c0e7dcefe93f543",
+    "captured": "2026-09-20"
+  },
+  {
+    "id": "zig",
+    "file": "zig.html",
+    "reduction": "First three matched listing regions, serialized by BeautifulSoup; wrapper retained where relevant. Navigation elsewhere, scripts and styles omitted. Not used for full-page accuracy or timing.",
+    "source": "https://ziglang.org/news/",
+    "capture_sha256": "9e67d9e10e43f43b45edfef0054cc2d88c42a2a31844b26ba189196d8c7ee2f6",
+    "captured": "2026-09-20"
+  },
+  {
+    "id": "unsong",
+    "file": "unsong.html",
+    "reduction": "First three matched listing regions, serialized by BeautifulSoup; wrapper retained where relevant. Navigation elsewhere, scripts and styles omitted. Not used for full-page accuracy or timing.",
+    "source": "https://unsongbook.com/",
+    "capture_sha256": "144c84755f8055f667522bed81264873b5e0c0da87dd9f8177c37306e1cdc7c4",
+    "captured": "2026-09-20"
+  }
+]

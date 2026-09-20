@@ -9,7 +9,7 @@ from threading import Lock
 from fastapi import HTTPException
 from starlette.responses import JSONResponse
 
-from .limits import MAX_CSV_BYTES
+from .limits import MAX_CSV_BYTES, MAX_ITEMS
 
 
 class RateLimits:
@@ -56,7 +56,7 @@ class ScanGuard:
                 headers={"Retry-After": "10"},
             )
         self.rates.charge(
-            [(f"scan:{owner}", 200, 3600), ("scan:global", 600, 3600)], cost
+            [(f"scan:{owner}", MAX_ITEMS, 3600), ("scan:global", 600, 3600)], cost
         )
         self.active.add(owner)
         try:

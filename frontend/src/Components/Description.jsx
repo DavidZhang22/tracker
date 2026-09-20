@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 export default function Description({ item, preview = false }) {
-  if (preview && !item.description) return null;
+  if (preview && !item.description && !item.description_suppressed) return null;
   return (
     <section className="item-description" aria-label="Description">
       <div className="description-heading">
@@ -13,7 +13,11 @@ export default function Description({ item, preview = false }) {
       {item.description ? (
         <p>{item.description}</p>
       ) : (
-        <p className="muted">No description available from this source.</p>
+        <p className="muted">
+          {item.description_suppressed
+            ? "Automatic description hidden."
+            : "No description available from this source."}
+        </p>
       )}
     </section>
   );

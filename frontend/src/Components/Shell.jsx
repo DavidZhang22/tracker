@@ -148,7 +148,13 @@ export function Shell() {
             <Route
               path="/settings"
               element={
-                <React.Suspense fallback={<p>Loading…</p>}>
+                <React.Suspense
+                  fallback={
+                    <p className="page-loading" role="status">
+                      Loading page…
+                    </p>
+                  }
+                >
                   <SettingsPage />
                 </React.Suspense>
               }
@@ -157,7 +163,13 @@ export function Shell() {
             <Route
               path="/add"
               element={
-                <React.Suspense fallback={<p>Loading…</p>}>
+                <React.Suspense
+                  fallback={
+                    <p className="page-loading" role="status">
+                      Loading page…
+                    </p>
+                  }
+                >
                   <AddPage />
                 </React.Suspense>
               }
@@ -165,7 +177,13 @@ export function Shell() {
             <Route
               path="/items/:id"
               element={
-                <React.Suspense fallback={<p>Loading…</p>}>
+                <React.Suspense
+                  fallback={
+                    <p className="page-loading" role="status">
+                      Loading page…
+                    </p>
+                  }
+                >
                   <ItemPage />
                 </React.Suspense>
               }

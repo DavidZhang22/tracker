@@ -1,0 +1,915 @@
+{
+  "profiles": 9,
+  "encoder_version": "minilm-l6-int8-b941bf19-v1",
+  "description_version": "profile-v2-safety",
+  "media_model_sha256": "08dc42d54bb989f0f061cae7710b057f20dc8d2c9a44523b6691527d485a3417",
+  "rss_before_models_mib": 21.765625,
+  "media": {
+    "count": 9,
+    "baseline_correct": 6,
+    "deployed_correct": 6,
+    "timing": {
+      "median_ms": 10.736787924543023,
+      "max_ms": 10.915654944255948,
+      "median_ms_per_profile": 1.1929764360603359
+    },
+    "results": [
+      {
+        "id": "audit-magnus",
+        "expected": "podcast",
+        "baseline": "podcast",
+        "deployed": "website",
+        "raw_winner": "website",
+        "raw_score": 0.35706111788749695,
+        "margin": 0.13302630186080933,
+        "no_summary": "website",
+        "no_entries": "website",
+        "sampled_entries": 12,
+        "summary_characters": 2201
+      },
+      {
+        "id": "audit-lightspeed",
+        "expected": "novel",
+        "baseline": "novel",
+        "deployed": "novel",
+        "raw_winner": "novel",
+        "raw_score": 0.8825428485870361,
+        "margin": 0.8519499897956848,
+        "no_summary": "novel",
+        "no_entries": "novel",
+        "sampled_entries": 11,
+        "summary_characters": 2400
+      },
+      {
+        "id": "audit-bandcampdaily",
+        "expected": "blog",
+        "baseline": "website",
+        "deployed": "website",
+        "raw_winner": "website",
+        "raw_score": 0.21277640759944916,
+        "margin": 0.0901801660656929,
+        "no_summary": "website",
+        "no_entries": "website",
+        "sampled_entries": 32,
+        "summary_characters": 170
+      },
+      {
+        "id": "audit-openlibrary",
+        "expected": "novel",
+        "baseline": "novel",
+        "deployed": "novel",
+        "raw_winner": "novel",
+        "raw_score": 0.5032671689987183,
+        "margin": 0.4084700345993042,
+        "no_summary": "novel",
+        "no_entries": "novel",
+        "sampled_entries": 22,
+        "summary_characters": 233
+      },
+      {
+        "id": "audit-eighty",
+        "expected": "blog",
+        "baseline": "blog",
+        "deployed": "blog",
+        "raw_winner": "blog",
+        "raw_score": 0.5211200714111328,
+        "margin": 0.319208025932312,
+        "no_summary": "blog",
+        "no_entries": "website",
+        "sampled_entries": 10,
+        "summary_characters": 1574
+      },
+      {
+        "id": "audit-hfpapers",
+        "expected": "research",
+        "baseline": "blog",
+        "deployed": "research",
+        "raw_winner": "research",
+        "raw_score": 0.635606586933136,
+        "margin": 0.5468597412109375,
+        "no_summary": "research",
+        "no_entries": "blog",
+        "sampled_entries": 32,
+        "summary_characters": 1393
+      },
+      {
+        "id": "audit-syntax",
+        "expected": "podcast",
+        "baseline": "blog",
+        "deployed": "blog",
+        "raw_winner": "jobs",
+        "raw_score": 0.28114446997642517,
+        "margin": 0.12182420492172241,
+        "no_summary": "podcast",
+        "no_entries": "podcast",
+        "sampled_entries": 10,
+        "summary_characters": 2400
+      },
+      {
+        "id": "audit-lexfridman",
+        "expected": "podcast",
+        "baseline": "podcast",
+        "deployed": "podcast",
+        "raw_winner": "podcast",
+        "raw_score": 0.5890244245529175,
+        "margin": 0.3801994323730469,
+        "no_summary": "podcast",
+        "no_entries": "podcast",
+        "sampled_entries": 32,
+        "summary_characters": 801
+      },
+      {
+        "id": "audit-unsong",
+        "expected": "novel",
+        "baseline": "novel",
+        "deployed": "novel",
+        "raw_winner": "novel",
+        "raw_score": 0.5419740080833435,
+        "margin": 0.4559900760650635,
+        "no_summary": "blog",
+        "no_entries": "novel",
+        "sampled_entries": 4,
+        "summary_characters": 517
+      }
+    ]
+  },
+  "authored_media_stress": {
+    "count": 7,
+    "baseline_correct": 4,
+    "deployed_correct": 4,
+    "timing": {
+      "median_ms": 1.201031031087041,
+      "max_ms": 1.2247159611433744,
+      "median_ms_per_profile": 0.17157586158386298
+    },
+    "results": [
+      {
+        "id": "music-explicit",
+        "expected": "music",
+        "baseline": "music",
+        "deployed": "music",
+        "raw_winner": "music",
+        "raw_score": 0.8233863115310669,
+        "margin": 0.7601199746131897,
+        "no_summary": "music",
+        "no_entries": "music",
+        "sampled_entries": 4,
+        "summary_characters": 70,
+        "format_evidence_supplied": true
+      },
+      {
+        "id": "music-sparse",
+        "expected": "music",
+        "baseline": "website",
+        "deployed": "website",
+        "raw_winner": "website",
+        "raw_score": 0.20299901068210602,
+        "margin": 0.09022200107574463,
+        "no_summary": "website",
+        "no_entries": "website",
+        "sampled_entries": 4,
+        "summary_characters": 0,
+        "format_evidence_supplied": false
+      },
+      {
+        "id": "podcast-sparse",
+        "expected": "podcast",
+        "baseline": "website",
+        "deployed": "website",
+        "raw_winner": "podcast",
+        "raw_score": 0.21628476679325104,
+        "margin": 0.06469444930553436,
+        "no_summary": "website",
+        "no_entries": "website",
+        "sampled_entries": 4,
+        "summary_characters": 0,
+        "format_evidence_supplied": false
+      },
+      {
+        "id": "fiction-explicit",
+        "expected": "novel",
+        "baseline": "novel",
+        "deployed": "novel",
+        "raw_winner": "novel",
+        "raw_score": 0.5289530754089355,
+        "margin": 0.4388398230075836,
+        "no_summary": "novel",
+        "no_entries": "novel",
+        "sampled_entries": 4,
+        "summary_characters": 74,
+        "format_evidence_supplied": true
+      },
+      {
+        "id": "music-news",
+        "expected": "blog",
+        "baseline": "blog",
+        "deployed": "blog",
+        "raw_winner": "blog",
+        "raw_score": 0.4925733506679535,
+        "margin": 0.227209210395813,
+        "no_summary": "blog",
+        "no_entries": "music",
+        "sampled_entries": 4,
+        "summary_characters": 77,
+        "format_evidence_supplied": true
+      },
+      {
+        "id": "software-news",
+        "expected": "blog",
+        "baseline": "blog",
+        "deployed": "blog",
+        "raw_winner": "blog",
+        "raw_score": 0.5788460969924927,
+        "margin": 0.45428067445755005,
+        "no_summary": "blog",
+        "no_entries": "blog",
+        "sampled_entries": 4,
+        "summary_characters": 76,
+        "format_evidence_supplied": true
+      },
+      {
+        "id": "spanish-podcast",
+        "expected": "podcast",
+        "baseline": "website",
+        "deployed": "website",
+        "raw_winner": "website",
+        "raw_score": 0.20299901068210602,
+        "margin": 0.09022200107574463,
+        "no_summary": "website",
+        "no_entries": "website",
+        "sampled_entries": 4,
+        "summary_characters": 104,
+        "format_evidence_supplied": true
+      }
+    ],
+    "provenance": "Authored stress fixtures, not public observations or an accuracy estimate. Sparse cases intentionally omit enough information to identify their true format."
+  },
+  "rss_after_media_mib": 43.5,
+  "lexical": {
+    "groups": {
+      "exact": {
+        "count": 1,
+        "top1": 1,
+        "recall3": 1,
+        "empty": 0
+      },
+      "meaning": {
+        "count": 9,
+        "top1": 1,
+        "recall3": 1,
+        "empty": 8
+      },
+      "multilingual": {
+        "count": 2,
+        "top1": 0,
+        "recall3": 0,
+        "empty": 2
+      },
+      "negative": {
+        "count": 3,
+        "top1": 0,
+        "recall3": 0,
+        "empty": 3
+      },
+      "typo": {
+        "count": 3,
+        "top1": 3,
+        "recall3": 3,
+        "empty": 0
+      }
+    },
+    "skipped_missing_sources": [
+      "creepy fictional small town radio",
+      "electronic dance record label",
+      "independent rock album releases",
+      "mind bending speculative fiction",
+      "qntm",
+      "night vale",
+      "Anjunabeats",
+      "anjunabets",
+      "musique \u00e9lectronique",
+      "radiohead",
+      "wilco records",
+      "alternative rock albums"
+    ],
+    "query_p50_ms": 23.64743046928197,
+    "stage_p50_ms": {
+      "query_preparation_ms": 11.31939550396055,
+      "encoder_ms": 0.00045599881559610367,
+      "ranking_ms": 12.197774543892592
+    },
+    "query_p95_ms": 35.82152596209198,
+    "results": [
+      {
+        "query": "paranormal archival horror narration",
+        "expected": [
+          "audit-magnus"
+        ],
+        "group": "meaning",
+        "top3": [],
+        "returned": 0,
+        "rank": 0
+      },
+      {
+        "query": "short fantasy and science fiction stories",
+        "expected": [
+          "audit-lightspeed"
+        ],
+        "group": "meaning",
+        "top3": [],
+        "returned": 0,
+        "rank": 0
+      },
+      {
+        "query": "music journalism album recommendations",
+        "expected": [
+          "audit-bandcampdaily"
+        ],
+        "group": "meaning",
+        "top3": [],
+        "returned": 0,
+        "rank": 0
+      },
+      {
+        "query": "borrow popular books",
+        "expected": [
+          "audit-openlibrary"
+        ],
+        "group": "meaning",
+        "top3": [],
+        "returned": 0,
+        "rank": 0
+      },
+      {
+        "query": "game art production interviews",
+        "expected": [
+          "audit-eighty"
+        ],
+        "group": "meaning",
+        "top3": [],
+        "returned": 0,
+        "rank": 0
+      },
+      {
+        "query": "recent machine learning papers",
+        "expected": [
+          "audit-hfpapers"
+        ],
+        "group": "meaning",
+        "top3": [],
+        "returned": 0,
+        "rank": 0
+      },
+      {
+        "query": "maguns archives",
+        "expected": [
+          "audit-magnus"
+        ],
+        "group": "typo",
+        "top3": [
+          "audit-magnus"
+        ],
+        "returned": 1,
+        "rank": 1
+      },
+      {
+        "query": "open libary",
+        "expected": [
+          "audit-openlibrary"
+        ],
+        "group": "typo",
+        "top3": [
+          "audit-openlibrary"
+        ],
+        "returned": 1,
+        "rank": 1
+      },
+      {
+        "query": "live airline ticket bookings",
+        "expected": [],
+        "group": "negative",
+        "top3": [],
+        "returned": 0,
+        "rank": 0
+      },
+      {
+        "query": "local plumber phone number",
+        "expected": [],
+        "group": "negative",
+        "top3": [],
+        "returned": 0,
+        "rank": 0
+      },
+      {
+        "query": "pizza delivery menu",
+        "expected": [],
+        "group": "negative",
+        "top3": [],
+        "returned": 0,
+        "rank": 0
+      },
+      {
+        "query": "ficci\u00f3n cient\u00edfica",
+        "expected": [
+          "audit-lightspeed"
+        ],
+        "group": "multilingual",
+        "top3": [],
+        "returned": 0,
+        "rank": 0
+      },
+      {
+        "query": "podcasts de terror",
+        "expected": [
+          "audit-magnus"
+        ],
+        "group": "multilingual",
+        "top3": [],
+        "returned": 0,
+        "rank": 0
+      },
+      {
+        "query": "javascript web development podcast",
+        "expected": [
+          "audit-syntax"
+        ],
+        "group": "meaning",
+        "top3": [
+          "audit-syntax"
+        ],
+        "returned": 1,
+        "rank": 1
+      },
+      {
+        "query": "long form scientist interviews",
+        "expected": [
+          "audit-lexfridman"
+        ],
+        "group": "meaning",
+        "top3": [],
+        "returned": 0,
+        "rank": 0
+      },
+      {
+        "query": "biblical mystical fantasy serial",
+        "expected": [
+          "audit-unsong"
+        ],
+        "group": "meaning",
+        "top3": [],
+        "returned": 0,
+        "rank": 0
+      },
+      {
+        "query": "synatx podcast",
+        "expected": [
+          "audit-syntax"
+        ],
+        "group": "typo",
+        "top3": [
+          "audit-syntax"
+        ],
+        "returned": 1,
+        "rank": 1
+      },
+      {
+        "query": "Unsong",
+        "expected": [
+          "audit-unsong"
+        ],
+        "group": "exact",
+        "top3": [
+          "audit-unsong"
+        ],
+        "returned": 1,
+        "rank": 1
+      }
+    ]
+  },
+  "encoder_load_ms": 177.14894097298384,
+  "rss_after_encoder_mib": 136.390625,
+  "description_and_index_items": 56,
+  "description_and_index_ms": 3425.7271379465237,
+  "semantic": {
+    "groups": {
+      "exact": {
+        "count": 1,
+        "top1": 1,
+        "recall3": 1,
+        "empty": 0
+      },
+      "meaning": {
+        "count": 9,
+        "top1": 4,
+        "recall3": 6,
+        "empty": 0
+      },
+      "multilingual": {
+        "count": 2,
+        "top1": 0,
+        "recall3": 0,
+        "empty": 1
+      },
+      "negative": {
+        "count": 3,
+        "top1": 0,
+        "recall3": 0,
+        "empty": 3
+      },
+      "typo": {
+        "count": 3,
+        "top1": 3,
+        "recall3": 3,
+        "empty": 0
+      }
+    },
+    "skipped_missing_sources": [
+      "creepy fictional small town radio",
+      "electronic dance record label",
+      "independent rock album releases",
+      "mind bending speculative fiction",
+      "qntm",
+      "night vale",
+      "Anjunabeats",
+      "anjunabets",
+      "musique \u00e9lectronique",
+      "radiohead",
+      "wilco records",
+      "alternative rock albums"
+    ],
+    "query_p50_ms": 24.621795979328454,
+    "stage_p50_ms": {
+      "query_preparation_ms": 9.609295462723821,
+      "encoder_ms": 1.7252889811061323,
+      "ranking_ms": 13.163357973098755
+    },
+    "query_p95_ms": 33.76297990325838,
+    "results": [
+      {
+        "query": "paranormal archival horror narration",
+        "expected": [
+          "audit-magnus"
+        ],
+        "group": "meaning",
+        "top3": [
+          "cascade-atlas",
+          "audit-magnus",
+          "audit-lightspeed"
+        ],
+        "returned": 3,
+        "rank": 2
+      },
+      {
+        "query": "short fantasy and science fiction stories",
+        "expected": [
+          "audit-lightspeed"
+        ],
+        "group": "meaning",
+        "top3": [
+          "audit-lightspeed",
+          "cascade-atlas",
+          "cascade-smithsonian"
+        ],
+        "returned": 3,
+        "rank": 1
+      },
+      {
+        "query": "music journalism album recommendations",
+        "expected": [
+          "audit-bandcampdaily"
+        ],
+        "group": "meaning",
+        "top3": [
+          "audit-lexfridman",
+          "audit-magnus",
+          "jvns"
+        ],
+        "returned": 3,
+        "rank": 0
+      },
+      {
+        "query": "borrow popular books",
+        "expected": [
+          "audit-openlibrary"
+        ],
+        "group": "meaning",
+        "top3": [
+          "audit-openlibrary",
+          "gutenberg"
+        ],
+        "returned": 2,
+        "rank": 1
+      },
+      {
+        "query": "game art production interviews",
+        "expected": [
+          "audit-eighty"
+        ],
+        "group": "meaning",
+        "top3": [
+          "audit-eighty",
+          "cascade-blender"
+        ],
+        "returned": 2,
+        "rank": 1
+      },
+      {
+        "query": "recent machine learning papers",
+        "expected": [
+          "audit-hfpapers"
+        ],
+        "group": "meaning",
+        "top3": [
+          "pmlr-volumes"
+        ],
+        "returned": 1,
+        "rank": 0
+      },
+      {
+        "query": "maguns archives",
+        "expected": [
+          "audit-magnus"
+        ],
+        "group": "typo",
+        "top3": [
+          "audit-magnus"
+        ],
+        "returned": 1,
+        "rank": 1
+      },
+      {
+        "query": "open libary",
+        "expected": [
+          "audit-openlibrary"
+        ],
+        "group": "typo",
+        "top3": [
+          "audit-openlibrary",
+          "simonwillison",
+          "audit-lexfridman"
+        ],
+        "returned": 3,
+        "rank": 1
+      },
+      {
+        "query": "live airline ticket bookings",
+        "expected": [],
+        "group": "negative",
+        "top3": [],
+        "returned": 0,
+        "rank": 0
+      },
+      {
+        "query": "local plumber phone number",
+        "expected": [],
+        "group": "negative",
+        "top3": [],
+        "returned": 0,
+        "rank": 0
+      },
+      {
+        "query": "pizza delivery menu",
+        "expected": [],
+        "group": "negative",
+        "top3": [],
+        "returned": 0,
+        "rank": 0
+      },
+      {
+        "query": "ficci\u00f3n cient\u00edfica",
+        "expected": [
+          "audit-lightspeed"
+        ],
+        "group": "multilingual",
+        "top3": [],
+        "returned": 0,
+        "rank": 0
+      },
+      {
+        "query": "podcasts de terror",
+        "expected": [
+          "audit-magnus"
+        ],
+        "group": "multilingual",
+        "top3": [
+          "talkpython",
+          "audit-lexfridman",
+          "changelog"
+        ],
+        "returned": 5,
+        "rank": 5
+      },
+      {
+        "query": "javascript web development podcast",
+        "expected": [
+          "audit-syntax"
+        ],
+        "group": "meaning",
+        "top3": [
+          "audit-syntax",
+          "changelog",
+          "audit-lexfridman"
+        ],
+        "returned": 4,
+        "rank": 1
+      },
+      {
+        "query": "long form scientist interviews",
+        "expected": [
+          "audit-lexfridman"
+        ],
+        "group": "meaning",
+        "top3": [
+          "talkpython",
+          "cascade-smithsonian",
+          "cascade-aeon"
+        ],
+        "returned": 6,
+        "rank": 4
+      },
+      {
+        "query": "biblical mystical fantasy serial",
+        "expected": [
+          "audit-unsong"
+        ],
+        "group": "meaning",
+        "top3": [
+          "royalroad",
+          "audit-unsong"
+        ],
+        "returned": 2,
+        "rank": 2
+      },
+      {
+        "query": "synatx podcast",
+        "expected": [
+          "audit-syntax"
+        ],
+        "group": "typo",
+        "top3": [
+          "audit-syntax",
+          "talkpython",
+          "audit-lexfridman"
+        ],
+        "returned": 4,
+        "rank": 1
+      },
+      {
+        "query": "Unsong",
+        "expected": [
+          "audit-unsong"
+        ],
+        "group": "exact",
+        "top3": [
+          "audit-unsong"
+        ],
+        "returned": 1,
+        "rank": 1
+      }
+    ]
+  },
+  "warm_library_load": {
+    "provenance": "Synthetic load fixtures copied from the 56 public profiles with distinct metadata and vector buffers; not 500 independent sources or an accuracy benchmark.",
+    "items": 500,
+    "queries": 8,
+    "repeats": 3,
+    "scope": "Warm correction, encoder and ranking only; excludes initial 500-item description generation/indexing, SQLite, HTTP and browser costs.",
+    "stage_p50_ms": {
+      "query_preparation_ms": 81.61198400193825,
+      "encoder_ms": 1.9324839813634753,
+      "ranking_ms": 115.1204589405097,
+      "total_ms": 198.73514003120363
+    },
+    "query_p95_ms": 282.8413409879431,
+    "rss_before_fixture_mib": 140.21875,
+    "rss_after_fixture_mib": 146.44921875,
+    "rss_after_queries_mib": 147.40234375,
+    "process_peak_mib": 180.921875,
+    "packed_vector_bytes": 768000
+  },
+  "descriptions": [
+    {
+      "id": "audit-magnus",
+      "method": "semantic-extractive",
+      "text": "Rusty Quill is an industry leading independent production company and podcast network. The Magnus Archives is a horror fiction anthology podcast examining what lurks in the archives of the Magnus Institute, an organisation dedicated to researching the esoteric and the weird. Complete rules tailored for a story-based tabletop roleplaying experience in the eerie world of the popular The Magnus Archives horror podcast.",
+      "grounded_in_eligible_source_sentences": true,
+      "source_sentence_count": 6
+    },
+    {
+      "id": "audit-lightspeed",
+      "method": "semantic-extractive",
+      "text": "\u00c1nar\u2019s bootheels echoed on the iron floor. Such an honor that it made him leaden to think of, made him long for sleep. There are still hundreds of pages before the end of the book, so they must have had a record of the length of the volume, but lost the text.",
+      "grounded_in_eligible_source_sentences": true,
+      "source_sentence_count": 20
+    },
+    {
+      "id": "audit-bandcampdaily",
+      "method": "semantic-extractive",
+      "text": "Bandcamp Daily is your guide to the artists, fans and labels on Bandcamp. Canada\u2019s four Atlantic provinces punch above their weight when it comes to producing guitar pop.",
+      "grounded_in_eligible_source_sentences": true,
+      "source_sentence_count": 2
+    },
+    {
+      "id": "audit-openlibrary",
+      "method": "semantic-extractive",
+      "text": "Open Library is an open, editable library catalog, building towards a web page for every book ever published. Read, borrow, and discover more than 3M books for free. See what readers from the community are adding to their bookshelves",
+      "grounded_in_eligible_source_sentences": true,
+      "source_sentence_count": 3
+    },
+    {
+      "id": "audit-eighty",
+      "method": "semantic-extractive",
+      "text": "Workflow breakdowns and tutorials for Unreal Engine 4, 3ds Max, Substance Painter, Houdini, and more. 19 September 2026 - Check out the fantastic art style of TheMathewFlames. 18 September 2026 - CD PROJEKT RED\u2019s art directors explain how Night City was handcrafted, how first-person gameplay shaped its scale and detail, why path tracing fit its lighting pipeline, and what Phantom Liberty changed.",
+      "grounded_in_eligible_source_sentences": true,
+      "source_sentence_count": 9
+    },
+    {
+      "id": "audit-hfpapers",
+      "method": "semantic-extractive",
+      "text": "Your daily dose of AI research from AK A multi-agent framework using large language models for stock trading simulates real-world trading firms, improving performance metrics like cumulative returns and Sharpe ratio. SmolDocling is a compact vision-language model that performs end-to-end document conversion with robust performance across various document types using 256M parameters and a new markup format.",
+      "grounded_in_eligible_source_sentences": true,
+      "source_sentence_count": 7
+    },
+    {
+      "id": "audit-syntax",
+      "method": "semantic-extractive",
+      "text": "Full Stack Web Developers Wes Bos and Scott Tolinski dive deep into web development, CSS, JavaScript, Frameworks, Typescript, Servers and more. Scott and Wes dig into a listener mailbag full of AI questions: how to bill freelance work when the tools make you faster, whether coding still matters in interviews, and if the AI bubble is about to pop. Plus Hugging Face's robot duck, Vitest 5 and the arrest behind the shai\u2010hulud supply chain attacks # Scott and Wes talk about WebMCP with Sarah Drasner and Dominic Farolino from the Chrome team, which is the new W3C standard that lets your site hand real tools to an agent.",
+      "grounded_in_eligible_source_sentences": true,
+      "source_sentence_count": 14
+    },
+    {
+      "id": "audit-lexfridman",
+      "method": "semantic-extractive",
+      "text": "This podcast hosts conversations that explore technology, history, philosophy, physics, mathematics, biology, chemistry, engineering, AI, robotics, programming, music, film, art, sports, psychology, neuroscience, geopolitics, business, economics, religion, astronomy, and the human condition with people from all walks of life. To support this podcast, please consider doing the following: I am forever grateful for the wisdom and love I've encountered in the meandering journey of doing these conversations.",
+      "grounded_in_eligible_source_sentences": true,
+      "source_sentence_count": 4
+    },
+    {
+      "id": "audit-unsong",
+      "method": "semantic-extractive",
+      "text": "Jerusalem is builded as a city that is in the public domain. \u2014 kingjamesprogramming.tumblr.com (Prologue) BOOK I: GENESIS 1. Dark Satanic Mills (Interlude \u05d0: The Cracks In The Sky) 2.",
+      "grounded_in_eligible_source_sentences": true,
+      "source_sentence_count": 4
+    }
+  ],
+  "authored_description_stress": {
+    "provenance": "Authored extraction-quality stress cases; not public-source accuracy or a legal/safety certification.",
+    "results": [
+      {
+        "id": "promotion",
+        "method": "semantic-extractive",
+        "text": "Weekly interviews explore physics and astronomy with researchers who explain their discoveries.",
+        "source_grounded": true,
+        "unwanted_present": []
+      },
+      {
+        "id": "support",
+        "method": "semantic-extractive",
+        "text": "To support this podcast, please consider buying merchandise from our online store. Weekly interviews explore physics and astronomy with researchers who explain their discoveries.",
+        "source_grounded": true,
+        "unwanted_present": [
+          "support this podcast",
+          "merchandise"
+        ]
+      },
+      {
+        "id": "instruction-text",
+        "method": "semantic-extractive",
+        "text": "Weekly interviews explore physics and astronomy with researchers who explain their discoveries.",
+        "source_grounded": true,
+        "unwanted_present": []
+      },
+      {
+        "id": "short",
+        "method": "unavailable",
+        "text": "",
+        "source_grounded": true,
+        "unwanted_present": []
+      },
+      {
+        "id": "duplicate",
+        "method": "semantic-extractive",
+        "text": "Weekly interviews explore physics and astronomy with researchers who explain their discoveries.",
+        "source_grounded": true,
+        "unwanted_present": []
+      }
+    ]
+  },
+  "suggestions": {
+    "provenance": "Authored account-local fixtures; hidden feature, not measured user recommendation quality.",
+    "fixture_order": [
+      "relevant",
+      "unrelated",
+      "paraphrase"
+    ],
+    "excluded_absent": true,
+    "candidate_count": 1000,
+    "returned": 40,
+    "timing": {
+      "median_ms": 286.81857394985855,
+      "max_ms": 288.97230606526136
+    }
+  },
+  "rss_after_evaluation_mib": 150.4765625,
+  "peak_working_set_mib": 180.921875
+}

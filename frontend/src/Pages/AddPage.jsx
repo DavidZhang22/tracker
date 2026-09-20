@@ -507,14 +507,22 @@ export default function AddPage() {
                           Read
                         </label>
                       )}
-                      <EntryLink entry={e} className="preview-title" />
-                      {!e.url && <span>No link</span>}
-                      {e.summary && (
-                        <span className="preview-context">{e.summary}</span>
-                      )}
-                      {mode === "import" && (
-                        <ImportDetails context={e.context} />
-                      )}
+                      <div className="entry-preview-content">
+                        <EntryLink entry={e} className="preview-title" />
+                        {!e.url && <span>No link</span>}
+                        {e.summary_suppressed ? (
+                          <span className="preview-context">
+                            Automatic summary hidden.
+                          </span>
+                        ) : (
+                          e.summary && (
+                            <span className="preview-context">{e.summary}</span>
+                          )
+                        )}
+                        {mode === "import" && (
+                          <ImportDetails context={e.context} title={e.title} />
+                        )}
+                      </div>
                       <LinkDate entry={e} />
                     </div>
                   ))}

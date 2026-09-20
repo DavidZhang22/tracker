@@ -1,6 +1,6 @@
 {
   "runtime": "v24.11.1",
-  "note": "Synthetic public-style metadata; 200 is the account limit. Pure JS timings exclude worker startup and browser rendering.",
+  "note": "Synthetic public-style metadata; 500 is the account limit. Pure JS timings exclude worker startup and browser rendering.",
   "queries": 144,
   "results": [
     {
@@ -9,14 +9,14 @@
       "max_score_error": 0,
       "changed_membership": 0,
       "before": {
-        "build_ms": 2.8186999999999927,
-        "queries_ms": 3.565400000000011,
-        "repeated_queries_ms": 5.8501999999999725
+        "build_ms": 1.0500000000000043,
+        "queries_ms": 2.0678999999999945,
+        "repeated_queries_ms": 3.137600000000006
       },
       "after": {
-        "build_ms": 1.9005999999999972,
-        "queries_ms": 2.1539000000000215,
-        "repeated_queries_ms": 0.4048000000000229
+        "build_ms": 0.805800000000005,
+        "queries_ms": 1.3312999999999988,
+        "repeated_queries_ms": 0.23969999999999914
       }
     },
     {
@@ -25,14 +25,30 @@
       "max_score_error": 0,
       "changed_membership": 0,
       "before": {
-        "build_ms": 7.499499999999955,
-        "queries_ms": 8.770199999999988,
-        "repeated_queries_ms": 18.662599999999998
+        "build_ms": 3.8049000000000035,
+        "queries_ms": 4.826299999999975,
+        "repeated_queries_ms": 11.748500000000035
       },
       "after": {
-        "build_ms": 5.744800000000055,
-        "queries_ms": 5.592200000000048,
-        "repeated_queries_ms": 0.37990000000002055
+        "build_ms": 2.6374000000000137,
+        "queries_ms": 3.3199000000000183,
+        "repeated_queries_ms": 0.20439999999996417
+      }
+    },
+    {
+      "items": 500,
+      "metadata_bytes": 270872,
+      "max_score_error": 0,
+      "changed_membership": 0,
+      "before": {
+        "build_ms": 9.179399999999987,
+        "queries_ms": 13.198800000000006,
+        "repeated_queries_ms": 29.55200000000002
+      },
+      "after": {
+        "build_ms": 6.262300000000096,
+        "queries_ms": 6.929500000000189,
+        "repeated_queries_ms": 0.1871000000001004
       }
     },
     {
@@ -41,14 +57,14 @@
       "max_score_error": 0,
       "changed_membership": 0,
       "before": {
-        "build_ms": 65.99160000000029,
-        "queries_ms": 201.77869999999984,
-        "repeated_queries_ms": 668.2049000000006
+        "build_ms": 33.64449999999988,
+        "queries_ms": 58.02780000000007,
+        "repeated_queries_ms": 150.20460000000003
       },
       "after": {
-        "build_ms": 63.528299999999945,
-        "queries_ms": 79.34190000000126,
-        "repeated_queries_ms": 0.41049999999995634
+        "build_ms": 29.567799999999806,
+        "queries_ms": 31.360699999999724,
+        "repeated_queries_ms": 0.19029999999929714
       }
     }
   ]

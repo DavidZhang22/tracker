@@ -13,12 +13,11 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import SavedViews from "../Components/SavedViews";
 import ContinueLink from "../Components/ContinueLink";
 import LibraryPage from "../Pages/LibraryPage";
 import ItemPage from "../Pages/ItemPage";
 import { libraryView, libraryViewParams } from "../libraryViews";
-import { api, patch, post } from "../api";
+import { api, patch } from "../api";
 
 vi.mock("../api", () => ({
   api: vi.fn(),
@@ -142,90 +141,8 @@ test("Library controls follow URLs and browser history without losing other crit
   expect(
     screen.getByRole("button", { name: /^Favorites\s*1$/ }),
   ).toHaveAttribute("aria-pressed", "true");
+  expect(screen.queryByText("Saved views")).not.toBeInTheDocument();
   expect(api).not.toHaveBeenCalledWith("/views");
-});
-
-test("saved views load on demand and support creating, renaming, updating, applying and deleting", async () => {
-  const saved = { id: "saved", name: "Reading", ...view };
-  api.mockImplementation((path) =>
-    Promise.resolve(path === "/views" ? [] : { ok: true }),
-  );
-  post.mockImplementation((_path, body) =>
-    Promise.resolve({ id: saved.id, ...body }),
-  );
-  patch.mockImplementation((_path, body) =>
-    Promise.resolve({ id: saved.id, ...body }),
-  );
-  const apply = vi.fn();
-  const { rerender } = render(<SavedViews current={view} onApply={apply} />);
-  expect(api).not.toHaveBeenCalled();
-  fireEvent.click(screen.getByText("Saved views"));
-  fireEvent.change(await screen.findByLabelText("View name"), {
-    target: { value: "Reading" },
-  });
-  fireEvent.click(screen.getByRole("button", { name: "Save new" }));
-  await screen.findByText("View saved.");
-  expect(post).toHaveBeenCalledWith("/views", { ...view, name: "Reading" });
-  fireEvent.change(screen.getByLabelText("View name"), {
-    target: { value: "Novels" },
-  });
-  fireEvent.submit(screen.getByRole("form", { name: "Saved view editor" }));
-  await screen.findByText("View updated.");
-  expect(patch).toHaveBeenLastCalledWith("/views/saved", {
-    ...view,
-    name: "Novels",
-  });
-  rerender(
-    <SavedViews current={{ ...view, query: "manga" }} onApply={apply} />,
-  );
-  fireEvent.click(screen.getByRole("button", { name: "Update view" }));
-  await waitFor(() =>
-    expect(patch).toHaveBeenLastCalledWith("/views/saved", {
-      ...view,
-      query: "manga",
-      name: "Novels",
-    }),
-  );
-  await waitFor(() =>
-    expect(screen.getByLabelText("Saved view")).toBeEnabled(),
-  );
-  fireEvent.change(screen.getByLabelText("Saved view"), {
-    target: { value: "" },
-  });
-  fireEvent.change(screen.getByLabelText("Saved view"), {
-    target: { value: "saved" },
-  });
-  expect(apply).toHaveBeenLastCalledWith({
-    ...saved,
-    query: "manga",
-    name: "Novels",
-  });
-  fireEvent.click(screen.getByRole("button", { name: "Delete view" }));
-  await screen.findByText("View deleted. Your items were kept.");
-  expect(api).toHaveBeenCalledWith("/views/saved", { method: "DELETE" });
-  expect(
-    screen.queryByRole("option", { name: "Novels" }),
-  ).not.toBeInTheDocument();
-});
-
-test("failed saved view writes retain the saved list and edits for retry", async () => {
-  api.mockResolvedValue([{ ...view, id: "saved", name: "Reading" }]);
-  patch.mockRejectedValue(new Error("Storage unavailable"));
-  render(<SavedViews current={view} onApply={() => {}} />);
-  fireEvent.click(screen.getByText("Saved views"));
-  fireEvent.change(await screen.findByLabelText("Saved view"), {
-    target: { value: "saved" },
-  });
-  fireEvent.change(screen.getByLabelText("View name"), {
-    target: { value: "Keep this edit" },
-  });
-  fireEvent.click(screen.getByRole("button", { name: "Update view" }));
-  expect(await screen.findByRole("alert")).toHaveTextContent(
-    "Storage unavailable",
-  );
-  expect(screen.getByLabelText("View name")).toHaveValue("Keep this edit");
-  expect(screen.getByRole("option", { name: "Reading" })).toBeInTheDocument();
-  expect(screen.getByRole("button", { name: "Update view" })).toBeEnabled();
 });
 
 test.each([true, false])(

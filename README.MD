@@ -36,7 +36,7 @@ The [generalization evaluation](backend/ml/reports/generalization.md) records th
 
 Library search combines title and URL matches, typo tolerance and local sentence embeddings of saved metadata and descriptions. **Quick search** uses only browser-side text and typo matching; **Smart search** adds server semantic matching. Larger libraries move lexical ranking into a background worker. Indexes survive progress/favorite updates, remain in memory, and are discarded when the page closes. Item link search matches text within that item's entries. Selection waits for current results.
 
-**Saved views** stores a search, status filter, media type, sort order and search mode together. Save up to 12 private views, rename/update them, or delete a view without deleting its items. Browser back/forward restores Library controls. Saved views are included in account exports and deletion.
+Browser back/forward restores Library controls. Saved views are currently unavailable; previously stored views remain in account exports and are erased with the account.
 
 **Continue** opens the next unread entry in detected number/date/source order, honoring the item's read-on-open preference. Muted/trashed entries and future scheduled releases are skipped. Merged or linkless entries open the unread list without changing their progress. **Latest** remains available for jumping to the newest entry.
 
@@ -56,12 +56,15 @@ Initial scans can learn validated extraction recipes for subsequent refreshes. A
 
 The link classifiers train offline and load numeric JSON weights without scikit-learn. Semantic library search uses a quantized MiniLM encoder through ONNX Runtime and NumPy, with text search as a fallback. Descriptions select sentences from the source rather than inventing information. In a saved four-page, two-CPU benchmark, reusable analysis processes reduced batch time from 9.21 to 6.70 seconds with identical scan output. This measures that fixture workload, not every website.
 
+- [Fresh model audit and UI release](backend/ml/reports/ui-model-review.md)
 - [Model training and evaluation](backend/ml/docs/LINK_CLASSIFIER.md)
 - [Record context network](backend/ml/docs/RECORD_CONTEXT.md)
 - [Semantic search and descriptions](backend/ml/docs/SEMANTIC_SEARCH.md)
 - [Parallel analysis benchmark](backend/ml/docs/PARALLEL_ANALYSIS.md)
 - [Response memory and refresh throughput](backend/ml/docs/MEMORY_PIPELINE.md)
 - [Lightweight refresh design](backend/ml/docs/LIGHTWEIGHT_REFRESH.md)
+
+Each account can store 500 items, including Trash. Optional automatic descriptions and link summaries are omitted when bounded checks of already-collected text flag explicit or exploitative content, serious-harm instructions, or illicit-service promotion. This is an English text heuristic, not a legality or malware verdict. It makes no additional requests, and preserves original imported fields and user-written descriptions.
 
 Sources can block access or change their layouts. Scans report incomplete coverage and preserve existing data on failure. Requests are paced and capped; each item stores at most 4,999 links, including muted links and Trash.
 

@@ -7,10 +7,10 @@ cannot raise them. No additional service or database is needed.
 | --- | --- |
 | Links per scan preview and saved item | 4,999 |
 | Links per account library | 100,000 |
-| Items per account library | 200 |
+| Items per account library | 500 |
 | Saved scan previews per account | Latest 5, valid for one hour, up to 8 MB each |
 | Active scan operations | One per account, three across the process |
-| Scan allowance | 200 items per account, 600 server-wide; tokens replenish over an hour |
+| Scan allowance | 500 items per account, 600 server-wide; tokens replenish over an hour |
 | API allowance | 240 requests per IP, 1,200 server-wide; tokens replenish over a minute |
 | In-flight API requests | 64 |
 | API request body | 64 KiB, including chunked requests; 10-second arrival deadline |
@@ -19,7 +19,7 @@ cannot raise them. No additional service or database is needed.
 | Repeated source requests and matching scans | Reused for five minutes across libraries, including Full Refresh |
 | Unknown source URL probes | 20 per hostname per five minutes, shared across accounts |
 | Sandboxed JavaScript pagination | Up to 20 steps, 40 resources, 50 seconds, 5 MB total snapshots |
-| Refresh all | Sequential per account, stops after ten minutes and reports remaining items |
+| Refresh all | Up to four workers per account with host pacing, stops after ten minutes and reports remaining items |
 
 Ignored records and Trash count toward storage limits. Existing libraries that
 already exceed a new limit are preserved; further growth is blocked. Refreshes
