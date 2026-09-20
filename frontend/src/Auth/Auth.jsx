@@ -54,6 +54,7 @@ export function AuthBoundary({ children }) {
     );
   return (
     <AuthContext.Provider
+      key={status.user?.id ?? status.user?.username ?? "local"}
       value={{
         ...status,
         endSession: (message = "") => {

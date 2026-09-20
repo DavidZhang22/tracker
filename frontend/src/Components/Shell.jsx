@@ -15,6 +15,7 @@ import { Notice } from "./Notice";
 import PageBoundary from "./PageBoundary";
 import { Icon } from "./Icons";
 import LibraryPage from "../Pages/LibraryPage";
+import { pageLoaders } from "../pageLoaders";
 export function Shell() {
   const auth = useAuth();
   const location = useLocation();
@@ -222,8 +223,8 @@ export function Shell() {
     </div>
   );
 }
-const AddPage = React.lazy(() => import("../Pages/AddPage"));
-const ItemPage = React.lazy(() => import("../Pages/ItemPage"));
-const SettingsPage = React.lazy(() => import("../Pages/SettingsPage"));
+const AddPage = React.lazy(pageLoaders.add);
+const ItemPage = React.lazy(pageLoaders.item);
+const SettingsPage = React.lazy(pageLoaders.settings);
 
-const AccountPage = React.lazy(() => import("../Auth/AccountPage"));
+const AccountPage = React.lazy(pageLoaders.account);

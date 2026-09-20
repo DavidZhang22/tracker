@@ -1,0 +1,107 @@
+{
+  "scope": "Median of three cold Chromium contexts per scenario, synthetic data, offline container limited to 1 GiB and two CPUs. Time to first row paint; fixed API/asset response delays, not real-world speed guarantees.",
+  "baseline_commit": "3cb0f28",
+  "baseline_index_sha256": "764377b1ce807143095767b261a6746cc26baddf3edca4b7cefdef07321240ee",
+  "candidate_index_sha256": "230e047ab9dc4c2bcf4afde7f9962ba7f442f8b48809b99a8bdda3f8092c0ab5",
+  "measurements": [
+    {
+      "route": "library",
+      "item_count": 25,
+      "api_latency_ms": 80,
+      "asset_latency_ms": 0,
+      "before_ms": 404.4,
+      "after_ms": 334.8,
+      "reduction_pct": 17.2
+    },
+    {
+      "route": "item",
+      "item_count": 25,
+      "api_latency_ms": 80,
+      "asset_latency_ms": 0,
+      "before_ms": 431.5,
+      "after_ms": 411.6,
+      "reduction_pct": 4.6
+    },
+    {
+      "route": "library",
+      "item_count": 500,
+      "api_latency_ms": 80,
+      "asset_latency_ms": 0,
+      "before_ms": 742.8,
+      "after_ms": 659.8,
+      "reduction_pct": 11.2
+    },
+    {
+      "route": "item",
+      "item_count": 500,
+      "api_latency_ms": 80,
+      "asset_latency_ms": 0,
+      "before_ms": 427.7,
+      "after_ms": 411.1,
+      "reduction_pct": 3.9
+    },
+    {
+      "route": "library",
+      "item_count": 25,
+      "api_latency_ms": 200,
+      "asset_latency_ms": 0,
+      "before_ms": 762.7,
+      "after_ms": 557.3,
+      "reduction_pct": 26.9
+    },
+    {
+      "route": "item",
+      "item_count": 25,
+      "api_latency_ms": 200,
+      "asset_latency_ms": 0,
+      "before_ms": 785.6,
+      "after_ms": 765.2,
+      "reduction_pct": 2.6
+    },
+    {
+      "route": "library",
+      "item_count": 500,
+      "api_latency_ms": 200,
+      "asset_latency_ms": 0,
+      "before_ms": 1112.7,
+      "after_ms": 902.5,
+      "reduction_pct": 18.9
+    },
+    {
+      "route": "item",
+      "item_count": 500,
+      "api_latency_ms": 200,
+      "asset_latency_ms": 0,
+      "before_ms": 798.1,
+      "after_ms": 763.3,
+      "reduction_pct": 4.4
+    },
+    {
+      "route": "library",
+      "item_count": 25,
+      "api_latency_ms": 80,
+      "asset_latency_ms": 80,
+      "before_ms": 558.3,
+      "after_ms": 501.5,
+      "reduction_pct": 10.2
+    },
+    {
+      "route": "item",
+      "item_count": 25,
+      "api_latency_ms": 80,
+      "asset_latency_ms": 80,
+      "before_ms": 662.5,
+      "after_ms": 581.5,
+      "reduction_pct": 12.2
+    }
+  ],
+  "live_library_query": {
+    "access": "SQLite read-only; aggregate timings only",
+    "items": 16,
+    "links": 3386,
+    "warm_median_ms": 15.2,
+    "json_ms": 0.354,
+    "response_bytes": 68695
+  },
+  "remaining_bottleneck": "500 rendered Library rows produce about 14,700 DOM nodes and 312\u2013317 ms of long tasks. Item link requests still await saved sorting preferences."
+}

@@ -19,8 +19,9 @@ import {
 import { Icon, TypeIcon, IconButton } from "../Components/Icons";
 import { Notice } from "../Components/Notice";
 import Description from "../Components/Description";
-import { api, patch, post, checked } from "../api";
+import { patch, post, checked } from "../api";
 import { linkSortOptions, usePreferences } from "../Contexts/Preferences";
+import { useStartupData } from "../Contexts/StartupData";
 import { useLinkResults } from "../Hooks/useLinkResults";
 import {
   ActionMenu,
@@ -38,6 +39,7 @@ export default function ItemPage() {
 }
 
 function ItemDetail({ id }) {
+  const loadStartupData = useStartupData();
   const { preferences } = usePreferences();
   const location = useLocation();
   const lastLanding = useRef(null);
@@ -104,7 +106,7 @@ function ItemDetail({ id }) {
   const reload = () => setVersion((v) => v + 1);
   useEffect(() => {
     let active = true;
-    api(`/items/${id}`)
+    loadStartupData(`/items/${id}`)
       .then((i) => {
         if (active) {
           setItem(i);
@@ -114,7 +116,7 @@ function ItemDetail({ id }) {
     return () => {
       active = false;
     };
-  }, [id, version]);
+  }, [id, version, loadStartupData]);
   const {
     data,
     initialLoading,
@@ -367,7 +369,6 @@ function ItemDetail({ id }) {
         {error || searchError || item.error}
       </Notice>
       <Notice>{message}</Notice>
-      <Description item={item} />
       {item.deleted && (
         <Notice>
           This item is in Trash.{" "}
@@ -412,6 +413,7 @@ function ItemDetail({ id }) {
           <span>Read of {item.total_count - item.ignored_count}</span>
         </button>
       </div>
+      <Description item={item} />
       <div className="detail-controls">
         <Link className="text-button" to={`/settings?item=${id}#item-settings`}>
           Item settings

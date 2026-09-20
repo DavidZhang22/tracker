@@ -62,3 +62,29 @@ Use `--sizes 390x844,320x780 --repeats 0` for a focused narrow-screen capture. N
 The complete frontend suite passed 199 tests; tooling passed 5 tests, ESLint and the production build passed. The focused backend test verifies immutable headers on versioned JS/CSS and 304 responses, while HTML and API responses stay `no-store`; unversioned and missing assets are not marked immutable. An offline final-image smoke test covers every built JS/CSS asset, private API protection, accounts, reading progress, export/deletion, and disabled email delivery.
 
 Browser screenshots were produced in the existing Linux Chromium image because the desktop computer-use runtime failed before opening the browser. This review uses actual rendered production bundles with synthetic API data; it is not a review of a user's private library and does not emulate every mobile browser.
+
+
+## Follow-up: page startup and description placement
+
+The item description now follows the Unread / New links / Read summary strip. Thirty-one browser states were checked at 1440, 390, and 320 px, with no document overflow or unexpected page errors; the failed-chunk fallback still recovers to Library. Desktop and mobile item screenshots confirm the description follows the summary.
+
+A read-only timing of the owner's current library (16 items, 3,386 links) measured 15.2 ms for the warm database query and 0.35 ms for JSON encoding. The main avoidable delay was the browser waterfall: authentication, then preferences, then page data. Item route code also waited for preferences and the workspace chunk.
+
+After authentication, initial Library or Item metadata now starts alongside preferences and the requested private route's code. Preferences still gate rendering, preserving the first displayed sort order. A one-use, session-scoped request context avoids duplicate GETs, handles early failures, and aborts/discards pending data on navigation or account disposal. Retry and refresh fetch again. No source scans, browser persistence, or extra runtime dependencies were added.
+
+`profile-page-load.py` records HTML/JS/API waterfalls, first row paint, scripting/layout/style work, long tasks, and heap at readiness. Measurements use three cold Chromium contexts per case in the same offline 1 GiB/two-CPU environment and synthetic accounts. Fixed response delays model waiting; they are not measured server execution or bandwidth limits. The baseline is commit `3cb0f28`.
+
+| Page and fixture | API delay | Asset delay | Before | After |
+| --- | ---: | ---: | ---: | ---: |
+| Library, 25 items | 80 ms | loopback | 404 ms | 335 ms |
+| Library, 25 items | 200 ms | loopback | 763 ms | 557 ms |
+| Library, 500 items | 80 ms | loopback | 743 ms | 660 ms |
+| Library, 500 items | 200 ms | loopback | 1,113 ms | 903 ms |
+| Item, 25-item account | 80 ms | loopback | 432 ms | 412 ms |
+| Item, 25-item account | 200 ms | loopback | 786 ms | 765 ms |
+| Library, 25 items | 80 ms | 80 ms | 558 ms | 502 ms |
+| Item, 25-item account | 80 ms | 80 ms | 663 ms | 582 ms |
+
+The largest improvement is removing one serial Library data wait: 17–27% in the small-library API-delay cases. Preloading route code improves item first-row paint by 12% with simulated asset latency; its sorted link query still follows preferences. At 500 items, rendering remains expensive: about 14,700 DOM nodes and 312–317 ms of long tasks. This change preserves all rows and existing selection behavior; it does not claim to solve large-list rendering. Main-page heap at readiness changed by roughly 40–110 KB, with no material memory reduction claim.
+
+All 208 frontend tests, 5 tooling tests, ESLint, production build, profiler lint, and the offline final-image smoke test passed. New tests cover saved sorting, one-use requests, Trash, failure/retry, navigation cancellation, account changes, and StrictMode cleanup. See [compact measurements](../backend/ml/reports/page-loading.json); raw profiles remain ignored under `backend/data/frontend-review/load-*.json`.

@@ -12,8 +12,9 @@ import {
   ExternalLinkIcon,
 } from "@heroicons/react/outline";
 import "../styles/library.css";
-import { api, patch, post, examples, checked, refreshLibrary } from "../api";
+import { patch, post, examples, checked, refreshLibrary } from "../api";
 import { usePreferences } from "../Contexts/Preferences";
+import { useStartupData } from "../Contexts/StartupData";
 import { Notice, ScanNote } from "../Components/Notice";
 import { Icon, TypeIcon, IconButton } from "../Components/Icons";
 import {
@@ -25,6 +26,7 @@ import {
   RefreshControl,
 } from "../Components/RowTools";
 export default function LibraryPage() {
+  const loadStartupData = useStartupData();
   const { preferences } = usePreferences();
   const [items, setItems] = useState([]),
     [loading, setLoading] = useState(true),
@@ -66,8 +68,13 @@ export default function LibraryPage() {
     const version = ++loadVersion.current;
     try {
       const next = trash
-        ? (await Promise.all([api("/items"), api("/items?trash=true")])).flat()
-        : await api("/items");
+        ? (
+            await Promise.all([
+              loadStartupData("/items"),
+              loadStartupData("/items?trash=true"),
+            ])
+          ).flat()
+        : await loadStartupData("/items");
       if (version !== loadVersion.current) return;
       setItems([...new Map(next.map((item) => [item.id, item])).values()]);
       setError("");
@@ -76,7 +83,7 @@ export default function LibraryPage() {
     } finally {
       if (version === loadVersion.current) setLoading(false);
     }
-  }, [trash]);
+  }, [trash, loadStartupData]);
   useEffect(() => {
     load();
   }, [load]);

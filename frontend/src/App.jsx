@@ -1,7 +1,9 @@
 import { lazy, Suspense, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthBoundary } from "./Auth/Auth";
 import { PreferencesProvider } from "./Contexts/Preferences";
+import { StartupDataProvider } from "./Contexts/StartupData";
+import { preloadPage } from "./pageLoaders";
 import Footer from "./Components/Footer";
 import AppLoading from "./Components/AppLoading";
 import PageBoundary from "./Components/PageBoundary";
@@ -13,16 +15,19 @@ const loadShell = () =>
 const Shell = lazy(loadShell);
 
 function Workspace() {
-  // Fetch the workspace code while account preferences are loading.
+  const location = useLocation();
   useEffect(() => {
     loadShell().catch(() => {});
-  }, []);
+    preloadPage(location.pathname);
+  }, [location.pathname]);
   return (
-    <PreferencesProvider>
-      <Suspense fallback={<AppLoading />}>
-        <Shell />
-      </Suspense>
-    </PreferencesProvider>
+    <StartupDataProvider>
+      <PreferencesProvider>
+        <Suspense fallback={<AppLoading />}>
+          <Shell />
+        </Suspense>
+      </PreferencesProvider>
+    </StartupDataProvider>
   );
 }
 export default function App() {
