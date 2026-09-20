@@ -27,5 +27,3 @@ node scripts/benchmark-browser-search.mjs /path/to/baseline.mjs ../backend/ml/re
 ```
 
 Raw measurements: [browser-search.json](browser-search.json).
-
-
