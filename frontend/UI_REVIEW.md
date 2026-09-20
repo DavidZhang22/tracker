@@ -1,4 +1,4 @@
-# Frontend visual and performance review — 2026-09-20
+# Frontend visual and performance review (2026-09-20)
 
 The production builds were inspected in Chromium using synthetic account data, without accessing production libraries or remote source websites. The reusable harness is `scripts/visual-audit.py`; it runs inside the existing Playwright browser image with networking disabled, a read-only root filesystem, a 1 GiB memory limit, and two CPUs. Its local fixture server introduces 80 ms of latency for each API response.
 
