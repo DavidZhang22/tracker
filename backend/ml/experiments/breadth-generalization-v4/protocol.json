@@ -1,0 +1,15 @@
+{
+  "source_candidate_sha256": "4fa3670516e5ddc8380bf83583fcf43e991ea1f21170abc868b8f5241aab1fcc",
+  "source_protocol_sha256": "8eb8452b19093c112576b1a25b38c14ada6e532a1a451ebba8650636db23e609",
+  "reason": "The group candidate failed original historical full-parser validation. Explicit chrome was not reliable enough for learned rejection.",
+  "fixed": "Expert weights, vocabulary, grouping, seed and cold support, and rescue threshold are unchanged.",
+  "rejection_thresholds": [
+    0.0,
+    0.01,
+    0.05
+  ],
+  "comparisons": "Full-parser original ten breadth validation websites and thirteen historical validation websites only; no held-out comparisons for selection.",
+  "selection": "Highest breadth-validation micro-F1, subject to historical micro-F1 not dropping and per-cohort precision/recall no more than two percentage points below baseline. Ties prefer the lower rejection threshold.",
+  "final_gate": "After validation selection is frozen, first external eight disclosed regression websites must pass the same no-micro-F1-drop and <=2pp precision/recall-loss gates before the new external eight websites are scored. Each cohort stays separate.",
+  "heldout_protection": "The second external eight websites remain unscored and must not affect variant selection."
+}

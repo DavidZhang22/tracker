@@ -51,3 +51,15 @@ backend/ml/.venv/
 # Platform-specific inference kernels are built from the checked-in C source.
 _model_native.dll
 _model_native.so
+
+# Reproducible model experiments retain compact evidence, not grid-search outputs.
+backend/ml/experiments/breadth-generalization*/*training-report.json
+backend/ml/experiments/breadth-generalization*/*validation-report.json
+backend/ml/experiments/breadth-generalization*/protected-routing-validation.json
+backend/ml/experiments/breadth-generalization*/chosen-*.json
+backend/ml/experiments/breadth-generalization*/safe-*.json
+backend/ml/experiments/breadth-generalization*/numeric-*.json
+backend/ml/experiments/breadth-generalization*/text-*.json
+backend/ml/experiments/breadth-generalization*/soft-*.json
+backend/ml/experiments/breadth-generalization*/reject-*.json
+!backend/ml/experiments/breadth-generalization-v4/reject-0.00.json

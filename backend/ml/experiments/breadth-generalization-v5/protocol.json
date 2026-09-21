@@ -1,0 +1,26 @@
+{
+  "version": 5,
+  "frozen_before": "Implementation and replay of the corrected table-role feature extraction; second external eight websites remain unscored.",
+  "model_path": "backend/ml/experiments/breadth-generalization-v4/reject-0.00.json",
+  "model_sha256": "97804df6d794bccd275073797feff5936366c8438af5ea026df56ca2bc58017f",
+  "changes": "Feature semantics correction only. No model training, weight changes, threshold changes, group key changes, or new expert selection.",
+  "verified_primary_column": "Existing non-job header recognition: exactly one title/name column, all direct header cells th, no spans, matching data row width with no spans.",
+  "verified_primary_target": "At most 20 inspected anchors in the primary cell, all belonging to this table. Exactly one unique non-fragment raw href. More anchors, multiple targets, absent links, or unsafe canonicalization leave prior features unchanged.",
+  "features": "For every anchor in such a row, canonical primary-target equality sets semantic_title and record_primary_url; a different target sets record_other_primary. Same-target links in other cells are primary aliases. All other features and the 84-feature schema stay unchanged.",
+  "exclusions": "Job application routing, unknown/ambiguous headers, nested table links, colspan/rowspan, multiple primary targets, and linkless primary cells retain their prior behavior. No hostnames, dataset IDs, or subject-specific URL rules.",
+  "evaluation_order": [
+    "original ten breadth validation pages",
+    "original thirteen historical validation pages",
+    "first external eight disclosed regression pages",
+    "all 63 historical and 51 breadth disclosed regression pages",
+    "untouched second external eight only if all previous gates pass"
+  ],
+  "gates_per_cohort": {
+    "precision_delta_min": -0.02,
+    "recall_delta_min": -0.02,
+    "micro_f1_delta_min": 0,
+    "source_macro_f1_delta_min": -0.01
+  },
+  "additional_guard": "Do not hide large per-source false-positive explosions in aggregate metrics.",
+  "dataset_policy": "Preserve every original frozen feature export. Any refreshed feature export must use a new v5 filename and record source/model/feature hashes. No refreshed final holdout export until prior gates pass."
+}

@@ -6,10 +6,12 @@ import math
 import os
 import struct
 from functools import lru_cache
+from itertools import islice
 from pathlib import Path
 
+from .dom import tags
 from .link_context import EXTRA_FEATURES, context_candidates, model_tokens
-from .link_model import FEATURES, load_model
+from .link_model import FEATURES, MAX_CANDIDATES, load_model
 
 NUMERIC_FEATURES = FEATURES + EXTRA_FEATURES
 MODEL_PATH = Path(__file__).with_name("link-context-model.json")
@@ -260,4 +262,20 @@ def classify_context(soup, source, *, fallback_scores=None, tables=None):
             mode == "primary" or nuisance_context(row["features"])
         ):
             rejected.add(key)
+    overflow = next(
+        islice(
+            tags(soup, {"a"}, attribute="href", limit=MAX_CANDIDATES + 1),
+            MAX_CANDIDATES,
+            None,
+        ),
+        None,
+    )
+    if overflow is not None:
+        # A crowded page is sampled by unique URL. Unscored aliases and later
+        # targets must not bypass that decision through generic fallback rules.
+        rejected.update(
+            id(anchor)
+            for anchor in tags(soup, {"a"}, attribute="href")
+            if id(anchor) not in scores
+        )
     return scores, labels, rejected, model

@@ -1,0 +1,5 @@
+{
+  "sha256": "8b9b8ddc7e9e8c7b467d5b23c5fca214417a60361962906855ef7f8faf2723f6",
+  "source": "app/tracker/link-cascade-model.json",
+  "purpose": "Frozen comparison baseline so reruns do not silently compare against future deployed artifacts."
+}

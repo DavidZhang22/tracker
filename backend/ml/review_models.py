@@ -31,8 +31,9 @@ class RefinementCandidate(CascadeModel):
     """Offline challenger only; withheld when full-page regression gates fail."""
 
     def __init__(self, data):
-        super().__init__(data)
-        self.refinement = ContextModel(data["refinement"], allow_fallback=False)
+        base = {k: v for k, v in data.items() if k not in {"refinement", "refinement_policy"}}
+        super().__init__(base)
+        self.review_refinement = ContextModel(data["refinement"], allow_fallback=False)
 
     def score_many(self, rows):
         result = super().score_many(rows)
@@ -41,12 +42,12 @@ class RefinementCandidate(CascadeModel):
             for i, score in enumerate(result)
             if score < self.upper or nuisance_context(rows[i]["features"])
         ]
-        scores = self.refinement.score_many([rows[i] for i in indices])
+        scores = self.review_refinement.score_many([rows[i] for i in indices])
         for i, score in zip(indices, scores, strict=True):
-            if (result[i] < self.upper and score >= self.refinement.upper) or (
-                result[i] >= self.upper and score < self.refinement.lower
+            if (result[i] < self.upper and score >= self.review_refinement.upper) or (
+                result[i] >= self.upper and score < self.review_refinement.lower
             ):
-                result[i] = decision_score(score, self.refinement.upper)
+                result[i] = decision_score(score, self.review_refinement.upper)
         return result
 
 

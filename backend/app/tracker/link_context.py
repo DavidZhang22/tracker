@@ -12,6 +12,7 @@ from .dom import HEADINGS, first_tag, tags
 from .link_model import FEATURES
 from .link_model import candidates as base_candidates
 from .tables import TABLE_FEATURES, table_context
+from .urls import DiscoveryError, canonical_url
 
 EXTRA_FEATURES = (
     "own_date_attribute",
@@ -183,6 +184,7 @@ def context_candidates(soup, source, limit=4000, *, tables=None):
                 own_date,
             )
         )
+    primary_targets = {}
     for index, (
         a,
         url,
@@ -261,9 +263,21 @@ def context_candidates(soup, source, limit=4000, *, tables=None):
         display = (
             htext if GENERIC.fullmatch(label) and htext and distance < 80 else label
         )
-        if tables.get(id(a), {}).get("primary"):
-            # A verified title-column header supplies the same semantic evidence
-            # as a title class. Older models do not have the table feature tail.
+        table = tables.get(id(a), {})
+        primary_href = table.get("primary_href")
+        if primary_href and primary_href not in primary_targets:
+            try:
+                primary_targets[primary_href] = canonical_url(primary_href, source)
+            except (DiscoveryError, ValueError, UnicodeError):
+                primary_targets[primary_href] = None
+        primary_target = primary_targets.get(primary_href)
+        if primary_target:
+            # Verified columns override misleading title classes on metadata cells.
+            is_primary = url == primary_target
+            features[FEATURES.index("semantic_title")] = float(is_primary)
+            extra[EXTRA_FEATURES.index("record_primary_url")] = is_primary
+            extra[EXTRA_FEATURES.index("record_other_primary")] = not is_primary
+        elif table.get("primary"):
             features[FEATURES.index("semantic_title")] = 1.0
         yield dict(
             anchor=a,

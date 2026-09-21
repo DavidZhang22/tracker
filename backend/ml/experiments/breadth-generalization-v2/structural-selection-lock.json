@@ -1,0 +1,238 @@
+{
+  "name": "text-neural32",
+  "high": 0.95,
+  "low": 0.05,
+  "eligible": true,
+  "quality": {
+    "breadth": {
+      "tp": 416,
+      "fp": 147,
+      "fn": 62,
+      "precision": 0.7389,
+      "recall": 0.8703,
+      "f1": 0.7992,
+      "by_source": {
+        "abs.gov.au": {
+          "tp": 20,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "allrecipes.com": {
+          "tp": 58,
+          "fp": 8,
+          "fn": 14,
+          "precision": 0.8788,
+          "recall": 0.8056,
+          "f1": 0.8406
+        },
+        "boardgamegeek.com": {
+          "tp": 72,
+          "fp": 5,
+          "fn": 28,
+          "precision": 0.9351,
+          "recall": 0.72,
+          "f1": 0.8136
+        },
+        "consumerfinance.gov": {
+          "tp": 21,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "cp-algorithms.com": {
+          "tp": 143,
+          "fp": 5,
+          "fn": 20,
+          "precision": 0.9662,
+          "recall": 0.8773,
+          "f1": 0.9196
+        },
+        "data.gov": {
+          "tp": 20,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "nationaltrail.co.uk": {
+          "tp": 16,
+          "fp": 128,
+          "fn": 0,
+          "precision": 0.1111,
+          "recall": 1.0,
+          "f1": 0.2
+        },
+        "openbsd.org": {
+          "tp": 12,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.9231,
+          "recall": 1.0,
+          "f1": 0.96
+        },
+        "sphinx-doc.org": {
+          "tp": 48,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "usgs.gov": {
+          "tp": 6,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "macro_f1": 0.8734,
+      "negative_only_urls": 0,
+      "negative_only_fp_rate": 0.0
+    },
+    "historical_public": {
+      "tp": 1566,
+      "fp": 26,
+      "fn": 86,
+      "precision": 0.9837,
+      "recall": 0.9479,
+      "f1": 0.9655,
+      "by_source": {
+        "blender.org": {
+          "tp": 6,
+          "fp": 1,
+          "fn": 18,
+          "precision": 0.8571,
+          "recall": 0.25,
+          "f1": 0.3871
+        },
+        "cloudflare.com": {
+          "tp": 19,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "djangoproject.com": {
+          "tp": 10,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "esa.int": {
+          "tp": 58,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "gentoo.org": {
+          "tp": 71,
+          "fp": 13,
+          "fn": 0,
+          "precision": 0.8452,
+          "recall": 1.0,
+          "f1": 0.9161
+        },
+        "go.dev": {
+          "tp": 10,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.9091,
+          "recall": 1.0,
+          "f1": 0.9524
+        },
+        "imperial.ac.uk": {
+          "tp": 26,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "jvns.ca": {
+          "tp": 546,
+          "fp": 2,
+          "fn": 50,
+          "precision": 0.9964,
+          "recall": 0.9161,
+          "f1": 0.9545
+        },
+        "kde.org": {
+          "tp": 10,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "nationalgallery.org.uk": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "publicdomainreview.org": {
+          "tp": 8,
+          "fp": 0,
+          "fn": 5,
+          "precision": 1.0,
+          "recall": 0.6154,
+          "f1": 0.7619
+        },
+        "python.org": {
+          "tp": 269,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "pythonbytes.fm": {
+          "tp": 495,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "realpython.com": {
+          "tp": 14,
+          "fp": 9,
+          "fn": 0,
+          "precision": 0.6087,
+          "recall": 1.0,
+          "f1": 0.7568
+        },
+        "ycombinator.com": {
+          "tp": 17,
+          "fp": 0,
+          "fn": 13,
+          "precision": 1.0,
+          "recall": 0.5667,
+          "f1": 0.7234
+        }
+      },
+      "macro_f1": 0.8968,
+      "negative_only_urls": 0,
+      "negative_only_fp_rate": 0.0
+    }
+  },
+  "precision_target_met": false,
+  "artifact": "chosen-structural-refinement.json",
+  "sha256": "b363afe0a7f97eb65b54506e9e48b40ccb3651889aa1e4ec6a85e2828295420e",
+  "bytes": 708978
+}

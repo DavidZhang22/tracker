@@ -1,0 +1,13 @@
+{
+  "candidate_sha256": "b363afe0a7f97eb65b54506e9e48b40ccb3651889aa1e4ec6a85e2828295420e",
+  "fresh_holdout_manifest_sha256": "7b5347f9cc7ff8e74274886c9335dfaa3932f413650ddd529f090056b0f7a0c1",
+  "frozen_before_fresh_evaluation": true,
+  "requirements": {
+    "fresh_precision_max_drop": 0.02,
+    "fresh_recall_max_drop": 0.02,
+    "fresh_micro_f1_must_not_decline": true,
+    "historical_validation_precision_recall_max_drop": 0.02,
+    "new_validation_full_parser_f1_must_improve": true
+  },
+  "notes": "The isolated classifier precision target0.80 was unmet; candidate selected on source-held-out validation and constrained by actual full-parser quality. Fresh8 remain untouched until this gate is written. V1 nine-family test is no longer a pristine blind evaluation after diagnosing failed full replacement."
+}

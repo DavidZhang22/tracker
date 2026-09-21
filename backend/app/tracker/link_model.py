@@ -11,7 +11,7 @@ import os
 import re
 from collections import Counter
 from functools import lru_cache
-from itertools import islice
+from itertools import chain, islice
 from pathlib import Path
 from urllib.parse import parse_qsl, urlsplit
 
@@ -21,6 +21,7 @@ from .urls import DiscoveryError, canonical_url
 
 VERSION = 1
 MAX_CANDIDATES = 4000
+MAX_INSPECTED_ANCHORS = 20000
 MODEL_PATH = Path(__file__).with_name("link-model.json")
 CONTENT = re.compile(
     r"\b(?:chapter|episode|posts?|articles?|blog|news|essays?|releases?|contest|watch|stories|story)\b",
@@ -99,17 +100,74 @@ def bounded(value, limit):
     return min(max(value / limit, 0.0), 1.0)
 
 
-def candidates(soup, source, limit=MAX_CANDIDATES):
+def _representative_quality(anchor):
+    label = anchor_label(anchor)
+    parents = list(islice(anchor.parents, 5))
+    informative = bool(
+        len(label) >= 3
+        and not GENERIC.fullmatch(label)
+        and not re.fullmatch(r"\d+(?:\.\d+)*", label)
+    )
+    heading = bool(first_tag(anchor, HEADINGS)) or any(
+        parent.name in HEADINGS for parent in parents[:3]
+    )
+    title = any(
+        re.search(r"title|headline", " ".join(node.get("class", [])), re.I)
+        for node in [anchor] + parents[:3]
+    )
+    chrome = any(parent.name in {"nav", "footer"} for parent in parents)
+    return not chrome, informative, heading or title, min(len(label), 150)
+
+
+def candidate_anchors(soup, source, limit=MAX_CANDIDATES, *, aliases=None):
+    """Select bounded anchors; crowded pages spend the budget on distinct URLs.
+
+    ``aliases`` optionally maps inspected anchor IDs to their selected representative
+    IDs. Missing IDs are unclassified, not accepted. Small pages retain their original
+    duplicate anchors and raw-anchor limit for feature compatibility.
+    """
+    if limit < 0:
+        raise ValueError("Candidate limit cannot be negative")
+    limit = min(limit, MAX_CANDIDATES)
+    if not limit:
+        return []
+    iterator = tags(soup, {"a"}, attribute="href", limit=MAX_INSPECTED_ANCHORS)
+    initial = list(islice(iterator, MAX_CANDIDATES + 1))
+    crowded = len(initial) > MAX_CANDIDATES
+    selected, alias_ids, anchors = {}, {}, []
+    inspected = chain(initial, iterator) if crowded else initial[:limit]
+    for position, anchor in enumerate(inspected):
+        try:
+            url = canonical_url(anchor["href"], source)
+        except (DiscoveryError, ValueError, UnicodeError):
+            continue
+        if not crowded:
+            anchors.append((anchor, url, urlsplit(url)))
+            if aliases is not None:
+                aliases[id(anchor)] = id(anchor)
+            continue
+        previous = selected.get(url)
+        if previous is None and len(selected) >= limit:
+            continue
+        quality = _representative_quality(anchor)
+        if previous is None or quality > previous[0]:
+            selected[url] = quality, position, anchor
+        if aliases is not None:
+            alias_ids.setdefault(url, []).append(id(anchor))
+    if crowded:
+        chosen = sorted(selected.items(), key=lambda item: item[1][1])
+        anchors = [(row[2], url, urlsplit(url)) for url, row in chosen]
+        if aliases is not None:
+            for url, (_, _, anchor) in selected.items():
+                aliases.update((key, id(anchor)) for key in alias_ids[url])
+    return anchors
+
+
+def candidates(soup, source, limit=MAX_CANDIDATES, *, aliases=None):
     """Bounded feature extraction shared verbatim by dataset builder and runtime."""
     root = urlsplit(source)
     root_parts = root.path.strip("/").split("/") if root.path.strip("/") else []
-    anchors = []
-    for a in tags(soup, {"a"}, attribute="href", limit=limit):
-        try:
-            url = canonical_url(a["href"], source)
-        except (DiscoveryError, ValueError, UnicodeError):
-            continue
-        anchors.append((a, url, urlsplit(url)))
+    anchors = candidate_anchors(soup, source, limit, aliases=aliases)
     shapes = Counter(
         (p.hostname, re.sub(r"/[^/]+/?$", "/*", p.path)) for _, _, p in anchors
     )
@@ -283,7 +341,7 @@ def page_scores(soup, source):
 
 def model_cache_tag():
     if os.environ.get("TRACKER_LINK_MODEL", "on").lower() in ("0", "off", "false"):
-        return "rules-v2"
+        return "rules-v3"
     if os.environ.get("TRACKER_LINK_MODEL", "on").lower() != "legacy":
         # Lazy import avoids the shared feature extractor's dependency cycle.
         from .context_model import active_context_model
@@ -291,10 +349,10 @@ def model_cache_tag():
         context = active_context_model()
         if context is not None:
             return (
-                "context-v2:"
+                "context-v3:"
                 + os.environ.get("TRACKER_LINK_MODEL", "on").lower()
                 + ":"
                 + context.model_id
             )
     model = load_model()
-    return "rules-v2:" + (model.model_id if model else "fallback")
+    return "rules-v3:" + (model.model_id if model else "fallback")

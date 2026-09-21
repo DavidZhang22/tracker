@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "normalization": "CRLF-to-LF only",
+  "datasets": {
+    "v3-dataset.jsonl": {
+      "raw_sha256": "5cd445174fb399122dda9bd738683e46222c04380fd5c6655700ef869a2b09a8",
+      "lf_sha256": "f7dd1f96037549c051b23e5c76b901f63ba11c3778a41a86fd68915fc0da19d8"
+    },
+    "generalization.jsonl": {
+      "raw_sha256": "2f2857f8f94bfaa11ff0feab28189f238bd4bab7e45d2fad7de715eafc2e93ff",
+      "lf_sha256": "bfcdf9f3bd80c94b57665691ad5081f55203935e684b1076319d0d72135c695c"
+    },
+    "cascade-dataset.jsonl": {
+      "raw_sha256": "e1fd5a2b2e07f9b21f46996c61720c102dcfe05d33a78b87ebb8304f35d2d710",
+      "lf_sha256": "000481766b78a81b85a40579a40c8ab5b6396461120cdb95cf57f3e529464c85"
+    },
+    "review-dataset.jsonl": {
+      "raw_sha256": "9e68d36e25e7b7ac8a85c5ba524c0094fab4fe6b5bb8d796cab19aa5cfced785",
+      "lf_sha256": "dccab37bfa9ada3563ea87593112f2f7b805c3b62ca85b4630f816f0b0ccec26"
+    },
+    "cascade-final-dataset.jsonl": {
+      "raw_sha256": "9ff161caa3fbdc90b7eb3b6aca0f82d831f686c9703fe85ab2892dd50bbeb285",
+      "lf_sha256": "5d7f2116143293aaf6b38749ae9dc2cb3370114cbc9b33cd7c9ddc640b3e8089"
+    },
+    "extraction-audit-dataset.jsonl": {
+      "raw_sha256": "2e0ebbdc7df0eb3866af1b2f5848805a7a2fae1e9d6645fe11ed6f64b1d759db",
+      "lf_sha256": "0987a2d511fdbb363a6092b0e6f778cf67dd12fe443e4035fc99b2d4b7f1bfbf"
+    },
+    "breadth-cultural-dataset.jsonl": {
+      "raw_sha256": "7782fb767c34e477945f311d3670e00803bc66e4f792e694e95fb8c13060cbda",
+      "lf_sha256": "7782fb767c34e477945f311d3670e00803bc66e4f792e694e95fb8c13060cbda"
+    },
+    "breadth-public-dataset.jsonl": {
+      "raw_sha256": "3651f04c6919474843046265fb7a76ebd780e9d53d88c235d5fe208ea9c29ec9",
+      "lf_sha256": "3651f04c6919474843046265fb7a76ebd780e9d53d88c235d5fe208ea9c29ec9"
+    },
+    "breadth-technical-dataset.jsonl": {
+      "raw_sha256": "7c7c0064d0d16fc04c19d06d3dba9158a1e8b320ec052a2e26463a5e6f0d6a37",
+      "lf_sha256": "7c7c0064d0d16fc04c19d06d3dba9158a1e8b320ec052a2e26463a5e6f0d6a37"
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "candidate_sha256": "4fa3670516e5ddc8380bf83583fcf43e991ea1f21170abc868b8f5241aab1fcc",
+  "rows": 6507,
+  "pages": 26,
+  "heldout_rows": 0,
+  "native_kernel": true,
+  "platform": "Windows-10-10.0.19045-SP0",
+  "max_score_error": 0.0,
+  "classification_mismatches": 0,
+  "group_key_mismatches": 0,
+  "partitioned_page_max_error": 0.0,
+  "expert_native_python_max_error": 5.273559366969494e-16,
+  "expert_scalar_rows": 182,
+  "rescued_anchors": 146,
+  "rejected_anchors": 94,
+  "baseline": {
+    "median_seconds": 0.1469430000288412,
+    "samples_seconds": [
+      0.15023940001265146,
+      0.1476031000202056,
+      0.145711899996968,
+      0.1469430000288412,
+      0.14693849999457598
+    ]
+  },
+  "candidate": {
+    "median_seconds": 0.3316552999895066,
+    "samples_seconds": [
+      0.3264740000013262,
+      0.32911350001813844,
+      0.39222459998563863,
+      0.3316552999895066,
+      0.3378536000091117
+    ]
+  },
+  "largest_page": {
+    "rows": 991,
+    "baseline": {
+      "median_seconds": 0.02252020000014454,
+      "samples_seconds": [
+        0.023083000007318333,
+        0.02269670000532642,
+        0.02252020000014454,
+        0.022168099996633828,
+        0.022128699987661093
+      ]
+    },
+    "candidate": {
+      "median_seconds": 0.03207670000847429,
+      "samples_seconds": [
+        0.03219690002151765,
+        0.03207670000847429,
+        0.031696899997768924,
+        0.04377519999979995,
+        0.03096989999176003
+      ]
+    },
+    "traced_python_peak_bytes": 261080
+  },
+  "limitations": "Local developer-machine inference timings, with resident feature rows and warmed kernels. Concurrent work may affect timing. Tracemalloc excludes some native allocations; imported training libraries make total process RSS unsuitable as production-memory evidence. This evaluates classifier inference only, not HTML parsing or network latency. Scalar group inference intentionally differs from whole-page inference."
+}

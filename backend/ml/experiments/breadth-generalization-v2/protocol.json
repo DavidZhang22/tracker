@@ -1,0 +1,52 @@
+{
+  "seed": 20260922,
+  "original_protocol_sha256": "6363babf0aa8a50b47a9e47e1a25b31197a3b9a6cd0f7f53f09499cee80c4357",
+  "partitions": "Same family assignments as V1. Its nine test websites are now disclosed regression data, still excluded from all V2 fitting/selection. Fresh external holdout remains unexamined.",
+  "candidates": [
+    "v1:numeric-trees",
+    "v1:text-trees",
+    "v1:numeric-neural64x32",
+    "v1:text-neural32",
+    "soft-numeric-trees",
+    "soft-numeric-neural64x32",
+    "soft-text-neural32"
+  ],
+  "weight_method": "Each site has equal influence within cohort. Class prior is 75% empirical unique-URL proportion and 25% uniform across present classes; repeated anchors share URL weight.",
+  "rescue_thresholds": [
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    0.95
+  ],
+  "rejection_thresholds": [
+    0.01,
+    0.03,
+    0.05,
+    0.1,
+    0.2
+  ],
+  "rejection_policies": [
+    {
+      "mode": "nuisance",
+      "ceiling": 0
+    },
+    {
+      "mode": "disagreement",
+      "ceiling": 0.75
+    },
+    {
+      "mode": "disagreement",
+      "ceiling": 0.9
+    }
+  ],
+  "selection": "Breadth precision >=.80, breadth macroF1 > baseline, historical public-only precision/recall/macroF1 at most .03 below baseline. Eligible choices ranked by breadth macroF1, historical public F1, smaller bytes.",
+  "baseline_sha256": "8b9b8ddc7e9e8c7b467d5b23c5fca214417a60361962906855ef7f8faf2723f6",
+  "no_test_evaluation": true,
+  "max_new_trees": 180,
+  "max_new_mlp": [
+    64,
+    32
+  ],
+  "max_vocab": 384
+}

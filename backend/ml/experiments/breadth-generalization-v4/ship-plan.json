@@ -1,0 +1,34 @@
+{
+  "new_code_to_ship": [
+    "backend/ml/train_breadth_generalization.py",
+    "backend/ml/train_group_generalization.py",
+    "backend/ml/dataset_provenance.py",
+    "backend/tests/test_generalization_protocol.py",
+    "backend/ml/experiments/breadth-generalization-v3/verify_runtime.py"
+  ],
+  "frozen_inputs_to_ship": [
+    "backend/ml/experiments/breadth-generalization/baseline-cascade.json",
+    "backend/ml/experiments/breadth-generalization/baseline-provenance.json",
+    "backend/ml/experiments/breadth-generalization/protocol.json",
+    "backend/ml/experiments/breadth-generalization/input-provenance.json",
+    "backend/ml/experiments/breadth-generalization/cascade-protocol.json",
+    "backend/ml/experiments/breadth-generalization-v2/protocol.json",
+    "backend/ml/experiments/breadth-generalization-v2/structural-routing-protocol.json",
+    "backend/ml/experiments/breadth-generalization-v2/promotion-gate.json",
+    "backend/ml/experiments/breadth-generalization-v3/protocol.json",
+    "backend/ml/experiments/breadth-generalization-v3/promotion-gate.json",
+    "backend/ml/experiments/breadth-generalization-v4/protocol.json"
+  ],
+  "compact_evidence_to_ship": [
+    "backend/ml/experiments/breadth-generalization-v4/experiment-summary.json",
+    "backend/ml/experiments/breadth-generalization-v4/runtime-parity-benchmark.json",
+    "backend/ml/experiments/breadth-generalization-v4/environment.json",
+    "backend/ml/experiments/breadth-generalization-v4/jvns-rejection-diagnostic.json"
+  ],
+  "final_artifact": "Keep a single final production artifact only after all frozen gates pass; no second copy of its complete embedded baseline+expert is necessary. Current V4 candidate failed first external regression before the pending generic table fix.",
+  "already_tracked_inputs": "Nine feature datasets named in V1 protocol, inference/evaluation helper code, native C source, pyproject.toml and uv.lock with optional ML dependencies. No new downloaded HTML is required for classifier replay.",
+  "safe_to_leave_ignored": "All seven regenerated expert JSONs; V1 chosen-context/chosen-cascade; V2 chosen-refinement/chosen-structural/safe candidates; V3 chosen-group candidate; V4 three variants; all expanded validation/training reports and duplicate selection locks, once compact evidence and frozen protocols are retained. Preserve them locally for diagnostics; no deletion requested.",
+  "regenerate": "Run V1 trainer, V2 --refine, V3 group selector, then --rejection-variants. Optional --structural-refine recreates failed V2 diagnostics. Frozen original baseline must be preseeded, not replaced with the newly deployed artifact.",
+  "hash_policy": "Keep frozen protocol/model bytes exact with narrowly scoped attributes. Dataset input-provenance accepts only CRLF/LF equivalence, never altered labels/order/schema/splits. Do not change old raw hashes to match a checkout.",
+  "full_parser_evidence": "Root should retain compact final per-page outcomes, capture hashes, code/input fingerprints and final promotion gates. Raw captures and expanded archived runs remain ignored; source manifests document their identity."
+}

@@ -1,0 +1,96 @@
+{
+  "baseline": {
+    "model_id": "cascade-text-structure-v1-067e036ceaaa",
+    "native": true,
+    "pages": [
+      {
+        "id": "breadth-cultural-allrecipes",
+        "correct": 14,
+        "unwanted": 8,
+        "expected": 72,
+        "median_seconds": 0.5439065890386701,
+        "samples_seconds": [
+          0.58478127210401,
+          0.5439065890386701,
+          0.5388515228405595
+        ]
+      },
+      {
+        "id": "breadth-technical-iana",
+        "correct": 637,
+        "unwanted": 1305,
+        "expected": 637,
+        "median_seconds": 12.012656743172556,
+        "samples_seconds": [
+          11.852969448082149,
+          12.012656743172556,
+          12.01691761589609
+        ]
+      },
+      {
+        "id": "breadth-holdout-yale",
+        "correct": 27,
+        "unwanted": 12,
+        "expected": 40,
+        "median_seconds": 0.24910614406690001,
+        "samples_seconds": [
+          0.25141129386611283,
+          0.24910614406690001,
+          0.24725440796464682
+        ]
+      }
+    ],
+    "peak_rss_mib": 143.13671875
+  },
+  "candidate": {
+    "model_id": "breadth-group-v4-reject-0.00",
+    "native": true,
+    "pages": [
+      {
+        "id": "breadth-cultural-allrecipes",
+        "correct": 57,
+        "unwanted": 8,
+        "expected": 72,
+        "median_seconds": 0.6345684840343893,
+        "samples_seconds": [
+          0.6543285259976983,
+          0.6345684840343893,
+          0.6121291678864509
+        ]
+      },
+      {
+        "id": "breadth-technical-iana",
+        "correct": 637,
+        "unwanted": 1277,
+        "expected": 637,
+        "median_seconds": 7.5807702739257365,
+        "samples_seconds": [
+          7.4355867290869355,
+          7.686994570074603,
+          7.5807702739257365
+        ]
+      },
+      {
+        "id": "breadth-holdout-yale",
+        "correct": 27,
+        "unwanted": 0,
+        "expected": 40,
+        "median_seconds": 0.2294332440942526,
+        "samples_seconds": [
+          0.2316769678145647,
+          0.2294332440942526,
+          0.228471603943035
+        ]
+      }
+    ],
+    "parity_max_error": 1.1102230246251565e-16,
+    "parity_rows": 991,
+    "peak_rss_mib": 130.34765625
+  },
+  "method": {
+    "platform": "Azure VM Linux Python3.12",
+    "containers": "Original running image and model-only candidate image, one CPU,768MiB limit,read-only root,no network,no user data volumes",
+    "repetitions": 3,
+    "scope": "Offline parser throughput and peak worker-process RSS; not live HTTP latency or total service memory"
+  }
+}

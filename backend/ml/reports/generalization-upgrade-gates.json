@@ -1,0 +1,445 @@
+{
+  "all_frozen_gates_passed": true,
+  "candidate_path": "backend/ml/experiments/breadth-generalization-v4/reject-0.00.json",
+  "candidate_sha256": "97804df6d794bccd275073797feff5936366c8438af5ea026df56ca2bc58017f",
+  "baseline_path": "backend/ml/experiments/breadth-generalization/baseline-cascade.json",
+  "baseline_sha256": "8b9b8ddc7e9e8c7b467d5b23c5fca214417a60361962906855ef7f8faf2723f6",
+  "protocol_path": "backend/ml/experiments/breadth-generalization-v5/protocol.json",
+  "protocol_sha256": "020aaa434e9816b73abf5c77df81ce95affb0eef04fe0aff9e573cbb971d8877",
+  "final_manifest_path": "backend/ml/datasets/generalization-final-sources.json",
+  "final_manifest_sha256": "9fea19eb4a9628f3cc1d1062419598f139833a56fa7fb8a502bf1b2b089d4c65",
+  "final_runtime_sha256": {
+    "__init__.py": "9cc585d0bf234675d1f99bb3ef5fe798d8bf2a7e642f36b2b1579d27f45268db",
+    "accounts.py": "654702b8bed6762762615ddc1e77d819e7e49e9e5a59434b708af9b0b3355a25",
+    "adapters.py": "3ba97d3ab344e1c2cca52e10d15ea4feb2e3ccfcf6fd33925fd6adfff8e6bb07",
+    "analysis_pool.py": "fe6c4a73bcbb069241a0e20992e3b8d1c7b3e2f795c1e83a21f7b8582bea348a",
+    "api.py": "cd022bcdcab2fe2a46b67cbdfc77c5bc609dc2fbe63a3dda3b4f8ca724071119",
+    "arxiv.py": "dd9727fa927b8c9aaf24f6d4fe34ea87faffbfdfbb739d4714c3b84703989e38",
+    "arxiv_search.py": "6139771d5d1923228cff286c2289104ceac53652dfed44c4bd3aa49e7def63c2",
+    "arxiv_urls.py": "7224cdccf231f23131a9863b904bee7a5e1a31faee9d9e2558b587fdc689b0d0",
+    "asura.py": "87137fea264c4d7090e0763662e78a659600927b66e88ec49730126754b9c3fa",
+    "browser_client.py": "271ba46bbf4767442ad95c661927da29894fa50bce0938ad9530f107ae9a1553",
+    "browser_discovery.py": "e08324a64f8a302d6803ab502e53069bf87287e2dc4bfd2212b6a688b63f536b",
+    "cache.py": "5565fe9aa0c6e4d75d2f8a49ac1a38e7f97445e83acc74b1263d7bda4db64ddb",
+    "cascade_model.py": "1996a19c3af6ec81b7313de1b0cca23ba58f69a6b961d321a5005411f95aa479",
+    "content_safety.py": "00532ec0931656ecd4e901df485a2c5defea08dd3218a360cac8ad2aa417f5e7",
+    "context_model.py": "d58c9766c1dc5aeaa33cefe1fdd19ef85c542b582d54fdb783f9b43e19dbe4e3",
+    "csv_import.py": "d15e0a3f16a2a1448fca7c8cbc710d623b58a5c869b447ccc1ff6942ca89722d",
+    "dates.py": "3b1e738eb1fa375779f54f3e03b0362e35bcda87d896c12dd2709b6afc7c46ba",
+    "discovery.py": "a42a6e21bef152285f45195062df590d11d20bcb2e340dd5efd78805c38f5fc8",
+    "documents.py": "8cfb3c0b73870ab145b48d4fa30e89b12f30fcbcb4b8929ca74dd489198db655",
+    "dom.py": "5865acb2cbdfdff362efa592cb0e317df3be0ce18f82d77a1784fd4898035838",
+    "embedded_lists.py": "f84d11ee9a5894c849d909ec995133dcf4378594c637cd540d6999ad59f940f9",
+    "embedded_series.py": "698970eb7c40b56797f80fa8716492473a45c007019d2d74558dffb4fe9a1c2f",
+    "enma.py": "2abf6b95a0d842ebe50330754d38c1938355e1a698a3c9f5bae6ffdfea471b64",
+    "entry_identity.py": "3eda650c508d08c0709e1b254aead338eceac528fe6a39b84a284f36e6d6b9f8",
+    "erasure.py": "422293f7521c656d181bf558efebc7d986acd53bcacb4f30a670cf00a9aa011e",
+    "errors.py": "72da78274f60430b789979c8e45e2b23e48d298e1e5332f01de2732b99076046",
+    "fenrir.py": "f5d446a9e0c231c09dc1a45968386f95f7991e54af08714c4cde195c18a78a9e",
+    "file_import.py": "49594e98877b92ea8baf4e12374d31df2f9da42b1b8d3065f3ffb347519b563e",
+    "flight.py": "9199b8083690e8ddda886b3c651cfa6666dde01ca6ccb6549c62b22dc66417ae",
+    "github.py": "219dd019ef96676848e0b91ffdb2285d4258b3774bb960c929fb2214bc8739f5",
+    "guards.py": "2967d428f2dc052ad1fd4d96a8c0afa15aa75959fe69088d60e0fce2fe7b9e60",
+    "http_identity.py": "466ed1f70612108ed0c695cdb5f997a52346f0bb7189bb2dc3c5acfcb2910efc",
+    "import_pool.py": "6dac1b5572e77237ff51b88c32a23c62c5c2f42e52f8e01567187dceec0f165b",
+    "import_worker.py": "6578ebe6dd6acffc9cc4a6d62b3e63702b1e628c78a9b1422e84a2ce4ecd07dd",
+    "inventories.py": "f014a5ec1ae2c6b49d209ca259d3a82bbdf4d51595dfc69bab7129552fb50e83",
+    "keywords.py": "5f685ea412655d47c81025b5db4302d0b11be860d797007e3d3f09c66b442751",
+    "limits.py": "dc44f372ca5bbe78c18e9ad3fd8aed01786632865667fa9557b836a521e45820",
+    "link-cascade-model.json": "8b9b8ddc7e9e8c7b467d5b23c5fca214417a60361962906855ef7f8faf2723f6",
+    "link-context-model.json": "9a6a3c06578595187e8e7c7c8590c74d780e640515e4a635d336194e0ccf8bb4",
+    "link-model.json": "869f4aa8f8c8c4d47f74e165ad1003211cbf39dc8a411b30d1ad445c9d939185",
+    "link_context.py": "35fe0b0dd025377d424604f158b6a47a122453a6009ad6c99efe28d3d89b8d1b",
+    "link_groups.py": "1b2ac60e13250e8e1e777553e4ecf1840c4b2a55952e0e9e94cfa7bc0111537b",
+    "link_model.py": "5007370c3b0d4b5a4c0ef738a2dc65468d521988483ec210625ffcd3e3213305",
+    "list_entries.py": "a9efc4d88cc8c6b05694106d596c764fc6cb6b3d77c24022b84a7db4c3b10523",
+    "listing_recipes.py": "1cff18427960e371c6ba356f965e88e432cc8acbafc97b36e1ecc2f0f34030d0",
+    "listing_structure.py": "c9fad460a210beaddc6492f4418c0bc0f2835f897a5a85b96d80bfc1a67f51ab",
+    "mangadex.py": "90f4aee432cf126f572924f5e36c493faaf0284d225edfa9e31869910dd3fced",
+    "media_classifier.json": "08dc42d54bb989f0f061cae7710b057f20dc8d2c9a44523b6691527d485a3417",
+    "media_classifier.py": "5f0edc4f17d8ecb7d5470b3b4ac50afee6671baa513e1db1b0b98c78bc599b6c",
+    "media_features.py": "d84b6831e13bfb0d86515cae73ebb8febe11e6fdde60a9687130efda9eb4e504",
+    "media_metadata.py": "3de0f94462c248a610c79d20f9caee85eca16186c860312c6012eb182701c4f2",
+    "model_groups.py": "2de054e886231608a274352c0f27e81aaa692af011a7bde875c346ae6a196055",
+    "models.py": "82ddc7f41bf091f40dbb6a96718c57e15042aad9266d73aa2a7ff065bc2b8a72",
+    "native_model.c": "fd99e62b374f999e9075f23517c36c6d08de2f8b42629d489ce541406d12b427",
+    "native_model.py": "6358b43ed6c2cd7426e212f6da60f1e040f0b92fef6496b2bd97024dd05c8dbd",
+    "page_context.py": "2e17f3f9e28cb53e1dde921894663d9ebd4c4f62cf238d6ed3155227f82b92c3",
+    "pagination.py": "0ae4d083474fd6d922ff40b6bccd6585bfb9dd416aa5b5b4a0acc4ceb15ec646",
+    "parser.py": "fb3eee4ca86792f0171e453271d3007b5e72b735a5fce032c089fbcbcd1b07ac",
+    "preferences.py": "1692f354fa9939d4bec4544f183118e49039e3f66e104d7b38af0f1ff9d5ec9d",
+    "privacy.py": "8890ea8ff0141912331ea4006922c0d196824efaea4486d5054cd773e67279e4",
+    "public_apis.py": "d1a462eb94d6ddc531d428ffd08bfd8c9d99c22791933b9ee17dbd06e26bf61d",
+    "recipes.py": "0b47bef0bf626644fda782a9b8558f7d029026d58e6fcbcba5013c93b934b3e1",
+    "record-context-model.json": "62c75ee4c94900d8f96bf5c01d5079c13ed4bc8f3ecbc4a84aed2123dc37a5cb",
+    "record_context.py": "4dba507808f8c695c39cb271e60fba33b5a97cfc7d49628ed9e7b2ac223edd73",
+    "recovery.py": "b82fb3836cf1c2bbcfcd76d86a0cbd4e8110b91f94674be5a0f2bba4f6302849",
+    "search_query.py": "2dbef8a91d955b36083bf1bccb59fd30c2e891284bbb57517db16880995706ba",
+    "semantic_assets.json": "5b7181abdd16d0b93a85144478b68e214a65abd4af965f19a966eb206b32291c",
+    "semantic_model.py": "1db15deb1a43ca033dc1e81a886dc6025a43cdb9ec3ee1acffeda1e6005d5ea4",
+    "semantic_profile.py": "c5d3ed68567d5da4f861d62704658c6f9aa768aa838f2392cc39f1c909184854",
+    "semantic_search.py": "10344ccf87fe568057e123f307cdaaee770a402bdd48353a8d46bba8fcfc0a85",
+    "sitemaps.py": "e94e0727c6bd3ef09a99f0ff4559c97e4d3131f4f0b109e6b6de19ec7294a069",
+    "source_cache.py": "f02ff096732ee3a79f4a7d4e1b568964e42e7f6cefaef5afbadc465e015da965",
+    "source_methods.py": "83f144916adad02769df3af00b7a4e069c83e0733a95cd0d9eded1450a23b2f2",
+    "steam.py": "9c9a02617fd15ee30cd519148c3cd2b1dc6735eea9c1275a17077e6f15b28f05",
+    "store.py": "1125c9841bc6636b1e5222e300aa0f8e7c10b61510f5d0d3aeaaa91a50a5c029",
+    "suggestions.py": "b86e6996c455cb37e7b01a8fe2d63d40dc258b3437321cea3f0d328816e6238b",
+    "tables.py": "e3d029f641b1b057f170bc1e7f3d163e2901e460ed348f1030f0c73c9cd1889c",
+    "urls.py": "0d98c8bcb6ca6b7d3e9e6d61a999a84246c3b25472bf085035e648a03acb544c",
+    "workers.py": "797fc9bd32ae4c956515cf4d2936fc4e974d313f2c95a5adb1ab340af08f20fb"
+  },
+  "cohorts": {
+    "full-validation": {
+      "passed": true,
+      "report_path": "backend/data/generalization-comparison/v5-full-validation.json",
+      "report_sha256": "844b0f659de00e76f131d2bfcd6ae8e2f11854cd2e3f0f082a53594535b95797",
+      "run_fingerprint": "fe65d3f72e3a3aacbf54b65a5a0f6d0de3ad5a04caf8ac87307cbb145ef64c74",
+      "baseline": {
+        "pages": 10,
+        "expected": 478,
+        "correct": 370,
+        "unwanted": 17,
+        "missing": 108,
+        "precision": 0.9561,
+        "recall": 0.7741,
+        "micro_f1": 0.8555,
+        "source_macro_f1": 0.7917,
+        "complete_pages": 5,
+        "clean_complete_pages": 4,
+        "zero_recall_pages": 1
+      },
+      "candidate": {
+        "pages": 10,
+        "expected": 478,
+        "correct": 441,
+        "unwanted": 17,
+        "missing": 37,
+        "precision": 0.9629,
+        "recall": 0.9226,
+        "micro_f1": 0.9423,
+        "source_macro_f1": 0.8613,
+        "complete_pages": 6,
+        "clean_complete_pages": 4,
+        "zero_recall_pages": 1
+      },
+      "delta": {
+        "precision": 0.0068,
+        "recall": 0.1485,
+        "micro_f1": 0.0868,
+        "source_macro_f1": 0.0696
+      },
+      "source_changes": {
+        "breadth-cultural-allrecipes": {
+          "gained_expected": 43,
+          "lost_expected": 0,
+          "unwanted_delta": 0
+        },
+        "breadth-cultural-boardgamegeek": {
+          "gained_expected": 28,
+          "lost_expected": 0,
+          "unwanted_delta": 0
+        }
+      }
+    },
+    "historical-validation": {
+      "passed": true,
+      "report_path": "backend/data/generalization-comparison/v5-historical-validation.json",
+      "report_sha256": "e642605a61b3ce9da17e3ca7f1de9eaef0bf23717e1740726ebaaab4d93f85ea",
+      "run_fingerprint": "bc55316971de8bbb70ab54632ff5b98e8e84040e6be38670efa915585afd7dd6",
+      "baseline": {
+        "pages": 13,
+        "expected": 1646,
+        "correct": 1565,
+        "unwanted": 27,
+        "missing": 81,
+        "precision": 0.983,
+        "recall": 0.9508,
+        "micro_f1": 0.9666,
+        "source_macro_f1": 0.9246,
+        "complete_pages": 9,
+        "clean_complete_pages": 7,
+        "zero_recall_pages": 0
+      },
+      "candidate": {
+        "pages": 13,
+        "expected": 1646,
+        "correct": 1569,
+        "unwanted": 27,
+        "missing": 77,
+        "precision": 0.9831,
+        "recall": 0.9532,
+        "micro_f1": 0.9679,
+        "source_macro_f1": 0.9249,
+        "complete_pages": 9,
+        "clean_complete_pages": 7,
+        "zero_recall_pages": 0
+      },
+      "delta": {
+        "precision": 0.0001,
+        "recall": 0.0024,
+        "micro_f1": 0.0013,
+        "source_macro_f1": 0.0003
+      },
+      "source_changes": {
+        "jvns": {
+          "gained_expected": 4,
+          "lost_expected": 0,
+          "unwanted_delta": 0
+        }
+      }
+    },
+    "first-external-regression": {
+      "passed": true,
+      "report_path": "backend/data/generalization-comparison/v5-first-external-regression.json",
+      "report_sha256": "80ff98fda843011cddc16a03f559e3c1af8cca6b8b9267d2f989d32e8d9bdef9",
+      "run_fingerprint": "9d32d3602931a23c37dbc852bf43fd03d51c908383c496d68187dc97088f70d8",
+      "baseline": {
+        "pages": 8,
+        "expected": 226,
+        "correct": 154,
+        "unwanted": 0,
+        "missing": 72,
+        "precision": 1.0,
+        "recall": 0.6814,
+        "micro_f1": 0.8105,
+        "source_macro_f1": 0.6757,
+        "complete_pages": 4,
+        "clean_complete_pages": 4,
+        "zero_recall_pages": 2
+      },
+      "candidate": {
+        "pages": 8,
+        "expected": 226,
+        "correct": 154,
+        "unwanted": 0,
+        "missing": 72,
+        "precision": 1.0,
+        "recall": 0.6814,
+        "micro_f1": 0.8105,
+        "source_macro_f1": 0.6757,
+        "complete_pages": 4,
+        "clean_complete_pages": 4,
+        "zero_recall_pages": 2
+      },
+      "delta": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "micro_f1": 0.0,
+        "source_macro_f1": 0.0
+      },
+      "source_changes": {}
+    },
+    "historical-full": {
+      "passed": true,
+      "report_path": "backend/data/generalization-comparison/v5-historical-full.json",
+      "report_sha256": "d9ec74f3fde68d65223ddac3848313015934765b8d0c02a87166638a7313a495",
+      "run_fingerprint": "4a0d0cd7857e12b368eef4dcdda6509b1ffeaa500ebb160c39e923c92484303a",
+      "baseline": {
+        "pages": 63,
+        "expected": 12679,
+        "correct": 11813,
+        "unwanted": 239,
+        "missing": 866,
+        "precision": 0.9802,
+        "recall": 0.9317,
+        "micro_f1": 0.9553,
+        "source_macro_f1": 0.8334,
+        "complete_pages": 41,
+        "clean_complete_pages": 30,
+        "zero_recall_pages": 5
+      },
+      "candidate": {
+        "pages": 63,
+        "expected": 12679,
+        "correct": 11846,
+        "unwanted": 244,
+        "missing": 833,
+        "precision": 0.9798,
+        "recall": 0.9343,
+        "micro_f1": 0.9565,
+        "source_macro_f1": 0.8491,
+        "complete_pages": 43,
+        "clean_complete_pages": 29,
+        "zero_recall_pages": 4
+      },
+      "delta": {
+        "precision": -0.0004,
+        "recall": 0.0026,
+        "micro_f1": 0.0012,
+        "source_macro_f1": 0.0157
+      },
+      "source_changes": {
+        "jvns": {
+          "gained_expected": 4,
+          "lost_expected": 0,
+          "unwanted_delta": 0
+        },
+        "pmlr-volumes": {
+          "gained_expected": 2,
+          "lost_expected": 0,
+          "unwanted_delta": 0
+        },
+        "cascade-debian": {
+          "gained_expected": 20,
+          "lost_expected": 0,
+          "unwanted_delta": 0
+        },
+        "review-godot": {
+          "gained_expected": 0,
+          "lost_expected": 0,
+          "unwanted_delta": 5
+        },
+        "audit-unsong": {
+          "gained_expected": 7,
+          "lost_expected": 0,
+          "unwanted_delta": 0
+        }
+      }
+    },
+    "all-breadth": {
+      "passed": true,
+      "report_path": "backend/data/generalization-comparison/v5-all-breadth.json",
+      "report_sha256": "7ca39cae202f6ff435679b6fa9cc4bf68833f98c5049959a890028e2bd9cad26",
+      "run_fingerprint": "8488a19f18bd091cbf37b3f3a47467d942d5901404f9dce3f414b4c9983036fd",
+      "baseline": {
+        "pages": 51,
+        "expected": 4829,
+        "correct": 3616,
+        "unwanted": 2217,
+        "missing": 1213,
+        "precision": 0.6199,
+        "recall": 0.7488,
+        "micro_f1": 0.6783,
+        "source_macro_f1": 0.7517,
+        "complete_pages": 30,
+        "clean_complete_pages": 19,
+        "zero_recall_pages": 5
+      },
+      "candidate": {
+        "pages": 51,
+        "expected": 4829,
+        "correct": 3814,
+        "unwanted": 2227,
+        "missing": 1015,
+        "precision": 0.6314,
+        "recall": 0.7898,
+        "micro_f1": 0.7017,
+        "source_macro_f1": 0.8129,
+        "complete_pages": 32,
+        "clean_complete_pages": 20,
+        "zero_recall_pages": 3
+      },
+      "delta": {
+        "precision": 0.0115,
+        "recall": 0.041,
+        "micro_f1": 0.0234,
+        "source_macro_f1": 0.0612
+      },
+      "source_changes": {
+        "breadth-cultural-allrecipes": {
+          "gained_expected": 43,
+          "lost_expected": 0,
+          "unwanted_delta": 0
+        },
+        "breadth-cultural-boardgamegeek": {
+          "gained_expected": 28,
+          "lost_expected": 0,
+          "unwanted_delta": 0
+        },
+        "breadth-public-bls": {
+          "gained_expected": 28,
+          "lost_expected": 0,
+          "unwanted_delta": 1
+        },
+        "breadth-public-sec": {
+          "gained_expected": 4,
+          "lost_expected": 0,
+          "unwanted_delta": 0
+        },
+        "breadth-technical-openssl": {
+          "gained_expected": 5,
+          "lost_expected": 0,
+          "unwanted_delta": 0
+        },
+        "breadth-technical-curl": {
+          "gained_expected": 28,
+          "lost_expected": 0,
+          "unwanted_delta": 0
+        },
+        "breadth-technical-nginx": {
+          "gained_expected": 39,
+          "lost_expected": 0,
+          "unwanted_delta": 0
+        },
+        "breadth-technical-iana": {
+          "gained_expected": 0,
+          "lost_expected": 0,
+          "unwanted_delta": 9
+        },
+        "breadth-technical-unicode": {
+          "gained_expected": 23,
+          "lost_expected": 0,
+          "unwanted_delta": 0
+        }
+      }
+    },
+    "final-heldout": {
+      "passed": true,
+      "report_path": "backend/data/generalization-comparison/v5-final-heldout.json",
+      "report_sha256": "608c5cae6f276bea4a290a669bc16083bc19ee44700483e326681bb718aa6c1c",
+      "run_fingerprint": "04fadf8bef7527bfb08b950a7d3a9fb1a58ec066b638264905cfc1f7d9745899",
+      "baseline": {
+        "pages": 8,
+        "expected": 3423,
+        "correct": 1151,
+        "unwanted": 534,
+        "missing": 2272,
+        "precision": 0.6831,
+        "recall": 0.3363,
+        "micro_f1": 0.4507,
+        "source_macro_f1": 0.5726,
+        "complete_pages": 4,
+        "clean_complete_pages": 1,
+        "zero_recall_pages": 2
+      },
+      "candidate": {
+        "pages": 8,
+        "expected": 3423,
+        "correct": 1151,
+        "unwanted": 534,
+        "missing": 2272,
+        "precision": 0.6831,
+        "recall": 0.3363,
+        "micro_f1": 0.4507,
+        "source_macro_f1": 0.5726,
+        "complete_pages": 4,
+        "clean_complete_pages": 1,
+        "zero_recall_pages": 2
+      },
+      "delta": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "micro_f1": 0.0,
+        "source_macro_f1": 0.0
+      },
+      "source_changes": {}
+    }
+  },
+  "limitations": [
+    "Final external eight-site holdout was evaluated once after freezing selection; every site has identical candidate and baseline outcomes. It shows no generalization gain, only non-regression.",
+    "Validation cohorts overlap broader regression cohorts. Do not sum their source or URL counts.",
+    "Baseline and candidate models are both replayed through V5 preprocessing; generic parser and feature improvements must be assessed separately against earlier runtime reports.",
+    "Weak reviewed listing scopes are not independently labeled gold. Metrics cover one saved HTML listing, not live acquisition, JavaScript loading, pagination, dates, or whole-site completeness.",
+    "OASIS standards and Love & Lemons catalog remain major final-holdout failures; IRS and OpenStreetMap have zero recall."
+  ],
+  "published_reports": {
+    "full-validation": "backend/ml/reports/generalization-upgrade-validation.json",
+    "historical-validation": "backend/ml/reports/generalization-upgrade-historical-validation.json",
+    "first-external-regression": "backend/ml/reports/generalization-upgrade-regression.json",
+    "historical-full": "backend/ml/reports/generalization-upgrade-historical.json",
+    "all-breadth": "backend/ml/reports/generalization-upgrade-breadth.json",
+    "final-heldout": "backend/ml/reports/generalization-upgrade-final.json"
+  },
+  "artifact_note": "Each replay explicitly overrides the bundled model with the recorded baseline/candidate artifact. Runtime fingerprints record the files present during evaluation; production now bundles the candidate with the same candidate_sha256."
+}

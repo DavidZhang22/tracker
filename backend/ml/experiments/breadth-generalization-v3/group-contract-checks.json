@@ -1,0 +1,15 @@
+{
+  "assertions": 11,
+  "passed": true,
+  "contracts": [
+    "numeric paths and final slug normalize",
+    "hostnames excluded from learned group identity",
+    "page/class/extension boundaries preserved",
+    "invalid and oversized URLs yield no group",
+    "query field cap enforced",
+    "duplicate anchors cannot seed or create cold support",
+    "two distinct accepted URLs seed warm rescue",
+    "three distinct expert-high URLs seed cold group",
+    "chrome excluded from support"
+  ]
+}

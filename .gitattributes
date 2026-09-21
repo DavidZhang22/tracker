@@ -2,3 +2,10 @@
 backend/ml/datasets/breadth-* text eol=lf
 backend/ml/reports/breadth-* text eol=lf
 backend/ml/reports/website-breadth.* text eol=lf
+# Preserve frozen experiment/model bytes and their recorded hashes.
+backend/ml/experiments/breadth-generalization*/*.json -text whitespace=cr-at-eol
+backend/app/tracker/link-cascade-model.json -text whitespace=cr-at-eol
+backend/ml/datasets/generalization-holdout-* text eol=lf
+backend/ml/datasets/generalization-final-* text eol=lf
+backend/ml/reports/generalization-upgrade*.json -text whitespace=cr-at-eol
+backend/ml/reports/generalization-upgrade*.md text eol=lf

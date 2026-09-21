@@ -1,0 +1,572 @@
+{
+  "created_at": "2026-09-21T18:22:17Z",
+  "model_ids": {
+    "baseline": "cascade-text-structure-v1-067e036ceaaa",
+    "candidate": "breadth-group-v4-reject-0.00"
+  },
+  "inputs": {
+    "candidate_mode": "cascade",
+    "repeats": 1,
+    "python": "3.12.8 | packaged by conda-forge | (main, Dec  5 2024, 14:06:27) [MSC v.1942 64 bit (AMD64)]",
+    "model_sha256": {
+      "baseline": "8b9b8ddc7e9e8c7b467d5b23c5fca214417a60361962906855ef7f8faf2723f6",
+      "candidate": "97804df6d794bccd275073797feff5936366c8438af5ea026df56ca2bc58017f"
+    },
+    "manifests": {
+      "C:\\Users\\david\\Documents\\tracker\\backend\\ml\\datasets\\generalization-final-sources.json": "9fea19eb4a9628f3cc1d1062419598f139833a56fa7fb8a502bf1b2b089d4c65"
+    },
+    "sources": {
+      "breadth-final-gimp": {
+        "manifest_row_sha256": "5d3906058accc1f7432c19b5b40b98edf4ccacee1cc05c0ec866da880259c698",
+        "capture_sha256": "8a84215d4fadbe21daf5bc1bfaf02f954112c179d395f2147ee851ce2d447de2"
+      },
+      "breadth-final-mathsisfun": {
+        "manifest_row_sha256": "8ee0dd373a0681a62b6259935098f3767a6916a7efa000f87d9a806fc6f4d431",
+        "capture_sha256": "b89346b1efeefd8681c3ef7e89fcefb71041590afbd7c2d9743cb757f76c058a"
+      },
+      "breadth-final-irs": {
+        "manifest_row_sha256": "9bb5efc953f89296924fc904b7faca4c120c3b340403b71ab8cd49664501f35b",
+        "capture_sha256": "97481040a7a7c4897a9fdb1d4c324afdf1a7f98a6de6ecb02b73958ae28d98ca"
+      },
+      "breadth-final-oasis": {
+        "manifest_row_sha256": "d0f2f1abb4444bbfe21e73024122dc550bbe7b465910f830583c84c130433447",
+        "capture_sha256": "746d1e0d64167b15a1b4391f645e00a76382ed700299318fd5229bcc04c77766"
+      },
+      "breadth-final-loveandlemons": {
+        "manifest_row_sha256": "02c9c406ae4d52079d649080e479e6b86d078d86b0c8f7be19f8f9065f2b36ec",
+        "capture_sha256": "11987e70878c66dfd5d33702d23058c462357751e93f85da78e75dbbbbfb931b"
+      },
+      "breadth-final-openstreetmap": {
+        "manifest_row_sha256": "b6f585d54ec93796fbe3827ae3ed08370bea64c4adf83acdbdf25575b8b3428c",
+        "capture_sha256": "859f326bb2d616a43f7bed192fbfa8fd9e8efe0a0027de986d2298a098fa17f5"
+      },
+      "breadth-final-ruby": {
+        "manifest_row_sha256": "8ca27777982038a4a91d987159be249ea6ac015d051f5ece9e2037c8858227ef",
+        "capture_sha256": "831c4509a76245b0b1bc731bfa8302cf56033b35b1d82dc37bd17eafcaa878e2"
+      },
+      "breadth-final-sfmoma": {
+        "manifest_row_sha256": "a0e37e925de508fa340478137a4842f853962787ec5718c9e21e9cfcabde7caa",
+        "capture_sha256": "5b4637ab6bb7b0c26ee4b0cf19c042c0f4ef06a7d9f6f27523aef9401388a560"
+      }
+    },
+    "runtime": {
+      "__init__.py": "9cc585d0bf234675d1f99bb3ef5fe798d8bf2a7e642f36b2b1579d27f45268db",
+      "accounts.py": "654702b8bed6762762615ddc1e77d819e7e49e9e5a59434b708af9b0b3355a25",
+      "adapters.py": "3ba97d3ab344e1c2cca52e10d15ea4feb2e3ccfcf6fd33925fd6adfff8e6bb07",
+      "analysis_pool.py": "fe6c4a73bcbb069241a0e20992e3b8d1c7b3e2f795c1e83a21f7b8582bea348a",
+      "api.py": "cd022bcdcab2fe2a46b67cbdfc77c5bc609dc2fbe63a3dda3b4f8ca724071119",
+      "arxiv.py": "dd9727fa927b8c9aaf24f6d4fe34ea87faffbfdfbb739d4714c3b84703989e38",
+      "arxiv_search.py": "6139771d5d1923228cff286c2289104ceac53652dfed44c4bd3aa49e7def63c2",
+      "arxiv_urls.py": "7224cdccf231f23131a9863b904bee7a5e1a31faee9d9e2558b587fdc689b0d0",
+      "asura.py": "87137fea264c4d7090e0763662e78a659600927b66e88ec49730126754b9c3fa",
+      "browser_client.py": "271ba46bbf4767442ad95c661927da29894fa50bce0938ad9530f107ae9a1553",
+      "browser_discovery.py": "e08324a64f8a302d6803ab502e53069bf87287e2dc4bfd2212b6a688b63f536b",
+      "cache.py": "5565fe9aa0c6e4d75d2f8a49ac1a38e7f97445e83acc74b1263d7bda4db64ddb",
+      "cascade_model.py": "1996a19c3af6ec81b7313de1b0cca23ba58f69a6b961d321a5005411f95aa479",
+      "content_safety.py": "00532ec0931656ecd4e901df485a2c5defea08dd3218a360cac8ad2aa417f5e7",
+      "context_model.py": "d58c9766c1dc5aeaa33cefe1fdd19ef85c542b582d54fdb783f9b43e19dbe4e3",
+      "csv_import.py": "d15e0a3f16a2a1448fca7c8cbc710d623b58a5c869b447ccc1ff6942ca89722d",
+      "dates.py": "3b1e738eb1fa375779f54f3e03b0362e35bcda87d896c12dd2709b6afc7c46ba",
+      "discovery.py": "a42a6e21bef152285f45195062df590d11d20bcb2e340dd5efd78805c38f5fc8",
+      "documents.py": "8cfb3c0b73870ab145b48d4fa30e89b12f30fcbcb4b8929ca74dd489198db655",
+      "dom.py": "5865acb2cbdfdff362efa592cb0e317df3be0ce18f82d77a1784fd4898035838",
+      "embedded_lists.py": "f84d11ee9a5894c849d909ec995133dcf4378594c637cd540d6999ad59f940f9",
+      "embedded_series.py": "698970eb7c40b56797f80fa8716492473a45c007019d2d74558dffb4fe9a1c2f",
+      "enma.py": "2abf6b95a0d842ebe50330754d38c1938355e1a698a3c9f5bae6ffdfea471b64",
+      "entry_identity.py": "3eda650c508d08c0709e1b254aead338eceac528fe6a39b84a284f36e6d6b9f8",
+      "erasure.py": "422293f7521c656d181bf558efebc7d986acd53bcacb4f30a670cf00a9aa011e",
+      "errors.py": "72da78274f60430b789979c8e45e2b23e48d298e1e5332f01de2732b99076046",
+      "fenrir.py": "f5d446a9e0c231c09dc1a45968386f95f7991e54af08714c4cde195c18a78a9e",
+      "file_import.py": "49594e98877b92ea8baf4e12374d31df2f9da42b1b8d3065f3ffb347519b563e",
+      "flight.py": "9199b8083690e8ddda886b3c651cfa6666dde01ca6ccb6549c62b22dc66417ae",
+      "github.py": "219dd019ef96676848e0b91ffdb2285d4258b3774bb960c929fb2214bc8739f5",
+      "guards.py": "2967d428f2dc052ad1fd4d96a8c0afa15aa75959fe69088d60e0fce2fe7b9e60",
+      "http_identity.py": "466ed1f70612108ed0c695cdb5f997a52346f0bb7189bb2dc3c5acfcb2910efc",
+      "import_pool.py": "6dac1b5572e77237ff51b88c32a23c62c5c2f42e52f8e01567187dceec0f165b",
+      "import_worker.py": "6578ebe6dd6acffc9cc4a6d62b3e63702b1e628c78a9b1422e84a2ce4ecd07dd",
+      "inventories.py": "f014a5ec1ae2c6b49d209ca259d3a82bbdf4d51595dfc69bab7129552fb50e83",
+      "keywords.py": "5f685ea412655d47c81025b5db4302d0b11be860d797007e3d3f09c66b442751",
+      "limits.py": "dc44f372ca5bbe78c18e9ad3fd8aed01786632865667fa9557b836a521e45820",
+      "link-cascade-model.json": "8b9b8ddc7e9e8c7b467d5b23c5fca214417a60361962906855ef7f8faf2723f6",
+      "link-context-model.json": "9a6a3c06578595187e8e7c7c8590c74d780e640515e4a635d336194e0ccf8bb4",
+      "link-model.json": "869f4aa8f8c8c4d47f74e165ad1003211cbf39dc8a411b30d1ad445c9d939185",
+      "link_context.py": "35fe0b0dd025377d424604f158b6a47a122453a6009ad6c99efe28d3d89b8d1b",
+      "link_groups.py": "1b2ac60e13250e8e1e777553e4ecf1840c4b2a55952e0e9e94cfa7bc0111537b",
+      "link_model.py": "5007370c3b0d4b5a4c0ef738a2dc65468d521988483ec210625ffcd3e3213305",
+      "list_entries.py": "a9efc4d88cc8c6b05694106d596c764fc6cb6b3d77c24022b84a7db4c3b10523",
+      "listing_recipes.py": "1cff18427960e371c6ba356f965e88e432cc8acbafc97b36e1ecc2f0f34030d0",
+      "listing_structure.py": "c9fad460a210beaddc6492f4418c0bc0f2835f897a5a85b96d80bfc1a67f51ab",
+      "mangadex.py": "90f4aee432cf126f572924f5e36c493faaf0284d225edfa9e31869910dd3fced",
+      "media_classifier.json": "08dc42d54bb989f0f061cae7710b057f20dc8d2c9a44523b6691527d485a3417",
+      "media_classifier.py": "5f0edc4f17d8ecb7d5470b3b4ac50afee6671baa513e1db1b0b98c78bc599b6c",
+      "media_features.py": "d84b6831e13bfb0d86515cae73ebb8febe11e6fdde60a9687130efda9eb4e504",
+      "media_metadata.py": "3de0f94462c248a610c79d20f9caee85eca16186c860312c6012eb182701c4f2",
+      "model_groups.py": "2de054e886231608a274352c0f27e81aaa692af011a7bde875c346ae6a196055",
+      "models.py": "82ddc7f41bf091f40dbb6a96718c57e15042aad9266d73aa2a7ff065bc2b8a72",
+      "native_model.c": "fd99e62b374f999e9075f23517c36c6d08de2f8b42629d489ce541406d12b427",
+      "native_model.py": "6358b43ed6c2cd7426e212f6da60f1e040f0b92fef6496b2bd97024dd05c8dbd",
+      "page_context.py": "2e17f3f9e28cb53e1dde921894663d9ebd4c4f62cf238d6ed3155227f82b92c3",
+      "pagination.py": "0ae4d083474fd6d922ff40b6bccd6585bfb9dd416aa5b5b4a0acc4ceb15ec646",
+      "parser.py": "fb3eee4ca86792f0171e453271d3007b5e72b735a5fce032c089fbcbcd1b07ac",
+      "preferences.py": "1692f354fa9939d4bec4544f183118e49039e3f66e104d7b38af0f1ff9d5ec9d",
+      "privacy.py": "8890ea8ff0141912331ea4006922c0d196824efaea4486d5054cd773e67279e4",
+      "public_apis.py": "d1a462eb94d6ddc531d428ffd08bfd8c9d99c22791933b9ee17dbd06e26bf61d",
+      "recipes.py": "0b47bef0bf626644fda782a9b8558f7d029026d58e6fcbcba5013c93b934b3e1",
+      "record-context-model.json": "62c75ee4c94900d8f96bf5c01d5079c13ed4bc8f3ecbc4a84aed2123dc37a5cb",
+      "record_context.py": "4dba507808f8c695c39cb271e60fba33b5a97cfc7d49628ed9e7b2ac223edd73",
+      "recovery.py": "b82fb3836cf1c2bbcfcd76d86a0cbd4e8110b91f94674be5a0f2bba4f6302849",
+      "search_query.py": "2dbef8a91d955b36083bf1bccb59fd30c2e891284bbb57517db16880995706ba",
+      "semantic_assets.json": "5b7181abdd16d0b93a85144478b68e214a65abd4af965f19a966eb206b32291c",
+      "semantic_model.py": "1db15deb1a43ca033dc1e81a886dc6025a43cdb9ec3ee1acffeda1e6005d5ea4",
+      "semantic_profile.py": "c5d3ed68567d5da4f861d62704658c6f9aa768aa838f2392cc39f1c909184854",
+      "semantic_search.py": "10344ccf87fe568057e123f307cdaaee770a402bdd48353a8d46bba8fcfc0a85",
+      "sitemaps.py": "e94e0727c6bd3ef09a99f0ff4559c97e4d3131f4f0b109e6b6de19ec7294a069",
+      "source_cache.py": "f02ff096732ee3a79f4a7d4e1b568964e42e7f6cefaef5afbadc465e015da965",
+      "source_methods.py": "83f144916adad02769df3af00b7a4e069c83e0733a95cd0d9eded1450a23b2f2",
+      "steam.py": "9c9a02617fd15ee30cd519148c3cd2b1dc6735eea9c1275a17077e6f15b28f05",
+      "store.py": "1125c9841bc6636b1e5222e300aa0f8e7c10b61510f5d0d3aeaaa91a50a5c029",
+      "suggestions.py": "b86e6996c455cb37e7b01a8fe2d63d40dc258b3437321cea3f0d328816e6238b",
+      "tables.py": "e3d029f641b1b057f170bc1e7f3d163e2901e460ed348f1030f0c73c9cd1889c",
+      "urls.py": "0d98c8bcb6ca6b7d3e9e6d61a999a84246c3b25472bf085035e648a03acb544c",
+      "workers.py": "797fc9bd32ae4c956515cf4d2936fc4e974d313f2c95a5adb1ab340af08f20fb"
+    },
+    "evaluator_sha256": "2f7a1ae93212bc52f14eb7e98a60a5e7e94dce1db5ccf32e2b62faa21fd60441"
+  },
+  "run_fingerprint": "04fadf8bef7527bfb08b950a7d3a9fb1a58ec066b638264905cfc1f7d9745899",
+  "complete": true,
+  "model_sha256": {
+    "baseline": "8b9b8ddc7e9e8c7b467d5b23c5fca214417a60361962906855ef7f8faf2723f6",
+    "candidate": "97804df6d794bccd275073797feff5936366c8438af5ea026df56ca2bc58017f"
+  },
+  "candidate_mode": "cascade",
+  "repeats": 1,
+  "scope": "Offline single-page replay; no source requests. Dataset scopes are weak reviewed annotations.",
+  "pages": {
+    "breadth-final-gimp": {
+      "source": "https://www.gimp.org/news/",
+      "site_family": "gimp.org",
+      "capture_sha256": "8a84215d4fadbe21daf5bc1bfaf02f954112c179d395f2147ee851ce2d447de2",
+      "original_split": "test",
+      "expected": 10,
+      "expected_sha256": "06540cbbb8fa2d99e64fbc7c9c1b697b8008aa7f5f9b71af80db48102f8af268",
+      "ignored_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "annotation_protocol": "frozen-selector",
+      "baseline": {
+        "expected": 10,
+        "correct": 10,
+        "unwanted": 0,
+        "missing": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "median_seconds": 0.11204479998559691,
+        "dated_entries": 10,
+        "missing_examples": [],
+        "unwanted_examples": []
+      },
+      "candidate": {
+        "expected": 10,
+        "correct": 10,
+        "unwanted": 0,
+        "missing": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "median_seconds": 0.1057219999784138,
+        "dated_entries": 10,
+        "missing_examples": [],
+        "unwanted_examples": []
+      },
+      "lost_expected": [],
+      "gained_expected": []
+    },
+    "breadth-final-mathsisfun": {
+      "source": "https://www.mathsisfun.com/algebra/index.html",
+      "site_family": "mathsisfun.com",
+      "capture_sha256": "b89346b1efeefd8681c3ef7e89fcefb71041590afbd7c2d9743cb757f76c058a",
+      "original_split": "test",
+      "expected": 64,
+      "expected_sha256": "73e23e5c567ba3683468b7c124bdbd8738e7c9be8a658f5bd613de17e3d9e7bc",
+      "ignored_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "annotation_protocol": "frozen-selector",
+      "baseline": {
+        "expected": 64,
+        "correct": 64,
+        "unwanted": 6,
+        "missing": 0,
+        "precision": 0.9143,
+        "recall": 1.0,
+        "f1": 0.9552,
+        "median_seconds": 0.10409549999167211,
+        "dated_entries": 0,
+        "missing_examples": [],
+        "unwanted_examples": [
+          "https://www.mathsisfun.com/algebra/index-2.html",
+          "https://www.mathsisfun.com/algebra/index-college.html",
+          "https://www.mathsisfun.com/algebra/index-pre-algebra.html",
+          "https://www.mathsisfun.com/algebra/trigonometry-index.html",
+          "https://www.mathsisfun.com/decimals-menu.html"
+        ]
+      },
+      "candidate": {
+        "expected": 64,
+        "correct": 64,
+        "unwanted": 6,
+        "missing": 0,
+        "precision": 0.9143,
+        "recall": 1.0,
+        "f1": 0.9552,
+        "median_seconds": 0.11606440000468865,
+        "dated_entries": 0,
+        "missing_examples": [],
+        "unwanted_examples": [
+          "https://www.mathsisfun.com/algebra/index-2.html",
+          "https://www.mathsisfun.com/algebra/index-college.html",
+          "https://www.mathsisfun.com/algebra/index-pre-algebra.html",
+          "https://www.mathsisfun.com/algebra/trigonometry-index.html",
+          "https://www.mathsisfun.com/decimals-menu.html"
+        ]
+      },
+      "lost_expected": [],
+      "gained_expected": []
+    },
+    "breadth-final-irs": {
+      "source": "https://www.irs.gov/newsroom/news-releases-for-current-month",
+      "site_family": "irs.gov",
+      "capture_sha256": "97481040a7a7c4897a9fdb1d4c324afdf1a7f98a6de6ecb02b73958ae28d98ca",
+      "original_split": "test",
+      "expected": 10,
+      "expected_sha256": "664b9281b9ca70735f31ceecfae33e1ba2a0830a6a513252bf3a2807a897f92c",
+      "ignored_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "annotation_protocol": "frozen-selector",
+      "baseline": {
+        "expected": 10,
+        "correct": 0,
+        "unwanted": 0,
+        "missing": 10,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "median_seconds": 0.18233859998872504,
+        "dated_entries": 0,
+        "missing_examples": [
+          "https://www.irs.gov/newsroom/irs-accepting-applicants-for-2027-compliance-assurance-process",
+          "https://www.irs.gov/newsroom/irs-announces-extension-of-tax-relief-for-farmers-and-ranchers-affected-by-drought-in-49-states-other-regions",
+          "https://www.irs.gov/newsroom/irs-issues-notice-on-45z-clean-fuel-production-tax-credit-to-support-domestic-biofuel-production-and-american-agriculture",
+          "https://www.irs.gov/newsroom/irs-reminder-direct-pay-offers-free-easy-way-to-pay-taxes",
+          "https://www.irs.gov/newsroom/irs-reminder-disaster-preparedness-starts-with-tax-records"
+        ],
+        "unwanted_examples": []
+      },
+      "candidate": {
+        "expected": 10,
+        "correct": 0,
+        "unwanted": 0,
+        "missing": 10,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "median_seconds": 0.18213719999766909,
+        "dated_entries": 0,
+        "missing_examples": [
+          "https://www.irs.gov/newsroom/irs-accepting-applicants-for-2027-compliance-assurance-process",
+          "https://www.irs.gov/newsroom/irs-announces-extension-of-tax-relief-for-farmers-and-ranchers-affected-by-drought-in-49-states-other-regions",
+          "https://www.irs.gov/newsroom/irs-issues-notice-on-45z-clean-fuel-production-tax-credit-to-support-domestic-biofuel-production-and-american-agriculture",
+          "https://www.irs.gov/newsroom/irs-reminder-direct-pay-offers-free-easy-way-to-pay-taxes",
+          "https://www.irs.gov/newsroom/irs-reminder-disaster-preparedness-starts-with-tax-records"
+        ],
+        "unwanted_examples": []
+      },
+      "lost_expected": [],
+      "gained_expected": []
+    },
+    "breadth-final-oasis": {
+      "source": "https://www.oasis-open.org/standards/",
+      "site_family": "oasis-open.org",
+      "capture_sha256": "746d1e0d64167b15a1b4391f645e00a76382ed700299318fd5229bcc04c77766",
+      "original_split": "test",
+      "expected": 1408,
+      "expected_sha256": "af30d6bd55481744a8a4814d9e922b1584ffc1551e935673b20e51df02d4562b",
+      "ignored_sha256": "6ea28ab8d7dcd8d1a4a4b4e94b2cb9d7eee081f3d46ac391e21e9a4a406958df",
+      "annotation_protocol": "frozen-selector",
+      "baseline": {
+        "expected": 1408,
+        "correct": 16,
+        "unwanted": 523,
+        "missing": 1392,
+        "precision": 0.0297,
+        "recall": 0.0114,
+        "f1": 0.0164,
+        "median_seconds": 5.6841674000024796,
+        "dated_entries": 444,
+        "missing_examples": [
+          "http://docs.oasis-open.org/amqp-bindmap/amqp-wsb/v1.0/amqp-wsb-v1.0.html",
+          "http://docs.oasis-open.org/amqp-bindmap/amqp-wsb/v1.0/cs01/amqp-wsb-v1.0-cs01.html",
+          "http://docs.oasis-open.org/amqp-bindmap/amqp-wsb/v1.0/cs01/amqp-wsb-v1.0-cs01.pdf",
+          "http://docs.oasis-open.org/amqp/anonterm/v1.0/anonterm-v1.0.html",
+          "http://docs.oasis-open.org/amqp/anonterm/v1.0/cs01/anonterm-v1.0-cs01.html"
+        ],
+        "unwanted_examples": [
+          "https://www.oasis-open.org/apps/org/workgroup/voting/ballot.php?id=3747",
+          "https://www.oasis-open.org/committees/acal",
+          "https://www.oasis-open.org/committees/amqp",
+          "https://www.oasis-open.org/committees/amqp-bindmap",
+          "https://www.oasis-open.org/committees/avdl"
+        ]
+      },
+      "candidate": {
+        "expected": 1408,
+        "correct": 16,
+        "unwanted": 523,
+        "missing": 1392,
+        "precision": 0.0297,
+        "recall": 0.0114,
+        "f1": 0.0164,
+        "median_seconds": 6.046596700005466,
+        "dated_entries": 444,
+        "missing_examples": [
+          "http://docs.oasis-open.org/amqp-bindmap/amqp-wsb/v1.0/amqp-wsb-v1.0.html",
+          "http://docs.oasis-open.org/amqp-bindmap/amqp-wsb/v1.0/cs01/amqp-wsb-v1.0-cs01.html",
+          "http://docs.oasis-open.org/amqp-bindmap/amqp-wsb/v1.0/cs01/amqp-wsb-v1.0-cs01.pdf",
+          "http://docs.oasis-open.org/amqp/anonterm/v1.0/anonterm-v1.0.html",
+          "http://docs.oasis-open.org/amqp/anonterm/v1.0/cs01/anonterm-v1.0-cs01.html"
+        ],
+        "unwanted_examples": [
+          "https://www.oasis-open.org/apps/org/workgroup/voting/ballot.php?id=3747",
+          "https://www.oasis-open.org/committees/acal",
+          "https://www.oasis-open.org/committees/amqp",
+          "https://www.oasis-open.org/committees/amqp-bindmap",
+          "https://www.oasis-open.org/committees/avdl"
+        ]
+      },
+      "lost_expected": [],
+      "gained_expected": []
+    },
+    "breadth-final-loveandlemons": {
+      "source": "https://www.loveandlemons.com/recipes/",
+      "site_family": "loveandlemons.com",
+      "capture_sha256": "11987e70878c66dfd5d33702d23058c462357751e93f85da78e75dbbbbfb931b",
+      "original_split": "test",
+      "expected": 1625,
+      "expected_sha256": "15f1b0669d6459f71737f7e81590cb2b6b04c7edc10431cae3f0f9d47e07c0b1",
+      "ignored_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "annotation_protocol": "frozen-selector",
+      "baseline": {
+        "expected": 1625,
+        "correct": 775,
+        "unwanted": 0,
+        "missing": 850,
+        "precision": 1.0,
+        "recall": 0.4769,
+        "f1": 0.6458,
+        "median_seconds": 2.877030100004049,
+        "dated_entries": 0,
+        "missing_examples": [
+          "https://www.loveandlemons.com/3-layer-fruit-smoothie",
+          "https://www.loveandlemons.com/4th-of-july-side-dishes",
+          "https://www.loveandlemons.com/7-layer-dip",
+          "https://www.loveandlemons.com/a-beautiful-spring-appetizer-board",
+          "https://www.loveandlemons.com/affogato-recipe"
+        ],
+        "unwanted_examples": []
+      },
+      "candidate": {
+        "expected": 1625,
+        "correct": 775,
+        "unwanted": 0,
+        "missing": 850,
+        "precision": 1.0,
+        "recall": 0.4769,
+        "f1": 0.6458,
+        "median_seconds": 2.923982599982992,
+        "dated_entries": 0,
+        "missing_examples": [
+          "https://www.loveandlemons.com/3-layer-fruit-smoothie",
+          "https://www.loveandlemons.com/4th-of-july-side-dishes",
+          "https://www.loveandlemons.com/7-layer-dip",
+          "https://www.loveandlemons.com/a-beautiful-spring-appetizer-board",
+          "https://www.loveandlemons.com/affogato-recipe"
+        ],
+        "unwanted_examples": []
+      },
+      "lost_expected": [],
+      "gained_expected": []
+    },
+    "breadth-final-openstreetmap": {
+      "source": "https://www.openstreetmap.org/diary",
+      "site_family": "openstreetmap.org",
+      "capture_sha256": "859f326bb2d616a43f7bed192fbfa8fd9e8efe0a0027de986d2298a098fa17f5",
+      "original_split": "test",
+      "expected": 20,
+      "expected_sha256": "ef3926d86b39eb80ae77db5d1e7faeef69469b52f9f8504b7eabb8e501468192",
+      "ignored_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "annotation_protocol": "frozen-selector",
+      "baseline": {
+        "expected": 20,
+        "correct": 0,
+        "unwanted": 1,
+        "missing": 20,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "median_seconds": 0.14183629999752156,
+        "dated_entries": 1,
+        "missing_examples": [
+          "https://www.openstreetmap.org/user/AngocA/diary/409389",
+          "https://www.openstreetmap.org/user/Dan_04/diary/409379",
+          "https://www.openstreetmap.org/user/EM_OSM/diary/409362",
+          "https://www.openstreetmap.org/user/Emmanuel%20Arrechea/diary/409365",
+          "https://www.openstreetmap.org/user/Enduro%20Travel%20Help/diary/409356"
+        ],
+        "unwanted_examples": [
+          "https://www.openstreetmap.org/"
+        ]
+      },
+      "candidate": {
+        "expected": 20,
+        "correct": 0,
+        "unwanted": 1,
+        "missing": 20,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "median_seconds": 0.1472234999819193,
+        "dated_entries": 1,
+        "missing_examples": [
+          "https://www.openstreetmap.org/user/AngocA/diary/409389",
+          "https://www.openstreetmap.org/user/Dan_04/diary/409379",
+          "https://www.openstreetmap.org/user/EM_OSM/diary/409362",
+          "https://www.openstreetmap.org/user/Emmanuel%20Arrechea/diary/409365",
+          "https://www.openstreetmap.org/user/Enduro%20Travel%20Help/diary/409356"
+        ],
+        "unwanted_examples": [
+          "https://www.openstreetmap.org/"
+        ]
+      },
+      "lost_expected": [],
+      "gained_expected": []
+    },
+    "breadth-final-ruby": {
+      "source": "https://www.ruby-lang.org/en/downloads/releases/",
+      "site_family": "ruby-lang.org",
+      "capture_sha256": "831c4509a76245b0b1bc731bfa8302cf56033b35b1d82dc37bd17eafcaa878e2",
+      "original_split": "test",
+      "expected": 244,
+      "expected_sha256": "bd455358309d24e02e5a189032e4fd0a45849d77a2fcb4183bc0d5884743a81f",
+      "ignored_sha256": "d0faca52f5e985a20214f6583dbe2ebc432726ef8fac572cf454bb10e5073d86",
+      "annotation_protocol": "frozen-selector",
+      "baseline": {
+        "expected": 244,
+        "correct": 244,
+        "unwanted": 1,
+        "missing": 0,
+        "precision": 0.9959,
+        "recall": 1.0,
+        "f1": 0.998,
+        "median_seconds": 0.8031906000105664,
+        "dated_entries": 244,
+        "missing_examples": [],
+        "unwanted_examples": [
+          "https://www.ruby-lang.org/en/downloads/branches"
+        ]
+      },
+      "candidate": {
+        "expected": 244,
+        "correct": 244,
+        "unwanted": 1,
+        "missing": 0,
+        "precision": 0.9959,
+        "recall": 1.0,
+        "f1": 0.998,
+        "median_seconds": 0.8595900999789592,
+        "dated_entries": 244,
+        "missing_examples": [],
+        "unwanted_examples": [
+          "https://www.ruby-lang.org/en/downloads/branches"
+        ]
+      },
+      "lost_expected": [],
+      "gained_expected": []
+    },
+    "breadth-final-sfmoma": {
+      "source": "https://www.sfmoma.org/exhibitions/",
+      "site_family": "sfmoma.org",
+      "capture_sha256": "5b4637ab6bb7b0c26ee4b0cf19c042c0f4ef06a7d9f6f27523aef9401388a560",
+      "original_split": "test",
+      "expected": 42,
+      "expected_sha256": "c8e7d642ad936f69198cbda17876fa3c390b7829a5f602d3e8863ceeefff337e",
+      "ignored_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "annotation_protocol": "frozen-selector",
+      "baseline": {
+        "expected": 42,
+        "correct": 42,
+        "unwanted": 3,
+        "missing": 0,
+        "precision": 0.9333,
+        "recall": 1.0,
+        "f1": 0.9655,
+        "median_seconds": 0.2029243000142742,
+        "dated_entries": 10,
+        "missing_examples": [],
+        "unwanted_examples": [
+          "https://www.sfmoma.org/event/ear-hustle-live",
+          "https://www.sfmoma.org/event/soma-pilipinas-pride-makibeki",
+          "https://www.sfmoma.org/event/susan-omalley-and-friends"
+        ]
+      },
+      "candidate": {
+        "expected": 42,
+        "correct": 42,
+        "unwanted": 3,
+        "missing": 0,
+        "precision": 0.9333,
+        "recall": 1.0,
+        "f1": 0.9655,
+        "median_seconds": 0.20553790000849403,
+        "dated_entries": 10,
+        "missing_examples": [],
+        "unwanted_examples": [
+          "https://www.sfmoma.org/event/ear-hustle-live",
+          "https://www.sfmoma.org/event/soma-pilipinas-pride-makibeki",
+          "https://www.sfmoma.org/event/susan-omalley-and-friends"
+        ]
+      },
+      "lost_expected": [],
+      "gained_expected": []
+    }
+  },
+  "summary": {
+    "baseline": {
+      "pages": 8,
+      "expected": 3423,
+      "correct": 1151,
+      "unwanted": 534,
+      "missing": 2272,
+      "precision": 0.6831,
+      "recall": 0.3363,
+      "micro_f1": 0.4507,
+      "source_macro_f1": 0.5726,
+      "complete_pages": 4,
+      "clean_complete_pages": 1,
+      "zero_recall_pages": 2
+    },
+    "candidate": {
+      "pages": 8,
+      "expected": 3423,
+      "correct": 1151,
+      "unwanted": 534,
+      "missing": 2272,
+      "precision": 0.6831,
+      "recall": 0.3363,
+      "micro_f1": 0.4507,
+      "source_macro_f1": 0.5726,
+      "complete_pages": 4,
+      "clean_complete_pages": 1,
+      "zero_recall_pages": 2
+    }
+  },
+  "memory": {
+    "process_peak_bytes": 118968320,
+    "process_final_rss_bytes": 96530432
+  }
+}

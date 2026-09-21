@@ -1,0 +1,179 @@
+{
+  "rows": 644,
+  "baseline_positive_anchors": 553,
+  "v3_rejected_baseline_positive_anchors": 16,
+  "v4_zero_removed_baseline_positive_anchors": 0,
+  "cause": "All decreases are explicit-chrome expert rejections below0.10; the rejection-disabled candidate preserves every baseline-positive score. No other code path decreases a baseline-positive score. Full-parser replay is still required to rule out downstream list-clustering effects.",
+  "examples": [
+    {
+      "url": "https://jvns.ca/blog/2026/07/21/more-nice-django-things",
+      "baseline": 0.7697793301817113,
+      "v3": 1.1674635992344794e-05,
+      "no_rejection": 0.7697793301817113,
+      "expert": 1.634449038928271e-05,
+      "chrome_features": [
+        "utility_label"
+      ]
+    },
+    {
+      "url": "https://jvns.ca/blog/2026/07/17/learning-about-running-sqlite",
+      "baseline": 0.627637537025815,
+      "v3": 5.708046653219456e-05,
+      "no_rejection": 0.627637537025815,
+      "expert": 7.991265314507237e-05,
+      "chrome_features": [
+        "utility_path",
+        "utility_label"
+      ]
+    },
+    {
+      "url": "https://jvns.ca/blog/2016/11/27/more-linux-drawings",
+      "baseline": 0.5010443802230572,
+      "v3": 2.0493062251350977e-05,
+      "no_rejection": 0.5010443802230572,
+      "expert": 2.8690287151891364e-05,
+      "chrome_features": [
+        "utility_label"
+      ]
+    },
+    {
+      "url": "https://jvns.ca/blog/2015/04/14/strace-zine",
+      "baseline": 0.5010443802230572,
+      "v3": 1.839055810091206e-05,
+      "no_rejection": 0.5010443802230572,
+      "expert": 2.5746781341276886e-05,
+      "chrome_features": [
+        "utility_label"
+      ]
+    },
+    {
+      "url": "https://jvns.ca/blog/2014/05/28/anonymous-talk-submission-equals-amazing",
+      "baseline": 0.7665688834332376,
+      "v3": 0.0005586406642816484,
+      "no_rejection": 0.7665688834332376,
+      "expert": 0.0007820969299943077,
+      "chrome_features": [
+        "utility_path"
+      ]
+    },
+    {
+      "url": "https://jvns.ca/blog/2020/10/28/a-few-things-i-ve-learned-about-email-marketing",
+      "baseline": 0.618245046823284,
+      "v3": 0.034394532134156997,
+      "no_rejection": 0.618245046823284,
+      "expert": 0.04815234498781979,
+      "chrome_features": [
+        "utility_path",
+        "utility_label"
+      ]
+    },
+    {
+      "url": "https://jvns.ca/blog/2016/11/16/ideas-about-how-to-use-aws",
+      "baseline": 0.6231172757082163,
+      "v3": 0.00012503131454093817,
+      "no_rejection": 0.6231172757082163,
+      "expert": 0.00017504384035731344,
+      "chrome_features": [
+        "utility_path",
+        "utility_label"
+      ]
+    },
+    {
+      "url": "https://jvns.ca/blog/2017/05/02/like-zines-about-computers--you-might-love-bubblesort-zines",
+      "baseline": 0.7398003406695568,
+      "v3": 0.015745777746815015,
+      "no_rejection": 0.7398003406695568,
+      "expert": 0.02204408884554102,
+      "chrome_features": [
+        "utility_path",
+        "utility_label"
+      ]
+    },
+    {
+      "url": "https://jvns.ca/blog/2014/11/11/the-best-thing-ive-ever-read-about-women-in-technology",
+      "baseline": 0.7569598286892885,
+      "v3": 0.03003043752713634,
+      "no_rejection": 0.7569598286892885,
+      "expert": 0.042042612537990874,
+      "chrome_features": [
+        "utility_path"
+      ]
+    },
+    {
+      "url": "https://jvns.ca/blog/2016/10/26/a-few-questions-about-open-source",
+      "baseline": 0.86740346279639,
+      "v3": 0.004586225107886775,
+      "no_rejection": 0.86740346279639,
+      "expert": 0.006420715151041485,
+      "chrome_features": [
+        "utility_path",
+        "utility_label"
+      ]
+    },
+    {
+      "url": "https://jvns.ca/blog/2014/04/26/i-dont-feel-guilty-about-not-contributing-to-open-source",
+      "baseline": 0.8805819009438691,
+      "v3": 0.045799727183038805,
+      "no_rejection": 0.8805819009438691,
+      "expert": 0.06411961805625432,
+      "chrome_features": [
+        "utility_path",
+        "utility_label"
+      ]
+    },
+    {
+      "url": "https://jvns.ca/blog/2016/11/21/things-to-learn-about-linux",
+      "baseline": 0.671217331607399,
+      "v3": 0.0012419367014425307,
+      "no_rejection": 0.671217331607399,
+      "expert": 0.0017387113820195427,
+      "chrome_features": [
+        "utility_path",
+        "utility_label"
+      ]
+    },
+    {
+      "url": "https://jvns.ca/blog/2021/01/16/day-40--screen-flickering---a-talk-about-containers",
+      "baseline": 0.5123746726727798,
+      "v3": 0.023330725727280434,
+      "no_rejection": 0.5123746726727798,
+      "expert": 0.0326630160181926,
+      "chrome_features": [
+        "utility_path",
+        "utility_label"
+      ]
+    },
+    {
+      "url": "https://jvns.ca/blog/2021/01/08/day-34--learning-about-qemu",
+      "baseline": 0.512278625008202,
+      "v3": 0.006417087871859282,
+      "no_rejection": 0.512278625008202,
+      "expert": 0.008983923020602995,
+      "chrome_features": [
+        "utility_path",
+        "utility_label"
+      ]
+    },
+    {
+      "url": "https://jvns.ca/blog/2021/01/07/day-33--a-login-bug--a-git-trick--and-generating-yaml-files",
+      "baseline": 0.5863036280709505,
+      "v3": 0.052101005427860766,
+      "no_rejection": 0.5863036280709505,
+      "expert": 0.07294140759900507,
+      "chrome_features": [
+        "utility_path"
+      ]
+    },
+    {
+      "url": "https://jvns.ca/blog/2020/11/23/day-11--learning-about-learning-rates",
+      "baseline": 0.5123746726727798,
+      "v3": 0.00926261814042832,
+      "no_rejection": 0.5123746726727798,
+      "expert": 0.012967665396599647,
+      "chrome_features": [
+        "utility_path",
+        "utility_label"
+      ]
+    }
+  ]
+}

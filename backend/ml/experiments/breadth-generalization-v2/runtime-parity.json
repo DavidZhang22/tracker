@@ -1,0 +1,30 @@
+{
+  "rows": 6507,
+  "breadth_rows": 2084,
+  "native_kernel": true,
+  "heldout_rows": 0,
+  "candidates": {
+    "chosen-structural-refinement.json": {
+      "sha256": "b363afe0a7f97eb65b54506e9e48b40ccb3651889aa1e4ec6a85e2828295420e",
+      "bytes": 708978,
+      "max_score_error": 0.0,
+      "classification_mismatches": 0,
+      "scalar_batch_max_error": 0.0,
+      "scalar_sample_count": 89,
+      "rescued": 250,
+      "rejected": 53,
+      "double_refinement_prevented": "Independent baseline has refinement and refinement_policy keys removed before constructing CascadeModel."
+    },
+    "safe-refinement-candidate.json": {
+      "sha256": "9928b7dfd8e99d7d7ad1fb86472d3afadd3d613e1ef19e6cb4f9b04e6d72040d",
+      "bytes": 710614,
+      "max_score_error": 0.0,
+      "classification_mismatches": 0,
+      "scalar_batch_max_error": 0.0,
+      "scalar_sample_count": 89,
+      "rescued": 303,
+      "rejected": 134,
+      "double_refinement_prevented": "Independent baseline has refinement and refinement_policy keys removed before constructing CascadeModel."
+    }
+  }
+}

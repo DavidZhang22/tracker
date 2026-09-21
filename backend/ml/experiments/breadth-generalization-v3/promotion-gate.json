@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "frozen_before": "Any scoring of the second external eight-website holdout",
+  "candidate_sha256": "4fa3670516e5ddc8380bf83583fcf43e991ea1f21170abc868b8f5241aab1fcc",
+  "baseline_sha256": "8b9b8ddc7e9e8c7b467d5b23c5fca214417a60361962906855ef7f8faf2723f6",
+  "metric_unit": "Full-parser canonical URL retrieval within each frozen source scope, aggregated separately per cohort",
+  "required_cohorts": [
+    "original breadth validation: 10 websites",
+    "historical public full-parser validation",
+    "first external eight websites: now disclosed regression data",
+    "second external eight websites: new heldout evaluation after prior cohorts pass"
+  ],
+  "gates_per_cohort": {
+    "precision_delta_min": -0.02,
+    "recall_delta_min": -0.02,
+    "micro_f1_delta_min": 0.0
+  },
+  "selection_rule": "No net micro-F1 regression and at most two percentage points of precision or recall loss in every required cohort. Report every source and source-macro F1 separately; do not pool cohorts to conceal failures.",
+  "execution_order": "Original validation and first external regression must pass before new external holdout scoring. Failed gates stop promotion, retain artifacts/results, and do not permit a claim of deployment readiness.",
+  "inference_contract": "Group refinement operates on a whole listing page. Scalar inference may differ from full-page inference because it lacks peer evidence. Missing source fields mean one page per batch; populated source fields partition mixed-page evaluation batches.",
+  "test_protection": "No new model fits, threshold changes, grouping changes, or candidate selection may use the second external holdout. Any further iteration must treat evaluated holdouts as disclosed regression data and freeze a new external evaluation."
+}

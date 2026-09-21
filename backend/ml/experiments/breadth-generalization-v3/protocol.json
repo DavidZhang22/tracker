@@ -1,0 +1,60 @@
+{
+  "method": "No new model fitting. Select page-group routing for frozen experts on original validation only.",
+  "excluded": "Original9 and external8 now disclosed regression cohorts, neither used for V3 selection. No new external holdout evaluated here.",
+  "original_split_sha256": "6363babf0aa8a50b47a9e47e1a25b31197a3b9a6cd0f7f53f09499cee80c4357",
+  "experts": [
+    "numeric-trees",
+    "text-trees",
+    "numeric-neural64x32",
+    "text-neural32",
+    "soft-numeric-trees",
+    "soft-numeric-neural64x32",
+    "soft-text-neural32"
+  ],
+  "key": {
+    "source": "source URL or source_id; missing value means the caller supplies one page per batch",
+    "url": "Lowercase percent-decoded path, UUID or >=12 hex segments become {id}, other numeric runs become {n}, final slug becomes * retaining an alphabetic file extension <=8 chars; sorted query names, no query values or hostname",
+    "classes": "Sorted unique c: tokens, at most48",
+    "roles": [
+      "same_host",
+      "semantic_title",
+      "contains_heading",
+      "record_primary_url",
+      "record_other_primary",
+      "in_tr",
+      "inside_list_record",
+      "image_label",
+      "action_label",
+      "heading_level * 6"
+    ]
+  },
+  "support": "At least2 distinct canonical URLs accepted by baseline in same group; duplicates never create support",
+  "seed_thresholds": [
+    0.5,
+    0.65,
+    0.8
+  ],
+  "rescue_thresholds": [
+    0.7,
+    0.8,
+    0.9,
+    0.95
+  ],
+  "rejection_thresholds": [
+    0.01,
+    0.05,
+    0.1
+  ],
+  "cold_group": [
+    false,
+    true
+  ],
+  "cold_threshold": 0.995,
+  "cold_min_distinct_urls": 3,
+  "cold_semantics": "If enabled, unsupported group needs>=3 distinct non-chrome links with expert>=.995; cold rescues individually require .995 too.",
+  "chrome": "Explicit semantic_navigation/in_nav/in_footer/in_aside/rel_author/rel_tag/utility_path/utility_label, overridden by semantic_title",
+  "selection": "Preserve historical public precision/recall/macroF1 within .03 of baseline, require breadth precision/recall not worse than baseline. Maximize breadth site macroF1, then precision, historical F1; ties prefer no cold group, higher seed confidence, smaller expert.",
+  "precision_target": 0.8,
+  "target_note": "Reported target only; full-parser quality gates decide promotion.",
+  "baseline_sha256": "8b9b8ddc7e9e8c7b467d5b23c5fca214417a60361962906855ef7f8faf2723f6"
+}

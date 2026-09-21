@@ -1,0 +1,374 @@
+{
+  "candidate": "text-trees-numeric-neural64x32-broad-replace",
+  "threshold": 0.5,
+  "eligible": true,
+  "selection_metric": "breadth validation site macro F1 with frozen gates",
+  "model_sha256": "32f9eb81cba89ef72a70585b8ff5de9262ddd55c34f436f3bea581fcbe9da9e7",
+  "artifact": "chosen-cascade.json",
+  "validation": {
+    "threshold": 0.5,
+    "breadth": {
+      "tp": 438,
+      "fp": 27,
+      "fn": 40,
+      "precision": 0.9419,
+      "recall": 0.9163,
+      "f1": 0.929,
+      "by_source": {
+        "abs.gov.au": {
+          "tp": 5,
+          "fp": 0,
+          "fn": 15,
+          "precision": 1.0,
+          "recall": 0.25,
+          "f1": 0.4
+        },
+        "allrecipes.com": {
+          "tp": 65,
+          "fp": 15,
+          "fn": 7,
+          "precision": 0.8125,
+          "recall": 0.9028,
+          "f1": 0.8553
+        },
+        "boardgamegeek.com": {
+          "tp": 99,
+          "fp": 5,
+          "fn": 1,
+          "precision": 0.9519,
+          "recall": 0.99,
+          "f1": 0.9706
+        },
+        "consumerfinance.gov": {
+          "tp": 21,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "cp-algorithms.com": {
+          "tp": 157,
+          "fp": 4,
+          "fn": 6,
+          "precision": 0.9752,
+          "recall": 0.9632,
+          "f1": 0.9691
+        },
+        "data.gov": {
+          "tp": 20,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "nationaltrail.co.uk": {
+          "tp": 16,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "openbsd.org": {
+          "tp": 12,
+          "fp": 3,
+          "fn": 0,
+          "precision": 0.8,
+          "recall": 1.0,
+          "f1": 0.8889
+        },
+        "sphinx-doc.org": {
+          "tp": 43,
+          "fp": 0,
+          "fn": 5,
+          "precision": 1.0,
+          "recall": 0.8958,
+          "f1": 0.9451
+        },
+        "usgs.gov": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 6,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "macro_f1": 0.8029,
+      "negative_only_urls": 0,
+      "negative_only_fp_rate": 0.0
+    },
+    "historical": {
+      "tp": 1369,
+      "fp": 384,
+      "fn": 635,
+      "precision": 0.7809,
+      "recall": 0.6831,
+      "f1": 0.7288,
+      "by_source": {
+        "authored:records-lectures-0": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "authored:records-lectures-1": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "authored:records-lectures-2": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "authored:records-lectures-3": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "authored:records-lectures-4": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "authored:records-lectures-5": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "authored:records-lectures-6": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "authored:records-lectures-7": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "authored:records-reports-0": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "authored:records-reports-1": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "authored:records-reports-2": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "authored:records-reports-3": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "authored:records-reports-4": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "authored:records-reports-5": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "authored:records-reports-6": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "authored:records-reports-7": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "authored:table-layouts-validation": {
+          "tp": 160,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "blender.org": {
+          "tp": 6,
+          "fp": 1,
+          "fn": 18,
+          "precision": 0.8571,
+          "recall": 0.25,
+          "f1": 0.3871
+        },
+        "cloudflare.com": {
+          "tp": 19,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "djangoproject.com": {
+          "tp": 10,
+          "fp": 256,
+          "fn": 0,
+          "precision": 0.0376,
+          "recall": 1.0,
+          "f1": 0.0725
+        },
+        "esa.int": {
+          "tp": 58,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "gentoo.org": {
+          "tp": 71,
+          "fp": 13,
+          "fn": 0,
+          "precision": 0.8452,
+          "recall": 1.0,
+          "f1": 0.9161
+        },
+        "go.dev": {
+          "tp": 10,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "imperial.ac.uk": {
+          "tp": 26,
+          "fp": 5,
+          "fn": 0,
+          "precision": 0.8387,
+          "recall": 1.0,
+          "f1": 0.9123
+        },
+        "jvns.ca": {
+          "tp": 32,
+          "fp": 0,
+          "fn": 564,
+          "precision": 1.0,
+          "recall": 0.0537,
+          "f1": 0.1019
+        },
+        "kde.org": {
+          "tp": 10,
+          "fp": 5,
+          "fn": 0,
+          "precision": 0.6667,
+          "recall": 1.0,
+          "f1": 0.8
+        },
+        "nationalgallery.org.uk": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "publicdomainreview.org": {
+          "tp": 12,
+          "fp": 12,
+          "fn": 1,
+          "precision": 0.5,
+          "recall": 0.9231,
+          "f1": 0.6486
+        },
+        "python.org": {
+          "tp": 269,
+          "fp": 11,
+          "fn": 0,
+          "precision": 0.9607,
+          "recall": 1.0,
+          "f1": 0.98
+        },
+        "pythonbytes.fm": {
+          "tp": 471,
+          "fp": 0,
+          "fn": 24,
+          "precision": 1.0,
+          "recall": 0.9515,
+          "f1": 0.9752
+        },
+        "realpython.com": {
+          "tp": 14,
+          "fp": 20,
+          "fn": 0,
+          "precision": 0.4118,
+          "recall": 1.0,
+          "f1": 0.5833
+        },
+        "ycombinator.com": {
+          "tp": 2,
+          "fp": 61,
+          "fn": 28,
+          "precision": 0.0317,
+          "recall": 0.0667,
+          "f1": 0.043
+        }
+      },
+      "macro_f1": 0.8569,
+      "negative_only_urls": 0,
+      "negative_only_fp_rate": 0.0
+    },
+    "eligible": true
+  }
+}

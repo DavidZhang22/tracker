@@ -1,0 +1,20 @@
+[
+  {
+    "path": "reject-0.00.json",
+    "reject_threshold": 0.0,
+    "sha256": "97804df6d794bccd275073797feff5936366c8438af5ea026df56ca2bc58017f",
+    "bytes": 532664
+  },
+  {
+    "path": "reject-0.01.json",
+    "reject_threshold": 0.01,
+    "sha256": "030fde281439a0002505e8cce0e96890d68d99d83582edcbf96dd4501e941a9e",
+    "bytes": 532665
+  },
+  {
+    "path": "reject-0.05.json",
+    "reject_threshold": 0.05,
+    "sha256": "e2806143c2a3091b9fbcefc96503fdd3efbeffe841891d1d24c6cb23e8315c5d",
+    "bytes": 532665
+  }
+]

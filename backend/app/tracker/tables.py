@@ -71,6 +71,17 @@ def table_context(soup):
             ):
                 continue
             texts = [c.get_text(" ", strip=True)[:500] for c in cells]
+            primary_href = None
+            if primary_column is not None:
+                primary_links = cells[primary_column].find_all("a", href=True, limit=21)
+                primary_targets = {
+                    link["href"]
+                    for link in primary_links
+                    if link.find_parent("table") is table
+                    and not link["href"].startswith("#")
+                }
+                if len(primary_links) <= 20 and len(primary_targets) == 1:
+                    primary_href = next(iter(primary_targets))
             if is_job:
                 current = texts[companies[0]].strip()
                 if current not in {"", "↳", "↪", "→", "〃", '"'}:
@@ -106,6 +117,7 @@ def table_context(soup):
                         primary=column == primary_column
                         and len(targets) == 1
                         and anchor["href"] in targets,
+                        primary_href=primary_href,
                         title=title[:1000],
                         summary=" · ".join(metadata)[:1000],
                         features=[

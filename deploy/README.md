@@ -78,4 +78,6 @@ Run one Uvicorn application worker. The default two analysis processes speed up 
 
 `TRACKER_LINK_MODEL=cascade` enables the tested light/deep combination: the existing classifier handles every candidate and a small neural network can rescue borderline rejections. `on` selects the previous classifier; `off` selects the original rules and adapters. Recreate the app after changing this value. A missing or invalid cascade falls back to the previous classifier. Model and extraction versions invalidate cached scan results.
 
+The current cascade also uses a page-consistency neural refinement and verified table-column roles. See the [generalization results and limitations](../backend/ml/reports/generalization-upgrade.md); the final unseen-site evaluation showed no regression but no accuracy gain. The model bundle remains below 0.6 MB.
+
 Both Dockerfiles compile a fixed, bounded C inference kernel in a separate build stage. The compiler and training dependencies are absent from the runtime image. Python inference remains available when the kernel cannot load. No model training or uploaded executable/model loading occurs in the web application. See the [benchmark and evaluation limits](../backend/ml/reports/model-pipeline.md).

@@ -1,0 +1,33 @@
+{
+  "status": "Prospective validation-only routing amendment after unsuitable full replacements; external holdout not evaluated.",
+  "rejection": "Only explicit chrome, no broad paragraph/row nuisance rule",
+  "chrome_features": [
+    "semantic_navigation",
+    "in_nav",
+    "in_footer",
+    "in_aside",
+    "rel_author",
+    "rel_tag",
+    "utility_path",
+    "utility_label"
+  ],
+  "title_override": "semantic_title overrides chrome",
+  "rescue": "Expert high confidence and not explicit chrome",
+  "high": [
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    0.95
+  ],
+  "low": [
+    0.01,
+    0.03,
+    0.05,
+    0.1,
+    0.2
+  ],
+  "classifier_precision": "Target .80 is reported, full-parser precision is final promotion gate.",
+  "historical_gates": "Public-only precision/recall/macroF1 >= baseline-.03",
+  "selection": "Highest validation breadth site macroF1 among historical-safe candidates that improve breadth precision and recall"
+}

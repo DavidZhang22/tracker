@@ -1,0 +1,21 @@
+{
+  "light_candidates": [
+    "numeric-trees",
+    "text-trees"
+  ],
+  "deep_candidates": [
+    "numeric-neural64x32",
+    "text-neural32"
+  ],
+  "gates": [
+    "light threshold +/- 0.15, bounded to 0.01..0.99",
+    "0.01..0.99"
+  ],
+  "policies": [
+    "rescue",
+    "replace"
+  ],
+  "thresholds": "Each component uses its separately validation-selected threshold.",
+  "selection": "Same validation gates and metric as single models, ties prefer smaller artifact.",
+  "rationale": "Frozen addendum before any candidate result or held-out test evaluation."
+}
