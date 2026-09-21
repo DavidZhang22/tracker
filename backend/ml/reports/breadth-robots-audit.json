@@ -1,0 +1,502 @@
+[
+  {
+    "id": "breadth-cultural-moma",
+    "urls": [
+      "https://www.moma.org/calendar/exhibitions"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "945a85aa870edcb2d761743134c2a6fe791db1680d56fd397d0db6208cd4072d"
+  },
+  {
+    "id": "breadth-cultural-whitney",
+    "urls": [
+      "https://whitney.org/exhibitions"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "bada8ec4b22245d47ac656216538c7bfa28007320d85b8dc2ddabda8c96092a1"
+  },
+  {
+    "id": "breadth-cultural-louvre",
+    "urls": [
+      "https://www.louvre.fr/en/explore/exhibitions"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "5478e27aa289ab17d9873f077c650d0164317ca7b8584c25d5d4435a3781a930"
+  },
+  {
+    "id": "breadth-cultural-cleveland",
+    "urls": [
+      "https://www.clevelandart.org/exhibitions",
+      "https://www.clevelandart.org/whats-on/exhibitions"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 10.0,
+    "robots_sha256": "ba7d9fd732897a68202b2d7c4960522adb80dbc9a029566cd78ff34cf4f8040f"
+  },
+  {
+    "id": "breadth-cultural-moca",
+    "urls": [
+      "https://www.moca.org/exhibitions"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "68208dd7839fd4fd673882f3bb4f7059eaa2b7e5fe4015a83b60e4568827d1d9"
+  },
+  {
+    "id": "breadth-cultural-kingarthur",
+    "urls": [
+      "https://www.kingarthurbaking.com/recipes/collections/sourdough-bread-recipes"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "688f1595fdf72e382c101e433c0089d9b66003303240b08f9c2e25fc65198554"
+  },
+  {
+    "id": "breadth-cultural-allrecipes",
+    "urls": [
+      "https://www.allrecipes.com/recipes/78/breakfast-and-brunch/"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "1a1bc17fb7ca1c74627e90639ced4239c1d4323a787d59927ce063c15a2fb47d"
+  },
+  {
+    "id": "breadth-cultural-seriouseats",
+    "urls": [
+      "https://www.seriouseats.com/italian-recipes-5117472",
+      "https://www.seriouseats.com/spinach-recipes-5117472"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "8faccc6b5fc3ae51539c604470adb8817deff418ffc98bebb4a9f9a3267c5a95"
+  },
+  {
+    "id": "breadth-cultural-rhs",
+    "urls": [
+      "https://www.rhs.org.uk/plants/types/perennials"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "ac8d45bd62d66cbcc1d221336c01f90e9277a80b5fdf527820d806351666ca37"
+  },
+  {
+    "id": "breadth-cultural-kew",
+    "urls": [
+      "https://www.kew.org/science/read-and-watch"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "e4bf6b4411fef9f645e437ce7f38d917332b76fc3e92ebf2a68df6179084e525"
+  },
+  {
+    "id": "breadth-cultural-boardgamegeek",
+    "urls": [
+      "https://boardgamegeek.com/browse/boardgame"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 5.0,
+    "robots_sha256": "7c09db4f09e74beb91cf27e62d5afba07577a944eabc7bab5e93a524d6d70d12"
+  },
+  {
+    "id": "breadth-cultural-puzzles",
+    "urls": [
+      "https://www.chiark.greenend.org.uk/~sgtatham/puzzles/"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "353b77a48c5532b316a916df1bc4b7adc2969e4197d4b86a06a70be9e6c20a9b"
+  },
+  {
+    "id": "breadth-cultural-nybg",
+    "urls": [
+      "https://www.nybg.org/visit/calendar/",
+      "https://www.nybg.org/"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "deb8b6d5523744e49bcab493be829952935add615335cfef8cc60a498ccf3b4f"
+  },
+  {
+    "id": "breadth-cultural-mood",
+    "urls": [
+      "https://blog.moodfabrics.com/free-sewing-patterns/"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "f6e0c104ec5c40e9122c1c5bc0eef83dce2fae8855765038879da13aaac42ed9"
+  },
+  {
+    "id": "breadth-cultural-budgetbytes",
+    "urls": [
+      "https://www.budgetbytes.com/category/recipes/"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "0e81750c1bd263bf70bfa45583b9865800af3211941e6d0588ea93c949ed0ad5"
+  },
+  {
+    "id": "breadth-cultural-openlibrary",
+    "urls": [
+      "https://openlibrary.org/trending/daily"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "754a184c81223be4ae26a0f36e84c865e5e42971e884f921f887ecff1da5411e"
+  },
+  {
+    "id": "breadth-cultural-nationaltrail",
+    "urls": [
+      "https://www.nationaltrail.co.uk/en_GB/trails/"
+    ],
+    "status": "robots-not-found-at-collection",
+    "allowed": true
+  },
+  {
+    "id": "breadth-public-fed",
+    "urls": [
+      "https://www.federalreserve.gov/newsevents/pressreleases/2026-press.htm"
+    ],
+    "status": "robots-not-found-at-collection",
+    "allowed": true
+  },
+  {
+    "id": "breadth-public-bea",
+    "urls": [
+      "https://bea.gov/news/current-releases"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "773fb8d35bb9a39d35335ee6db8dc5c912d2aacbfb823152d9c61cd647dd902d"
+  },
+  {
+    "id": "breadth-public-bls",
+    "urls": [
+      "https://www.bls.gov/bls/newsrels.htm"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "42bec9ceaee5b4929ce2a132fff866c5d66e395195825a77996d9d59e78686df"
+  },
+  {
+    "id": "breadth-public-ftc",
+    "urls": [
+      "https://www.ftc.gov/news-events/news/press-releases"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 5.0,
+    "robots_sha256": "85024bc00d13205858fefe8d39817407cee112295dc2dd7e80ab38ce30e21737"
+  },
+  {
+    "id": "breadth-public-fda",
+    "urls": [
+      "https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 30.0,
+    "robots_sha256": "b28f1d0132f966047fe40018266dbff647024fa01c020b80e44b5c3f167114ed"
+  },
+  {
+    "id": "breadth-public-usgs",
+    "urls": [
+      "https://pubs.usgs.gov/"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "df13bf0ac4c68eb5196014d6f05a881f68161b7faeedfdd79fe8770767f86836"
+  },
+  {
+    "id": "breadth-public-ons",
+    "urls": [
+      "https://www.ons.gov.uk/releasecalendar?view=published"
+    ],
+    "status": "robots-not-found-at-collection",
+    "allowed": true
+  },
+  {
+    "id": "breadth-public-abs",
+    "urls": [
+      "https://www.abs.gov.au/release-calendar/latest-releases"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "2de3e3cc8eed16090dd838b5daa903af5cd3156212ae0ae065274cf6be12d892"
+  },
+  {
+    "id": "breadth-public-treasury",
+    "urls": [
+      "https://home.treasury.gov/news/press-releases"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "d1a6768683ed6be840be9e836e1d941677eca2bbda66cf5fa291365060b21aab"
+  },
+  {
+    "id": "breadth-public-sec",
+    "urls": [
+      "https://www.sec.gov/newsroom/press-releases"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "f83678ce2bb4a1f7603e0f7f0eac1bc7f1063f45997516a8cd6f4029f234c623"
+  },
+  {
+    "id": "breadth-public-fdic",
+    "urls": [
+      "https://www.fdic.gov/news/press-releases"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "b6725e16c4ef13c636e6e9731c2dd3f0d4099ec667b1fc0960adcf071cf45b1e"
+  },
+  {
+    "id": "breadth-public-supreme",
+    "urls": [
+      "https://www.supremecourt.gov/opinions/slipopinion/25"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "c7fde595e2d892d1d6e05ba9273c97e84b837a2259675baa7ce449c7e6ba2a22"
+  },
+  {
+    "id": "breadth-public-cfpb",
+    "urls": [
+      "https://www.consumerfinance.gov/about-us/newsroom/"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "82860737089392625ec580d390a73311c4d729799de2e3223fddc97d7e659fe3"
+  },
+  {
+    "id": "breadth-public-rba",
+    "urls": [
+      "https://www.rba.gov.au/media-releases/"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "34db55399446178564cb2ded56d9829eb0d6c204ab3a6731d161392d218efcb5"
+  },
+  {
+    "id": "breadth-public-bankcanada",
+    "urls": [
+      "https://www.bankofcanada.ca/press/press-releases/"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "32a514576e8373e3dd00b11c702a81218cf227326f4ad2e67b96997b46292320"
+  },
+  {
+    "id": "breadth-public-wmo",
+    "urls": [
+      "https://wmo.int/news"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "5f69453e3d5f90d6a4f0aac88ce1eec9016e6e882da36778d4d5d3008987252c"
+  },
+  {
+    "id": "breadth-technical-openssl",
+    "urls": [
+      "https://openssl-library.org/news/vulnerabilities/"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "fd89345af6aca5dab85f2aa6a830e270a362b1fa6b5f19607ddd773a081ed651"
+  },
+  {
+    "id": "breadth-technical-curl",
+    "urls": [
+      "https://curl.se/docs/vulnerabilities.html"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "5c70a80b658bfa44c7f91338d8a41c91dec47ad8bea7ddd310242bfcebeb5176"
+  },
+  {
+    "id": "breadth-technical-kernel",
+    "urls": [
+      "https://www.kernel.org/"
+    ],
+    "status": "robots-not-found-at-collection",
+    "allowed": true
+  },
+  {
+    "id": "breadth-technical-nginx",
+    "urls": [
+      "https://nginx.org/en/security_advisories.html"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "8f5b42f5d23ca623fa42f917a5c90b8677ef8d7c9b5ffc0324bbea8e7067f26e"
+  },
+  {
+    "id": "breadth-technical-iana",
+    "urls": [
+      "https://www.iana.org/protocols"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "e5c4b84484ee4216e9373be99380320c25dd94805f99f0a805846f087636553f"
+  },
+  {
+    "id": "breadth-technical-unicode",
+    "urls": [
+      "https://www.unicode.org/versions/enumeratedversions.html"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "002273c0b9381447313b9b82c58dcec96a7ceebaca788cfe745cd8a9f5198ce4"
+  },
+  {
+    "id": "breadth-technical-netlib",
+    "urls": [
+      "https://www.netlib.org/lapack/lawnspdf/"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "f4d1a641a9876af0cc79c0bf7fd6feb18fa48b334bc6dd8244cb8afc625b117d"
+  },
+  {
+    "id": "breadth-technical-uci",
+    "urls": [
+      "https://archive.ics.uci.edu/datasets"
+    ],
+    "status": "robots-not-found-at-collection",
+    "allowed": true
+  },
+  {
+    "id": "breadth-technical-data-gov",
+    "urls": [
+      "https://catalog.data.gov/dataset/",
+      "https://catalog.data.gov/"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 10.0,
+    "robots_sha256": "8c5ed3bd234a802efe10349b17749c514dd58315d5b7c1a8197cd589af93517d"
+  },
+  {
+    "id": "breadth-technical-cp-algorithms",
+    "urls": [
+      "https://cp-algorithms.com/navigation.html"
+    ],
+    "status": "robots-not-found-at-collection",
+    "allowed": true
+  },
+  {
+    "id": "breadth-technical-kattis",
+    "urls": [
+      "https://open.kattis.com/problems"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "46555a2ad43d09aa7d2f64f68da79f2375d4c0bda7284732c2372bcc04d332ce"
+  },
+  {
+    "id": "breadth-technical-sphinx",
+    "urls": [
+      "https://www.sphinx-doc.org/en/master/changes/index.html"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "8b40ac5eee46eeb2b6599dbb527e30fa0601e32960f4acc089e34b3b29d89911"
+  },
+  {
+    "id": "breadth-technical-busybox",
+    "urls": [
+      "https://busybox.net/downloads/"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 10.0,
+    "robots_sha256": "a2a5c8fa4b9e25b0a4fc5b4cc266b26eb74e2ec24e924905be11a12c977507d1"
+  },
+  {
+    "id": "breadth-technical-samba",
+    "urls": [
+      "https://www.samba.org/samba/history/"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "30c96b1b15aeaf32435967416347a13d823897b8782b8a264dc77d026be9bfb8"
+  },
+  {
+    "id": "breadth-technical-gnu",
+    "urls": [
+      "https://www.gnu.org/manual/manual.html"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 4.0,
+    "robots_sha256": "0e4faeb5a566b55bee4e90a4737ddbb926989b9133635e8257bb8e692d9b16fd"
+  },
+  {
+    "id": "breadth-technical-git",
+    "urls": [
+      "https://git-scm.com/docs"
+    ],
+    "status": "robots-not-found-at-collection",
+    "allowed": true
+  },
+  {
+    "id": "breadth-technical-openbsd",
+    "urls": [
+      "https://www.openbsd.org/faq/"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "227a0990922c12cde6513daae78cd68a80688aeae4af4c0ee74d5410988f41c0"
+  },
+  {
+    "id": "breadth-technical-wolfram",
+    "urls": [
+      "https://mathworld.wolfram.com/letters/A.html"
+    ],
+    "status": "saved-rules-checked",
+    "allowed": true,
+    "interval": 2.0,
+    "robots_sha256": "07f5bae382e2c6ae7235a8961e90f4a3af7c2c5e11b07ab4e98b593b2e084e68"
+  }
+]

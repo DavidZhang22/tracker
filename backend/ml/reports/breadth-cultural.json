@@ -1,0 +1,3144 @@
+{
+  "created_at": "2026-09-21T16:47:22Z",
+  "model_mode": "cascade",
+  "environment": {
+    "platform": "Windows-10-10.0.19045-SP0",
+    "python": "3.12.8"
+  },
+  "timing_scope": "Offline local parser and model replay; no source network latency. Feature timing excludes the initial BeautifulSoup construction and includes scope validation.",
+  "native_kernel_available": true,
+  "network_requests": 0,
+  "repeats": 3,
+  "pages": {
+    "breadth-cultural-moma": {
+      "source": "https://www.moma.org/calendar/exhibitions",
+      "site_family": "moma.org",
+      "sector": "museum exhibitions",
+      "layout": "sectioned exhibition cards",
+      "capture_sha256": "7005b053f9e9bdf9b06be46f6adeb3c164800ba5ed14fd6f56b2c22cc649689a",
+      "capture_bytes": 388377,
+      "scope_sha256": "69a36b6b0554b2a76bfd27acf0ad571e7dfc6c6e122055af98bed165b091cc2c",
+      "expected": 27,
+      "correct": 27,
+      "unwanted": 0,
+      "missing": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "auxiliary_scope_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "auxiliary_urls": 0,
+      "candidates": 113,
+      "candidate_unique_urls": 73,
+      "expected_in_candidates": 27,
+      "feature_seconds": 0.06288529999437742,
+      "median_seconds": 0.23242250000475906,
+      "dated_entries": 5,
+      "accepted_auxiliary": 0,
+      "missing_examples": [],
+      "unwanted_examples": [],
+      "models": {
+        "legacy": {
+          "model_id": "mlp-8-b223bb65103d",
+          "threshold": 0.85,
+          "median_seconds": 0.001874799985671416,
+          "metrics": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 23,
+            "precision": 1.0,
+            "recall": 0.1481,
+            "f1": 0.2581,
+            "by_source": {
+              "breadth-cultural-moma": {
+                "tp": 4,
+                "fp": 0,
+                "fn": 23,
+                "precision": 1.0,
+                "recall": 0.1481,
+                "f1": 0.2581
+              }
+            },
+            "macro_f1": 0.2581,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "context": {
+          "model_id": "context-tables-gated-5cd445174fb3",
+          "threshold": 0.25,
+          "median_seconds": 0.0025745999882929027,
+          "metrics": {
+            "tp": 27,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "by_source": {
+              "breadth-cultural-moma": {
+                "tp": 27,
+                "fp": 0,
+                "fn": 0,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              }
+            },
+            "macro_f1": 1.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "deep_alone": {
+          "model_id": "cascade-research-numeric64x32-edbe8e927ac4",
+          "threshold": 0.9,
+          "median_seconds": 0.003177200007485226,
+          "metrics": {
+            "tp": 24,
+            "fp": 0,
+            "fn": 3,
+            "precision": 1.0,
+            "recall": 0.8889,
+            "f1": 0.9412,
+            "by_source": {
+              "breadth-cultural-moma": {
+                "tp": 24,
+                "fp": 0,
+                "fn": 3,
+                "precision": 1.0,
+                "recall": 0.8889,
+                "f1": 0.9412
+              }
+            },
+            "macro_f1": 0.9412,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "cascade": {
+          "model_id": "cascade-text-structure-v1-067e036ceaaa",
+          "threshold": 0.5,
+          "median_seconds": 0.0025664999848231673,
+          "metrics": {
+            "tp": 27,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "by_source": {
+              "breadth-cultural-moma": {
+                "tp": 27,
+                "fp": 0,
+                "fn": 0,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              }
+            },
+            "macro_f1": 1.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        }
+      },
+      "output_sha256": "d4336e86e516582d0b34c0902ca13d4b045c7f27cc198fc38545bf0e2bd7a0a2"
+    },
+    "breadth-cultural-whitney": {
+      "source": "https://whitney.org/exhibitions",
+      "site_family": "whitney.org",
+      "sector": "museum exhibitions",
+      "layout": "exhibition tiles",
+      "capture_sha256": "e088916da0fe90895e389a0c1da5cc0b052ef903351dd514b72bf081c1cdc24b",
+      "capture_bytes": 79997,
+      "scope_sha256": "fc0cbad3cc896aee3da2ff0db68b04f465024d062ea89a629067c02c6e306134",
+      "expected": 21,
+      "correct": 21,
+      "unwanted": 1,
+      "missing": 0,
+      "precision": 0.9545,
+      "recall": 1.0,
+      "f1": 0.9767,
+      "auxiliary_scope_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "auxiliary_urls": 0,
+      "candidates": 90,
+      "candidate_unique_urls": 74,
+      "expected_in_candidates": 21,
+      "feature_seconds": 0.026180799992289394,
+      "median_seconds": 0.13682780001545325,
+      "dated_entries": 7,
+      "accepted_auxiliary": 0,
+      "missing_examples": [],
+      "unwanted_examples": [
+        "https://whitney.org/exhibitions/archive"
+      ],
+      "models": {
+        "legacy": {
+          "model_id": "mlp-8-b223bb65103d",
+          "threshold": 0.85,
+          "median_seconds": 0.0014074999780859798,
+          "metrics": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 21,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "by_source": {
+              "breadth-cultural-whitney": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 21,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "macro_f1": 0.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "context": {
+          "model_id": "context-tables-gated-5cd445174fb3",
+          "threshold": 0.25,
+          "median_seconds": 0.0020337000023573637,
+          "metrics": {
+            "tp": 21,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9545,
+            "recall": 1.0,
+            "f1": 0.9767,
+            "by_source": {
+              "breadth-cultural-whitney": {
+                "tp": 21,
+                "fp": 1,
+                "fn": 0,
+                "precision": 0.9545,
+                "recall": 1.0,
+                "f1": 0.9767
+              }
+            },
+            "macro_f1": 0.9767,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "deep_alone": {
+          "model_id": "cascade-research-numeric64x32-edbe8e927ac4",
+          "threshold": 0.9,
+          "median_seconds": 0.002585300011560321,
+          "metrics": {
+            "tp": 21,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9545,
+            "recall": 1.0,
+            "f1": 0.9767,
+            "by_source": {
+              "breadth-cultural-whitney": {
+                "tp": 21,
+                "fp": 1,
+                "fn": 0,
+                "precision": 0.9545,
+                "recall": 1.0,
+                "f1": 0.9767
+              }
+            },
+            "macro_f1": 0.9767,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "cascade": {
+          "model_id": "cascade-text-structure-v1-067e036ceaaa",
+          "threshold": 0.5,
+          "median_seconds": 0.0022656999935861677,
+          "metrics": {
+            "tp": 21,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9545,
+            "recall": 1.0,
+            "f1": 0.9767,
+            "by_source": {
+              "breadth-cultural-whitney": {
+                "tp": 21,
+                "fp": 1,
+                "fn": 0,
+                "precision": 0.9545,
+                "recall": 1.0,
+                "f1": 0.9767
+              }
+            },
+            "macro_f1": 0.9767,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        }
+      },
+      "output_sha256": "d682fcbaa9890e29dc99b3a45f1f0f3d6fc3062887644fa1b586633961b22b8e"
+    },
+    "breadth-cultural-louvre": {
+      "source": "https://www.louvre.fr/en/explore/exhibitions",
+      "site_family": "louvre.fr",
+      "sector": "museum exhibitions",
+      "layout": "multisection exhibition cards",
+      "capture_sha256": "d5b9edbfd74da0dc21b0dee89fd3e432302cd1a8622dbe3b69fad234658508d1",
+      "capture_bytes": 250185,
+      "scope_sha256": "ee9ba3f70f3f2e3ac076e35ce675307444c950e5e088f4659fe56cd5d58a6958",
+      "expected": 7,
+      "correct": 7,
+      "unwanted": 0,
+      "missing": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "auxiliary_scope_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "auxiliary_urls": 0,
+      "candidates": 65,
+      "candidate_unique_urls": 57,
+      "expected_in_candidates": 7,
+      "feature_seconds": 0.0197364000196103,
+      "median_seconds": 0.09343179999268614,
+      "dated_entries": 2,
+      "accepted_auxiliary": 0,
+      "missing_examples": [],
+      "unwanted_examples": [],
+      "models": {
+        "legacy": {
+          "model_id": "mlp-8-b223bb65103d",
+          "threshold": 0.85,
+          "median_seconds": 0.0010528999846428633,
+          "metrics": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "by_source": {
+              "breadth-cultural-louvre": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 7,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "macro_f1": 0.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "context": {
+          "model_id": "context-tables-gated-5cd445174fb3",
+          "threshold": 0.25,
+          "median_seconds": 0.001396199979353696,
+          "metrics": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "by_source": {
+              "breadth-cultural-louvre": {
+                "tp": 7,
+                "fp": 0,
+                "fn": 0,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              }
+            },
+            "macro_f1": 1.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "deep_alone": {
+          "model_id": "cascade-research-numeric64x32-edbe8e927ac4",
+          "threshold": 0.9,
+          "median_seconds": 0.0016365000046789646,
+          "metrics": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "by_source": {
+              "breadth-cultural-louvre": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 7,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "macro_f1": 0.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "cascade": {
+          "model_id": "cascade-text-structure-v1-067e036ceaaa",
+          "threshold": 0.5,
+          "median_seconds": 0.0013515999889932573,
+          "metrics": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "by_source": {
+              "breadth-cultural-louvre": {
+                "tp": 7,
+                "fp": 0,
+                "fn": 0,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              }
+            },
+            "macro_f1": 1.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        }
+      },
+      "output_sha256": "7e7c4dad052aebf6ab05e451db0c17fc5f3a9f4618d6372288cb5d572b723fa4"
+    },
+    "breadth-cultural-cleveland": {
+      "source": "https://www.clevelandart.org/whats-on/exhibitions",
+      "site_family": "clevelandart.org",
+      "sector": "museum exhibitions",
+      "layout": "exhibition listing",
+      "capture_sha256": "f06fbaeab6b36eb88360df917a8c2ba79b809f9479b1b8b5f82b3e527ac177e3",
+      "capture_bytes": 216325,
+      "scope_sha256": "fdd70c55b0d9f1bffe6bdbddda86a7804b805a100cbc7b8704fad9571e28ace4",
+      "expected": 28,
+      "correct": 28,
+      "unwanted": 0,
+      "missing": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "auxiliary_scope_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "auxiliary_urls": 0,
+      "candidates": 36,
+      "candidate_unique_urls": 36,
+      "expected_in_candidates": 28,
+      "feature_seconds": 0.025908500014338642,
+      "median_seconds": 0.2341766000026837,
+      "dated_entries": 5,
+      "accepted_auxiliary": 0,
+      "missing_examples": [],
+      "unwanted_examples": [],
+      "models": {
+        "legacy": {
+          "model_id": "mlp-8-b223bb65103d",
+          "threshold": 0.85,
+          "median_seconds": 0.0005932000058237463,
+          "metrics": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 28,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "by_source": {
+              "breadth-cultural-cleveland": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 28,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "macro_f1": 0.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "context": {
+          "model_id": "context-tables-gated-5cd445174fb3",
+          "threshold": 0.25,
+          "median_seconds": 0.0007933999877423048,
+          "metrics": {
+            "tp": 22,
+            "fp": 0,
+            "fn": 6,
+            "precision": 1.0,
+            "recall": 0.7857,
+            "f1": 0.88,
+            "by_source": {
+              "breadth-cultural-cleveland": {
+                "tp": 22,
+                "fp": 0,
+                "fn": 6,
+                "precision": 1.0,
+                "recall": 0.7857,
+                "f1": 0.88
+              }
+            },
+            "macro_f1": 0.88,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "deep_alone": {
+          "model_id": "cascade-research-numeric64x32-edbe8e927ac4",
+          "threshold": 0.9,
+          "median_seconds": 0.0009386999881826341,
+          "metrics": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 28,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "by_source": {
+              "breadth-cultural-cleveland": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 28,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "macro_f1": 0.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "cascade": {
+          "model_id": "cascade-text-structure-v1-067e036ceaaa",
+          "threshold": 0.5,
+          "median_seconds": 0.0007677999965380877,
+          "metrics": {
+            "tp": 22,
+            "fp": 0,
+            "fn": 6,
+            "precision": 1.0,
+            "recall": 0.7857,
+            "f1": 0.88,
+            "by_source": {
+              "breadth-cultural-cleveland": {
+                "tp": 22,
+                "fp": 0,
+                "fn": 6,
+                "precision": 1.0,
+                "recall": 0.7857,
+                "f1": 0.88
+              }
+            },
+            "macro_f1": 0.88,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        }
+      },
+      "output_sha256": "dd0d6f22ff1e1cdbb72b7dd8f357f9c9f2fde5cefcbdb1a5ba8c6dabbb46f2ca"
+    },
+    "breadth-cultural-moca": {
+      "source": "https://www.moca.org/exhibitions",
+      "site_family": "moca.org",
+      "sector": "museum exhibitions",
+      "layout": "image and date cards",
+      "capture_sha256": "2490198d025e973161bd2e471e3dbde6f6bb360b2f0abf40a9ea1cec8fa21210",
+      "capture_bytes": 170934,
+      "scope_sha256": "1453d39489ad61f10df7788c94fcd20db797b0126a25a5d97a99da1b3988ef4c",
+      "expected": 6,
+      "correct": 6,
+      "unwanted": 0,
+      "missing": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "auxiliary_scope_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "auxiliary_urls": 0,
+      "candidates": 90,
+      "candidate_unique_urls": 36,
+      "expected_in_candidates": 6,
+      "feature_seconds": 0.03323390000150539,
+      "median_seconds": 0.10242420001304708,
+      "dated_entries": 2,
+      "accepted_auxiliary": 0,
+      "missing_examples": [],
+      "unwanted_examples": [],
+      "models": {
+        "legacy": {
+          "model_id": "mlp-8-b223bb65103d",
+          "threshold": 0.85,
+          "median_seconds": 0.001548900007037446,
+          "metrics": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "by_source": {
+              "breadth-cultural-moca": {
+                "tp": 6,
+                "fp": 0,
+                "fn": 0,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              }
+            },
+            "macro_f1": 1.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "context": {
+          "model_id": "context-tables-gated-5cd445174fb3",
+          "threshold": 0.25,
+          "median_seconds": 0.0019745000172406435,
+          "metrics": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "by_source": {
+              "breadth-cultural-moca": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 6,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "macro_f1": 0.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "deep_alone": {
+          "model_id": "cascade-research-numeric64x32-edbe8e927ac4",
+          "threshold": 0.9,
+          "median_seconds": 0.0024896999821066856,
+          "metrics": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "by_source": {
+              "breadth-cultural-moca": {
+                "tp": 6,
+                "fp": 0,
+                "fn": 0,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              }
+            },
+            "macro_f1": 1.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "cascade": {
+          "model_id": "cascade-text-structure-v1-067e036ceaaa",
+          "threshold": 0.5,
+          "median_seconds": 0.00198830000590533,
+          "metrics": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "by_source": {
+              "breadth-cultural-moca": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 6,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "macro_f1": 0.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        }
+      },
+      "output_sha256": "4975b01849b17a6e1ad3936b479229da861d017b7f09145cd99f70e1f18fbc48"
+    },
+    "breadth-cultural-kingarthur": {
+      "source": "https://www.kingarthurbaking.com/recipes/collections/sourdough-bread-recipes",
+      "site_family": "kingarthurbaking.com",
+      "sector": "recipes",
+      "layout": "recipe collection cards",
+      "capture_sha256": "c72dc7007305203c8e80cc83064a45e910ad6ad1562d33276a35d653201db54a",
+      "capture_bytes": 319306,
+      "scope_sha256": "164acc821e6db568d4df3228347a9310810e206af613a05ff7e66a412f411836",
+      "expected": 19,
+      "correct": 19,
+      "unwanted": 4,
+      "missing": 0,
+      "precision": 0.8261,
+      "recall": 1.0,
+      "f1": 0.9048,
+      "auxiliary_scope_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "auxiliary_urls": 0,
+      "candidates": 478,
+      "candidate_unique_urls": 293,
+      "expected_in_candidates": 19,
+      "feature_seconds": 0.13951360000646673,
+      "median_seconds": 0.3912836999807041,
+      "dated_entries": 0,
+      "accepted_auxiliary": 0,
+      "missing_examples": [],
+      "unwanted_examples": [
+        "https://www.kingarthurbaking.com/recipes/collections",
+        "https://www.kingarthurbaking.com/recipes/collections/everyday-bread",
+        "https://www.kingarthurbaking.com/recipes/collections/extraordinary-breads",
+        "https://www.kingarthurbaking.com/recipes/collections/sourdough-beyond-crusty-bread"
+      ],
+      "models": {
+        "legacy": {
+          "model_id": "mlp-8-b223bb65103d",
+          "threshold": 0.85,
+          "median_seconds": 0.00801839999621734,
+          "metrics": {
+            "tp": 0,
+            "fp": 6,
+            "fn": 19,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "by_source": {
+              "breadth-cultural-kingarthur": {
+                "tp": 0,
+                "fp": 6,
+                "fn": 19,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "macro_f1": 0.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "context": {
+          "model_id": "context-tables-gated-5cd445174fb3",
+          "threshold": 0.25,
+          "median_seconds": 0.010500400007003918,
+          "metrics": {
+            "tp": 9,
+            "fp": 7,
+            "fn": 10,
+            "precision": 0.5625,
+            "recall": 0.4737,
+            "f1": 0.5143,
+            "by_source": {
+              "breadth-cultural-kingarthur": {
+                "tp": 9,
+                "fp": 7,
+                "fn": 10,
+                "precision": 0.5625,
+                "recall": 0.4737,
+                "f1": 0.5143
+              }
+            },
+            "macro_f1": 0.5143,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "deep_alone": {
+          "model_id": "cascade-research-numeric64x32-edbe8e927ac4",
+          "threshold": 0.9,
+          "median_seconds": 0.012570599996251985,
+          "metrics": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 15,
+            "precision": 1.0,
+            "recall": 0.2105,
+            "f1": 0.3478,
+            "by_source": {
+              "breadth-cultural-kingarthur": {
+                "tp": 4,
+                "fp": 0,
+                "fn": 15,
+                "precision": 1.0,
+                "recall": 0.2105,
+                "f1": 0.3478
+              }
+            },
+            "macro_f1": 0.3478,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "cascade": {
+          "model_id": "cascade-text-structure-v1-067e036ceaaa",
+          "threshold": 0.5,
+          "median_seconds": 0.010547200014116243,
+          "metrics": {
+            "tp": 9,
+            "fp": 7,
+            "fn": 10,
+            "precision": 0.5625,
+            "recall": 0.4737,
+            "f1": 0.5143,
+            "by_source": {
+              "breadth-cultural-kingarthur": {
+                "tp": 9,
+                "fp": 7,
+                "fn": 10,
+                "precision": 0.5625,
+                "recall": 0.4737,
+                "f1": 0.5143
+              }
+            },
+            "macro_f1": 0.5143,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        }
+      },
+      "output_sha256": "e23a4997c19c73d9171410c9a2fc75933091f83b939f8ef3b686974d8c05fdbe"
+    },
+    "breadth-cultural-allrecipes": {
+      "source": "https://www.allrecipes.com/recipes/78/breakfast-and-brunch/",
+      "site_family": "allrecipes.com",
+      "sector": "recipes",
+      "layout": "recipe category cards",
+      "capture_sha256": "cf70a4d3b600a7c7d6b158d7b8bc11aa964be8a0811212636d0dc2f3f6602396",
+      "capture_bytes": 587509,
+      "scope_sha256": "bdbe4752c40d424af15186566e0164e9dfa2ac4280ca4411f1bdafc7b78cac06",
+      "expected": 72,
+      "correct": 14,
+      "unwanted": 8,
+      "missing": 58,
+      "precision": 0.6364,
+      "recall": 0.1944,
+      "f1": 0.2979,
+      "auxiliary_scope_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "auxiliary_urls": 0,
+      "candidates": 313,
+      "candidate_unique_urls": 197,
+      "expected_in_candidates": 72,
+      "feature_seconds": 0.12754259997745976,
+      "median_seconds": 0.6276008999848273,
+      "dated_entries": 0,
+      "accepted_auxiliary": 0,
+      "missing_examples": [
+        "https://www.allrecipes.com/3-ingredient-pancakes-recipe-11894382",
+        "https://www.allrecipes.com/apple-cider-bath-cinnamon-rolls-recipe-12111965",
+        "https://www.allrecipes.com/apple-cinnamon-roll-casserole-recipe-11849180",
+        "https://www.allrecipes.com/bacon-pancake-dippers-recipe-11972436",
+        "https://www.allrecipes.com/banana-bread-baked-oatmeal-recipe-11880277",
+        "https://www.allrecipes.com/banana-pudding-protein-yogurt-cups-recipe-12026421",
+        "https://www.allrecipes.com/best-peanut-butter-breakfast-recipes-12121331",
+        "https://www.allrecipes.com/birds-nest-eggs-recipe-11943851"
+      ],
+      "unwanted_examples": [
+        "https://www.allrecipes.com/recipes/144/breakfast-and-brunch/breakfast-casseroles",
+        "https://www.allrecipes.com/recipes/145/breakfast-and-brunch/cereals",
+        "https://www.allrecipes.com/recipes/147/breakfast-and-brunch/crepes",
+        "https://www.allrecipes.com/recipes/150/breakfast-and-brunch/meat-and-seafood",
+        "https://www.allrecipes.com/recipes/152/breakfast-and-brunch/potatoes",
+        "https://www.allrecipes.com/recipes/15334/healthy-recipes/breakfast-and-brunch",
+        "https://www.allrecipes.com/recipes/15882/us-recipes/southern/breakfast-and-brunch",
+        "https://www.allrecipes.com/recipes/17766/breakfast-and-brunch/breakfast-cookies"
+      ],
+      "models": {
+        "legacy": {
+          "model_id": "mlp-8-b223bb65103d",
+          "threshold": 0.85,
+          "median_seconds": 0.005122999980812892,
+          "metrics": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 72,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "by_source": {
+              "breadth-cultural-allrecipes": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 72,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "macro_f1": 0.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "context": {
+          "model_id": "context-tables-gated-5cd445174fb3",
+          "threshold": 0.25,
+          "median_seconds": 0.006805599987274036,
+          "metrics": {
+            "tp": 14,
+            "fp": 19,
+            "fn": 58,
+            "precision": 0.4242,
+            "recall": 0.1944,
+            "f1": 0.2667,
+            "by_source": {
+              "breadth-cultural-allrecipes": {
+                "tp": 14,
+                "fp": 19,
+                "fn": 58,
+                "precision": 0.4242,
+                "recall": 0.1944,
+                "f1": 0.2667
+              }
+            },
+            "macro_f1": 0.2667,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "deep_alone": {
+          "model_id": "cascade-research-numeric64x32-edbe8e927ac4",
+          "threshold": 0.9,
+          "median_seconds": 0.00864949999959208,
+          "metrics": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 70,
+            "precision": 1.0,
+            "recall": 0.0278,
+            "f1": 0.0541,
+            "by_source": {
+              "breadth-cultural-allrecipes": {
+                "tp": 2,
+                "fp": 0,
+                "fn": 70,
+                "precision": 1.0,
+                "recall": 0.0278,
+                "f1": 0.0541
+              }
+            },
+            "macro_f1": 0.0541,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "cascade": {
+          "model_id": "cascade-text-structure-v1-067e036ceaaa",
+          "threshold": 0.5,
+          "median_seconds": 0.007566999993287027,
+          "metrics": {
+            "tp": 14,
+            "fp": 19,
+            "fn": 58,
+            "precision": 0.4242,
+            "recall": 0.1944,
+            "f1": 0.2667,
+            "by_source": {
+              "breadth-cultural-allrecipes": {
+                "tp": 14,
+                "fp": 19,
+                "fn": 58,
+                "precision": 0.4242,
+                "recall": 0.1944,
+                "f1": 0.2667
+              }
+            },
+            "macro_f1": 0.2667,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        }
+      },
+      "output_sha256": "73876faffa8230622fa1c214e3fe6c1b2d64fc9d18d4a1c1dd67228a5027b723"
+    },
+    "breadth-cultural-seriouseats": {
+      "source": "https://www.seriouseats.com/spinach-recipes-5117472",
+      "site_family": "seriouseats.com",
+      "sector": "recipes",
+      "layout": "recipe category cards",
+      "capture_sha256": "2d7b28805fe6009e9ca49f61d7590d078851bfe88dc3f062b98c10687c977d7b",
+      "capture_bytes": 756660,
+      "scope_sha256": "2a7e64d011803452fb89f0a047c57a4b0847295f30aa56f6661f5ea5e383682a",
+      "expected": 63,
+      "correct": 60,
+      "unwanted": 0,
+      "missing": 3,
+      "precision": 1.0,
+      "recall": 0.9524,
+      "f1": 0.9756,
+      "auxiliary_scope_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "auxiliary_urls": 0,
+      "candidates": 241,
+      "candidate_unique_urls": 151,
+      "expected_in_candidates": 63,
+      "feature_seconds": 0.10350120000657625,
+      "median_seconds": 0.5316898000019137,
+      "dated_entries": 0,
+      "accepted_auxiliary": 0,
+      "missing_examples": [
+        "https://www.seriouseats.com/kalitsounia-cretan-hand-pies-12034621",
+        "https://www.seriouseats.com/palak-raita-recipe-11781352",
+        "https://www.seriouseats.com/spinach-recipes-11702104"
+      ],
+      "unwanted_examples": [],
+      "models": {
+        "legacy": {
+          "model_id": "mlp-8-b223bb65103d",
+          "threshold": 0.85,
+          "median_seconds": 0.004148999985773116,
+          "metrics": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 63,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "by_source": {
+              "breadth-cultural-seriouseats": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 63,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "macro_f1": 0.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "context": {
+          "model_id": "context-tables-gated-5cd445174fb3",
+          "threshold": 0.25,
+          "median_seconds": 0.005283000005874783,
+          "metrics": {
+            "tp": 60,
+            "fp": 44,
+            "fn": 3,
+            "precision": 0.5769,
+            "recall": 0.9524,
+            "f1": 0.7186,
+            "by_source": {
+              "breadth-cultural-seriouseats": {
+                "tp": 60,
+                "fp": 44,
+                "fn": 3,
+                "precision": 0.5769,
+                "recall": 0.9524,
+                "f1": 0.7186
+              }
+            },
+            "macro_f1": 0.7186,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "deep_alone": {
+          "model_id": "cascade-research-numeric64x32-edbe8e927ac4",
+          "threshold": 0.9,
+          "median_seconds": 0.006645899993600324,
+          "metrics": {
+            "tp": 9,
+            "fp": 0,
+            "fn": 54,
+            "precision": 1.0,
+            "recall": 0.1429,
+            "f1": 0.25,
+            "by_source": {
+              "breadth-cultural-seriouseats": {
+                "tp": 9,
+                "fp": 0,
+                "fn": 54,
+                "precision": 1.0,
+                "recall": 0.1429,
+                "f1": 0.25
+              }
+            },
+            "macro_f1": 0.25,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "cascade": {
+          "model_id": "cascade-text-structure-v1-067e036ceaaa",
+          "threshold": 0.5,
+          "median_seconds": 0.005317700008163229,
+          "metrics": {
+            "tp": 60,
+            "fp": 44,
+            "fn": 3,
+            "precision": 0.5769,
+            "recall": 0.9524,
+            "f1": 0.7186,
+            "by_source": {
+              "breadth-cultural-seriouseats": {
+                "tp": 60,
+                "fp": 44,
+                "fn": 3,
+                "precision": 0.5769,
+                "recall": 0.9524,
+                "f1": 0.7186
+              }
+            },
+            "macro_f1": 0.7186,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        }
+      },
+      "output_sha256": "2c71ed49da19595711ab95e3b6e28e938a05f7b36919955ebb5a7de3a0fa35b5"
+    },
+    "breadth-cultural-rhs": {
+      "source": "https://www.rhs.org.uk/plants/types/perennials",
+      "site_family": "rhs.org.uk",
+      "sector": "gardening",
+      "layout": "plant guide collection",
+      "capture_sha256": "e5e7d9884f4b8dd6e9abea2e4e66d9dfe195b2d4bbe8cd14774f3623ed88f57f",
+      "capture_bytes": 95731,
+      "scope_sha256": "794a3f1abac562ecd5e9a1ffbe5b02a6153f75e51a70570c9027704fc43ba2d9",
+      "expected": 1,
+      "correct": 1,
+      "unwanted": 0,
+      "missing": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "auxiliary_scope_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "auxiliary_urls": 0,
+      "candidates": 152,
+      "candidate_unique_urls": 122,
+      "expected_in_candidates": 1,
+      "feature_seconds": 0.042737500014482066,
+      "median_seconds": 0.15612440000404604,
+      "dated_entries": 0,
+      "accepted_auxiliary": 0,
+      "missing_examples": [],
+      "unwanted_examples": [],
+      "models": {
+        "legacy": {
+          "model_id": "mlp-8-b223bb65103d",
+          "threshold": 0.85,
+          "median_seconds": 0.0026495999773032963,
+          "metrics": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "by_source": {
+              "breadth-cultural-rhs": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 1,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "macro_f1": 0.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "context": {
+          "model_id": "context-tables-gated-5cd445174fb3",
+          "threshold": 0.25,
+          "median_seconds": 0.0033872000058181584,
+          "metrics": {
+            "tp": 1,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.3333,
+            "recall": 1.0,
+            "f1": 0.5,
+            "by_source": {
+              "breadth-cultural-rhs": {
+                "tp": 1,
+                "fp": 2,
+                "fn": 0,
+                "precision": 0.3333,
+                "recall": 1.0,
+                "f1": 0.5
+              }
+            },
+            "macro_f1": 0.5,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "deep_alone": {
+          "model_id": "cascade-research-numeric64x32-edbe8e927ac4",
+          "threshold": 0.9,
+          "median_seconds": 0.0041219999839086086,
+          "metrics": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "by_source": {
+              "breadth-cultural-rhs": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 1,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "macro_f1": 0.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "cascade": {
+          "model_id": "cascade-text-structure-v1-067e036ceaaa",
+          "threshold": 0.5,
+          "median_seconds": 0.0035066000127699226,
+          "metrics": {
+            "tp": 1,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.3333,
+            "recall": 1.0,
+            "f1": 0.5,
+            "by_source": {
+              "breadth-cultural-rhs": {
+                "tp": 1,
+                "fp": 2,
+                "fn": 0,
+                "precision": 0.3333,
+                "recall": 1.0,
+                "f1": 0.5
+              }
+            },
+            "macro_f1": 0.5,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        }
+      },
+      "output_sha256": "674ca32093d646619561c334db2e9be60d6b59ddd67306300ba8f1c89a4cb487"
+    },
+    "breadth-cultural-kew": {
+      "source": "https://www.kew.org/science/read-and-watch",
+      "site_family": "kew.org",
+      "sector": "botanical science",
+      "layout": "science story cards",
+      "capture_sha256": "73cb777e531e71e858a78f7ba43a78bcba36a04fa87e0c2e705e2984f845bef2",
+      "capture_bytes": 87516,
+      "scope_sha256": "29b47389faa2267535643a7e4bc3c3c8ce1350721e2c5f98e88614d2dc11cc26",
+      "expected": 12,
+      "correct": 12,
+      "unwanted": 0,
+      "missing": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "auxiliary_scope_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "auxiliary_urls": 0,
+      "candidates": 78,
+      "candidate_unique_urls": 63,
+      "expected_in_candidates": 12,
+      "feature_seconds": 0.024840300000505522,
+      "median_seconds": 0.1065400000079535,
+      "dated_entries": 9,
+      "accepted_auxiliary": 0,
+      "missing_examples": [],
+      "unwanted_examples": [],
+      "models": {
+        "legacy": {
+          "model_id": "mlp-8-b223bb65103d",
+          "threshold": 0.85,
+          "median_seconds": 0.0012268999998923391,
+          "metrics": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 12,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "by_source": {
+              "breadth-cultural-kew": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 12,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "macro_f1": 0.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "context": {
+          "model_id": "context-tables-gated-5cd445174fb3",
+          "threshold": 0.25,
+          "median_seconds": 0.0017235999985132366,
+          "metrics": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "by_source": {
+              "breadth-cultural-kew": {
+                "tp": 12,
+                "fp": 0,
+                "fn": 0,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              }
+            },
+            "macro_f1": 1.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "deep_alone": {
+          "model_id": "cascade-research-numeric64x32-edbe8e927ac4",
+          "threshold": 0.9,
+          "median_seconds": 0.002162699995096773,
+          "metrics": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 12,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "by_source": {
+              "breadth-cultural-kew": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 12,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "macro_f1": 0.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "cascade": {
+          "model_id": "cascade-text-structure-v1-067e036ceaaa",
+          "threshold": 0.5,
+          "median_seconds": 0.0017977000097744167,
+          "metrics": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "by_source": {
+              "breadth-cultural-kew": {
+                "tp": 12,
+                "fp": 0,
+                "fn": 0,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0
+              }
+            },
+            "macro_f1": 1.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        }
+      },
+      "output_sha256": "3feb4a12456ff983fe8cd20fe4f46e983cf2f69d246aae4704c8a04ee6dcdadc"
+    },
+    "breadth-cultural-boardgamegeek": {
+      "source": "https://boardgamegeek.com/browse/boardgame",
+      "site_family": "boardgamegeek.com",
+      "sector": "board games",
+      "layout": "ranked inventory table",
+      "capture_sha256": "7b8b7a327ccf8309eb18732a78c0eda6ac5ec054ac5443451a384f0bc604da4c",
+      "capture_bytes": 193676,
+      "scope_sha256": "cfb3173b9220762db889548973b6af79a32d1a2054c5ec1057e59646c6ff7e11",
+      "expected": 100,
+      "correct": 72,
+      "unwanted": 1,
+      "missing": 28,
+      "precision": 0.9863,
+      "recall": 0.72,
+      "f1": 0.8324,
+      "auxiliary_scope_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "auxiliary_urls": 0,
+      "candidates": 217,
+      "candidate_unique_urls": 110,
+      "expected_in_candidates": 100,
+      "feature_seconds": 0.11965050001163036,
+      "median_seconds": 0.5196084000053816,
+      "dated_entries": 0,
+      "accepted_auxiliary": 0,
+      "missing_examples": [
+        "https://boardgamegeek.com/boardgame/124361/concordia",
+        "https://boardgamegeek.com/boardgame/161533/lisboa",
+        "https://boardgamegeek.com/boardgame/164928/orleans",
+        "https://boardgamegeek.com/boardgame/167355/nemesis",
+        "https://boardgamegeek.com/boardgame/169786/scythe",
+        "https://boardgamegeek.com/boardgame/184267/on-mars",
+        "https://boardgamegeek.com/boardgame/185343/anachrony",
+        "https://boardgamegeek.com/boardgame/199792/everdell"
+      ],
+      "unwanted_examples": [
+        "https://boardgamegeek.com/browse/boardgame/page/1814"
+      ],
+      "models": {
+        "legacy": {
+          "model_id": "mlp-8-b223bb65103d",
+          "threshold": 0.85,
+          "median_seconds": 0.0035966000286862254,
+          "metrics": {
+            "tp": 0,
+            "fp": 5,
+            "fn": 100,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "by_source": {
+              "breadth-cultural-boardgamegeek": {
+                "tp": 0,
+                "fp": 5,
+                "fn": 100,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "macro_f1": 0.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "context": {
+          "model_id": "context-tables-gated-5cd445174fb3",
+          "threshold": 0.25,
+          "median_seconds": 0.00515900002210401,
+          "metrics": {
+            "tp": 72,
+            "fp": 5,
+            "fn": 28,
+            "precision": 0.9351,
+            "recall": 0.72,
+            "f1": 0.8136,
+            "by_source": {
+              "breadth-cultural-boardgamegeek": {
+                "tp": 72,
+                "fp": 5,
+                "fn": 28,
+                "precision": 0.9351,
+                "recall": 0.72,
+                "f1": 0.8136
+              }
+            },
+            "macro_f1": 0.8136,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "deep_alone": {
+          "model_id": "cascade-research-numeric64x32-edbe8e927ac4",
+          "threshold": 0.9,
+          "median_seconds": 0.0058759999810718,
+          "metrics": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 100,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "by_source": {
+              "breadth-cultural-boardgamegeek": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 100,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "macro_f1": 0.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "cascade": {
+          "model_id": "cascade-text-structure-v1-067e036ceaaa",
+          "threshold": 0.5,
+          "median_seconds": 0.005858599994098768,
+          "metrics": {
+            "tp": 72,
+            "fp": 5,
+            "fn": 28,
+            "precision": 0.9351,
+            "recall": 0.72,
+            "f1": 0.8136,
+            "by_source": {
+              "breadth-cultural-boardgamegeek": {
+                "tp": 72,
+                "fp": 5,
+                "fn": 28,
+                "precision": 0.9351,
+                "recall": 0.72,
+                "f1": 0.8136
+              }
+            },
+            "macro_f1": 0.8136,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        }
+      },
+      "output_sha256": "17a2694d2cea133f35129a2e003d254792b46467a534eee92b5b7415352c85b3"
+    },
+    "breadth-cultural-puzzles": {
+      "source": "https://www.chiark.greenend.org.uk/~sgtatham/puzzles/",
+      "site_family": "greenend.org.uk",
+      "sector": "puzzles",
+      "layout": "static game catalog table",
+      "capture_sha256": "8de7f2235fa9889d5b00cb4a540fc2c2c2b641431ac2305c427b2c55d1fc5fad",
+      "capture_bytes": 37181,
+      "scope_sha256": "e44d0a2be94a74ce7dae8808fc1790654d9822f2dbe1e0cdf4fdeefe1c7f21eb",
+      "expected": 40,
+      "correct": 0,
+      "unwanted": 3,
+      "missing": 40,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "auxiliary_scope_sha256": "0f7b7aca17bfc42af572d6db7ab0d54245620d1fa493fb7febe961f2ea0d5a08",
+      "auxiliary_urls": 80,
+      "candidates": 179,
+      "candidate_unique_urls": 99,
+      "expected_in_candidates": 40,
+      "feature_seconds": 0.07853889997932129,
+      "median_seconds": 0.2703574000042863,
+      "dated_entries": 3,
+      "accepted_auxiliary": 39,
+      "missing_examples": [
+        "https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/blackbox.html",
+        "https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/bridges.html",
+        "https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/cube.html",
+        "https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/dominosa.html",
+        "https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/fifteen.html",
+        "https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/filling.html",
+        "https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/flip.html",
+        "https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/flood.html"
+      ],
+      "unwanted_examples": [
+        "https://www.chiark.greenend.org.uk/~sgtatham/puzzles/Puzzles.dmg",
+        "https://www.chiark.greenend.org.uk/~sgtatham/puzzles/puzzles-installer.msi",
+        "https://www.chiark.greenend.org.uk/~sgtatham/puzzles/puzzles.chm"
+      ],
+      "models": {
+        "legacy": {
+          "model_id": "mlp-8-b223bb65103d",
+          "threshold": 0.85,
+          "median_seconds": 0.002885099995182827,
+          "metrics": {
+            "tp": 40,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.9524,
+            "recall": 1.0,
+            "f1": 0.9756,
+            "by_source": {
+              "breadth-cultural-puzzles": {
+                "tp": 40,
+                "fp": 2,
+                "fn": 0,
+                "precision": 0.9524,
+                "recall": 1.0,
+                "f1": 0.9756
+              }
+            },
+            "macro_f1": 0.9756,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "context": {
+          "model_id": "context-tables-gated-5cd445174fb3",
+          "threshold": 0.25,
+          "median_seconds": 0.003984299983130768,
+          "metrics": {
+            "tp": 39,
+            "fp": 0,
+            "fn": 1,
+            "precision": 1.0,
+            "recall": 0.975,
+            "f1": 0.9873,
+            "by_source": {
+              "breadth-cultural-puzzles": {
+                "tp": 39,
+                "fp": 0,
+                "fn": 1,
+                "precision": 1.0,
+                "recall": 0.975,
+                "f1": 0.9873
+              }
+            },
+            "macro_f1": 0.9873,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "deep_alone": {
+          "model_id": "cascade-research-numeric64x32-edbe8e927ac4",
+          "threshold": 0.9,
+          "median_seconds": 0.005030699976487085,
+          "metrics": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 40,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "by_source": {
+              "breadth-cultural-puzzles": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 40,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "macro_f1": 0.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "cascade": {
+          "model_id": "cascade-text-structure-v1-067e036ceaaa",
+          "threshold": 0.5,
+          "median_seconds": 0.0039954000094439834,
+          "metrics": {
+            "tp": 39,
+            "fp": 0,
+            "fn": 1,
+            "precision": 1.0,
+            "recall": 0.975,
+            "f1": 0.9873,
+            "by_source": {
+              "breadth-cultural-puzzles": {
+                "tp": 39,
+                "fp": 0,
+                "fn": 1,
+                "precision": 1.0,
+                "recall": 0.975,
+                "f1": 0.9873
+              }
+            },
+            "macro_f1": 0.9873,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        }
+      },
+      "output_sha256": "12540dea37b5a1bd8fbe8843b2e26fa7e0ba3b1f4da8063780924c62a5846c15"
+    },
+    "breadth-cultural-nybg": {
+      "source": "https://www.nybg.org/",
+      "site_family": "nybg.org",
+      "sector": "garden events",
+      "layout": "event calendar",
+      "capture_sha256": "ecb10d931f0405a7bd148e44737e0548db27083a991b093f0e0df2b51820b691",
+      "capture_bytes": 582681,
+      "scope_sha256": "f4b9b83a68132851421e8f2bade10506342c0fe1fca1d379a1c69a8aa4b97f8b",
+      "expected": 25,
+      "correct": 25,
+      "unwanted": 4,
+      "missing": 0,
+      "precision": 0.8621,
+      "recall": 1.0,
+      "f1": 0.9259,
+      "auxiliary_scope_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "auxiliary_urls": 0,
+      "candidates": 309,
+      "candidate_unique_urls": 192,
+      "expected_in_candidates": 25,
+      "feature_seconds": 0.17502900000545196,
+      "median_seconds": 0.6410639000241645,
+      "dated_entries": 4,
+      "accepted_auxiliary": 0,
+      "missing_examples": [],
+      "unwanted_examples": [
+        "https://www.nybg.org/event/dia-de-los-muertos",
+        "https://www.nybg.org/event/upcoming-exhibitions",
+        "https://www.nybg.org/event/upcoming-exhibitions/kaws",
+        "https://www.nybg.org/gardens/gardens-collections"
+      ],
+      "models": {
+        "legacy": {
+          "model_id": "mlp-8-b223bb65103d",
+          "threshold": 0.85,
+          "median_seconds": 0.00506259998655878,
+          "metrics": {
+            "tp": 4,
+            "fp": 2,
+            "fn": 21,
+            "precision": 0.6667,
+            "recall": 0.16,
+            "f1": 0.2581,
+            "by_source": {
+              "breadth-cultural-nybg": {
+                "tp": 4,
+                "fp": 2,
+                "fn": 21,
+                "precision": 0.6667,
+                "recall": 0.16,
+                "f1": 0.2581
+              }
+            },
+            "macro_f1": 0.2581,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "context": {
+          "model_id": "context-tables-gated-5cd445174fb3",
+          "threshold": 0.25,
+          "median_seconds": 0.00701700002537109,
+          "metrics": {
+            "tp": 23,
+            "fp": 1,
+            "fn": 2,
+            "precision": 0.9583,
+            "recall": 0.92,
+            "f1": 0.9388,
+            "by_source": {
+              "breadth-cultural-nybg": {
+                "tp": 23,
+                "fp": 1,
+                "fn": 2,
+                "precision": 0.9583,
+                "recall": 0.92,
+                "f1": 0.9388
+              }
+            },
+            "macro_f1": 0.9388,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "deep_alone": {
+          "model_id": "cascade-research-numeric64x32-edbe8e927ac4",
+          "threshold": 0.9,
+          "median_seconds": 0.00887050002347678,
+          "metrics": {
+            "tp": 5,
+            "fp": 2,
+            "fn": 20,
+            "precision": 0.7143,
+            "recall": 0.2,
+            "f1": 0.3125,
+            "by_source": {
+              "breadth-cultural-nybg": {
+                "tp": 5,
+                "fp": 2,
+                "fn": 20,
+                "precision": 0.7143,
+                "recall": 0.2,
+                "f1": 0.3125
+              }
+            },
+            "macro_f1": 0.3125,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "cascade": {
+          "model_id": "cascade-text-structure-v1-067e036ceaaa",
+          "threshold": 0.5,
+          "median_seconds": 0.007364199991570786,
+          "metrics": {
+            "tp": 23,
+            "fp": 1,
+            "fn": 2,
+            "precision": 0.9583,
+            "recall": 0.92,
+            "f1": 0.9388,
+            "by_source": {
+              "breadth-cultural-nybg": {
+                "tp": 23,
+                "fp": 1,
+                "fn": 2,
+                "precision": 0.9583,
+                "recall": 0.92,
+                "f1": 0.9388
+              }
+            },
+            "macro_f1": 0.9388,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        }
+      },
+      "output_sha256": "dfa3051f64febeb4846007e249e82bd90d6c2bde3454ae663a6e46f864f87840"
+    },
+    "breadth-cultural-mood": {
+      "source": "https://blog.moodfabrics.com/free-sewing-patterns/",
+      "site_family": "moodfabrics.com",
+      "sector": "craft patterns",
+      "layout": "grouped pattern index",
+      "capture_sha256": "615027de1a00b730bdd6194f86891364448e3fd1bfd576a37168167c1442d63d",
+      "capture_bytes": 458255,
+      "scope_sha256": "7528f8966dc7720226f5d3b32bb2d90ca367dbc310168c791f0087d4536df0ec",
+      "expected": 217,
+      "correct": 217,
+      "unwanted": 19,
+      "missing": 0,
+      "precision": 0.9195,
+      "recall": 1.0,
+      "f1": 0.9581,
+      "auxiliary_scope_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "auxiliary_urls": 0,
+      "candidates": 642,
+      "candidate_unique_urls": 310,
+      "expected_in_candidates": 217,
+      "feature_seconds": 0.23428939998848364,
+      "median_seconds": 1.2651616999937687,
+      "dated_entries": 0,
+      "accepted_auxiliary": 0,
+      "missing_examples": [],
+      "unwanted_examples": [
+        "https://blog.moodfabrics.com/the-bluebell-dress-free-sewing-pattern",
+        "https://blog.moodfabrics.com/the-brassia-dress-free-sewing-pattern",
+        "https://blog.moodfabrics.com/the-cypress-dress-free-sewing-pattern",
+        "https://blog.moodfabrics.com/the-eurya-dress-free-sewing-pattern",
+        "https://blog.moodfabrics.com/the-ginger-dress-free-sewing-pattern",
+        "https://blog.moodfabrics.com/the-heather-dress-free-sewing-pattern",
+        "https://blog.moodfabrics.com/the-honeysuckle-dress-free-sewing-pattern",
+        "https://blog.moodfabrics.com/the-laelia-tunic-free-sewing-pattern"
+      ],
+      "models": {
+        "legacy": {
+          "model_id": "mlp-8-b223bb65103d",
+          "threshold": 0.85,
+          "median_seconds": 0.010924900008831173,
+          "metrics": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 215,
+            "precision": 1.0,
+            "recall": 0.0092,
+            "f1": 0.0183,
+            "by_source": {
+              "breadth-cultural-mood": {
+                "tp": 2,
+                "fp": 0,
+                "fn": 215,
+                "precision": 1.0,
+                "recall": 0.0092,
+                "f1": 0.0183
+              }
+            },
+            "macro_f1": 0.0183,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "context": {
+          "model_id": "context-tables-gated-5cd445174fb3",
+          "threshold": 0.25,
+          "median_seconds": 0.015206800017040223,
+          "metrics": {
+            "tp": 213,
+            "fp": 5,
+            "fn": 4,
+            "precision": 0.9771,
+            "recall": 0.9816,
+            "f1": 0.9793,
+            "by_source": {
+              "breadth-cultural-mood": {
+                "tp": 213,
+                "fp": 5,
+                "fn": 4,
+                "precision": 0.9771,
+                "recall": 0.9816,
+                "f1": 0.9793
+              }
+            },
+            "macro_f1": 0.9793,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "deep_alone": {
+          "model_id": "cascade-research-numeric64x32-edbe8e927ac4",
+          "threshold": 0.9,
+          "median_seconds": 0.018396800005575642,
+          "metrics": {
+            "tp": 213,
+            "fp": 4,
+            "fn": 4,
+            "precision": 0.9816,
+            "recall": 0.9816,
+            "f1": 0.9816,
+            "by_source": {
+              "breadth-cultural-mood": {
+                "tp": 213,
+                "fp": 4,
+                "fn": 4,
+                "precision": 0.9816,
+                "recall": 0.9816,
+                "f1": 0.9816
+              }
+            },
+            "macro_f1": 0.9816,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "cascade": {
+          "model_id": "cascade-text-structure-v1-067e036ceaaa",
+          "threshold": 0.5,
+          "median_seconds": 0.015060899982927367,
+          "metrics": {
+            "tp": 213,
+            "fp": 5,
+            "fn": 4,
+            "precision": 0.9771,
+            "recall": 0.9816,
+            "f1": 0.9793,
+            "by_source": {
+              "breadth-cultural-mood": {
+                "tp": 213,
+                "fp": 5,
+                "fn": 4,
+                "precision": 0.9771,
+                "recall": 0.9816,
+                "f1": 0.9793
+              }
+            },
+            "macro_f1": 0.9793,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        }
+      },
+      "output_sha256": "a89d9546bc97648d29f618c74d3ea53c389cd79657afc0cca679035681973ca3"
+    },
+    "breadth-cultural-budgetbytes": {
+      "source": "https://www.budgetbytes.com/category/recipes/",
+      "site_family": "budgetbytes.com",
+      "sector": "recipes",
+      "layout": "themed recipe cards",
+      "capture_sha256": "062704f0ecc42894480be0251fdf6a1e7beb2631af920a5e6f059556bc66a061",
+      "capture_bytes": 355292,
+      "scope_sha256": "d39f5cd007e5cefacae26d30ffcf2017f4722ccc5ca5035e0eb97b21474bc8e9",
+      "expected": 47,
+      "correct": 47,
+      "unwanted": 0,
+      "missing": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "auxiliary_scope_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "auxiliary_urls": 0,
+      "candidates": 110,
+      "candidate_unique_urls": 90,
+      "expected_in_candidates": 47,
+      "feature_seconds": 0.03571820000070147,
+      "median_seconds": 0.19529100001091138,
+      "dated_entries": 0,
+      "accepted_auxiliary": 0,
+      "missing_examples": [],
+      "unwanted_examples": [],
+      "models": {
+        "legacy": {
+          "model_id": "mlp-8-b223bb65103d",
+          "threshold": 0.85,
+          "median_seconds": 0.0018216999887954444,
+          "metrics": {
+            "tp": 46,
+            "fp": 0,
+            "fn": 1,
+            "precision": 1.0,
+            "recall": 0.9787,
+            "f1": 0.9892,
+            "by_source": {
+              "breadth-cultural-budgetbytes": {
+                "tp": 46,
+                "fp": 0,
+                "fn": 1,
+                "precision": 1.0,
+                "recall": 0.9787,
+                "f1": 0.9892
+              }
+            },
+            "macro_f1": 0.9892,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "context": {
+          "model_id": "context-tables-gated-5cd445174fb3",
+          "threshold": 0.25,
+          "median_seconds": 0.0025969000125769526,
+          "metrics": {
+            "tp": 33,
+            "fp": 4,
+            "fn": 14,
+            "precision": 0.8919,
+            "recall": 0.7021,
+            "f1": 0.7857,
+            "by_source": {
+              "breadth-cultural-budgetbytes": {
+                "tp": 33,
+                "fp": 4,
+                "fn": 14,
+                "precision": 0.8919,
+                "recall": 0.7021,
+                "f1": 0.7857
+              }
+            },
+            "macro_f1": 0.7857,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "deep_alone": {
+          "model_id": "cascade-research-numeric64x32-edbe8e927ac4",
+          "threshold": 0.9,
+          "median_seconds": 0.0032275999838020653,
+          "metrics": {
+            "tp": 39,
+            "fp": 0,
+            "fn": 8,
+            "precision": 1.0,
+            "recall": 0.8298,
+            "f1": 0.907,
+            "by_source": {
+              "breadth-cultural-budgetbytes": {
+                "tp": 39,
+                "fp": 0,
+                "fn": 8,
+                "precision": 1.0,
+                "recall": 0.8298,
+                "f1": 0.907
+              }
+            },
+            "macro_f1": 0.907,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "cascade": {
+          "model_id": "cascade-text-structure-v1-067e036ceaaa",
+          "threshold": 0.5,
+          "median_seconds": 0.0027193999849259853,
+          "metrics": {
+            "tp": 41,
+            "fp": 4,
+            "fn": 6,
+            "precision": 0.9111,
+            "recall": 0.8723,
+            "f1": 0.8913,
+            "by_source": {
+              "breadth-cultural-budgetbytes": {
+                "tp": 41,
+                "fp": 4,
+                "fn": 6,
+                "precision": 0.9111,
+                "recall": 0.8723,
+                "f1": 0.8913
+              }
+            },
+            "macro_f1": 0.8913,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        }
+      },
+      "output_sha256": "915279dd5566e6056e0c055d54e66077e816235a3278d3e1c651168a4cb847dd"
+    },
+    "breadth-cultural-openlibrary": {
+      "source": "https://openlibrary.org/trending/daily",
+      "site_family": "openlibrary.org",
+      "sector": "book catalog",
+      "layout": "trending books",
+      "capture_sha256": "c96c45f2a0e6b7855ed8f8cc3dba6adc9c136c5a018f44a7efaf4af614b62844",
+      "capture_bytes": 201529,
+      "scope_sha256": "33c8ac9b4fa9d56d0764c8736c1e4329f01faf3aac65b8a603889217fa4c50eb",
+      "expected": 20,
+      "correct": 20,
+      "unwanted": 2,
+      "missing": 0,
+      "precision": 0.9091,
+      "recall": 1.0,
+      "f1": 0.9524,
+      "auxiliary_scope_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "auxiliary_urls": 0,
+      "candidates": 285,
+      "candidate_unique_urls": 214,
+      "expected_in_candidates": 20,
+      "feature_seconds": 0.10427809998509474,
+      "median_seconds": 0.47721819998696446,
+      "dated_entries": 0,
+      "accepted_auxiliary": 0,
+      "missing_examples": [],
+      "unwanted_examples": [
+        "https://openlibrary.org/series/OL326110L/Harry_Potter",
+        "https://openlibrary.org/series/OL327005L/Twisted"
+      ],
+      "models": {
+        "legacy": {
+          "model_id": "mlp-8-b223bb65103d",
+          "threshold": 0.85,
+          "median_seconds": 0.004587700008414686,
+          "metrics": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 19,
+            "precision": 1.0,
+            "recall": 0.05,
+            "f1": 0.0952,
+            "by_source": {
+              "breadth-cultural-openlibrary": {
+                "tp": 1,
+                "fp": 0,
+                "fn": 19,
+                "precision": 1.0,
+                "recall": 0.05,
+                "f1": 0.0952
+              }
+            },
+            "macro_f1": 0.0952,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "context": {
+          "model_id": "context-tables-gated-5cd445174fb3",
+          "threshold": 0.25,
+          "median_seconds": 0.006372100004227832,
+          "metrics": {
+            "tp": 18,
+            "fp": 2,
+            "fn": 2,
+            "precision": 0.9,
+            "recall": 0.9,
+            "f1": 0.9,
+            "by_source": {
+              "breadth-cultural-openlibrary": {
+                "tp": 18,
+                "fp": 2,
+                "fn": 2,
+                "precision": 0.9,
+                "recall": 0.9,
+                "f1": 0.9
+              }
+            },
+            "macro_f1": 0.9,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "deep_alone": {
+          "model_id": "cascade-research-numeric64x32-edbe8e927ac4",
+          "threshold": 0.9,
+          "median_seconds": 0.007585300016216934,
+          "metrics": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 20,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "by_source": {
+              "breadth-cultural-openlibrary": {
+                "tp": 0,
+                "fp": 0,
+                "fn": 20,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0
+              }
+            },
+            "macro_f1": 0.0,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "cascade": {
+          "model_id": "cascade-text-structure-v1-067e036ceaaa",
+          "threshold": 0.5,
+          "median_seconds": 0.006344699999317527,
+          "metrics": {
+            "tp": 18,
+            "fp": 2,
+            "fn": 2,
+            "precision": 0.9,
+            "recall": 0.9,
+            "f1": 0.9,
+            "by_source": {
+              "breadth-cultural-openlibrary": {
+                "tp": 18,
+                "fp": 2,
+                "fn": 2,
+                "precision": 0.9,
+                "recall": 0.9,
+                "f1": 0.9
+              }
+            },
+            "macro_f1": 0.9,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        }
+      },
+      "output_sha256": "4407cdb8d3b433764931732b88a5a524ed06df5439072c93fb486290731a8eb3"
+    },
+    "breadth-cultural-nationaltrail": {
+      "source": "https://www.nationaltrail.co.uk/en_GB/trails/",
+      "site_family": "nationaltrail.co.uk",
+      "sector": "outdoor trails",
+      "layout": "trail directory",
+      "capture_sha256": "1bd61fd3f4d26589cc8c2e25494732284dea771c673c6bfcd73bd1c2cb75ce02",
+      "capture_bytes": 238668,
+      "scope_sha256": "0858dbce372639ad6bf7cbef209876b492f19b17520745addd6bb066f48eb6ec",
+      "expected": 16,
+      "correct": 16,
+      "unwanted": 0,
+      "missing": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "auxiliary_scope_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "auxiliary_urls": 0,
+      "candidates": 332,
+      "candidate_unique_urls": 229,
+      "expected_in_candidates": 16,
+      "feature_seconds": 0.12198349999380298,
+      "median_seconds": 0.3064734000072349,
+      "dated_entries": 0,
+      "accepted_auxiliary": 0,
+      "missing_examples": [],
+      "unwanted_examples": [],
+      "models": {
+        "legacy": {
+          "model_id": "mlp-8-b223bb65103d",
+          "threshold": 0.85,
+          "median_seconds": 0.005346000019926578,
+          "metrics": {
+            "tp": 16,
+            "fp": 36,
+            "fn": 0,
+            "precision": 0.3077,
+            "recall": 1.0,
+            "f1": 0.4706,
+            "by_source": {
+              "breadth-cultural-nationaltrail": {
+                "tp": 16,
+                "fp": 36,
+                "fn": 0,
+                "precision": 0.3077,
+                "recall": 1.0,
+                "f1": 0.4706
+              }
+            },
+            "macro_f1": 0.4706,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "context": {
+          "model_id": "context-tables-gated-5cd445174fb3",
+          "threshold": 0.25,
+          "median_seconds": 0.007321599987335503,
+          "metrics": {
+            "tp": 16,
+            "fp": 128,
+            "fn": 0,
+            "precision": 0.1111,
+            "recall": 1.0,
+            "f1": 0.2,
+            "by_source": {
+              "breadth-cultural-nationaltrail": {
+                "tp": 16,
+                "fp": 128,
+                "fn": 0,
+                "precision": 0.1111,
+                "recall": 1.0,
+                "f1": 0.2
+              }
+            },
+            "macro_f1": 0.2,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "deep_alone": {
+          "model_id": "cascade-research-numeric64x32-edbe8e927ac4",
+          "threshold": 0.9,
+          "median_seconds": 0.009183700021822006,
+          "metrics": {
+            "tp": 16,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9412,
+            "recall": 1.0,
+            "f1": 0.9697,
+            "by_source": {
+              "breadth-cultural-nationaltrail": {
+                "tp": 16,
+                "fp": 1,
+                "fn": 0,
+                "precision": 0.9412,
+                "recall": 1.0,
+                "f1": 0.9697
+              }
+            },
+            "macro_f1": 0.9697,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        },
+        "cascade": {
+          "model_id": "cascade-text-structure-v1-067e036ceaaa",
+          "threshold": 0.5,
+          "median_seconds": 0.007425499992677942,
+          "metrics": {
+            "tp": 16,
+            "fp": 128,
+            "fn": 0,
+            "precision": 0.1111,
+            "recall": 1.0,
+            "f1": 0.2,
+            "by_source": {
+              "breadth-cultural-nationaltrail": {
+                "tp": 16,
+                "fp": 128,
+                "fn": 0,
+                "precision": 0.1111,
+                "recall": 1.0,
+                "f1": 0.2
+              }
+            },
+            "macro_f1": 0.2,
+            "negative_only_urls": 0,
+            "negative_only_fp_rate": 0.0
+          }
+        }
+      },
+      "output_sha256": "eed9db8c3a75b6edc8871400af58ba0f8af23f6ab78c4696c5539f845e461cac"
+    }
+  },
+  "models": {
+    "legacy": {
+      "model_id": "mlp-8-b223bb65103d",
+      "threshold": 0.85,
+      "metrics": {
+        "tp": 119,
+        "fp": 51,
+        "fn": 602,
+        "precision": 0.7,
+        "recall": 0.165,
+        "f1": 0.2671,
+        "by_source": {
+          "breadth-cultural-allrecipes": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 72,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-cultural-boardgamegeek": {
+            "tp": 0,
+            "fp": 5,
+            "fn": 100,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-cultural-budgetbytes": {
+            "tp": 46,
+            "fp": 0,
+            "fn": 1,
+            "precision": 1.0,
+            "recall": 0.9787,
+            "f1": 0.9892
+          },
+          "breadth-cultural-cleveland": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 28,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-cultural-kew": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 12,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-cultural-kingarthur": {
+            "tp": 0,
+            "fp": 6,
+            "fn": 19,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-cultural-louvre": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-cultural-moca": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "breadth-cultural-moma": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 23,
+            "precision": 1.0,
+            "recall": 0.1481,
+            "f1": 0.2581
+          },
+          "breadth-cultural-mood": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 215,
+            "precision": 1.0,
+            "recall": 0.0092,
+            "f1": 0.0183
+          },
+          "breadth-cultural-nationaltrail": {
+            "tp": 16,
+            "fp": 36,
+            "fn": 0,
+            "precision": 0.3077,
+            "recall": 1.0,
+            "f1": 0.4706
+          },
+          "breadth-cultural-nybg": {
+            "tp": 4,
+            "fp": 2,
+            "fn": 21,
+            "precision": 0.6667,
+            "recall": 0.16,
+            "f1": 0.2581
+          },
+          "breadth-cultural-openlibrary": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 19,
+            "precision": 1.0,
+            "recall": 0.05,
+            "f1": 0.0952
+          },
+          "breadth-cultural-puzzles": {
+            "tp": 40,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.9524,
+            "recall": 1.0,
+            "f1": 0.9756
+          },
+          "breadth-cultural-rhs": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-cultural-seriouseats": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 63,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-cultural-whitney": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 21,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "macro_f1": 0.2391,
+        "negative_only_urls": 0,
+        "negative_only_fp_rate": 0.0
+      },
+      "sum_source_median_seconds": 0.06186879993765615
+    },
+    "context": {
+      "model_id": "context-tables-gated-5cd445174fb3",
+      "threshold": 0.25,
+      "metrics": {
+        "tp": 587,
+        "fp": 218,
+        "fn": 134,
+        "precision": 0.7292,
+        "recall": 0.8141,
+        "f1": 0.7693,
+        "by_source": {
+          "breadth-cultural-allrecipes": {
+            "tp": 14,
+            "fp": 19,
+            "fn": 58,
+            "precision": 0.4242,
+            "recall": 0.1944,
+            "f1": 0.2667
+          },
+          "breadth-cultural-boardgamegeek": {
+            "tp": 72,
+            "fp": 5,
+            "fn": 28,
+            "precision": 0.9351,
+            "recall": 0.72,
+            "f1": 0.8136
+          },
+          "breadth-cultural-budgetbytes": {
+            "tp": 33,
+            "fp": 4,
+            "fn": 14,
+            "precision": 0.8919,
+            "recall": 0.7021,
+            "f1": 0.7857
+          },
+          "breadth-cultural-cleveland": {
+            "tp": 22,
+            "fp": 0,
+            "fn": 6,
+            "precision": 1.0,
+            "recall": 0.7857,
+            "f1": 0.88
+          },
+          "breadth-cultural-kew": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "breadth-cultural-kingarthur": {
+            "tp": 9,
+            "fp": 7,
+            "fn": 10,
+            "precision": 0.5625,
+            "recall": 0.4737,
+            "f1": 0.5143
+          },
+          "breadth-cultural-louvre": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "breadth-cultural-moca": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-cultural-moma": {
+            "tp": 27,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "breadth-cultural-mood": {
+            "tp": 213,
+            "fp": 5,
+            "fn": 4,
+            "precision": 0.9771,
+            "recall": 0.9816,
+            "f1": 0.9793
+          },
+          "breadth-cultural-nationaltrail": {
+            "tp": 16,
+            "fp": 128,
+            "fn": 0,
+            "precision": 0.1111,
+            "recall": 1.0,
+            "f1": 0.2
+          },
+          "breadth-cultural-nybg": {
+            "tp": 23,
+            "fp": 1,
+            "fn": 2,
+            "precision": 0.9583,
+            "recall": 0.92,
+            "f1": 0.9388
+          },
+          "breadth-cultural-openlibrary": {
+            "tp": 18,
+            "fp": 2,
+            "fn": 2,
+            "precision": 0.9,
+            "recall": 0.9,
+            "f1": 0.9
+          },
+          "breadth-cultural-puzzles": {
+            "tp": 39,
+            "fp": 0,
+            "fn": 1,
+            "precision": 1.0,
+            "recall": 0.975,
+            "f1": 0.9873
+          },
+          "breadth-cultural-rhs": {
+            "tp": 1,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.3333,
+            "recall": 1.0,
+            "f1": 0.5
+          },
+          "breadth-cultural-seriouseats": {
+            "tp": 60,
+            "fp": 44,
+            "fn": 3,
+            "precision": 0.5769,
+            "recall": 0.9524,
+            "f1": 0.7186
+          },
+          "breadth-cultural-whitney": {
+            "tp": 21,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9545,
+            "recall": 1.0,
+            "f1": 0.9767
+          }
+        },
+        "macro_f1": 0.733,
+        "negative_only_urls": 0,
+        "negative_only_fp_rate": 0.0
+      },
+      "sum_source_median_seconds": 0.08412990003125742
+    },
+    "deep_alone": {
+      "model_id": "cascade-research-numeric64x32-edbe8e927ac4",
+      "threshold": 0.9,
+      "metrics": {
+        "tp": 339,
+        "fp": 8,
+        "fn": 382,
+        "precision": 0.9769,
+        "recall": 0.4702,
+        "f1": 0.6348,
+        "by_source": {
+          "breadth-cultural-allrecipes": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 70,
+            "precision": 1.0,
+            "recall": 0.0278,
+            "f1": 0.0541
+          },
+          "breadth-cultural-boardgamegeek": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 100,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-cultural-budgetbytes": {
+            "tp": 39,
+            "fp": 0,
+            "fn": 8,
+            "precision": 1.0,
+            "recall": 0.8298,
+            "f1": 0.907
+          },
+          "breadth-cultural-cleveland": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 28,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-cultural-kew": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 12,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-cultural-kingarthur": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 15,
+            "precision": 1.0,
+            "recall": 0.2105,
+            "f1": 0.3478
+          },
+          "breadth-cultural-louvre": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 7,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-cultural-moca": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "breadth-cultural-moma": {
+            "tp": 24,
+            "fp": 0,
+            "fn": 3,
+            "precision": 1.0,
+            "recall": 0.8889,
+            "f1": 0.9412
+          },
+          "breadth-cultural-mood": {
+            "tp": 213,
+            "fp": 4,
+            "fn": 4,
+            "precision": 0.9816,
+            "recall": 0.9816,
+            "f1": 0.9816
+          },
+          "breadth-cultural-nationaltrail": {
+            "tp": 16,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9412,
+            "recall": 1.0,
+            "f1": 0.9697
+          },
+          "breadth-cultural-nybg": {
+            "tp": 5,
+            "fp": 2,
+            "fn": 20,
+            "precision": 0.7143,
+            "recall": 0.2,
+            "f1": 0.3125
+          },
+          "breadth-cultural-openlibrary": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 20,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-cultural-puzzles": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 40,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-cultural-rhs": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-cultural-seriouseats": {
+            "tp": 9,
+            "fp": 0,
+            "fn": 54,
+            "precision": 1.0,
+            "recall": 0.1429,
+            "f1": 0.25
+          },
+          "breadth-cultural-whitney": {
+            "tp": 21,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9545,
+            "recall": 1.0,
+            "f1": 0.9767
+          }
+        },
+        "macro_f1": 0.3965,
+        "negative_only_urls": 0,
+        "negative_only_fp_rate": 0.0
+      },
+      "sum_source_median_seconds": 0.10314869997091591
+    },
+    "cascade": {
+      "model_id": "cascade-text-structure-v1-067e036ceaaa",
+      "threshold": 0.5,
+      "metrics": {
+        "tp": 595,
+        "fp": 218,
+        "fn": 126,
+        "precision": 0.7319,
+        "recall": 0.8252,
+        "f1": 0.7757,
+        "by_source": {
+          "breadth-cultural-allrecipes": {
+            "tp": 14,
+            "fp": 19,
+            "fn": 58,
+            "precision": 0.4242,
+            "recall": 0.1944,
+            "f1": 0.2667
+          },
+          "breadth-cultural-boardgamegeek": {
+            "tp": 72,
+            "fp": 5,
+            "fn": 28,
+            "precision": 0.9351,
+            "recall": 0.72,
+            "f1": 0.8136
+          },
+          "breadth-cultural-budgetbytes": {
+            "tp": 41,
+            "fp": 4,
+            "fn": 6,
+            "precision": 0.9111,
+            "recall": 0.8723,
+            "f1": 0.8913
+          },
+          "breadth-cultural-cleveland": {
+            "tp": 22,
+            "fp": 0,
+            "fn": 6,
+            "precision": 1.0,
+            "recall": 0.7857,
+            "f1": 0.88
+          },
+          "breadth-cultural-kew": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "breadth-cultural-kingarthur": {
+            "tp": 9,
+            "fp": 7,
+            "fn": 10,
+            "precision": 0.5625,
+            "recall": 0.4737,
+            "f1": 0.5143
+          },
+          "breadth-cultural-louvre": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "breadth-cultural-moca": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-cultural-moma": {
+            "tp": 27,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "breadth-cultural-mood": {
+            "tp": 213,
+            "fp": 5,
+            "fn": 4,
+            "precision": 0.9771,
+            "recall": 0.9816,
+            "f1": 0.9793
+          },
+          "breadth-cultural-nationaltrail": {
+            "tp": 16,
+            "fp": 128,
+            "fn": 0,
+            "precision": 0.1111,
+            "recall": 1.0,
+            "f1": 0.2
+          },
+          "breadth-cultural-nybg": {
+            "tp": 23,
+            "fp": 1,
+            "fn": 2,
+            "precision": 0.9583,
+            "recall": 0.92,
+            "f1": 0.9388
+          },
+          "breadth-cultural-openlibrary": {
+            "tp": 18,
+            "fp": 2,
+            "fn": 2,
+            "precision": 0.9,
+            "recall": 0.9,
+            "f1": 0.9
+          },
+          "breadth-cultural-puzzles": {
+            "tp": 39,
+            "fp": 0,
+            "fn": 1,
+            "precision": 1.0,
+            "recall": 0.975,
+            "f1": 0.9873
+          },
+          "breadth-cultural-rhs": {
+            "tp": 1,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.3333,
+            "recall": 1.0,
+            "f1": 0.5
+          },
+          "breadth-cultural-seriouseats": {
+            "tp": 60,
+            "fp": 44,
+            "fn": 3,
+            "precision": 0.5769,
+            "recall": 0.9524,
+            "f1": 0.7186
+          },
+          "breadth-cultural-whitney": {
+            "tp": 21,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9545,
+            "recall": 1.0,
+            "f1": 0.9767
+          }
+        },
+        "macro_f1": 0.7392,
+        "negative_only_urls": 0,
+        "negative_only_fp_rate": 0.0
+      },
+      "sum_source_median_seconds": 0.0864447999629192
+    }
+  },
+  "labels": "Assistant-reviewed source scopes, not independent human gold. No model training or threshold tuning.",
+  "scope": "Single captured listings, not entire archives or a live discovery/API/browser benchmark.",
+  "summary": {
+    "pages": 17,
+    "expected": 721,
+    "correct": 592,
+    "unwanted": 42,
+    "missing": 129,
+    "precision": 0.9338,
+    "recall": 0.8211,
+    "micro_f1": 0.8738,
+    "source_macro_f1": 0.872,
+    "complete_pages": 13,
+    "clean_complete_pages": 8,
+    "zero_recall_pages": 1
+  },
+  "by_sector": {
+    "board games": {
+      "pages": 1,
+      "expected": 100,
+      "correct": 72,
+      "unwanted": 1,
+      "missing": 28,
+      "precision": 0.9863,
+      "recall": 0.72,
+      "micro_f1": 0.8324,
+      "source_macro_f1": 0.8324,
+      "complete_pages": 0,
+      "clean_complete_pages": 0,
+      "zero_recall_pages": 0
+    },
+    "book catalog": {
+      "pages": 1,
+      "expected": 20,
+      "correct": 20,
+      "unwanted": 2,
+      "missing": 0,
+      "precision": 0.9091,
+      "recall": 1.0,
+      "micro_f1": 0.9524,
+      "source_macro_f1": 0.9524,
+      "complete_pages": 1,
+      "clean_complete_pages": 0,
+      "zero_recall_pages": 0
+    },
+    "botanical science": {
+      "pages": 1,
+      "expected": 12,
+      "correct": 12,
+      "unwanted": 0,
+      "missing": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "micro_f1": 1.0,
+      "source_macro_f1": 1.0,
+      "complete_pages": 1,
+      "clean_complete_pages": 1,
+      "zero_recall_pages": 0
+    },
+    "craft patterns": {
+      "pages": 1,
+      "expected": 217,
+      "correct": 217,
+      "unwanted": 19,
+      "missing": 0,
+      "precision": 0.9195,
+      "recall": 1.0,
+      "micro_f1": 0.9581,
+      "source_macro_f1": 0.9581,
+      "complete_pages": 1,
+      "clean_complete_pages": 0,
+      "zero_recall_pages": 0
+    },
+    "garden events": {
+      "pages": 1,
+      "expected": 25,
+      "correct": 25,
+      "unwanted": 4,
+      "missing": 0,
+      "precision": 0.8621,
+      "recall": 1.0,
+      "micro_f1": 0.9259,
+      "source_macro_f1": 0.9259,
+      "complete_pages": 1,
+      "clean_complete_pages": 0,
+      "zero_recall_pages": 0
+    },
+    "gardening": {
+      "pages": 1,
+      "expected": 1,
+      "correct": 1,
+      "unwanted": 0,
+      "missing": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "micro_f1": 1.0,
+      "source_macro_f1": 1.0,
+      "complete_pages": 1,
+      "clean_complete_pages": 1,
+      "zero_recall_pages": 0
+    },
+    "museum exhibitions": {
+      "pages": 5,
+      "expected": 89,
+      "correct": 89,
+      "unwanted": 1,
+      "missing": 0,
+      "precision": 0.9889,
+      "recall": 1.0,
+      "micro_f1": 0.9944,
+      "source_macro_f1": 0.9953,
+      "complete_pages": 5,
+      "clean_complete_pages": 4,
+      "zero_recall_pages": 0
+    },
+    "outdoor trails": {
+      "pages": 1,
+      "expected": 16,
+      "correct": 16,
+      "unwanted": 0,
+      "missing": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "micro_f1": 1.0,
+      "source_macro_f1": 1.0,
+      "complete_pages": 1,
+      "clean_complete_pages": 1,
+      "zero_recall_pages": 0
+    },
+    "puzzles": {
+      "pages": 1,
+      "expected": 40,
+      "correct": 0,
+      "unwanted": 3,
+      "missing": 40,
+      "precision": 0.0,
+      "recall": 0.0,
+      "micro_f1": 0.0,
+      "source_macro_f1": 0.0,
+      "complete_pages": 0,
+      "clean_complete_pages": 0,
+      "zero_recall_pages": 1
+    },
+    "recipes": {
+      "pages": 4,
+      "expected": 201,
+      "correct": 140,
+      "unwanted": 12,
+      "missing": 61,
+      "precision": 0.9211,
+      "recall": 0.6965,
+      "micro_f1": 0.7932,
+      "source_macro_f1": 0.7946,
+      "complete_pages": 2,
+      "clean_complete_pages": 1,
+      "zero_recall_pages": 0
+    }
+  },
+  "feature_rows": 3730,
+  "memory": {
+    "process_peak_bytes": 93405184,
+    "process_final_rss_bytes": 92749824
+  },
+  "dataset_sha256": "7782fb767c34e477945f311d3670e00803bc66e4f792e694e95fb8c13060cbda"
+}

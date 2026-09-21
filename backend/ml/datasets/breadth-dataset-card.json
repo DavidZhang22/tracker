@@ -1,0 +1,36 @@
+{
+  "name": "website-breadth-2026-09-21",
+  "purpose": "Source-scoped evaluation of link classification and static HTML extraction beyond media",
+  "new_website_families": 51,
+  "total_evaluated_website_families": 113,
+  "new_rows": 16809,
+  "new_expected_urls": 4829,
+  "split": "test",
+  "features": "84 bounded numeric context features and token features from the existing context candidate builder",
+  "label_policy": "Explicit DOM-defined positive scopes, reviewed neutral auxiliary scopes, and other candidate URLs as source-scoped negatives. Source/URL dedup is used for metrics.",
+  "label_quality": "Assistant-reviewed weak labels. Positives frozen before predictions; auxiliary annotations for three technical sources refined independently after initial evaluation.",
+  "training": "No training or threshold tuning in this evaluation. Retire these sources from holdout status if used for subsequent development.",
+  "raw_captures": "Ignored local backend/data/breadth-{cultural,technical,public}/ directories. Full-page replay requires exact hash-matching snapshots.",
+  "privacy": "Public listing pages only; no account libraries, credentials, form submissions or private content.",
+  "report": "ml/reports/website-breadth.md",
+  "manifest_sha256": {
+    "breadth-cultural-sources.json": "86efd24978a6cfe7d4d17cb9381ccf6967ac2e314b08ba40a63047da90eaf24a",
+    "breadth-public-sources.json": "21ea21c45b68ab4507eae00f62f79b245cb1f0cfd743adb24644dc41820faa5c",
+    "breadth-technical-sources.json": "45f4b07d426a685c79fdb703f5de6d718d6ae404f0d75006cca29260e73b62d5"
+  },
+  "dataset_sha256": {
+    "breadth-cultural-dataset.jsonl": "7782fb767c34e477945f311d3670e00803bc66e4f792e694e95fb8c13060cbda",
+    "breadth-public-dataset.jsonl": "3651f04c6919474843046265fb7a76ebd780e9d53d88c235d5fe208ea9c29ec9",
+    "breadth-technical-dataset.jsonl": "7c7c0064d0d16fc04c19d06d3dba9158a1e8b320ec052a2e26463a5e6f0d6a37"
+  },
+  "limitations": [
+    "Counts include historical development/regression pages, not 100 unseen test domains.",
+    "One listing per new site, not complete archives or proof of support for every page on each site.",
+    "Labels are source-scoped weak annotations. Out-of-scope links can still be useful in a different tracker. No model training or threshold tuning was performed.",
+    "Auxiliary scopes for three technical pages were refined by an independent reviewer after initial evaluation; positive scopes were unchanged. The initial report is retained.",
+    "Model metrics are conditional on generated candidates and must not be compared directly to full parser extraction recall.",
+    "Timings are local Windows replays, some concurrent, not isolated production latency benchmarks. Process RSS includes all four models and accumulated feature rows.",
+    "Refusals, robots exclusions, JavaScript shells and unreviewed captures do not count as evaluated websites.",
+    "Historical parser results are retained with their original reports, not pooled into a current accuracy score."
+  ]
+}

@@ -1,0 +1,4 @@
+# Keep evaluation artifact hashes identical on Windows and Linux.
+backend/ml/datasets/breadth-* text eol=lf
+backend/ml/reports/breadth-* text eol=lf
+backend/ml/reports/website-breadth.* text eol=lf
