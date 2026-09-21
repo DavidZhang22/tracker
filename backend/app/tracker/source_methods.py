@@ -10,6 +10,7 @@ from .urls import DiscoveryError, canonical_url
 
 SourceMethod = Literal[
     "auto",
+    "arxiv",
     "sitemap",
     "wordpress_com",
     "wordpress",
@@ -44,6 +45,10 @@ def detect_source_method(url):
         parse_qs(p.query, keep_blank_values=True),
     )
     method = "auto"
+    from .arxiv_urls import is_source
+
+    if is_source(url):
+        return {"source_method": "arxiv", "note": ""}
     if host in {"enma.lol", "www.enma.lol"}:
         from .enma import series_slug
 

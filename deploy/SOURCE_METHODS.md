@@ -16,7 +16,7 @@ instances and self-hosted/custom-domain blogs can still select their API manuall
 
 The detected method is saved with the item and reused on refresh. Choosing a
 method manually (including Automatic), a saved non-Automatic default, or entering
-a CSS selector overrides detection. Explicit Automatic retains the existing page,
+a CSS selector overrides detection. Except for arXiv (which always uses metadata in Automatic mode), explicit Automatic retains the existing page,
 feed, model, and site-adapter behavior. API clients may send `detect_api: false`
 with `source_method: "auto"` to request that same behavior. `/api/source-method/detect`
 returns a URL-only suggestion; `/api/scans` independently resolves and persists it.
@@ -27,6 +27,7 @@ The preview shows exactly which entries will be saved.
 
 | Method | Source URL | Setup / scope |
 | --- | --- | --- |
+| arXiv API | Search, category, paper, or API URL | No key. Atom metadata, dated paper links, subject filters, bounded pagination, and daily caching. Some valid queries may be refused by arXiv. |
 | WordPress.com API | Site homepage, including supported custom domains | No key. Published posts and pages, with publication dates and stable IDs. External links inside posts are not listed. |
 | WordPress API (self-hosted) | Homepage or installation’s `/wp-json/` URL | No key for public posts/pages unless the owner restricts access. `/wp-json/` supports subdirectory installations. |
 | DEV.to API | `https://dev.to/username` | No key. Articles belonging to an author or organization. |
@@ -175,23 +176,16 @@ article listings. No individual article, video, or chapter body was requested.
 - [Sitemap protocol](https://www.sitemaps.org/protocol.html)
 
 
-## arXiv API access investigation (2026-09-20)
+## arXiv
 
-The official API returns Atom metadata; paper pages and PDFs are unnecessary for tracking. Existing feed parsing supports its abstract-page links and publication dates, but automatic search translation and arXiv offset pagination remain unenabled because the requested search could not be fetched reliably.
+arXiv searches automatically use `https://export.arxiv.org/api/query`. Supported inputs include simple searches, `/search/cs` and other supported subject scopes, direct API queries, paper abstract/PDF/HTML URLs, and recent category lists. Paper URLs request metadata only. RSS/Atom category feeds retain the feed reader. Existing Automatic arXiv items also use the API when refreshed; HTML selectors must be cleared.
 
-Six sequential HTTPS GETs from the deployed Azure host requested at most one result each. All used the identifying Trackify User-Agent and accepted Atom/XML. A diagnostic guard enforced a six-request ceiling and at least 3.2 seconds between requests; actual intervals exceeded 20 seconds. No browser impersonation, IP rotation, automatic retries, HTML searches, paper pages, or PDFs were used.
+Search conversion preserves each unquoted term, quoted phrases, supported fields (all, title, author, abstract, comments, journal reference, report number), Boolean operators, subject scope, pagination offset, and supported sorting. An empty website order uses API relevance. Announcement-date ordering maps to submission/update ordering with a visible note. Recent/new category URLs track the category by submission date, including older papers, with a scope note. Advanced searches and unsupported filters fail clearly rather than disappearing from the query. Website and API indexing/ranking can differ, so results are not promised to be identical.
 
-| Query | Sorting | Status | Response |
-| --- | --- | --- | --- |
-| `all:domain AND all:specific AND all:language` | submitted date, descending | 406 | Empty |
-| `all:electron` | default | 200 | 2,938-byte Atom feed |
-| `all:electron`, percent-encoded colon | default | 200 | 2,938-byte Atom feed |
-| `all:domain AND all:specific AND all:language` | default | 406 | Empty |
-| `all:electron` | submitted date, descending | 406 | Empty |
-| `all:"domain specific language"` | default | 406 | Empty |
+Requests use deterministic parameter order, literal colons, `%20` spaces, and encoded quotes. Canonical cache keys remain independent of this wire representation. The user-provided `all:"domain specific language"` request with 200 results succeeds from Azure in this format, while its equivalent reordered/re-encoded URL returned HTTP 406. The translated computer-science search `Hoffmann et al. 2022` still returns HTTP 406. These observations suggest URL-sensitive upstream/cache behavior, not a proven block on particular terms. Access is not guaranteed; the adapter never tries alternative searches or browser impersonation after a refusal.
 
-The 200 responses contain actual paper entries, include an intermediate cache hit, and carry Google Frontend and `via: 1.1 google` headers. Every 406 has `cache-control: private, no-store`, cache misses, and only Varnish hops in Via. This is consistent with a difference between cached and uncached API handling, but does not distinguish CDN filtering, origin access policy, or an upstream failure. It does not establish a blanket IP ban. Normal hostname requests fail too, so Trackify's DNS pinning is not required to reproduce the issue. Percent-encoding the query colon succeeds for the sample and is not the cause. Neither dropping sorting nor changing to an exact phrase fixes the user's topic.
+The reader follows OpenSearch offsets, requesting at most 200 records per page and 25 pages per scan (also subject to the scan request budget and 4,999-link cap). It extracts publication dates, titles, authors, categories, abstracts, and stable unversioned abstract-page links. It never opens individual paper pages or downloads PDFs. Missing, duplicate, inconsistent, or refused later pages keep earlier records and report partial coverage with the API's total result count.
 
-No automatic API adapter was enabled: silently dropping filters or relying on one cached sample would not resolve the requested search. The next step is to provide arXiv support with the working/failing URLs, UTC timestamps, response headers, source IP, and client identity. Raw diagnostic details are retained locally under ignored `backend/data/arxiv-review/`; no support message was sent. A future integration needs strict search conversion, explicit OpenSearch pagination and partial-coverage reporting, one shared connection with at least three seconds between requests, and daily query reuse.
+Successful API responses are shared for 24 hours across users and refresh modes. A durable gate serializes arXiv API/RSS requests across workers sharing the cache database and waits at least 3.1 seconds after each request. HTTP refusals and Retry-After pause all arXiv hosts; there are no automatic retries. Multiple independently deployed servers would need a shared external limiter before using this integration at the same time.
 
 References: [API manual](https://info.arxiv.org/help/api/user-manual.html), [API access limits](https://info.arxiv.org/help/api/tou.html).

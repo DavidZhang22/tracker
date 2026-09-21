@@ -5,6 +5,10 @@ from .sitemaps import scan_sitemap
 
 
 async def scan_inventory(fetcher, source, method, max_pages, keywords=""):
+    if method == "arxiv":
+        from .arxiv import scan_arxiv
+
+        return await scan_arxiv(fetcher, source, max_pages)
     if method == "sitemap":
         return await scan_sitemap(fetcher, source, max_pages)
     return await scan_api(fetcher, source, method, max_pages, keywords)

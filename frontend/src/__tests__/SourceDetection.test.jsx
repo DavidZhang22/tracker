@@ -210,3 +210,20 @@ test("missing keys explain the fallback without an alert and failed detection do
     screen.getByRole("button", { name: "Add to library" }),
   ).toBeInTheDocument();
 });
+
+test("arXiv searches select the metadata API without making source requests", async () => {
+  post.mockResolvedValue({ source_method: "arxiv", note: "" });
+  show();
+  change(
+    /Source URL/,
+    "https://arxiv.org/search/cs?query=Hoffmann+et+al.+2022&searchtype=all",
+  );
+  await tick();
+  expect(screen.getByLabelText("Source method")).toHaveValue("arxiv");
+  expect(screen.getByText(/cached for one day/)).toBeInTheDocument();
+  expect(post).toHaveBeenCalledTimes(1);
+  expect(post).toHaveBeenLastCalledWith(
+    "/source-method/detect",
+    expect.anything(),
+  );
+});

@@ -206,6 +206,14 @@ class Discoverer:
                 "CSS selectors apply to Automatic scans. Clear the selector to use an API or sitemap."
             )
         url = canonical_url(url, preserve_slash=True)
+        from .arxiv_urls import is_source
+
+        if source_method == "auto" and is_source(url):
+            if selector:
+                raise DiscoveryError(
+                    "arXiv uses its metadata API. Clear the HTML selector to scan it."
+                )
+            source_method = "arxiv"
         cache = getattr(self.fetcher, "cache", None)
         token = DEEP_SCAN.set(deep)
         epoch = cache_epochs.set(

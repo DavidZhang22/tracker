@@ -1,4 +1,5 @@
 export const apiMethods = [
+  ["arxiv", "arXiv API"],
   ["wordpress_com", "WordPress.com API"],
   ["wordpress", "WordPress API (self-hosted)"],
   ["devto", "DEV.to API"],
@@ -13,6 +14,8 @@ export const apiMethods = [
 ];
 
 const hints = {
+  arxiv:
+    "Converts arXiv searches to its metadata API. Preserves supported fields and subject filters; results are cached for one day. Papers are not downloaded.",
   auto: "Uses pages, feeds, and site adapters, with a browser fallback for JavaScript listings.",
   sitemap:
     "Lists pages from the site’s sitemap. Titles come from URLs; dates indicate updates. Use “URL must contain” to narrow the list.",

@@ -491,6 +491,8 @@ async def test_mixed_public_private_dns_blocked():
 
 
 async def test_arxiv_atom_feed_uses_abstract_links_and_publication_dates_only():
+    from app.tracker.arxiv_urls import translate
+
     source = canonical_url(
         "https://export.arxiv.org/api/query?search_query=all:language&max_results=2"
     )
@@ -502,6 +504,7 @@ async def test_arxiv_atom_feed_uses_abstract_links_and_publication_dates_only():
       <link href="https://export.arxiv.org/api/query?search_query=all:language"
             rel="self" type="application/atom+xml"/>
       <opensearch:totalResults>1200</opensearch:totalResults>
+      <opensearch:startIndex>0</opensearch:startIndex>
       <entry>
         <id>http://arxiv.org/abs/2609.12345v1</id>
         <updated>2026-09-19T12:00:00Z</updated>
@@ -524,15 +527,15 @@ async def test_arxiv_atom_feed_uses_abstract_links_and_publication_dates_only():
               rel="related" type="application/pdf"/>
       </entry>
     </feed>"""
-    fetcher = FakeFetcher({source: feed})
-    result = await Discoverer(fetcher).scan(source)
-    assert result.methods == ["feed"]
+    request = translate(source).url()
+    fetcher = FakeFetcher({request: feed})
+    result = await Discoverer(fetcher, max_pages=1).scan(source)
+    assert result.methods == ["arXiv API"]
     assert [(entry.url, entry.published_at) for entry in result.entries] == [
-        ("http://arxiv.org/abs/2609.10001v2", "2026-09-16T10:30:00+00:00"),
-        ("http://arxiv.org/abs/2609.12345v1", "2026-09-17T09:00:00+00:00"),
+        ("https://arxiv.org/abs/2609.10001", "2026-09-16T10:30:00+00:00"),
+        ("https://arxiv.org/abs/2609.12345", "2026-09-17T09:00:00+00:00"),
     ]
     assert all(entry.date_kind == "published" for entry in result.entries)
-    assert fetcher.calls == [source]
-    assert any(
-        "full historical archive is not guaranteed" in w for w in result.warnings
-    )
+    assert fetcher.calls == [request]
+    assert result.coverage == "partial" and result.expected_count == 1200
+    assert any("request limit" in w for w in result.warnings)

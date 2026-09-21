@@ -191,3 +191,25 @@ def test_auto_api_uses_only_listing_request_with_publication_dates(tmp_path):
         assert data["entries"][0]["date_kind"] == "published"
         assert data["entries"][0]["published_at"].startswith("2026-09-14")
         assert len(fetcher.calls) == 1
+
+
+def test_arxiv_api_selection_is_saved_and_reused(tmp_path):
+    scanner = RecordingScanner()
+    source = "https://arxiv.org/search/cs?query=Hoffmann+et+al.+2022&searchtype=all"
+    with TestClient(create_app(tmp_path / "library.db", scanner)) as client:
+        assert (
+            client.post("/api/source-method/detect", json={"url": source}).json()[
+                "source_method"
+            ]
+            == "arxiv"
+        )
+        preview = client.post("/api/scans", json={"url": source}).json()
+        assert preview["source_method"] == "arxiv"
+        item = client.post("/api/items", json={"scan_id": preview["scan_id"]}).json()
+        assert item["source_method"] == "arxiv"
+        for suffix in ("", "?deep=true"):
+            assert (
+                client.post(f"/api/items/{item['id']}/refresh{suffix}").status_code
+                == 200
+            )
+        assert scanner.calls == ["arxiv"] * 3

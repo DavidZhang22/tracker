@@ -4,7 +4,7 @@ import ipaddress
 import re
 import socket
 import time
-from contextlib import contextmanager
+from contextlib import asynccontextmanager, contextmanager
 from contextvars import ContextVar
 from dataclasses import dataclass
 from email.utils import parsedate_to_datetime
@@ -12,6 +12,10 @@ from urllib.parse import parse_qsl, urlencode, urljoin, urlsplit, urlunsplit
 
 import httpx
 
+from .arxiv_urls import HOSTS as ARXIV_HOSTS
+from .arxiv_urls import is_api as arxiv_api
+from .arxiv_urls import paper_id as arxiv_paper_id
+from .arxiv_urls import request_url as arxiv_request_url
 from .cache import FetchCache
 from .documents import MAX_RESPONSE, Document
 from .errors import DiscoveryError
@@ -102,6 +106,8 @@ def content_key(url):
     # cached scans made by older parsers.
     url = canonical_url(url)
     p = urlsplit(url)
+    if p.hostname in ARXIV_HOSTS and (identity := arxiv_paper_id(url)):
+        return "arxiv:" + identity
     if p.hostname in {"asurascans.com", "www.asurascans.com"}:
         match = re.fullmatch(
             r"/comics/([a-z0-9]+(?:-[a-z0-9]+)*)-[0-9a-f]{8}/chapter/(\d+(?:\.\d+)?)",
@@ -274,10 +280,36 @@ class SafeFetcher:
         )
         return response_key(key), key
 
+    def _response_ttl(self, url):
+        return max(self.ttl, 86400) if arxiv_api(url) else self.ttl
+
+    @asynccontextmanager
+    async def _polite_gate(self, host):
+        if host not in ARXIV_HOSTS | {"rss.arxiv.org"}:
+            yield
+            return
+        # Shared durable lease covers API and RSS across accounts and workers.
+        while True:
+            async with SharedWork(self.cache.coordinator, "fetch:arxiv-rate") as gate:
+                if gate.state[0] == "owner":
+                    gate.seconds = 3.1
+                    yield
+                    return
+                delay = max(0.01, gate.state[1] - time.time())
+            await asyncio.sleep(delay)
+
     def _fresh(self, cached, body):
         if (
             not cached
-            or min(cached.get("expires", 0), cached["checked"] + self.ttl)
+            or min(
+                cached.get("expires", 0),
+                cached["checked"]
+                + (
+                    self.ttl
+                    if cached.get("error")
+                    else self._response_ttl(cached.get("final", ""))
+                ),
+            )
             <= time.time()
         ):
             return None
@@ -314,6 +346,7 @@ class SafeFetcher:
                     return hit
                 work.require_owner()
                 attempted = [False]
+                succeeded = False
                 try:
                     async with asyncio.timeout(60):
                         target, body, redirect_ttl = await self._request(
@@ -327,6 +360,7 @@ class SafeFetcher:
                         )
                         url = target
                     else:
+                        succeeded = True
                         return target, body
                 except TimeoutError as exc:
                     work.error = "The source request timed out. Retry later."
@@ -335,12 +369,17 @@ class SafeFetcher:
                     work.error = str(exc)
                     raise
                 finally:
-                    work.seconds = self.ttl if attempted[0] else 0
+                    work.seconds = (
+                        (self._response_ttl(url) if succeeded else self.ttl)
+                        if attempted[0]
+                        else 0
+                    )
         raise DiscoveryError("The source redirected too many times.")
 
     async def _request(self, url, cache_key, cached, body, secret_query, attempted):
         budget = request_budget.get()
-        p = urlsplit(url)
+        p = urlsplit(arxiv_request_url(url))
+        ttl = self._response_ttl(url)
         addresses = await public_addresses(p.hostname)
         ip = addresses[0]
         netloc = f"[{ip}]" if ":" in ip else ip
@@ -348,9 +387,22 @@ class SafeFetcher:
         if secret_query:
             target += ("&" if p.query else "?") + urlencode(secret_query)
         slot = hash(p.hostname) % 64
-        async with self.network_locks[slot]:
+        async with self._polite_gate(p.hostname), self.network_locks[slot]:
             # A request ahead of this one may have asked us to pause.
-            backoff = await run_blocking(self.cache.get, "backoff:" + p.hostname)
+            backoff_key = "backoff:" + (
+                "arxiv" if p.hostname in ARXIV_HOSTS | {"rss.arxiv.org"} else p.hostname
+            )
+
+            def cooldown():
+                keys = [backoff_key]
+                if backoff_key == "backoff:arxiv":
+                    keys.extend(
+                        "backoff:" + host for host in ARXIV_HOSTS | {"rss.arxiv.org"}
+                    )
+                values = [value for key in keys if (value := self.cache.get(key))]
+                return max(values, key=lambda value: value["expires"], default=None)
+
+            backoff = await run_blocking(cooldown)
             if backoff and backoff["expires"] > time.time():
                 raise DiscoveryError(
                     "This source requested a pause. Retry after "
@@ -396,7 +448,7 @@ class SafeFetcher:
                             if budget:
                                 budget.take_bytes(body.text_size)
                             cached.update(
-                                checked=time.time(), expires=time.time() + self.ttl
+                                checked=time.time(), expires=time.time() + ttl
                             )
                             await run_blocking(self.cache.put, cache_key, cached)
                             return cached["final"], body, 0
@@ -438,7 +490,7 @@ class SafeFetcher:
                                 pass
                             await run_blocking(
                                 self.cache.put,
-                                "backoff:" + p.hostname,
+                                backoff_key,
                                 {"expires": time.time() + min(delay, 86400)},
                             )
                             await run_blocking(
@@ -514,7 +566,7 @@ class SafeFetcher:
                                         "modified": response.headers.get(
                                             "last-modified"
                                         ),
-                                        "expires": time.time() + self.ttl,
+                                        "expires": time.time() + ttl,
                                     },
                                 )
 
