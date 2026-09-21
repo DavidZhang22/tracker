@@ -1,5 +1,7 @@
 """Bounded Atom metadata discovery through arXiv's public API."""
 
+from datetime import datetime
+
 from defusedxml import ElementTree as ET
 from defusedxml.common import DefusedXmlException
 
@@ -138,6 +140,27 @@ async def scan_arxiv(fetcher, source, max_pages):
         result.coverage = "partial"
         result.warnings.append(
             "Duplicate or changing arXiv results prevented complete coverage."
+        )
+    if query.date_bounds:
+        lower, upper = query.date_bounds
+        result.unfiltered_count = len(result.entries)
+        if any(
+            not entry.published_at or entry.date_kind != "published"
+            for entry in result.entries
+        ):
+            result.coverage = "partial"
+            result.warnings.append(
+                "Papers without an original submission date were excluded from the date-filtered preview."
+            )
+        result.entries = [
+            entry
+            for entry in result.entries
+            if entry.published_at
+            and entry.date_kind == "published"
+            and lower <= datetime.fromisoformat(entry.published_at) < upper
+        ]
+        result.expected_count = (
+            len(result.entries) if result.coverage == "complete" else None
         )
     result.warnings = list(dict.fromkeys(result.warnings))
     return result

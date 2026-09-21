@@ -227,3 +227,54 @@ test("arXiv searches select the metadata API without making source requests", as
     expect.anything(),
   );
 });
+
+test("advanced API previews explain skipped filters without blocking saving", async () => {
+  const url =
+    "https://arxiv.org/search/advanced?terms-0-term=Options+Pricing&terms-0-field=title&date-date_type=announced_date_first";
+  const warning =
+    "Skipped date filter: first-announced dates are not available through the arXiv API.";
+  let scans = 0;
+  post.mockImplementation(async (path) =>
+    path === "/scans"
+      ? {
+          ...preview,
+          source_method: "arxiv",
+          scan_id: `advanced-${++scans}`,
+          title: "Options Pricing",
+          url,
+          warnings: [warning],
+          entries: [
+            {
+              title: "Option pricing with neural networks",
+              url: "https://arxiv.org/abs/2609.00001",
+            },
+          ],
+        }
+      : { source_method: "arxiv", note: "" },
+  );
+  show();
+  change(/Source URL/, url);
+  await tick();
+  expect(screen.getByLabelText("Source method")).toHaveValue("arxiv");
+  expect(
+    screen.getByText(
+      /Unsupported filters are omitted and listed in the preview/,
+    ),
+  ).toBeInTheDocument();
+  await scan();
+  const message = screen.getByText(warning);
+  expect(message.closest('[role="status"]')).toBeInTheDocument();
+  expect(message.closest(".scan-results")).toContainElement(
+    screen.getByRole("link", { name: /Option pricing with neural networks/ }),
+  );
+  expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Add to library" })).toBeEnabled();
+  fireEvent.click(screen.getByRole("button", { name: "Dismiss message" }));
+  expect(screen.queryByText(warning)).not.toBeInTheDocument();
+  await scan();
+  expect(screen.getByText(warning)).toBeInTheDocument();
+  expect(post).toHaveBeenLastCalledWith(
+    "/scans",
+    expect.objectContaining({ url, detect_api: true }),
+  );
+});

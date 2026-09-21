@@ -158,12 +158,18 @@ class Query:
     params: dict
     title: str
     notes: tuple = ()
+    date_bounds: tuple | None = None
 
     def url(self, start=None):
         values = dict(self.params)
         if start is not None:
             values["start"] = start
-        return request_url(API + "?" + urlencode(values))
+        target = request_url(API + "?" + urlencode(values))
+        if len(target) > 4096:
+            raise DiscoveryError(
+                "The translated API URL is too long. Use fewer search terms."
+            )
+        return target
 
 
 def translate(url):
@@ -186,13 +192,18 @@ def translate(url):
         raise DiscoveryError("Remove repeated parameters from the arXiv URL.")
     path = p.path.rstrip("/")
     if is_api(url):
-        if params.keys() - API_KEYS:
-            raise DiscoveryError("The arXiv API URL has unsupported parameters.")
+        from .search_query import Omissions
+
+        omissions = Omissions("arXiv API")
+        for key in sorted(params.keys() - API_KEYS):
+            if params[key]:
+                omissions.add(key, "this API parameter is unavailable")
+            params.pop(key)
         search, ids = params.get("search_query", ""), params.get("id_list", "")
         if (
             not search
             and not ids
-            or len(search) > 1800
+            or len(search) > 3500
             or re.search(r"[\x00-\x1f\x7f]", search)
         ):
             raise DiscoveryError("Use an arXiv API search_query or id_list.")
@@ -205,13 +216,20 @@ def translate(url):
             "relevance",
             "submittedDate",
             "lastUpdatedDate",
-        } or params.get("sortOrder", "descending") not in {"ascending", "descending"}:
-            raise DiscoveryError("Choose a supported arXiv sort order.")
+        }:
+            omissions.add(
+                "Sort order", "the API uses relevance because this sort is unavailable"
+            )
+            params.pop("sortBy", None)
+            params.pop("sortOrder", None)
+        elif params.get("sortOrder", "descending") not in {"ascending", "descending"}:
+            omissions.add("Sort direction", "the API uses descending order")
+            params.pop("sortOrder", None)
         params["start"] = integer(params, "start", 0, 29999)
         params["max_results"] = min(
             200, max(1, integer(params, "max_results", 200, 30000))
         )
-        return Query(params, "arXiv: " + (search or ids)[:180])
+        return Query(params, "arXiv: " + (search or ids)[:180], tuple(omissions.notes))
     if paper_id(url):
         if params.keys() - {"download"}:
             raise DiscoveryError("The arXiv paper URL has unsupported parameters.")
@@ -220,59 +238,11 @@ def translate(url):
             {"id_list": value, "start": 0, "max_results": 200}, "arXiv: " + value
         )
     match = re.fullmatch(r"/search(?:/([^/]+))?", path)
-    if match and match[1] != "advanced":
-        if params.keys() - {
-            "query",
-            "searchtype",
-            "abstracts",
-            "order",
-            "size",
-            "start",
-        }:
-            raise DiscoveryError(
-                "This arXiv search has unsupported filters. Use an API search URL to preserve them."
-            )
-        field = FIELDS.get(params.get("searchtype", "all"))
-        if not field:
-            raise DiscoveryError(
-                "This arXiv search field has no supported API equivalent. Use an API search URL."
-            )
-        text = params.get("query", "")
-        search = expression(text, field)
-        if match[1]:
-            search = "(" + search + ") AND " + category(match[1])
-        values = {
-            "search_query": search,
-            "start": integer(params, "start", 0, 29999),
-            "max_results": min(200, max(1, integer(params, "size", 200, 30000))),
-        }
-        order = params.get("order", "")
-        notes = ()
-        if order and order != "relevance":
-            key = order.lstrip("-+")
-            sort = {
-                "submitted_date": "submittedDate",
-                "announced_date_first": "submittedDate",
-                "announced_date_last": "lastUpdatedDate",
-                "last_updated_date": "lastUpdatedDate",
-            }.get(key)
-            if not sort:
-                raise DiscoveryError(
-                    "This arXiv sort order is unsupported. Use an API search URL."
-                )
-            values.update(
-                sortBy=sort,
-                sortOrder="descending" if order.startswith("-") else "ascending",
-            )
-            if key.startswith("announced_"):
-                notes = (
-                    "The API sorts by submission or update date; website announcement dates may differ.",
-                )
-        return Query(
-            values,
-            "arXiv: " + text[:150] + (" (" + match[1] + ")" if match[1] else ""),
-            notes,
-        )
+    if match:
+        from .arxiv_search import compile_form
+
+        advanced = match[1] == "advanced"
+        return Query(*compile_form(params, None if advanced else match[1], advanced))
     match = re.fullmatch(r"/list/([^/]+)/(recent|new)", path)
     if match and params.keys() <= {"skip", "show"}:
         return Query(
@@ -288,6 +258,4 @@ def translate(url):
                 "Tracking this subject by submission date, including older papers; announcement-only sections are not reproduced.",
             ),
         )
-    raise DiscoveryError(
-        "Use an arXiv search, recent category, paper, or API URL. Advanced searches need an equivalent API query; filters are never silently removed."
-    )
+    raise DiscoveryError("Use an arXiv search, recent category, paper, or API URL.")

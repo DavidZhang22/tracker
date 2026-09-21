@@ -268,7 +268,11 @@ class Discoverer:
                         *(
                             parser_version()
                             if source_method == "auto"
-                            else ["inventory-v1"]
+                            else [
+                                "arxiv-inventory-v2"
+                                if source_method == "arxiv"
+                                else "inventory-v1"
+                            ]
                         ),
                     ]
                 ).encode()

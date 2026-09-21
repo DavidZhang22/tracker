@@ -99,7 +99,7 @@ def test_fields_boolean_operators_and_sort_are_preserved(field, prefix):
         query.params["search_query"]
         == f'{prefix}:"a b" OR ({prefix}:c ANDNOT {prefix}:d)'
     )
-    assert query.params["sortBy"] == "submittedDate"
+    assert query.params["sortBy"] == "lastUpdatedDate"
     assert query.params["sortOrder"] == "descending"
     assert query.params["start"] == 50
 
@@ -109,14 +109,10 @@ def test_fields_boolean_operators_and_sort_are_preserved(field, prefix):
     [
         "https://arxiv.org/search/?query=a&query=b",
         "https://arxiv.org/search/?query=a&searchtype=doi",
-        "https://arxiv.org/search/?query=a&date=2022",
         "https://arxiv.org/search/?query=%22bad",
         "https://arxiv.org/search/?query=(a",
         "https://arxiv.org/search/?query=a+OR",
-        "https://arxiv.org/search/advanced?terms-0-term=a",
-        "https://arxiv.org/search/?query=a&order=unknown",
         "https://arxiv.org/search/?query=a&start=-5",
-        "https://export.arxiv.org/api/query?search_query=all:x&sortBy=bad",
         "https://export.arxiv.org/api/query?id_list=bad",
         "https://arxiv.org.evil.example/search/?query=a",
         "https://name@arxiv.org/search/?query=a",
@@ -329,3 +325,24 @@ async def test_daily_cache_eviction_does_not_trigger_early_refetch(monkeypatch):
     with pytest.raises(DiscoveryError, match="checked recently"):
         await SafeFetcher(cache, interval=0).get(EXACT)
     assert len(calls) == 1
+
+
+@pytest.mark.parametrize(
+    "suffix",
+    [
+        "terms-0-term=alpha&terms-00-term=beta",
+        "terms-0-term=alpha&terms-0-field=title&terms-00-field=author",
+    ],
+)
+def test_numeric_row_aliases_cannot_overwrite_filters(suffix):
+    with pytest.raises(DiscoveryError, match="repeated fields"):
+        translate("https://arxiv.org/search/advanced?" + suffix)
+
+
+def test_invalid_subject_selection_is_disclosed():
+    query = translate(
+        "https://arxiv.org/search/advanced?terms-0-term=alpha&classification-physics=y&classification-physics_archives=cs&classification-computer_science=maybe"
+    )
+    assert query.params["search_query"] == "all:alpha"
+    assert any("Physics" in note for note in query.notes)
+    assert any("computer science" in note for note in query.notes)
