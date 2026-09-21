@@ -9,7 +9,10 @@ Defaults are newest-to-oldest links, automatic link ordering, recently added
 items, read-on-open enabled for new items, and lightweight refresh. Changing the
 read-on-open default affects existing items only when the user selects the
 explicit apply option; Trash is excluded and reading progress is untouched.
-Individual item overrides and detection filters are editable under Item settings.
+Individual titles, descriptions, media types, reading behavior, and detection filters
+are editable in the item page’s **Item settings** popup. Saving updates the item
+in place without reloading its links. Manual titles survive refreshes. Old
+`/settings?item=…` links redirect to that item’s editor.
 Account/password controls are also reachable from Settings. `/account` remains
 available for existing bookmarks.
 

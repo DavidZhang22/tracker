@@ -19,6 +19,7 @@ import {
 import { Icon, TypeIcon, IconButton } from "../Components/Icons";
 import { Notice } from "../Components/Notice";
 import Description from "../Components/Description";
+import ItemSettingsDialog from "../Components/ItemSettingsDialog";
 import { patch, post, checked } from "../api";
 import { linkSortOptions, usePreferences } from "../Contexts/Preferences";
 import { useStartupData } from "../Contexts/StartupData";
@@ -44,6 +45,19 @@ function ItemDetail({ id }) {
   const location = useLocation();
   const lastLanding = useRef(null);
   const [params, setParams] = useSearchParams();
+  const [focusDescription, setFocusDescription] = useState(false);
+  const showSettings = (open, description = false) => {
+    setFocusDescription(description);
+    setParams(
+      (previous) => {
+        const next = new URLSearchParams(previous);
+        if (open) next.set("settings", "1");
+        else next.delete("settings");
+        return next;
+      },
+      { replace: true },
+    );
+  };
   const setParamsRef = useRef(setParams);
   setParamsRef.current = setParams;
   const filters = [
@@ -413,11 +427,20 @@ function ItemDetail({ id }) {
           <span>Read of {item.total_count - item.ignored_count}</span>
         </button>
       </div>
-      <Description item={item} />
+      <Description
+        item={item}
+        onEdit={() => showSettings(true, true)}
+        disabled={busy}
+      />
       <div className="detail-controls">
-        <Link className="text-button" to={`/settings?item=${id}#item-settings`}>
+        <button
+          className="text-button"
+          onClick={() => showSettings(true)}
+          disabled={busy || item.deleted}
+          aria-haspopup="dialog"
+        >
           Item settings
-        </Link>
+        </button>
         <div className="actions">
           {item.new_count > 0 && (
             <button
@@ -718,6 +741,19 @@ function ItemDetail({ id }) {
           date.
         </p>
       </details>
+      {params.get("settings") === "1" && !item.deleted && (
+        <ItemSettingsDialog
+          key={item.id}
+          item={item}
+          focusDescription={focusDescription}
+          onClose={() => showSettings(false)}
+          onSaved={(saved) => {
+            setItem(saved);
+            setMessage("Item settings saved.");
+            showSettings(false);
+          }}
+        />
+      )}
     </>
   );
 }

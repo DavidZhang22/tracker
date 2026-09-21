@@ -178,3 +178,18 @@ def test_invalid_direct_override_rolls_back_and_private_tags_are_not_writable(tm
     with pytest.raises(ValueError):
         store.update("items", item["id"], {"search_tags": json.dumps(["injected"])})
     assert store.item(item["id"])["kind_override"] == ""
+
+
+def test_manual_title_survives_refresh_and_restart_without_changing_progress(client):
+    client.fake.result = manga()
+    item = add(client, mark_read=True)
+    iid = item["id"]
+    renamed = client.patch(f"/api/items/{iid}", json={"title": "My manga reading list"})
+    assert renamed.status_code == 200
+    assert renamed.json()["title"] == "My manga reading list"
+    assert renamed.json()["read_count"] == item["read_count"]
+    client.app.state.store.merge(iid, manga().to_dict())
+    reopened = Store(client.app.state.store.path)
+    assert reopened.item(iid)["title"] == "My manga reading list"
+    assert reopened.item(iid)["read_count"] == item["read_count"]
+    assert reopened.item(iid)["url"] == item["url"]

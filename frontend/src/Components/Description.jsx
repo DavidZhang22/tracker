@@ -1,18 +1,24 @@
-import { Link } from "react-router-dom";
-
-export default function Description({ item, preview = false }) {
+export default function Description({
+  item,
+  preview = false,
+  onEdit,
+  disabled = false,
+}) {
   if (preview && !item.description && !item.description_suppressed) return null;
   return (
     <section className="item-description" aria-label="Description">
       <div className="description-heading">
         <h2>Description</h2>
-        {!preview && !item.deleted && (
-          <Link
+        {!preview && !item.deleted && onEdit && (
+          <button
             className="text-button"
-            to={`/settings?item=${item.id}#item-settings`}
+            type="button"
+            onClick={onEdit}
+            disabled={disabled}
+            aria-haspopup="dialog"
           >
             Edit
-          </Link>
+          </button>
         )}
       </div>
       {item.description ? (

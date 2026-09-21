@@ -130,19 +130,22 @@ test("malformed search responses settle on local matches instead of leaving sele
   expect(screen.getByRole("status")).toHaveAttribute("aria-busy", "false");
 });
 
-test("descriptions are plain text with an accessible edit link", () => {
+test("descriptions are plain text with an accessible edit action", () => {
+  const edit = vi.fn();
   const text = '<img src=x onerror="alert(1)"> A source description.';
   const view = render(
     <MemoryRouter>
-      <Description item={{ ...items[0], description: text }} />
+      <Description item={{ ...items[0], description: text }} onEdit={edit} />
     </MemoryRouter>,
   );
   expect(screen.getByText(text)).toBeVisible();
   expect(view.container.querySelector("img")).toBeNull();
-  expect(screen.getByRole("link", { name: "Edit" })).toHaveAttribute(
-    "href",
-    "/settings?item=a#item-settings",
+  expect(screen.getByRole("button", { name: "Edit" })).toHaveAttribute(
+    "aria-haspopup",
+    "dialog",
   );
+  screen.getByRole("button", { name: "Edit" }).click();
+  expect(edit).toHaveBeenCalledOnce();
 });
 
 test("normalized equivalent queries and reading changes reuse one semantic request", async () => {

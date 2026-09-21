@@ -1,6 +1,6 @@
 # API and sitemap sources
 
-Choose **Source method** on Add item, or under Settings → Item settings. Settings
+Choose **Source method** on Add item, or in the item page’s **Item settings** popup. Settings
 also contains **Default source method** for new items. New items with the Automatic
 default select a supported API from their URL. Existing items keep their saved
 method. Changing an item’s method keeps its saved links and
@@ -109,7 +109,7 @@ credential redaction, and redirect safety.
 
 Automatic uses the browser worker when the initial scan has no content links or
 detects a load-more control. Browser mode can also be selected explicitly in Add
-item or Settings → Item settings. Known APIs take precedence; existing Automatic
+item or the item page’s **Item settings** popup. Known APIs take precedence; existing Automatic
 Steam items also use the news API on their next refresh.
 
 Rendered links pass through the existing link and context classifiers, including

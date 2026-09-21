@@ -6,7 +6,7 @@ import {
   screen,
   waitFor,
 } from "@testing-library/react";
-import { Link, MemoryRouter, Route, Routes } from "react-router-dom";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { api, patch, post } from "../api";
 import {
   defaults,
@@ -16,6 +16,7 @@ import {
 import SettingsPage from "../Pages/SettingsPage";
 import AddPage from "../Pages/AddPage";
 import ItemPage from "../Pages/ItemPage";
+import ItemSettingsDialog from "../Components/ItemSettingsDialog";
 import { RefreshControl } from "../Components/RowTools";
 
 vi.mock("../api", () => ({
@@ -43,6 +44,17 @@ const item = {
   url: "https://example.org/series",
 };
 let saved;
+beforeAll(() => {
+  vi.stubGlobal(
+    "IntersectionObserver",
+    class {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    },
+  );
+});
+afterAll(() => vi.unstubAllGlobals());
 beforeEach(() => {
   vi.resetAllMocks();
   saved = { ...defaults };
@@ -84,8 +96,8 @@ function settings(path = "/settings") {
   );
 }
 
-test("saved order and reading defaults survive remount; item settings link back to the chosen item", async () => {
-  const view = settings("/settings?item=one");
+test("general settings retain account defaults without loading item settings", async () => {
+  const view = settings();
   expect(await screen.findByLabelText("Default link order")).toHaveValue(
     "desc",
   );
@@ -104,12 +116,20 @@ test("saved order and reading defaults survive remount; item settings link back 
     apply_auto_read: false,
   });
   view.unmount();
-  settings("/settings?item=one");
+  const restored = settings();
   expect(await screen.findByLabelText("Default link order")).toHaveValue("asc");
   expect(
     screen.getByLabelText("Mark links as read when opened in new items"),
   ).not.toBeChecked();
-  await click(await screen.findByRole("link", { name: "Back to item" }));
+  expect(screen.queryByText("Choose an item")).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole("heading", { name: "Item settings" }),
+  ).not.toBeInTheDocument();
+  expect(api.mock.calls.some(([path]) => path.startsWith("/items"))).toBe(
+    false,
+  );
+  restored.unmount();
+  settings("/items/one");
   await waitFor(() =>
     expect(
       api.mock.calls.some(
@@ -120,7 +140,7 @@ test("saved order and reading defaults survive remount; item settings link back 
   );
 });
 
-test("per-item read-on-open and detection settings are saved in one place", async () => {
+test("legacy item settings URLs open the editor on the item page", async () => {
   settings("/settings?item=one");
   await click(
     await screen.findByLabelText("Mark as read when opened for this item"),
@@ -129,9 +149,8 @@ test("per-item read-on-open and detection settings are saved in one place", asyn
   await click(screen.getByText("Advanced content detection"));
   change("Content selector", "article a");
   change("URL must contain", "/chapter/");
-  await click(screen.getByRole("button", { name: "Save item settings" }));
+  await click(screen.getByRole("button", { name: "Save changes" }));
   expect(patch).toHaveBeenCalledWith("/items/one", {
-    source_method: "auto",
     auto_read: false,
     keywords: "Spanish, official",
     selector: "article a",
@@ -143,14 +162,16 @@ test("manual media type saves independently of the scraping method and can retur
   settings("/settings?item=one");
   await screen.findByLabelText("Media type");
   change("Media type", "comic");
-  await click(screen.getByRole("button", { name: "Save item settings" }));
+  await click(screen.getByRole("button", { name: "Save changes" }));
   expect(patch).toHaveBeenLastCalledWith(
     "/items/one",
-    expect.objectContaining({ kind_override: "comic", source_method: "auto" }),
+    expect.objectContaining({ kind_override: "comic" }),
   );
-  expect(screen.getByLabelText("Media type")).toHaveValue("comic");
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  await click(screen.getByRole("button", { name: "Item settings" }));
+  expect(await screen.findByLabelText("Media type")).toHaveValue("comic");
   change("Media type", "");
-  await click(screen.getByRole("button", { name: "Save item settings" }));
+  await click(screen.getByRole("button", { name: "Save changes" }));
   expect(patch).toHaveBeenLastCalledWith(
     "/items/one",
     expect.objectContaining({ kind_override: "" }),
@@ -187,17 +208,25 @@ test("preview media type is saved and reset when scanning another source", async
 });
 
 test("source method defaults persist and item methods save independently", async () => {
-  settings("/settings?item=one");
-  await screen.findByLabelText("Source method");
+  const view = settings();
+  await screen.findByLabelText("Default source method");
   change("Default source method", "sitemap");
   await click(screen.getByRole("button", { name: "Save preferences" }));
   expect(saved.source_method).toBe("sitemap");
-  expect(screen.getByLabelText("Source method")).toHaveValue("auto");
+  view.unmount();
+  api.mockImplementation(async (path) =>
+    path === "/settings"
+      ? saved
+      : path.includes("/links")
+        ? { links: [], total: 0 }
+        : { ...item, selector: "article a" },
+  );
+  settings("/items/one?settings=1");
+  expect(await screen.findByLabelText("Source method")).toHaveValue("auto");
   await click(screen.getByText("Advanced content detection"));
-  change("Content selector", "article a");
   change("Source method", "wordpress_com");
   expect(screen.queryByLabelText("Content selector")).not.toBeInTheDocument();
-  await click(screen.getByRole("button", { name: "Save item settings" }));
+  await click(screen.getByRole("button", { name: "Save changes" }));
   expect(patch).toHaveBeenLastCalledWith(
     "/items/one",
     expect.objectContaining({ source_method: "wordpress_com", selector: "" }),
@@ -276,50 +305,154 @@ test("failed settings save retains edits and never claims success", async () => 
   expect(saved.link_direction).toBe("desc");
 });
 
-test("a pending item settings save cannot replace the next item's draft", async () => {
-  const second = { ...item, id: "two", title: "Second item", auto_read: false };
+test("a pending save cannot update another item's editor after navigation", async () => {
   let finishSave;
-  api.mockImplementation(async (path) =>
-    path === "/settings"
-      ? { ...saved }
-      : path === "/items"
-        ? [item, second]
-        : path === "/items/two"
-          ? second
-          : item,
-  );
   patch.mockImplementation(
     () =>
       new Promise((resolve) => {
         finishSave = resolve;
       }),
   );
-  render(
-    <MemoryRouter initialEntries={["/settings?item=one"]}>
-      <Link to="/settings?item=two">Open second settings</Link>
-      <PreferencesProvider>
-        <SettingsPage />
-      </PreferencesProvider>
-    </MemoryRouter>,
+  const onSaved = vi.fn();
+  const view = render(
+    <ItemSettingsDialog
+      key="one"
+      item={item}
+      onSaved={onSaved}
+      onClose={vi.fn()}
+    />,
   );
-  await screen.findByLabelText("Mark as read when opened for this item");
-  await click(screen.getByRole("button", { name: "Save item settings" }));
-  await click(screen.getByRole("link", { name: "Open second settings" }));
-  await waitFor(() =>
-    expect(
-      screen.getByLabelText("Mark as read when opened for this item"),
-    ).not.toBeChecked(),
+  change("Title", "Renamed first item");
+  await click(screen.getByRole("button", { name: "Save changes" }));
+  const second = { ...item, id: "two", title: "Second item", auto_read: false };
+  view.rerender(
+    <ItemSettingsDialog
+      key="two"
+      item={second}
+      onSaved={onSaved}
+      onClose={vi.fn()}
+    />,
   );
-  await act(async () => finishSave(item));
-  expect(screen.getByLabelText("Choose an item")).toHaveValue("two");
+  await act(async () => finishSave({ ...item, title: "Renamed first item" }));
+  expect(screen.getByLabelText("Title")).toHaveValue("Second item");
   expect(
     screen.getByLabelText("Mark as read when opened for this item"),
   ).not.toBeChecked();
-  expect(screen.getByRole("link", { name: "Back to item" })).toHaveAttribute(
-    "href",
-    "/items/two",
+  expect(onSaved).not.toHaveBeenCalled();
+});
+
+test("renaming in the popup updates the heading without reloading links", async () => {
+  settings("/items/one?filter=unread&search=chapter&direction=asc");
+  await click(await screen.findByRole("button", { name: "Item settings" }));
+  expect(
+    await screen.findByRole("dialog", { name: "Item settings" }),
+  ).toBeInTheDocument();
+  expect(screen.getByLabelText("Title")).toHaveFocus();
+  const requestsBefore = api.mock.calls.length;
+  change("Title", "  My reading list  ");
+  await click(screen.getByRole("button", { name: "Save changes" }));
+  expect(patch).toHaveBeenLastCalledWith("/items/one", {
+    title: "My reading list",
+  });
+  expect(
+    await screen.findByRole("heading", { name: "My reading list" }),
+  ).toBeInTheDocument();
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  expect(screen.getByLabelText("Search links")).toHaveValue("chapter");
+  expect(api).toHaveBeenCalledTimes(requestsBefore);
+  await click(screen.getByRole("button", { name: "Item settings" }));
+  expect(await screen.findByLabelText("Title")).toHaveValue("My reading list");
+});
+
+test("cancel discards title edits and unchanged or blank titles cannot be saved", async () => {
+  settings("/items/one?settings=1");
+  await screen.findByLabelText("Title");
+  expect(screen.getByRole("button", { name: "Save changes" })).toBeDisabled();
+  change("Title", "   ");
+  expect(screen.getByRole("button", { name: "Save changes" })).toBeDisabled();
+  change("Title", "Discard this edit");
+  await click(screen.getByRole("button", { name: "Cancel" }));
+  expect(patch).not.toHaveBeenCalled();
+  expect(screen.getByRole("heading", { name: item.title })).toBeInTheDocument();
+  await click(screen.getByRole("button", { name: "Item settings" }));
+  expect(await screen.findByLabelText("Title")).toHaveValue(item.title);
+});
+
+test("failed item saving keeps the draft open for retry and prevents duplicate submissions", async () => {
+  settings("/items/one?settings=1");
+  await screen.findByLabelText("Title");
+  change("Title", "Keep my edit");
+  let reject;
+  patch.mockImplementationOnce(
+    () =>
+      new Promise((_, fail) => {
+        reject = fail;
+      }),
   );
-  expect(screen.queryByText("Item settings saved.")).not.toBeInTheDocument();
+  await click(screen.getByRole("button", { name: "Save changes" }));
+  expect(screen.getByRole("button", { name: "Saving…" })).toBeDisabled();
+  expect(screen.getByRole("button", { name: "Cancel" })).toBeDisabled();
+  await act(async () => reject(new Error("Storage unavailable")));
+  expect(await screen.findByRole("alert")).toHaveTextContent(
+    "Storage unavailable",
+  );
+  expect(screen.getByLabelText("Title")).toHaveValue("Keep my edit");
+  await click(screen.getByRole("button", { name: "Save changes" }));
+  expect(
+    await screen.findByRole("heading", { name: "Keep my edit" }),
+  ).toBeInTheDocument();
+});
+
+test("description edit opens the same popup and can restore the source description", async () => {
+  const described = {
+    ...item,
+    description: "My notes",
+    description_override: "My notes",
+    description_auto: "Source summary",
+  };
+  api.mockImplementation(async (path) =>
+    path === "/settings"
+      ? saved
+      : path.includes("/links")
+        ? { links: [], total: 0 }
+        : described,
+  );
+  settings("/items/one");
+  await click(await screen.findByRole("button", { name: "Edit", exact: true }));
+  expect(
+    await screen.findByRole("textbox", { name: "Description" }),
+  ).toHaveFocus();
+  await click(screen.getByRole("button", { name: "Use source description" }));
+  expect(screen.getByRole("textbox", { name: "Description" })).toHaveValue(
+    "Source summary",
+  );
+  await click(screen.getByRole("button", { name: "Save changes" }));
+  expect(patch).toHaveBeenLastCalledWith("/items/one", {
+    description_override: null,
+  });
+});
+
+test("imported items can be renamed without exposing web detection settings", async () => {
+  const onSaved = vi.fn();
+  render(
+    <ItemSettingsDialog
+      item={{ ...item, source_type: "document" }}
+      onSaved={onSaved}
+      onClose={vi.fn()}
+    />,
+  );
+  expect(screen.queryByLabelText("Source method")).not.toBeInTheDocument();
+  expect(
+    screen.queryByText("Advanced content detection"),
+  ).not.toBeInTheDocument();
+  change("Title", "Uploaded reading list");
+  await click(screen.getByRole("button", { name: "Save changes" }));
+  expect(patch).toHaveBeenLastCalledWith("/items/one", {
+    title: "Uploaded reading list",
+  });
+  expect(onSaved).toHaveBeenCalledWith(
+    expect.objectContaining({ title: "Uploaded reading list" }),
+  );
 });
 
 test("failed preference loading can retry without falling back to unsaved defaults", async () => {

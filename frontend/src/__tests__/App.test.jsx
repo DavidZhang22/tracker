@@ -740,12 +740,12 @@ test("middle click marks read but right click does not", async () => {
   expect(patch).toHaveBeenCalledWith("/links/chapter1", { read: true });
 });
 
-test("item settings are centralized while ignored link controls stay accessible", async () => {
+test("item settings open locally while muted link controls stay accessible", async () => {
   mockDetail();
   detail();
   expect(
-    await screen.findByRole("link", { name: "Item settings" }),
-  ).toHaveAttribute("href", "/settings?item=one#item-settings");
+    await screen.findByRole("button", { name: "Item settings" }),
+  ).toHaveAttribute("aria-haspopup", "dialog");
   expect(
     screen.queryByLabelText("Mark as read when opened"),
   ).not.toBeInTheDocument();
