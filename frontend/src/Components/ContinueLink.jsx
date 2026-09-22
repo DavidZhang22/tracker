@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRightIcon, ExternalLinkIcon } from "@heroicons/react/outline";
+import { ArrowRightIcon } from "@heroicons/react/outline";
 import { patch } from "../api";
 import { Icon } from "./Icons";
 
@@ -8,7 +8,7 @@ export default function ContinueLink({
   item,
   onRead,
   onError,
-  className = "latest-link",
+  className = "icon-button",
 }) {
   const pending = useRef(false);
   const entry = item.next_unread;
@@ -64,7 +64,7 @@ export default function ContinueLink({
       onClick={open}
       onAuxClick={open}
     >
-      Continue <Icon as={ExternalLinkIcon} />
+      <Icon as={ArrowRightIcon} />
     </a>
   ) : (
     <Link
@@ -73,7 +73,7 @@ export default function ContinueLink({
       aria-label={label}
       title={`Next unread: ${entry.title}`}
     >
-      Continue <Icon as={ArrowRightIcon} />
+      <Icon as={ArrowRightIcon} />
     </Link>
   );
 }

@@ -250,7 +250,7 @@ test("each refresh completion updates its row before the batch finishes", async 
   await click(screen.getByRole("button", { name: "Refresh" }));
   expect(screen.getByText("12 unread")).toBeInTheDocument();
   expect(
-    screen.getByText("10 new links. 1 item checked. Refreshing…"),
+    screen.getByText("10 new items. 1 item checked. Refreshing…"),
   ).toBeInTheDocument();
   expect(
     screen.getByRole("button", { name: "Favorite My series" }),
@@ -258,7 +258,7 @@ test("each refresh completion updates its row before the batch finishes", async 
   expect(screen.getByRole("button", { name: "Refreshing…" })).toBeDisabled();
   await act(async () => finish());
   expect(
-    screen.getByText("10 new links. 2 items checked."),
+    screen.getByText("10 new items. 2 items checked."),
   ).toBeInTheDocument();
   expect(screen.getByRole("button", { name: "Refresh" })).toBeEnabled();
 });

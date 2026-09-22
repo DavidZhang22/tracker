@@ -195,7 +195,7 @@ function ItemDetail({ id }) {
         setMessage(
           r.cached
             ? `Using the recent scan from ${checked(r.checked_at)}. Scans are shared across libraries for five minutes.`
-            : `${r.new_count} new links found.`,
+            : `${r.new_count} new ${r.new_count === 1 ? "item" : "items"} found.`,
         );
       reload();
     } catch (e) {
@@ -420,7 +420,7 @@ function ItemDetail({ id }) {
         </button>
         <button onClick={() => choose("filter", "new")}>
           <span className="summary-number teal">{item.new_count}</span>
-          <span>New links</span>
+          <span>New items</span>
         </button>
         <button onClick={() => choose("filter", "read")}>
           <span className="summary-number">{item.read_count}</span>

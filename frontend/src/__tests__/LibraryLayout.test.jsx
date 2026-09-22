@@ -48,12 +48,12 @@ test("compact totals retain link counts separately from item filter counts", asy
     </MemoryRouter>,
   );
   await screen.findByText("A series");
-  const totals = screen.getByLabelText("Library link totals");
+  const totals = screen.getByLabelText("Library reading totals");
   expect(
-    within(totals).getByRole("button", { name: "3 unread links" }),
+    within(totals).getByRole("button", { name: "3 unread items" }),
   ).toBeInTheDocument();
   expect(
-    within(totals).getByRole("button", { name: "1 new link" }),
+    within(totals).getByRole("button", { name: "1 new item" }),
   ).toBeInTheDocument();
   expect(
     screen.getByRole("button", { name: /^Unread\s*1$/ }),
@@ -62,7 +62,7 @@ test("compact totals retain link counts separately from item filter counts", asy
     screen.getByRole("button", { name: /^Favorites\s*1$/ }),
   ).toBeInTheDocument();
   fireEvent.click(
-    within(totals).getByRole("button", { name: "3 unread links" }),
+    within(totals).getByRole("button", { name: "3 unread items" }),
   );
   expect(screen.getAllByRole("article")).toHaveLength(1);
   expect(screen.queryByText("A muted favorite")).not.toBeInTheDocument();
@@ -76,7 +76,9 @@ test("consolidated row retains progress, last check, mute state, and actions", a
     </MemoryRouter>,
   );
   const row = (await screen.findByText("A series")).closest("article");
-  expect(within(row).getByText("Muted")).toBeInTheDocument();
+  expect(
+    within(row).getByRole("button", { name: "Unmute A series" }),
+  ).toBeEnabled();
   expect(within(row).getByText("5 of 8 read")).toBeInTheDocument();
   expect(within(row).getByText("Checked Today")).toBeInTheDocument();
   expect(

@@ -30,7 +30,7 @@
 }
 .library-panel .item-row,
 .library-panel .list-heading {
-  grid-template-columns: minmax(0, 1fr) 164px 73px;
+  grid-template-columns: minmax(0, 1fr) 164px 110px;
   gap: 20px;
 }
 .library-panel .item-row {
@@ -62,18 +62,13 @@
 .library-panel .last-checked::before {
   content: none;
 }
-.library-panel .muted-label {
-  border: 0;
-  border-left: 1px solid var(--line);
-  padding: 2px 0 2px 7px;
-  color: inherit;
-  background: none;
-  font: inherit;
+.library-panel .continue-slot,
+.library-panel .mute-slot {
+  display: flex;
+  flex: 0 0 36px;
 }
-.library-panel .muted-label:hover {
-  color: var(--accent);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+.library-panel .row-actions {
+  justify-content: flex-end;
 }
 .library-panel .badge {
   background: #f0f5f4;
@@ -84,7 +79,7 @@
 @media (max-width: 1000px) and (min-width: 801px) and (pointer: fine) {
   .library-panel .item-row,
   .library-panel .list-heading {
-    grid-template-columns: minmax(0, 1fr) 130px 73px;
+    grid-template-columns: minmax(0, 1fr) 130px 110px;
     gap: 14px;
   }
   .library-panel .item-identity > .type-icon {
@@ -105,7 +100,19 @@
     padding: 16px 14px;
   }
   .library-panel .item-identity {
+    grid-column: 1 / -1;
     gap: 8px;
+  }
+  .library-panel .continue-slot,
+  .library-panel .mute-slot {
+    flex-basis: 44px;
+  }
+  .library-panel .row-actions {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+  .library-panel .row-actions > .icon-button {
+    display: inline-flex;
   }
   .library-panel .progress-cell {
     display: grid;
@@ -132,7 +139,7 @@
 }
 
 .continue-link {
-  font-weight: 600;
+  color: var(--accent);
 }
 
 .library-panel .panel-footer {

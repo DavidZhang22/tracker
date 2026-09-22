@@ -7,6 +7,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import {
   CollectionIcon,
   StarIcon,
+  EyeOffIcon,
   PlusIcon,
   SearchIcon,
   ExternalLinkIcon,
@@ -116,7 +117,7 @@ export default function LibraryPage() {
           if (r.type === "start") setMessage(`Checking ${r.total} items…`);
           else
             setMessage(
-              `${r.new_count} new ${r.new_count === 1 ? "link" : "links"}. ${r.checked} ${r.checked === 1 ? "item" : "items"} checked.${r.type !== "complete" ? " Refreshing…" : ""}${r.failed ? ` ${r.failed} checks could not finish. Saved links were kept.` : ""}${r.type === "complete" && r.remaining ? ` Refresh paused; ${r.remaining} items remain.` : ""}`,
+              `${r.new_count} new ${r.new_count === 1 ? "item" : "items"}. ${r.checked} ${r.checked === 1 ? "item" : "items"} checked.${r.type !== "complete" ? " Refreshing…" : ""}${r.failed ? ` ${r.failed} checks could not finish. Saved links were kept.` : ""}${r.type === "complete" && r.remaining ? ` Refresh paused; ${r.remaining} items remain.` : ""}`,
             );
         },
         controller.signal,
@@ -253,14 +254,14 @@ export default function LibraryPage() {
             )}
           </h1>
           {!trash && (
-            <div className="library-totals" aria-label="Library link totals">
+            <div className="library-totals" aria-label="Library reading totals">
               <button onClick={() => chooseView({ filter: "unread" })}>
                 <strong>{totals.unread}</strong> unread{" "}
-                {totals.unread === 1 ? "link" : "links"}
+                {totals.unread === 1 ? "item" : "items"}
               </button>
               <button onClick={() => chooseView({ filter: "new" })}>
                 <strong>{totals.new}</strong> new{" "}
-                {totals.new === 1 ? "link" : "links"}
+                {totals.new === 1 ? "item" : "items"}
               </button>
             </div>
           )}
@@ -401,6 +402,9 @@ export default function LibraryPage() {
                 onContextMenu={openRowMenu}
               >
                 <div className="item-identity">
+                  <span className="continue-slot">
+                    <ContinueLink item={i} onRead={load} onError={setError} />
+                  </span>
                   <label className="row-select">
                     <input
                       type="checkbox"
@@ -422,21 +426,9 @@ export default function LibraryPage() {
                           : new URL(i.url).hostname.replace(/^www\./, "")}
                       </span>
                       <span className="kind-label">{mediaLabel(i.kind)}</span>
-                      {i.ignored && (
-                        <button
-                          className="muted-label"
-                          aria-label={`Unmute ${i.title}`}
-                          title="Unmute"
-                          disabled={busy || searching}
-                          onClick={() => update(i.id, { ignored: false })}
-                        >
-                          Muted
-                        </button>
-                      )}
                       {i.new_count > 0 && (
                         <span className="badge">{i.new_count} new</span>
                       )}
-                      <ContinueLink item={i} onRead={load} onError={setError} />
                       {i.latest_link &&
                         (i.latest_link.url &&
                         (i.latest_link.link_count || 1) === 1 ? (
@@ -489,6 +481,16 @@ export default function LibraryPage() {
                     active={i.favorite}
                     onClick={() => update(i.id, { favorite: !i.favorite })}
                   />
+                  <span className="mute-slot">
+                    {i.ignored && (
+                      <IconButton
+                        icon={EyeOffIcon}
+                        label={`Unmute ${i.title}`}
+                        disabled={busy || searching}
+                        onClick={() => update(i.id, { ignored: false })}
+                      />
+                    )}
+                  </span>
                   <ActionMenu
                     record={i}
                     disabled={busy || searching}
