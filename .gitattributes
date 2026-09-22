@@ -14,7 +14,6 @@ backend/ml/experiments/semantic-decision/*.json -text whitespace=cr-at-eol
 backend/ml/reports/semantic-decision*.json -text whitespace=cr-at-eol
 backend/ml/datasets/semantic-decision* text eol=lf
 backend/ml/reports/semantic-decision.md text eol=lf
-backend/ml/*semantic*.py text eol=lf
-backend/tests/test_semantic_decision*.py text eol=lf
-# Numeric weights are reviewed through reproducible metrics and checksum tests.
-backend/ml/experiments/semantic-decision/minilm-l6-neural.json -diff
+backend/ml/semantic_decisions/*.py text eol=lf
+backend/tests/ml/*.py text eol=lf
+backend/ml/**/*.gz binary

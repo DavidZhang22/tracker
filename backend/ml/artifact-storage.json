@@ -1,0 +1,377 @@
+{
+  "format": "gzip",
+  "source_commit": "c4a486333396bb6224c295ed621ce1bada36db2d",
+  "minimum_bytes": 32768,
+  "bytes": 11785887,
+  "stored_bytes": 3392740,
+  "artifacts": [
+    {
+      "path": "backend/ml/experiments/breadth-generalization-v4/experiment-summary.json",
+      "stored_path": "backend/ml/experiments/breadth-generalization-v4/experiment-summary.json.gz",
+      "bytes": 62722,
+      "stored_bytes": 8582,
+      "sha256": "85ac70905d8e7b4bb14d3b16497f4057d32b3b24e805664eebc29212e5ea20aa",
+      "stored_sha256": "ac57181f5bd09d2099375650f4be6ea20d469f070a28bb2351e4d0472854011b"
+    },
+    {
+      "path": "backend/ml/experiments/breadth-generalization-v4/reject-0.00.json",
+      "stored_path": "backend/ml/experiments/breadth-generalization-v4/reject-0.00.json.gz",
+      "bytes": 532664,
+      "stored_bytes": 193423,
+      "sha256": "97804df6d794bccd275073797feff5936366c8438af5ea026df56ca2bc58017f",
+      "stored_sha256": "2074293549f50443895576cd9a3417fcdd9735338cbe941ce44be8be94658975"
+    },
+    {
+      "path": "backend/ml/experiments/breadth-generalization/baseline-cascade.json",
+      "stored_path": "backend/ml/experiments/breadth-generalization/baseline-cascade.json.gz",
+      "bytes": 373059,
+      "stored_bytes": 122311,
+      "sha256": "8b9b8ddc7e9e8c7b467d5b23c5fca214417a60361962906855ef7f8faf2723f6",
+      "stored_sha256": "077aa543c27e2e2792f946b57d2463f0a5b83b9bb77d6940cf7490a58feff50d"
+    },
+    {
+      "path": "backend/ml/experiments/cascade/cascade.json",
+      "stored_path": "backend/ml/experiments/cascade/cascade.json.gz",
+      "bytes": 1296405,
+      "stored_bytes": 547533,
+      "sha256": "1f2085af39b494b4d60e3ac9ed7b0e887afe7b7282e648d547d4f9a5074bd1a2",
+      "stored_sha256": "15746344577ac9e745c84b6aeaecded130322266d5ff78f18a71a9e820185f47"
+    },
+    {
+      "path": "backend/ml/experiments/cascade/neural32.json",
+      "stored_path": "backend/ml/experiments/cascade/neural32.json.gz",
+      "bytes": 337349,
+      "stored_bytes": 147962,
+      "sha256": "62d4dfbf99bcd06758495e0c494af8e7e4b6ffed4aef7530c90acbf8ac59050e",
+      "stored_sha256": "1fe5aca56fb5b6f9627fa9265006377c83d684dee5aa08ed27eb6e7bf44bf7e8"
+    },
+    {
+      "path": "backend/ml/experiments/cascade/neural64x32.json",
+      "stored_path": "backend/ml/experiments/cascade/neural64x32.json.gz",
+      "bytes": 1274555,
+      "stored_bytes": 542911,
+      "sha256": "675d161df79f883ddf61f464b92d863e395e95ed6337476b5522f399c243db02",
+      "stored_sha256": "6c8d7fd5c3c8d88a74285c78cf370020e99c6e01fe6c2edf4b9801f762bf1c04"
+    },
+    {
+      "path": "backend/ml/experiments/context/link-context-model.json",
+      "stored_path": "backend/ml/experiments/context/link-context-model.json.gz",
+      "bytes": 105310,
+      "stored_bytes": 25122,
+      "sha256": "9a11e5198ef256f21e929d2d1cd8eaf44faea790bad6c757fa0f879ec245a7f8",
+      "stored_sha256": "64b5557325e0934a5dc2168f00ec9bf6017d1247b5478c01a358f68d25e55114"
+    },
+    {
+      "path": "backend/ml/experiments/context/training-report.json",
+      "stored_path": "backend/ml/experiments/context/training-report.json.gz",
+      "bytes": 70911,
+      "stored_bytes": 4878,
+      "sha256": "bcfcd422bef22f0bd7e1120ad2d27ffd13547c17656a20b2350e5db72c9e75b9",
+      "stored_sha256": "94234e0629b9453211107e382d38d25051863c1a3dcfcd1adc18a59c7fc698bd"
+    },
+    {
+      "path": "backend/ml/experiments/generalization/link-context-model.json",
+      "stored_path": "backend/ml/experiments/generalization/link-context-model.json.gz",
+      "bytes": 103592,
+      "stored_bytes": 24603,
+      "sha256": "975b0b276ed0e34022622fd04d9eb028176ca832e3f2fe097079ed2f52cade2b",
+      "stored_sha256": "72d01759ed634cddf4781c664ded3c82cce35cb691c8e456728f0363b935b03e"
+    },
+    {
+      "path": "backend/ml/experiments/generalization/training-report.json",
+      "stored_path": "backend/ml/experiments/generalization/training-report.json.gz",
+      "bytes": 143000,
+      "stored_bytes": 4873,
+      "sha256": "d00f56f1bb212ad94c2b60d51a4c8e88db01fdd09adbceaa26041d566d0bdfd1",
+      "stored_sha256": "0ccb82a8eed84e62bef24cf3ebe029a69b114743fcbb70b0462bdded06b26f62"
+    },
+    {
+      "path": "backend/ml/experiments/rescue-cascade/cascade.json",
+      "stored_path": "backend/ml/experiments/rescue-cascade/cascade.json.gz",
+      "bytes": 373059,
+      "stored_bytes": 122311,
+      "sha256": "8b9b8ddc7e9e8c7b467d5b23c5fca214417a60361962906855ef7f8faf2723f6",
+      "stored_sha256": "077aa543c27e2e2792f946b57d2463f0a5b83b9bb77d6940cf7490a58feff50d"
+    },
+    {
+      "path": "backend/ml/experiments/rescue-cascade/distilled64x32.json",
+      "stored_path": "backend/ml/experiments/rescue-cascade/distilled64x32.json.gz",
+      "bytes": 161340,
+      "stored_bytes": 72405,
+      "sha256": "c20d24af1dca1356d863b9409c8db7f645dc1f38b80e386043427c0246bd6aa1",
+      "stored_sha256": "721565e9c1be8fcf49cb4f7e571f8a45f4d551d54a10838dffbf845c63af1919"
+    },
+    {
+      "path": "backend/ml/experiments/rescue-cascade/numeric32.json",
+      "stored_path": "backend/ml/experiments/rescue-cascade/numeric32.json.gz",
+      "bytes": 60095,
+      "stored_bytes": 27900,
+      "sha256": "5b54dbfac3fe1809922f4b5453b29e568453064eb8d386c4b7676b605f178a41",
+      "stored_sha256": "40b05b4eaed418da5c8de03edd958d128ee629564f3fb45026618355bf9c6b50"
+    },
+    {
+      "path": "backend/ml/experiments/rescue-cascade/numeric64x32.json",
+      "stored_path": "backend/ml/experiments/rescue-cascade/numeric64x32.json.gz",
+      "bytes": 163702,
+      "stored_bytes": 73312,
+      "sha256": "131d920a390fa638143a175d301b41ee334ba1e93c46737534094e80c5f0e7e3",
+      "stored_sha256": "75c629087918f270bd0875813638d7cc3099437f201359b48363540a7251f9dc"
+    },
+    {
+      "path": "backend/ml/experiments/review/cascade.json",
+      "stored_path": "backend/ml/experiments/review/cascade.json.gz",
+      "bytes": 421043,
+      "stored_bytes": 137518,
+      "sha256": "73047b221545de7021bdc8a329e0f7ad6ee73e08cf931883fc4d4663b99150dd",
+      "stored_sha256": "2867387154677067728dc081410f12b16614096b8495e84d20668089e21c5737"
+    },
+    {
+      "path": "backend/ml/experiments/review/neural64x32.json",
+      "stored_path": "backend/ml/experiments/review/neural64x32.json.gz",
+      "bytes": 162695,
+      "stored_bytes": 72828,
+      "sha256": "055f1e0adf1c55456da3eaba86af92b68222386e298a7a0a711c503c7b6ae00b",
+      "stored_sha256": "8d017753d3cf7b517be6f0b8be39df5d55440a0867cec75315e749ff3781ea66"
+    },
+    {
+      "path": "backend/ml/experiments/review/report.json",
+      "stored_path": "backend/ml/experiments/review/report.json.gz",
+      "bytes": 42647,
+      "stored_bytes": 3486,
+      "sha256": "4ce54370059bf1d5bbfc1fc860f25d6a7e41b8a95c43f13cdf4c4e8177fbbafb",
+      "stored_sha256": "f8f5d95db211b23455b741b87f295864f3d2505baab31ffeab8eec38fb810921"
+    },
+    {
+      "path": "backend/ml/experiments/review/trees120x4.json",
+      "stored_path": "backend/ml/experiments/review/trees120x4.json.gz",
+      "bytes": 141708,
+      "stored_bytes": 44165,
+      "sha256": "773e206ea0368010c854a7f818256745678b40be3581cd3efcd41a25dfaf4410",
+      "stored_sha256": "a56f652530eaf166cb6020dd176e382f50597abdf7af8d875c34a00d5408e5cb"
+    },
+    {
+      "path": "backend/ml/experiments/review/trees180x4.json",
+      "stored_path": "backend/ml/experiments/review/trees180x4.json.gz",
+      "bytes": 208602,
+      "stored_bytes": 64297,
+      "sha256": "3a0d54d93c03fa7b1b9f151bcd7356b2cb5c07dd87a61e6a9c9081dee9759027",
+      "stored_sha256": "e0fe3f093d4e139b06f1d913dd5bb364483a8c0b4fd01478a1f4baf69a7b2b8b"
+    },
+    {
+      "path": "backend/ml/experiments/review/trees80x3.json",
+      "stored_path": "backend/ml/experiments/review/trees80x3.json.gz",
+      "bytes": 47956,
+      "stored_bytes": 15585,
+      "sha256": "cbd87570294748ed431fa6cbc54159a0a55efc7190c03926d11c09287bbfe04b",
+      "stored_sha256": "316ceca10fcf3cc0345404f47a3e1cc776b16f08216d425119c7d89c43cc3546"
+    },
+    {
+      "path": "backend/ml/experiments/semantic-decision/baseline.json",
+      "stored_path": "backend/ml/experiments/semantic-decision/baseline.json.gz",
+      "bytes": 532664,
+      "stored_bytes": 193423,
+      "sha256": "97804df6d794bccd275073797feff5936366c8438af5ea026df56ca2bc58017f",
+      "stored_sha256": "2074293549f50443895576cd9a3417fcdd9735338cbe941ce44be8be94658975"
+    },
+    {
+      "path": "backend/ml/experiments/semantic-decision/minilm-l6-neural.json",
+      "stored_path": "backend/ml/experiments/semantic-decision/minilm-l6-neural.json.gz",
+      "bytes": 1092093,
+      "stored_bytes": 321939,
+      "sha256": "ef77e60f9aa8676ccc74cbaf87671813504b9af7fedde887c5107582e5aa3002",
+      "stored_sha256": "42b0346da218e1a09b28e1ec63ea3718b4ff8477ad145740d42db5dabbf121bb"
+    },
+    {
+      "path": "backend/ml/experiments/semantic-decision/validation.json",
+      "stored_path": "backend/ml/experiments/semantic-decision/validation.json.gz",
+      "bytes": 783457,
+      "stored_bytes": 32848,
+      "sha256": "d9c74c2d6c29796331b01025def458f4220b42b2e551ca67eb5edc38cf652594",
+      "stored_sha256": "d13059510a21f80823c3e65b4ef00cff6d829cd32e0aa24011f7981b0ce21884"
+    },
+    {
+      "path": "backend/ml/experiments/structural-cascade/cascade.json",
+      "stored_path": "backend/ml/experiments/structural-cascade/cascade.json.gz",
+      "bytes": 373041,
+      "stored_bytes": 122288,
+      "sha256": "120b098163332c80e6b7ea1c407ce99ac33de253d59614b921586b5592b1e310",
+      "stored_sha256": "7d3cb9b4dda74242abe15d2c630c649adfd1bd7faa001ab2823c8c6490cc4825"
+    },
+    {
+      "path": "backend/ml/experiments/structural-cascade/distilled64x32.json",
+      "stored_path": "backend/ml/experiments/structural-cascade/distilled64x32.json.gz",
+      "bytes": 161340,
+      "stored_bytes": 72405,
+      "sha256": "c20d24af1dca1356d863b9409c8db7f645dc1f38b80e386043427c0246bd6aa1",
+      "stored_sha256": "721565e9c1be8fcf49cb4f7e571f8a45f4d551d54a10838dffbf845c63af1919"
+    },
+    {
+      "path": "backend/ml/experiments/structural-cascade/numeric32.json",
+      "stored_path": "backend/ml/experiments/structural-cascade/numeric32.json.gz",
+      "bytes": 60095,
+      "stored_bytes": 27900,
+      "sha256": "5b54dbfac3fe1809922f4b5453b29e568453064eb8d386c4b7676b605f178a41",
+      "stored_sha256": "40b05b4eaed418da5c8de03edd958d128ee629564f3fb45026618355bf9c6b50"
+    },
+    {
+      "path": "backend/ml/experiments/structural-cascade/numeric64x32.json",
+      "stored_path": "backend/ml/experiments/structural-cascade/numeric64x32.json.gz",
+      "bytes": 163702,
+      "stored_bytes": 73312,
+      "sha256": "131d920a390fa638143a175d301b41ee334ba1e93c46737534094e80c5f0e7e3",
+      "stored_sha256": "75c629087918f270bd0875813638d7cc3099437f201359b48363540a7251f9dc"
+    },
+    {
+      "path": "backend/ml/experiments/tables/link-context-model.json",
+      "stored_path": "backend/ml/experiments/tables/link-context-model.json.gz",
+      "bytes": 103896,
+      "stored_bytes": 24775,
+      "sha256": "babb826a296ec399ebb56415415129281281b3db13c39f8b253fdb9d66fde843",
+      "stored_sha256": "ca4b30a809f2bd2bc56a4041aba593449acf4c05f62d30f98ae3136c47bb13dc"
+    },
+    {
+      "path": "backend/ml/experiments/tables/training-report.json",
+      "stored_path": "backend/ml/experiments/tables/training-report.json.gz",
+      "bytes": 48757,
+      "stored_bytes": 2951,
+      "sha256": "a0678a810d41e01ffa951e56f6f79b6d53b282b3440eb116d16aae06426ba5b6",
+      "stored_sha256": "7009a4731e413f6b6b86066d7f2197668084f8551056509309ffd2e4c4c0cf30"
+    },
+    {
+      "path": "backend/ml/reports/breadth-cultural.json",
+      "stored_path": "backend/ml/reports/breadth-cultural.json.gz",
+      "bytes": 93435,
+      "stored_bytes": 9962,
+      "sha256": "1cad149fc26c4f5bd9ef434233097b081892ab6546bc293a8f90df2029c83bfb",
+      "stored_sha256": "2d3998f4567617ab8033bb7362e9ef01d92fb475e75880e9175e96a467678b5c"
+    },
+    {
+      "path": "backend/ml/reports/breadth-public.json",
+      "stored_path": "backend/ml/reports/breadth-public.json.gz",
+      "bytes": 87427,
+      "stored_bytes": 9045,
+      "sha256": "116a39fc61054247e34b16603a1def5969c984f44254b0ee63017571a9096e4a",
+      "stored_sha256": "78e3660deb2264a35bb48094932afe1dcabe6c8e88cd1cc4f306a9e9cac5d2da"
+    },
+    {
+      "path": "backend/ml/reports/breadth-technical-initial.json",
+      "stored_path": "backend/ml/reports/breadth-technical-initial.json.gz",
+      "bytes": 102130,
+      "stored_bytes": 11097,
+      "sha256": "0b9d62d3c3062d4b7866f505d07e73d8352d37a9c7f83b22b01f4aaf1c38803e",
+      "stored_sha256": "90f8617cba05d0bfe36a7ba51408397ed91b4c481de64ce1ca9f9a69df169805"
+    },
+    {
+      "path": "backend/ml/reports/breadth-technical.json",
+      "stored_path": "backend/ml/reports/breadth-technical.json.gz",
+      "bytes": 104623,
+      "stored_bytes": 11522,
+      "sha256": "a68fb2d99a88d95852926b6d18e1ec248a70394298ab959da9449e89669b21dd",
+      "stored_sha256": "1762926826b2838be58fa098266092c8153947e722b87cdb6b3fb0d1e166af54"
+    },
+    {
+      "path": "backend/ml/reports/context-vm-training-report.json",
+      "stored_path": "backend/ml/reports/context-vm-training-report.json.gz",
+      "bytes": 70926,
+      "stored_bytes": 4881,
+      "sha256": "df7463500350f2414bc48f015a679015bf990adf04f7cd3529ab5892e760c3ad",
+      "stored_sha256": "e8a48ec08e9c1a3b09d54f7f7fe3550d696550f332d6f090382f36a53260db57"
+    },
+    {
+      "path": "backend/ml/reports/extraction-audit-linux.json",
+      "stored_path": "backend/ml/reports/extraction-audit-linux.json.gz",
+      "bytes": 35374,
+      "stored_bytes": 3601,
+      "sha256": "f185f9a6e9c6bce0f0bd9de67169a869d57fec1a0164b8eda7a37b8eb3b19115",
+      "stored_sha256": "90a8519376b6ea22cac9b82a8490aa2bb2ac3ab2e7b650d2794ce823c27f3e25"
+    },
+    {
+      "path": "backend/ml/reports/extraction-audit-records.json",
+      "stored_path": "backend/ml/reports/extraction-audit-records.json.gz",
+      "bytes": 99885,
+      "stored_bytes": 12242,
+      "sha256": "69b35736da0f213449cbd393e567b1f3104f656c1c27efd433886f86a034cf43",
+      "stored_sha256": "5157add5f3a6dc50104683810b9f4fd8d9ab81598084fc793075e4311eedbd66"
+    },
+    {
+      "path": "backend/ml/reports/extraction-audit.json",
+      "stored_path": "backend/ml/reports/extraction-audit.json.gz",
+      "bytes": 36687,
+      "stored_bytes": 3616,
+      "sha256": "bc31102d81274a99bf0fcd8daecc4816eac2acb9fb030de164f5122a3ae8bae1",
+      "stored_sha256": "236f5619138ef8d6b6a408b376773886dbc2751b9c690c84f8ca49bc02d88dea"
+    },
+    {
+      "path": "backend/ml/reports/generalization-evaluation.json",
+      "stored_path": "backend/ml/reports/generalization-evaluation.json.gz",
+      "bytes": 100883,
+      "stored_bytes": 4614,
+      "sha256": "5a0226b7ee294711e5695120a2f35addc98ba1f8f68f5a07324a0863b4ad660d",
+      "stored_sha256": "02813c2b0b2fe9c54bfffb5030b012a5363cd5e62d0b5d87b4238a0c9698fa25"
+    },
+    {
+      "path": "backend/ml/reports/generalization-upgrade-breadth.json",
+      "stored_path": "backend/ml/reports/generalization-upgrade-breadth.json.gz",
+      "bytes": 122163,
+      "stored_bytes": 23045,
+      "sha256": "7ca39cae202f6ff435679b6fa9cc4bf68833f98c5049959a890028e2bd9cad26",
+      "stored_sha256": "cefece1a9ae675a08464e7df4ec82bd65b1a66c37aace9665a4082bea1de6c26"
+    },
+    {
+      "path": "backend/ml/reports/generalization-upgrade-historical-validation.json",
+      "stored_path": "backend/ml/reports/generalization-upgrade-historical-validation.json.gz",
+      "bytes": 33979,
+      "stored_bytes": 8865,
+      "sha256": "e642605a61b3ce9da17e3ca7f1de9eaef0bf23717e1740726ebaaab4d93f85ea",
+      "stored_sha256": "710d4bd12bbd1e602d3ef3e4a11c87134416d27ab5fc19fec7be1d2e22c7819b"
+    },
+    {
+      "path": "backend/ml/reports/generalization-upgrade-historical.json",
+      "stored_path": "backend/ml/reports/generalization-upgrade-historical.json.gz",
+      "bytes": 125516,
+      "stored_bytes": 24771,
+      "sha256": "d9ec74f3fde68d65223ddac3848313015934765b8d0c02a87166638a7313a495",
+      "stored_sha256": "e31a88a37da75b94b41d6d9ff495479895c517253929655da9d0cf818daaa3e7"
+    },
+    {
+      "path": "backend/ml/reports/generalization-upgrade-validation.json",
+      "stored_path": "backend/ml/reports/generalization-upgrade-validation.json.gz",
+      "bytes": 34443,
+      "stored_bytes": 9093,
+      "sha256": "844b0f659de00e76f131d2bfcd6ae8e2f11854cd2e3f0f082a53594535b95797",
+      "stored_sha256": "47de5e9d134e324a9131abf7278c428fc5d5b8b593ef96a2f829b047575351cc"
+    },
+    {
+      "path": "backend/ml/reports/memory-benchmark.json",
+      "stored_path": "backend/ml/reports/memory-benchmark.json.gz",
+      "bytes": 34585,
+      "stored_bytes": 5633,
+      "sha256": "35d4a02c2db6efb21984e1a7747cd2edceec2aa108461406024e309a593f835c",
+      "stored_sha256": "9c7491a0fc66f200598165f0be84b4971088cbb6ca7c5ff96b1b8b7ee9b1f94d"
+    },
+    {
+      "path": "backend/ml/reports/semantic-decision-regression.json",
+      "stored_path": "backend/ml/reports/semantic-decision-regression.json.gz",
+      "bytes": 43754,
+      "stored_bytes": 5637,
+      "sha256": "1e559dbcbb00b39c1ce3bd9fdc43f243870a49d597397088143f6f187b0524e3",
+      "stored_sha256": "bbad6abe3744215d40f1e6858fe61987d5e127c77d3cc0e6101d61f88e44634c"
+    },
+    {
+      "path": "backend/ml/reports/semantic-decision-runtime-linux.json",
+      "stored_path": "backend/ml/reports/semantic-decision-runtime-linux.json.gz",
+      "bytes": 1167745,
+      "stored_bytes": 100437,
+      "sha256": "ee7e98a7180e7bc2ded300ac2e7cfedf80c2c68f20f6b0a11f7a50ad9a505307",
+      "stored_sha256": "aa62f1711429329945dfaeabe2698ffa6e9f0b371006e17ebda0187ef1fac6f9"
+    },
+    {
+      "path": "backend/ml/reports/website-breadth.json",
+      "stored_path": "backend/ml/reports/website-breadth.json.gz",
+      "bytes": 90873,
+      "stored_bytes": 16833,
+      "sha256": "1df44f06d34d6ffb5af7ce2f1abf4596e4e6ad7b9f7ff02b1fad9af1cd1e37dd",
+      "stored_sha256": "fcdd2e7dc3ef91a572486f8ad28c1061871f4f366ea6b23f88051dfe2981c770"
+    }
+  ]
+}

@@ -7,14 +7,12 @@ import json
 import os
 import statistics
 import sys
-import tempfile
 import time
 from pathlib import Path
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / "ml")]
-
 from bs4 import BeautifulSoup
 from evaluate_breadth import aggregate, checked_scope, score_sets
 from evaluate_extraction_audit import memory_usage, parser_identity, scope
@@ -24,10 +22,11 @@ from verify_model_pipeline import expected_urls
 from app.tracker.cascade_model import CascadeModel
 from app.tracker.context_model import ContextModel
 from app.tracker.parser import parse_page
+from ml.artifacts import exists, read_bytes, read_json, write_bytes
 
 
 def load_model(path):
-    data = json.loads(path.read_text(encoding="utf8"))
+    data = read_json(path)
     return CascadeModel(data) if "light" in data else ContextModel(data)
 
 
@@ -72,27 +71,13 @@ def atomic_json(path, value, attempts=4):
     encoded = (json.dumps(value, indent=2) + "\n").encode("utf8")
     transient = {errno.EACCES, errno.EBUSY, errno.EINTR, errno.EINVAL, errno.EPERM}
     for attempt in range(attempts):
-        temporary = None
         try:
-            fd, temporary = tempfile.mkstemp(
-                prefix="." + path.name + ".", suffix=".tmp", dir=path.parent
-            )
-            with os.fdopen(fd, "wb") as handle:
-                handle.write(encoded)
-                handle.flush()
-                os.fsync(handle.fileno())
-            os.replace(temporary, path)
+            write_bytes(path, encoded)
             return
         except OSError as exc:
             if attempt + 1 == attempts or exc.errno not in transient:
                 raise
             time.sleep(0.05 * 2**attempt)
-        finally:
-            if temporary is not None:
-                try:
-                    os.unlink(temporary)
-                except FileNotFoundError:
-                    pass
 
 
 def checkpoint(path, report, *, final=False):
@@ -119,7 +104,7 @@ def run_inputs(args, sources, manifest_paths):
         repeats=args.repeats,
         python=sys.version,
         model_sha256={
-            name: hashlib.sha256(path.read_bytes()).hexdigest()
+            name: hashlib.sha256(read_bytes(path)).hexdigest()
             for name, path in (
                 ("baseline", args.baseline),
                 ("candidate", args.candidate),
@@ -146,7 +131,7 @@ def run_inputs(args, sources, manifest_paths):
 
 
 def resumed_report(path, fingerprint):
-    previous = json.loads(path.read_text(encoding="utf8"))
+    previous = read_json(path)
     if previous.get("run_fingerprint") != fingerprint:
         raise ValueError(
             "Resume inputs changed: models, captures, manifests, runtime, or evaluation options. "
@@ -208,7 +193,7 @@ def main():
         run_fingerprint=fingerprint,
         complete=False,
         model_sha256={
-            name: hashlib.sha256(path.read_bytes()).hexdigest()
+            name: hashlib.sha256(read_bytes(path)).hexdigest()
             for name, path in (
                 ("baseline", args.baseline),
                 ("candidate", args.candidate),
@@ -220,7 +205,7 @@ def main():
         pages={},
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    if args.resume and args.output.exists():
+    if args.resume and exists(args.output):
         report = resumed_report(args.output, fingerprint)
     for source in sources.values():
         if source["id"] in report["pages"]:

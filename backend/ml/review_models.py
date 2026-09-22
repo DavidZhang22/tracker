@@ -21,9 +21,14 @@ from sklearn.neural_network import MLPClassifier
 from threadpoolctl import threadpool_limits
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path[:0] = [os.environ.get("TRACKER_ML_APP_ROOT", str(ROOT)), str(ROOT / "ml")]
+sys.path[:0] = [
+    os.environ.get("TRACKER_ML_APP_ROOT", str(ROOT)),
+    str(ROOT),
+    str(ROOT / "ml"),
+]
 from app.tracker.cascade_model import CascadeModel, decision_score, load_cascade_model
 from app.tracker.context_model import NUMERIC_FEATURES, ContextModel, nuisance_context
+from ml.artifacts import read_json, write_text
 from ml.evaluation import metrics
 
 
@@ -31,7 +36,11 @@ class RefinementCandidate(CascadeModel):
     """Offline challenger only; withheld when full-page regression gates fail."""
 
     def __init__(self, data):
-        base = {k: v for k, v in data.items() if k not in {"refinement", "refinement_policy"}}
+        base = {
+            k: v
+            for k, v in data.items()
+            if k not in {"refinement", "refinement_policy"}
+        }
         super().__init__(base)
         self.review_refinement = ContextModel(data["refinement"], allow_fallback=False)
 
@@ -265,8 +274,9 @@ def main():
             ),
         )
         payload["threshold"] = selected["threshold"]
-        (args.output / (name + ".json")).write_text(
-            json.dumps(payload, separators=(",", ":")) + "\n"
+        write_text(
+            args.output / (name + ".json"),
+            json.dumps(payload, separators=(",", ":")) + "\n",
         )
         report["candidates"][name] = dict(
             seconds=time.perf_counter() - start,
@@ -282,9 +292,7 @@ def main():
         )
         print(name, {k: v for k, v in selected.items() if k != "by_source"}, flush=True)
     payload = json.loads((ROOT / "app/tracker/link-cascade-model.json").read_text())
-    payload["refinement"] = json.loads(
-        (args.output / (args.refinement + ".json")).read_text()
-    )
+    payload["refinement"] = read_json(args.output / (args.refinement + ".json"))
     payload["refinement"].update(threshold=0.9, reject_threshold=0.1)
     payload["model_id"] = (
         "cascade-refined-v2-"
@@ -297,10 +305,10 @@ def main():
     report["deployment"] = (
         "Research artifact only. Requires complete-page holdout and runtime gates; never auto-promoted."
     )
-    (args.output / "cascade.json").write_text(
-        json.dumps(payload, separators=(",", ":")) + "\n"
+    write_text(
+        args.output / "cascade.json", json.dumps(payload, separators=(",", ":")) + "\n"
     )
-    (args.output / "report.json").write_text(json.dumps(report, indent=2) + "\n")
+    write_text(args.output / "report.json", json.dumps(report, indent=2) + "\n")
 
 
 if __name__ == "__main__":

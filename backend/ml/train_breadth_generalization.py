@@ -29,6 +29,7 @@ from train_cascade import vectorize
 from app.tracker.cascade_model import CascadeModel
 from app.tracker.context_model import NUMERIC_FEATURES, ContextModel
 from app.tracker.native_model import kernel
+from ml.artifacts import exists, read_bytes, read_json, write_bytes, write_text
 
 SEED = 20260922
 ROLES = (
@@ -63,13 +64,15 @@ SPECS = (
 
 def frozen_baseline(directory):
     path = directory / "baseline-cascade.json"
-    if not path.exists():
-        path.write_bytes((ROOT / "app/tracker/link-cascade-model.json").read_bytes())
-    return CascadeModel(json.loads(path.read_text(encoding="utf8")))
+    if not exists(path):
+        write_bytes(path, (ROOT / "app/tracker/link-cascade-model.json").read_bytes())
+    return CascadeModel(read_json(path))
 
 
 def write(path, data):
-    path.write_text(json.dumps(data, indent=2, allow_nan=False) + "\n", encoding="utf8")
+    write_text(
+        path, json.dumps(data, indent=2, allow_nan=False) + "\n", encoding="utf8"
+    )
 
 
 def family(row):
@@ -329,7 +332,7 @@ def main():
     historical_floor = baseline["historical_validation"]["macro_f1"] - 0.04
     report = dict(
         protocol_sha256=hashlib.sha256(
-            (args.output / "protocol.json").read_bytes()
+            read_bytes(args.output / "protocol.json")
         ).hexdigest(),
         counts=counts,
         baseline=baseline,
@@ -423,14 +426,14 @@ def main():
         )
         assert parity < 1e-8, (name, parity)
         path = args.output / (name + ".json")
-        path.write_text(
-            json.dumps(payload, separators=(",", ":")) + "\n", encoding="utf8"
+        write_text(
+            path, json.dumps(payload, separators=(",", ":")) + "\n", encoding="utf8"
         )
-        assert path.stat().st_size < 2_000_000
+        assert len(read_bytes(path)) < 2_000_000
         result = dict(
             name=name,
             seconds=round(time.perf_counter() - begin, 3),
-            model_bytes=path.stat().st_size,
+            model_bytes=len(read_bytes(path)),
             export_max_error=parity,
             convergence_warnings=[str(w.message) for w in caught],
             selected=chosen,
@@ -534,19 +537,23 @@ def main():
     selected_path = args.output / (
         "chosen-cascade.json" if is_cascade else "chosen-context.json"
     )
-    selected_path.write_text(
-        json.dumps(payload, separators=(",", ":")) + "\n", encoding="utf8"
+    write_text(
+        selected_path,
+        json.dumps(payload, separators=(",", ":")) + "\n",
+        encoding="utf8",
     )
     if is_cascade:
-        (args.output / "chosen-context.json").write_text(
-            json.dumps(payload["light"], separators=(",", ":")) + "\n", encoding="utf8"
+        write_text(
+            args.output / "chosen-context.json",
+            json.dumps(payload["light"], separators=(",", ":")) + "\n",
+            encoding="utf8",
         )
     selection = dict(
         candidate=name,
         threshold=0.5 if is_cascade else payload["threshold"],
         eligible=best["selected"]["eligible"],
         selection_metric="breadth validation site macro F1 with frozen gates",
-        model_sha256=hashlib.sha256(selected_path.read_bytes()).hexdigest(),
+        model_sha256=hashlib.sha256(read_bytes(selected_path)).hexdigest(),
         artifact=selected_path.name,
         validation=best["selected"],
     )
@@ -648,7 +655,7 @@ def refine_main():
     protocol = dict(
         seed=SEED,
         original_protocol_sha256=hashlib.sha256(
-            (first / "protocol.json").read_bytes()
+            read_bytes(first / "protocol.json")
         ).hexdigest(),
         partitions="Same family assignments as V1. Its nine test websites are now disclosed regression data, still excluded from all V2 fitting/selection. Fresh external holdout remains unexamined.",
         candidates=["v1:" + name for name, _, _ in SPECS]
@@ -662,19 +669,21 @@ def refine_main():
             dict(mode="disagreement", ceiling=0.90),
         ],
         selection="Breadth precision >=.80, breadth macroF1 > baseline, historical public-only precision/recall/macroF1 at most .03 below baseline. Eligible choices ranked by breadth macroF1, historical public F1, smaller bytes.",
-        baseline_sha256=hashlib.sha256(base_path.read_bytes()).hexdigest(),
+        baseline_sha256=hashlib.sha256(read_bytes(base_path)).hexdigest(),
         no_test_evaluation=True,
         max_new_trees=180,
         max_new_mlp=[64, 32],
         max_vocab=384,
     )
     protocol_path = args.output / "protocol.json"
-    if protocol_path.exists() and json.loads(protocol_path.read_text()) != protocol:
-        raise ValueError("Refinement protocol changed")
-    write(protocol_path, protocol)
+    if exists(protocol_path):
+        if read_json(protocol_path) != protocol:
+            raise ValueError("Refinement protocol changed")
+    else:
+        write(protocol_path, protocol)
     baseline = frozen_baseline(first)
     assert baseline is not None
-    base_payload = json.loads(base_path.read_text(encoding="utf8"))
+    base_payload = read_json(base_path)
     datasets = {"breadth": valid, "historical_public": historical}
     baseline_scores = {
         k: np.array(baseline.score_many(rows)) for k, rows in datasets.items()
@@ -687,7 +696,7 @@ def refine_main():
         k: summarize(rows, baseline_scores[k] >= 0.5) for k, rows in datasets.items()
     }
     report = dict(
-        protocol_sha256=hashlib.sha256(protocol_path.read_bytes()).hexdigest(),
+        protocol_sha256=hashlib.sha256(read_bytes(protocol_path)).hexdigest(),
         counts=counts,
         baseline=baseline_metrics,
         fits=[],
@@ -695,9 +704,7 @@ def refine_main():
     )
     payloads = {}
     for name, _, _ in SPECS:
-        payloads["v1:" + name] = json.loads(
-            (first / (name + ".json")).read_text(encoding="utf8")
-        )
+        payloads["v1:" + name] = read_json(first / (name + ".json"))
     vocab, idf = vocabulary(train)
     sample_weight = refine_weights(train)
     for name, mode, kind in (
@@ -743,8 +750,8 @@ def refine_main():
         )
         assert parity < 1e-8
         path = args.output / (name + ".json")
-        path.write_text(
-            json.dumps(payload, separators=(",", ":")) + "\n", encoding="utf8"
+        write_text(
+            path, json.dumps(payload, separators=(",", ":")) + "\n", encoding="utf8"
         )
         payloads[name] = payload
         report["fits"].append(
@@ -752,7 +759,7 @@ def refine_main():
                 name=name,
                 seconds=round(time.perf_counter() - begin, 3),
                 export_max_error=parity,
-                bytes=path.stat().st_size,
+                bytes=len(read_bytes(path)),
                 warnings=[str(w.message) for w in caught],
             )
         )
@@ -841,12 +848,12 @@ def refine_main():
     payload["refinement"].update(threshold=best["high"], reject_threshold=best["low"])
     payload["refinement_policy"] = best["policy"]
     path = args.output / "chosen-refinement.json"
-    path.write_text(json.dumps(payload, separators=(",", ":")) + "\n", encoding="utf8")
+    write_text(path, json.dumps(payload, separators=(",", ":")) + "\n", encoding="utf8")
     report["selection"] = dict(
         best,
         artifact=path.name,
-        sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
-        bytes=path.stat().st_size,
+        sha256=hashlib.sha256(read_bytes(path)).hexdigest(),
+        bytes=len(read_bytes(path)),
     )
     write(args.output / "selection-lock.json", report["selection"])
     write(args.output / "validation-report.json", report)
@@ -881,9 +888,7 @@ def explicit_chrome(rows):
 def structural_main():
     output = ROOT / "ml/experiments/breadth-generalization-v2"
     first = ROOT / "ml/experiments/breadth-generalization"
-    protocol = json.loads(
-        (output / "structural-routing-protocol.json").read_text(encoding="utf8")
-    )
+    protocol = read_json(output / "structural-routing-protocol.json")
     breadth, _ = freeze_protocol(first)
     groups, _ = prepare(breadth)
     datasets = {
@@ -901,21 +906,16 @@ def structural_main():
     base_metrics = {
         k: summarize(rows, base_scores[k] >= 0.5) for k, rows in datasets.items()
     }
-    candidates = {
-        name: json.loads((first / (name + ".json")).read_text(encoding="utf8"))
-        for name, _, _ in SPECS
-    }
+    candidates = {name: read_json(first / (name + ".json")) for name, _, _ in SPECS}
     for name in (
         "soft-numeric-trees",
         "soft-numeric-neural64x32",
         "soft-text-neural32",
     ):
-        candidates[name] = json.loads(
-            (output / (name + ".json")).read_text(encoding="utf8")
-        )
+        candidates[name] = read_json(output / (name + ".json"))
     report = dict(
         protocol_sha256=hashlib.sha256(
-            (output / "structural-routing-protocol.json").read_bytes()
+            read_bytes(output / "structural-routing-protocol.json")
         ).hexdigest(),
         baseline=base_metrics,
         candidates=[],
@@ -985,18 +985,18 @@ def structural_main():
             c["quality"]["historical_public"]["f1"],
         ),
     )
-    payload = json.loads((first / "baseline-cascade.json").read_text(encoding="utf8"))
+    payload = read_json(first / "baseline-cascade.json")
     payload["model_id"] = "breadth-structural-refinement-v2"
     payload["refinement"] = json.loads(json.dumps(candidates[best["name"]]))
     payload["refinement"].update(threshold=best["high"], reject_threshold=best["low"])
     payload["refinement_policy"] = {"mode": "structural", "title_override": True}
     path = output / "chosen-structural-refinement.json"
-    path.write_text(json.dumps(payload, separators=(",", ":")) + "\n", encoding="utf8")
+    write_text(path, json.dumps(payload, separators=(",", ":")) + "\n", encoding="utf8")
     report["selection"] = dict(
         best,
         artifact=path.name,
-        sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
-        bytes=path.stat().st_size,
+        sha256=hashlib.sha256(read_bytes(path)).hexdigest(),
+        bytes=len(read_bytes(path)),
     )
     write(output / "structural-selection-lock.json", report["selection"])
     write(output / "structural-validation-report.json", report)

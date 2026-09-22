@@ -20,6 +20,7 @@ from train import metrics
 
 from app.tracker.context_model import ContextModel
 from app.tracker.parser import candidate_url, parse_page
+from ml.artifacts import read_json, write_text
 
 
 def main():
@@ -31,7 +32,7 @@ def main():
         (ROOT / "app/tracker/link-context-model.json").read_text(encoding="utf-8")
     )
     candidate = copy.deepcopy(baseline)
-    candidate["fallback"] = json.loads(args.candidate.read_text(encoding="utf-8"))
+    candidate["fallback"] = read_json(args.candidate)
     candidate["model_id"] = "generalization-candidate"
     # Preserve job-table behavior and compare at the existing acceptance threshold.
     datasets = [
@@ -114,7 +115,7 @@ def main():
             pages=pages,
         )
         print(name, json.dumps(pages), flush=True)
-    args.output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    write_text(args.output, json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

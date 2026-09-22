@@ -28,6 +28,7 @@ from app.tracker.link_model import FEATURES, load_model
 from app.tracker.native_model import kernel
 from app.tracker.parser import parse_page
 from app.tracker.urls import canonical_url, canonical_url_cache
+from ml.artifacts import write_text
 
 
 def target(href, base):
@@ -267,9 +268,7 @@ def main():
         )
         report["pages"][source["id"]] = page
         all_rows.extend(rows)
-        args.output.write_text(
-            json.dumps(report, indent=2) + "\n", encoding="utf8", newline="\n"
-        )
+        write_text(args.output, json.dumps(report, indent=2) + "\n", encoding="utf8")
         print(
             source["id"],
             f"{page['correct']}/{page['expected']}",
@@ -310,9 +309,7 @@ def main():
         newline="\n",
     )
     report["dataset_sha256"] = hashlib.sha256(args.dataset.read_bytes()).hexdigest()
-    args.output.write_text(
-        json.dumps(report, indent=2) + "\n", encoding="utf8", newline="\n"
-    )
+    write_text(args.output, json.dumps(report, indent=2) + "\n", encoding="utf8")
     print(json.dumps(report["summary"]), flush=True)
 
 

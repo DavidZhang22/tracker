@@ -1,4 +1,4 @@
-import { librarySearchIndex } from "../media.js";
+import { librarySearchIndex } from "./searchIndex.js";
 
 export function createSearchHandler(send) {
   let search = null;

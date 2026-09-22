@@ -1,4 +1,4 @@
-import { librarySearchIndex } from "../media.js";
+import { librarySearchIndex } from "./searchIndex.js";
 import { workerSearchRows } from "./snapshot.js";
 
 export const WORKER_THRESHOLD = 50;

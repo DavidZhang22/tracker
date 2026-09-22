@@ -3,11 +3,16 @@
 import argparse
 import hashlib
 import json
+import sys
 from collections import Counter
 from pathlib import Path
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from ml.artifacts import read_bytes, read_json, write_text
+
 HISTORICAL_MANIFESTS = (
     "sources",
     "v2_sources",
@@ -38,9 +43,7 @@ def historical_sources():
             sources[row["id"]] = row
     result = []
     for name in HISTORICAL_REPORTS:
-        report = json.loads(
-            (ROOT / "ml/reports" / (name + ".json")).read_text(encoding="utf8")
-        )
+        report = read_json(ROOT / "ml/reports" / (name + ".json"))
         for sid, page in report["pages"].items():
             row = sources[sid]
             host = urlsplit(row["url"]).hostname.removeprefix("www.")
@@ -159,7 +162,7 @@ def main():
     feature_rows = 0
     model_metrics = {}
     for path in args.report:
-        report = json.loads(path.read_text(encoding="utf8"))
+        report = read_json(path)
         feature_rows += report["feature_rows"]
         for sid, page in report["pages"].items():
             row = sources[sid]
@@ -278,15 +281,13 @@ def main():
         ],
         input_sha256={
             p.resolve().relative_to(ROOT).as_posix(): hashlib.sha256(
-                p.read_bytes()
+                read_bytes(p)
             ).hexdigest()
             for p in args.manifest + args.report
         },
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(
-        json.dumps(report, indent=2) + "\n", encoding="utf8", newline="\n"
-    )
+    write_text(args.output, json.dumps(report, indent=2) + "\n", encoding="utf8")
     print(
         json.dumps(
             {

@@ -16,6 +16,9 @@ from pathlib import Path
 from unittest.mock import patch
 from urllib.parse import urlsplit
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from ml.artifacts import read_json, write_text
+
 
 def setup(path):
     sys.path.insert(0, path)
@@ -109,18 +112,10 @@ def main():
         from app.tracker.cascade_model import CascadeModel
 
         models["text-neural"] = ContextModel(
-            json.loads(
-                (args.data_root / "ml/experiments/cascade/neural64x32.json").read_text(
-                    encoding="utf8"
-                )
-            )
+            read_json(args.data_root / "ml/experiments/cascade/neural64x32.json")
         )
         models["tree-neural-cascade"] = CascadeModel(
-            json.loads(
-                (
-                    args.data_root / "ml/experiments/structural-cascade/cascade.json"
-                ).read_text(encoding="utf8")
-            )
+            read_json(args.data_root / "ml/experiments/structural-cascade/cascade.json")
         )
     if args.rescue:
         from app.tracker.cascade_model import load_cascade_model
@@ -166,7 +161,7 @@ def main():
                 print(name, source["id"], json.dumps(pages[source["id"]]), flush=True)
         report["models"][name] = dict(model_id=model.model_id, pages=pages)
     if args.stress:
-        args.output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf8")
+        write_text(args.output, json.dumps(report, indent=2) + "\n", encoding="utf8")
         html = (
             "<main>"
             + "".join(
@@ -201,7 +196,7 @@ def main():
     peak = Path("/sys/fs/cgroup/memory.peak")
     report["container_peak_bytes"] = int(peak.read_text()) if peak.exists() else None
     report["native_disabled"] = os.environ.get("TRACKER_NATIVE_MODEL") == "off"
-    args.output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf8")
+    write_text(args.output, json.dumps(report, indent=2) + "\n", encoding="utf8")
 
 
 if __name__ == "__main__":

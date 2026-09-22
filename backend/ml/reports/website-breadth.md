@@ -4,7 +4,7 @@ Recorded September 21, 2026. Runtime models and application behavior were not ch
 
 ## Coverage
 
-**113 distinct website families across 114 evaluated listing pages:** 62 historical families plus 51 new families. Subdomains are grouped with their parent website; different pages on Python.org count once. The machine-readable [site index and summary](website-breadth.json) lists every historical and new source.
+**113 distinct website families across 114 evaluated listing pages:** 62 historical families plus 51 new families. Subdomains are grouped with their parent website; different pages on Python.org count once. The machine-readable [site index and summary](website-breadth.json.gz) lists every historical and new source.
 
 The expansion adds **16,809 labeled candidate rows** and **4,829 intended content URLs** across 39 subject-area labels. Candidate rows can contain repeated anchors; evaluation deduplicates by source and canonical URL. All new rows are marked `test`, and no model weights or thresholds were fitted on them.
 
@@ -55,7 +55,7 @@ Any subsequent development on these new examples should reclassify them as devel
 - No content-detail downloads, pagination crawls, browser execution, credentials, access-control workarounds, or retries after refusals. The run recorded **174 network requests and 16,545,311 received bytes**. Offline evaluation made no requests.
 - A final [offline policy audit](breadth-robots-audit.json) checked original and final URLs for all 51 evaluated sites: 44 verified saved robots policies and seven original robots 404 responses, with no disallowed evaluated URLs.
 - Positive scopes were annotated from saved DOM before predictions, using selectors and explicit expected URL sets. Captures and scopes are hashed, and the evaluator rejects changed labels or captures.
-- A separate reviewer inspected six varied scopes without seeing predictions. After the initial run, 123 GNU submanual URLs, 62 NGINX CVE references, and one Netlib alternate scan were made neutral. Positive labels did not change. The [initial technical report](breadth-technical-initial.json) and per-source review provenance are retained; this is not a pristine blind evaluation.
+- A separate reviewer inspected six varied scopes without seeing predictions. After the initial run, 123 GNU submanual URLs, 62 NGINX CVE references, and one Netlib alternate scan were made neutral. Positive labels did not change. The [initial technical report](breadth-technical-initial.json.gz) and per-source review provenance are retained; this is not a pristine blind evaluation.
 - Labels are assistant-reviewed weak scope annotations, not independent human gold. Website families can share publishers or templates. RHS has one target URL; excluding that sparse page still leaves 112 families.
 - Historical coverage includes training, validation, test, and holdout pages. Historical results keep their original reports and are not pooled into a current accuracy score. No new family overlaps recorded source/page URLs in existing JSONL datasets; synthetic or missing origin metadata cannot prove full domain disjointness.
 

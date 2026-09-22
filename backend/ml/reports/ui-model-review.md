@@ -53,7 +53,7 @@ Each replay used a fresh network-disabled candidate container capped at **1 GiB 
 
 The 500-item fixture uses distinct metadata/vector buffers copied from 56 public profiles; it is a load test, not 500 independently labeled sources. It excludes initial generation of 500 descriptions, database queries, HTTP and rendering. The browser worker was remeasured at 500 items; its documented before/after comparison is for the previous optimization, not a new speedup in this release.
 
-Raw reports: [extraction runtime](extraction-audit-linux.json), [parser runtime](extraction-audit-parser-linux.json), [search/media runtime](non-extraction-audit-linux.json), [screening](content-safety-linux.json).
+Raw reports: [extraction runtime](extraction-audit-linux.json.gz), [parser runtime](extraction-audit-parser-linux.json), [search/media runtime](non-extraction-audit-linux.json), [screening](content-safety-linux.json).
 
 ## Verification and remaining work
 

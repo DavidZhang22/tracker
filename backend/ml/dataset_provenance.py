@@ -3,9 +3,13 @@
 import hashlib
 import json
 
+from ml.artifacts import exists, read_json, write_text
+
 
 def _write_json(path, data):
-    path.write_text(json.dumps(data, indent=2, allow_nan=False) + "\n", encoding="utf8")
+    write_text(
+        path, json.dumps(data, indent=2, allow_nan=False) + "\n", encoding="utf8"
+    )
 
 
 def freeze_protocol_document(path, proposed, dataset_paths):
@@ -17,8 +21,8 @@ def freeze_protocol_document(path, proposed, dataset_paths):
     hashes = {name: hashlib.sha256(value).hexdigest() for name, value in raw.items()}
     if proposed.get("dataset_sha256") != hashes:
         raise ValueError("Proposed dataset hashes do not match input bytes")
-    existing = path.exists()
-    frozen = json.loads(path.read_text(encoding="utf8")) if existing else proposed
+    existing = exists(path)
+    frozen = read_json(path) if existing else proposed
     if {k: v for k, v in frozen.items() if k != "dataset_sha256"} != {
         k: v for k, v in proposed.items() if k != "dataset_sha256"
     }:
@@ -28,8 +32,8 @@ def freeze_protocol_document(path, proposed, dataset_paths):
     if set(frozen["dataset_sha256"]) != set(raw):
         raise ValueError("Frozen dataset inventory differs")
     provenance_path = path.with_name("input-provenance.json")
-    if provenance_path.exists():
-        provenance = json.loads(provenance_path.read_text(encoding="utf8"))
+    if exists(provenance_path):
+        provenance = read_json(provenance_path)
         if (
             provenance.get("version") != 1
             or provenance.get("normalization") != "CRLF-to-LF only"
@@ -63,6 +67,6 @@ def freeze_protocol_document(path, proposed, dataset_paths):
             raise ValueError("Frozen dataset content differs: " + name)
     if not existing:
         _write_json(path, frozen)
-    if not provenance_path.exists():
+    if not exists(provenance_path):
         _write_json(provenance_path, provenance)
     return frozen

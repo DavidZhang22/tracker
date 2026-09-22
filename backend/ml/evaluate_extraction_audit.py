@@ -13,8 +13,7 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 APP_ROOT = Path(os.environ.get("TRACKER_ML_APP_ROOT", ROOT))
-sys.path[:0] = [str(APP_ROOT), str(ROOT / "ml")]
-
+sys.path[:0] = [str(APP_ROOT), str(ROOT), str(ROOT / "ml")]
 from bs4 import BeautifulSoup
 from evaluation import metrics
 
@@ -27,6 +26,7 @@ from app.tracker.native_model import kernel
 from app.tracker.parser import parse_page
 from app.tracker.record_context import RecordContext, load_record_model, predict
 from app.tracker.urls import DiscoveryError, canonical_url, canonical_url_cache
+from ml.artifacts import read_json, write_text
 
 MANIFEST = ROOT / "ml/datasets/extraction-audit-sources.json"
 DATASET = ROOT / "ml/datasets/extraction-audit-dataset.jsonl"
@@ -205,7 +205,8 @@ def build():
         encoding="utf8",
     )
     output = ROOT / "ml/reports/extraction-audit-records.json"
-    output.write_text(
+    write_text(
+        output,
         json.dumps(dict(cases=record_cases, inventory=inventory), indent=2) + "\n",
         encoding="utf8",
     )
@@ -355,9 +356,7 @@ def evaluate(output, repeats=3):
         ],
         [p >= boundary_model["threshold"] for p in predictions],
     )
-    cases = json.loads(
-        (ROOT / "ml/reports/extraction-audit-records.json").read_text(encoding="utf8")
-    )["cases"]
+    cases = read_json(ROOT / "ml/reports/extraction-audit-records.json")["cases"]
     result["record_context"] = dict(
         model_id=boundary_model["model_id"],
         candidate_region_metrics=boundary_metrics,
@@ -390,7 +389,7 @@ def evaluate(output, repeats=3):
             ),
         )
     result["memory"] = memory_usage()
-    output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf8")
+    write_text(output, json.dumps(result, indent=2) + "\n", encoding="utf8")
     print(
         json.dumps(
             {
@@ -483,7 +482,7 @@ def parser_replay(output, repeats=3):
         p["median_seconds"] for p in report["pages"].values()
     )
     report["memory"] = memory_usage()
-    output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf8")
+    write_text(output, json.dumps(report, indent=2) + "\n", encoding="utf8")
 
 
 def main():

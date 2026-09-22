@@ -23,6 +23,7 @@ from train_breadth_generalization import (
 )
 
 from app.tracker.context_model import NUMERIC_FEATURES, ContextModel
+from ml.artifacts import exists, read_bytes, read_json, write_text
 
 ROLE_NAMES = (
     "same_host",
@@ -115,7 +116,7 @@ def main():
         method="No new model fitting. Select page-group routing for frozen experts on original validation only.",
         excluded="Original9 and external8 now disclosed regression cohorts, neither used for V3 selection. No new external holdout evaluated here.",
         original_split_sha256=hashlib.sha256(
-            (first / "protocol.json").read_bytes()
+            read_bytes(first / "protocol.json")
         ).hexdigest(),
         experts=[name for name, _, _ in SPECS]
         + ["soft-numeric-trees", "soft-numeric-neural64x32", "soft-text-neural32"],
@@ -138,13 +139,17 @@ def main():
         precision_target=0.8,
         target_note="Reported target only; full-parser quality gates decide promotion.",
         baseline_sha256=hashlib.sha256(
-            (first / "baseline-cascade.json").read_bytes()
+            read_bytes(first / "baseline-cascade.json")
         ).hexdigest(),
     )
     path = output / "protocol.json"
-    if path.exists() and json.loads(path.read_text()) != protocol:
-        raise ValueError("V3 routing protocol already frozen with different content")
-    write(path, protocol)
+    if exists(path):
+        if read_json(path) != protocol:
+            raise ValueError(
+                "V3 routing protocol already frozen with different content"
+            )
+    else:
+        write(path, protocol)
     breadth, _ = freeze_protocol(first)
     groups, _ = prepare(breadth)
     datasets = {
@@ -159,19 +164,16 @@ def main():
     base = {k: np.array(baseline.score_many(rows)) for k, rows in datasets.items()}
     chrome = {k: explicit_chrome(rows) for k, rows in datasets.items()}
     metrics = {k: summarize(rows, base[k] >= 0.5) for k, rows in datasets.items()}
-    payloads = {
-        name: json.loads((first / (name + ".json")).read_text(encoding="utf8"))
-        for name, _, _ in SPECS
-    }
+    payloads = {name: read_json(first / (name + ".json")) for name, _, _ in SPECS}
     payloads.update(
         {
-            name: json.loads((second / (name + ".json")).read_text(encoding="utf8"))
+            name: read_json(second / (name + ".json"))
             for name in protocol["experts"]
             if name.startswith("soft-")
         }
     )
     report = dict(
-        protocol_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
+        protocol_sha256=hashlib.sha256(read_bytes(path)).hexdigest(),
         baseline=metrics,
         candidates=[],
         heldout_rows=0,
@@ -258,7 +260,7 @@ def main():
             flush=True,
         )
     best = max(report["candidates"], key=selection_key)
-    payload = json.loads((first / "baseline-cascade.json").read_text(encoding="utf8"))
+    payload = read_json(first / "baseline-cascade.json")
     payload["model_id"] = "breadth-group-refinement-v3"
     payload["refinement"] = json.loads(json.dumps(payloads[best["name"]]))
     payload["refinement"].update(threshold=best["high"], reject_threshold=best["low"])
@@ -273,14 +275,14 @@ def main():
         key_version=1,
     )
     artifact = output / "chosen-group-refinement.json"
-    artifact.write_text(
-        json.dumps(payload, separators=(",", ":")) + "\n", encoding="utf8"
+    write_text(
+        artifact, json.dumps(payload, separators=(",", ":")) + "\n", encoding="utf8"
     )
     report["selection"] = dict(
         best,
         artifact=artifact.name,
-        sha256=hashlib.sha256(artifact.read_bytes()).hexdigest(),
-        bytes=artifact.stat().st_size,
+        sha256=hashlib.sha256(read_bytes(artifact)).hexdigest(),
+        bytes=len(read_bytes(artifact)),
     )
     write(output / "selection-lock.json", report["selection"])
     write(output / "validation-report.json", report)
@@ -315,9 +317,9 @@ def rejection_variants():
     output.mkdir(parents=True, exist_ok=True)
     source = previous / "chosen-group-refinement.json"
     protocol = dict(
-        source_candidate_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
+        source_candidate_sha256=hashlib.sha256(read_bytes(source)).hexdigest(),
         source_protocol_sha256=hashlib.sha256(
-            (previous / "protocol.json").read_bytes()
+            read_bytes(previous / "protocol.json")
         ).hexdigest(),
         reason="The group candidate failed original historical full-parser validation. Explicit chrome was not reliable enough for learned rejection.",
         fixed="Expert weights, vocabulary, grouping, seed and cold support, and rescue threshold are unchanged.",
@@ -328,24 +330,26 @@ def rejection_variants():
         heldout_protection="The second external eight websites remain unscored and must not affect variant selection.",
     )
     path = output / "protocol.json"
-    if path.exists() and json.loads(path.read_text()) != protocol:
-        raise ValueError("V4 rejection protocol is already frozen")
-    write(path, protocol)
+    if exists(path):
+        if read_json(path) != protocol:
+            raise ValueError("V4 rejection protocol is already frozen")
+    else:
+        write(path, protocol)
     generated = []
     for threshold in protocol["rejection_thresholds"]:
-        payload = json.loads(source.read_text(encoding="utf8"))
+        payload = read_json(source)
         payload["model_id"] = f"breadth-group-v4-reject-{threshold:.2f}"
         payload["refinement"]["reject_threshold"] = threshold
         artifact = output / f"reject-{threshold:.2f}.json"
-        artifact.write_text(
-            json.dumps(payload, separators=(",", ":")) + "\n", encoding="utf8"
+        write_text(
+            artifact, json.dumps(payload, separators=(",", ":")) + "\n", encoding="utf8"
         )
         generated.append(
             dict(
                 path=artifact.name,
                 reject_threshold=threshold,
-                sha256=hashlib.sha256(artifact.read_bytes()).hexdigest(),
-                bytes=artifact.stat().st_size,
+                sha256=hashlib.sha256(read_bytes(artifact)).hexdigest(),
+                bytes=len(read_bytes(artifact)),
             )
         )
     write(output / "candidates.json", generated)

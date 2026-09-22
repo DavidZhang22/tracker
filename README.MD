@@ -74,7 +74,7 @@ A direct diagnostic request on September 15 identified Enma's response as `Forbi
 
 ## Repository layout
 
-`frontend/src` separates pages, shared controls, account code, hooks, preferences and styles. `backend/app/tracker` contains the active API, storage, source adapters and inference code. Tests live in `frontend/src/__tests__` and `backend/tests`; ML datasets, reports and design notes are grouped under `backend/ml`. `deploy` contains the production Compose configuration and backup tools. The root Compose file runs a local-only instance.
+`frontend/src` separates pages, shared controls, account code, hooks, preferences and styles. `backend/app/tracker` contains the active API, storage, source adapters and inference code. Tests live in `frontend/src/__tests__` and `backend/tests`; ML datasets, compressed historical results and design notes are grouped under `backend/ml`; the contextual model experiment and its tests live in `backend/ml/semantic_decisions` and `backend/tests/ml`. Browser search indexing lives in `frontend/src/Search`. `deploy` contains the production Compose configuration and backup tools. The root Compose file runs a local-only instance.
 
 See the [frontend guide](frontend/README.md), [backend guide](backend/README.MD), and [model tools](backend/ml/README.md) for entry points. Local databases, credentials, captures and generated build files are ignored.
 

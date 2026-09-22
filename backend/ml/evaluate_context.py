@@ -17,6 +17,7 @@ from train import metrics
 
 from app.tracker.context_model import load_context_model
 from app.tracker.parser import parse_page
+from ml.artifacts import read_json, write_text
 
 
 def main():
@@ -81,12 +82,12 @@ def main():
         )
     if args.baseline_only:
         path = ROOT / f"ml/reports/context-{args.split}-report.json"
-        report = json.loads(path.read_text())
+        report = read_json(path)
         report["parser"]["legacy"] = predictions["legacy"]
         report["parse_seconds"].update(timings)
         report["unlabelled_predictions"].update(unknown)
         report["baseline"] = "Frozen v1 parser, with v1 classifier enabled"
-        path.write_text(json.dumps(report, indent=2) + "\n")
+        write_text(path, json.dumps(report, indent=2) + "\n")
         print(json.dumps(report["parser"]["legacy"]))
         return
     model = load_context_model()
@@ -101,8 +102,9 @@ def main():
         parse_seconds=timings,
         unlabelled_predictions=unknown,
     )
-    (args.output or ROOT / f"ml/reports/context-{args.split}-report.json").write_text(
-        json.dumps(report, indent=2) + "\n"
+    write_text(
+        args.output or ROOT / f"ml/reports/context-{args.split}-report.json",
+        json.dumps(report, indent=2) + "\n",
     )
     print(json.dumps(report, indent=2))
 

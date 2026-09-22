@@ -70,7 +70,7 @@ python ml/evaluate_generalization.py --candidate data/generalization/candidate/l
 python ml/verify_document_runtime.py
 ```
 
-The last command is intended for Linux in the bounded production image. See [raw model comparison](generalization-evaluation.json) and [candidate training report](../experiments/generalization/training-report.json).
+The last command is intended for Linux in the bounded production image. See [raw model comparison](generalization-evaluation.json.gz) and [candidate training report](../experiments/generalization/training-report.json.gz).
 
 ## Deployment verification
 

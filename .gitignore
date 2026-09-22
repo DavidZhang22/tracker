@@ -68,3 +68,9 @@ backend/ml/experiments/semantic-decision/lexical-linear.json
 backend/ml/experiments/semantic-decision/numeric-neural.json
 backend/ml/experiments/semantic-decision/minilm-l6-linear.json
 backend/ml/experiments/semantic-decision/minilm-l3-neural.json
+
+# Opt-in verification output is regenerated locally, not versioned.
+backend/tests/live-report.json
+backend/tests/collections-report.json
+# Historical cache paths created by running commands from the wrong directory.
+backend/backend/data/

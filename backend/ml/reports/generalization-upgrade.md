@@ -64,7 +64,7 @@ Independent inference verification covered 6,507 validation rows with exact runt
 
 ## Reproduce and audit
 
-[Promotion gates and report hashes](generalization-upgrade-gates.json), [Linux measurements](generalization-upgrade-linux.json), and the [experiment ledger](../experiments/breadth-generalization-v4/experiment-summary.json) retain successful and rejected approaches. Full per-page reports are linked from the gate file. The original baseline and selected production artifact are retained; redundant generated experts and expanded search grids are archived locally under ignored `backend/data/generalization-experiment-archive/` and can be regenerated.
+[Promotion gates and report hashes](generalization-upgrade-gates.json), [Linux measurements](generalization-upgrade-linux.json), and the [experiment ledger](../experiments/breadth-generalization-v4/experiment-summary.json.gz) retain successful and rejected approaches. Full per-page reports are linked from the gate file. The original baseline and selected production artifact are retained; redundant generated experts and expanded search grids are archived locally under ignored `backend/data/generalization-experiment-archive/` and can be regenerated.
 
 Install the backend's optional `ml` dependencies for training. From the repository root:
 

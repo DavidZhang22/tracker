@@ -32,6 +32,7 @@ from app.tracker.models import Entry, Scan
 from app.tracker.parser import parse_page
 from app.tracker.store import Store
 from app.tracker.urls import SafeFetcher
+from ml.artifacts import write_text
 
 
 def cards(count):
@@ -275,7 +276,7 @@ async def main():
     assert 1 <= args.links <= 4999 and 0 <= args.padding <= 6_000_000
     result = await (pipeline(args) if args.mode == "pipeline" else profile(args))
     if args.output:
-        args.output.write_text(json.dumps(result, indent=2), encoding="utf-8")
+        write_text(args.output, json.dumps(result, indent=2), encoding="utf-8")
     print(json.dumps(result), flush=True)
 
 

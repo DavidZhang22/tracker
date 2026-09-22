@@ -24,6 +24,7 @@ sys.path.insert(0, str(ROOT / "ml"))
 from train import metrics
 
 from app.tracker.context_model import NUMERIC_FEATURES, ContextModel
+from ml.artifacts import read_bytes, read_json, write_text
 
 
 def vectorize(rows, vocabulary, idf):
@@ -244,7 +245,7 @@ def main():
     )
     assert error < 0.0001, error
     if args.fallback_model:
-        payload["fallback"] = json.loads(args.fallback_model.read_text(encoding="utf8"))
+        payload["fallback"] = read_json(args.fallback_model)
         payload["gate_feature"] = "job_table"
         payload["model_id"] = "context-tables-gated-" + digest[:12]
         runtime = ContextModel(payload)
@@ -278,10 +279,10 @@ def main():
         and best["selected"]["recall"] >= 0.9,
     )
     model_path = args.output_dir / "link-context-model.json"
-    model_path.write_text(json.dumps(payload, separators=(",", ":")) + "\n")
-    report["model_bytes"] = model_path.stat().st_size
-    (args.output_dir / "training-report.json").write_text(
-        json.dumps(report, indent=2) + "\n"
+    write_text(model_path, json.dumps(payload, separators=(",", ":")) + "\n")
+    report["model_bytes"] = len(read_bytes(model_path))
+    write_text(
+        args.output_dir / "training-report.json", json.dumps(report, indent=2) + "\n"
     )
     print(
         json.dumps(

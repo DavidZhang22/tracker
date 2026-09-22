@@ -17,12 +17,14 @@ Open http://127.0.0.1:3000 with the backend running on port 8000.
 | `src/Pages/` | Library, item, import, settings, privacy and suggestions pages |
 | `src/Components/` | Navigation shell, icons, notices and reusable controls |
 | `src/Auth/` | Account sessions, authentication forms and data controls |
-| `src/Contexts/` | Saved preferences and their provider |
-| `src/Hooks/` | Search result caching and source detection |
+| `src/Contexts/` | Saved preferences and session-scoped startup data |
+| `src/Hooks/` | Search lifecycle, result caching and source detection |
+| `src/Search/` | Browser search index, metadata snapshots and worker transport |
+| `src/media.js` | Media kinds and display labels |
 | `src/api.js` | HTTP requests and streamed refresh updates |
 | `src/styles/` | Shared and responsive styles |
 | `src/__tests__/` | Interaction and API regression tests |
-| `scripts/` | Browser checks using fixture APIs |
+| `scripts/` | [Browser checks, benchmarks and tooling tests](scripts/README.md) |
 | `public/` | App icon, manifest and downloadable CSV example |
 | `vite.config.js` | Development proxy, production output and Vitest configuration |
 | `eslint.config.js` | ESLint flat configuration |

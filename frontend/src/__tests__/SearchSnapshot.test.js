@@ -1,5 +1,5 @@
 import { searchSnapshot, workerSearchRows } from "../Search/snapshot";
-import { librarySearchIndex } from "../media";
+import { librarySearchIndex } from "../Search/searchIndex";
 
 const item = {
   id: "one",

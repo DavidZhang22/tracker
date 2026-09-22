@@ -26,6 +26,7 @@ from train import metrics
 from app.tracker.cascade_model import CascadeModel
 from app.tracker.context_model import NUMERIC_FEATURES, ContextModel
 from app.tracker.link_context import model_tokens
+from ml.artifacts import read_bytes, write_text
 
 
 def page_weights(rows, *, training=False):
@@ -246,8 +247,8 @@ def main():
             ]
         )
         path = args.output / (name + ".json")
-        path.write_text(
-            json.dumps(payload, separators=(",", ":")) + "\n", encoding="utf8"
+        write_text(
+            path, json.dumps(payload, separators=(",", ":")) + "\n", encoding="utf8"
         )
         fitted[name] = payload
         report["candidates"][name] = dict(
@@ -260,7 +261,7 @@ def main():
                 len(layer["bias"]) + sum(map(len, layer["weights"]))
                 for layer in payload["layers"]
             ),
-            bytes=path.stat().st_size,
+            bytes=len(read_bytes(path)),
             export_max_error=parity,
             calibration=payload["calibration"],
         )
@@ -328,8 +329,10 @@ def main():
         "-"
         + hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()[:12]
     )
-    (args.output / "cascade.json").write_text(
-        json.dumps(payload, separators=(",", ":")) + "\n", encoding="utf8"
+    write_text(
+        args.output / "cascade.json",
+        json.dumps(payload, separators=(",", ":")) + "\n",
+        encoding="utf8",
     )
     report["cascade"] = dict(
         deep=deep_name,
@@ -361,8 +364,10 @@ def main():
             {k: v for k, v in report["test"][name].items() if k != "by_source"},
             flush=True,
         )
-    (args.output / "report.json").write_text(
-        json.dumps(report, indent=2) + "\n", encoding="utf8"
+    write_text(
+        args.output / "report.json",
+        json.dumps(report, indent=2) + "\n",
+        encoding="utf8",
     )
 
 

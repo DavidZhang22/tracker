@@ -2,11 +2,11 @@ import { performance } from "node:perf_hooks";
 import { writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import { librarySearchIndex as current } from "../src/media.js";
+import { librarySearchIndex as current } from "../src/Search/searchIndex.js";
 
 const baselinePath = process.argv[2];
 if (!baselinePath)
-  throw new Error("Pass the previous media.js file for a comparable baseline.");
+  throw new Error("Pass a baseline module exporting librarySearchIndex for comparison.");
 const { librarySearchIndex: baseline } = await import(
   pathToFileURL(resolve(baselinePath))
 );

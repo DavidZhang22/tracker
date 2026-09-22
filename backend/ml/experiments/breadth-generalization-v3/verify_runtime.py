@@ -23,6 +23,7 @@ from app.tracker.cascade_model import CascadeModel
 from app.tracker.context_model import ContextModel
 from app.tracker.model_groups import group_key as runtime_group_key
 from app.tracker.native_model import kernel
+from ml.artifacts import read_bytes, read_json, write_text
 
 
 def timing(call, repeats=5):
@@ -56,7 +57,7 @@ def main():
     del groups, breadth
     gc.collect()
     artifact = args.candidate
-    payload = json.loads(artifact.read_text(encoding="utf8"))
+    payload = read_json(artifact)
     policy = payload["refinement_policy"]
     baseline_payload = {
         k: v for k, v in payload.items() if k not in {"refinement", "refinement_policy"}
@@ -123,7 +124,7 @@ def main():
     _, peak = tracemalloc.get_traced_memory()
     tracemalloc.stop()
     report = dict(
-        candidate_sha256=hashlib.sha256(artifact.read_bytes()).hexdigest(),
+        candidate_sha256=hashlib.sha256(read_bytes(artifact)).hexdigest(),
         rows=len(rows),
         pages=len(pages),
         heldout_rows=0,
@@ -148,7 +149,7 @@ def main():
         limitations="Local developer-machine inference timings, with resident feature rows and warmed kernels. Concurrent work may affect timing. Tracemalloc excludes some native allocations; imported training libraries make total process RSS unsuitable as production-memory evidence. This evaluates classifier inference only, not HTML parsing or network latency. Scalar group inference intentionally differs from whole-page inference.",
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf8")
+    write_text(args.output, json.dumps(report, indent=2) + "\n", encoding="utf8")
     print(json.dumps(report, indent=2))
 
 

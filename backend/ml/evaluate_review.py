@@ -15,6 +15,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / "ml")]
 from verify_model_pipeline import expected_urls
 
+from ml.artifacts import read_bytes, read_json, write_text
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
@@ -49,11 +51,11 @@ def main():
             sources[source["id"]] = source
     models = {
         "baseline": load_cascade_model(),
-        "candidate": RefinementCandidate(json.loads(args.candidate.read_text())),
+        "candidate": RefinementCandidate(read_json(args.candidate)),
     }
     report = dict(
         split=args.split,
-        candidate_sha256=hashlib.sha256(args.candidate.read_bytes()).hexdigest(),
+        candidate_sha256=hashlib.sha256(read_bytes(args.candidate)).hexdigest(),
         repeats=args.repeats,
         pages={},
         skipped=[],
@@ -127,7 +129,7 @@ def main():
         )
         report["pages"][source["id"]] = page
         print(source["id"], page["baseline"], "->", page["candidate"], flush=True)
-        args.output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf8")
+        write_text(args.output, json.dumps(report, indent=2) + "\n", encoding="utf8")
 
 
 if __name__ == "__main__":

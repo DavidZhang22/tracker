@@ -9,11 +9,12 @@ Production loads bounded numeric JSON models in [`app/tracker`](../app/tracker).
 | [`datasets/`](datasets) | Frozen training rows, dataset cards and source manifests |
 | [`reports/`](reports) | Recorded evaluations, profiles and memory measurements |
 | [`experiments/`](experiments) | Candidate model artifacts and their reports |
+| [`semantic_decisions/`](semantic_decisions) | Contextual decision-model data, training, replay and CPU benchmarks |
 | [`baselines/v1/`](baselines/v1) | Original model and parser for historical comparisons |
 | [`docs/`](docs) | Model designs, evaluation limitations and benchmark instructions |
 | `raw/` | Ignored local source captures; never private account data |
 
-The Python tools stay in this directory so existing direct CLI imports work. `train_*` and `build_*` prepare candidates and datasets; `evaluate_*` and `benchmark_*` measure them; `verify_*` exercise isolated runtime behavior. Tools that collect live pages are opt-in and retain request limits.
+Shared tools retain their direct CLI entry points. The contextual decision experiment lives in the `semantic_decisions` package, with its focused tests in `backend/tests/ml`. `train_*` and `build_*` prepare candidates and datasets; `evaluate_*` and `benchmark_*` measure them; `verify_*` exercise isolated runtime behavior. Tools that collect live pages are opt-in and retain request limits.
 
 Run from `backend`:
 
@@ -48,3 +49,21 @@ Training uses frozen feature rows. Full page replay additionally needs the ignor
 - [Fresh extraction/media/search audit, UI and description screening](reports/ui-model-review.md)
 
 - [113-website breadth evaluation, cross-domain corpus and extraction limitations](reports/website-breadth.md)
+
+## Stored results
+
+Large historical JSON reports and candidate models are stored as `.json.gz`. Small summaries, source manifests, datasets and active application models remain readable in their existing formats. [The storage inventory](artifact-storage.json) records original and compressed checksums for the archived files.
+
+Offline tools accept either the original logical `.json` path or the stored `.json.gz` path through `ml.artifacts`. Checksums and model-size measurements use the original decompressed bytes. Regenerating a compressed result keeps its storage format. Prefer a fresh output directory under `backend/data` for new experiments so recorded comparisons remain available.
+
+For external tools that require plain JSON, run from `backend`:
+
+```sh
+python -m ml.artifacts --restore ml/reports/semantic-decision-runtime-linux.json.gz
+python -m ml.artifacts ml/reports/semantic-decision-runtime-linux.json
+```
+
+The second command compresses the restored file again. Both operations verify the original bytes before removing the other copy. Source captures, databases and backups are outside this archive workflow.
+
+- [Contextual decision experiment and current commands](semantic_decisions/README.md)
+- [Recorded CPU generalization results](reports/semantic-decision.md)

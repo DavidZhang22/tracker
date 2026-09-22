@@ -75,16 +75,8 @@ No production parser, model bundle, server configuration or dependencies changed
 
 ## Evidence and reproduction
 
-[Protocol](../experiments/semantic-decision/protocol.json), [split inventory](../experiments/semantic-decision/data-summary.json), [validation grid](../experiments/semantic-decision/validation.json), [frozen selection](../experiments/semantic-decision/selection.json), [fresh holdout](semantic-decision-holdout.json), [known regression](semantic-decision-regression.json), [Linux runtime including failed parity](semantic-decision-runtime-linux.json), [batch-composition audit](semantic-decision-batch-parity.json), [collection provenance](semantic-decision-holdout-provenance.json), and [outcome/hashes](semantic-decision-gates.json).
+[Protocol](../experiments/semantic-decision/protocol.json), [split inventory](../experiments/semantic-decision/data-summary.json), [validation grid](../experiments/semantic-decision/validation.json.gz), [frozen selection](../experiments/semantic-decision/selection.json), [fresh holdout](semantic-decision-holdout.json), [known regression](semantic-decision-regression.json.gz), [Linux runtime including failed parity](semantic-decision-runtime-linux.json.gz), [batch-composition audit](semantic-decision-batch-parity.json), [collection provenance](semantic-decision-holdout-provenance.json), and [outcome/hashes](semantic-decision-gates.json).
 
-Run from the repository root with backend development and ML dependencies installed. Original ignored public HTML captures and checksum-verified MiniLM-L3/L6 assets are required; fetching a later page does not reproduce frozen annotations. Unselected heads and intermediate embeddings are reproducible local artifacts; the finalist and frozen baseline are retained.
+Current commands and prerequisites are in the [experiment guide](../semantic_decisions/README.md). The tools have moved into that package and large results use lossless gzip storage. Recorded source paths and document hashes describe commit `c4a486333396bb6224c295ed621ce1bada36db2d`; model and result bytes are unchanged.
 
-```sh
-python backend/ml/semantic_decision_experiment.py fit
-python backend/ml/semantic_decision_experiment.py evaluate --manifest backend/ml/datasets/semantic-decision-holdout-sources.json --output backend/ml/reports/semantic-decision-holdout.json
-python backend/ml/semantic_decision_experiment.py evaluate --output backend/ml/reports/semantic-decision-regression.json
-python backend/ml/benchmark_semantic_decisions.py --repeats 5 --page-id breadth-semantic-holdout-walters --page-id breadth-semantic-holdout-wireshark --page-id breadth-semantic-holdout-nostarch --evaluation backend/ml/reports/semantic-decision-holdout.json
-python backend/ml/audit_semantic_batches.py
-```
-
-The benchmark requires the matching native kernel for the stated native comparison. The measured Linux run used the existing deployment image and its compiled kernel. Container constraints are imposed externally, not by the Python benchmark. The last benchmark command is expected to fail its semantic parity gate for this frozen candidate.
+The benchmark requires the matching native kernel for the stated native comparison. The measured Linux run used the existing deployment image and its compiled kernel. Container constraints are imposed externally, not by the Python benchmark. It is expected to fail its semantic parity gate for this frozen candidate.

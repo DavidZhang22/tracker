@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { api } from "../api";
-import { librarySearchIndex, normalizeLibraryQuery } from "../media";
+import { librarySearchIndex, normalizeLibraryQuery } from "../Search/searchIndex";
 import { createLocalSearch, WORKER_THRESHOLD } from "../Search/localSearch";
 import { searchSnapshot } from "../Search/snapshot";
 

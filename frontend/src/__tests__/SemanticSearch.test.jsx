@@ -3,7 +3,7 @@ import { act, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import useLibrarySearch from "../Hooks/useLibrarySearch";
 import Description from "../Components/Description";
-import { librarySearchIndex } from "../media";
+import { librarySearchIndex } from "../Search/searchIndex";
 import { api } from "../api";
 import { createSearchHandler } from "../Search/workerHandler";
 

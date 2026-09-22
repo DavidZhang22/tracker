@@ -1,7 +1,7 @@
 import { vi } from "vitest";
 import { createLocalSearch } from "../Search/localSearch";
 import { createSearchHandler } from "../Search/workerHandler";
-import { librarySearchIndex } from "../media";
+import { librarySearchIndex } from "../Search/searchIndex";
 
 const rows = [
   {
