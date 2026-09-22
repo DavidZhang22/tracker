@@ -1,0 +1,1359 @@
+{
+  "environment": {
+    "platform": "Windows-10-10.0.19045-SP0",
+    "python": "3.12.8",
+    "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+    "logical_cpus": 16,
+    "inference_threads": 2,
+    "training_threads": 1,
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "memory_limit": "No OS memory cap on local run; measured process RSS, not a service budget proof"
+  },
+  "selection": {
+    "overall": {
+      "name": "minilm-l6-neural",
+      "threshold": 0.7,
+      "policy": "uncertain",
+      "eligible": false
+    },
+    "semantic": {
+      "name": "minilm-l6-neural",
+      "threshold": 0.7,
+      "policy": "uncertain",
+      "eligible": false
+    },
+    "validation_sha256": "d9c74c2d6c29796331b01025def458f4220b42b2e551ca67eb5edc38cf652594",
+    "protocol_sha256": "8452a34f1301e038f4d089c37b38b5dca75ffb5e383aa43e55996b6c552f1b33",
+    "finalists": {
+      "minilm-l6-neural": "ef77e60f9aa8676ccc74cbaf87671813504b9af7fedde887c5107582e5aa3002"
+    }
+  },
+  "scope": "Previously disclosed regression websites",
+  "rows": 10270,
+  "pages": 21,
+  "families": 21,
+  "candidate_ceiling": {
+    "pages": 21,
+    "expected": 3669,
+    "correct": 3669,
+    "unwanted": 5107,
+    "missing": 0,
+    "precision": 0.4181,
+    "recall": 1.0,
+    "micro_f1": 0.5896,
+    "source_macro_f1": 0.4757,
+    "complete_pages": 21,
+    "clean_complete_pages": 0,
+    "zero_recall_pages": 0,
+    "family_macro_f1": 0.4756571428571427,
+    "by_page": {
+      "gutenberg": {
+        "expected": 25,
+        "correct": 25,
+        "unwanted": 21,
+        "missing": 0,
+        "precision": 0.5435,
+        "recall": 1.0,
+        "f1": 0.7042
+      },
+      "smashing": {
+        "expected": 10,
+        "correct": 10,
+        "unwanted": 67,
+        "missing": 0,
+        "precision": 0.1299,
+        "recall": 1.0,
+        "f1": 0.2299
+      },
+      "talkpython": {
+        "expected": 560,
+        "correct": 560,
+        "unwanted": 35,
+        "missing": 0,
+        "precision": 0.9412,
+        "recall": 1.0,
+        "f1": 0.9697
+      },
+      "w3c-standards": {
+        "expected": 1233,
+        "correct": 1233,
+        "unwanted": 1792,
+        "missing": 0,
+        "precision": 0.4076,
+        "recall": 1.0,
+        "f1": 0.5791
+      },
+      "cascade-nist": {
+        "expected": 12,
+        "correct": 12,
+        "unwanted": 129,
+        "missing": 0,
+        "precision": 0.0851,
+        "recall": 1.0,
+        "f1": 0.1569
+      },
+      "cascade-britishmuseum": {
+        "expected": 11,
+        "correct": 11,
+        "unwanted": 80,
+        "missing": 0,
+        "precision": 0.1209,
+        "recall": 1.0,
+        "f1": 0.2157
+      },
+      "cascade-eff": {
+        "expected": 15,
+        "correct": 15,
+        "unwanted": 106,
+        "missing": 0,
+        "precision": 0.124,
+        "recall": 1.0,
+        "f1": 0.2206
+      },
+      "cascade-planetary": {
+        "expected": 20,
+        "correct": 20,
+        "unwanted": 95,
+        "missing": 0,
+        "precision": 0.1739,
+        "recall": 1.0,
+        "f1": 0.2963
+      },
+      "cascade-freecodecamp": {
+        "expected": 25,
+        "correct": 25,
+        "unwanted": 96,
+        "missing": 0,
+        "precision": 0.2066,
+        "recall": 1.0,
+        "f1": 0.3425
+      },
+      "review-godot": {
+        "expected": 24,
+        "correct": 24,
+        "unwanted": 45,
+        "missing": 0,
+        "precision": 0.3478,
+        "recall": 1.0,
+        "f1": 0.5161
+      },
+      "review-signal": {
+        "expected": 154,
+        "correct": 154,
+        "unwanted": 126,
+        "missing": 0,
+        "precision": 0.55,
+        "recall": 1.0,
+        "f1": 0.7097
+      },
+      "review-projecteuler": {
+        "expected": 50,
+        "correct": 50,
+        "unwanted": 29,
+        "missing": 0,
+        "precision": 0.6329,
+        "recall": 1.0,
+        "f1": 0.7752
+      },
+      "breadth-cultural-whitney": {
+        "expected": 21,
+        "correct": 21,
+        "unwanted": 53,
+        "missing": 0,
+        "precision": 0.2838,
+        "recall": 1.0,
+        "f1": 0.4421
+      },
+      "breadth-cultural-moca": {
+        "expected": 6,
+        "correct": 6,
+        "unwanted": 30,
+        "missing": 0,
+        "precision": 0.1667,
+        "recall": 1.0,
+        "f1": 0.2857
+      },
+      "breadth-cultural-mood": {
+        "expected": 217,
+        "correct": 217,
+        "unwanted": 93,
+        "missing": 0,
+        "precision": 0.7,
+        "recall": 1.0,
+        "f1": 0.8235
+      },
+      "breadth-public-fed": {
+        "expected": 101,
+        "correct": 101,
+        "unwanted": 193,
+        "missing": 0,
+        "precision": 0.3435,
+        "recall": 1.0,
+        "f1": 0.5114
+      },
+      "breadth-public-fdic": {
+        "expected": 20,
+        "correct": 20,
+        "unwanted": 74,
+        "missing": 0,
+        "precision": 0.2128,
+        "recall": 1.0,
+        "f1": 0.3509
+      },
+      "breadth-public-bankcanada": {
+        "expected": 10,
+        "correct": 10,
+        "unwanted": 153,
+        "missing": 0,
+        "precision": 0.0613,
+        "recall": 1.0,
+        "f1": 0.1156
+      },
+      "breadth-technical-iana": {
+        "expected": 637,
+        "correct": 637,
+        "unwanted": 1365,
+        "missing": 0,
+        "precision": 0.3182,
+        "recall": 1.0,
+        "f1": 0.4828
+      },
+      "breadth-technical-busybox": {
+        "expected": 131,
+        "correct": 131,
+        "unwanted": 220,
+        "missing": 0,
+        "precision": 0.3732,
+        "recall": 1.0,
+        "f1": 0.5436
+      },
+      "breadth-technical-gnu": {
+        "expected": 387,
+        "correct": 387,
+        "unwanted": 305,
+        "missing": 0,
+        "precision": 0.5592,
+        "recall": 1.0,
+        "f1": 0.7173
+      }
+    }
+  },
+  "models": {
+    "deployed": {
+      "candidates": {
+        "pages": 21,
+        "expected": 3669,
+        "correct": 3296,
+        "unwanted": 1647,
+        "missing": 373,
+        "precision": 0.6668,
+        "recall": 0.8983,
+        "micro_f1": 0.7654,
+        "source_macro_f1": 0.7923,
+        "complete_pages": 15,
+        "clean_complete_pages": 7,
+        "zero_recall_pages": 2,
+        "family_macro_f1": 0.7922714285714285,
+        "by_page": {
+          "gutenberg": {
+            "expected": 25,
+            "correct": 25,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "smashing": {
+            "expected": 10,
+            "correct": 10,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "talkpython": {
+            "expected": 560,
+            "correct": 560,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "w3c-standards": {
+            "expected": 1233,
+            "correct": 1233,
+            "unwanted": 160,
+            "missing": 0,
+            "precision": 0.8851,
+            "recall": 1.0,
+            "f1": 0.9391
+          },
+          "cascade-nist": {
+            "expected": 12,
+            "correct": 12,
+            "unwanted": 6,
+            "missing": 0,
+            "precision": 0.6667,
+            "recall": 1.0,
+            "f1": 0.8
+          },
+          "cascade-britishmuseum": {
+            "expected": 11,
+            "correct": 11,
+            "unwanted": 3,
+            "missing": 0,
+            "precision": 0.7857,
+            "recall": 1.0,
+            "f1": 0.88
+          },
+          "cascade-eff": {
+            "expected": 15,
+            "correct": 14,
+            "unwanted": 2,
+            "missing": 1,
+            "precision": 0.875,
+            "recall": 0.9333,
+            "f1": 0.9032
+          },
+          "cascade-planetary": {
+            "expected": 20,
+            "correct": 20,
+            "unwanted": 2,
+            "missing": 0,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "cascade-freecodecamp": {
+            "expected": 25,
+            "correct": 25,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "review-godot": {
+            "expected": 24,
+            "correct": 24,
+            "unwanted": 5,
+            "missing": 0,
+            "precision": 0.8276,
+            "recall": 1.0,
+            "f1": 0.9057
+          },
+          "review-signal": {
+            "expected": 154,
+            "correct": 154,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "review-projecteuler": {
+            "expected": 50,
+            "correct": 50,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "breadth-cultural-whitney": {
+            "expected": 21,
+            "correct": 21,
+            "unwanted": 1,
+            "missing": 0,
+            "precision": 0.9545,
+            "recall": 1.0,
+            "f1": 0.9767
+          },
+          "breadth-cultural-moca": {
+            "expected": 6,
+            "correct": 0,
+            "unwanted": 0,
+            "missing": 6,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-cultural-mood": {
+            "expected": 217,
+            "correct": 216,
+            "unwanted": 22,
+            "missing": 1,
+            "precision": 0.9076,
+            "recall": 0.9954,
+            "f1": 0.9495
+          },
+          "breadth-public-fed": {
+            "expected": 101,
+            "correct": 100,
+            "unwanted": 5,
+            "missing": 1,
+            "precision": 0.9524,
+            "recall": 0.9901,
+            "f1": 0.9709
+          },
+          "breadth-public-fdic": {
+            "expected": 20,
+            "correct": 20,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "breadth-public-bankcanada": {
+            "expected": 10,
+            "correct": 10,
+            "unwanted": 25,
+            "missing": 0,
+            "precision": 0.2857,
+            "recall": 1.0,
+            "f1": 0.4444
+          },
+          "breadth-technical-iana": {
+            "expected": 637,
+            "correct": 637,
+            "unwanted": 1181,
+            "missing": 0,
+            "precision": 0.3504,
+            "recall": 1.0,
+            "f1": 0.5189
+          },
+          "breadth-technical-busybox": {
+            "expected": 131,
+            "correct": 0,
+            "unwanted": 0,
+            "missing": 131,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "breadth-technical-gnu": {
+            "expected": 387,
+            "correct": 154,
+            "unwanted": 235,
+            "missing": 233,
+            "precision": 0.3959,
+            "recall": 0.3979,
+            "f1": 0.3969
+          }
+        }
+      },
+      "pipeline": {
+        "summary": {
+          "pages": 21,
+          "expected": 3669,
+          "correct": 3420,
+          "unwanted": 1901,
+          "missing": 249,
+          "precision": 0.6427,
+          "recall": 0.9321,
+          "micro_f1": 0.7608,
+          "source_macro_f1": 0.8535,
+          "complete_pages": 18,
+          "clean_complete_pages": 10,
+          "zero_recall_pages": 1
+        },
+        "pages": {
+          "gutenberg": {
+            "expected": 25,
+            "correct": 25,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.13989649998256937,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "smashing": {
+            "expected": 10,
+            "correct": 10,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.2027317999745719,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "talkpython": {
+            "expected": 560,
+            "correct": 560,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 1.7323516000178643,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "w3c-standards": {
+            "expected": 1233,
+            "correct": 1233,
+            "unwanted": 160,
+            "missing": 0,
+            "precision": 0.8851,
+            "recall": 1.0,
+            "f1": 0.9391,
+            "parse_seconds": 7.388302200008184,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://www.w3.org/2007/03/rdf_concepts_ru/Overview.html",
+              "https://www.w3.org/TR/2012/CR-performance-timeline-20120726",
+              "https://www.w3.org/TR/2014/CR-css-masking-1-20140826",
+              "https://www.w3.org/TR/2014/CR-css-shapes-1-20140320"
+            ]
+          },
+          "cascade-nist": {
+            "expected": 12,
+            "correct": 12,
+            "unwanted": 6,
+            "missing": 0,
+            "precision": 0.6667,
+            "recall": 1.0,
+            "f1": 0.8,
+            "parse_seconds": 0.34077839995734394,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://www.nist.gov/blogs/taking-measure/enjoy-espresso-you-can-thank-precise-temperature-measurements",
+              "https://www.nist.gov/blogs/taking-measure/how-oj-simpson-trial-inspired-my-career-forensic-science",
+              "https://www.nist.gov/blogs/taking-measure/lasers-and-math-can-help-doctors-deliver-just-right-amount-medicine",
+              "https://www.nist.gov/blogs/taking-measure/nist-inventions-are-powering-our-world"
+            ]
+          },
+          "cascade-britishmuseum": {
+            "expected": 11,
+            "correct": 11,
+            "unwanted": 3,
+            "missing": 0,
+            "precision": 0.7857,
+            "recall": 1.0,
+            "f1": 0.88,
+            "parse_seconds": 0.43556299997726455,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://www.britishmuseum.org/exhibitions-events/past-exhibitions",
+              "https://www.britishmuseum.org/our-work/international/international-touring-exhibitions",
+              "https://www.britishmuseum.org/our-work/national/uk-touring-exhibitions-and-loans"
+            ]
+          },
+          "cascade-eff": {
+            "expected": 15,
+            "correct": 0,
+            "unwanted": 0,
+            "missing": 15,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "parse_seconds": 0.23019799997564405,
+            "missing_examples": [
+              "https://www.eff.org/deeplinks/2026/09/2026-eff-award-winners-access-now-7amleh-arab-center-advancement-social-media",
+              "https://www.eff.org/deeplinks/2026/09/california-tell-governor-stand-net-neutrality-affordability-and-public-safety",
+              "https://www.eff.org/deeplinks/2026/09/cold-take-amazons-new-encryption-method-still-doesnt-deliver-real-privacy",
+              "https://www.eff.org/deeplinks/2026/09/cops-play-hide-and-seek-about-using-spy-tech-avoid-scrutiny-and-bad-pr"
+            ],
+            "unwanted_examples": []
+          },
+          "cascade-planetary": {
+            "expected": 20,
+            "correct": 20,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.2941792000201531,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "cascade-freecodecamp": {
+            "expected": 25,
+            "correct": 25,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.2679653000086546,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "review-godot": {
+            "expected": 24,
+            "correct": 24,
+            "unwanted": 5,
+            "missing": 0,
+            "precision": 0.8276,
+            "recall": 1.0,
+            "f1": 0.9057,
+            "parse_seconds": 0.14684529998339713,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://godotengine.org/blog/events",
+              "https://godotengine.org/blog/news",
+              "https://godotengine.org/blog/progress-report",
+              "https://godotengine.org/blog/release"
+            ]
+          },
+          "review-signal": {
+            "expected": 154,
+            "correct": 154,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 1.4700931999832392,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "review-projecteuler": {
+            "expected": 50,
+            "correct": 50,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.17832999996608123,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "breadth-cultural-whitney": {
+            "expected": 21,
+            "correct": 21,
+            "unwanted": 1,
+            "missing": 0,
+            "precision": 0.9545,
+            "recall": 1.0,
+            "f1": 0.9767,
+            "parse_seconds": 0.1907822000212036,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://whitney.org/exhibitions/archive"
+            ]
+          },
+          "breadth-cultural-moca": {
+            "expected": 6,
+            "correct": 6,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.1314486000337638,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "breadth-cultural-mood": {
+            "expected": 217,
+            "correct": 217,
+            "unwanted": 19,
+            "missing": 0,
+            "precision": 0.9195,
+            "recall": 1.0,
+            "f1": 0.9581,
+            "parse_seconds": 1.7486962000257336,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://blog.moodfabrics.com/the-bluebell-dress-free-sewing-pattern",
+              "https://blog.moodfabrics.com/the-brassia-dress-free-sewing-pattern",
+              "https://blog.moodfabrics.com/the-cypress-dress-free-sewing-pattern",
+              "https://blog.moodfabrics.com/the-eurya-dress-free-sewing-pattern"
+            ]
+          },
+          "breadth-public-fed": {
+            "expected": 101,
+            "correct": 100,
+            "unwanted": 0,
+            "missing": 1,
+            "precision": 1.0,
+            "recall": 0.9901,
+            "f1": 0.995,
+            "parse_seconds": 0.5791465000365861,
+            "missing_examples": [
+              "https://www.frbservices.org/news/press-releases/01082026-penny-deposits-update"
+            ],
+            "unwanted_examples": []
+          },
+          "breadth-public-fdic": {
+            "expected": 20,
+            "correct": 20,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.218501599971205,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "breadth-public-bankcanada": {
+            "expected": 10,
+            "correct": 10,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.5490227999980561,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "breadth-technical-iana": {
+            "expected": 637,
+            "correct": 637,
+            "unwanted": 1277,
+            "missing": 0,
+            "precision": 0.3328,
+            "recall": 1.0,
+            "f1": 0.4994,
+            "parse_seconds": 11.127213300031144,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://www.iana.org/go/rfc10006",
+              "https://www.iana.org/go/rfc10028",
+              "https://www.iana.org/go/rfc10030",
+              "https://www.iana.org/go/rfc1028"
+            ]
+          },
+          "breadth-technical-busybox": {
+            "expected": 131,
+            "correct": 131,
+            "unwanted": 195,
+            "missing": 0,
+            "precision": 0.4018,
+            "recall": 1.0,
+            "f1": 0.5733,
+            "parse_seconds": 0.8689691999461502,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://busybox.net/downloads/BusyBox.1",
+              "https://busybox.net/downloads/BusyBox.html",
+              "https://busybox.net/downloads/BusyBox.txt",
+              "https://busybox.net/downloads/bc_with_common_bc.tar.bz2"
+            ]
+          },
+          "breadth-technical-gnu": {
+            "expected": 387,
+            "correct": 154,
+            "unwanted": 235,
+            "missing": 233,
+            "precision": 0.3959,
+            "recall": 0.3979,
+            "f1": 0.3969,
+            "parse_seconds": 1.7619586000218987,
+            "missing_examples": [
+              "http://aspell.net/man-html",
+              "http://gnubiff.sourceforge.net/documentation.php",
+              "http://homepages.inf.ed.ac.uk/timc/gurgle/gurgle.html",
+              "http://htmlpreview.github.io/?https%3A%2F%2Fgithub.com%2Fopencog%2Fguile-dbi%2Fblob%2Fmaster%2Fwebsite%2Fguile-dbi.html="
+            ],
+            "unwanted_examples": [
+              "https://www.gnu.org/software/3dldf",
+              "https://www.gnu.org/software/8sync",
+              "https://www.gnu.org/software/acct",
+              "https://www.gnu.org/software/alive"
+            ]
+          }
+        },
+        "timing_note": "Replay only. Candidate embeddings were computed separately; these timings exclude semantic inference."
+      }
+    },
+    "minilm-l6-neural": {
+      "selection": {
+        "name": "minilm-l6-neural",
+        "threshold": 0.7,
+        "policy": "uncertain",
+        "eligible": false
+      },
+      "candidates": {
+        "pages": 21,
+        "expected": 3669,
+        "correct": 3297,
+        "unwanted": 615,
+        "missing": 372,
+        "precision": 0.8428,
+        "recall": 0.8986,
+        "micro_f1": 0.8698,
+        "source_macro_f1": 0.8242,
+        "complete_pages": 15,
+        "clean_complete_pages": 6,
+        "zero_recall_pages": 0,
+        "family_macro_f1": 0.8242428571428572,
+        "by_page": {
+          "gutenberg": {
+            "expected": 25,
+            "correct": 7,
+            "unwanted": 0,
+            "missing": 18,
+            "precision": 1.0,
+            "recall": 0.28,
+            "f1": 0.4375
+          },
+          "smashing": {
+            "expected": 10,
+            "correct": 10,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "talkpython": {
+            "expected": 560,
+            "correct": 560,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "w3c-standards": {
+            "expected": 1233,
+            "correct": 1233,
+            "unwanted": 159,
+            "missing": 0,
+            "precision": 0.8858,
+            "recall": 1.0,
+            "f1": 0.9394
+          },
+          "cascade-nist": {
+            "expected": 12,
+            "correct": 12,
+            "unwanted": 5,
+            "missing": 0,
+            "precision": 0.7059,
+            "recall": 1.0,
+            "f1": 0.8276
+          },
+          "cascade-britishmuseum": {
+            "expected": 11,
+            "correct": 11,
+            "unwanted": 3,
+            "missing": 0,
+            "precision": 0.7857,
+            "recall": 1.0,
+            "f1": 0.88
+          },
+          "cascade-eff": {
+            "expected": 15,
+            "correct": 12,
+            "unwanted": 0,
+            "missing": 3,
+            "precision": 1.0,
+            "recall": 0.8,
+            "f1": 0.8889
+          },
+          "cascade-planetary": {
+            "expected": 20,
+            "correct": 20,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "cascade-freecodecamp": {
+            "expected": 25,
+            "correct": 25,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "review-godot": {
+            "expected": 24,
+            "correct": 24,
+            "unwanted": 5,
+            "missing": 0,
+            "precision": 0.8276,
+            "recall": 1.0,
+            "f1": 0.9057
+          },
+          "review-signal": {
+            "expected": 154,
+            "correct": 154,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "review-projecteuler": {
+            "expected": 50,
+            "correct": 50,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "breadth-cultural-whitney": {
+            "expected": 21,
+            "correct": 21,
+            "unwanted": 1,
+            "missing": 0,
+            "precision": 0.9545,
+            "recall": 1.0,
+            "f1": 0.9767
+          },
+          "breadth-cultural-moca": {
+            "expected": 6,
+            "correct": 2,
+            "unwanted": 0,
+            "missing": 4,
+            "precision": 1.0,
+            "recall": 0.3333,
+            "f1": 0.5
+          },
+          "breadth-cultural-mood": {
+            "expected": 217,
+            "correct": 216,
+            "unwanted": 21,
+            "missing": 1,
+            "precision": 0.9114,
+            "recall": 0.9954,
+            "f1": 0.9515
+          },
+          "breadth-public-fed": {
+            "expected": 101,
+            "correct": 100,
+            "unwanted": 2,
+            "missing": 1,
+            "precision": 0.9804,
+            "recall": 0.9901,
+            "f1": 0.9852
+          },
+          "breadth-public-fdic": {
+            "expected": 20,
+            "correct": 20,
+            "unwanted": 3,
+            "missing": 0,
+            "precision": 0.8696,
+            "recall": 1.0,
+            "f1": 0.9302
+          },
+          "breadth-public-bankcanada": {
+            "expected": 10,
+            "correct": 10,
+            "unwanted": 24,
+            "missing": 0,
+            "precision": 0.2941,
+            "recall": 1.0,
+            "f1": 0.4545
+          },
+          "breadth-technical-iana": {
+            "expected": 637,
+            "correct": 637,
+            "unwanted": 141,
+            "missing": 0,
+            "precision": 0.8188,
+            "recall": 1.0,
+            "f1": 0.9004
+          },
+          "breadth-technical-busybox": {
+            "expected": 131,
+            "correct": 131,
+            "unwanted": 213,
+            "missing": 0,
+            "precision": 0.3808,
+            "recall": 1.0,
+            "f1": 0.5516
+          },
+          "breadth-technical-gnu": {
+            "expected": 387,
+            "correct": 42,
+            "unwanted": 38,
+            "missing": 345,
+            "precision": 0.525,
+            "recall": 0.1085,
+            "f1": 0.1799
+          }
+        }
+      },
+      "pipeline": {
+        "summary": {
+          "pages": 21,
+          "expected": 3669,
+          "correct": 3290,
+          "unwanted": 1632,
+          "missing": 379,
+          "precision": 0.6684,
+          "recall": 0.8967,
+          "micro_f1": 0.7659,
+          "source_macro_f1": 0.8184,
+          "complete_pages": 17,
+          "clean_complete_pages": 9,
+          "zero_recall_pages": 1
+        },
+        "pages": {
+          "gutenberg": {
+            "expected": 25,
+            "correct": 7,
+            "unwanted": 0,
+            "missing": 18,
+            "precision": 1.0,
+            "recall": 0.28,
+            "f1": 0.4375,
+            "parse_seconds": 0.11186399997677654,
+            "missing_examples": [
+              "https://www.gutenberg.org/ebooks/11",
+              "https://www.gutenberg.org/ebooks/1342",
+              "https://www.gutenberg.org/ebooks/145",
+              "https://www.gutenberg.org/ebooks/1513"
+            ],
+            "unwanted_examples": []
+          },
+          "smashing": {
+            "expected": 10,
+            "correct": 10,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.24498839996522292,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "talkpython": {
+            "expected": 560,
+            "correct": 560,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 1.8194307000376284,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "w3c-standards": {
+            "expected": 1233,
+            "correct": 1233,
+            "unwanted": 158,
+            "missing": 0,
+            "precision": 0.8864,
+            "recall": 1.0,
+            "f1": 0.9398,
+            "parse_seconds": 7.701440999982879,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "http://www.dkg.it/w3c/TR/2004/REC-webarch-20041215/it/index.htm",
+              "http://www.w3c.es/Traducciones/es/TR/2002/REC-xmldsig-filter2-20021108",
+              "https://www.w3.org/2005/02/XOP-pt.html",
+              "https://www.w3.org/2006/05/N-aryRelationInSWRus.html"
+            ]
+          },
+          "cascade-nist": {
+            "expected": 12,
+            "correct": 12,
+            "unwanted": 5,
+            "missing": 0,
+            "precision": 0.7059,
+            "recall": 1.0,
+            "f1": 0.8276,
+            "parse_seconds": 0.38522310002008453,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://www.nist.gov/blogs/taking-measure/enjoy-espresso-you-can-thank-precise-temperature-measurements",
+              "https://www.nist.gov/blogs/taking-measure/how-oj-simpson-trial-inspired-my-career-forensic-science",
+              "https://www.nist.gov/blogs/taking-measure/lasers-and-math-can-help-doctors-deliver-just-right-amount-medicine",
+              "https://www.nist.gov/blogs/taking-measure/nist-inventions-are-powering-our-world"
+            ]
+          },
+          "cascade-britishmuseum": {
+            "expected": 11,
+            "correct": 11,
+            "unwanted": 3,
+            "missing": 0,
+            "precision": 0.7857,
+            "recall": 1.0,
+            "f1": 0.88,
+            "parse_seconds": 0.38038670003879815,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://www.britishmuseum.org/exhibitions-events/past-exhibitions",
+              "https://www.britishmuseum.org/our-work/international/international-touring-exhibitions",
+              "https://www.britishmuseum.org/our-work/national/uk-touring-exhibitions-and-loans"
+            ]
+          },
+          "cascade-eff": {
+            "expected": 15,
+            "correct": 0,
+            "unwanted": 0,
+            "missing": 15,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "parse_seconds": 0.21525799995288253,
+            "missing_examples": [
+              "https://www.eff.org/deeplinks/2026/09/2026-eff-award-winners-access-now-7amleh-arab-center-advancement-social-media",
+              "https://www.eff.org/deeplinks/2026/09/california-tell-governor-stand-net-neutrality-affordability-and-public-safety",
+              "https://www.eff.org/deeplinks/2026/09/cold-take-amazons-new-encryption-method-still-doesnt-deliver-real-privacy",
+              "https://www.eff.org/deeplinks/2026/09/cops-play-hide-and-seek-about-using-spy-tech-avoid-scrutiny-and-bad-pr"
+            ],
+            "unwanted_examples": []
+          },
+          "cascade-planetary": {
+            "expected": 20,
+            "correct": 20,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.29866470000706613,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "cascade-freecodecamp": {
+            "expected": 25,
+            "correct": 25,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.27688859996851534,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "review-godot": {
+            "expected": 24,
+            "correct": 24,
+            "unwanted": 5,
+            "missing": 0,
+            "precision": 0.8276,
+            "recall": 1.0,
+            "f1": 0.9057,
+            "parse_seconds": 0.142141200019978,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://godotengine.org/blog/events",
+              "https://godotengine.org/blog/news",
+              "https://godotengine.org/blog/progress-report",
+              "https://godotengine.org/blog/release"
+            ]
+          },
+          "review-signal": {
+            "expected": 154,
+            "correct": 154,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 1.5094457999803126,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "review-projecteuler": {
+            "expected": 50,
+            "correct": 50,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.17594849999295548,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "breadth-cultural-whitney": {
+            "expected": 21,
+            "correct": 21,
+            "unwanted": 1,
+            "missing": 0,
+            "precision": 0.9545,
+            "recall": 1.0,
+            "f1": 0.9767,
+            "parse_seconds": 0.19962679996388033,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://whitney.org/exhibitions/archive"
+            ]
+          },
+          "breadth-cultural-moca": {
+            "expected": 6,
+            "correct": 6,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.1424293000018224,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "breadth-cultural-mood": {
+            "expected": 217,
+            "correct": 217,
+            "unwanted": 19,
+            "missing": 0,
+            "precision": 0.9195,
+            "recall": 1.0,
+            "f1": 0.9581,
+            "parse_seconds": 1.9472147999913432,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://blog.moodfabrics.com/the-bluebell-dress-free-sewing-pattern",
+              "https://blog.moodfabrics.com/the-brassia-dress-free-sewing-pattern",
+              "https://blog.moodfabrics.com/the-cypress-dress-free-sewing-pattern",
+              "https://blog.moodfabrics.com/the-eurya-dress-free-sewing-pattern"
+            ]
+          },
+          "breadth-public-fed": {
+            "expected": 101,
+            "correct": 100,
+            "unwanted": 0,
+            "missing": 1,
+            "precision": 1.0,
+            "recall": 0.9901,
+            "f1": 0.995,
+            "parse_seconds": 0.6431908999802545,
+            "missing_examples": [
+              "https://www.frbservices.org/news/press-releases/01082026-penny-deposits-update"
+            ],
+            "unwanted_examples": []
+          },
+          "breadth-public-fdic": {
+            "expected": 20,
+            "correct": 20,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.2793936000089161,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "breadth-public-bankcanada": {
+            "expected": 10,
+            "correct": 10,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.45207429997390136,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "breadth-technical-iana": {
+            "expected": 637,
+            "correct": 637,
+            "unwanted": 1208,
+            "missing": 0,
+            "precision": 0.3453,
+            "recall": 1.0,
+            "f1": 0.5133,
+            "parse_seconds": 11.355110400007106,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://www.iana.org/go/rfc10006",
+              "https://www.iana.org/go/rfc10028",
+              "https://www.iana.org/go/rfc10030",
+              "https://www.iana.org/go/rfc1028"
+            ]
+          },
+          "breadth-technical-busybox": {
+            "expected": 131,
+            "correct": 131,
+            "unwanted": 195,
+            "missing": 0,
+            "precision": 0.4018,
+            "recall": 1.0,
+            "f1": 0.5733,
+            "parse_seconds": 0.7694612999912351,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://busybox.net/downloads/BusyBox.1",
+              "https://busybox.net/downloads/BusyBox.html",
+              "https://busybox.net/downloads/BusyBox.txt",
+              "https://busybox.net/downloads/bc_with_common_bc.tar.bz2"
+            ]
+          },
+          "breadth-technical-gnu": {
+            "expected": 387,
+            "correct": 42,
+            "unwanted": 38,
+            "missing": 345,
+            "precision": 0.525,
+            "recall": 0.1085,
+            "f1": 0.1799,
+            "parse_seconds": 1.7621395000023767,
+            "missing_examples": [
+              "http://aspell.net/man-html",
+              "http://gnubiff.sourceforge.net/documentation.php",
+              "http://homepages.inf.ed.ac.uk/timc/gurgle/gurgle.html",
+              "http://htmlpreview.github.io/?https%3A%2F%2Fgithub.com%2Fopencog%2Fguile-dbi%2Fblob%2Fmaster%2Fwebsite%2Fguile-dbi.html="
+            ],
+            "unwanted_examples": [
+              "https://www.gnu.org/software/acct",
+              "https://www.gnu.org/software/alive",
+              "https://www.gnu.org/software/anastasis",
+              "https://www.gnu.org/software/autogen"
+            ]
+          }
+        },
+        "timing_note": "Replay only. Candidate embeddings were computed separately; these timings exclude semantic inference."
+      },
+      "decision_hashes": {
+        "gutenberg": "a47a29d5a52d36082c576cad8d06a08eb65acd038e484189b8937e8d04abb6d5",
+        "smashing": "94d9233ad1286d72d91d5f0fc374e063f3de98fffc9c1affdc04d8819ed3ef28",
+        "talkpython": "cfe4a71b952b78a892567078dc546a4575a769427dc03bd5ce4b1e9817273aff",
+        "w3c-standards": "413492b92619d7e4757f5ba297432d6f18a1d792cbd6f664d2a4fd2199fb5fe0",
+        "cascade-nist": "b8e787feabbecf08c1b0d8242443943eca7e17e65baab1b6643fadc1c9d30775",
+        "cascade-britishmuseum": "b81767f9e727ea8b4e44578ca35cf62284bfca205cee1d77ecd6995cbb2e7ed7",
+        "cascade-eff": "313be600c376bea68b0863d0414033b611c7c1b4aa2359b4980a7f6416c2ab52",
+        "cascade-planetary": "4c39d199e4fa152c7371f6a60238f5137d057b736fbfb0a4b773b9599032075f",
+        "cascade-freecodecamp": "18b699739d124afef2730fbc93c4bb966765b2002a76a25bc10aa6b83854bcbd",
+        "review-godot": "fc807b2fb914cef6593b8874966756abf4fe02da177a8875f4f43b643ca5d92a",
+        "review-signal": "475e0f296ad180b25984c1c8288cc3194c821bca01f6eac03cb848c5f33358e5",
+        "review-projecteuler": "b1641d35f4696fcc2fe196df6f312f6b1a33852cefea0d2329055310b58024c9",
+        "breadth-cultural-whitney": "481ca519bf15f8fbc629b245bf581502727d556aa45b4578d4fd1f860018116e",
+        "breadth-cultural-moca": "f3d8a5f6efd0f6ddd7ea982a00c126caf5ce02746362da08ed052e591e783328",
+        "breadth-cultural-mood": "a26715f7d794ad545761c242a0a8e931452f0cbccded4eee68c01b9e1d8fb5cd",
+        "breadth-public-fed": "1ec49208da378c91d5d85124d845f920d1118b711b1ba3f6a04cc84a957fcf7f",
+        "breadth-public-fdic": "901d34f5477f492b7a15b67a27db6ccd39a0058503756438b0043907958d8929",
+        "breadth-public-bankcanada": "7d017ddd8343a8cb15b30432e86b2e51896b33beea538d4cfec137e494cbf147",
+        "breadth-technical-iana": "577334cd0c3151cebf7ad593e84c95569967a457c26bb3a3b089a62f6abc17ee",
+        "breadth-technical-busybox": "44acde6939b4656ec07d41b9652d0bad9aed93d95e94f404c0cf4116802a0672",
+        "breadth-technical-gnu": "b22ebf1e9e3213153ba008dacb90a3bf930d6f97a03287e9881c68c4085b3436"
+      }
+    }
+  },
+  "complete": true
+}

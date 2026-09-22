@@ -63,3 +63,8 @@ backend/ml/experiments/breadth-generalization*/text-*.json
 backend/ml/experiments/breadth-generalization*/soft-*.json
 backend/ml/experiments/breadth-generalization*/reject-*.json
 !backend/ml/experiments/breadth-generalization-v4/reject-0.00.json
+# Reproducible comparison heads; retain the frozen finalist and compact evidence.
+backend/ml/experiments/semantic-decision/lexical-linear.json
+backend/ml/experiments/semantic-decision/numeric-neural.json
+backend/ml/experiments/semantic-decision/minilm-l6-linear.json
+backend/ml/experiments/semantic-decision/minilm-l3-neural.json

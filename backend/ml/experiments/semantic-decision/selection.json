@@ -1,0 +1,19 @@
+{
+  "overall": {
+    "name": "minilm-l6-neural",
+    "threshold": 0.7,
+    "policy": "uncertain",
+    "eligible": false
+  },
+  "semantic": {
+    "name": "minilm-l6-neural",
+    "threshold": 0.7,
+    "policy": "uncertain",
+    "eligible": false
+  },
+  "validation_sha256": "d9c74c2d6c29796331b01025def458f4220b42b2e551ca67eb5edc38cf652594",
+  "protocol_sha256": "8452a34f1301e038f4d089c37b38b5dca75ffb5e383aa43e55996b6c552f1b33",
+  "finalists": {
+    "minilm-l6-neural": "ef77e60f9aa8676ccc74cbaf87671813504b9af7fedde887c5107582e5aa3002"
+  }
+}

@@ -1,0 +1,592 @@
+{
+  "environment": {
+    "platform": "Windows-10-10.0.19045-SP0",
+    "python": "3.12.8",
+    "cpu": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+    "logical_cpus": 16,
+    "inference_threads": 2,
+    "training_threads": 1,
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "memory_limit": "No OS memory cap on local run; measured process RSS, not a service budget proof"
+  },
+  "selection": {
+    "overall": {
+      "name": "minilm-l6-neural",
+      "threshold": 0.7,
+      "policy": "uncertain",
+      "eligible": false
+    },
+    "semantic": {
+      "name": "minilm-l6-neural",
+      "threshold": 0.7,
+      "policy": "uncertain",
+      "eligible": false
+    },
+    "validation_sha256": "d9c74c2d6c29796331b01025def458f4220b42b2e551ca67eb5edc38cf652594",
+    "protocol_sha256": "8452a34f1301e038f4d089c37b38b5dca75ffb5e383aa43e55996b6c552f1b33",
+    "finalists": {
+      "minilm-l6-neural": "ef77e60f9aa8676ccc74cbaf87671813504b9af7fedde887c5107582e5aa3002"
+    }
+  },
+  "scope": "Fresh unseen websites",
+  "rows": 1953,
+  "pages": 8,
+  "families": 8,
+  "candidate_ceiling": {
+    "pages": 8,
+    "expected": 937,
+    "correct": 937,
+    "unwanted": 329,
+    "missing": 0,
+    "precision": 0.7401,
+    "recall": 1.0,
+    "micro_f1": 0.8507,
+    "source_macro_f1": 0.6489,
+    "complete_pages": 8,
+    "clean_complete_pages": 0,
+    "zero_recall_pages": 0,
+    "family_macro_f1": 0.6488624999999999,
+    "by_page": {
+      "breadth-semantic-holdout-99pi": {
+        "expected": 12,
+        "correct": 12,
+        "unwanted": 50,
+        "missing": 0,
+        "precision": 0.1935,
+        "recall": 1.0,
+        "f1": 0.3243
+      },
+      "breadth-semantic-holdout-longreads": {
+        "expected": 27,
+        "correct": 27,
+        "unwanted": 34,
+        "missing": 0,
+        "precision": 0.4426,
+        "recall": 1.0,
+        "f1": 0.6136
+      },
+      "breadth-semantic-holdout-smittenkitchen": {
+        "expected": 10,
+        "correct": 10,
+        "unwanted": 43,
+        "missing": 0,
+        "precision": 0.1887,
+        "recall": 1.0,
+        "f1": 0.3175
+      },
+      "breadth-semantic-holdout-walters": {
+        "expected": 29,
+        "correct": 29,
+        "unwanted": 30,
+        "missing": 0,
+        "precision": 0.4915,
+        "recall": 1.0,
+        "f1": 0.6591
+      },
+      "breadth-semantic-holdout-wireshark": {
+        "expected": 333,
+        "correct": 333,
+        "unwanted": 39,
+        "missing": 0,
+        "precision": 0.8952,
+        "recall": 1.0,
+        "f1": 0.9447
+      },
+      "breadth-semantic-holdout-metacpan": {
+        "expected": 100,
+        "correct": 100,
+        "unwanted": 50,
+        "missing": 0,
+        "precision": 0.6667,
+        "recall": 1.0,
+        "f1": 0.8
+      },
+      "breadth-semantic-holdout-nostarch": {
+        "expected": 401,
+        "correct": 401,
+        "unwanted": 48,
+        "missing": 0,
+        "precision": 0.8931,
+        "recall": 1.0,
+        "f1": 0.9435
+      },
+      "breadth-semantic-holdout-tvmaze": {
+        "expected": 25,
+        "correct": 25,
+        "unwanted": 35,
+        "missing": 0,
+        "precision": 0.4167,
+        "recall": 1.0,
+        "f1": 0.5882
+      }
+    }
+  },
+  "models": {
+    "deployed": {
+      "candidates": {
+        "pages": 8,
+        "expected": 937,
+        "correct": 915,
+        "unwanted": 4,
+        "missing": 22,
+        "precision": 0.9956,
+        "recall": 0.9765,
+        "micro_f1": 0.986,
+        "source_macro_f1": 0.9781,
+        "complete_pages": 7,
+        "clean_complete_pages": 5,
+        "zero_recall_pages": 0,
+        "family_macro_f1": 0.9781375,
+        "by_page": {
+          "breadth-semantic-holdout-99pi": {
+            "expected": 12,
+            "correct": 12,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "breadth-semantic-holdout-longreads": {
+            "expected": 27,
+            "correct": 27,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "breadth-semantic-holdout-smittenkitchen": {
+            "expected": 10,
+            "correct": 10,
+            "unwanted": 1,
+            "missing": 0,
+            "precision": 0.9091,
+            "recall": 1.0,
+            "f1": 0.9524
+          },
+          "breadth-semantic-holdout-walters": {
+            "expected": 29,
+            "correct": 29,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "breadth-semantic-holdout-wireshark": {
+            "expected": 333,
+            "correct": 333,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "breadth-semantic-holdout-metacpan": {
+            "expected": 100,
+            "correct": 78,
+            "unwanted": 0,
+            "missing": 22,
+            "precision": 1.0,
+            "recall": 0.78,
+            "f1": 0.8764
+          },
+          "breadth-semantic-holdout-nostarch": {
+            "expected": 401,
+            "correct": 401,
+            "unwanted": 3,
+            "missing": 0,
+            "precision": 0.9926,
+            "recall": 1.0,
+            "f1": 0.9963
+          },
+          "breadth-semantic-holdout-tvmaze": {
+            "expected": 25,
+            "correct": 25,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        }
+      },
+      "pipeline": {
+        "summary": {
+          "pages": 8,
+          "expected": 937,
+          "correct": 915,
+          "unwanted": 3,
+          "missing": 22,
+          "precision": 0.9967,
+          "recall": 0.9765,
+          "micro_f1": 0.9865,
+          "source_macro_f1": 0.9821,
+          "complete_pages": 7,
+          "clean_complete_pages": 5,
+          "zero_recall_pages": 0
+        },
+        "pages": {
+          "breadth-semantic-holdout-99pi": {
+            "expected": 12,
+            "correct": 12,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.3233806000207551,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "breadth-semantic-holdout-longreads": {
+            "expected": 27,
+            "correct": 27,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.4194838000112213,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "breadth-semantic-holdout-smittenkitchen": {
+            "expected": 10,
+            "correct": 10,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.21861699997680262,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "breadth-semantic-holdout-walters": {
+            "expected": 29,
+            "correct": 29,
+            "unwanted": 1,
+            "missing": 0,
+            "precision": 0.9667,
+            "recall": 1.0,
+            "f1": 0.9831,
+            "parse_seconds": 0.24720919999526814,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://thewalters.org/exhibitions/past"
+            ]
+          },
+          "breadth-semantic-holdout-wireshark": {
+            "expected": 333,
+            "correct": 333,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.859884100034833,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "breadth-semantic-holdout-metacpan": {
+            "expected": 100,
+            "correct": 78,
+            "unwanted": 0,
+            "missing": 22,
+            "precision": 1.0,
+            "recall": 0.78,
+            "f1": 0.8764,
+            "parse_seconds": 0.5085678999894299,
+            "missing_examples": [
+              "https://metacpan.org/dist/Dist-Zilla-PluginBundle-Author-GETTY",
+              "https://metacpan.org/release/DCON/Chem-Structure-Parser-0.031",
+              "https://metacpan.org/release/DJZORT/NetAddr-IP-4.080_01",
+              "https://metacpan.org/release/FORGEOPS/ForgeOps-Tracker-0.6.0"
+            ],
+            "unwanted_examples": []
+          },
+          "breadth-semantic-holdout-nostarch": {
+            "expected": 401,
+            "correct": 401,
+            "unwanted": 2,
+            "missing": 0,
+            "precision": 0.995,
+            "recall": 1.0,
+            "f1": 0.9975,
+            "parse_seconds": 4.462112400040496,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://nostarch.com/lego%C2%AE-power-functions-set",
+              "https://nostarch.com/lego%C2%AE-technic-idea-book-complete-set"
+            ]
+          },
+          "breadth-semantic-holdout-tvmaze": {
+            "expected": 25,
+            "correct": 25,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.7441365999984555,
+            "missing_examples": [],
+            "unwanted_examples": []
+          }
+        },
+        "timing_note": "Replay only. Candidate embeddings were computed separately; these timings exclude semantic inference."
+      }
+    },
+    "minilm-l6-neural": {
+      "selection": {
+        "name": "minilm-l6-neural",
+        "threshold": 0.7,
+        "policy": "uncertain",
+        "eligible": false
+      },
+      "candidates": {
+        "pages": 8,
+        "expected": 937,
+        "correct": 765,
+        "unwanted": 2,
+        "missing": 172,
+        "precision": 0.9974,
+        "recall": 0.8164,
+        "micro_f1": 0.8979,
+        "source_macro_f1": 0.9465,
+        "complete_pages": 3,
+        "clean_complete_pages": 3,
+        "zero_recall_pages": 0,
+        "family_macro_f1": 0.9465125,
+        "by_page": {
+          "breadth-semantic-holdout-99pi": {
+            "expected": 12,
+            "correct": 12,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "breadth-semantic-holdout-longreads": {
+            "expected": 27,
+            "correct": 27,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "breadth-semantic-holdout-smittenkitchen": {
+            "expected": 10,
+            "correct": 10,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "breadth-semantic-holdout-walters": {
+            "expected": 29,
+            "correct": 28,
+            "unwanted": 0,
+            "missing": 1,
+            "precision": 1.0,
+            "recall": 0.9655,
+            "f1": 0.9825
+          },
+          "breadth-semantic-holdout-wireshark": {
+            "expected": 333,
+            "correct": 327,
+            "unwanted": 0,
+            "missing": 6,
+            "precision": 1.0,
+            "recall": 0.982,
+            "f1": 0.9909
+          },
+          "breadth-semantic-holdout-metacpan": {
+            "expected": 100,
+            "correct": 78,
+            "unwanted": 0,
+            "missing": 22,
+            "precision": 1.0,
+            "recall": 0.78,
+            "f1": 0.8764
+          },
+          "breadth-semantic-holdout-nostarch": {
+            "expected": 401,
+            "correct": 261,
+            "unwanted": 2,
+            "missing": 140,
+            "precision": 0.9924,
+            "recall": 0.6509,
+            "f1": 0.7861
+          },
+          "breadth-semantic-holdout-tvmaze": {
+            "expected": 25,
+            "correct": 22,
+            "unwanted": 0,
+            "missing": 3,
+            "precision": 1.0,
+            "recall": 0.88,
+            "f1": 0.9362
+          }
+        }
+      },
+      "pipeline": {
+        "summary": {
+          "pages": 8,
+          "expected": 937,
+          "correct": 915,
+          "unwanted": 3,
+          "missing": 22,
+          "precision": 0.9967,
+          "recall": 0.9765,
+          "micro_f1": 0.9865,
+          "source_macro_f1": 0.9821,
+          "complete_pages": 7,
+          "clean_complete_pages": 5,
+          "zero_recall_pages": 0
+        },
+        "pages": {
+          "breadth-semantic-holdout-99pi": {
+            "expected": 12,
+            "correct": 12,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.35121960000833496,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "breadth-semantic-holdout-longreads": {
+            "expected": 27,
+            "correct": 27,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.4321809000102803,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "breadth-semantic-holdout-smittenkitchen": {
+            "expected": 10,
+            "correct": 10,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 0.32053110003471375,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "breadth-semantic-holdout-walters": {
+            "expected": 29,
+            "correct": 29,
+            "unwanted": 1,
+            "missing": 0,
+            "precision": 0.9667,
+            "recall": 1.0,
+            "f1": 0.9831,
+            "parse_seconds": 0.3893538999836892,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://thewalters.org/exhibitions/past"
+            ]
+          },
+          "breadth-semantic-holdout-wireshark": {
+            "expected": 333,
+            "correct": 333,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 1.37620609998703,
+            "missing_examples": [],
+            "unwanted_examples": []
+          },
+          "breadth-semantic-holdout-metacpan": {
+            "expected": 100,
+            "correct": 78,
+            "unwanted": 0,
+            "missing": 22,
+            "precision": 1.0,
+            "recall": 0.78,
+            "f1": 0.8764,
+            "parse_seconds": 0.7747092000208795,
+            "missing_examples": [
+              "https://metacpan.org/dist/Dist-Zilla-PluginBundle-Author-GETTY",
+              "https://metacpan.org/release/DCON/Chem-Structure-Parser-0.031",
+              "https://metacpan.org/release/DJZORT/NetAddr-IP-4.080_01",
+              "https://metacpan.org/release/FORGEOPS/ForgeOps-Tracker-0.6.0"
+            ],
+            "unwanted_examples": []
+          },
+          "breadth-semantic-holdout-nostarch": {
+            "expected": 401,
+            "correct": 401,
+            "unwanted": 2,
+            "missing": 0,
+            "precision": 0.995,
+            "recall": 1.0,
+            "f1": 0.9975,
+            "parse_seconds": 5.492410400009248,
+            "missing_examples": [],
+            "unwanted_examples": [
+              "https://nostarch.com/lego%C2%AE-power-functions-set",
+              "https://nostarch.com/lego%C2%AE-technic-idea-book-complete-set"
+            ]
+          },
+          "breadth-semantic-holdout-tvmaze": {
+            "expected": 25,
+            "correct": 25,
+            "unwanted": 0,
+            "missing": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "parse_seconds": 1.1690821999800391,
+            "missing_examples": [],
+            "unwanted_examples": []
+          }
+        },
+        "timing_note": "Replay only. Candidate embeddings were computed separately; these timings exclude semantic inference."
+      },
+      "decision_hashes": {
+        "breadth-semantic-holdout-99pi": "5d01dc5b596ca04f38062a6b391a30ef2a335f73f090a5c837fb3e713dbe522d",
+        "breadth-semantic-holdout-longreads": "32716d770ee60cdecce09dc9a47300fadb0167775c8ad6470a93965c91d0597c",
+        "breadth-semantic-holdout-smittenkitchen": "6065b3b6bea30e20f849a269df46fa9aa14b48c9b20cf7ffecd5eccf3a1d46a1",
+        "breadth-semantic-holdout-walters": "ad315ae8df114bbfb82b59129859e1a3e19577b07bb635459cbc9df600ee9a03",
+        "breadth-semantic-holdout-wireshark": "93af1f6de7190affc5a4b8101b01fb94ab9afe40b6efab6609fa485338786392",
+        "breadth-semantic-holdout-metacpan": "9b21fefd6f1d254484203b846ad14455a2443bf5fcd0f7c62c107544b438807f",
+        "breadth-semantic-holdout-nostarch": "7ddda482540ffd131ce77c73bbf8e20504ec88659d823b9604edb9d6f845c684",
+        "breadth-semantic-holdout-tvmaze": "45fd56979858c8124cb324601a44ece666d894d1ea17920be726a7a71f0a1925"
+      }
+    }
+  },
+  "complete": true
+}

@@ -1,0 +1,56 @@
+{
+  "experiment_complete": true,
+  "production_changed": false,
+  "promotion": "rejected",
+  "quality_gate_passed": false,
+  "runtime_decision_parity_passed": false,
+  "runtime_measurements_complete": true,
+  "runtime_report_complete": false,
+  "runtime_report_note": "Timing cases all completed; the strict semantic decision parity gate failed and the command exited nonzero. This failure is retained, not waived.",
+  "runtime_constraints": {
+    "image": "sha256:c323552bafbecd1cbb570ea5475d07142b6f3a4e325c1c3724aa263fdb939792",
+    "cpus": 2,
+    "memory_bytes": 1073741824,
+    "network": "none",
+    "live_database_mounted": false,
+    "read_only_root": true,
+    "worker_user": "1000:1000",
+    "native_kernel_available": true
+  },
+  "tests": {
+    "passed": 103,
+    "lint": "passed"
+  },
+  "training_rows": 6652,
+  "training_families": 60,
+  "validation_families": 25,
+  "finalist": {
+    "name": "minilm-l6-neural",
+    "threshold": 0.7,
+    "policy": "uncertain",
+    "eligible": false
+  },
+  "production_model_sha256": "97804df6d794bccd275073797feff5936366c8438af5ea026df56ca2bc58017f",
+  "frozen_baseline_matches_current": true,
+  "artifacts": {
+    "ml/experiments/semantic-decision/protocol.json": "8452a34f1301e038f4d089c37b38b5dca75ffb5e383aa43e55996b6c552f1b33",
+    "ml/experiments/semantic-decision/selection.json": "5c1e619aba077ab9b9b9e78e4d5554da3dbc81356c83fb47a4af3bc57d013eb2",
+    "ml/experiments/semantic-decision/validation.json": "d9c74c2d6c29796331b01025def458f4220b42b2e551ca67eb5edc38cf652594",
+    "ml/experiments/semantic-decision/baseline.json": "97804df6d794bccd275073797feff5936366c8438af5ea026df56ca2bc58017f",
+    "ml/experiments/semantic-decision/minilm-l6-neural.json": "ef77e60f9aa8676ccc74cbaf87671813504b9af7fedde887c5107582e5aa3002",
+    "ml/experiments/semantic-decision/data-summary.json": "4c437e2b7a694f8460413c6439b891d7a426d5a67b7f2ad8c43a071ee32bad52",
+    "ml/experiments/semantic-decision/holdout-lock.json": "7552c9bfaea3a7554e9f14c17582341894c7e677a53d358d45c57143a628a15f",
+    "ml/reports/semantic-decision.md": "3fdd221bbabe459d498ece198f9a7548bf9e3e5b13628e63f789275079afd539",
+    "ml/reports/semantic-decision-holdout.json": "cf296ea6fe3a7d0158679cb1702c1bed28eddf47a41a8f37f6aa84ded93a4930",
+    "ml/reports/semantic-decision-regression.json": "1e559dbcbb00b39c1ce3bd9fdc43f243870a49d597397088143f6f187b0524e3",
+    "ml/reports/semantic-decision-runtime-linux.json": "ee7e98a7180e7bc2ded300ac2e7cfedf80c2c68f20f6b0a11f7a50ad9a505307",
+    "ml/reports/semantic-decision-batch-parity.json": "b7c99d2a3e591a376f9146841adcb8d1cee2e4ebff9666175cd43f5b465a13a1",
+    "ml/reports/semantic-decision-holdout-provenance.json": "449e0f8f2a98fa4ac567b5becabc5eeee0e49b159cb3ff671c6ee51f6df9f57a",
+    "ml/datasets/semantic-decision-holdout-sources.json": "9c373f959e54d0a1ad75eed8945a886264a55adaf4671b31a71c0fa92e79f603",
+    "ml/datasets/semantic-decision-holdout-dataset.jsonl": "9abcb248f6ea6edd4beb0dad539165381668ca19fbc8d22858ef76cb9d887f8a",
+    "ml/semantic_decision_data.py": "55646de3e55aac00e334c259c6e4b5c43dfd93438568d84d74e64e39140a773d",
+    "ml/semantic_decision_experiment.py": "32ae1cb5c606bbcb97c8484d8c9f8056a533839db7e736ab4e5bdd4776c6c583",
+    "ml/benchmark_semantic_decisions.py": "3dd10196debec0fe0774d0584f226b7c2bbf1cb01c8f85f5e63f5e29c5a406f6",
+    "ml/audit_semantic_batches.py": "a4edc58ef3b60d62674604766b81645f7899004452e248a61828637e1727ac54"
+  }
+}

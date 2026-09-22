@@ -9,3 +9,12 @@ backend/ml/datasets/generalization-holdout-* text eol=lf
 backend/ml/datasets/generalization-final-* text eol=lf
 backend/ml/reports/generalization-upgrade*.json -text whitespace=cr-at-eol
 backend/ml/reports/generalization-upgrade*.md text eol=lf
+# Freeze CPU decision experiments without checkout newline changes.
+backend/ml/experiments/semantic-decision/*.json -text whitespace=cr-at-eol
+backend/ml/reports/semantic-decision*.json -text whitespace=cr-at-eol
+backend/ml/datasets/semantic-decision* text eol=lf
+backend/ml/reports/semantic-decision.md text eol=lf
+backend/ml/*semantic*.py text eol=lf
+backend/tests/test_semantic_decision*.py text eol=lf
+# Numeric weights are reviewed through reproducible metrics and checksum tests.
+backend/ml/experiments/semantic-decision/minilm-l6-neural.json -diff

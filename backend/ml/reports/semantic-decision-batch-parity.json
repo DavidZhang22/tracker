@@ -1,0 +1,323 @@
+{
+  "selected_model_sha256": "ef77e60f9aa8676ccc74cbaf87671813504b9af7fedde887c5107582e5aa3002",
+  "hypothesis": "Compare cached global embedding batches with live page-local uncertainty batches; fixed weights and threshold, no tuning.",
+  "pages": {
+    "breadth-semantic-holdout-walters": {
+      "rows": 99,
+      "offline_vs_linux_changed_rows": 0,
+      "offline_vs_local_gated_changed_rows": 0,
+      "local_gated_vs_linux_changed_rows": 0,
+      "offline_quality": {
+        "pages": 1,
+        "expected": 29,
+        "correct": 28,
+        "unwanted": 0,
+        "missing": 1,
+        "precision": 1.0,
+        "recall": 0.9655,
+        "micro_f1": 0.9825,
+        "source_macro_f1": 0.9825,
+        "complete_pages": 0,
+        "clean_complete_pages": 0,
+        "zero_recall_pages": 0,
+        "family_macro_f1": 0.9825,
+        "by_page": {
+          "breadth-semantic-holdout-walters": {
+            "expected": 29,
+            "correct": 28,
+            "unwanted": 0,
+            "missing": 1,
+            "precision": 1.0,
+            "recall": 0.9655,
+            "f1": 0.9825
+          }
+        }
+      },
+      "runtime_linux_quality": {
+        "pages": 1,
+        "expected": 29,
+        "correct": 28,
+        "unwanted": 0,
+        "missing": 1,
+        "precision": 1.0,
+        "recall": 0.9655,
+        "micro_f1": 0.9825,
+        "source_macro_f1": 0.9825,
+        "complete_pages": 0,
+        "clean_complete_pages": 0,
+        "zero_recall_pages": 0,
+        "family_macro_f1": 0.9825,
+        "by_page": {
+          "breadth-semantic-holdout-walters": {
+            "expected": 29,
+            "correct": 28,
+            "unwanted": 0,
+            "missing": 1,
+            "precision": 1.0,
+            "recall": 0.9655,
+            "f1": 0.9825
+          }
+        }
+      },
+      "changed": []
+    },
+    "breadth-semantic-holdout-wireshark": {
+      "rows": 448,
+      "offline_vs_linux_changed_rows": 1,
+      "offline_vs_local_gated_changed_rows": 1,
+      "local_gated_vs_linux_changed_rows": 0,
+      "offline_quality": {
+        "pages": 1,
+        "expected": 333,
+        "correct": 327,
+        "unwanted": 0,
+        "missing": 6,
+        "precision": 1.0,
+        "recall": 0.982,
+        "micro_f1": 0.9909,
+        "source_macro_f1": 0.9909,
+        "complete_pages": 0,
+        "clean_complete_pages": 0,
+        "zero_recall_pages": 0,
+        "family_macro_f1": 0.9909,
+        "by_page": {
+          "breadth-semantic-holdout-wireshark": {
+            "expected": 333,
+            "correct": 327,
+            "unwanted": 0,
+            "missing": 6,
+            "precision": 1.0,
+            "recall": 0.982,
+            "f1": 0.9909
+          }
+        }
+      },
+      "runtime_linux_quality": {
+        "pages": 1,
+        "expected": 333,
+        "correct": 328,
+        "unwanted": 0,
+        "missing": 5,
+        "precision": 1.0,
+        "recall": 0.985,
+        "micro_f1": 0.9924,
+        "source_macro_f1": 0.9924,
+        "complete_pages": 0,
+        "clean_complete_pages": 0,
+        "zero_recall_pages": 0,
+        "family_macro_f1": 0.9924,
+        "by_page": {
+          "breadth-semantic-holdout-wireshark": {
+            "expected": 333,
+            "correct": 328,
+            "unwanted": 0,
+            "missing": 5,
+            "precision": 1.0,
+            "recall": 0.985,
+            "f1": 0.9924
+          }
+        }
+      },
+      "changed": [
+        {
+          "url": "https://www.wireshark.org/news/20111107.html",
+          "cached_probability": 0.6928583165881457,
+          "offline": false,
+          "runtime_linux": true
+        }
+      ]
+    },
+    "breadth-semantic-holdout-nostarch": {
+      "rows": 869,
+      "offline_vs_linux_changed_rows": 22,
+      "offline_vs_local_gated_changed_rows": 22,
+      "local_gated_vs_linux_changed_rows": 0,
+      "offline_quality": {
+        "pages": 1,
+        "expected": 401,
+        "correct": 261,
+        "unwanted": 2,
+        "missing": 140,
+        "precision": 0.9924,
+        "recall": 0.6509,
+        "micro_f1": 0.7861,
+        "source_macro_f1": 0.7861,
+        "complete_pages": 0,
+        "clean_complete_pages": 0,
+        "zero_recall_pages": 0,
+        "family_macro_f1": 0.7861,
+        "by_page": {
+          "breadth-semantic-holdout-nostarch": {
+            "expected": 401,
+            "correct": 261,
+            "unwanted": 2,
+            "missing": 140,
+            "precision": 0.9924,
+            "recall": 0.6509,
+            "f1": 0.7861
+          }
+        }
+      },
+      "runtime_linux_quality": {
+        "pages": 1,
+        "expected": 401,
+        "correct": 261,
+        "unwanted": 2,
+        "missing": 140,
+        "precision": 0.9924,
+        "recall": 0.6509,
+        "micro_f1": 0.7861,
+        "source_macro_f1": 0.7861,
+        "complete_pages": 0,
+        "clean_complete_pages": 0,
+        "zero_recall_pages": 0,
+        "family_macro_f1": 0.7861,
+        "by_page": {
+          "breadth-semantic-holdout-nostarch": {
+            "expected": 401,
+            "correct": 261,
+            "unwanted": 2,
+            "missing": 140,
+            "precision": 0.9924,
+            "recall": 0.6509,
+            "f1": 0.7861
+          }
+        }
+      },
+      "changed": [
+        {
+          "url": "https://nostarch.com/bare-metal-c",
+          "cached_probability": 0.7943784399401784,
+          "offline": true,
+          "runtime_linux": false
+        },
+        {
+          "url": "https://nostarch.com/bitcoinforthebefuddled",
+          "cached_probability": 0.7241024193472648,
+          "offline": true,
+          "runtime_linux": false
+        },
+        {
+          "url": "https://nostarch.com/legomustang",
+          "cached_probability": 0.7448478006651879,
+          "offline": true,
+          "runtime_linux": false
+        },
+        {
+          "url": "https://nostarch.com/datavisualization",
+          "cached_probability": 0.8215494825723435,
+          "offline": true,
+          "runtime_linux": false
+        },
+        {
+          "url": "https://nostarch.com/devops-desperate",
+          "cached_probability": 0.6069986610644469,
+          "offline": false,
+          "runtime_linux": true
+        },
+        {
+          "url": "https://nostarch.com/dive-data-science",
+          "cached_probability": 0.769018708089993,
+          "offline": true,
+          "runtime_linux": false
+        },
+        {
+          "url": "https://nostarch.com/legoheavyweapons",
+          "cached_probability": 0.48024745206938657,
+          "offline": false,
+          "runtime_linux": true
+        },
+        {
+          "url": "https://nostarch.com/machine-learning-kids",
+          "cached_probability": 0.5672787470351698,
+          "offline": false,
+          "runtime_linux": true
+        },
+        {
+          "url": "https://nostarch.com/machine-learning-q-and-ai",
+          "cached_probability": 0.7113741176075541,
+          "offline": true,
+          "runtime_linux": false
+        },
+        {
+          "url": "https://nostarch.com/scratchgames",
+          "cached_probability": 0.6567895483043458,
+          "offline": false,
+          "runtime_linux": true
+        },
+        {
+          "url": "https://nostarch.com/twinegames",
+          "cached_probability": 0.3794816293092369,
+          "offline": false,
+          "runtime_linux": true
+        },
+        {
+          "url": "https://nostarch.com/math-hacks-scratch",
+          "cached_probability": 0.7488106377702403,
+          "offline": true,
+          "runtime_linux": false
+        },
+        {
+          "url": "https://nostarch.com/NLPPython",
+          "cached_probability": 0.5003010554684278,
+          "offline": false,
+          "runtime_linux": true
+        },
+        {
+          "url": "https://nostarch.com/forensicimaging",
+          "cached_probability": 0.5575094183785934,
+          "offline": false,
+          "runtime_linux": true
+        },
+        {
+          "url": "https://nostarch.com/practical-sdr",
+          "cached_probability": 0.9197365345465756,
+          "offline": true,
+          "runtime_linux": false
+        },
+        {
+          "url": "https://nostarch.com/practical-sdr",
+          "cached_probability": 0.7378172671213651,
+          "offline": true,
+          "runtime_linux": false
+        },
+        {
+          "url": "https://nostarch.com/seriouspython",
+          "cached_probability": 0.6803284731599437,
+          "offline": false,
+          "runtime_linux": true
+        },
+        {
+          "url": "https://nostarch.com/cultoflego",
+          "cached_probability": 0.7709270359793905,
+          "offline": true,
+          "runtime_linux": false
+        },
+        {
+          "url": "https://nostarch.com/developers-guide-to-ai",
+          "cached_probability": 0.6095895795566211,
+          "offline": false,
+          "runtime_linux": true
+        },
+        {
+          "url": "https://nostarch.com/legoadventure",
+          "cached_probability": 0.6512193562463782,
+          "offline": false,
+          "runtime_linux": true
+        },
+        {
+          "url": "https://nostarch.com/powerfunctions2",
+          "cached_probability": 0.5841135692137464,
+          "offline": false,
+          "runtime_linux": true
+        },
+        {
+          "url": "https://nostarch.com/technic_contraptions.htm",
+          "cached_probability": 0.6815632777474745,
+          "offline": false,
+          "runtime_linux": true
+        }
+      ]
+    }
+  }
+}

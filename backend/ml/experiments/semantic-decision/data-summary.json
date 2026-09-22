@@ -1,0 +1,1081 @@
+{
+  "assignments": {
+    "train": [
+      "aclanthology.org",
+      "aeon.co",
+      "archlinux.org",
+      "asurascans.com",
+      "atlasobscura.com",
+      "bea.gov",
+      "bls.gov",
+      "budgetbytes.com",
+      "changelog.com",
+      "clevelandart.org",
+      "codeforces.com",
+      "curl.se",
+      "debian.org",
+      "fda.gov",
+      "ftc.gov",
+      "git-scm.com",
+      "github.com",
+      "greenend.org.uk",
+      "hackaday.com",
+      "julialang.org",
+      "kattis.com",
+      "kernel.org",
+      "kew.org",
+      "kingarthurbaking.com",
+      "laphamsquarterly.org",
+      "lobste.rs",
+      "louvre.fr",
+      "lwn.net",
+      "mlr.press",
+      "moma.org",
+      "nasa.gov",
+      "netlib.org",
+      "nginx.org",
+      "nybg.org",
+      "ons.gov.uk",
+      "openlibrary.org",
+      "openssl-library.org",
+      "paulgraham.com",
+      "planetpython.org",
+      "quantamagazine.org",
+      "rba.gov.au",
+      "rhs.org.uk",
+      "royalroad.com",
+      "rust-lang.org",
+      "samba.org",
+      "schneier.com",
+      "sec.gov",
+      "seriouseats.com",
+      "simonwillison.net",
+      "smithsonianmag.com",
+      "sqlite.org",
+      "supremecourt.gov",
+      "treasury.gov",
+      "uci.edu",
+      "unicode.org",
+      "usenix.org",
+      "wmo.int",
+      "wolfram.com",
+      "wordpress.org",
+      "xkcd.com"
+    ],
+    "validation": [
+      "abs.gov.au",
+      "allrecipes.com",
+      "blender.org",
+      "boardgamegeek.com",
+      "cloudflare.com",
+      "consumerfinance.gov",
+      "cp-algorithms.com",
+      "data.gov",
+      "djangoproject.com",
+      "esa.int",
+      "gentoo.org",
+      "go.dev",
+      "imperial.ac.uk",
+      "jvns.ca",
+      "kde.org",
+      "nationalgallery.org.uk",
+      "nationaltrail.co.uk",
+      "openbsd.org",
+      "publicdomainreview.org",
+      "python.org",
+      "pythonbytes.fm",
+      "realpython.com",
+      "sphinx-doc.org",
+      "usgs.gov",
+      "ycombinator.com"
+    ],
+    "test": [
+      "bankofcanada.ca",
+      "britishmuseum.org",
+      "busybox.net",
+      "eff.org",
+      "fdic.gov",
+      "federalreserve.gov",
+      "freecodecamp.org",
+      "gnu.org",
+      "godotengine.org",
+      "gutenberg.org",
+      "iana.org",
+      "moca.org",
+      "moodfabrics.com",
+      "nist.gov",
+      "planetary.org",
+      "projecteuler.net",
+      "signal.org",
+      "smashingmagazine.com",
+      "talkpython.fm",
+      "w3.org",
+      "whitney.org"
+    ]
+  },
+  "pages": [
+    {
+      "id": "asura",
+      "site_family": "asurascans.com",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 174,
+      "expected": 140,
+      "fingerprint": "4c6474944532cfe3ebee5c2f1a2960103cd06a4fee117f6bc988b53dca23712f"
+    },
+    {
+      "id": "royalroad",
+      "site_family": "royalroad.com",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 323,
+      "expected": 109,
+      "fingerprint": "df6bf8f4d107b0a716aea43e1ec1f327fad76797a1f6886bf4cf408797431420"
+    },
+    {
+      "id": "github",
+      "site_family": "github.com",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 805,
+      "expected": 10,
+      "fingerprint": "1ef6f84105adfdf84588a0b7e49adfd67bd7fb8098c149c4e5d59af087b44255"
+    },
+    {
+      "id": "codeforces",
+      "site_family": "codeforces.com",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 824,
+      "expected": 100,
+      "fingerprint": "e3ad18971bcc02db98a8ce23d827fe540a2248f45cbe5418ffebc0bb87b4c610"
+    },
+    {
+      "id": "python",
+      "site_family": "python.org",
+      "split": "validation",
+      "cohort": "historical",
+      "candidates": 25,
+      "expected": 9,
+      "fingerprint": "6b79f7d3f850a3c98958f642b9ed59037eb42d032fb110823dc1becdd70f465e"
+    },
+    {
+      "id": "rust",
+      "site_family": "rust-lang.org",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 415,
+      "expected": 391,
+      "fingerprint": "d9b43b043531ae625d3ea4361da29101af4dab813d81a39915d51ef13bcefe1f"
+    },
+    {
+      "id": "paulgraham",
+      "site_family": "paulgraham.com",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 239,
+      "expected": 236,
+      "fingerprint": "958ce63fe354ec217071ad57754388310a90570f2f598dc2da7121721bfc0d33"
+    },
+    {
+      "id": "cloudflare",
+      "site_family": "cloudflare.com",
+      "split": "validation",
+      "cohort": "historical",
+      "candidates": 188,
+      "expected": 91,
+      "fingerprint": "ce5856fc1c0742e215cffd82c4b9af78d7a260cfd42a6b3b95ac39538774ec5e"
+    },
+    {
+      "id": "hn",
+      "site_family": "ycombinator.com",
+      "split": "validation",
+      "cohort": "historical",
+      "candidates": 228,
+      "expected": 30,
+      "fingerprint": "26277befb7540a6f9dca4955f47448fa87ca305fb74e576f3a5b8352e8f9cd71"
+    },
+    {
+      "id": "django",
+      "site_family": "djangoproject.com",
+      "split": "validation",
+      "cohort": "historical",
+      "candidates": 341,
+      "expected": 10,
+      "fingerprint": "fee98b56059e0534191483bfb8b3c5cfb347f489126c451f46894f44cf70297e"
+    },
+    {
+      "id": "pythonbytes",
+      "site_family": "pythonbytes.fm",
+      "split": "validation",
+      "cohort": "historical",
+      "candidates": 531,
+      "expected": 495,
+      "fingerprint": "ccc8f31d716fe9dd24253127418b1358cfc2e09f5fae9c162fc6259618e43c0e"
+    },
+    {
+      "id": "xkcd",
+      "site_family": "xkcd.com",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 3329,
+      "expected": 3294,
+      "fingerprint": "94cbd11ce988a40ed7cb6272bd202bd16a7f8fd795b4f2df3c8ac9c272df19b1"
+    },
+    {
+      "id": "go",
+      "site_family": "go.dev",
+      "split": "validation",
+      "cohort": "historical",
+      "candidates": 93,
+      "expected": 11,
+      "fingerprint": "a4dd730a7bd09fd4cd42f4ba8ce4564a6322b8119d627d9dc2b0da86efc3a890"
+    },
+    {
+      "id": "planetpython",
+      "site_family": "planetpython.org",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 853,
+      "expected": 25,
+      "fingerprint": "94efe7788ef1688f0f073b98592b73db6ddf1d6035e8cf2e5c3c7f5808f2f094"
+    },
+    {
+      "id": "hackaday",
+      "site_family": "hackaday.com",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 180,
+      "expected": 18,
+      "fingerprint": "a70a4b7e59263c127ad79da4fdfd3f0cc3efbc9c7d176a583369524e8292579f"
+    },
+    {
+      "id": "lobsters",
+      "site_family": "lobste.rs",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 276,
+      "expected": 25,
+      "fingerprint": "e5b812da732c2db98e25cc570137abd8eddcb326a8f303311f243384c5055ba3"
+    },
+    {
+      "id": "changelog",
+      "site_family": "changelog.com",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 331,
+      "expected": 13,
+      "fingerprint": "9a7e7f2e34a26fe7b04d9ca5eda1320dbfee22f933eb43a9c9c9f617efb9d854"
+    },
+    {
+      "id": "wordpress",
+      "site_family": "wordpress.org",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 130,
+      "expected": 10,
+      "fingerprint": "73d1b90f490e2ac1b49e7c0efcc0c426511c338171ff2fb9f31797c7bc360a3e"
+    },
+    {
+      "id": "simonwillison",
+      "site_family": "simonwillison.net",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 440,
+      "expected": 70,
+      "fingerprint": "0940280db9321c96c8aa6ec85d528378f2b507839dd753c4da04723d6b6a6a5c"
+    },
+    {
+      "id": "lwn",
+      "site_family": "lwn.net",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 98,
+      "expected": 48,
+      "fingerprint": "b697b9f7e8210f7498845a02728da366bf2134073c4021b307994f6486b29120"
+    },
+    {
+      "id": "schneier",
+      "site_family": "schneier.com",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 151,
+      "expected": 11,
+      "fingerprint": "a8f06b93ca335ef0565bf068ef6b991abcf62105f6060a2d849926dd2eece0a8"
+    },
+    {
+      "id": "jvns",
+      "site_family": "jvns.ca",
+      "split": "validation",
+      "cohort": "historical",
+      "candidates": 644,
+      "expected": 596,
+      "fingerprint": "67a7649fc185d1783b44f1fffc5e7e0ff6ada15611437fa7b90fdabd6f5bd9c8"
+    },
+    {
+      "id": "realpython",
+      "site_family": "realpython.com",
+      "split": "validation",
+      "cohort": "historical",
+      "candidates": 202,
+      "expected": 46,
+      "fingerprint": "57ebc95ea5ef72a620d8779fa78a3dc2ff2ec8f039b29641d6ba2a4568aedb80"
+    },
+    {
+      "id": "gutenberg",
+      "site_family": "gutenberg.org",
+      "split": "test",
+      "cohort": "historical",
+      "candidates": 53,
+      "expected": 25,
+      "fingerprint": "e0d6f1c5dd27025726257cfcf033fbbf88ba5ec9c4bd14ced965a6d3b50b2eb7"
+    },
+    {
+      "id": "smashing",
+      "site_family": "smashingmagazine.com",
+      "split": "test",
+      "cohort": "historical",
+      "candidates": 144,
+      "expected": 10,
+      "fingerprint": "994c8ded8a68c5d9ad661dccf897a9cb2b72bd7f6570d9187da3b4ff60030629"
+    },
+    {
+      "id": "talkpython",
+      "site_family": "talkpython.fm",
+      "split": "test",
+      "cohort": "historical",
+      "candidates": 604,
+      "expected": 560,
+      "fingerprint": "a875b10f2916d740869c0f4292f82f1cd6fb2bb11abe316c06a0ced3316f4738"
+    },
+    {
+      "id": "nasa-index",
+      "site_family": "nasa.gov",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 304,
+      "expected": 25,
+      "fingerprint": "674debf73a0eb129a0b319eb077829fc04cbaf9206aef53c8cb53177300806a8"
+    },
+    {
+      "id": "pmlr-volumes",
+      "site_family": "mlr.press",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 353,
+      "expected": 327,
+      "fingerprint": "5b3bed57ed303d9167e4fa1a44d35e6b327d8d1e74c25e3122672670578ab7cb"
+    },
+    {
+      "id": "python-releases",
+      "site_family": "python.org",
+      "split": "validation",
+      "cohort": "historical",
+      "candidates": 991,
+      "expected": 260,
+      "fingerprint": "de2220106d344d33e7d5ac7c65b6f06e46eff02cc9149f61a2a6485bb60b3d2f"
+    },
+    {
+      "id": "esa-gallery",
+      "site_family": "esa.int",
+      "split": "validation",
+      "cohort": "historical",
+      "candidates": 76,
+      "expected": 58,
+      "fingerprint": "204747a2747fab9566c5290c041921fb7de5033deef6a81f50d8336c1c002753"
+    },
+    {
+      "id": "w3c-standards",
+      "site_family": "w3.org",
+      "split": "test",
+      "cohort": "historical",
+      "candidates": 3025,
+      "expected": 1233,
+      "fingerprint": "10dc31c61692ed45dc7b3fa11d7cc1f6df4b443344edf6b475aff32fad989e05"
+    },
+    {
+      "id": "cascade-sqlite",
+      "site_family": "sqlite.org",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 647,
+      "expected": 262,
+      "fingerprint": "68c5c7aff1cfdc952d1895f2447ee450c33f4a408d5884d58a32fd54de059136"
+    },
+    {
+      "id": "cascade-debian",
+      "site_family": "debian.org",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 69,
+      "expected": 20,
+      "fingerprint": "65d4d65ac3f546730f66a18cb0bfe5e2929110e9891fa26c83bc770e3c3ae8cf"
+    },
+    {
+      "id": "cascade-arch",
+      "site_family": "archlinux.org",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 88,
+      "expected": 50,
+      "fingerprint": "1884ed289549f3a5ea50da0d6be6582174ea338f37481b6103f4e4b87b47ee16"
+    },
+    {
+      "id": "cascade-usenix",
+      "site_family": "usenix.org",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 268,
+      "expected": 53,
+      "fingerprint": "9e55f9d657bb492b7a53a8fc2682f3f6bfbe812bd5f8a454b49c4ba3c05cf6ab"
+    },
+    {
+      "id": "cascade-quanta",
+      "site_family": "quantamagazine.org",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 482,
+      "expected": 12,
+      "fingerprint": "cc6c826591ed81d24b4ae6c81de65085706dc21db8103f6425fb2a6c04b99e66"
+    },
+    {
+      "id": "cascade-aeon",
+      "site_family": "aeon.co",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 60,
+      "expected": 13,
+      "fingerprint": "71567c72fb321793ef94eab3095e3aaf3d067bc582e5e64d87c66d6879c328b8"
+    },
+    {
+      "id": "cascade-atlas",
+      "site_family": "atlasobscura.com",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 95,
+      "expected": 9,
+      "fingerprint": "8d9a7d329a539fe252b36c0d5b607fd57cbebf3c0997cb5ac4a4760fa4722f71"
+    },
+    {
+      "id": "cascade-laphams",
+      "site_family": "laphamsquarterly.org",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 136,
+      "expected": 11,
+      "fingerprint": "ba0228d8a1cec88008ba81d17743b17e471c3febe767f7ba60a41d64780a3909"
+    },
+    {
+      "id": "cascade-smithsonian",
+      "site_family": "smithsonianmag.com",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 149,
+      "expected": 15,
+      "fingerprint": "54c318d0ec1748ee983f39b5abe75eab76c511f803427dada9b3988e36c140ff"
+    },
+    {
+      "id": "cascade-blender",
+      "site_family": "blender.org",
+      "split": "validation",
+      "cohort": "historical",
+      "candidates": 162,
+      "expected": 24,
+      "fingerprint": "5bca9d2f87e6a78dee6445efa0bb99fb9b0bfbedeb9249fb592b594839d24125"
+    },
+    {
+      "id": "cascade-imperial",
+      "site_family": "imperial.ac.uk",
+      "split": "validation",
+      "cohort": "historical",
+      "candidates": 149,
+      "expected": 26,
+      "fingerprint": "3a27ab0dfa6f8204304436e8fe253ef34c30a6ec30d6a164785c43595b608b39"
+    },
+    {
+      "id": "cascade-nationalgallery",
+      "site_family": "nationalgallery.org.uk",
+      "split": "validation",
+      "cohort": "historical",
+      "candidates": 84,
+      "expected": 7,
+      "fingerprint": "f2f566a794e9e4bcf140773e5fde9ab10945c48120c788d533be1cac6232964f"
+    },
+    {
+      "id": "cascade-nist",
+      "site_family": "nist.gov",
+      "split": "test",
+      "cohort": "historical",
+      "candidates": 167,
+      "expected": 12,
+      "fingerprint": "9c148f4d874e5c23b59068564db1efbb450b32a6afbace58490b60dc05cd9ad1"
+    },
+    {
+      "id": "cascade-britishmuseum",
+      "site_family": "britishmuseum.org",
+      "split": "test",
+      "cohort": "historical",
+      "candidates": 100,
+      "expected": 11,
+      "fingerprint": "afdd2068e6186f88cbfa981a68f6e0bf127648a460ff4cc6dd78f155c10d0958"
+    },
+    {
+      "id": "cascade-eff",
+      "site_family": "eff.org",
+      "split": "test",
+      "cohort": "historical",
+      "candidates": 230,
+      "expected": 15,
+      "fingerprint": "bbe1932460d9898dc76b0bee20b29e1cb4307780d2e7680692d51873544f0202"
+    },
+    {
+      "id": "cascade-planetary",
+      "site_family": "planetary.org",
+      "split": "test",
+      "cohort": "historical",
+      "candidates": 191,
+      "expected": 20,
+      "fingerprint": "dd19333c8e5b3286f3be9bd0b76a8b91013819ca6156b36e9d8e007bcd323f4a"
+    },
+    {
+      "id": "cascade-freecodecamp",
+      "site_family": "freecodecamp.org",
+      "split": "test",
+      "cohort": "historical",
+      "candidates": 182,
+      "expected": 25,
+      "fingerprint": "a7aaea8cfb3cf4366ae64311e22a6457e958967f0ff24b3a0ec1e666e0b1d5d8"
+    },
+    {
+      "id": "review-julia",
+      "site_family": "julialang.org",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 204,
+      "expected": 158,
+      "fingerprint": "84a8a938bbba8edccd0cd3d8050241733e48de34508efdeeed0f9595e0d1bff9"
+    },
+    {
+      "id": "review-aclanthology",
+      "site_family": "aclanthology.org",
+      "split": "train",
+      "cohort": "historical",
+      "candidates": 2299,
+      "expected": 2270,
+      "fingerprint": "718d81c0f01efe54aa2e6a495c99d67695f8a5250a1a7ce8c893a35c76b7fba4"
+    },
+    {
+      "id": "review-gentoo",
+      "site_family": "gentoo.org",
+      "split": "validation",
+      "cohort": "historical",
+      "candidates": 410,
+      "expected": 71,
+      "fingerprint": "5fa925e614fc70f84b133ae5728c4180a8b0aaa131a010717233549e06a64742"
+    },
+    {
+      "id": "review-kde",
+      "site_family": "kde.org",
+      "split": "validation",
+      "cohort": "historical",
+      "candidates": 125,
+      "expected": 10,
+      "fingerprint": "eb9083b95e392803a5c188d34704b5ab3e79a366da8811f78ed772ef043624b9"
+    },
+    {
+      "id": "review-publicdomainreview",
+      "site_family": "publicdomainreview.org",
+      "split": "validation",
+      "cohort": "historical",
+      "candidates": 174,
+      "expected": 13,
+      "fingerprint": "6e57cbb42a62ed5ef6eaee55fb2cc2bcf39330e57ca2753cf8fbc6c3a683c535"
+    },
+    {
+      "id": "review-godot",
+      "site_family": "godotengine.org",
+      "split": "test",
+      "cohort": "historical",
+      "candidates": 94,
+      "expected": 24,
+      "fingerprint": "e92253c5008100fd4f2d4e6b3b447d832f5f5c4bd45c1260be015bdaac0fb6f8"
+    },
+    {
+      "id": "review-signal",
+      "site_family": "signal.org",
+      "split": "test",
+      "cohort": "historical",
+      "candidates": 632,
+      "expected": 154,
+      "fingerprint": "8e3ed84d85eef51f8cfeb86bbd81659cd048b9e399aae075f6cbdaae7a604ccc"
+    },
+    {
+      "id": "review-projecteuler",
+      "site_family": "projecteuler.net",
+      "split": "test",
+      "cohort": "historical",
+      "candidates": 101,
+      "expected": 50,
+      "fingerprint": "b244f114b7d9ea77585d5de4fe33fa7e0e289ecd8f5ea25455e996d0d5cb6497"
+    },
+    {
+      "id": "breadth-cultural-moma",
+      "site_family": "moma.org",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 113,
+      "expected": 27,
+      "fingerprint": "40987e4c4da34f944eeb83ea246d53a209fa8c28f17b5ad6c0037217e2758bcc"
+    },
+    {
+      "id": "breadth-cultural-whitney",
+      "site_family": "whitney.org",
+      "split": "test",
+      "cohort": "breadth",
+      "candidates": 90,
+      "expected": 21,
+      "fingerprint": "ad83da0688dad207c0657ca00badbb8455d0ea474d0482452672ec8e658feefe"
+    },
+    {
+      "id": "breadth-cultural-louvre",
+      "site_family": "louvre.fr",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 65,
+      "expected": 7,
+      "fingerprint": "e6f7b6549da8b13db1a61eea7fc974291468a074b461d3394767282b3f7f6b2d"
+    },
+    {
+      "id": "breadth-cultural-cleveland",
+      "site_family": "clevelandart.org",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 36,
+      "expected": 28,
+      "fingerprint": "0c43e0523c008dfcb3d7d435be9f52c621042312dcd75c7afa21a74074301065"
+    },
+    {
+      "id": "breadth-cultural-moca",
+      "site_family": "moca.org",
+      "split": "test",
+      "cohort": "breadth",
+      "candidates": 90,
+      "expected": 6,
+      "fingerprint": "c4525ee05734c5b825997dbc71874e695daab76ba4325e8284562b030668831b"
+    },
+    {
+      "id": "breadth-cultural-kingarthur",
+      "site_family": "kingarthurbaking.com",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 478,
+      "expected": 19,
+      "fingerprint": "a7b0e611506137d10e95c66791634f3be6dbb1fa1c180f48e48d8bf439ae5753"
+    },
+    {
+      "id": "breadth-cultural-allrecipes",
+      "site_family": "allrecipes.com",
+      "split": "validation",
+      "cohort": "breadth",
+      "candidates": 313,
+      "expected": 72,
+      "fingerprint": "cb78c8054ee98ba07f8853fcd7886ece57b717cc263823c61ce7546066a870ad"
+    },
+    {
+      "id": "breadth-cultural-seriouseats",
+      "site_family": "seriouseats.com",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 241,
+      "expected": 63,
+      "fingerprint": "1c42fdb9ff8de1851f36777e62060d6fe3cd1b487e4e9ecdf9aacfd212cf2c3c"
+    },
+    {
+      "id": "breadth-cultural-rhs",
+      "site_family": "rhs.org.uk",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 152,
+      "expected": 1,
+      "fingerprint": "3e03bb09cb9a3e4b644c2b9b0ed44eb7a008a2cbccfed98e010a14792a1e9eb1"
+    },
+    {
+      "id": "breadth-cultural-kew",
+      "site_family": "kew.org",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 78,
+      "expected": 12,
+      "fingerprint": "53a1cc0d847513689cd4b856b4741039f8bd89c619df7342cd71809dc82ea197"
+    },
+    {
+      "id": "breadth-cultural-boardgamegeek",
+      "site_family": "boardgamegeek.com",
+      "split": "validation",
+      "cohort": "breadth",
+      "candidates": 217,
+      "expected": 100,
+      "fingerprint": "4aeda8c62497c23d2b77c6ce7a101f7aebcfb1716d7d93b7f199a1f8a9fa3ec4"
+    },
+    {
+      "id": "breadth-cultural-puzzles",
+      "site_family": "greenend.org.uk",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 179,
+      "expected": 40,
+      "fingerprint": "0f23b9120dbda589356e19664fd08554697e2309490ea04820e430f90918246e"
+    },
+    {
+      "id": "breadth-cultural-nybg",
+      "site_family": "nybg.org",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 309,
+      "expected": 25,
+      "fingerprint": "921bd7bc09143956a94b515b59d0adebf0eb0797410c6d3b9c996a689f12f3df"
+    },
+    {
+      "id": "breadth-cultural-mood",
+      "site_family": "moodfabrics.com",
+      "split": "test",
+      "cohort": "breadth",
+      "candidates": 642,
+      "expected": 217,
+      "fingerprint": "fd7b2ec0110486a2c6c4d9a04a781dd6b2c8171dc163b8a6dcbee61fff65246e"
+    },
+    {
+      "id": "breadth-cultural-budgetbytes",
+      "site_family": "budgetbytes.com",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 110,
+      "expected": 47,
+      "fingerprint": "245adc7244bcb9da744a8be3bd4014287551a91076b5ddb2a6eacb0158c35ab1"
+    },
+    {
+      "id": "breadth-cultural-openlibrary",
+      "site_family": "openlibrary.org",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 285,
+      "expected": 20,
+      "fingerprint": "5e2b5202606b6b3854d4234280091aeee71b9c2a75ceb3fa260bffa15f49f534"
+    },
+    {
+      "id": "breadth-cultural-nationaltrail",
+      "site_family": "nationaltrail.co.uk",
+      "split": "validation",
+      "cohort": "breadth",
+      "candidates": 332,
+      "expected": 16,
+      "fingerprint": "5a7d52c1159a3d0baa7cab02442566700df86f66d97dfdca5f5025990697d747"
+    },
+    {
+      "id": "breadth-public-fed",
+      "site_family": "federalreserve.gov",
+      "split": "test",
+      "cohort": "breadth",
+      "candidates": 334,
+      "expected": 101,
+      "fingerprint": "f0aef0d41f12eca00336a3cec513975ef77f31df89a69eedf45dd52ac73ddf43"
+    },
+    {
+      "id": "breadth-public-bea",
+      "site_family": "bea.gov",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 99,
+      "expected": 12,
+      "fingerprint": "ef05ef21e924bd5f4b4d12d5ec90dbdd8198e1df34dcf8ac6cb7a0302f5a869c"
+    },
+    {
+      "id": "breadth-public-bls",
+      "site_family": "bls.gov",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 357,
+      "expected": 50,
+      "fingerprint": "9ab474935593da56aaca7e3330ae89f407c26a2e7c8bdd3bf12fc1761c719e92"
+    },
+    {
+      "id": "breadth-public-ftc",
+      "site_family": "ftc.gov",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 299,
+      "expected": 20,
+      "fingerprint": "e4070f71b5cf70b82392b49308fff23fbf7f56f8b3cd624bda2f1d235270821e"
+    },
+    {
+      "id": "breadth-public-fda",
+      "site_family": "fda.gov",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 78,
+      "expected": 10,
+      "fingerprint": "3a47d11eb4df262286dfef3b1062494ad2232c8949789e6df8e97b8437033873"
+    },
+    {
+      "id": "breadth-public-usgs",
+      "site_family": "usgs.gov",
+      "split": "validation",
+      "cohort": "breadth",
+      "candidates": 32,
+      "expected": 6,
+      "fingerprint": "156523e7e5adcbdd1d19058770782db3504198e31fa3407e1226f3461ec8eb3e"
+    },
+    {
+      "id": "breadth-public-ons",
+      "site_family": "ons.gov.uk",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 91,
+      "expected": 10,
+      "fingerprint": "9cc7f412443c0552c950ec82b9e7731a7a65db656624e4d39361f01e3f3143a9"
+    },
+    {
+      "id": "breadth-public-abs",
+      "site_family": "abs.gov.au",
+      "split": "validation",
+      "cohort": "breadth",
+      "candidates": 71,
+      "expected": 20,
+      "fingerprint": "da6f60859cdcbf31161e859b9660b2a4f8ad121b55c435e1ccb45845c0c6b253"
+    },
+    {
+      "id": "breadth-public-treasury",
+      "site_family": "treasury.gov",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 324,
+      "expected": 10,
+      "fingerprint": "f428189e5a1736dd0fbdee9af11006c864da9a978a9eeb7e830a8a5e544a06e6"
+    },
+    {
+      "id": "breadth-public-sec",
+      "site_family": "sec.gov",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 149,
+      "expected": 25,
+      "fingerprint": "d59689cb352a9c91aa3568a544db4eaead2062929877f5e19a140ab0999c4d7a"
+    },
+    {
+      "id": "breadth-public-fdic",
+      "site_family": "fdic.gov",
+      "split": "test",
+      "cohort": "breadth",
+      "candidates": 114,
+      "expected": 20,
+      "fingerprint": "aa70d2be5cbfa91859a619da606dcf667921417ee7dbd15f90541ac0d1de77e2"
+    },
+    {
+      "id": "breadth-public-supreme",
+      "site_family": "supremecourt.gov",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 207,
+      "expected": 74,
+      "fingerprint": "ddeadfbd4045ee616867ba1139786bb2cd4384421c6ee58f0baeb5aeffaacc79"
+    },
+    {
+      "id": "breadth-public-cfpb",
+      "site_family": "consumerfinance.gov",
+      "split": "validation",
+      "cohort": "breadth",
+      "candidates": 161,
+      "expected": 21,
+      "fingerprint": "1f0f7151656b4e128cfd2f79fc9b42cf3d22a8f32ed89dffa383a9585167594d"
+    },
+    {
+      "id": "breadth-public-rba",
+      "site_family": "rba.gov.au",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 177,
+      "expected": 87,
+      "fingerprint": "4236dfdd41dbeaaa78e5d3b0349150d57f31114425e0d2166dafbfc5b967fb40"
+    },
+    {
+      "id": "breadth-public-bankcanada",
+      "site_family": "bankofcanada.ca",
+      "split": "test",
+      "cohort": "breadth",
+      "candidates": 270,
+      "expected": 10,
+      "fingerprint": "99bf8ffc9244d7a508ed5c39b6f743da9c92aac684afc7596d64c35aa40924f5"
+    },
+    {
+      "id": "breadth-public-wmo",
+      "site_family": "wmo.int",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 158,
+      "expected": 12,
+      "fingerprint": "1c5787c651228920d9212bc392c9847642dadbc38638ee760e804486385746e0"
+    },
+    {
+      "id": "breadth-technical-openssl",
+      "site_family": "openssl-library.org",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 1120,
+      "expected": 106,
+      "fingerprint": "1bf7422c43a4bfa7b8d5cb9482a2fb5749505e50e1c9c984e1861f72bfcc4151"
+    },
+    {
+      "id": "breadth-technical-curl",
+      "site_family": "curl.se",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 154,
+      "expected": 69,
+      "fingerprint": "6dd76f9e6f000fab8b39d1640d89f9e8441edf9946b678cbd0bd196b9bd997a7"
+    },
+    {
+      "id": "breadth-technical-kernel",
+      "site_family": "kernel.org",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 104,
+      "expected": 8,
+      "fingerprint": "643af5f69adf93279ee387e1d68c50c7bab9206e3b92f5a2bc2b10b5aea21538"
+    },
+    {
+      "id": "breadth-technical-nginx",
+      "site_family": "nginx.org",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 115,
+      "expected": 47,
+      "fingerprint": "e077eca77106dbfdfcf123c64f9d304548f8301b6225cb4a716c9b44e40345ae"
+    },
+    {
+      "id": "breadth-technical-iana",
+      "site_family": "iana.org",
+      "split": "test",
+      "cohort": "breadth",
+      "candidates": 2002,
+      "expected": 637,
+      "fingerprint": "bd2656c7d51f3c3d9c4c7319fa2e3b69b9987755a74d0ce18f9736259aa56e9f"
+    },
+    {
+      "id": "breadth-technical-unicode",
+      "site_family": "unicode.org",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 127,
+      "expected": 33,
+      "fingerprint": "5d17ea583bccca7ac37b4a45fb35aeaf0e145a34bd6f0bd38bba363f7cad71ce"
+    },
+    {
+      "id": "breadth-technical-netlib",
+      "site_family": "netlib.org",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 295,
+      "expected": 294,
+      "fingerprint": "c2e46bad2e15879a96532fe8ea9eebb61414990e45d2038b2e9542af90f312ca"
+    },
+    {
+      "id": "breadth-technical-uci",
+      "site_family": "uci.edu",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 48,
+      "expected": 10,
+      "fingerprint": "cd02541129423141a87b7671a9d983bf3d079da2c5691b8a4582bf70521bcd2b"
+    },
+    {
+      "id": "breadth-technical-data-gov",
+      "site_family": "data.gov",
+      "split": "validation",
+      "cohort": "breadth",
+      "candidates": 129,
+      "expected": 20,
+      "fingerprint": "4263921d591925f33856ac1743149d06f29135a9637527239db8f02e91a43f2e"
+    },
+    {
+      "id": "breadth-technical-cp-algorithms",
+      "site_family": "cp-algorithms.com",
+      "split": "validation",
+      "cohort": "breadth",
+      "candidates": 364,
+      "expected": 163,
+      "fingerprint": "70c06596c00f325aebeff4d39f4bb3466a68b14eec86210738d1d3fa579ba77e"
+    },
+    {
+      "id": "breadth-technical-kattis",
+      "site_family": "kattis.com",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 322,
+      "expected": 100,
+      "fingerprint": "4f54d95b416ef5289c46ae816ef8cb8f2e2f1570539abbc121c59388095bf6cc"
+    },
+    {
+      "id": "breadth-technical-sphinx",
+      "site_family": "sphinx-doc.org",
+      "split": "validation",
+      "cohort": "breadth",
+      "candidates": 328,
+      "expected": 48,
+      "fingerprint": "857772a62e1c8d86f4b3f39f053f783c1430c0ef7b977d53892b88f96778378e"
+    },
+    {
+      "id": "breadth-technical-busybox",
+      "site_family": "busybox.net",
+      "split": "test",
+      "cohort": "breadth",
+      "candidates": 351,
+      "expected": 131,
+      "fingerprint": "6a41b4f5f6ad888b2f6f6d7b4670d694b1f2bc05873899662c03d747fcd0ad32"
+    },
+    {
+      "id": "breadth-technical-samba",
+      "site_family": "samba.org",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 634,
+      "expected": 545,
+      "fingerprint": "40ad45fa3b50e1f524778c79ab74ed163db3b46db628c8204f8a5e93838afa7c"
+    },
+    {
+      "id": "breadth-technical-gnu",
+      "site_family": "gnu.org",
+      "split": "test",
+      "cohort": "breadth",
+      "candidates": 854,
+      "expected": 387,
+      "fingerprint": "308e0993ccd597e9281300b683da1402759fd5e34bc41a167556c0a937a94487"
+    },
+    {
+      "id": "breadth-technical-git",
+      "site_family": "git-scm.com",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 115,
+      "expected": 78,
+      "fingerprint": "99fdf7d46fde1e6e872855fd46a1053c49558258b98cedc70563e5e9a81a9873"
+    },
+    {
+      "id": "breadth-technical-openbsd",
+      "site_family": "openbsd.org",
+      "split": "validation",
+      "cohort": "breadth",
+      "candidates": 137,
+      "expected": 12,
+      "fingerprint": "b6369d7e68dd0cafd10377f7b6b99dd21d6444d1daae8fac35cc5aa314cfa6d5"
+    },
+    {
+      "id": "breadth-technical-wolfram",
+      "site_family": "wolfram.com",
+      "split": "train",
+      "cohort": "breadth",
+      "candidates": 963,
+      "expected": 932,
+      "fingerprint": "e6c75c91a431a81075e55aed3ed1a93b65991201305ac9e16509aedd0991c05b"
+    }
+  ]
+}

@@ -1,0 +1,370 @@
+{
+  "version": 1,
+  "purpose": "Fresh decision-stage holdout for offline candidate comparisons; never training or threshold selection.",
+  "created_at": "2026-09-22T07:39:15.955604+00:00",
+  "scope_frozen_at": "2026-09-22T07:37:46.496972+00:00",
+  "labels_frozen_before_model_outputs": true,
+  "models_invoked_for_annotation_or_rows": false,
+  "labels": "Assistant-reviewed source-scoped weak URL labels; not independently adjudicated human gold.",
+  "selection": {
+    "planned_families": 12,
+    "qualified_families": 8,
+    "qualified_families_list": [
+      "99percentinvisible.org",
+      "longreads.com",
+      "smittenkitchen.com",
+      "thewalters.org",
+      "wireshark.org",
+      "metacpan.org",
+      "nostarch.com",
+      "tvmaze.com"
+    ],
+    "selection_policy": "Sources and record scopes chosen before collection/model outputs; unavailable or record-empty captures retained as exclusions. One taxonomy-only recipe index was followed to a visible category listing before label freeze.",
+    "prior_host_inventory_count": 2454,
+    "family_overlap": [],
+    "overlap_policy": "Compared every proposed family against URL/source/site_family hosts in all prior backend/ml/datasets JSON/JSONL, conservatively treating ancestor/subdomain matches as overlap; additionally rg-searched previous backend/data metadata/scripts and backend/tests for all proposed domains, finding no prior matches.",
+    "prior_datasets": [
+      {
+        "file": "ml/datasets/breadth-cultural-dataset.jsonl",
+        "sha256": "7782fb767c34e477945f311d3670e00803bc66e4f792e694e95fb8c13060cbda"
+      },
+      {
+        "file": "ml/datasets/breadth-cultural-sources.json",
+        "sha256": "86efd24978a6cfe7d4d17cb9381ccf6967ac2e314b08ba40a63047da90eaf24a"
+      },
+      {
+        "file": "ml/datasets/breadth-dataset-card.json",
+        "sha256": "27d6250837a694314213bc8495ee6b87288081442c61b08ad0c2c512cd878854"
+      },
+      {
+        "file": "ml/datasets/breadth-public-dataset.jsonl",
+        "sha256": "3651f04c6919474843046265fb7a76ebd780e9d53d88c235d5fe208ea9c29ec9"
+      },
+      {
+        "file": "ml/datasets/breadth-public-sources.json",
+        "sha256": "21ea21c45b68ab4507eae00f62f79b245cb1f0cfd743adb24644dc41820faa5c"
+      },
+      {
+        "file": "ml/datasets/breadth-technical-dataset.jsonl",
+        "sha256": "7c7c0064d0d16fc04c19d06d3dba9158a1e8b320ec052a2e26463a5e6f0d6a37"
+      },
+      {
+        "file": "ml/datasets/breadth-technical-sources.json",
+        "sha256": "45f4b07d426a685c79fdb703f5de6d718d6ae404f0d75006cca29260e73b62d5"
+      },
+      {
+        "file": "ml/datasets/cascade-dataset.jsonl",
+        "sha256": "e1fd5a2b2e07f9b21f46996c61720c102dcfe05d33a78b87ebb8304f35d2d710"
+      },
+      {
+        "file": "ml/datasets/cascade-final-dataset.jsonl",
+        "sha256": "9ff161caa3fbdc90b7eb3b6aca0f82d831f686c9703fe85ab2892dd50bbeb285"
+      },
+      {
+        "file": "ml/datasets/cascade-final-sources.json",
+        "sha256": "473c744fdda29417f9af9c535b30af6890972b239d1f7fb7ed006e1d8af9a57f"
+      },
+      {
+        "file": "ml/datasets/cascade-sources.json",
+        "sha256": "27e3708cf8bbe984a5629712e0c7107a78d4d8a32ba3fa1ca44b4961fa7420a6"
+      },
+      {
+        "file": "ml/datasets/dataset-card.json",
+        "sha256": "b21c9a9b7fe94294858fca4e958e9d0c6a749f27f082357c4171daeea4d81abc"
+      },
+      {
+        "file": "ml/datasets/dataset.jsonl",
+        "sha256": "b223bb65103d5e3db93a2de1fa3c6540061b22592637fa00f2507c06015ae066"
+      },
+      {
+        "file": "ml/datasets/extraction-audit-dataset.jsonl",
+        "sha256": "2e0ebbdc7df0eb3866af1b2f5848805a7a2fae1e9d6645fe11ed6f64b1d759db"
+      },
+      {
+        "file": "ml/datasets/extraction-audit-records.jsonl",
+        "sha256": "412e45dfe5c01191fbc36eb6c850d74bcee66339f247fb3390de6150b079e8b6"
+      },
+      {
+        "file": "ml/datasets/extraction-audit-sources.json",
+        "sha256": "d0cd42f6ffe7b19a7909fec06f62db35591e065c6e675b4e6ddae6fcde3a0eaa"
+      },
+      {
+        "file": "ml/datasets/generalization-final-dataset.jsonl",
+        "sha256": "b191c47d88aa0436a5b41e22cf4abfdfbda92881923844114553688b77eb1301"
+      },
+      {
+        "file": "ml/datasets/generalization-final-sources.json",
+        "sha256": "9fea19eb4a9628f3cc1d1062419598f139833a56fa7fb8a502bf1b2b089d4c65"
+      },
+      {
+        "file": "ml/datasets/generalization-holdout-dataset.jsonl",
+        "sha256": "1e1e69eccd5cac57779e1d836c52d5632259e5bf0e1b0bb2064347e023a4a914"
+      },
+      {
+        "file": "ml/datasets/generalization-holdout-sources.json",
+        "sha256": "7b5347f9cc7ff8e74274886c9335dfaa3932f413650ddd529f090056b0f7a0c1"
+      },
+      {
+        "file": "ml/datasets/generalization-sources.json",
+        "sha256": "5b4169b6da132d67046003c7485b9e912c74516060cbdf8caab112284639092e"
+      },
+      {
+        "file": "ml/datasets/generalization.jsonl",
+        "sha256": "2f2857f8f94bfaa11ff0feab28189f238bd4bab7e45d2fad7de715eafc2e93ff"
+      },
+      {
+        "file": "ml/datasets/holdout-dataset-card.json",
+        "sha256": "9a0af7249f618d0260e1e1522cc80d8b08b3163b344a5c96f220e4a8b8e923b7"
+      },
+      {
+        "file": "ml/datasets/holdout-dataset.jsonl",
+        "sha256": "cd97dfb2c509d3765263d57ea173d400c4a0dc935a7068a045b5439294769791"
+      },
+      {
+        "file": "ml/datasets/media-final-profiles.json",
+        "sha256": "65dcfe177e6aeb677091426e8cd0879d9105c6a41b136a966aade72f480431d1"
+      },
+      {
+        "file": "ml/datasets/media-profiles.json",
+        "sha256": "f9900ebf4badd319bc80a7450c7956dc7eb1c887fc119809494e104d0b2cbacd"
+      },
+      {
+        "file": "ml/datasets/media-public-profiles.json",
+        "sha256": "e82aad691585080098e45994ff3cb1a2ed0e509c806381907684f3a9ab8bd318"
+      },
+      {
+        "file": "ml/datasets/non-extraction-audit-profiles.json",
+        "sha256": "e3a2a7c3a47e9f0faed0460c34053977522dfcb4aeba4f1496dba18b6471ea78"
+      },
+      {
+        "file": "ml/datasets/non-extraction-audit-queries.json",
+        "sha256": "1d6b27abbdde5ac6c7db20a277655f4e233ac9a0cecb22314a006e0d24100939"
+      },
+      {
+        "file": "ml/datasets/non-extraction-audit-sources.json",
+        "sha256": "8f190efaf851d728456a39f898c5f9104f7b8180afb6cb787d72ec799cfee156"
+      },
+      {
+        "file": "ml/datasets/record-context-dataset.jsonl",
+        "sha256": "e4714e1947955ab401803034df45b6df62c9bd6a197a1eb3df6f6c93ffdd526b"
+      },
+      {
+        "file": "ml/datasets/review-dataset-card.json",
+        "sha256": "1390eda6aa295cfe459cd0e6687ad83440b930f7d110bc16e729512b1f19434b"
+      },
+      {
+        "file": "ml/datasets/review-dataset.jsonl",
+        "sha256": "9e68d36e25e7b7ac8a85c5ba524c0094fab4fe6b5bb8d796cab19aa5cfced785"
+      },
+      {
+        "file": "ml/datasets/review-sources.json",
+        "sha256": "dfa5adea42a558cfaba734edfc0f67dd0fcb747ba3094eaa3455bda6bf85372c"
+      },
+      {
+        "file": "ml/datasets/search-queries.json",
+        "sha256": "6a8463eb14b81046d321afdb3e54852cfdf83616bb2f7863b6f967c75d7e74f8"
+      },
+      {
+        "file": "ml/datasets/sources.json",
+        "sha256": "8a3f0b8e5402fac7e35cf4e5b99c8ee966134ae36d1dd2d7c605cf2459ef69df"
+      },
+      {
+        "file": "ml/datasets/v2-dataset-card.json",
+        "sha256": "0e2003fa3b10c2569a65de5855f871e34471a91f9e3f1236f0863f4c37c296f0"
+      },
+      {
+        "file": "ml/datasets/v2-dataset.jsonl",
+        "sha256": "2a106aa097f5c872eff05d1b20c03c6499dbec836c2b29206c38f9ba60d11bbd"
+      },
+      {
+        "file": "ml/datasets/v2_sources.json",
+        "sha256": "5c4dce6a3ad44b31f98382267ad6f0cdceaba486e6f62863a2f50b70ffa175be"
+      },
+      {
+        "file": "ml/datasets/v3-dataset-card.json",
+        "sha256": "af01d21e2f5fdff04390340921db9674c62b909de8a4f8475323b74517c8d63b"
+      },
+      {
+        "file": "ml/datasets/v3-dataset.jsonl",
+        "sha256": "5cd445174fb399122dda9bd738683e46222c04380fd5c6655700ef869a2b09a8"
+      }
+    ]
+  },
+  "collection": {
+    "collector": "ml/collect_breadth.py",
+    "user_agent": "Trackify/1.0 (+https://mediatrackify.duckdns.org; contact: mediatrackify@gmail.com)",
+    "network_requests": 23,
+    "cache_hits": 1,
+    "bytes_received": 2713908,
+    "maximum_requests_per_family": 3,
+    "maximum_bytes_per_family": 697399,
+    "safety": "Existing collector: robots checks, same-family redirects only, 6-request/10MB attempt budgets, minimum 2s spacing. Total requests/bytes also remain below those budgets per family including the recipe retry. No individual record URLs fetched; no browser/API workaround or access-control bypass.",
+    "listing_attempts": 13,
+    "html_captures": 10,
+    "record_empty_capture_families": [
+      "openstax.org"
+    ],
+    "excluded_families": [
+      {
+        "site_family": "radiolab.org",
+        "status": "robots-unavailable",
+        "review_status": "excluded-acquisition",
+        "reason": "Public listing could not be collected under the existing robots and access rules; retained as acquisition evidence, not a scored source."
+      },
+      {
+        "site_family": "openstax.org",
+        "status": "captured",
+        "review_status": "excluded-no-server-rendered-records",
+        "reason": "Saved HTML is a JavaScript shell without catalogue record anchors; no browser/API/content-page workaround attempted."
+      },
+      {
+        "site_family": "djangopackages.org",
+        "status": "unavailable",
+        "review_status": "excluded-acquisition",
+        "reason": "Public listing could not be collected under the existing robots and access rules; retained as acquisition evidence, not a scored source."
+      },
+      {
+        "site_family": "allaboutbirds.org",
+        "status": "robots-unavailable",
+        "review_status": "excluded-acquisition",
+        "reason": "Public listing could not be collected under the existing robots and access rules; retained as acquisition evidence, not a scored source."
+      }
+    ]
+  },
+  "artifacts": {
+    "manifest": {
+      "file": "ml/datasets/semantic-decision-holdout-sources.json",
+      "sha256": "9c373f959e54d0a1ad75eed8945a886264a55adaf4671b31a71c0fa92e79f603"
+    },
+    "dataset": {
+      "file": "ml/datasets/semantic-decision-holdout-dataset.jsonl",
+      "sha256": "9abcb248f6ea6edd4beb0dad539165381668ca19fbc8d22858ef76cb9d887f8a"
+    },
+    "captures_directory": "data/semantic-decision-holdout (gitignored)",
+    "feature_extractor": {
+      "file": "app/tracker/link_context.py",
+      "sha256": "35fe0b0dd025377d424604f158b6a47a122453a6009ad6c99efe28d3d89b8d1b"
+    }
+  },
+  "totals": {
+    "expected_urls": 937,
+    "neutral_urls": 52,
+    "candidate_rows": 1953,
+    "positive_rows": 1416,
+    "negative_rows": 537
+  },
+  "pages": [
+    {
+      "source_id": "breadth-semantic-holdout-99pi",
+      "site_family": "99percentinvisible.org",
+      "expected_urls": 12,
+      "neutral_urls": 24,
+      "candidate_rows": 99,
+      "positive_candidate_rows": 24,
+      "unique_candidate_urls": 62,
+      "positive_unique_urls": 12,
+      "missing_from_candidates": [],
+      "feature_seconds": 0.0576,
+      "annotation_ambiguity": "Required unit is an episode landing page, not every access mode. Alternate representations are frozen as neutral."
+    },
+    {
+      "source_id": "breadth-semantic-holdout-longreads",
+      "site_family": "longreads.com",
+      "expected_urls": 27,
+      "neutral_urls": 1,
+      "candidate_rows": 109,
+      "positive_candidate_rows": 46,
+      "unique_candidate_urls": 61,
+      "positive_unique_urls": 27,
+      "missing_from_candidates": [],
+      "feature_seconds": 0.1211,
+      "annotation_ambiguity": "Reading lists and weekly roundups have their own titled editorial entries and count as records; the recommender utility is neutral."
+    },
+    {
+      "source_id": "breadth-semantic-holdout-smittenkitchen",
+      "site_family": "smittenkitchen.com",
+      "expected_urls": 10,
+      "neutral_urls": 11,
+      "candidate_rows": 78,
+      "positive_candidate_rows": 20,
+      "unique_candidate_urls": 53,
+      "positive_unique_urls": 10,
+      "missing_from_candidates": [],
+      "feature_seconds": 0.052,
+      "annotation_ambiguity": "Only the first captured category page is required. Sidebar dated content is neutral; category filters and further pages remain auxiliary negatives."
+    },
+    {
+      "source_id": "breadth-semantic-holdout-walters",
+      "site_family": "thewalters.org",
+      "expected_urls": 29,
+      "neutral_urls": 0,
+      "candidate_rows": 99,
+      "positive_candidate_rows": 29,
+      "unique_candidate_urls": 59,
+      "positive_unique_urls": 29,
+      "missing_from_candidates": [],
+      "feature_seconds": 0.1244,
+      "annotation_ambiguity": "Named ongoing installations, collection displays, upcoming and recent past exhibition cards are required, even when the display title is an artist name."
+    },
+    {
+      "source_id": "breadth-semantic-holdout-wireshark",
+      "site_family": "wireshark.org",
+      "expected_urls": 333,
+      "neutral_urls": 4,
+      "candidate_rows": 448,
+      "positive_candidate_rows": 333,
+      "unique_candidate_urls": 372,
+      "positive_unique_urls": 333,
+      "missing_from_candidates": [],
+      "feature_seconds": 0.2637,
+      "annotation_ambiguity": "Announcements, including development releases, are the record unit. Separate technical release notes are neutral rather than additional required items."
+    },
+    {
+      "source_id": "breadth-semantic-holdout-metacpan",
+      "site_family": "metacpan.org",
+      "expected_urls": 100,
+      "neutral_urls": 0,
+      "candidate_rows": 161,
+      "positive_candidate_rows": 100,
+      "unique_candidate_urls": 150,
+      "positive_unique_urls": 100,
+      "missing_from_candidates": [],
+      "feature_seconds": 0.084,
+      "annotation_ambiguity": "The same visible release-name role can use a /dist/ latest pointer or a versioned /release/ URL. Both are required; labels follow the visible primary record role rather than a path-only definition."
+    },
+    {
+      "source_id": "breadth-semantic-holdout-nostarch",
+      "site_family": "nostarch.com",
+      "expected_urls": 401,
+      "neutral_urls": 12,
+      "candidate_rows": 869,
+      "positive_candidate_rows": 814,
+      "unique_candidate_urls": 449,
+      "positive_unique_urls": 401,
+      "missing_from_candidates": [],
+      "feature_seconds": 0.6438,
+      "annotation_ambiguity": "Printed/electronic books, comics, workbooks and separate editions are required. Apparel, drinkware, tote bag and coding-card products are neutral; generic category/cart controls are negatives."
+    },
+    {
+      "source_id": "breadth-semantic-holdout-tvmaze",
+      "site_family": "tvmaze.com",
+      "expected_urls": 25,
+      "neutral_urls": 0,
+      "candidate_rows": 90,
+      "positive_candidate_rows": 50,
+      "unique_candidate_urls": 60,
+      "positive_unique_urls": 25,
+      "missing_from_candidates": [],
+      "feature_seconds": 0.0474,
+      "annotation_ambiguity": "A series is the record unit; same-title shows with distinct IDs are separate required records. Only the captured first inventory page is required."
+    }
+  ],
+  "limitations": [
+    "Eight source families are a small held-out sample; uncertainty and per-family variation matter.",
+    "Rows repeat some canonical URLs across anchors. Report URL-level and source-macro results, not only candidate-row micro scores.",
+    "Wireshark and No Starch dominate record counts; they must not dominate the headline generalization conclusion.",
+    "Capture-time server-rendered HTML only. Excluded access failures and the OpenStax JavaScript shell are acquisition outcomes, not model errors.",
+    "Neutral alternate representations and source-scope ambiguities were frozen before predictions; changing these after outputs would invalidate the fresh-holdout claim.",
+    "No novel/comic serial chapter inventory is present; television, audio, editorial, recipe, exhibition and publisher catalog records broaden media coverage but do not establish chapter-specific generalization."
+  ]
+}
