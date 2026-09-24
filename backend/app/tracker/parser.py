@@ -4,7 +4,7 @@ import json
 import re
 import xml.etree.ElementTree as ET
 from collections import Counter
-from itertools import chain
+from itertools import chain, islice
 from types import SimpleNamespace
 from urllib.parse import parse_qs, urlsplit
 
@@ -14,7 +14,7 @@ from .asura import enrich_asura_dates
 from .context_model import classify_context
 from .dates import DATE_TEXT, evidence, link_date
 from .documents import unpack
-from .dom import first_parent, tags
+from .dom import first_parent, first_tag, tags
 from .embedded_lists import extract as embedded_list_entries
 from .embedded_series import embedded_series
 from .entry_identity import entry_key
@@ -230,9 +230,9 @@ def merge_entries(entries):
                     setattr(old, field, getattr(entry, field))
             old.summary = old.summary or entry.summary
             old.language = entry.language or old.language
-            old.context = " ".join(dict.fromkeys((old.context, entry.context))).strip()[
-                :1800
-            ]
+            old.context = "\n".join(
+                dict.fromkeys((old.context, entry.context))
+            ).strip()[:1800]
             old.availability = entry.availability or old.availability
             old.number = old.number if old.number is not None else entry.number
     return list(merged.values())
@@ -400,6 +400,47 @@ def parse_feed(text, source):
         )
     scan.entries = merge_entries(scan.entries)
     return scan, links
+
+
+def enrich_visible_context(entries, anchors, source, context, navigation):
+    """Reuse listing evidence for accepted fallback URLs without visiting targets."""
+    missing = {
+        content_key(entry.url): entry
+        for entry in entries
+        if entry.url and not entry.context.strip()
+    }
+    if not missing:
+        return
+    best = {}
+    for anchor in islice(anchors, MAX_LINKS):
+        if (
+            id(anchor) in navigation
+            or first_parent(anchor, {"nav", "footer", "aside"})
+            or (
+                first_parent(anchor, {"header"})
+                and not first_parent(anchor, {"article"})
+            )
+        ):
+            continue
+        url = candidate_url(anchor.get("href"), source)
+        key = content_key(url) if url else None
+        entry = missing.get(key)
+        if entry is None:
+            continue
+        label = anchor_label(anchor).strip().casefold()
+        title = entry.title.strip().casefold()
+        rank = (
+            bool(label) and label == title,
+            bool(first_parent(anchor, {"h2", "h3"}) or first_tag(anchor, {"h2", "h3"})),
+            min(len(label), 120),
+        )
+        if key not in best or rank > best[key][0]:
+            best[key] = rank, anchor
+    for key, (_, anchor) in best.items():
+        entry = missing[key]
+        entry.context = context.text(anchor)
+        if not entry.language:
+            entry.language = context.language(anchor)
 
 
 def parse_page(text, source, selector="", include_path="", *, learned=None, trace=None):
@@ -620,7 +661,9 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
             continue
         container = first_parent(a, {"tr", "article", "li"}) or a
         primary = bool(
-            first_parent(a, {"h2", "h3"}) or first_parent(a, class_pattern=TITLE_CLASS)
+            first_parent(a, {"h2", "h3"})
+            or first_tag(a, {"h2", "h3"})
+            or first_parent(a, class_pattern=TITLE_CLASS)
         )
         if not selector and kind == "website" and not (context_model and model_accepts):
             if id(container) not in record_cache:
@@ -902,6 +945,9 @@ def _parse_html(soup, source, selector, include_path, learned, trace):
     if any(not e.url for e in scan.entries):
         scan.methods.append("content list")
     scan.entries = merge_entries(scan.entries)
+    enrich_visible_context(
+        scan.entries, all_anchors, source, record_context, navigation
+    )
     if len(listed) > MAX_LINKS:
         scan.entries = scan.entries[:MAX_LINKS]
         scan.coverage = "partial"

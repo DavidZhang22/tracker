@@ -34,6 +34,18 @@ import {
   RefreshControl,
 } from "../Components/RowTools";
 
+function hasDetails(entry, sourceType) {
+  const context = entry.context?.trim();
+  if (!context) return false;
+  if (["csv", "document"].includes(sourceType)) return true;
+  const normalize = (value) =>
+    (value || "").trim().replace(/\s+/g, " ").toLowerCase();
+  const content = normalize(context);
+  return (
+    content !== normalize(entry.title) && content !== normalize(entry.summary)
+  );
+}
+
 export default function ItemPage() {
   const { id } = useParams();
   return <ItemDetail key={id} id={id} />;
@@ -632,9 +644,7 @@ function ItemDetail({ id }) {
                   onAction={(action) => selectedAction(action, [l.id])}
                 />
               </div>
-              {(l.members?.length > 1 ||
-                (["csv", "document"].includes(item.source_type) &&
-                  l.context?.trim())) && (
+              {(l.members?.length > 1 || hasDetails(l, item.source_type)) && (
                 <div className="entry-details">
                   {l.members?.length > 1 && (
                     <details className="merged-links">
@@ -665,9 +675,7 @@ function ItemDetail({ id }) {
                                 )
                               ))}
                             {member.id !== l.id &&
-                              ["csv", "document"].includes(
-                                item.source_type,
-                              ) && (
+                              hasDetails(member, item.source_type) && (
                                 <ImportDetails
                                   context={member.context}
                                   title={member.title}
@@ -678,7 +686,7 @@ function ItemDetail({ id }) {
                       </ul>
                     </details>
                   )}
-                  {["csv", "document"].includes(item.source_type) && (
+                  {hasDetails(l, item.source_type) && (
                     <ImportDetails context={l.context} title={l.title} />
                   )}
                 </div>

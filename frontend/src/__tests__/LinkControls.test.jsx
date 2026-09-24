@@ -328,3 +328,63 @@ test("entries without URLs remain readable and selectable, including merged memb
   await click(read);
   expect(patch).toHaveBeenCalledWith("/links/c1", { read: true });
 });
+
+test("web links show useful gathered details without empty or title-only disclosures", async () => {
+  const links = [
+    {
+      ...rows[0],
+      title: "North Hall",
+      context: "North Hall\nGrill\nBurger\nFries",
+    },
+    { ...rows[1], title: "South Hall", context: "  SOUTH\n HALL " },
+    { ...rows[2], context: "  " },
+    {
+      ...rows[2],
+      id: "summary",
+      title: "Announcement",
+      summary: "Doors open at noon.",
+      context: "Doors open at noon.",
+    },
+  ];
+  api.mockImplementation(async (path) =>
+    path.includes("/links?")
+      ? { links, total: links.length, sort_used: "source" }
+      : { ...item, source_type: "web" },
+  );
+  view();
+  const details = await screen.findByLabelText("Details for North Hall");
+  expect(
+    screen.queryByLabelText("Details for South Hall"),
+  ).not.toBeInTheDocument();
+  expect(
+    screen.queryByLabelText("Details for Chapter 3"),
+  ).not.toBeInTheDocument();
+  expect(
+    screen.queryByLabelText("Details for Announcement"),
+  ).not.toBeInTheDocument();
+  await click(details);
+  expect(screen.getByText("Grill")).toBeVisible();
+  expect(screen.getByText("Burger")).toBeVisible();
+  expect(screen.getByText("Fries")).toBeVisible();
+  expect(details.closest(".entry-details").parentElement).toHaveClass(
+    "entry-row",
+  );
+});
+
+test("merged web links retain each member's gathered details", async () => {
+  const members = [
+    { ...rows[0], title: "North Hall", context: "Grill\nBurger" },
+    { ...rows[1], title: "South Hall", context: "Pasta bar\nRavioli" },
+  ];
+  api.mockImplementation(async (path) =>
+    path.includes("/links?")
+      ? { links: [{ ...members[0], members }], total: 1, sort_used: "source" }
+      : { ...item, source_type: "web" },
+  );
+  view();
+  await click(await screen.findByText("2 links in this entry"));
+  await click(screen.getByLabelText("Details for North Hall"));
+  await click(screen.getByLabelText("Details for South Hall"));
+  expect(screen.getByText("Burger")).toBeVisible();
+  expect(screen.getByText("Ravioli")).toBeVisible();
+});

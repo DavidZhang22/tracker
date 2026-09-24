@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "purpose": "Evaluate record-scoped context/detail extraction on short real public HTML fragments beyond media listings.",
+  "dataset": "context-expansion-v1.jsonl",
+  "dataset_sha256": "c0593146f418dbe0757c95b7d982376bc03ae2dd89124687e726252fe5ef8511",
+  "protocol": "Family assignments were declared before annotation, inference or model outputs. Facts were manually selected by inspecting source DOM; heldout families must not enter fitting, synthetic augmentation or threshold selection. A second development-only expansion assigned sqlite.org, loc.gov, usa.gov and mit.edu before capture; loc.gov failed. The original validation and heldout labels were not changed.",
+  "splits": {
+    "development": [
+      "liondine.com",
+      "python.org",
+      "sqlite.org",
+      "usa.gov",
+      "mit.edu"
+    ],
+    "validation": [
+      "gov.uk",
+      "w3.org"
+    ],
+    "heldout": [
+      "si.edu",
+      "gnu.org",
+      "nobelprize.org",
+      "rust-lang.org"
+    ]
+  },
+  "scope": {
+    "families": 11,
+    "records": 33,
+    "positive_detail_records": 30,
+    "empty_detail_controls": 3,
+    "required_fact_checks": 92,
+    "forbidden_neighbor_checks": 69,
+    "dataset_bytes": 55494,
+    "fragment_bytes": 31393
+  },
+  "collection": {
+    "collector": "ml.collect_breadth.collect / ListingFetcher with app.tracker.urls.SafeFetcher",
+    "user_agent": "Trackify/1.0 (+https://mediatrackify.duckdns.org; contact: mediatrackify@gmail.com)",
+    "policy": "One listing and robots.txt per family, plus budgeted same-family redirects; robots-aware, minimum 2-second host interval. No linked content pages, browser rendering or third-party APIs requested. LionDine capture was shared from the parent task without a second request.",
+    "sources_manifest": "context-expansion-v1-sources.json",
+    "network_requests": 28,
+    "cache_hits": 0,
+    "full_captures_bytes": 1872007,
+    "capture_failures": [
+      {
+        "id": "context-loc",
+        "status": "unavailable",
+        "error": "The source requires Cloudflare browser verification (HTTP 403). Trackify could not read its listing. Use an accessible feed or import a CSV; saved entries were kept."
+      }
+    ],
+    "raw_storage": "Full captures remain ignored under backend/data/context-expansion/raw. Source SHA256 refers to the saved UTF-8 capture, not compressed HTTP wire bytes."
+  },
+  "annotation_contract": {
+    "selector": "Unique CSS selector for the exact anchor inside html, independent of URL normalization.",
+    "boundary_selector": "Manually identified record container. Nested contextual links can belong to one target record. GNU controls intentionally use the anchor itself.",
+    "required": "Case/whitespace normalized source phrases that must be present in the extracted details. LionDine includes every food label in its retained open hall.",
+    "forbidden": "Distinctive source facts from adjacent records; must not be copied into this record.",
+    "title": "Visible source anchor text, including original icon text if present.",
+    "fragment_sha256": "Hash of the committed html string encoded in UTF-8.",
+    "provenance": "Real-source excerpt; neutral outer wrapper and removal of scripts/styles/SVG/comments are disclosed. No model-generated labels."
+  },
+  "efficient_expansion": [
+    "Capture a listing once and annotate its record boundary plus required/forbidden facts once, then reuse that HTML for all candidate models.",
+    "Derive positive/negative boundary candidates offline from those labels, keeping all candidates from a family in the same split.",
+    "Apply bounded layout transformations only to development records: extra neutral wrappers, sibling order where semantic association remains unchanged, harmless whitespace and class changes, repeated neighbor controls.",
+    "Inherit source family, split, parent example id and transformation seed on every synthetic variant; reject duplicates by normalized fragment checksum.",
+    "Keep required facts and forbidden neighbor facts fixed during layout mutations, and validate their DOM association before using variants.",
+    "Report real-family results separately from synthetic robustness results. Synthetic row counts are not evidence of wider real-site coverage."
+  ],
+  "limitations": [
+    "Eleven source families and 33 anchors are a small targeted diagnostic suite, not an unbiased estimate of web-wide accuracy.",
+    "Each fragment retains two or three neighboring records. It does not test full-page discovery, link classification, pagination, scripts, redirects or network-access failures.",
+    "Eleven of twelve selected source families were captured. Library of Congress returned Cloudflare HTTP 403 and was excluded without bypassing it. Accessibility here is not a promise that another location or date will succeed.",
+    "Public site content is volatile. Captured dates and menu/status facts describe the saved snapshot only.",
+    "New heldout context tasks may share domains with older unrelated link-classification datasets; this is task-level heldout context evidence, not a claim the production model has never seen these domains.",
+    "Source snippets are retained for regression/evaluation with attribution; no grant of source-content licensing is implied.",
+    "No automatic boundary labels came from the currently deployed record model, avoiding self-confirming evaluation."
+  ]
+}

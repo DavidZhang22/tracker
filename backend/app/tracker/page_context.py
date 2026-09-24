@@ -13,6 +13,7 @@ class PageContext:
         self.headings = {}
         self.boundaries = {}
         self.snippets = {}
+        self.detail_texts = {}
 
     def node_dates(self, node):
         from .dates import node_dates
@@ -69,3 +70,11 @@ class PageContext:
         if key not in self.snippets:
             self.snippets[key] = snippets(node, limit)
         return self.snippets[key]
+
+    def details(self, node, limit=1500):
+        from .context_details import details_text
+
+        key = id(node), limit
+        if key not in self.detail_texts:
+            self.detail_texts[key] = details_text(node, limit)
+        return self.detail_texts[key]

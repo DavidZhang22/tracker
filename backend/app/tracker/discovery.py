@@ -40,7 +40,7 @@ from .urls import (
 )
 from .workers import KeyedLocks, run_blocking
 
-DISCOVERY_VERSION = "listing-semantics-v8"
+DISCOVERY_VERSION = "listing-semantics-v9"
 DEEP_SCAN = ContextVar("deep_scan", default=False)
 INITIAL_DOCUMENT = ContextVar("initial_document", default=None)
 

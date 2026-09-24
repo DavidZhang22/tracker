@@ -11,7 +11,7 @@ from urllib.parse import urlsplit
 
 from bs4 import Tag
 
-from .dom import first_tag
+from .dom import first_parent, first_tag
 from .keywords import language_codes, language_text
 from .limits import MAX_LINKS
 from .page_context import PageContext
@@ -263,11 +263,13 @@ class RecordContext:
     def info(self, node):
         key = id(node)
         if key not in self.stats:
-            tags = [node] + list(islice(node.descendants, 400))
+            descendants = list(islice(node.descendants, 401))
+            tags = [node, *descendants[:400]]
             tags = [t for t in tags if isinstance(t, Tag)]
             anchors = [t for t in tags if t.name == "a" and t.get("href")]
             hrefs = {a["href"] for a in anchors}
             self.stats[key] = dict(
+                complete=len(descendants) <= 400,
                 hrefs=hrefs,
                 routes=Counter(route(u) for u in hrefs),
                 text=self.page.snippet(node),
@@ -412,8 +414,39 @@ class RecordContext:
                 probability, _, node, neighbor = max(ranked, key=lambda t: t[:2])
                 if probability >= model["threshold"]:
                     return node, neighbor
-        # Model failure never broadens a keyword match to the whole page.
+            if record := self._single_target_record(anchor, choices):
+                return record, None
+        # A missing or invalid model still fails closed to the anchor.
         return anchor, None
+
+    def _single_target_record(self, anchor, choices):
+        if not (first_parent(anchor, {"h2", "h3"}) or first_tag(anchor, {"h2", "h3"})):
+            return None
+        for node, neighbor, _ in choices:
+            if neighbor is not None or node is anchor:
+                continue
+            semantic = node.name in {"article", "li", "tr"}
+            if not semantic and not RECORD.search(" ".join(node.get("class", []))):
+                continue
+            if node.name in {
+                "html",
+                "body",
+                "main",
+                "nav",
+                "header",
+                "footer",
+                "aside",
+            }:
+                continue
+            info = self.info(node)
+            if (
+                info["complete"]
+                and info["hrefs"] == {anchor.get("href")}
+                and not info["navigation"]
+                and (semantic or self.siblings(node)[0] > 0)
+            ):
+                return node
+        return None
 
     def record(self, anchor):
         return self.region(anchor)[0]
@@ -428,10 +461,10 @@ class RecordContext:
     def text(self, anchor):
         record, neighbor = self.region(anchor)
         if id(anchor) not in self.selected:
-            return snippets(anchor, 240)
-        parts = [self.info(record)["text"]]
+            return self.page.details(anchor, 240)
+        parts = [self.page.details(record)]
         if neighbor is not None:
-            parts.append(self.info(neighbor)["text"])
+            parts.append(self.page.details(neighbor))
         # Explicit accessible references are stronger than physical proximity.
         for ref in (
             anchor.get("aria-describedby", "")
@@ -443,7 +476,7 @@ class RecordContext:
                 for node in self.soup.find_all(id=True):
                     self.references.setdefault(node["id"], node)
             if linked := self.references.get(ref):
-                parts.append(snippets(linked, 240))
+                parts.append(self.page.details(linked, 240))
         # Section headings can describe a whole group; never take a neighboring row's label.
         for parent in [record] + list(islice(record.parents, 3)):
             if parent.name in {"body", "html", "main", "[document]"}:
@@ -456,9 +489,9 @@ class RecordContext:
                     "h5",
                     "h6",
                 }:
-                    parts.append(snippets(previous, 160))
+                    parts.append(self.page.details(previous, 160))
                     break
             else:
                 continue
             break
-        return " ".join(dict.fromkeys(parts))[:1800]
+        return "\n".join(dict.fromkeys(part for part in parts if part))[:1800]

@@ -57,3 +57,12 @@ languages, publication dates, and manga/group relationships. User relationships,
 images and chapter contents are excluded. Offline tests reduce the pagination
 total to their fixture size and explicitly exercise empty English results,
 pagination limits, other-title records, unavailable chapters, and invalid IDs.
+
+
+`liondine-latenight.html` retains all eleven hall cards from the September 24,
+2026 UTC snapshot of https://liondine.com/meals/latenight. SVG, scripts, styles,
+and the outer page are omitted; a neutral page heading is supplied. JJ's has
+21 food labels and Diana has 34 in this snapshot. Hewitt and Diana share a source URL and remain
+one tracked link after deduplication. These are snapshot facts, not live menu
+advice. The context-expansion source manifest records the full capture hash;
+tests reuse the saved listing and never request individual dining-hall pages.

@@ -9,6 +9,7 @@ Production loads bounded numeric JSON models in [`app/tracker`](../app/tracker).
 | [`datasets/`](datasets) | Frozen training rows, dataset cards and source manifests |
 | [`reports/`](reports) | Recorded evaluations, profiles and memory measurements |
 | [`experiments/`](experiments) | Candidate model artifacts and their reports |
+| [`context_expansion/`](context_expansion) | Reviewed record details, bounded DOM augmentation and model comparisons |
 | [`semantic_decisions/`](semantic_decisions) | Contextual decision-model data, training, replay and CPU benchmarks |
 | [`baselines/v1/`](baselines/v1) | Original model and parser for historical comparisons |
 | [`docs/`](docs) | Model designs, evaluation limitations and benchmark instructions |
@@ -67,3 +68,6 @@ The second command compresses the restored file again. Both operations verify th
 
 - [Contextual decision experiment and current commands](semantic_decisions/README.md)
 - [Recorded CPU generalization results](reports/semantic-decision.md)
+
+- [Context dataset expansion and neural/tree comparison](reports/context-expansion-models.md)
+- [Listing details fixes and full-page measurements](reports/context-extraction.md)
