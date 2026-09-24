@@ -12,6 +12,7 @@ import { Notice } from "../Components/Notice";
 import { api, post, examples } from "../api";
 import { LinkDate } from "../Components/RowTools";
 import { orderedPreview, usePreferences } from "../Contexts/Preferences";
+import SourceStatus from "../Components/SourceStatus";
 import SourceMethod from "../Components/SourceMethod";
 import useSourceMethod from "../Hooks/useSourceMethod";
 import ImportInput, { ImportDetails } from "../Components/ImportInput";
@@ -34,6 +35,7 @@ export default function AddPage() {
     [busy, setBusy] = useState(false),
     [saving, setSaving] = useState(false),
     [error, setError] = useState("");
+  const [failedSource, setFailedSource] = useState(null);
   const source = useSourceMethod(
     mode === "web" ? url : "",
     preferences.source_method,
@@ -99,6 +101,7 @@ export default function AddPage() {
   const scan = async (e) => {
     e.preventDefault();
     setBusy(true);
+    setFailedSource(null);
     setResult(null);
     setError("");
     setPage(0);
@@ -118,6 +121,7 @@ export default function AddPage() {
       setTitle(r.title);
     } catch (e) {
       setError(e.message);
+      setFailedSource({ url, status: e.sourceStatus });
     } finally {
       setBusy(false);
     }
@@ -195,6 +199,16 @@ export default function AddPage() {
         </div>
       )}
       <Notice error>{error}</Notice>
+      {mode === "web" && !result && (
+        <SourceStatus
+          key={url}
+          status={
+            failedSource?.url === url
+              ? failedSource.status || source.sourceStatus
+              : source.sourceStatus
+          }
+        />
+      )}
       <div className="add-layout">
         <div>
           {mode === "import" ? (

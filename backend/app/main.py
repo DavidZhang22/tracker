@@ -25,6 +25,7 @@ from app.tracker.privacy import router as privacy_router
 from app.tracker.recovery import PUBLIC_PATHS, Recovery
 from app.tracker.recovery import router as recovery_router
 from app.tracker.semantic_search import SearchAdmission, SemanticSearch
+from app.tracker.source_registry import SourceRegistry
 from app.tracker.store import LibraryErased, Store
 from app.tracker.urls import SafeFetcher
 from app.tracker.workers import KeyedLocks, run_blocking
@@ -90,6 +91,9 @@ def create_app(db_path=None, discoverer=None, auth_config=None):
             FetchCache(Path(app.state.store.path).with_name("fetch-cache.sqlite3"))
         ),
         analyzer=analyzer,
+    )
+    app.state.source_registry = SourceRegistry(
+        Path(app.state.store.path).with_name("source-status.sqlite3")
     )
     app.state.scan_semaphore = asyncio.Semaphore(6)
     app.state.scan_guard = ScanGuard()

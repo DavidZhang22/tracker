@@ -66,6 +66,8 @@ The link classifiers train offline and load numeric JSON weights without scikit-
 
 Each account can store 500 items, including Trash. Optional automatic descriptions and link summaries are omitted when bounded checks of already-collected text flag explicit or exploitative content, serious-harm instructions, or illicit-service promotion. This is an English text heuristic, not a legality or malware verdict. It makes no additional requests, and preserves original imported fields and user-written descriptions.
 
+A shared source registry offers verified official feeds when a previously checked listing is unavailable. Recommendations are dismissible and open a fresh preview; they never silently replace a source. See the [200-site access audit and dataset expansion](backend/ml/reports/media200.md).
+
 Sources can block access or change their layouts. Scans report incomplete coverage and preserve existing data on failure. Requests are paced and capped; each item stores at most 4,999 links, including muted links and Trash.
 
 Enma watch URLs select its episode-list API, making one metadata request without loading the player. On September 15, 2026, Enma returned HTTP 403 to both local and deployed scans. Trackify reports that refusal and respects the fetch backoff; it cannot guarantee access. The adapter has synthetic contract tests based on the site's published client code, but successful live extraction remains unverified. Episode numbers come from listing metadata; missing publication dates remain unavailable.

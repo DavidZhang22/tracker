@@ -26,7 +26,7 @@ from train import metrics
 from app.tracker.cascade_model import CascadeModel
 from app.tracker.context_model import NUMERIC_FEATURES, ContextModel
 from app.tracker.link_context import model_tokens
-from ml.artifacts import read_bytes, write_text
+from ml.artifacts import read_bytes, read_text, write_text
 
 
 def page_weights(rows, *, training=False):
@@ -129,6 +129,11 @@ def main():
     parser.add_argument("--extra", type=Path)
     parser.add_argument("--structural", action="store_true")
     parser.add_argument("--policy", choices=("replace", "rescue"), default="replace")
+    parser.add_argument(
+        "--allow-weak-labels",
+        action="store_true",
+        help="Explicitly include reviewed weak-label experiment data.",
+    )
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     paths = [
@@ -137,11 +142,13 @@ def main():
     ]
     if args.extra:
         paths.append(args.extra)
-    rows = [
-        json.loads(line)
-        for path in paths
-        for line in path.read_text(encoding="utf8").splitlines()
-    ]
+    rows = [json.loads(line) for path in paths for line in read_text(path).splitlines()]
+    if not args.allow_weak_labels and any(
+        r.get("label_quality", "").startswith("weak") for r in rows
+    ):
+        parser.error(
+            "This corpus includes weak labels. Review them, then use --allow-weak-labels for an offline experiment."
+        )
     # Source identity partitions calibration and threshold selection; never individual links.
     train = [r for r in rows if r["split"] == "train"]
     validation = [r for r in rows if r["split"] == "validation"]

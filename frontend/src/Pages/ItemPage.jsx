@@ -17,6 +17,7 @@ import {
   SearchIcon,
 } from "@heroicons/react/outline";
 import { Icon, TypeIcon, IconButton } from "../Components/Icons";
+import SourceStatus from "../Components/SourceStatus";
 import { Notice } from "../Components/Notice";
 import Description from "../Components/Description";
 import ItemSettingsDialog from "../Components/ItemSettingsDialog";
@@ -394,6 +395,9 @@ function ItemDetail({ id }) {
       >
         {error || searchError || item.error}
       </Notice>
+      {item.error && !item.deleted && (
+        <SourceStatus status={item.source_status} />
+      )}
       <Notice>{message}</Notice>
       {item.deleted && (
         <Notice>

@@ -32,6 +32,7 @@ export default function useSourceMethod(url, defaultMethod, selector, busy) {
   const method = choice || match?.source_method || "auto";
   return {
     method,
+    sourceStatus: match?.source_status || null,
     select: setChoice,
     note:
       match?.note ||

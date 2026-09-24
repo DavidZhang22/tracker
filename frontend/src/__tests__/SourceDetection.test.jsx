@@ -278,3 +278,67 @@ test("advanced API previews explain skipped filters without blocking saving", as
     expect.objectContaining({ url, detect_api: true }),
   );
 });
+
+test("source guidance follows the typed URL and disappears after a successful scan", async () => {
+  post.mockResolvedValue({
+    source_method: "auto",
+    note: "",
+    source_status: {
+      host: "blocked.example.org",
+      status: "access_blocked",
+      checked_at: "2026-09-24T10:00:00Z",
+      message: "Listing refused the last check.",
+      alternatives: [
+        {
+          label: "Official feed",
+          url: "https://feeds.example.org/rss",
+          relationship: "official",
+        },
+      ],
+    },
+  });
+  show();
+  change(/Source URL/, "https://blocked.example.org/");
+  await tick();
+  expect(
+    screen.getByRole("link", { name: "Official feed" }),
+  ).toBeInTheDocument();
+  change(/Source URL/, "https://another.example.org/");
+  expect(
+    screen.queryByRole("link", { name: "Official feed" }),
+  ).not.toBeInTheDocument();
+  post.mockResolvedValue(preview);
+  await scan();
+  expect(
+    screen.queryByRole("link", { name: "Official feed" }),
+  ).not.toBeInTheDocument();
+});
+
+test("scan errors carry source alternatives even with a manual source method", async () => {
+  const error = new Error("Access refused");
+  error.sourceStatus = {
+    host: "blocked.example.org",
+    status: "access_blocked",
+    checked_at: "2026-09-24T10:00:00Z",
+    message: "Listing refused the last check.",
+    alternatives: [
+      {
+        label: "Official feed",
+        url: "https://feeds.example.org/rss",
+        relationship: "official",
+      },
+    ],
+  };
+  post.mockRejectedValue(error);
+  show();
+  change(/Source URL/, "https://blocked.example.org/");
+  change("Source method", "sitemap");
+  await scan();
+  expect(
+    screen.getByRole("link", { name: "Official feed" }),
+  ).toBeInTheDocument();
+  change(/Source URL/, "https://new.example.org/");
+  expect(
+    screen.queryByRole("link", { name: "Official feed" }),
+  ).not.toBeInTheDocument();
+});

@@ -7,7 +7,7 @@ from typing import Annotated, Literal
 from urllib.parse import urlsplit
 
 from fastapi import APIRouter, HTTPException, Query, Request
-from fastapi.responses import StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
 from starlette.background import BackgroundTask
 
@@ -180,8 +180,10 @@ def ready(request: Request):
 
 
 @router.post("/source-method/detect")
-def detect_method(body: SourceDetectionRequest):
-    return detect_source_method(body.url)
+def detect_method(body: SourceDetectionRequest, request: Request):
+    result = detect_source_method(body.url)
+    guidance = request.app.state.source_registry.lookup(body.url)
+    return result | ({"source_status": guidance} if guidance else {})
 
 
 @router.post("/scans")
@@ -194,14 +196,26 @@ async def scan(body: ScanRequest, request: Request):
     await run_blocking(request.state.store.check_ready)
     with request.app.state.scan_guard.operation(request.state.store.path):
         async with request.app.state.scan_semaphore:
-            result = await request.app.state.discoverer.scan(
-                body.url,
-                selector,
-                body.include_path,
-                **({"keywords": body.keywords} if body.keywords else {}),
-                **({"source_method": method} if method != "auto" else {}),
-                deep=True,
-            )
+            try:
+                result = await request.app.state.discoverer.scan(
+                    body.url,
+                    selector,
+                    body.include_path,
+                    **({"keywords": body.keywords} if body.keywords else {}),
+                    **({"source_method": method} if method != "auto" else {}),
+                    deep=True,
+                )
+            except DiscoveryError as exc:
+                guidance = await run_blocking(
+                    request.app.state.source_registry.lookup, body.url
+                )
+                return JSONResponse(
+                    {
+                        "detail": str(exc),
+                        **({"source_status": guidance} if guidance else {}),
+                    },
+                    status_code=422,
+                )
     payload = bounded_scan(result.to_dict()) | {
         "selector": selector,
         "include_path": body.include_path,
@@ -311,7 +325,12 @@ class CsvImportRequest(BaseModel):
 def import_csv(iid: str, body: CsvImportRequest, request: Request):
     request.state.store.import_csv(iid, body.scan_id, body.title)
     request.app.state.semantic.enrich(request.state.store, [iid])
-    return request.state.store.item(iid)
+    result = request.state.store.item(iid)
+    if result.get("error") and result.get("source_type") not in {"csv", "document"}:
+        guidance = request.app.state.source_registry.lookup(result["url"])
+        if guidance:
+            result["source_status"] = guidance
+    return result
 
 
 @router.post("/items/bulk")

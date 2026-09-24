@@ -1,0 +1,22 @@
+.source-status {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+.source-status p,
+.source-status ul {
+  margin: 0;
+}
+.source-status ul {
+  padding-left: 20px;
+}
+.source-status li + li {
+  margin-top: 8px;
+}
+.source-status a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}

@@ -23,6 +23,7 @@ async function request(path, options = {}) {
         : "The request could not be completed.",
     );
     error.status = response.status;
+    error.sourceStatus = data.source_status || null;
     const retryAfter = Number(response.headers.get("Retry-After"));
     if (Number.isFinite(retryAfter) && retryAfter > 0)
       error.retryAfter = Math.ceil(retryAfter);

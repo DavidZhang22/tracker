@@ -1,0 +1,4052 @@
+[
+  {
+    "id": "media200-001",
+    "site_family": "msn.com",
+    "url": "https://msn.com",
+    "name": "Msn",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 1,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-002",
+    "site_family": "globo.com",
+    "url": "https://globo.com",
+    "name": "Globo",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 2,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-003",
+    "site_family": "nytimes.com",
+    "url": "https://nytimes.com",
+    "name": "The New York Times",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 3,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 15,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-004",
+    "site_family": "bbc.co.uk",
+    "url": "https://bbc.com",
+    "name": "Bbc",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 4,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      },
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 5,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": {
+      "datasets": [
+        "v2-dataset.jsonl",
+        "v3-dataset.jsonl"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    "split": "existing",
+    "status": "pending"
+  },
+  {
+    "id": "media200-005",
+    "site_family": "uol.com.br",
+    "url": "https://uol.com.br",
+    "name": "Uol",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 6,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-006",
+    "site_family": "dcinside.com",
+    "url": "https://dcinside.com",
+    "name": "Dcinside",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 7,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-007",
+    "site_family": "cnn.com",
+    "url": "https://cnn.com",
+    "name": "Cnn",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 8,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-008",
+    "site_family": "theguardian.com",
+    "url": "https://theguardian.com",
+    "name": "The Guardian",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 9,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-009",
+    "site_family": "as.com",
+    "url": "https://as.com",
+    "name": "As",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 10,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-010",
+    "site_family": "foxnews.com",
+    "url": "https://foxnews.com",
+    "name": "Fox News",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 11,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-011",
+    "site_family": "indiatimes.com",
+    "url": "https://indiatimes.com",
+    "name": "Indiatimes",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 12,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      },
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 37,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-012",
+    "site_family": "people.com",
+    "url": "https://people.com",
+    "name": "People",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 13,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 3,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      },
+      {
+        "category": "entertainment",
+        "ranking_url": "https://detailed.com/entertainment-blogs/",
+        "category_rank": 4,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "5ca97a5477a648150ce26e44ff07c21607e80c8e5af2b4e2766aeab6897abb2f"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-013",
+    "site_family": "kompas.com",
+    "url": "https://kompas.com",
+    "name": "Kompas.com",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 14,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-014",
+    "site_family": "clarin.com",
+    "url": "https://clarin.com",
+    "name": "Clarín",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 15,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-015",
+    "site_family": "infobae.com",
+    "url": "https://infobae.com",
+    "name": "Infobae",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 16,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-016",
+    "site_family": "bild.de",
+    "url": "https://bild.de",
+    "name": "Bild",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 17,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-017",
+    "site_family": "corriere.it",
+    "url": "https://corriere.it",
+    "name": "Corriere Della Sera",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 18,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-018",
+    "site_family": "daum.net",
+    "url": "https://daum.net",
+    "name": "Daum",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 19,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-019",
+    "site_family": "aol.com",
+    "url": "https://aol.com",
+    "name": "Aol",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 20,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-020",
+    "site_family": "elpais.com",
+    "url": "https://elpais.com",
+    "name": "El País",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 21,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-021",
+    "site_family": "okdiario.com",
+    "url": "https://okdiario.com",
+    "name": "Okdiario",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 22,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-022",
+    "site_family": "detik.com",
+    "url": "https://detik.com",
+    "name": "Detikcom",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 23,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-023",
+    "site_family": "spiegel.de",
+    "url": "https://spiegel.de",
+    "name": "Der Spiegel",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 24,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-024",
+    "site_family": "elmundo.es",
+    "url": "https://elmundo.es",
+    "name": "El Mundo",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 25,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-025",
+    "site_family": "ndtv.com",
+    "url": "https://ndtv.com",
+    "name": "Ndtv",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 26,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-026",
+    "site_family": "usatoday.com",
+    "url": "https://usatoday.com",
+    "name": "Usa Today",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 27,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-027",
+    "site_family": "cnbc.com",
+    "url": "https://cnbc.com",
+    "name": "Cnbc",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 28,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-028",
+    "site_family": "nbcnews.com",
+    "url": "https://nbcnews.com",
+    "name": "Nbc News",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 29,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-029",
+    "site_family": "ukr.net",
+    "url": "https://ukr.net",
+    "name": "Ukr.net",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 30,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-030",
+    "site_family": "forbes.com",
+    "url": "https://forbes.com",
+    "name": "Forbes",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 31,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-031",
+    "site_family": "t-online.de",
+    "url": "https://t-online.de",
+    "name": "T-Online",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 32,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-032",
+    "site_family": "reuters.com",
+    "url": "https://reuters.com",
+    "name": "Reuters",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 33,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-033",
+    "site_family": "lemonde.fr",
+    "url": "https://lemonde.fr",
+    "name": "Le Monde",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 34,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-034",
+    "site_family": "nypost.com",
+    "url": "https://nypost.com",
+    "name": "New York Post",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 35,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-035",
+    "site_family": "economictimes.com",
+    "url": "https://economictimes.com",
+    "name": "Economictimes.com",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 36,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-036",
+    "site_family": "dw.com",
+    "url": "https://dw.com",
+    "name": "Dw",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 38,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-037",
+    "site_family": "welt.de",
+    "url": "https://welt.de",
+    "name": "Welt",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 39,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-038",
+    "site_family": "focus.de",
+    "url": "https://focus.de",
+    "name": "Focus Online",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 40,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-039",
+    "site_family": "actu.fr",
+    "url": "https://actu.fr",
+    "name": "Actu.fr",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 41,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-040",
+    "site_family": "20minutos.es",
+    "url": "https://20minutos.es",
+    "name": "20minutos.es",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 42,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-041",
+    "site_family": "apnews.com",
+    "url": "https://apnews.com",
+    "name": "Ap News",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 43,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-042",
+    "site_family": "aljazeera.com",
+    "url": "https://aljazeera.com",
+    "name": "Al Jazeera",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 44,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-043",
+    "site_family": "ouest-france.fr",
+    "url": "https://ouest-france.fr",
+    "name": "Ouest-France",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 45,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-044",
+    "site_family": "jw.org",
+    "url": "https://jw.org",
+    "name": "Jw.org",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 46,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-045",
+    "site_family": "bloomberg.com",
+    "url": "https://bloomberg.com",
+    "name": "Bloomberg",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 47,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-046",
+    "site_family": "lefigaro.fr",
+    "url": "https://lefigaro.fr",
+    "name": "Le Figaro",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 48,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-047",
+    "site_family": "mundodeportivo.com",
+    "url": "https://mundodeportivo.com",
+    "name": "Mundo Deportivo",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 49,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-048",
+    "site_family": "cnnbrasil.com.br",
+    "url": "https://cnnbrasil.com.br",
+    "name": "Cnn Brasil",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 50,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-049",
+    "site_family": "wsj.com",
+    "url": "https://wsj.com",
+    "name": "The Wall Street Journal",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 51,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-050",
+    "site_family": "cbsnews.com",
+    "url": "https://cbsnews.com",
+    "name": "Cbs News",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 52,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": {
+      "datasets": [
+        "v2-dataset.jsonl",
+        "v3-dataset.jsonl"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    "split": "existing",
+    "status": "pending"
+  },
+  {
+    "id": "media200-051",
+    "site_family": "kakaku.com",
+    "url": "https://kakaku.com",
+    "name": "Kakaku.com",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 53,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-052",
+    "site_family": "bfmtv.com",
+    "url": "https://bfmtv.com",
+    "name": "Bfmtv",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 54,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-053",
+    "site_family": "elespanol.com",
+    "url": "https://elespanol.com",
+    "name": "El Español",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 55,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-054",
+    "site_family": "euronews.com",
+    "url": "https://euronews.com",
+    "name": "Euronews",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 56,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-055",
+    "site_family": "franceinfo.fr",
+    "url": "https://franceinfo.fr",
+    "name": "Franceinfo",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 57,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-056",
+    "site_family": "lanacion.com.ar",
+    "url": "https://lanacion.com.ar",
+    "name": "La Nacion",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 58,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-057",
+    "site_family": "indianexpress.com",
+    "url": "https://indianexpress.com",
+    "name": "The Indian Express",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 59,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-058",
+    "site_family": "thehindu.com",
+    "url": "https://thehindu.com",
+    "name": "The Hindu",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 60,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-059",
+    "site_family": "sky.com",
+    "url": "https://sky.com",
+    "name": "Sky",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 61,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-060",
+    "site_family": "washingtonpost.com",
+    "url": "https://washingtonpost.com",
+    "name": "The Washington Post",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 62,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": {
+      "datasets": [
+        "v2-dataset.jsonl",
+        "v3-dataset.jsonl"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    "split": "existing",
+    "status": "pending"
+  },
+  {
+    "id": "media200-061",
+    "site_family": "udn.com",
+    "url": "https://udn.com",
+    "name": "Udn",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 63,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-062",
+    "site_family": "abc.net.au",
+    "url": "https://abc.net.au",
+    "name": "Abc Au",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 64,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-063",
+    "site_family": "nikkei.com",
+    "url": "https://nikkei.com",
+    "name": "Nikkei",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 65,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-064",
+    "site_family": "elconfidencial.com",
+    "url": "https://elconfidencial.com",
+    "name": "El Confidencial",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 66,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-065",
+    "site_family": "npr.org",
+    "url": "https://npr.org",
+    "name": "Npr",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 67,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-066",
+    "site_family": "buzzfeed.com",
+    "url": "https://buzzfeed.com",
+    "name": "Buzzfeed",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 68,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-067",
+    "site_family": "terra.com.br",
+    "url": "https://terra.com.br",
+    "name": "Terra",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 69,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-068",
+    "site_family": "businessinsider.com",
+    "url": "https://businessinsider.com",
+    "name": "Business Insider",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 70,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 2,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-069",
+    "site_family": "news.com.au",
+    "url": "https://news.com.au",
+    "name": "News.com.au",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 71,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-070",
+    "site_family": "aajtak.in",
+    "url": "https://aajtak.in",
+    "name": "Aaj Tak",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 72,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-071",
+    "site_family": "cbc.ca",
+    "url": "https://cbc.ca",
+    "name": "Cbc",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 73,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-072",
+    "site_family": "independent.co.uk",
+    "url": "https://independent.co.uk",
+    "name": "Independent",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 74,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-073",
+    "site_family": "abc.es",
+    "url": "https://abc.es",
+    "name": "Abc Es",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 75,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-074",
+    "site_family": "hindustantimes.com",
+    "url": "https://hindustantimes.com",
+    "name": "Hindustan Times",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 76,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-075",
+    "site_family": "news18.com",
+    "url": "https://news18.com",
+    "name": "News18",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 77,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-076",
+    "site_family": "20minutes.fr",
+    "url": "https://20minutes.fr",
+    "name": "20minutes.fr",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 78,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-077",
+    "site_family": "variety.com",
+    "url": "https://variety.com",
+    "name": "Variety",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 79,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-078",
+    "site_family": "parade.com",
+    "url": "https://parade.com",
+    "name": "Parade",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 80,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-079",
+    "site_family": "jagran.com",
+    "url": "https://jagran.com",
+    "name": "Jagran",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 81,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-080",
+    "site_family": "nate.com",
+    "url": "https://nate.com",
+    "name": "Nate",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 82,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-081",
+    "site_family": "dailymail.co.uk",
+    "url": "https://dailymail.co.uk",
+    "name": "Mailonline",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 83,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-082",
+    "site_family": "chip.de",
+    "url": "https://chip.de",
+    "name": "Chip",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 84,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-083",
+    "site_family": "thesun.co.uk",
+    "url": "https://thesun.co.uk",
+    "name": "The Sun",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 85,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-084",
+    "site_family": "abril.com.br",
+    "url": "https://abril.com.br",
+    "name": "Abril.com.br",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 86,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-085",
+    "site_family": "telegraph.co.uk",
+    "url": "https://telegraph.co.uk",
+    "name": "The Telegraph",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 87,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-086",
+    "site_family": "leparisien.fr",
+    "url": "https://leparisien.fr",
+    "name": "Le Parisien",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 88,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-087",
+    "site_family": "marketwatch.com",
+    "url": "https://marketwatch.com",
+    "name": "Marketwatch",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 89,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 13,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-088",
+    "site_family": "huffpost.com",
+    "url": "https://huffpost.com",
+    "name": "Huffpost",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 90,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-089",
+    "site_family": "liputan6.com",
+    "url": "https://liputan6.com",
+    "name": "Liputan6.Com",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 91,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-090",
+    "site_family": "ndr.de",
+    "url": "https://ndr.de",
+    "name": "Ndr",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 92,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-091",
+    "site_family": "the-sun.com",
+    "url": "https://the-sun.com",
+    "name": "The Sun",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 93,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-092",
+    "site_family": "abplive.com",
+    "url": "https://abplive.com",
+    "name": "Abp Live",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 94,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-093",
+    "site_family": "livehindustan.com",
+    "url": "https://livehindustan.com",
+    "name": "Live Hindustan",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 95,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-094",
+    "site_family": "faz.net",
+    "url": "https://faz.net",
+    "name": "Faz.net",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 96,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-095",
+    "site_family": "chosun.com",
+    "url": "https://chosun.com",
+    "name": "The Chosun Ilbo",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 97,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-096",
+    "site_family": "estadao.com.br",
+    "url": "https://estadao.com.br",
+    "name": "Estadão",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 98,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-097",
+    "site_family": "youm7.com",
+    "url": "https://youm7.com",
+    "name": "Youm7",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 99,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-098",
+    "site_family": "mirror.co.uk",
+    "url": "https://mirror.co.uk",
+    "name": "Mirror",
+    "category": "news",
+    "ranking_references": [
+      {
+        "category": "news",
+        "ranking_url": "https://onelittleweb.com/digital-market-intelligence/popular-websites/news-and-media/",
+        "category_rank": 100,
+        "ranking_vintage": "June 2026",
+        "ranking_capture_sha256": "9689cd7bd4b632f083910f93db1ce6462e638029d4b3d35568e4975c65ed9586"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-099",
+    "site_family": "youtube.com",
+    "url": "https://youtube.com/",
+    "name": "youtube.com",
+    "category": "media",
+    "ranking_references": [
+      {
+        "category": "media",
+        "ranking_url": "https://www.similarweb.com/top-websites/arts-and-entertainment/",
+        "category_rank": 1,
+        "ranking_vintage": "August 2026"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-100",
+    "site_family": "netflix.com",
+    "url": "https://netflix.com/",
+    "name": "netflix.com",
+    "category": "media",
+    "ranking_references": [
+      {
+        "category": "media",
+        "ranking_url": "https://www.similarweb.com/top-websites/arts-and-entertainment/",
+        "category_rank": 2,
+        "ranking_vintage": "August 2026"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-101",
+    "site_family": "bilibili.com",
+    "url": "https://bilibili.com/",
+    "name": "bilibili.com",
+    "category": "media",
+    "ranking_references": [
+      {
+        "category": "media",
+        "ranking_url": "https://www.similarweb.com/top-websites/arts-and-entertainment/",
+        "category_rank": 3,
+        "ranking_vintage": "August 2026"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-102",
+    "site_family": "fandom.com",
+    "url": "https://fandom.com/",
+    "name": "fandom.com",
+    "category": "media",
+    "ranking_references": [
+      {
+        "category": "media",
+        "ranking_url": "https://www.similarweb.com/top-websites/arts-and-entertainment/",
+        "category_rank": 4,
+        "ranking_vintage": "August 2026"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-103",
+    "site_family": "imdb.com",
+    "url": "https://imdb.com/",
+    "name": "imdb.com",
+    "category": "media",
+    "ranking_references": [
+      {
+        "category": "media",
+        "ranking_url": "https://www.similarweb.com/top-websites/arts-and-entertainment/",
+        "category_rank": 5,
+        "ranking_vintage": "August 2026"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-104",
+    "site_family": "billboard.com",
+    "url": "https://www.billboard.com/",
+    "name": "https://www.billboard.com/",
+    "category": "blogs",
+    "ranking_references": [
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 1,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      },
+      {
+        "category": "music",
+        "ranking_url": "https://detailed.com/music-blogs/",
+        "category_rank": 3,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "1cbe817b943105c4957265e283dc8d7545c092020dcbd4f4aba78d767308d6d4"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-105",
+    "site_family": "tmz.com",
+    "url": "https://www.tmz.com/",
+    "name": "https://www.tmz.com/",
+    "category": "entertainment",
+    "ranking_references": [
+      {
+        "category": "entertainment",
+        "ranking_url": "https://detailed.com/entertainment-blogs/",
+        "category_rank": 1,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "5ca97a5477a648150ce26e44ff07c21607e80c8e5af2b4e2766aeab6897abb2f"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 4,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-106",
+    "site_family": "wired.com",
+    "url": "https://www.wired.com",
+    "name": "wired.com",
+    "category": "technology",
+    "ranking_references": [
+      {
+        "category": "technology",
+        "ranking_url": "https://detailed.com/tech-blogs/",
+        "category_rank": 1,
+        "ranking_vintage": "September 21, 2026",
+        "ranking_capture_sha256": "3ce9c0827ac14941257234cda2da9baae3633c5d6c1c17d8e89b4539a9aff42e"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 21,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-107",
+    "site_family": "gamingbible.com",
+    "url": "https://www.gamingbible.com/",
+    "name": "GAMINGbible",
+    "category": "gaming",
+    "ranking_references": [
+      {
+        "category": "gaming",
+        "ranking_url": "https://detailed.com/gaming-blogs/",
+        "category_rank": 1,
+        "ranking_vintage": "January 12th, 2024",
+        "ranking_capture_sha256": "beac1b9a45dc901d5e60d71f022cbe1975d2e46132f87ed9f791e887429f1fc2"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-108",
+    "site_family": "rollingstone.com",
+    "url": "https://www.rollingstone.com/music/",
+    "name": "https://www.rollingstone.com/music/",
+    "category": "music",
+    "ranking_references": [
+      {
+        "category": "music",
+        "ranking_url": "https://detailed.com/music-blogs/",
+        "category_rank": 1,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "1cbe817b943105c4957265e283dc8d7545c092020dcbd4f4aba78d767308d6d4"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 11,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-109",
+    "site_family": "bookriot.com",
+    "url": "https://bookriot.com/",
+    "name": "https://bookriot.com/",
+    "category": "books",
+    "ranking_references": [
+      {
+        "category": "books",
+        "ranking_url": "https://detailed.com/book-blogs/",
+        "category_rank": 1,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "a56376660eee7172c5ea32d227be3dd74f7d8110be6f3c798c889accacb22e56"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-110",
+    "site_family": "seriouseats.com",
+    "url": "http://www.seriouseats.com/",
+    "name": "seriouseats.com",
+    "category": "food",
+    "ranking_references": [
+      {
+        "category": "food",
+        "ranking_url": "https://detailed.com/food-blogs/",
+        "category_rank": 1,
+        "ranking_vintage": "September 19, 2026",
+        "ranking_capture_sha256": "0837a1b239ae0ebc404ffacbe03f97c3861073f5e0a8bd98caf9ce38611b3888"
+      }
+    ],
+    "existing": {
+      "datasets": [
+        "breadth-cultural-dataset.jsonl"
+      ],
+      "splits": [
+        "test"
+      ]
+    },
+    "split": "existing",
+    "status": "pending"
+  },
+  {
+    "id": "media200-111",
+    "site_family": "pagesix.com",
+    "url": "https://pagesix.com/",
+    "name": "https://pagesix.com/",
+    "category": "entertainment",
+    "ranking_references": [
+      {
+        "category": "entertainment",
+        "ranking_url": "https://detailed.com/entertainment-blogs/",
+        "category_rank": 2,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "5ca97a5477a648150ce26e44ff07c21607e80c8e5af2b4e2766aeab6897abb2f"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 22,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-112",
+    "site_family": "techcrunch.com",
+    "url": "https://techcrunch.com",
+    "name": "techcrunch.com",
+    "category": "technology",
+    "ranking_references": [
+      {
+        "category": "technology",
+        "ranking_url": "https://detailed.com/tech-blogs/",
+        "category_rank": 2,
+        "ranking_vintage": "September 21, 2026",
+        "ranking_capture_sha256": "3ce9c0827ac14941257234cda2da9baae3633c5d6c1c17d8e89b4539a9aff42e"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 19,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-113",
+    "site_family": "gfinityesports.com",
+    "url": "https://www.gfinityesports.com/",
+    "name": "Gfinity",
+    "category": "gaming",
+    "ranking_references": [
+      {
+        "category": "gaming",
+        "ranking_url": "https://detailed.com/gaming-blogs/",
+        "category_rank": 2,
+        "ranking_vintage": "January 12th, 2024",
+        "ranking_capture_sha256": "beac1b9a45dc901d5e60d71f022cbe1975d2e46132f87ed9f791e887429f1fc2"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-114",
+    "site_family": "allhiphop.com",
+    "url": "https://allhiphop.com/",
+    "name": "https://allhiphop.com/",
+    "category": "music",
+    "ranking_references": [
+      {
+        "category": "music",
+        "ranking_url": "https://detailed.com/music-blogs/",
+        "category_rank": 2,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "1cbe817b943105c4957265e283dc8d7545c092020dcbd4f4aba78d767308d6d4"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-115",
+    "site_family": "lrb.co.uk",
+    "url": "https://www.lrb.co.uk/blog/",
+    "name": "https://www.lrb.co.uk/blog/",
+    "category": "books",
+    "ranking_references": [
+      {
+        "category": "books",
+        "ranking_url": "https://detailed.com/book-blogs/",
+        "category_rank": 2,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "a56376660eee7172c5ea32d227be3dd74f7d8110be6f3c798c889accacb22e56"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-116",
+    "site_family": "thekitchn.com",
+    "url": "https://www.thekitchn.com/",
+    "name": "thekitchn.com",
+    "category": "food",
+    "ranking_references": [
+      {
+        "category": "food",
+        "ranking_url": "https://detailed.com/food-blogs/",
+        "category_rank": 2,
+        "ranking_vintage": "September 19, 2026",
+        "ranking_capture_sha256": "0837a1b239ae0ebc404ffacbe03f97c3861073f5e0a8bd98caf9ce38611b3888"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-117",
+    "site_family": "radaronline.com",
+    "url": "https://radaronline.com/",
+    "name": "https://radaronline.com/",
+    "category": "entertainment",
+    "ranking_references": [
+      {
+        "category": "entertainment",
+        "ranking_url": "https://detailed.com/entertainment-blogs/",
+        "category_rank": 3,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "5ca97a5477a648150ce26e44ff07c21607e80c8e5af2b4e2766aeab6897abb2f"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-118",
+    "site_family": "mashable.com",
+    "url": "https://mashable.com/",
+    "name": "mashable.com",
+    "category": "technology",
+    "ranking_references": [
+      {
+        "category": "technology",
+        "ranking_url": "https://detailed.com/tech-blogs/",
+        "category_rank": 3,
+        "ranking_vintage": "September 21, 2026",
+        "ranking_capture_sha256": "3ce9c0827ac14941257234cda2da9baae3633c5d6c1c17d8e89b4539a9aff42e"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 38,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-119",
+    "site_family": "gamespot.com",
+    "url": "https://www.gamespot.com/",
+    "name": "GameSpot",
+    "category": "gaming",
+    "ranking_references": [
+      {
+        "category": "gaming",
+        "ranking_url": "https://detailed.com/gaming-blogs/",
+        "category_rank": 3,
+        "ranking_vintage": "January 12th, 2024",
+        "ranking_capture_sha256": "beac1b9a45dc901d5e60d71f022cbe1975d2e46132f87ed9f791e887429f1fc2"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-120",
+    "site_family": "reedsy.com",
+    "url": "https://blog.reedsy.com/",
+    "name": "https://blog.reedsy.com/",
+    "category": "books",
+    "ranking_references": [
+      {
+        "category": "books",
+        "ranking_url": "https://detailed.com/book-blogs/",
+        "category_rank": 3,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "a56376660eee7172c5ea32d227be3dd74f7d8110be6f3c798c889accacb22e56"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-121",
+    "site_family": "food52.com",
+    "url": "https://food52.com/",
+    "name": "food52.com",
+    "category": "food",
+    "ranking_references": [
+      {
+        "category": "food",
+        "ranking_url": "https://detailed.com/food-blogs/",
+        "category_rank": 3,
+        "ranking_vintage": "September 19, 2026",
+        "ranking_capture_sha256": "0837a1b239ae0ebc404ffacbe03f97c3861073f5e0a8bd98caf9ce38611b3888"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-122",
+    "site_family": "theverge.com",
+    "url": "https://www.theverge.com/",
+    "name": "theverge.com",
+    "category": "technology",
+    "ranking_references": [
+      {
+        "category": "technology",
+        "ranking_url": "https://detailed.com/tech-blogs/",
+        "category_rank": 4,
+        "ranking_vintage": "September 21, 2026",
+        "ranking_capture_sha256": "3ce9c0827ac14941257234cda2da9baae3633c5d6c1c17d8e89b4539a9aff42e"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 8,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-123",
+    "site_family": "pushsquare.com",
+    "url": "https://www.pushsquare.com/",
+    "name": "PushSquare",
+    "category": "gaming",
+    "ranking_references": [
+      {
+        "category": "gaming",
+        "ranking_url": "https://detailed.com/gaming-blogs/",
+        "category_rank": 4,
+        "ranking_vintage": "January 12th, 2024",
+        "ranking_capture_sha256": "beac1b9a45dc901d5e60d71f022cbe1975d2e46132f87ed9f791e887429f1fc2"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-124",
+    "site_family": "pitchfork.com",
+    "url": "https://pitchfork.com/",
+    "name": "https://pitchfork.com/",
+    "category": "music",
+    "ranking_references": [
+      {
+        "category": "music",
+        "ranking_url": "https://detailed.com/music-blogs/",
+        "category_rank": 4,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "1cbe817b943105c4957265e283dc8d7545c092020dcbd4f4aba78d767308d6d4"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 23,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-125",
+    "site_family": "smartbitchestrashybooks.com",
+    "url": "https://smartbitchestrashybooks.com/",
+    "name": "https://smartbitchestrashybooks.com/",
+    "category": "books",
+    "ranking_references": [
+      {
+        "category": "books",
+        "ranking_url": "https://detailed.com/book-blogs/",
+        "category_rank": 4,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "a56376660eee7172c5ea32d227be3dd74f7d8110be6f3c798c889accacb22e56"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-126",
+    "site_family": "simplyrecipes.com",
+    "url": "http://www.simplyrecipes.com/",
+    "name": "simplyrecipes.com",
+    "category": "food",
+    "ranking_references": [
+      {
+        "category": "food",
+        "ranking_url": "https://detailed.com/food-blogs/",
+        "category_rank": 4,
+        "ranking_vintage": "September 19, 2026",
+        "ranking_capture_sha256": "0837a1b239ae0ebc404ffacbe03f97c3861073f5e0a8bd98caf9ce38611b3888"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-127",
+    "site_family": "entrepreneur.com",
+    "url": "https://www.entrepreneur.com/",
+    "name": "https://www.entrepreneur.com/",
+    "category": "blogs",
+    "ranking_references": [
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 5,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-128",
+    "site_family": "digitalspy.com",
+    "url": "https://www.digitalspy.com/",
+    "name": "https://www.digitalspy.com/",
+    "category": "entertainment",
+    "ranking_references": [
+      {
+        "category": "entertainment",
+        "ranking_url": "https://detailed.com/entertainment-blogs/",
+        "category_rank": 5,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "5ca97a5477a648150ce26e44ff07c21607e80c8e5af2b4e2766aeab6897abb2f"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 35,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-129",
+    "site_family": "cnet.com",
+    "url": "https://www.cnet.com/news/",
+    "name": "cnet.com/news",
+    "category": "technology",
+    "ranking_references": [
+      {
+        "category": "technology",
+        "ranking_url": "https://detailed.com/tech-blogs/",
+        "category_rank": 5,
+        "ranking_vintage": "September 21, 2026",
+        "ranking_capture_sha256": "3ce9c0827ac14941257234cda2da9baae3633c5d6c1c17d8e89b4539a9aff42e"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 40,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-130",
+    "site_family": "videogameschronicle.com",
+    "url": "https://www.videogameschronicle.com/",
+    "name": "Video Games Chronicle",
+    "category": "gaming",
+    "ranking_references": [
+      {
+        "category": "gaming",
+        "ranking_url": "https://detailed.com/gaming-blogs/",
+        "category_rank": 5,
+        "ranking_vintage": "January 12th, 2024",
+        "ranking_capture_sha256": "beac1b9a45dc901d5e60d71f022cbe1975d2e46132f87ed9f791e887429f1fc2"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-131",
+    "site_family": "hotnewhiphop.com",
+    "url": "https://www.hotnewhiphop.com/",
+    "name": "https://www.hotnewhiphop.com/",
+    "category": "music",
+    "ranking_references": [
+      {
+        "category": "music",
+        "ranking_url": "https://detailed.com/music-blogs/",
+        "category_rank": 5,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "1cbe817b943105c4957265e283dc8d7545c092020dcbd4f4aba78d767308d6d4"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 14,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-132",
+    "site_family": "bookbub.com",
+    "url": "https://www.bookbub.com/blog",
+    "name": "https://www.bookbub.com/blog",
+    "category": "books",
+    "ranking_references": [
+      {
+        "category": "books",
+        "ranking_url": "https://detailed.com/book-blogs/",
+        "category_rank": 5,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "a56376660eee7172c5ea32d227be3dd74f7d8110be6f3c798c889accacb22e56"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-133",
+    "site_family": "thepioneerwoman.com",
+    "url": "http://thepioneerwoman.com/",
+    "name": "thepioneerwoman.com",
+    "category": "food",
+    "ranking_references": [
+      {
+        "category": "food",
+        "ranking_url": "https://detailed.com/food-blogs/",
+        "category_rank": 5,
+        "ranking_vintage": "September 19, 2026",
+        "ranking_capture_sha256": "0837a1b239ae0ebc404ffacbe03f97c3861073f5e0a8bd98caf9ce38611b3888"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-134",
+    "site_family": "seekingalpha.com",
+    "url": "https://seekingalpha.com/",
+    "name": "https://seekingalpha.com/",
+    "category": "blogs",
+    "ranking_references": [
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 6,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-135",
+    "site_family": "toofab.com",
+    "url": "https://toofab.com/",
+    "name": "https://toofab.com/",
+    "category": "entertainment",
+    "ranking_references": [
+      {
+        "category": "entertainment",
+        "ranking_url": "https://detailed.com/entertainment-blogs/",
+        "category_rank": 6,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "5ca97a5477a648150ce26e44ff07c21607e80c8e5af2b4e2766aeab6897abb2f"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-136",
+    "site_family": "vox.com",
+    "url": "https://www.vox.com/technology",
+    "name": "vox.com/technology",
+    "category": "technology",
+    "ranking_references": [
+      {
+        "category": "technology",
+        "ranking_url": "https://detailed.com/tech-blogs/",
+        "category_rank": 6,
+        "ranking_vintage": "September 21, 2026",
+        "ranking_capture_sha256": "3ce9c0827ac14941257234cda2da9baae3633c5d6c1c17d8e89b4539a9aff42e"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-137",
+    "site_family": "vg247.com",
+    "url": "https://www.vg247.com/",
+    "name": "VG247",
+    "category": "gaming",
+    "ranking_references": [
+      {
+        "category": "gaming",
+        "ranking_url": "https://detailed.com/gaming-blogs/",
+        "category_rank": 6,
+        "ranking_vintage": "January 12th, 2024",
+        "ranking_capture_sha256": "beac1b9a45dc901d5e60d71f022cbe1975d2e46132f87ed9f791e887429f1fc2"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-138",
+    "site_family": "faroutmagazine.co.uk",
+    "url": "http://faroutmagazine.co.uk",
+    "name": "http://faroutmagazine.co.uk",
+    "category": "music",
+    "ranking_references": [
+      {
+        "category": "music",
+        "ranking_url": "https://detailed.com/music-blogs/",
+        "category_rank": 6,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "1cbe817b943105c4957265e283dc8d7545c092020dcbd4f4aba78d767308d6d4"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 50,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-139",
+    "site_family": "epicreads.com",
+    "url": "https://www.epicreads.com/blog/",
+    "name": "https://www.epicreads.com/blog/",
+    "category": "books",
+    "ranking_references": [
+      {
+        "category": "books",
+        "ranking_url": "https://detailed.com/book-blogs/",
+        "category_rank": 6,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "a56376660eee7172c5ea32d227be3dd74f7d8110be6f3c798c889accacb22e56"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-140",
+    "site_family": "sallysbakingaddiction.com",
+    "url": "https://sallysbakingaddiction.com/recent-posts/",
+    "name": "sallysbakingaddiction.com/recent-posts",
+    "category": "food",
+    "ranking_references": [
+      {
+        "category": "food",
+        "ranking_url": "https://detailed.com/food-blogs/",
+        "category_rank": 6,
+        "ranking_vintage": "September 19, 2026",
+        "ranking_capture_sha256": "0837a1b239ae0ebc404ffacbe03f97c3861073f5e0a8bd98caf9ce38611b3888"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-141",
+    "site_family": "yahoo.com",
+    "url": "https://sports.yahoo.com/",
+    "name": "https://sports.yahoo.com/",
+    "category": "blogs",
+    "ranking_references": [
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 7,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-142",
+    "site_family": "papermag.com",
+    "url": "https://www.papermag.com/",
+    "name": "https://www.papermag.com/",
+    "category": "entertainment",
+    "ranking_references": [
+      {
+        "category": "entertainment",
+        "ranking_url": "https://detailed.com/entertainment-blogs/",
+        "category_rank": 7,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "5ca97a5477a648150ce26e44ff07c21607e80c8e5af2b4e2766aeab6897abb2f"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-143",
+    "site_family": "zdnet.com",
+    "url": "http://www.zdnet.com/",
+    "name": "zdnet.com",
+    "category": "technology",
+    "ranking_references": [
+      {
+        "category": "technology",
+        "ranking_url": "https://detailed.com/tech-blogs/",
+        "category_rank": 7,
+        "ranking_vintage": "September 21, 2026",
+        "ranking_capture_sha256": "3ce9c0827ac14941257234cda2da9baae3633c5d6c1c17d8e89b4539a9aff42e"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-144",
+    "site_family": "racinggames.gg",
+    "url": "https://racinggames.gg/",
+    "name": "RacingGames.gg",
+    "category": "gaming",
+    "ranking_references": [
+      {
+        "category": "gaming",
+        "ranking_url": "https://detailed.com/gaming-blogs/",
+        "category_rank": 7,
+        "ranking_vintage": "January 12th, 2024",
+        "ranking_capture_sha256": "beac1b9a45dc901d5e60d71f022cbe1975d2e46132f87ed9f791e887429f1fc2"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-145",
+    "site_family": "loudersound.com",
+    "url": "https://www.loudersound.com/",
+    "name": "https://www.loudersound.com/",
+    "category": "music",
+    "ranking_references": [
+      {
+        "category": "music",
+        "ranking_url": "https://detailed.com/music-blogs/",
+        "category_rank": 7,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "1cbe817b943105c4957265e283dc8d7545c092020dcbd4f4aba78d767308d6d4"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 34,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-146",
+    "site_family": "booktrust.org.uk",
+    "url": "https://www.booktrust.org.uk/",
+    "name": "https://www.booktrust.org.uk/",
+    "category": "books",
+    "ranking_references": [
+      {
+        "category": "books",
+        "ranking_url": "https://detailed.com/book-blogs/",
+        "category_rank": 7,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "a56376660eee7172c5ea32d227be3dd74f7d8110be6f3c798c889accacb22e56"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-147",
+    "site_family": "smittenkitchen.com",
+    "url": "https://smittenkitchen.com/",
+    "name": "smittenkitchen.com",
+    "category": "food",
+    "ranking_references": [
+      {
+        "category": "food",
+        "ranking_url": "https://detailed.com/food-blogs/",
+        "category_rank": 7,
+        "ranking_vintage": "September 19, 2026",
+        "ranking_capture_sha256": "0837a1b239ae0ebc404ffacbe03f97c3861073f5e0a8bd98caf9ce38611b3888"
+      }
+    ],
+    "existing": {
+      "datasets": [
+        "semantic-decision-holdout-dataset.jsonl"
+      ],
+      "splits": [
+        "test"
+      ]
+    },
+    "split": "existing",
+    "status": "pending"
+  },
+  {
+    "id": "media200-148",
+    "site_family": "etonline.com",
+    "url": "https://www.etonline.com/",
+    "name": "https://www.etonline.com/",
+    "category": "entertainment",
+    "ranking_references": [
+      {
+        "category": "entertainment",
+        "ranking_url": "https://detailed.com/entertainment-blogs/",
+        "category_rank": 8,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "5ca97a5477a648150ce26e44ff07c21607e80c8e5af2b4e2766aeab6897abb2f"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 25,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-149",
+    "site_family": "gizmodo.com",
+    "url": "https://gizmodo.com/",
+    "name": "gizmodo.com",
+    "category": "technology",
+    "ranking_references": [
+      {
+        "category": "technology",
+        "ranking_url": "https://detailed.com/tech-blogs/",
+        "category_rank": 8,
+        "ranking_vintage": "September 21, 2026",
+        "ranking_capture_sha256": "3ce9c0827ac14941257234cda2da9baae3633c5d6c1c17d8e89b4539a9aff42e"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 24,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-150",
+    "site_family": "gaminggorilla.com",
+    "url": "https://gaminggorilla.com/",
+    "name": "Gaming Gorilla",
+    "category": "gaming",
+    "ranking_references": [
+      {
+        "category": "gaming",
+        "ranking_url": "https://detailed.com/gaming-blogs/",
+        "category_rank": 8,
+        "ranking_vintage": "January 12th, 2024",
+        "ranking_capture_sha256": "beac1b9a45dc901d5e60d71f022cbe1975d2e46132f87ed9f791e887429f1fc2"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-151",
+    "site_family": "nme.com",
+    "url": "https://www.nme.com/",
+    "name": "https://www.nme.com/",
+    "category": "music",
+    "ranking_references": [
+      {
+        "category": "music",
+        "ranking_url": "https://detailed.com/music-blogs/",
+        "category_rank": 8,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "1cbe817b943105c4957265e283dc8d7545c092020dcbd4f4aba78d767308d6d4"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 10,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-152",
+    "site_family": "bookishelf.com",
+    "url": "https://www.bookishelf.com/",
+    "name": "https://www.bookishelf.com/",
+    "category": "books",
+    "ranking_references": [
+      {
+        "category": "books",
+        "ranking_url": "https://detailed.com/book-blogs/",
+        "category_rank": 8,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "a56376660eee7172c5ea32d227be3dd74f7d8110be6f3c798c889accacb22e56"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-153",
+    "site_family": "minimalistbaker.com",
+    "url": "https://minimalistbaker.com/",
+    "name": "minimalistbaker.com",
+    "category": "food",
+    "ranking_references": [
+      {
+        "category": "food",
+        "ranking_url": "https://detailed.com/food-blogs/",
+        "category_rank": 8,
+        "ranking_vintage": "September 19, 2026",
+        "ranking_capture_sha256": "0837a1b239ae0ebc404ffacbe03f97c3861073f5e0a8bd98caf9ce38611b3888"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-154",
+    "site_family": "elle.com",
+    "url": "https://www.elle.com/",
+    "name": "https://www.elle.com/",
+    "category": "blogs",
+    "ranking_references": [
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 9,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-155",
+    "site_family": "theblast.com",
+    "url": "https://theblast.com/",
+    "name": "https://theblast.com/",
+    "category": "entertainment",
+    "ranking_references": [
+      {
+        "category": "entertainment",
+        "ranking_url": "https://detailed.com/entertainment-blogs/",
+        "category_rank": 9,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "5ca97a5477a648150ce26e44ff07c21607e80c8e5af2b4e2766aeab6897abb2f"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-156",
+    "site_family": "arstechnica.com",
+    "url": "https://arstechnica.com/",
+    "name": "arstechnica.com",
+    "category": "technology",
+    "ranking_references": [
+      {
+        "category": "technology",
+        "ranking_url": "https://detailed.com/tech-blogs/",
+        "category_rank": 9,
+        "ranking_vintage": "September 21, 2026",
+        "ranking_capture_sha256": "3ce9c0827ac14941257234cda2da9baae3633c5d6c1c17d8e89b4539a9aff42e"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 48,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-157",
+    "site_family": "kotaku.com",
+    "url": "https://kotaku.com/",
+    "name": "Kotaku",
+    "category": "gaming",
+    "ranking_references": [
+      {
+        "category": "gaming",
+        "ranking_url": "https://detailed.com/gaming-blogs/",
+        "category_rank": 9,
+        "ranking_vintage": "January 12th, 2024",
+        "ranking_capture_sha256": "beac1b9a45dc901d5e60d71f022cbe1975d2e46132f87ed9f791e887429f1fc2"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-158",
+    "site_family": "ultimateclassicrock.com",
+    "url": "https://ultimateclassicrock.com/",
+    "name": "https://ultimateclassicrock.com/",
+    "category": "music",
+    "ranking_references": [
+      {
+        "category": "music",
+        "ranking_url": "https://detailed.com/music-blogs/",
+        "category_rank": 9,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "1cbe817b943105c4957265e283dc8d7545c092020dcbd4f4aba78d767308d6d4"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-159",
+    "site_family": "bookavatar.com",
+    "url": "https://www.bookavatar.com",
+    "name": "https://www.bookavatar.com",
+    "category": "books",
+    "ranking_references": [
+      {
+        "category": "books",
+        "ranking_url": "https://detailed.com/book-blogs/",
+        "category_rank": 9,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "a56376660eee7172c5ea32d227be3dd74f7d8110be6f3c798c889accacb22e56"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-160",
+    "site_family": "budgetbytes.com",
+    "url": "https://www.budgetbytes.com/",
+    "name": "budgetbytes.com",
+    "category": "food",
+    "ranking_references": [
+      {
+        "category": "food",
+        "ranking_url": "https://detailed.com/food-blogs/",
+        "category_rank": 9,
+        "ranking_vintage": "September 19, 2026",
+        "ranking_capture_sha256": "0837a1b239ae0ebc404ffacbe03f97c3861073f5e0a8bd98caf9ce38611b3888"
+      }
+    ],
+    "existing": {
+      "datasets": [
+        "breadth-cultural-dataset.jsonl"
+      ],
+      "splits": [
+        "test"
+      ]
+    },
+    "split": "existing",
+    "status": "pending"
+  },
+  {
+    "id": "media200-161",
+    "site_family": "eonline.com",
+    "url": "https://www.eonline.com/news",
+    "name": "https://www.eonline.com/news",
+    "category": "entertainment",
+    "ranking_references": [
+      {
+        "category": "entertainment",
+        "ranking_url": "https://detailed.com/entertainment-blogs/",
+        "category_rank": 10,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "5ca97a5477a648150ce26e44ff07c21607e80c8e5af2b4e2766aeab6897abb2f"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 46,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-162",
+    "site_family": "engadget.com",
+    "url": "https://www.engadget.com/",
+    "name": "engadget.com",
+    "category": "technology",
+    "ranking_references": [
+      {
+        "category": "technology",
+        "ranking_url": "https://detailed.com/tech-blogs/",
+        "category_rank": 10,
+        "ranking_vintage": "September 21, 2026",
+        "ranking_capture_sha256": "3ce9c0827ac14941257234cda2da9baae3633c5d6c1c17d8e89b4539a9aff42e"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-163",
+    "site_family": "eurogamer.net",
+    "url": "https://www.eurogamer.net/",
+    "name": "EuroGamer",
+    "category": "gaming",
+    "ranking_references": [
+      {
+        "category": "gaming",
+        "ranking_url": "https://detailed.com/gaming-blogs/",
+        "category_rank": 10,
+        "ranking_vintage": "January 12th, 2024",
+        "ranking_capture_sha256": "beac1b9a45dc901d5e60d71f022cbe1975d2e46132f87ed9f791e887429f1fc2"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-164",
+    "site_family": "hiphopdx.com",
+    "url": "https://hiphopdx.com/",
+    "name": "https://hiphopdx.com/",
+    "category": "music",
+    "ranking_references": [
+      {
+        "category": "music",
+        "ranking_url": "https://detailed.com/music-blogs/",
+        "category_rank": 10,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "1cbe817b943105c4957265e283dc8d7545c092020dcbd4f4aba78d767308d6d4"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 32,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-165",
+    "site_family": "simonandschuster.com",
+    "url": "https://www.simonandschuster.com/",
+    "name": "https://www.simonandschuster.com/",
+    "category": "books",
+    "ranking_references": [
+      {
+        "category": "books",
+        "ranking_url": "https://detailed.com/book-blogs/",
+        "category_rank": 10,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "a56376660eee7172c5ea32d227be3dd74f7d8110be6f3c798c889accacb22e56"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-166",
+    "site_family": "skinnytaste.com",
+    "url": "https://www.skinnytaste.com/",
+    "name": "skinnytaste.com",
+    "category": "food",
+    "ranking_references": [
+      {
+        "category": "food",
+        "ranking_url": "https://detailed.com/food-blogs/",
+        "category_rank": 10,
+        "ranking_vintage": "September 19, 2026",
+        "ranking_capture_sha256": "0837a1b239ae0ebc404ffacbe03f97c3861073f5e0a8bd98caf9ce38611b3888"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-167",
+    "site_family": "perezhilton.com",
+    "url": "https://perezhilton.com/",
+    "name": "https://perezhilton.com/",
+    "category": "entertainment",
+    "ranking_references": [
+      {
+        "category": "entertainment",
+        "ranking_url": "https://detailed.com/entertainment-blogs/",
+        "category_rank": 11,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "5ca97a5477a648150ce26e44ff07c21607e80c8e5af2b4e2766aeab6897abb2f"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-168",
+    "site_family": "venturebeat.com",
+    "url": "https://venturebeat.com/",
+    "name": "venturebeat.com",
+    "category": "technology",
+    "ranking_references": [
+      {
+        "category": "technology",
+        "ranking_url": "https://detailed.com/tech-blogs/",
+        "category_rank": 11,
+        "ranking_vintage": "September 21, 2026",
+        "ranking_capture_sha256": "3ce9c0827ac14941257234cda2da9baae3633c5d6c1c17d8e89b4539a9aff42e"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-169",
+    "site_family": "gamesradar.com",
+    "url": "https://www.gamesradar.com/",
+    "name": "GamesRadar",
+    "category": "gaming",
+    "ranking_references": [
+      {
+        "category": "gaming",
+        "ranking_url": "https://detailed.com/gaming-blogs/",
+        "category_rank": 11,
+        "ranking_vintage": "January 12th, 2024",
+        "ranking_capture_sha256": "beac1b9a45dc901d5e60d71f022cbe1975d2e46132f87ed9f791e887429f1fc2"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-170",
+    "site_family": "loudwire.com",
+    "url": "https://loudwire.com/",
+    "name": "https://loudwire.com/",
+    "category": "music",
+    "ranking_references": [
+      {
+        "category": "music",
+        "ranking_url": "https://detailed.com/music-blogs/",
+        "category_rank": 11,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "1cbe817b943105c4957265e283dc8d7545c092020dcbd4f4aba78d767308d6d4"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 43,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-171",
+    "site_family": "theuncorkedlibrarian.com",
+    "url": "https://www.theuncorkedlibrarian.com/",
+    "name": "https://www.theuncorkedlibrarian.com/",
+    "category": "books",
+    "ranking_references": [
+      {
+        "category": "books",
+        "ranking_url": "https://detailed.com/book-blogs/",
+        "category_rank": 11,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "a56376660eee7172c5ea32d227be3dd74f7d8110be6f3c798c889accacb22e56"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-172",
+    "site_family": "cookieandkate.com",
+    "url": "https://cookieandkate.com/",
+    "name": "cookieandkate.com",
+    "category": "food",
+    "ranking_references": [
+      {
+        "category": "food",
+        "ranking_url": "https://detailed.com/food-blogs/",
+        "category_rank": 11,
+        "ranking_vintage": "September 19, 2026",
+        "ranking_capture_sha256": "0837a1b239ae0ebc404ffacbe03f97c3861073f5e0a8bd98caf9ce38611b3888"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-173",
+    "site_family": "hbr.org",
+    "url": "https://hbr.org/",
+    "name": "https://hbr.org/",
+    "category": "blogs",
+    "ranking_references": [
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 12,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-174",
+    "site_family": "extratv.com",
+    "url": "https://extratv.com/",
+    "name": "https://extratv.com/",
+    "category": "entertainment",
+    "ranking_references": [
+      {
+        "category": "entertainment",
+        "ranking_url": "https://detailed.com/entertainment-blogs/",
+        "category_rank": 12,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "5ca97a5477a648150ce26e44ff07c21607e80c8e5af2b4e2766aeab6897abb2f"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-175",
+    "site_family": "computerworld.com",
+    "url": "https://www.computerworld.com/",
+    "name": "computerworld.com",
+    "category": "technology",
+    "ranking_references": [
+      {
+        "category": "technology",
+        "ranking_url": "https://detailed.com/tech-blogs/",
+        "category_rank": 12,
+        "ranking_vintage": "September 21, 2026",
+        "ranking_capture_sha256": "3ce9c0827ac14941257234cda2da9baae3633c5d6c1c17d8e89b4539a9aff42e"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-176",
+    "site_family": "fortnitetracker.com",
+    "url": "https://fortnitetracker.com/",
+    "name": "Fortnite Tracker",
+    "category": "gaming",
+    "ranking_references": [
+      {
+        "category": "gaming",
+        "ranking_url": "https://detailed.com/gaming-blogs/",
+        "category_rank": 12,
+        "ranking_vintage": "January 12th, 2024",
+        "ranking_capture_sha256": "beac1b9a45dc901d5e60d71f022cbe1975d2e46132f87ed9f791e887429f1fc2"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-177",
+    "site_family": "thefader.com",
+    "url": "http://www.thefader.com/",
+    "name": "http://www.thefader.com/",
+    "category": "music",
+    "ranking_references": [
+      {
+        "category": "music",
+        "ranking_url": "https://detailed.com/music-blogs/",
+        "category_rank": 12,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "1cbe817b943105c4957265e283dc8d7545c092020dcbd4f4aba78d767308d6d4"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-178",
+    "site_family": "noseinabook.co.uk",
+    "url": "https://noseinabook.co.uk/",
+    "name": "https://noseinabook.co.uk/",
+    "category": "books",
+    "ranking_references": [
+      {
+        "category": "books",
+        "ranking_url": "https://detailed.com/book-blogs/",
+        "category_rank": 12,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "a56376660eee7172c5ea32d227be3dd74f7d8110be6f3c798c889accacb22e56"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-179",
+    "site_family": "loveandlemons.com",
+    "url": "https://www.loveandlemons.com/",
+    "name": "loveandlemons.com",
+    "category": "food",
+    "ranking_references": [
+      {
+        "category": "food",
+        "ranking_url": "https://detailed.com/food-blogs/",
+        "category_rank": 12,
+        "ranking_vintage": "September 19, 2026",
+        "ranking_capture_sha256": "0837a1b239ae0ebc404ffacbe03f97c3861073f5e0a8bd98caf9ce38611b3888"
+      }
+    ],
+    "existing": {
+      "datasets": [
+        "generalization-final-dataset.jsonl"
+      ],
+      "splits": [
+        "test"
+      ]
+    },
+    "split": "existing",
+    "status": "pending"
+  },
+  {
+    "id": "media200-180",
+    "site_family": "hollywoodlife.com",
+    "url": "https://hollywoodlife.com/",
+    "name": "https://hollywoodlife.com/",
+    "category": "entertainment",
+    "ranking_references": [
+      {
+        "category": "entertainment",
+        "ranking_url": "https://detailed.com/entertainment-blogs/",
+        "category_rank": 13,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "5ca97a5477a648150ce26e44ff07c21607e80c8e5af2b4e2766aeab6897abb2f"
+      },
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 42,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-181",
+    "site_family": "digitaltrends.com",
+    "url": "https://www.digitaltrends.com/",
+    "name": "digitaltrends.com",
+    "category": "technology",
+    "ranking_references": [
+      {
+        "category": "technology",
+        "ranking_url": "https://detailed.com/tech-blogs/",
+        "category_rank": 13,
+        "ranking_vintage": "September 21, 2026",
+        "ranking_capture_sha256": "3ce9c0827ac14941257234cda2da9baae3633c5d6c1c17d8e89b4539a9aff42e"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-182",
+    "site_family": "valorfeed.gg",
+    "url": "https://valorfeed.gg/",
+    "name": "ValorFeed",
+    "category": "gaming",
+    "ranking_references": [
+      {
+        "category": "gaming",
+        "ranking_url": "https://detailed.com/gaming-blogs/",
+        "category_rank": 13,
+        "ranking_vintage": "January 12th, 2024",
+        "ranking_capture_sha256": "beac1b9a45dc901d5e60d71f022cbe1975d2e46132f87ed9f791e887429f1fc2"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-183",
+    "site_family": "stereogum.com",
+    "url": "https://www.stereogum.com/",
+    "name": "https://www.stereogum.com/",
+    "category": "music",
+    "ranking_references": [
+      {
+        "category": "music",
+        "ranking_url": "https://detailed.com/music-blogs/",
+        "category_rank": 13,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "1cbe817b943105c4957265e283dc8d7545c092020dcbd4f4aba78d767308d6d4"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-184",
+    "site_family": "forreadingaddicts.co.uk",
+    "url": "https://forreadingaddicts.co.uk/kaths-blog/",
+    "name": "https://forreadingaddicts.co.uk/kaths-blog/",
+    "category": "books",
+    "ranking_references": [
+      {
+        "category": "books",
+        "ranking_url": "https://detailed.com/book-blogs/",
+        "category_rank": 13,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "a56376660eee7172c5ea32d227be3dd74f7d8110be6f3c798c889accacb22e56"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-185",
+    "site_family": "pinchofyum.com",
+    "url": "https://pinchofyum.com/",
+    "name": "pinchofyum.com",
+    "category": "food",
+    "ranking_references": [
+      {
+        "category": "food",
+        "ranking_url": "https://detailed.com/food-blogs/",
+        "category_rank": 13,
+        "ranking_vintage": "September 19, 2026",
+        "ranking_capture_sha256": "0837a1b239ae0ebc404ffacbe03f97c3861073f5e0a8bd98caf9ce38611b3888"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-186",
+    "site_family": "soapdirt.com",
+    "url": "https://soapdirt.com/",
+    "name": "https://soapdirt.com/",
+    "category": "entertainment",
+    "ranking_references": [
+      {
+        "category": "entertainment",
+        "ranking_url": "https://detailed.com/entertainment-blogs/",
+        "category_rank": 14,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "5ca97a5477a648150ce26e44ff07c21607e80c8e5af2b4e2766aeab6897abb2f"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-187",
+    "site_family": "techrepublic.com",
+    "url": "https://www.techrepublic.com",
+    "name": "techrepublic.com",
+    "category": "technology",
+    "ranking_references": [
+      {
+        "category": "technology",
+        "ranking_url": "https://detailed.com/tech-blogs/",
+        "category_rank": 14,
+        "ranking_vintage": "September 21, 2026",
+        "ranking_capture_sha256": "3ce9c0827ac14941257234cda2da9baae3633c5d6c1c17d8e89b4539a9aff42e"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-188",
+    "site_family": "nintendolife.com",
+    "url": "https://www.nintendolife.com/",
+    "name": "Nintendo Life",
+    "category": "gaming",
+    "ranking_references": [
+      {
+        "category": "gaming",
+        "ranking_url": "https://detailed.com/gaming-blogs/",
+        "category_rank": 14,
+        "ranking_vintage": "January 12th, 2024",
+        "ranking_capture_sha256": "beac1b9a45dc901d5e60d71f022cbe1975d2e46132f87ed9f791e887429f1fc2"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-189",
+    "site_family": "thelineofbestfit.com",
+    "url": "https://www.thelineofbestfit.com/",
+    "name": "https://www.thelineofbestfit.com/",
+    "category": "music",
+    "ranking_references": [
+      {
+        "category": "music",
+        "ranking_url": "https://detailed.com/music-blogs/",
+        "category_rank": 14,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "1cbe817b943105c4957265e283dc8d7545c092020dcbd4f4aba78d767308d6d4"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-190",
+    "site_family": "shereadsromancebooks.com",
+    "url": "https://www.shereadsromancebooks.com/",
+    "name": "https://www.shereadsromancebooks.com/",
+    "category": "books",
+    "ranking_references": [
+      {
+        "category": "books",
+        "ranking_url": "https://detailed.com/book-blogs/",
+        "category_rank": 14,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "a56376660eee7172c5ea32d227be3dd74f7d8110be6f3c798c889accacb22e56"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-191",
+    "site_family": "gimmesomeoven.com",
+    "url": "https://www.gimmesomeoven.com/",
+    "name": "gimmesomeoven.com",
+    "category": "food",
+    "ranking_references": [
+      {
+        "category": "food",
+        "ranking_url": "https://detailed.com/food-blogs/",
+        "category_rank": 14,
+        "ranking_vintage": "September 19, 2026",
+        "ranking_capture_sha256": "0837a1b239ae0ebc404ffacbe03f97c3861073f5e0a8bd98caf9ce38611b3888"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-192",
+    "site_family": "celebuzz.com",
+    "url": "https://www.celebuzz.com/",
+    "name": "https://www.celebuzz.com/",
+    "category": "entertainment",
+    "ranking_references": [
+      {
+        "category": "entertainment",
+        "ranking_url": "https://detailed.com/entertainment-blogs/",
+        "category_rank": 15,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "5ca97a5477a648150ce26e44ff07c21607e80c8e5af2b4e2766aeab6897abb2f"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-193",
+    "site_family": "thenextweb.com",
+    "url": "https://thenextweb.com/",
+    "name": "thenextweb.com",
+    "category": "technology",
+    "ranking_references": [
+      {
+        "category": "technology",
+        "ranking_url": "https://detailed.com/tech-blogs/",
+        "category_rank": 15,
+        "ranking_vintage": "September 21, 2026",
+        "ranking_capture_sha256": "3ce9c0827ac14941257234cda2da9baae3633c5d6c1c17d8e89b4539a9aff42e"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-194",
+    "site_family": "rockpapershotgun.com",
+    "url": "https://www.rockpapershotgun.com/",
+    "name": "RockPaperShotgun",
+    "category": "gaming",
+    "ranking_references": [
+      {
+        "category": "gaming",
+        "ranking_url": "https://detailed.com/gaming-blogs/",
+        "category_rank": 15,
+        "ranking_vintage": "January 12th, 2024",
+        "ranking_capture_sha256": "beac1b9a45dc901d5e60d71f022cbe1975d2e46132f87ed9f791e887429f1fc2"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-195",
+    "site_family": "albumoftheyear.org",
+    "url": "https://www.albumoftheyear.org/l/newsworthy/",
+    "name": "https://www.albumoftheyear.org/l/newsworthy/",
+    "category": "music",
+    "ranking_references": [
+      {
+        "category": "music",
+        "ranking_url": "https://detailed.com/music-blogs/",
+        "category_rank": 15,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "1cbe817b943105c4957265e283dc8d7545c092020dcbd4f4aba78d767308d6d4"
+      }
+    ],
+    "existing": null,
+    "split": "validation",
+    "status": "pending"
+  },
+  {
+    "id": "media200-196",
+    "site_family": "literaryladiesguide.com",
+    "url": "https://www.literaryladiesguide.com/",
+    "name": "https://www.literaryladiesguide.com/",
+    "category": "books",
+    "ranking_references": [
+      {
+        "category": "books",
+        "ranking_url": "https://detailed.com/book-blogs/",
+        "category_rank": 15,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "a56376660eee7172c5ea32d227be3dd74f7d8110be6f3c798c889accacb22e56"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-197",
+    "site_family": "davidlebovitz.com",
+    "url": "https://www.davidlebovitz.com/",
+    "name": "davidlebovitz.com",
+    "category": "food",
+    "ranking_references": [
+      {
+        "category": "food",
+        "ranking_url": "https://detailed.com/food-blogs/",
+        "category_rank": 15,
+        "ranking_vintage": "September 19, 2026",
+        "ranking_capture_sha256": "0837a1b239ae0ebc404ffacbe03f97c3861073f5e0a8bd98caf9ce38611b3888"
+      }
+    ],
+    "existing": null,
+    "split": "test",
+    "status": "pending"
+  },
+  {
+    "id": "media200-198",
+    "site_family": "fastcompany.com",
+    "url": "https://www.fastcompany.com/",
+    "name": "https://www.fastcompany.com/",
+    "category": "blogs",
+    "ranking_references": [
+      {
+        "category": "blogs",
+        "ranking_url": "https://detailed.com/50/",
+        "category_rank": 16,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "4a67ed4d8b5a12c37b930d9494ac0c1d3be48e3c450549ebf00f48d821fa692c"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-199",
+    "site_family": "intouchweekly.com",
+    "url": "https://www.intouchweekly.com/",
+    "name": "https://www.intouchweekly.com/",
+    "category": "entertainment",
+    "ranking_references": [
+      {
+        "category": "entertainment",
+        "ranking_url": "https://detailed.com/entertainment-blogs/",
+        "category_rank": 16,
+        "ranking_vintage": "September 23, 2026",
+        "ranking_capture_sha256": "5ca97a5477a648150ce26e44ff07c21607e80c8e5af2b4e2766aeab6897abb2f"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  },
+  {
+    "id": "media200-200",
+    "site_family": "macrumors.com",
+    "url": "https://www.macrumors.com/",
+    "name": "macrumors.com",
+    "category": "technology",
+    "ranking_references": [
+      {
+        "category": "technology",
+        "ranking_url": "https://detailed.com/tech-blogs/",
+        "category_rank": 16,
+        "ranking_vintage": "September 21, 2026",
+        "ranking_capture_sha256": "3ce9c0827ac14941257234cda2da9baae3633c5d6c1c17d8e89b4539a9aff42e"
+      }
+    ],
+    "existing": null,
+    "split": "train",
+    "status": "pending"
+  }
+]

@@ -24,7 +24,7 @@ sys.path.insert(0, str(ROOT / "ml"))
 from train import metrics
 
 from app.tracker.context_model import NUMERIC_FEATURES, ContextModel
-from ml.artifacts import read_bytes, read_json, write_text
+from ml.artifacts import read_bytes, read_json, read_text, write_text
 
 
 def vectorize(rows, vocabulary, idf):
@@ -51,15 +51,26 @@ def main():
     )
     parser.add_argument("--expanded", action="store_true")
     parser.add_argument("--fallback-model", type=Path)
+    parser.add_argument(
+        "--allow-weak-labels",
+        action="store_true",
+        help="Explicitly include reviewed weak-label experiment data.",
+    )
     args = parser.parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
     started = time.perf_counter()
     path = args.dataset
     rows = [
         r
-        for line in path.read_text(encoding="utf-8").splitlines()
+        for line in read_text(path).splitlines()
         if (r := json.loads(line))["split"] != "test"
     ]
+    if not args.allow_weak_labels and any(
+        r.get("label_quality", "").startswith("weak") for r in rows
+    ):
+        parser.error(
+            "This corpus includes weak labels. Review them, then use --allow-weak-labels for an offline experiment."
+        )
     train = [r for r in rows if r["split"] == "train"]
     valid = [r for r in rows if r["split"] == "validation"]
     df, sites = Counter(), defaultdict(set)

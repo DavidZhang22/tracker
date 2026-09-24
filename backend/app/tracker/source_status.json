@@ -1,0 +1,1474 @@
+[
+  {
+    "host": "msn.com",
+    "checked_url": "https://msn.com/",
+    "status": "javascript_required",
+    "checked_at": "2026-09-24T09:53:27.260473+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "globo.com",
+    "checked_url": "https://globo.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:27.265030+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "nytimes.com",
+    "checked_url": "https://nytimes.com/",
+    "status": "access_blocked",
+    "checked_at": "2026-09-24T09:53:27.268469+00:00",
+    "alternatives": [
+      {
+        "url": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+        "label": "New York Times headlines",
+        "kind": "feed",
+        "relationship": "official",
+        "evidence_url": "https://www.nytimes.com/rss",
+        "verified_at": "2026-09-24T10:02:16.392109+00:00"
+      }
+    ]
+  },
+  {
+    "host": "bbc.com",
+    "checked_url": "https://bbc.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:27.271642+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "uol.com.br",
+    "checked_url": "https://uol.com.br/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:29.631868+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "dcinside.com",
+    "checked_url": "https://dcinside.com/",
+    "status": "robots_unavailable",
+    "checked_at": "2026-09-24T09:53:29.852340+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "cnn.com",
+    "checked_url": "https://cnn.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:29.905992+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "theguardian.com",
+    "checked_url": "https://theguardian.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:30.484150+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "as.com",
+    "checked_url": "https://as.com/",
+    "status": "access_blocked",
+    "checked_at": "2026-09-24T09:53:32.273614+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "foxnews.com",
+    "checked_url": "https://foxnews.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:34.242784+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "indiatimes.com",
+    "checked_url": "https://indiatimes.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:34.353284+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "people.com",
+    "checked_url": "https://people.com/",
+    "status": "access_blocked",
+    "checked_at": "2026-09-24T09:53:34.530802+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "kompas.com",
+    "checked_url": "https://kompas.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:35.167220+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "clarin.com",
+    "checked_url": "https://clarin.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:36.527032+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "infobae.com",
+    "checked_url": "https://infobae.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:36.736402+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "bild.de",
+    "checked_url": "https://bild.de/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:36.995309+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "corriere.it",
+    "checked_url": "https://corriere.it/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:38.852274+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "daum.net",
+    "checked_url": "https://daum.net/",
+    "status": "javascript_required",
+    "checked_at": "2026-09-24T09:53:39.121412+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "aol.com",
+    "checked_url": "https://aol.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:40.057657+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "elpais.com",
+    "checked_url": "https://elpais.com/",
+    "status": "access_blocked",
+    "checked_at": "2026-09-24T09:53:41.348307+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "okdiario.com",
+    "checked_url": "https://okdiario.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:42.600117+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "detik.com",
+    "checked_url": "https://detik.com/",
+    "status": "robots_unavailable",
+    "checked_at": "2026-09-24T09:53:43.081732+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "spiegel.de",
+    "checked_url": "https://spiegel.de/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:43.532263+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "elmundo.es",
+    "checked_url": "https://elmundo.es/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:43.891788+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "ndtv.com",
+    "checked_url": "https://ndtv.com/",
+    "status": "robots_unavailable",
+    "checked_at": "2026-09-24T09:53:45.810364+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "usatoday.com",
+    "checked_url": "https://usatoday.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:46.179653+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "cnbc.com",
+    "checked_url": "https://cnbc.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:46.478300+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "nbcnews.com",
+    "checked_url": "https://nbcnews.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:47.024159+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "ukr.net",
+    "checked_url": "https://ukr.net/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:48.732116+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "forbes.com",
+    "checked_url": "https://forbes.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:48.943265+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "t-online.de",
+    "checked_url": "https://t-online.de/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:50.868713+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "reuters.com",
+    "checked_url": "https://reuters.com/",
+    "status": "robots_disallowed",
+    "checked_at": "2026-09-24T09:53:51.382406+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "lemonde.fr",
+    "checked_url": "https://lemonde.fr/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:51.555931+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "nypost.com",
+    "checked_url": "https://nypost.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:52.047154+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "economictimes.com",
+    "checked_url": "https://economictimes.com/",
+    "status": "unreviewed_redirect",
+    "checked_at": "2026-09-24T09:53:53.945638+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "dw.com",
+    "checked_url": "https://dw.com/",
+    "status": "javascript_required",
+    "checked_at": "2026-09-24T09:53:54.091241+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "welt.de",
+    "checked_url": "https://welt.de/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:54.264098+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "focus.de",
+    "checked_url": "https://focus.de/",
+    "status": "robots_unavailable",
+    "checked_at": "2026-09-24T09:53:56.480773+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "actu.fr",
+    "checked_url": "https://actu.fr/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:56.733386+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "20minutos.es",
+    "checked_url": "https://20minutos.es/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:57.419931+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "apnews.com",
+    "checked_url": "https://apnews.com/",
+    "status": "access_blocked",
+    "checked_at": "2026-09-24T09:53:58.187175+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "aljazeera.com",
+    "checked_url": "https://aljazeera.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:53:59.184600+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "ouest-france.fr",
+    "checked_url": "https://ouest-france.fr/",
+    "status": "robots_unavailable",
+    "checked_at": "2026-09-24T09:54:00.371096+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "jw.org",
+    "checked_url": "https://jw.org/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:00.436105+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "bloomberg.com",
+    "checked_url": "https://bloomberg.com/",
+    "status": "access_blocked",
+    "checked_at": "2026-09-24T09:54:00.642971+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "lefigaro.fr",
+    "checked_url": "https://lefigaro.fr/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:02.071581+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "mundodeportivo.com",
+    "checked_url": "https://mundodeportivo.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:03.175025+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "cnnbrasil.com.br",
+    "checked_url": "https://cnnbrasil.com.br/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:04.520186+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "wsj.com",
+    "checked_url": "https://wsj.com/",
+    "status": "robots_disallowed",
+    "checked_at": "2026-09-24T09:54:04.794880+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "cbsnews.com",
+    "checked_url": "https://cbsnews.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:05.268523+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "kakaku.com",
+    "checked_url": "https://kakaku.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:06.094036+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "bfmtv.com",
+    "checked_url": "https://bfmtv.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:06.998743+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "elespanol.com",
+    "checked_url": "https://elespanol.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:07.330778+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "euronews.com",
+    "checked_url": "https://euronews.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:07.698703+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "franceinfo.fr",
+    "checked_url": "https://franceinfo.fr/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:08.681968+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "lanacion.com.ar",
+    "checked_url": "https://lanacion.com.ar/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:09.876059+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "indianexpress.com",
+    "checked_url": "https://indianexpress.com/",
+    "status": "robots_unavailable",
+    "checked_at": "2026-09-24T09:54:10.138503+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "thehindu.com",
+    "checked_url": "https://thehindu.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:10.260291+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "sky.com",
+    "checked_url": "https://sky.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:10.471203+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "washingtonpost.com",
+    "checked_url": "https://washingtonpost.com/",
+    "status": "temporarily_unavailable",
+    "checked_at": "2026-09-24T09:54:11.197155+00:00",
+    "alternatives": [
+      {
+        "url": "https://feeds.washingtonpost.com/rss/world",
+        "label": "Washington Post world news",
+        "kind": "feed",
+        "relationship": "official",
+        "evidence_url": "https://www.washingtonpost.com/information/2026/05/21/washington-post-rss-feeds/",
+        "verified_at": "2026-09-24T10:02:16.394750+00:00"
+      }
+    ]
+  },
+  {
+    "host": "udn.com",
+    "checked_url": "https://udn.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:12.693630+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "abc.net.au",
+    "checked_url": "https://abc.net.au/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:12.860281+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "nikkei.com",
+    "checked_url": "https://nikkei.com/",
+    "status": "robots_unavailable",
+    "checked_at": "2026-09-24T09:54:13.347303+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "elconfidencial.com",
+    "checked_url": "https://elconfidencial.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:14.660215+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "npr.org",
+    "checked_url": "https://npr.org/",
+    "status": "robots_unavailable",
+    "checked_at": "2026-09-24T09:54:14.851870+00:00",
+    "alternatives": [
+      {
+        "url": "https://feeds.npr.org/1001/rss.xml",
+        "label": "NPR news",
+        "kind": "feed",
+        "relationship": "official",
+        "evidence_url": "https://www.npr.org/rss/",
+        "verified_at": "2026-09-24T10:02:16.393411+00:00"
+      }
+    ]
+  },
+  {
+    "host": "buzzfeed.com",
+    "checked_url": "https://buzzfeed.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:15.450699+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "terra.com.br",
+    "checked_url": "https://terra.com.br/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:17.942398+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "businessinsider.com",
+    "checked_url": "https://businessinsider.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:18.119676+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "news.com.au",
+    "checked_url": "https://news.com.au/",
+    "status": "robots_disallowed",
+    "checked_at": "2026-09-24T09:54:20.382692+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "aajtak.in",
+    "checked_url": "https://aajtak.in/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:20.809153+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "cbc.ca",
+    "checked_url": "https://cbc.ca/",
+    "status": "robots_unavailable",
+    "checked_at": "2026-09-24T09:54:20.984601+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "independent.co.uk",
+    "checked_url": "https://independent.co.uk/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:23.573751+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "abc.es",
+    "checked_url": "https://abc.es/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:28.123413+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "hindustantimes.com",
+    "checked_url": "https://hindustantimes.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:30.639565+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "news18.com",
+    "checked_url": "https://news18.com/",
+    "status": "robots_unavailable",
+    "checked_at": "2026-09-24T09:54:33.021304+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "20minutes.fr",
+    "checked_url": "https://20minutes.fr/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:33.209258+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "variety.com",
+    "checked_url": "https://variety.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:33.699616+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "parade.com",
+    "checked_url": "https://parade.com/",
+    "status": "access_blocked",
+    "checked_at": "2026-09-24T09:54:35.923139+00:00",
+    "alternatives": [
+      {
+        "url": "https://parade.com/feed",
+        "label": "Parade articles",
+        "kind": "feed",
+        "relationship": "official",
+        "evidence_url": "https://parade.com/feed",
+        "verified_at": "2026-09-24T10:02:21.328980+00:00"
+      }
+    ]
+  },
+  {
+    "host": "jagran.com",
+    "checked_url": "https://jagran.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:36.160617+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "nate.com",
+    "checked_url": "https://nate.com/",
+    "status": "javascript_required",
+    "checked_at": "2026-09-24T09:54:36.994035+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "dailymail.co.uk",
+    "checked_url": "https://dailymail.co.uk/",
+    "status": "unreviewed_redirect",
+    "checked_at": "2026-09-24T09:54:38.180431+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "chip.de",
+    "checked_url": "https://chip.de/",
+    "status": "robots_unavailable",
+    "checked_at": "2026-09-24T09:54:38.416294+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "thesun.co.uk",
+    "checked_url": "https://thesun.co.uk/",
+    "status": "robots_disallowed",
+    "checked_at": "2026-09-24T09:54:38.672984+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "abril.com.br",
+    "checked_url": "https://abril.com.br/",
+    "status": "unreviewed_redirect",
+    "checked_at": "2026-09-24T09:54:38.691584+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "telegraph.co.uk",
+    "checked_url": "https://telegraph.co.uk/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:40.101478+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "leparisien.fr",
+    "checked_url": "https://leparisien.fr/",
+    "status": "access_blocked",
+    "checked_at": "2026-09-24T09:54:40.140007+00:00",
+    "alternatives": [
+      {
+        "url": "https://feeds.leparisien.fr/leparisien/rss",
+        "label": "Le Parisien headlines",
+        "kind": "feed",
+        "relationship": "official",
+        "evidence_url": "https://feeds.leparisien.fr/leparisien/rss",
+        "verified_at": "2026-09-24T10:02:21.254669+00:00"
+      }
+    ]
+  },
+  {
+    "host": "marketwatch.com",
+    "checked_url": "https://marketwatch.com/",
+    "status": "robots_disallowed",
+    "checked_at": "2026-09-24T09:54:41.089708+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "huffpost.com",
+    "checked_url": "https://huffpost.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:41.201230+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "liputan6.com",
+    "checked_url": "https://liputan6.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:41.502366+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "ndr.de",
+    "checked_url": "https://ndr.de/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:42.788710+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "the-sun.com",
+    "checked_url": "https://the-sun.com/",
+    "status": "robots_disallowed",
+    "checked_at": "2026-09-24T09:54:43.570479+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "abplive.com",
+    "checked_url": "https://abplive.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:44.117657+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "livehindustan.com",
+    "checked_url": "https://livehindustan.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:44.517620+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "faz.net",
+    "checked_url": "https://faz.net/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:46.024484+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "chosun.com",
+    "checked_url": "https://chosun.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:46.983039+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "estadao.com.br",
+    "checked_url": "https://estadao.com.br/",
+    "status": "robots_unavailable",
+    "checked_at": "2026-09-24T09:54:47.799722+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "youm7.com",
+    "checked_url": "https://youm7.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:48.011223+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "mirror.co.uk",
+    "checked_url": "https://mirror.co.uk/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:48.783872+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "youtube.com",
+    "checked_url": "https://youtube.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:50.550961+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "netflix.com",
+    "checked_url": "https://netflix.com/",
+    "status": "robots_disallowed",
+    "checked_at": "2026-09-24T09:54:50.932550+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "bilibili.com",
+    "checked_url": "https://bilibili.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:51.291526+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "fandom.com",
+    "checked_url": "https://fandom.com/",
+    "status": "robots_unavailable",
+    "checked_at": "2026-09-24T09:54:52.871862+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "imdb.com",
+    "checked_url": "https://imdb.com/",
+    "status": "robots_disallowed",
+    "checked_at": "2026-09-24T09:54:53.080854+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "billboard.com",
+    "checked_url": "https://www.billboard.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:53.255282+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "tmz.com",
+    "checked_url": "https://www.tmz.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:53.824075+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "wired.com",
+    "checked_url": "https://www.wired.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:55.020144+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "gamingbible.com",
+    "checked_url": "https://www.gamingbible.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:55.574598+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "rollingstone.com",
+    "checked_url": "https://www.rollingstone.com/music/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:56.049545+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "bookriot.com",
+    "checked_url": "https://bookriot.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:57.364935+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "seriouseats.com",
+    "checked_url": "http://www.seriouseats.com/",
+    "status": "access_blocked",
+    "checked_at": "2026-09-24T09:54:57.764916+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "pagesix.com",
+    "checked_url": "https://pagesix.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:58.322621+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "techcrunch.com",
+    "checked_url": "https://techcrunch.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:54:59.457626+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "gfinityesports.com",
+    "checked_url": "https://www.gfinityesports.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:00.434457+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "allhiphop.com",
+    "checked_url": "https://allhiphop.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:01.575905+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "lrb.co.uk",
+    "checked_url": "https://www.lrb.co.uk/blog/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:02.673954+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "thekitchn.com",
+    "checked_url": "https://www.thekitchn.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:04.007696+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "radaronline.com",
+    "checked_url": "https://radaronline.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:04.497235+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "mashable.com",
+    "checked_url": "https://mashable.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:05.913621+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "gamespot.com",
+    "checked_url": "https://www.gamespot.com/",
+    "status": "robots_unavailable",
+    "checked_at": "2026-09-24T09:55:06.210850+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "blog.reedsy.com",
+    "checked_url": "https://blog.reedsy.com/",
+    "status": "unreviewed_redirect",
+    "checked_at": "2026-09-24T09:55:06.405687+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "food52.com",
+    "checked_url": "https://food52.com/",
+    "status": "robots_unavailable",
+    "checked_at": "2026-09-24T09:55:06.757059+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "theverge.com",
+    "checked_url": "https://www.theverge.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:06.918463+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "pushsquare.com",
+    "checked_url": "https://www.pushsquare.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:08.088809+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "pitchfork.com",
+    "checked_url": "https://pitchfork.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:08.817195+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "smartbitchestrashybooks.com",
+    "checked_url": "https://smartbitchestrashybooks.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:09.129286+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "simplyrecipes.com",
+    "checked_url": "http://www.simplyrecipes.com/",
+    "status": "access_blocked",
+    "checked_at": "2026-09-24T09:55:10.752757+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "entrepreneur.com",
+    "checked_url": "https://www.entrepreneur.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:11.115394+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "digitalspy.com",
+    "checked_url": "https://www.digitalspy.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:11.404068+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "cnet.com",
+    "checked_url": "https://www.cnet.com/news/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:13.249445+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "videogameschronicle.com",
+    "checked_url": "https://www.videogameschronicle.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:13.589011+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "hotnewhiphop.com",
+    "checked_url": "https://www.hotnewhiphop.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:13.707031+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "bookbub.com",
+    "checked_url": "https://www.bookbub.com/blog",
+    "status": "robots_unavailable",
+    "checked_at": "2026-09-24T09:55:15.447695+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "thepioneerwoman.com",
+    "checked_url": "http://thepioneerwoman.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:15.687485+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "seekingalpha.com",
+    "checked_url": "https://seekingalpha.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:15.811151+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "toofab.com",
+    "checked_url": "https://toofab.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:17.048704+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "vox.com",
+    "checked_url": "https://www.vox.com/technology",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:18.022003+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "vg247.com",
+    "checked_url": "https://www.vg247.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:18.314246+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "faroutmagazine.co.uk",
+    "checked_url": "http://faroutmagazine.co.uk/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:18.928226+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "epicreads.com",
+    "checked_url": "https://www.epicreads.com/blog/",
+    "status": "robots_unavailable",
+    "checked_at": "2026-09-24T09:55:19.434047+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "sallysbakingaddiction.com",
+    "checked_url": "https://sallysbakingaddiction.com/recent-posts/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:20.076803+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "sports.yahoo.com",
+    "checked_url": "https://sports.yahoo.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:20.293775+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "papermag.com",
+    "checked_url": "https://www.papermag.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:20.649413+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "zdnet.com",
+    "checked_url": "http://www.zdnet.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:22.357807+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "racinggames.gg",
+    "checked_url": "https://racinggames.gg/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:22.909675+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "loudersound.com",
+    "checked_url": "https://www.loudersound.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:22.992384+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "booktrust.org.uk",
+    "checked_url": "https://www.booktrust.org.uk/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:25.102744+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "smittenkitchen.com",
+    "checked_url": "https://smittenkitchen.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:25.287158+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "etonline.com",
+    "checked_url": "https://www.etonline.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:25.312126+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "gizmodo.com",
+    "checked_url": "https://gizmodo.com/",
+    "status": "robots_unavailable",
+    "checked_at": "2026-09-24T09:55:27.463290+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "gaminggorilla.com",
+    "checked_url": "https://gaminggorilla.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:27.537823+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "nme.com",
+    "checked_url": "https://www.nme.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:27.701216+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "bookishelf.com",
+    "checked_url": "https://www.bookishelf.com/",
+    "status": "deferred_crawl_delay",
+    "checked_at": "2026-09-24T09:55:28.491761+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "minimalistbaker.com",
+    "checked_url": "https://minimalistbaker.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:28.548210+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "elle.com",
+    "checked_url": "https://www.elle.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:28.848695+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "theblast.com",
+    "checked_url": "https://theblast.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:29.800111+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "arstechnica.com",
+    "checked_url": "https://arstechnica.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:30.082499+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "kotaku.com",
+    "checked_url": "https://kotaku.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:30.783726+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "ultimateclassicrock.com",
+    "checked_url": "https://ultimateclassicrock.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:31.046794+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "bookavatar.com",
+    "checked_url": "https://www.bookavatar.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:32.053891+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "budgetbytes.com",
+    "checked_url": "https://www.budgetbytes.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:32.378382+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "eonline.com",
+    "checked_url": "https://www.eonline.com/news",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:33.075033+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "engadget.com",
+    "checked_url": "https://www.engadget.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:33.663120+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "eurogamer.net",
+    "checked_url": "https://www.eurogamer.net/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:34.383875+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "hiphopdx.com",
+    "checked_url": "https://hiphopdx.com/",
+    "status": "unreviewed_redirect",
+    "checked_at": "2026-09-24T09:55:34.681287+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "simonandschuster.com",
+    "checked_url": "https://www.simonandschuster.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:35.376416+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "skinnytaste.com",
+    "checked_url": "https://www.skinnytaste.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:35.965595+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "perezhilton.com",
+    "checked_url": "https://perezhilton.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:36.627259+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "venturebeat.com",
+    "checked_url": "https://venturebeat.com/",
+    "status": "temporarily_unavailable",
+    "checked_at": "2026-09-24T09:55:37.172365+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "gamesradar.com",
+    "checked_url": "https://www.gamesradar.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:37.559428+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "loudwire.com",
+    "checked_url": "https://loudwire.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:38.158714+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "theuncorkedlibrarian.com",
+    "checked_url": "https://www.theuncorkedlibrarian.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:39.314429+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "cookieandkate.com",
+    "checked_url": "https://cookieandkate.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:39.783373+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "hbr.org",
+    "checked_url": "https://hbr.org/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:40.406517+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "extratv.com",
+    "checked_url": "https://extratv.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:40.864614+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "computerworld.com",
+    "checked_url": "https://www.computerworld.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:41.988822+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "fortnitetracker.com",
+    "checked_url": "https://fortnitetracker.com/",
+    "status": "access_blocked",
+    "checked_at": "2026-09-24T09:55:42.014634+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "thefader.com",
+    "checked_url": "http://www.thefader.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:42.823267+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "noseinabook.co.uk",
+    "checked_url": "https://noseinabook.co.uk/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:43.131830+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "loveandlemons.com",
+    "checked_url": "https://www.loveandlemons.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:44.183260+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "hollywoodlife.com",
+    "checked_url": "https://hollywoodlife.com/",
+    "status": "access_blocked",
+    "checked_at": "2026-09-24T09:55:44.910265+00:00",
+    "alternatives": [
+      {
+        "url": "https://hollywoodlife.com/feed/",
+        "label": "Hollywood Life articles",
+        "kind": "feed",
+        "relationship": "official",
+        "evidence_url": "https://hollywoodlife.com/feed/",
+        "verified_at": "2026-09-24T10:02:23.792836+00:00"
+      }
+    ]
+  },
+  {
+    "host": "digitaltrends.com",
+    "checked_url": "https://www.digitaltrends.com/",
+    "status": "access_blocked",
+    "checked_at": "2026-09-24T09:55:45.833631+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "valorfeed.gg",
+    "checked_url": "https://valorfeed.gg/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:46.450562+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "stereogum.com",
+    "checked_url": "https://www.stereogum.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:47.126207+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "forreadingaddicts.co.uk",
+    "checked_url": "https://forreadingaddicts.co.uk/kaths-blog/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:48.000355+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "pinchofyum.com",
+    "checked_url": "https://pinchofyum.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:49.067581+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "soapdirt.com",
+    "checked_url": "https://soapdirt.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:49.786794+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "techrepublic.com",
+    "checked_url": "https://www.techrepublic.com/",
+    "status": "access_blocked",
+    "checked_at": "2026-09-24T09:55:50.921473+00:00",
+    "alternatives": [
+      {
+        "url": "https://www.techrepublic.com/rssfeeds/articles/",
+        "label": "TechRepublic articles",
+        "kind": "feed",
+        "relationship": "official",
+        "evidence_url": "https://www.techrepublic.com/rssfeeds/",
+        "verified_at": "2026-09-24T10:02:19.048188+00:00"
+      }
+    ]
+  },
+  {
+    "host": "nintendolife.com",
+    "checked_url": "https://www.nintendolife.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:51.360439+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "thelineofbestfit.com",
+    "checked_url": "https://www.thelineofbestfit.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:52.158491+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "shereadsromancebooks.com",
+    "checked_url": "https://www.shereadsromancebooks.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:52.978665+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "gimmesomeoven.com",
+    "checked_url": "https://www.gimmesomeoven.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:53.060639+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "celebuzz.com",
+    "checked_url": "https://www.celebuzz.com/",
+    "status": "deferred_crawl_delay",
+    "checked_at": "2026-09-24T09:55:55.178052+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "thenextweb.com",
+    "checked_url": "https://thenextweb.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:55.276704+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "rockpapershotgun.com",
+    "checked_url": "https://www.rockpapershotgun.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:55.345984+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "albumoftheyear.org",
+    "checked_url": "https://www.albumoftheyear.org/l/newsworthy/",
+    "status": "access_blocked",
+    "checked_at": "2026-09-24T09:55:55.408380+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "literaryladiesguide.com",
+    "checked_url": "https://www.literaryladiesguide.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:56.873274+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "davidlebovitz.com",
+    "checked_url": "https://www.davidlebovitz.com/",
+    "status": "deferred_crawl_delay",
+    "checked_at": "2026-09-24T09:55:57.558517+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "fastcompany.com",
+    "checked_url": "https://www.fastcompany.com/",
+    "status": "access_blocked",
+    "checked_at": "2026-09-24T09:55:57.656827+00:00",
+    "alternatives": [
+      {
+        "url": "https://www.fastcompany.com/latest/rss",
+        "label": "Fast Company articles",
+        "kind": "feed",
+        "relationship": "official",
+        "evidence_url": "https://www.fastcompany.com/latest/rss",
+        "verified_at": "2026-09-24T10:02:19.063519+00:00"
+      }
+    ]
+  },
+  {
+    "host": "intouchweekly.com",
+    "checked_url": "https://www.intouchweekly.com/",
+    "status": "robots_disallowed",
+    "checked_at": "2026-09-24T09:55:57.705587+00:00",
+    "alternatives": []
+  },
+  {
+    "host": "macrumors.com",
+    "checked_url": "https://www.macrumors.com/",
+    "status": "accessible",
+    "checked_at": "2026-09-24T09:55:57.780105+00:00",
+    "alternatives": []
+  }
+]
