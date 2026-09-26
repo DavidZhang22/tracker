@@ -8,13 +8,39 @@ import MediaType from "./MediaType";
 import SourceMethod from "./SourceMethod";
 import "../styles/item-settings.css";
 
+const MAX_SOURCES = 5;
+
+function sources(item) {
+  if (Array.isArray(item.source_urls)) return item.source_urls;
+  return !["csv", "document", "manual"].includes(item.source_type) && item.url
+    ? [item.url]
+    : [];
+}
+
+function safeSource(value) {
+  try {
+    const url = new URL(value.trim());
+    if (
+      !["http:", "https:"].includes(url.protocol) ||
+      url.username ||
+      url.password
+    )
+      return null;
+    url.hash = "";
+    return url.href;
+  } catch {
+    return null;
+  }
+}
+
 function values(item) {
   return {
     title: item.title.trim(),
     kind_override: item.kind_override || "",
     description_override: item.description_override ?? null,
     auto_read: item.auto_read,
-    ...(!["csv", "document"].includes(item.source_type)
+    source_urls: sources(item).map((url) => url.trim()),
+    ...(sources(item).length
       ? {
           source_method: item.source_method || "auto",
           keywords: item.keywords || "",
@@ -34,7 +60,10 @@ export default function ItemSettingsDialog({
   onSaved,
   focusDescription = false,
 }) {
-  const [draft, setDraft] = useState(item);
+  const [draft, setDraft] = useState(() => ({
+    ...item,
+    source_urls: sources(item),
+  }));
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const titleRef = useRef(null),
@@ -48,10 +77,21 @@ export default function ItemSettingsDialog({
   }, []);
   const change = (name, value) =>
     setDraft((old) => ({ ...old, [name]: value }));
+  const sourceUrls = draft.source_urls;
+  const normalizedUrls = sourceUrls.map(safeSource);
+  const sourceErrors = sourceUrls.map((url, index) => {
+    if (!url.trim()) return "Enter a source URL or remove this field.";
+    if (!normalizedUrls[index])
+      return "Use a full HTTP or HTTPS URL without credentials.";
+    if (normalizedUrls.indexOf(normalizedUrls[index]) !== index)
+      return "This source is already listed.";
+    return "";
+  });
+  const invalidSources = sourceErrors.some(Boolean);
   const original = values(item);
   const changes = Object.fromEntries(
     Object.entries(values(draft)).filter(
-      ([key, value]) => original[key] !== value,
+      ([key, value]) => JSON.stringify(original[key]) !== JSON.stringify(value),
     ),
   );
   const close = () => {
@@ -63,6 +103,7 @@ export default function ItemSettingsDialog({
       busy ||
       item.deleted ||
       !draft.title.trim() ||
+      invalidSources ||
       !Object.keys(changes).length
     )
       return;
@@ -167,12 +208,119 @@ export default function ItemSettingsDialog({
                 />
                 Mark as read when opened for this item
               </label>
-              {!["csv", "document"].includes(draft.source_type) && (
+              <section
+                className="item-settings-sources"
+                aria-labelledby="item-sources-title"
+              >
+                <div className="item-settings-sources-heading">
+                  <h3 id="item-sources-title">Sources</h3>
+                  <span className="hint">
+                    {sourceUrls.length}/{MAX_SOURCES}
+                  </span>
+                </div>
+                <p className="hint" id="item-sources-hint">
+                  Changes apply on the next refresh. Removing a source keeps its
+                  saved entries.
+                </p>
+                {sourceUrls.length === 0 && (
+                  <p className="hint">
+                    Add a web source to enable refreshing this item.
+                  </p>
+                )}
+                {sourceUrls.map((url, index) => (
+                  <div className="item-settings-source" key={index}>
+                    <div className="item-settings-source-heading">
+                      <label htmlFor={`item-source-${index}`}>
+                        {index === 0
+                          ? "Primary source"
+                          : `Additional source ${index}`}
+                      </label>
+                      <div className="item-settings-source-actions">
+                        {normalizedUrls[index] && (
+                          <a
+                            href={normalizedUrls[index]}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`Open source ${index + 1}`}
+                          >
+                            Open
+                          </a>
+                        )}
+                        <button
+                          type="button"
+                          className="text-button"
+                          aria-label={`Remove source ${index + 1}`}
+                          onClick={() =>
+                            change(
+                              "source_urls",
+                              sourceUrls.filter((_, i) => i !== index),
+                            )
+                          }
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                    <label className="field">
+                      <input
+                        id={`item-source-${index}`}
+                        type="url"
+                        inputMode="url"
+                        aria-label={`Source URL ${index + 1}`}
+                        aria-describedby={
+                          sourceErrors[index] && url
+                            ? `item-source-error-${index}`
+                            : "item-sources-hint"
+                        }
+                        aria-invalid={Boolean(sourceErrors[index] && url)}
+                        value={url}
+                        maxLength={2000}
+                        required
+                        placeholder="https://example.com/releases"
+                        autoCapitalize="none"
+                        spellCheck={false}
+                        onChange={(event) =>
+                          change(
+                            "source_urls",
+                            sourceUrls.map((value, i) =>
+                              i === index ? event.target.value : value,
+                            ),
+                          )
+                        }
+                      />
+                      {sourceErrors[index] && url && (
+                        <span
+                          className="hint item-settings-source-error"
+                          id={`item-source-error-${index}`}
+                        >
+                          {sourceErrors[index]}
+                        </span>
+                      )}
+                    </label>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  className="button"
+                  disabled={sourceUrls.length >= MAX_SOURCES}
+                  onClick={() => change("source_urls", [...sourceUrls, ""])}
+                >
+                  Add source
+                </button>
+              </section>
+              {sourceUrls.length > 0 && (
                 <>
                   <SourceMethod
                     value={draft.source_method || "auto"}
                     onChange={(value) => change("source_method", value)}
                   />
+                  {sourceUrls.length > 1 && (
+                    <p className="hint item-settings-source-scope">
+                      The source method and advanced filters apply to the
+                      primary source. Additional sources use automatic
+                      detection.
+                    </p>
+                  )}
                   <label className="field">
                     Keywords
                     <input
@@ -183,7 +331,7 @@ export default function ItemSettingsDialog({
                     />
                     <span className="hint">
                       Match every comma-separated keyword in a title or nearby
-                      details. Saved links are kept.
+                      details across all sources. Saved entries are kept.
                     </span>
                   </label>
                   <details>
@@ -234,6 +382,7 @@ export default function ItemSettingsDialog({
                 busy ||
                 item.deleted ||
                 !draft.title.trim() ||
+                invalidSources ||
                 !Object.keys(changes).length
               }
             >

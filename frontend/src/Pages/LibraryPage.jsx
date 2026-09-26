@@ -275,7 +275,13 @@ export default function LibraryPage() {
               disabled={
                 busy ||
                 !active.some(
-                  (i) => !["csv", "document"].includes(i.source_type),
+                  (i) =>
+                    (
+                      i.source_urls ??
+                      (["csv", "document"].includes(i.source_type)
+                        ? []
+                        : [i.url])
+                    ).length > 0,
                 )
               }
             />
@@ -423,7 +429,9 @@ export default function LibraryPage() {
                       <span>
                         {["csv", "document"].includes(i.source_type)
                           ? i.source_name || "File import"
-                          : new URL(i.url).hostname.replace(/^www\./, "")}
+                          : new URL(
+                              i.source_urls?.[0] || i.url,
+                            ).hostname.replace(/^www\./, "")}
                       </span>
                       <span className="kind-label">{mediaLabel(i.kind)}</span>
                       {i.new_count > 0 && (

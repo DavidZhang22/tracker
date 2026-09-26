@@ -16,6 +16,12 @@ Track blogs, chapters, videos, game updates, job listings and other public sourc
 - Password-protected accounts, optional verified recovery emails, data export, session revocation and account deletion.
 - File and pasted-text imports with optional links, row details, date detection and a preview before saving.
 
+## Manual entries and source links
+
+Choose **Add item → Manual** to create a tracker from authored entries. A title is required; details, a link, date and number are optional. Review the preview before saving. **Add entry** on an existing item supports the same form and an **Import file or text** shortcut. Additions keep existing entries, progress and item settings. A manual preview supports up to 100 entries; the existing per-item and library storage limits still apply.
+
+**Item settings → Source links** shows the current sources and supports up to five public HTTP(S) URLs, including sources added to imported or manual trackers. Saving settings makes no network requests. Refresh scans those sources using the shared cache, request pacing and concurrency limit, combines matching links, and preserves saved progress. Source method, selector and URL-path options apply to the primary source; additional sources automatically detect supported APIs. Keywords apply to all sources. Removing a source keeps its saved entries; removing every source disables refresh. A failed source does not discard successful results from the others. Each source counts toward scan quotas, and a bulk refresh is limited to 500 sources.
+
 ## Import files or text
 
 Choose **Add item → File or text**, then upload a file or paste text. Supported formats are CSV, TSV, Excel (.xlsx), PowerPoint (.pptx), Word (.docx), PDF, HTML, Markdown and plain text. Preview the entries, name the item, and choose reading progress before saving. Each import creates entries within one item. Links are optional: study lists, tasks and ordinary tables work too.
@@ -26,7 +32,7 @@ All entries are kept by default. Rows, bullets, numbered lists, headings and bol
 
 CSV and pasted spreadsheet rows offer column detection and manual correction. UTF-8, UTF-16 with a BOM, Windows-1252, comma, semicolon, tab and pipe exports are supported. Ambiguous numeric dates require an explicit day/month choice. The link column can be None, and blank link cells are allowed. Other cells stay searchable under each entry's Details. Excel supports embedded hyperlinks, plain URLs, cached cell values and literal HYPERLINK formulas; it does not calculate formulas.
 
-**Update import** merges a revised file or pasted text after preview. Matching entries retain read, favorite, muted, Trash and grouping state; missing entries remain saved. Unlinked entries match by title and number, allowing notes to change or a real URL to be added. Repeated titles use their details to distinguish records, so editing ambiguous records can create a new entry; review the preview. Both Refresh and Full Refresh skip imported items and muted sources, including muted favorites.
+**Update import** merges a revised file or pasted text after preview. Matching entries retain read, favorite, muted, Trash and grouping state; missing entries remain saved. Unlinked entries match by title and number, allowing notes to change or a real URL to be added. Repeated titles use their details to distinguish records, so editing ambiguous records can create a new entry; review the preview. Both Refresh and Full Refresh skip items without source links and muted items, including muted favorites.
 
 Uploads are processed on the Trackify server; the original file is not saved. Parsing does not visit imported URLs, execute scripts or macros, or load external document parts. CSV retains its bounded fast parser. Other formats use one isolated parser process at a time with a 20-second wall timeout; Linux adds a 384 MiB address-space cap and 12-second CPU cap. Office archive expansion is limited to 24 MB, and XML entity expansion is disabled. Existing authentication, origin checks, request limits, account isolation and safe URL validation also apply. No additional database or hosted parsing service needs setup.
 

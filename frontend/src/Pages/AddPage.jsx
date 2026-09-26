@@ -16,6 +16,7 @@ import SourceStatus from "../Components/SourceStatus";
 import SourceMethod from "../Components/SourceMethod";
 import useSourceMethod from "../Hooks/useSourceMethod";
 import ImportInput, { ImportDetails } from "../Components/ImportInput";
+import ManualEntryInput from "../Components/ManualEntryInput";
 import MediaType from "../Components/MediaType";
 import Description from "../Components/Description";
 
@@ -24,8 +25,10 @@ export default function AddPage() {
   const [params] = useSearchParams(),
     navigate = useNavigate();
   const importId = params.get("import");
+  const appendId = params.get("append");
+  const targetId = appendId || importId;
   const sourceUrl = params.get("url") || "";
-  const [mode, setMode] = useState(importId ? "import" : "web");
+  const [mode, setMode] = useState(targetId ? "import" : "web");
   const [target, setTarget] = useState(null);
   const [url, setUrl] = useState(params.get("url") || ""),
     [selector, setSelector] = useState(""),
@@ -77,16 +80,23 @@ export default function AddPage() {
   useEffect(() => {
     setUrl(sourceUrl);
     setResult(null);
-    if (importId) setMode("import");
+    if (targetId) setMode("import");
     else if (sourceUrl) setMode("web");
     setTarget(null);
-    if (!importId) return;
+    if (!targetId) return;
     let active = true;
-    api(`/items/${importId}`)
+    api(`/items/${targetId}`)
       .then((item) => {
         if (!active) return;
-        if (!["csv", "document"].includes(item.source_type) || item.deleted)
-          throw new Error("Choose an imported item outside Trash to update.");
+        if (
+          item.deleted ||
+          (!appendId && !["csv", "document"].includes(item.source_type))
+        )
+          throw new Error(
+            appendId
+              ? "Choose an item outside Trash to add entries."
+              : "Choose an imported item outside Trash to update.",
+          );
         setTarget(item);
         setTitle(item.title);
         setKeywords(item.keywords || "");
@@ -97,7 +107,7 @@ export default function AddPage() {
     return () => {
       active = false;
     };
-  }, [sourceUrl, importId]);
+  }, [sourceUrl, importId, appendId, targetId]);
   const scan = async (e) => {
     e.preventDefault();
     setBusy(true);
@@ -129,31 +139,39 @@ export default function AddPage() {
   const save = async () => {
     if (
       !result ||
-      (mode === "import" && !result.entries.length) ||
+      (mode !== "web" && !result.entries.length) ||
       saving ||
       remaining > 0 ||
-      (importId && !target)
+      (targetId && !target)
     )
       return;
     setSaving(true);
     setError("");
     try {
       const item = await post(
-        importId ? `/items/${importId}/import` : "/items",
-        {
-          scan_id: result.scan_id,
-          title: title.trim() || result.title,
-          ...(!importId && kindOverride ? { kind_override: kindOverride } : {}),
-          ...(!importId
-            ? {
-                mark_read: readMode === "all",
-                read_indices:
-                  readMode === "choose"
-                    ? [...selectedRead].sort((a, b) => a - b)
-                    : [],
-              }
-            : {}),
-        },
+        appendId
+          ? `/items/${appendId}/entries`
+          : importId
+            ? `/items/${importId}/import`
+            : "/items",
+        appendId
+          ? { scan_id: result.scan_id }
+          : {
+              scan_id: result.scan_id,
+              title: title.trim() || result.title,
+              ...(!importId && kindOverride
+                ? { kind_override: kindOverride }
+                : {}),
+              ...(!importId
+                ? {
+                    mark_read: readMode === "all",
+                    read_indices:
+                      readMode === "choose"
+                        ? [...selectedRead].sort((a, b) => a - b)
+                        : [],
+                  }
+                : {}),
+            },
       );
       navigate(`/items/${item.id}`);
     } catch (e) {
@@ -174,13 +192,21 @@ export default function AddPage() {
         Library
       </Link>
       <div className="page-heading">
-        <h1>{importId ? "Update imported item" : "Add item"}</h1>
+        <h1>
+          {appendId
+            ? "Add entries to item"
+            : importId
+              ? "Update imported item"
+              : "Add item"}
+        </h1>
+        {appendId && target && <p>{target.title}</p>}
       </div>
-      {!importId && (
+      {!targetId && (
         <div className="source-tabs" role="group" aria-label="Item source">
           {[
             ["web", "Website"],
             ["import", "File or text"],
+            ["manual", "Manual"],
           ].map(([value, label]) => (
             <button
               key={value}
@@ -211,11 +237,27 @@ export default function AddPage() {
       )}
       <div className="add-layout">
         <div>
-          {mode === "import" ? (
+          {mode === "manual" ? (
+            <ManualEntryInput
+              disabled={saving}
+              onBusy={setBusy}
+              onError={setError}
+              onInvalidate={() => setResult(null)}
+              onPreview={(r) => {
+                setResult(r);
+                setKindOverride("");
+                setPage(0);
+                setReadMode("unread");
+                setSelectedRead(new Set());
+                setTitle(r.title);
+              }}
+            />
+          ) : mode === "import" ? (
             <ImportInput
-              key={importId || "new"}
-              disabled={saving || Boolean(importId && !target)}
-              itemId={importId}
+              key={targetId || "new"}
+              disabled={saving || Boolean(targetId && !target)}
+              itemId={targetId}
+              append={Boolean(appendId)}
               keywords={keywords}
               onKeywords={setKeywords}
               onBusy={setBusy}
@@ -352,7 +394,7 @@ export default function AddPage() {
                     busy ||
                     saving ||
                     remaining > 0 ||
-                    (mode === "import" && !result.entries.length)
+                    (mode !== "web" && !result.entries.length)
                   }
                   title={
                     remaining > 0
@@ -364,9 +406,11 @@ export default function AddPage() {
                     ? "Saving…"
                     : remaining > 0
                       ? `Add in ${remaining}s`
-                      : importId
-                        ? "Update item"
-                        : "Add to library"}
+                      : appendId
+                        ? "Add to item"
+                        : importId
+                          ? "Update item"
+                          : "Add to library"}
                   <Icon as={ArrowRightIcon} />
                 </button>
               </div>
@@ -376,7 +420,7 @@ export default function AddPage() {
                   <div>
                     <h2>
                       {result.entries.length}{" "}
-                      {mode === "import" || result.entries.some((e) => !e.url)
+                      {mode !== "web" || result.entries.some((e) => !e.url)
                         ? result.entries.length === 1
                           ? "entry"
                           : "entries"
@@ -387,11 +431,13 @@ export default function AddPage() {
                     </h2>
                     <div className="scan-meta">
                       <span>
-                        {result.csv
-                          ? `${result.csv.rows} CSV rows`
-                          : result.document
-                            ? `${result.document.format} - ${result.document.candidates} candidate entries`
-                            : `${result.pages_scanned} pages scanned`}
+                        {mode === "manual"
+                          ? "Manual entries"
+                          : result.csv
+                            ? `${result.csv.rows} CSV rows`
+                            : result.document
+                              ? `${result.document.format} - ${result.document.candidates} candidate entries`
+                              : `${result.pages_scanned} pages scanned`}
                       </span>
                       <span>
                         {result.entries.filter((e) => e.published_at).length}{" "}
@@ -422,15 +468,17 @@ export default function AddPage() {
                   </ul>
                 </Notice>
               )}
-              <label className="field">
-                Item name
-                <input
-                  value={title}
-                  maxLength={300}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </label>
-              {!importId && (
+              {!appendId && (
+                <label className="field">
+                  Item name
+                  <input
+                    value={title}
+                    maxLength={300}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </label>
+              )}
+              {!targetId && (
                 <MediaType
                   value={kindOverride}
                   detected={result.detected_kind || result.kind}
@@ -439,8 +487,8 @@ export default function AddPage() {
                 />
               )}
               <div>
-                {!importId && <Description item={result} preview />}
-                {!importId && (
+                {!targetId && <Description item={result} preview />}
+                {!targetId && (
                   <div className="preview-reading">
                     <label className="field">
                       Reading progress
@@ -529,7 +577,7 @@ export default function AddPage() {
                       )}
                       <div className="entry-preview-content">
                         <EntryLink entry={e} className="preview-title" />
-                        {!e.url && mode !== "import" && <span>No link</span>}
+                        {!e.url && mode === "web" && <span>No link</span>}
                         {e.summary_suppressed ? (
                           <span className="preview-context">
                             Automatic summary hidden.
@@ -539,7 +587,7 @@ export default function AddPage() {
                             <span className="preview-context">{e.summary}</span>
                           )
                         )}
-                        {mode === "import" && (
+                        {mode !== "web" && (
                           <ImportDetails
                             context={e.context}
                             title={e.title}
@@ -576,7 +624,19 @@ export default function AddPage() {
           )}
         </div>
         <aside className="help-panel">
-          {mode === "import" ? (
+          {mode === "manual" ? (
+            <>
+              <h2>Add entries</h2>
+              <p>
+                Create a list with titles and optional details, links, dates, or
+                numbers. Review it before adding it to your library.
+              </p>
+              <p>
+                Add up to 100 entries at a time. You can add more from the item
+                page.
+              </p>
+            </>
+          ) : mode === "import" ? (
             <>
               <h2>Import entries</h2>
               <p>

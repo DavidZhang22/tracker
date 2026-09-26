@@ -11,7 +11,8 @@ from time import time
 
 from . import link_groups
 from .content_safety import public_metadata
-from .entry_identity import entry_key
+from .csv_import import safe_link
+from .entry_identity import entry_key, record_id
 from .limits import (
     ITEM_ADD_INTERVAL_SECONDS,
     MAX_ITEMS,
@@ -28,6 +29,34 @@ from .preferences import Preferences
 from .semantic_profile import fingerprint
 from .suggestions import save_observations
 from .urls import DiscoveryError, canonical_url, content_key
+
+MAX_ITEM_SOURCES = 5
+
+
+def source_urls(values):
+    if not isinstance(values, list) or len(values) > MAX_ITEM_SOURCES:
+        raise ValueError(f"Choose up to {MAX_ITEM_SOURCES} source links.")
+    normalized = []
+    seen = set()
+    for value in values:
+        url = safe_link(value) if isinstance(value, str) else None
+        if not url:
+            raise ValueError("Source links must be public http or https URLs.")
+        key = content_key(url)
+        if key in seen:
+            raise ValueError("Each source link must be different.")
+        seen.add(key)
+        normalized.append(url)
+    return normalized
+
+
+def effective_sources(row):
+    configured = row.get("source_urls")
+    if configured is not None:
+        return json.loads(configured) if isinstance(configured, str) else configured
+    return (
+        [] if row.get("source_type") in {"csv", "document", "manual"} else [row["url"]]
+    )
 
 
 def identity(url):
@@ -111,6 +140,7 @@ class Store:
                     "source_method": "TEXT NOT NULL DEFAULT 'auto'",
                     "source_type": "TEXT NOT NULL DEFAULT 'web'",
                     "source_name": "TEXT NOT NULL DEFAULT ''",
+                    "source_urls": "TEXT",
                     "detected_kind": "TEXT NOT NULL DEFAULT ''",
                     "kind_override": "TEXT NOT NULL DEFAULT ''",
                     "search_tags": "TEXT NOT NULL DEFAULT '[]'",
@@ -152,7 +182,7 @@ class Store:
                 "SELECT id FROM items WHERE media_version<?", (MEDIA_VERSION,)
             ).fetchall():
                 self._refresh_media(db, item["id"])
-            db.execute("PRAGMA user_version=13")
+            db.execute("PRAGMA user_version=14")
         marker.touch(exist_ok=True)
 
     @staticmethod
@@ -290,6 +320,8 @@ class Store:
         r = dict(row)
         r.pop("semantic_vector", None)
         r.pop("semantic_key", None)
+        if "source_type" in r:
+            r["source_urls"] = effective_sources(r)
         if "description_auto" in r:
             r["description"] = (
                 r["description_override"]
@@ -429,12 +461,15 @@ class Store:
 
     def refresh_sources(self):
         with self.connection() as db:
-            return [
-                dict(row)
-                for row in db.execute(
-                    "SELECT id,url FROM items WHERE ignored=0 AND deleted=0 AND source_type NOT IN ('csv','document') ORDER BY created_at DESC"
-                )
-            ]
+            rows = db.execute(
+                "SELECT id,url,source_type,source_urls FROM items WHERE ignored=0 AND deleted=0 ORDER BY created_at DESC"
+            ).fetchall()
+        result = []
+        for row in rows:
+            urls = effective_sources(dict(row))
+            if urls:
+                result.append({"id": row["id"], "url": urls[0], "source_urls": urls})
+        return result
 
     def save_scan(self, payload):
         payload = annotate(bounded_scan(payload))
@@ -611,6 +646,8 @@ class Store:
             if (
                 scan.get("source_type") not in {"csv", "document"}
                 or scan.get("import_item_id") != iid
+                or scan.get("manual_import")
+                or scan.get("append_entries")
                 or not scan["entries"]
             ):
                 raise ValueError(
@@ -624,10 +661,79 @@ class Store:
             db.execute("DELETE FROM scans WHERE id=?", (scan_id,))
         return self.item(iid)
 
+    def append_entries(self, iid, scan_id):
+        with self.connection() as db:
+            db.execute("BEGIN IMMEDIATE")
+            item = db.execute("SELECT deleted FROM items WHERE id=?", (iid,)).fetchone()
+            if item is None:
+                raise KeyError("Item not found.")
+            if item["deleted"]:
+                raise ValueError("Restore this item from Trash before adding entries.")
+            row = db.execute(
+                "SELECT payload FROM scans WHERE id=? AND created_at > strftime('%Y-%m-%dT%H:%M:%S','now','-1 hour')",
+                (scan_id,),
+            ).fetchone()
+            if row is None:
+                raise ValueError("This preview expired. Preview your entries again.")
+            scan = json.loads(row["payload"])
+            if (
+                scan.get("import_item_id") != iid
+                or not (
+                    scan.get("manual_import") is True
+                    or scan.get("append_entries") is True
+                )
+                or scan.get("source_type") not in {"csv", "document"}
+                or not scan.get("entries")
+            ):
+                raise ValueError("Preview entries for this item before adding them.")
+            known = {
+                self._append_identity(dict(row)): row["source_id"] or row["identity"]
+                for row in db.execute(
+                    "SELECT * FROM links WHERE item_id=? AND url=''", (iid,)
+                )
+            }
+            entries = []
+            for entry in scan["entries"]:
+                key = self._append_identity(entry) if not entry["url"] else ""
+                entries.append(entry | {"source_id": known.get(key, key)})
+            added = self._merge(db, iid, scan | {"entries": entries}, append=True)
+            db.execute("DELETE FROM scans WHERE id=?", (scan_id,))
+        return added
+
+    @staticmethod
+    def _append_identity(entry):
+        fields = {
+            key: entry.get(key) or ""
+            for key in (
+                "title",
+                "context",
+                "summary",
+                "availability",
+                "language",
+                "published_at",
+            )
+        }
+        fields["number"] = (
+            float(entry["number"]) if entry.get("number") is not None else None
+        )
+        return record_id("append-entry", json.dumps(fields, sort_keys=True))
+
     def _merge(
-        self, db, iid, scan, initial=False, mark_read=False, read_identities=None
+        self,
+        db,
+        iid,
+        scan,
+        initial=False,
+        mark_read=False,
+        read_identities=None,
+        *,
+        append=False,
     ):
         read_identities = read_identities or set()
+        if append and len(scan["entries"]) > MAX_LINKS:
+            raise ValueError(
+                f"An item can contain up to {MAX_LINKS:,} entries, including Trash."
+            )
         scan = bounded_scan(scan)
         if len(json.dumps(scan).encode()) > MAX_PREVIEW_BYTES:
             raise DiscoveryError(
@@ -690,6 +796,10 @@ class Store:
             key = by_source.get(source_id) or by_url.get(url_key, url_key)
             if key not in known:
                 if not remaining:
+                    if append:
+                        raise ValueError(
+                            f"Adding these entries would exceed the storage limit ({MAX_LINKS:,} per item; {MAX_LIBRARY_LINKS:,} per library, including Trash). Nothing was added."
+                        )
                     capped = True
                     continue
                 remaining -= 1
@@ -722,6 +832,8 @@ class Store:
             order.extend(reversed(before.get(key, [])))
             order.append(key)
         order.extend(reversed(before.get(None, [])))
+        if append:
+            order = list(dict.fromkeys([*previous, *incoming]))
         positions = {key: i for i, key in enumerate(order)}
         for key, entry in accepted:
             old = previous_rows.get(key)
@@ -808,6 +920,8 @@ class Store:
                 if key not in incoming_set and previous_rows[key]["position"] != i
             ),
         )
+        if append:
+            return added
         db.execute(
             """UPDATE items SET last_checked_at=?,last_attempt_at=?,error=NULL,warnings=?,methods=?,pages_scanned=?,expected_count=?,requests_made=?,cache_hits=?,coverage=?,order_hint=? WHERE id=?""",
             (
@@ -828,25 +942,35 @@ class Store:
         self._refresh_media(db, iid, scan)
         return added
 
-    def merge(self, iid, scan):
+    def merge(self, iid, scan, expected_sources=None):
         with self.connection() as db:
             # Serialize quota checks with inserts, including concurrent refreshes.
             db.execute("BEGIN IMMEDIATE")
-            row = db.execute("SELECT deleted FROM items WHERE id=?", (iid,)).fetchone()
+            row = db.execute("SELECT * FROM items WHERE id=?", (iid,)).fetchone()
             if not row:
                 raise KeyError("Item not found.")
+            if expected_sources is not None and (
+                row["deleted"] or effective_sources(dict(row)) != expected_sources
+            ):
+                return None
             if row["deleted"]:
                 raise DiscoveryError(
                     "Restore this item from Trash before refreshing it."
                 )
             return self._merge(db, iid, scan)
 
-    def failure(self, iid, message):
+    def failure(self, iid, message, expected_sources=None):
         with self.connection() as db:
-            db.execute(
+            db.execute("BEGIN IMMEDIATE")
+            if expected_sources is not None:
+                row = db.execute("SELECT * FROM items WHERE id=?", (iid,)).fetchone()
+                if not row or effective_sources(dict(row)) != expected_sources:
+                    return False
+            updated = db.execute(
                 "UPDATE items SET error=?,last_attempt_at=? WHERE id=? AND deleted=0",
                 (message, utcnow(), iid),
             )
+            return bool(updated.rowcount)
 
     def update(self, table, row_id, values):
         allowed = {
@@ -861,11 +985,16 @@ class Store:
                 "source_method",
                 "kind_override",
                 "description_override",
+                "source_urls",
             },
             "links": {"favorite", "ignored", "read"},
         }
         if table not in allowed or set(values) - allowed[table]:
             raise ValueError("Invalid update.")
+        if "source_urls" in values:
+            values = values | {
+                "source_urls": json.dumps(source_urls(values["source_urls"]))
+            }
         if values:
             with self.connection() as db:
                 db.execute("BEGIN IMMEDIATE")

@@ -89,7 +89,8 @@ class ApiGuard:
 
         ip = (scope.get("client") or ("unknown",))[0]
         csv_upload = (
-            scope["path"] in {"/api/scans/csv", "/api/scans/import"}
+            scope["path"]
+            in {"/api/scans/csv", "/api/scans/import", "/api/scans/manual"}
             and scope["method"] == "POST"
         )
         try:

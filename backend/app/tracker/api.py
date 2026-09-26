@@ -15,9 +15,11 @@ from .content_safety import public_scan
 from .csv_import import parse_csv
 from .keywords import terms
 from .limits import MAX_ITEMS, MAX_LINKS, bounded_scan
+from .manual_import import ManualPreview, manual_scan
 from .media_metadata import MediaOverride, annotate
 from .preferences import PreferencesPatch
 from .source_methods import SourceMethod, detect_source_method
+from .source_refresh import scan_sources, source_urls
 from .store import ItemAdditionCooldown
 from .suggestions import collect_cached, ranked_suggestions
 from .urls import DiscoveryError
@@ -64,6 +66,9 @@ def update_settings(body: PreferencesPatch, request: Request):
 
 
 class ItemPatch(BaseModel):
+    source_urls: list[Annotated[str, Field(min_length=8, max_length=2048)]] | None = (
+        Field(default=None, max_length=5)
+    )
     description_override: str | None = Field(default=None, max_length=1200)
     kind_override: MediaOverride | None = None
     favorite: bool | None = None
@@ -249,6 +254,24 @@ async def search_library(body: SearchRequest, request: Request):
         )
 
 
+@router.post("/scans/manual")
+async def manual_preview(body: ManualPreview, request: Request):
+    store = request.state.store
+    target = (
+        await run_blocking(store.refresh_source, body.item_id) if body.item_id else None
+    )
+    if target and target["deleted"]:
+        raise HTTPException(422, "Restore this item from Trash before adding entries.")
+    with request.app.state.scan_guard.operation(store.path):
+        payload = await run_blocking(manual_scan, body.entries)
+        if target:
+            payload.update(url=target["url"], import_item_id=body.item_id)
+        payload = await run_blocking(annotate, payload)
+        payload = await run_blocking(request.app.state.semantic.preview, payload)
+        sid = await run_blocking(store.save_scan, payload)
+    return public_scan(payload) | {"scan_id": sid}
+
+
 @router.post("/scans/import")
 @router.post("/scans/csv")
 async def csv_preview(
@@ -265,6 +288,7 @@ async def csv_preview(
     date_order: Literal["auto", "day_first", "month_first"] = "auto",
     keywords: str = Query("", max_length=300),
     item_id: str | None = Query(None, min_length=1, max_length=64),
+    append: bool = False,
 ):
     mime = request.headers.get("content-type", "").split(";", 1)[0].strip().lower()
     general_import = request.url.path == "/api/scans/import"
@@ -281,7 +305,8 @@ async def csv_preview(
     store = request.state.store
     target = await run_blocking(store.refresh_source, item_id) if item_id else None
     if target and (
-        target["source_type"] not in {"csv", "document"} or target["deleted"]
+        (target["source_type"] not in {"csv", "document"} and not append)
+        or target["deleted"]
     ):
         raise HTTPException(422, "Choose an imported item outside Trash to update.")
     columns = {
@@ -309,7 +334,9 @@ async def csv_preview(
         else:
             payload = await run_blocking(parse_csv, data, filename, **options)
         if target:
-            payload.update(url=target["url"], import_item_id=item_id)
+            payload.update(
+                url=target["url"], import_item_id=item_id, append_entries=append
+            )
         payload = await run_blocking(annotate, payload)
         payload = await run_blocking(request.app.state.semantic.preview, payload)
         sid = await run_blocking(store.save_scan, payload)
@@ -319,6 +346,14 @@ async def csv_preview(
 class CsvImportRequest(BaseModel):
     scan_id: str = Field(min_length=1, max_length=64)
     title: str | None = Field(default=None, min_length=1, max_length=300)
+
+
+@router.post("/items/{iid}/entries")
+async def append_entries(iid: str, body: CsvImportRequest, request: Request):
+    store = request.state.store
+    await run_blocking(store.append_entries, iid, body.scan_id)
+    await run_blocking(request.app.state.semantic.enrich, store, [iid])
+    return await run_blocking(store.item, iid)
 
 
 @router.post("/items/{iid}/import")
@@ -440,59 +475,62 @@ def acknowledge(iid: str, request: Request):
     return request.state.store.item(iid)
 
 
-async def refresh_item(iid, app, store, skip_unavailable=False, deep=False):
+async def refresh_item(
+    iid, app, store, skip_unavailable=False, deep=False, source_budget=5
+):
     async with app.state.refresh_locks.hold((store.path, iid)):
         item = await run_blocking(store.refresh_source, iid)
-        if skip_unavailable and (
-            item["deleted"]
-            or item["ignored"]
-            or item.get("source_type") in {"csv", "document"}
-        ):
+        urls = source_urls(item)
+        if skip_unavailable and (item["deleted"] or item["ignored"] or not urls):
             return {"id": iid, "new_count": 0, "ok": True, "skipped": True}
         if item["deleted"]:
             raise DiscoveryError("Restore this item from Trash before refreshing it.")
-        if item.get("source_type") in {"csv", "document"}:
-            raise DiscoveryError("Upload a file or paste text to update this item.")
+        if not urls:
+            raise DiscoveryError(
+                "Add a source link in item settings, or upload entries to update this item."
+            )
         try:
-            async with app.state.scan_semaphore:
-                store.check_active()
-                result = await app.state.discoverer.scan(
-                    item["url"],
-                    item["selector"],
-                    item["include_path"],
-                    **({"keywords": item["keywords"]} if item.get("keywords") else {}),
-                    **({"deep": True} if deep else {}),
-                    **(
-                        {"source_method": item["source_method"]}
-                        if item.get("source_method", "auto") != "auto"
-                        else {}
-                    ),
-                )
-            if not result.entries and not (
-                result.unfiltered_count
-                and result.keywords
-                or result.coverage == "complete"
-                and result.expected_count == 0
-            ):
+            if len(urls) > source_budget:
                 raise DiscoveryError(
-                    "No content found during refresh. Saved links and progress were kept. "
-                    + " ".join(result.warnings)
+                    "Sources changed while refresh was starting. Refresh this item again."
                 )
-            added = await run_blocking(lambda: store.merge(iid, result.to_dict()))
+            payload, errors = await scan_sources(item, app, store, deep=deep)
+            current = await run_blocking(store.refresh_source, iid)
+            if current["deleted"] or source_urls(current) != urls:
+                return {"id": iid, "new_count": 0, "ok": True, "skipped": True}
+            added = await run_blocking(store.merge, iid, payload, urls)
+            if added is None:
+                return {"id": iid, "new_count": 0, "ok": True, "skipped": True}
+            if errors:
+                await run_blocking(
+                    store.failure,
+                    iid,
+                    "Some sources could not be refreshed. " + " ".join(errors),
+                    urls,
+                )
             await run_blocking(app.state.semantic.enrich, store, [iid])
             return {
                 "id": iid,
                 "new_count": added,
-                "ok": True,
-                "cached": result.cached,
-                "checked_at": result.checked_at,
-                "requests_made": result.requests_made,
-                "analysis_mode": result.analysis_mode,
+                "ok": not errors,
+                "cached": payload["cached"],
+                "checked_at": payload["checked_at"],
+                "requests_made": payload["requests_made"],
+                "analysis_mode": payload["analysis_mode"],
+                **(
+                    {
+                        "error": "Some sources could not be refreshed. "
+                        + " ".join(errors)
+                    }
+                    if errors
+                    else {}
+                ),
             }
         except DiscoveryError as exc:
-            if (await run_blocking(store.refresh_source, iid))["deleted"]:
+            current = await run_blocking(store.refresh_source, iid)
+            if current["deleted"] or source_urls(current) != urls:
                 return {"id": iid, "new_count": 0, "ok": True, "skipped": True}
-            await run_blocking(store.failure, iid, str(exc))
+            await run_blocking(store.failure, iid, str(exc), urls)
             return {"id": iid, "new_count": 0, "ok": False, "error": str(exc)}
 
 
@@ -502,8 +540,12 @@ async def refresh_one(iid: str, request: Request, deep: bool | None = None):
         deep = (await run_blocking(request.state.store.settings))[
             "refresh_mode"
         ] == "deep"
-    with request.app.state.scan_guard.operation(request.state.store.path):
-        return await refresh_item(iid, request.app, request.state.store, deep=deep)
+    item = await run_blocking(request.state.store.refresh_source, iid)
+    budget = max(1, len(source_urls(item)))
+    with request.app.state.scan_guard.operation(request.state.store.path, cost=budget):
+        return await refresh_item(
+            iid, request.app, request.state.store, deep=deep, source_budget=budget
+        )
 
 
 def refresh_summary(results, total):
@@ -537,7 +579,12 @@ async def refresh_events(rows, app, store, deep=False):
                 active_hosts[host] += 1
                 try:
                     result = await refresh_item(
-                        row["id"], app, store, skip_unavailable=True, deep=deep
+                        row["id"],
+                        app,
+                        store,
+                        skip_unavailable=True,
+                        deep=deep,
+                        source_budget=max(1, len(source_urls(row))),
                     )
                     await queue.put((result, await run_blocking(store.item, row["id"])))
                 finally:
@@ -599,8 +646,14 @@ async def refresh_all(request: Request, stream: bool = False, deep: bool | None 
             422,
             f"Refresh all supports up to {MAX_ITEMS} active items. Refresh individual items instead.",
         )
+    cost = sum(len(source_urls(row)) for row in rows)
+    if cost > MAX_ITEMS:
+        raise HTTPException(
+            422,
+            f"Refresh supports up to {MAX_ITEMS} sources at once. Refresh individual items for this library.",
+        )
     admission = request.app.state.scan_guard.operation(
-        request.state.store.path, cost=max(1, len(rows))
+        request.state.store.path, cost=max(1, cost)
     )
     if not stream:
         with admission:

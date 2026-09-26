@@ -20,6 +20,7 @@ import { Icon, TypeIcon, IconButton } from "../Components/Icons";
 import SourceStatus from "../Components/SourceStatus";
 import { Notice } from "../Components/Notice";
 import Description from "../Components/Description";
+import { ManualEntryDialog } from "../Components/ManualEntryInput";
 import ItemSettingsDialog from "../Components/ItemSettingsDialog";
 import { patch, post, checked } from "../api";
 import { linkSortOptions, usePreferences } from "../Contexts/Preferences";
@@ -121,7 +122,10 @@ function ItemDetail({ id }) {
     [],
   );
   const [item, setItem] = useState(null);
+  const [adding, setAdding] = useState(false);
   const imported = ["csv", "document"].includes(item?.source_type);
+  const sourceUrls =
+    item?.source_urls ?? (imported || !item?.url ? [] : [item.url]);
   const entryLabel = imported ? "entry" : "link";
   const entryLabels = imported ? "entries" : "links";
   const [error, setError] = useState(""),
@@ -337,18 +341,19 @@ function ItemDetail({ id }) {
           <TypeIcon kind={item.kind} />
           <div>
             <h1>{item.title}</h1>
-            {["csv", "document"].includes(item.source_type) ? (
+            {!sourceUrls.length ? (
               <span className="source-link">
-                {item.source_name || "File import"}
+                {item.source_name ||
+                  (imported ? "Imported entries" : "No source links")}
               </span>
             ) : (
               <a
                 className="source-link"
-                href={item.url}
+                href={sourceUrls[0]}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {new URL(item.url).hostname}
+                {new URL(sourceUrls[0]).hostname}
                 <Icon as={ExternalLinkIcon} />
               </a>
             )}
@@ -375,13 +380,15 @@ function ItemDetail({ id }) {
             active={item.ignored}
             onClick={() => update({ ignored: !item.ignored })}
           />
-          {["csv", "document"].includes(item.source_type) ? (
-            !item.deleted && (
-              <Link className="button primary" to={`/add?import=${id}`}>
-                Update import
-              </Link>
-            )
-          ) : (
+          {imported && !item.deleted && (
+            <Link
+              className={`button ${sourceUrls.length ? "" : "primary"}`}
+              to={`/add?import=${id}`}
+            >
+              Update import
+            </Link>
+          )}
+          {sourceUrls.length > 0 && (
             <RefreshControl
               label="Refresh item"
               onRefresh={refresh}
@@ -461,6 +468,16 @@ function ItemDetail({ id }) {
           Item settings
         </button>
         <div className="actions">
+          {!item.deleted && (
+            <button
+              className="button"
+              onClick={() => setAdding(true)}
+              disabled={busy}
+              aria-haspopup="dialog"
+            >
+              Add entry
+            </button>
+          )}
           {item.new_count > 0 && (
             <button
               className="text-button"
@@ -770,6 +787,18 @@ function ItemDetail({ id }) {
           source date.
         </p>
       </details>
+      {adding && !item.deleted && (
+        <ManualEntryDialog
+          item={item}
+          onClose={() => setAdding(false)}
+          onSaved={(saved) => {
+            setItem(saved);
+            setAdding(false);
+            setMessage("Entries added.");
+            reload();
+          }}
+        />
+      )}
       {params.get("settings") === "1" && !item.deleted && (
         <ItemSettingsDialog
           key={item.id}

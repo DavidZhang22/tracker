@@ -153,3 +153,24 @@ test("Library shows its count and limit in the heading while Trash keeps its own
   ).toBeInTheDocument();
   expect(screen.queryByText("1/500")).not.toBeInTheDocument();
 });
+
+test.each([
+  ["document", ["https://example.org/feed"], false, true],
+  ["document", [], false, false],
+  ["web", [], false, false],
+  ["document", ["https://example.org/feed"], true, false],
+])(
+  "refresh availability follows sources for %s",
+  async (source_type, source_urls, ignored, enabled) => {
+    api.mockResolvedValue([{ ...item, source_type, source_urls, ignored }]);
+    render(
+      <MemoryRouter>
+        <LibraryPage />
+      </MemoryRouter>,
+    );
+    await screen.findByText("A series");
+    const button = screen.getByRole("button", { name: "Refresh", exact: true });
+    if (enabled) expect(button).toBeEnabled();
+    else expect(button).toBeDisabled();
+  },
+);

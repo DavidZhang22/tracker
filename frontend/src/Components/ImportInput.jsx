@@ -44,6 +44,7 @@ export function ImportDetails({ context, title, defaultOpen = false }) {
 export default function ImportInput({
   disabled,
   itemId,
+  append = false,
   keywords,
   onKeywords,
   onPreview,
@@ -83,6 +84,7 @@ export default function ImportInput({
         ...options,
         keywords,
         ...(itemId ? { item_id: itemId } : {}),
+        ...(append ? { append: true } : {}),
       });
       setMetadata(result.csv);
       setReviewed(true);

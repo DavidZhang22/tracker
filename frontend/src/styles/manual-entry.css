@@ -1,0 +1,72 @@
+.manual-entry-record {
+  position: relative;
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  margin: 0 0 24px;
+}
+.manual-entry-record + .manual-entry-record {
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+}
+.manual-entry-record legend {
+  font-weight: 600;
+  padding: 0 0 12px;
+}
+.manual-entry-remove {
+  float: right;
+  margin-bottom: 8px;
+}
+.manual-entry-record .field {
+  clear: both;
+}
+.manual-entry-metadata {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.manual-entry-metadata input {
+  min-width: 0;
+  width: 100%;
+}
+.manual-entry-options summary {
+  margin-bottom: 12px;
+}
+.manual-entry-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+}
+.manual-entry-dialog .manual-entry-form {
+  padding: 0;
+  border: 0;
+}
+.manual-entry-preview {
+  margin-top: 24px;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+.manual-entry-preview .entry-preview:last-child {
+  border-bottom: 0;
+}
+@media (max-width: 400px) {
+  .manual-entry-metadata {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .manual-entry-actions .button {
+    flex: 1 1 100%;
+  }
+}
+
+.manual-import-link {
+  margin-bottom: 20px;
+}
+
+.manual-entry-record .manual-entry-options {
+  margin-bottom: 0;
+}
+.manual-entry-metadata .field {
+  margin-bottom: 0;
+}
