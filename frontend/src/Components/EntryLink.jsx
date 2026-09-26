@@ -1,10 +1,7 @@
 export default function EntryLink({ entry, className, onClick, onAuxClick }) {
   if (!entry.url)
     return (
-      <span
-        className={className}
-        title="This entry has no link on the source page."
-      >
+      <span className={className} title="This entry has no attached link.">
         {entry.title}
       </span>
     );

@@ -13,10 +13,10 @@ from urllib.parse import urlsplit
 
 from bs4 import BeautifulSoup, NavigableString
 from defusedxml import ElementTree as XML
-from markdown_it import MarkdownIt
 
 from .context_model import classify_context
-from .csv_import import decode, parse_csv, safe_link
+from .csv_import import decode, parse_csv, read_table, safe_link
+from .import_records import assign_import_ids, plain_records, text_markup
 from .keywords import matches, terms
 from .limits import MAX_CSV_BYTES, MAX_LINKS
 from .models import Entry, Scan, sequence_value, utcnow
@@ -433,7 +433,7 @@ def document_entries(markup, keywords, relevant=False):
     if len(anchors) > MAX_RECORDS:
         raise DiscoveryError("Import up to 10,000 candidate links at a time.")
     scores, labels, rejected, model = ({}, {}, set(), None)
-    if relevant:
+    if relevant and anchors:
         if len(anchors) > 4000:
             raise DiscoveryError(
                 "Content filtering supports up to 4,000 candidates. Use All links or split the file."
@@ -443,6 +443,8 @@ def document_entries(markup, keywords, relevant=False):
         )
     context = RecordContext(soup)
     entries, unsafe, removed = [], 0, 0
+    consumed = set()
+    positions = {id(node): i for i, node in enumerate(soup.descendants)}
     for position, anchor in enumerate(anchors):
         url = safe_link(anchor["href"])
         if not url:
@@ -481,11 +483,28 @@ def document_entries(markup, keywords, relevant=False):
             method="Document import",
             **dates,
         )
-        if not keywords or matches(entry, keywords):
-            entries.append(entry)
+        entry.position = positions[id(anchor)]
+        entries.append(entry)
+        if record is not None:
+            consumed.add(id(record))
+        if neighbor is not None:
+            consumed.add(id(neighbor))
+    linked_text = {e.context for e in entries} | {e.title for e in entries}
+    records = plain_records(soup, context.page, consumed)
+    if len(records) + len(anchors) > MAX_RECORDS:
+        raise DiscoveryError("Import up to 10,000 candidate entries at a time.")
+    for node, entry in records:
+        if entry.context in linked_text:
+            continue
+        entry.position = positions[id(node)]
+        entries.append(entry)
+    entries.sort(key=lambda entry: entry.position)
+    assign_import_ids(entries)
+    entries = [entry for entry in entries if not keywords or matches(entry, keywords)]
     merged = merge_entries(entries)
     return merged[:MAX_LINKS], {
-        "candidates": len(anchors),
+        "candidates": len(anchors) + len(records),
+        "unlinked": sum(not entry.url for entry in merged[:MAX_LINKS]),
         "unsafe": unsafe,
         "filtered": removed,
         "duplicates": len(entries) - len(merged),
@@ -520,21 +539,23 @@ def parse_file(data, filename, *, keywords="", link_filter="all", **csv_options)
             raise DiscoveryError("Import up to one million text characters at a time.")
         if extension in {".html", ".htm"}:
             markup = text
-        elif extension == ".txt":
-            if "\t" in text and "\n" in text:
-                try:
-                    return parse_csv(data, filename, keywords=keywords, **csv_options)
-                except DiscoveryError:
-                    pass
-            markup = "".join(
-                "<p>" + escape(line) + "</p>"
-                for line in text.splitlines()
-                if line.strip()
-            )
         else:
-            markup = MarkdownIt("commonmark", {"html": False, "breaks": True}).render(
-                text
-            )
+            if extension == ".txt" and "\n" in text:
+                # Consistent columns are stronger evidence than punctuation in prose.
+                try:
+                    columns, rows, detected, has_header = read_table(
+                        data,
+                        csv_options.get("delimiter", "auto"),
+                        csv_options.get("header", "auto"),
+                    )
+                    if len(columns) > 1 and (has_header or len(rows) >= 2):
+                        return parse_csv(
+                            data, filename, keywords=keywords, **csv_options
+                        )
+                except DiscoveryError:
+                    if csv_options.get("delimiter", "auto") != "auto":
+                        raise
+            markup = text_markup(text)
         metadata = {"format": extension[1:].upper(), "units": 1}
     entries, counts = document_entries(markup, keywords, link_filter == "content")
     scan = Scan(
@@ -555,16 +576,16 @@ def parse_file(data, filename, *, keywords="", link_filter="all", **csv_options)
             f"Skipped {counts['unsafe']} links without a complete public HTTP or HTTPS address."
         )
     if counts["duplicates"]:
-        scan.warnings.append(f"Combined {counts['duplicates']} duplicate links.")
+        scan.warnings.append(f"Combined {counts['duplicates']} duplicate entries.")
     if counts["truncated"]:
-        scan.warnings.append(f"Kept the first {MAX_LINKS:,} unique links.")
+        scan.warnings.append(f"Kept the first {MAX_LINKS:,} unique entries.")
     if metadata.get("image_pages"):
         scan.warnings.append(
             "Some PDF pages have no selectable text. Image-only text needs OCR before import; embedded hyperlinks are still included."
         )
     if not entries:
         scan.warnings.append(
-            "No matching public links found. Try All links, remove keywords, or paste text containing complete URLs."
+            "No matching entries found. Try a list or table, or remove keywords."
         )
     return scan.to_dict() | {
         "source_type": "document",

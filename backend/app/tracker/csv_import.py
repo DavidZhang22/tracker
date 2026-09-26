@@ -12,6 +12,7 @@ from itertools import islice
 from urllib.parse import urlsplit
 
 from .dates import DATE_TEXT, evidence
+from .import_records import HEADER_WORDS, assign_import_ids
 from .keywords import matches, terms
 from .limits import MAX_CSV_BYTES, MAX_LINKS
 from .models import Entry, Scan, sequence_value, utcnow
@@ -43,6 +44,12 @@ ALIASES = {
         "name",
         "headline",
         "label",
+        "problem",
+        "task",
+        "item",
+        "topic",
+        "question",
+        "exercise",
     ),
     "company": (
         "company",
@@ -74,6 +81,8 @@ ALIASES = {
         "episodenumber",
         "number",
         "sequence",
+        "problemnumber",
+        "id",
     ),
 }
 
@@ -170,7 +179,9 @@ def read_table(data, delimiter="auto", header="auto"):
         ) from exc
     if not rows:
         raise DiscoveryError("The CSV contains no rows.")
-    aliases = {normalized(alias) for group in ALIASES.values() for alias in group}
+    aliases = {
+        normalized(alias) for group in ALIASES.values() for alias in group
+    } | HEADER_WORDS
     has_header = header == "yes" or (
         header == "auto"
         and not any(safe_link(c) for c in rows[0])
@@ -208,7 +219,7 @@ def detect_columns(labels, rows):
     counts = [
         sum(bool(safe_link(row[i])) for row in rows[:100]) for i in range(len(labels))
     ]
-    if selected["url"] < 0 or not counts[selected["url"]]:
+    if selected["url"] < 0:
         selected["url"] = (
             max(range(len(labels)), key=lambda i: counts[i]) if any(counts) else -1
         )
@@ -307,10 +318,6 @@ def parse_csv(
                 "A selected column is not in this CSV. Check the column choices."
             )
         chosen[field] = index
-    if chosen["url"] < 0:
-        raise DiscoveryError(
-            "No link column was found. Include complete http:// or https:// links in a CSV column."
-        )
     if len({v for v in chosen.values() if v >= 0}) != sum(
         v >= 0 for v in chosen.values()
     ):
@@ -337,8 +344,9 @@ def parse_csv(
     skipped, clipped, undated = 0, 0, 0
     imported = []
     for position, row in enumerate(rows):
-        url = safe_link(row[chosen["url"]])
-        if not url:
+        raw_url = row[chosen["url"]] if chosen["url"] >= 0 else ""
+        url = safe_link(raw_url) if raw_url else ""
+        if raw_url and not url:
             skipped += 1
             continue
 
@@ -349,7 +357,13 @@ def parse_csv(
             value("title")
             or urlsplit(url).path.rstrip("/").rsplit("/", 1)[-1]
             or urlsplit(url).hostname
+            or next(
+                (cell for i, cell in enumerate(row) if cell and i != chosen["url"]), ""
+            )
         )
+        if not label:
+            skipped += 1
+            continue
         company = value("company")
         if company and company.casefold() not in label.casefold():
             label = company + " · " + label
@@ -373,6 +387,8 @@ def parse_csv(
                     number = None
             except ValueError:
                 number = sequence_value(value("number"))
+        if number is None and not url:
+            number = sequence_value(label)
         entry = Entry(
             url,
             label[:300],
@@ -382,28 +398,29 @@ def parse_csv(
             context=context[:8192],
             **date,
         )
-        if not keywords or matches(entry, keywords):
-            imported.append(entry)
+        imported.append(entry)
+    assign_import_ids(imported)
+    imported = [entry for entry in imported if not keywords or matches(entry, keywords)]
     merged = merge_entries(imported)
     duplicates = len(imported) - len(merged)
     scan.entries = merged[:MAX_LINKS]
     scan.unfiltered_count = len(rows) - skipped
     if skipped:
         scan.warnings.append(
-            f"Skipped {skipped} rows with missing or unsafe links. Only complete public HTTP or HTTPS links are imported."
+            f"Skipped {skipped} rows with unsafe links or no entry text. Links must be complete public HTTP or HTTPS addresses."
         )
     if duplicates:
-        scan.warnings.append(f"Combined {duplicates} duplicate links.")
+        scan.warnings.append(f"Combined {duplicates} duplicate entries.")
     if undated:
         scan.warnings.append(
-            f"{undated} date cells did not contain a clear content date. Their original text is kept in link details."
+            f"{undated} date cells did not contain a clear content date. Their original text is kept in entry details."
         )
     if clipped:
         scan.warnings.append(f"Shortened long text in {clipped} rows.")
     if len(merged) > MAX_LINKS:
         scan.coverage = "partial"
         scan.warnings.append(
-            f"Kept the first {MAX_LINKS:,} unique links. Split larger collections into separate files."
+            f"Kept the first {MAX_LINKS:,} unique entries. Split larger collections into separate files."
         )
     if url_columns > 1:
         scan.warnings.append(

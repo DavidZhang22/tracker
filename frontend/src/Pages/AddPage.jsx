@@ -376,7 +376,13 @@ export default function AddPage() {
                   <div>
                     <h2>
                       {result.entries.length}{" "}
-                      {result.entries.some((e) => !e.url) ? "entries" : "links"}{" "}
+                      {mode === "import" || result.entries.some((e) => !e.url)
+                        ? result.entries.length === 1
+                          ? "entry"
+                          : "entries"
+                        : result.entries.length === 1
+                          ? "link"
+                          : "links"}{" "}
                       found
                     </h2>
                     <div className="scan-meta">
@@ -384,7 +390,7 @@ export default function AddPage() {
                         {result.csv
                           ? `${result.csv.rows} CSV rows`
                           : result.document
-                            ? `${result.document.format} - ${result.document.candidates} candidate links`
+                            ? `${result.document.format} - ${result.document.candidates} candidate entries`
                             : `${result.pages_scanned} pages scanned`}
                       </span>
                       <span>
@@ -452,7 +458,7 @@ export default function AddPage() {
                         }}
                       >
                         <option value="unread">Not started</option>
-                        <option value="choose">Choose read links</option>
+                        <option value="choose">Choose read entries</option>
                         <option value="all">Caught up</option>
                       </select>
                     </label>
@@ -523,7 +529,7 @@ export default function AddPage() {
                       )}
                       <div className="entry-preview-content">
                         <EntryLink entry={e} className="preview-title" />
-                        {!e.url && <span>No link</span>}
+                        {!e.url && mode !== "import" && <span>No link</span>}
                         {e.summary_suppressed ? (
                           <span className="preview-context">
                             Automatic summary hidden.
@@ -534,7 +540,11 @@ export default function AddPage() {
                           )
                         )}
                         {mode === "import" && (
-                          <ImportDetails context={e.context} title={e.title} />
+                          <ImportDetails
+                            context={e.context}
+                            title={e.title}
+                            defaultOpen
+                          />
                         )}
                       </div>
                       <LinkDate entry={e} />
@@ -568,14 +578,15 @@ export default function AddPage() {
         <aside className="help-panel">
           {mode === "import" ? (
             <>
-              <h2>Import links</h2>
+              <h2>Import entries</h2>
               <p>
-                Import links from a file or pasted text into one item. Titles,
-                dates, and details stay with each record.
+                Import a list, table, or document into one item. Links are
+                optional. Titles, dates, and details stay with each record.
               </p>
               <p>
-                Review the links before saving. Files are processed on the
-                server; imported URLs are not opened. Up to 4,999 unique links.
+                Review the entries before saving. Files are processed on the
+                server. Imported URLs are not opened. Up to 4,999 unique
+                entries.
               </p>
               <a className="button" href="/examples/links.csv" download>
                 Download example CSV

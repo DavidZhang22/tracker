@@ -255,7 +255,7 @@ async def csv_preview(
     request: Request,
     filename: str = Query("links.csv", max_length=255),
     link_filter: Literal["all", "content"] = "all",
-    url_column: int | None = Query(None, ge=0, le=63),
+    url_column: int | None = Query(None, ge=-1, le=63),
     title_column: int | None = Query(None, ge=-1, le=63),
     company_column: int | None = Query(None, ge=-1, le=63),
     date_column: int | None = Query(None, ge=-1, le=63),

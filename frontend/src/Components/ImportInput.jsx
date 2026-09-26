@@ -4,7 +4,7 @@ import { Icon } from "./Icons";
 import { uploadFile } from "../api";
 import "../styles/entry-details.css";
 
-export function ImportDetails({ context, title }) {
+export function ImportDetails({ context, title, defaultOpen = false }) {
   if (typeof context !== "string" || !context.trim()) return null;
   const lines = context
     .trim()
@@ -21,7 +21,7 @@ export function ImportDetails({ context, title }) {
         : { value: line.trim() };
     });
   return (
-    <details className="csv-details">
+    <details className="csv-details" open={defaultOpen || undefined}>
       <summary aria-label={title ? `Details for ${title}` : undefined}>
         Details
       </summary>
@@ -78,7 +78,7 @@ export default function ImportInput({
       const source =
         inputMode === "file"
           ? file
-          : new File([text], "Pasted links.txt", { type: "text/plain" });
+          : new File([text], "Pasted text.txt", { type: "text/plain" });
       const result = await uploadFile(source, {
         ...options,
         keywords,
@@ -182,7 +182,7 @@ export default function ImportInput({
             maxLength={200000}
             value={text}
             disabled={disabled || busy}
-            placeholder="Paste links with their titles, dates, or other details."
+            placeholder="Paste a list, table, or CSV with titles and details. Links are optional."
             onChange={(event) => {
               setText(event.target.value);
               setMetadata(null);
@@ -192,7 +192,7 @@ export default function ImportInput({
             }}
           />
           <span className="hint">
-            Up to 200,000 characters. Include complete https:// links.
+            Up to 200,000 characters. Links are optional.
           </span>
         </label>
       )}
@@ -227,12 +227,14 @@ export default function ImportInput({
                 {label}
                 <select
                   disabled={disabled || busy}
-                  value={options[`${field}_column`] ?? metadata.selected[field]}
+                  value={
+                    options[`${field}_column`] ?? metadata.selected[field] ?? -1
+                  }
                   onChange={(event) =>
                     change(`${field}_column`, Number(event.target.value))
                   }
                 >
-                  {field !== "url" && <option value={-1}>None</option>}
+                  <option value={-1}>None</option>
                   {metadata.columns.map((column) => (
                     <option key={column.index} value={column.index}>
                       {column.index + 1}. {column.label}
@@ -303,14 +305,18 @@ export default function ImportInput({
             <label className="field">
               Keep
               <select
-                aria-label="Links to import"
+                aria-label="Entries to import"
                 value={options.link_filter || "all"}
                 disabled={disabled || busy}
                 onChange={(event) => change("link_filter", event.target.value)}
               >
-                <option value="all">All links</option>
-                <option value="content">Content links (model filtered)</option>
+                <option value="all">All entries</option>
+                <option value="content">Filter links with the model</option>
               </select>
+              <span className="hint">
+                Model filtering applies to links. Entries without links are
+                kept.
+              </span>
             </label>
           )}
         </div>
@@ -324,12 +330,12 @@ export default function ImportInput({
           ? "Reading input…"
           : reviewed
             ? "Update preview"
-            : "Preview links"}
+            : "Preview entries"}
       </button>
       {itemId && (
         <p className="hint">
-          Matching links will update. Read, favorite, muted, and deleted states
-          are kept. Links missing from the file stay in the item.
+          Matching entries will update. Read, favorite, muted, and deleted
+          states are kept. Entries missing from the file stay in the item.
         </p>
       )}
     </form>

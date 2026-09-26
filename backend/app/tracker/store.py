@@ -197,7 +197,7 @@ class Store:
                 "SELECT * FROM links WHERE item_id=? ORDER BY discovered_at,id",
                 (item["id"],),
             ):
-                groups.setdefault(identity(row["url"]), []).append(dict(row))
+                groups.setdefault(entry_key(row), []).append(dict(row))
             for key, rows in groups.items():
                 original = rows[0]
                 if len(rows) == 1 and original["identity"] == key:
@@ -513,7 +513,7 @@ class Store:
                 raise ValueError("This preview updates an existing imported item.")
             if scan.get("source_type") in {"csv", "document"} and not scan["entries"]:
                 raise ValueError(
-                    "There are no links to import. Check the input and import options."
+                    "There are no entries to import. Check the input and import options."
                 )
             selected = set(read_indices or [])
             if len(selected) > MAX_LINKS or any(
@@ -614,7 +614,7 @@ class Store:
                 or not scan["entries"]
             ):
                 raise ValueError(
-                    "Import a file or text for this item and review its links first."
+                    "Import a file or text for this item and review its entries first."
                 )
             self._merge(db, iid, scan)
             db.execute(

@@ -116,6 +116,7 @@ export function ActionMenu({
   record,
   onAction,
   links = false,
+  noun = "links",
   disabled = false,
   rangeActions = false,
   mergeActions = false,
@@ -150,7 +151,7 @@ export function ActionMenu({
           ? [
               ["merge", "Merge with above"],
               ...(record.link_count > 1
-                ? [["separate", "Separate links"]]
+                ? [["separate", `Separate ${noun}`]]
                 : []),
             ]
           : []),
@@ -321,6 +322,7 @@ export function SelectionBar({
   busy,
   trash = false,
   links = false,
+  noun = links ? "links" : "items",
   total = visible.length,
   onSelectAll,
   rangeActions = false,
@@ -375,11 +377,11 @@ export function SelectionBar({
             <option value="" disabled>
               Select
             </option>
-            <option value="manual">Choose {links ? "links" : "items"}</option>
+            <option value="manual">Choose {noun}</option>
             <option value="page">This page ({visible.length})</option>
             {onSelectAll && (
               <option value="all">
-                All matching {links ? "links" : "items"} ({total})
+                All matching {noun} ({total})
               </option>
             )}
             <option value="invert">Invert selection</option>
@@ -444,7 +446,7 @@ export function SelectionBar({
                         <option value="merge">Merge with above</option>
                       )}
                       {mergeActions && (
-                        <option value="separate">Separate links</option>
+                        <option value="separate">Separate {noun}</option>
                       )}
                       <option value="unignore">Unmute</option>
                       {links && (
@@ -481,7 +483,7 @@ export function SelectionBar({
       {patternOpen && (
         <SelectionPattern
           total={total}
-          noun={links ? "links" : "items"}
+          noun={noun}
           busy={busy}
           onApply={onSelectAll}
           onClose={() => setPatternOpen(false)}

@@ -5,9 +5,10 @@ import {
   render,
   screen,
   waitFor,
+  within,
 } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { api, post, uploadFile } from "../api";
+import { api, patch, post, uploadFile } from "../api";
 import { PreferencesProvider } from "../Contexts/Preferences";
 import AddPage from "../Pages/AddPage";
 import ItemPage from "../Pages/ItemPage";
@@ -16,6 +17,7 @@ import { ImportDetails } from "../Components/ImportInput";
 vi.mock("../api", () => ({
   api: vi.fn(),
   post: vi.fn(),
+  patch: vi.fn(),
   uploadFile: vi.fn(),
   examples: [],
   day: () => "Sep 1",
@@ -79,7 +81,8 @@ beforeEach(() => {
         : item,
   );
   uploadFile.mockResolvedValue(preview);
-  post.mockResolvedValue({ id: "one" });
+  post.mockResolvedValue({ id: "one", updated: 1 });
+  patch.mockResolvedValue({ ok: true });
 });
 function setup(path = "/add") {
   return render(
@@ -104,7 +107,7 @@ async function chooseFile() {
       target: { files: [file] },
     },
   );
-  await click("Preview links");
+  await click("Preview entries");
 }
 
 test("CSV previews rows inside one item and uses existing read choices", async () => {
@@ -114,8 +117,10 @@ test("CSV previews rows inside one item and uses existing read choices", async (
   expect(uploadFile).toHaveBeenCalledWith(file, { keywords: "" });
   expect(screen.getByLabelText("Link column")).toHaveValue("0");
   expect(screen.getByLabelText("Title column")).toHaveValue("1");
-  expect(screen.getByText("1 links found")).toBeInTheDocument();
-  fireEvent.click(screen.getByLabelText("Details for Example — Engineer"));
+  expect(screen.getByText("1 entry found")).toBeInTheDocument();
+  expect(
+    screen.getByLabelText("Details for Example — Engineer").parentElement,
+  ).toHaveAttribute("open");
   expect(screen.getByText("Location", { selector: "dt" })).toBeInTheDocument();
   expect(screen.getByText("Remote", { selector: "dd" })).toBeInTheDocument();
   fireEvent.change(screen.getByLabelText("Reading progress"), {
@@ -161,7 +166,9 @@ test("changing columns or files invalidates the preview before saving", async ()
   expect(
     screen.queryByRole("button", { name: "Add to library" }),
   ).not.toBeInTheDocument();
-  expect(screen.getByRole("button", { name: "Preview links" })).toBeDisabled();
+  expect(
+    screen.getByRole("button", { name: "Preview entries" }),
+  ).toBeDisabled();
 });
 
 test("empty results and oversized files cannot be saved", async () => {
@@ -176,7 +183,9 @@ test("empty results and oversized files cannot be saved", async () => {
   expect(
     screen.getByText("Choose a non-empty file up to 4 MB."),
   ).toBeInTheDocument();
-  expect(screen.getByRole("button", { name: "Preview links" })).toBeDisabled();
+  expect(
+    screen.getByRole("button", { name: "Preview entries" }),
+  ).toBeDisabled();
   expect(uploadFile).not.toHaveBeenCalled();
   uploadFile.mockResolvedValue({ ...preview, entries: [] });
   await chooseFile();
@@ -219,9 +228,9 @@ test("upload errors keep the file available for retry", async () => {
   await chooseFile();
   expect(screen.getByText("Database unavailable")).toBeInTheDocument();
   expect(
-    screen.getByRole("button", { name: "Preview links" }),
+    screen.getByRole("button", { name: "Preview entries" }),
   ).not.toBeDisabled();
-  await click("Preview links");
+  await click("Preview entries");
   expect(screen.getByRole("button", { name: "Add to library" })).toBeEnabled();
 });
 
@@ -240,9 +249,9 @@ test("pasted text previews one item and editing it invalidates the saved preview
   fireEvent.change(input, {
     target: { value: "Engineer https://example.org/job" },
   });
-  await click("Preview links");
+  await click("Preview entries");
   const uploaded = uploadFile.mock.calls[0][0];
-  expect(uploaded.name).toBe("Pasted links.txt");
+  expect(uploaded.name).toBe("Pasted text.txt");
   expect(uploaded.size).toBe(32);
   expect(screen.getByRole("button", { name: "Add to library" })).toBeEnabled();
   expect(screen.queryByLabelText("Link column")).not.toBeInTheDocument();
@@ -269,16 +278,16 @@ test("documents allow optional model filtering and never submit a website scan",
   fireEvent.change(screen.getByLabelText("Import file"), {
     target: { files: [document] },
   });
-  fireEvent.change(screen.getByLabelText("Links to import"), {
+  fireEvent.change(screen.getByLabelText("Entries to import"), {
     target: { value: "content" },
   });
-  await click("Preview links");
+  await click("Preview entries");
   expect(uploadFile).toHaveBeenCalledWith(document, {
     keywords: "",
     link_filter: "content",
   });
   expect(post).not.toHaveBeenCalled();
-  fireEvent.change(screen.getByLabelText("Links to import"), {
+  fireEvent.change(screen.getByLabelText("Entries to import"), {
     target: { value: "all" },
   });
   expect(
@@ -342,7 +351,7 @@ test("merged imported entries keep every member's fields outside the title row",
         : item,
   );
   setup("/items/one");
-  const grouped = await screen.findByText("2 links in this entry");
+  const grouped = await screen.findByText("2 entries in this group");
   fireEvent.click(grouped);
   fireEvent.click(screen.getByLabelText("Details for First job"));
   fireEvent.click(screen.getByLabelText("Details for Second job"));
@@ -364,11 +373,182 @@ test("preview keeps imported fields when an automatic summary is suppressed", as
   setup();
   await click("File or text");
   await chooseFile();
-  fireEvent.click(screen.getByLabelText("Details for Example — Engineer"));
+  expect(
+    screen.getByLabelText("Details for Example — Engineer").parentElement,
+  ).toHaveAttribute("open");
   expect(screen.getByText("Automatic summary hidden.")).toBeVisible();
   expect(screen.getByText("Automatic description hidden.")).toBeVisible();
   expect(screen.getByText("Remote", { selector: "dd" })).toBeVisible();
   expect(
     screen.getByRole("link", { name: "Example — Engineer" }),
   ).toHaveAttribute("href", entry.url);
+});
+
+const problems = [
+  {
+    title: "3. Longest Substring Without Repeating Characters",
+    context: "Sliding window + last-seen indices",
+  },
+  { title: "56. Merge Intervals", context: "Sort by start, then merge" },
+  {
+    title: "347. Top K Frequent Elements",
+    context: "Min-heap; then O(n) frequency buckets",
+  },
+].map((problem, index) => ({
+  ...problem,
+  id: `problem-${index}`,
+  source_id: `import:problem-${index}`,
+  url: "",
+  position: index,
+  method: "Text import",
+}));
+
+function mockUnlinkedItem(entries = problems) {
+  api.mockImplementation(async (path) =>
+    path === "/settings"
+      ? { link_sort: "source", link_direction: "asc" }
+      : path.includes("/links")
+        ? { links: entries, total: entries.length, sort_used: "source" }
+        : {
+            ...item,
+            title: "Practice problems",
+            source_type: "document",
+            source_name: "Pasted text.txt",
+            total_count: entries.length,
+            unread_count: entries.length,
+            dated_count: 0,
+            auto_read: true,
+          },
+  );
+}
+
+test("pasted problems without links show titles and details before saving read choices", async () => {
+  const text = problems
+    .map((problem) => `**${problem.title}**${problem.context}`)
+    .join("");
+  mockUnlinkedItem();
+  uploadFile.mockResolvedValue({
+    ...preview,
+    source_type: "document",
+    source_name: "Pasted text.txt",
+    title: "Practice problems",
+    csv: undefined,
+    document: { format: "TXT", candidates: problems.length },
+    entries: problems,
+  });
+  const { container } = setup();
+  await click("File or text");
+  await click("Paste text");
+  fireEvent.change(
+    screen.getByLabelText("Paste text", { selector: "textarea" }),
+    {
+      target: { value: text },
+    },
+  );
+  await click("Preview entries");
+  expect(
+    screen.getByRole("heading", { name: "3 entries found" }),
+  ).toBeVisible();
+  const submitted = uploadFile.mock.calls[0][0];
+  const submittedText = await new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.readAsText(submitted);
+  });
+  expect(submittedText).toBe(text);
+  for (const problem of problems) {
+    expect(screen.getByText(problem.title)).toBeVisible();
+    expect(screen.getByText(problem.context)).toBeVisible();
+    expect(
+      screen.queryByRole("link", { name: problem.title }),
+    ).not.toBeInTheDocument();
+  }
+  expect(container.querySelector(".entry-preview a")).toBeNull();
+  expect(post).not.toHaveBeenCalled();
+  fireEvent.change(screen.getByLabelText("Reading progress"), {
+    target: { value: "choose" },
+  });
+  fireEvent.click(screen.getByLabelText(`Read: ${problems[1].title}`));
+  await click("Add to library");
+  expect(post).toHaveBeenCalledWith("/items", {
+    scan_id: "csv-preview",
+    title: "Practice problems",
+    mark_read: false,
+    read_indices: [1],
+  });
+  expect(
+    await screen.findByRole("button", { name: "All entries" }),
+  ).toBeVisible();
+});
+
+test("CSV preview permits no link column and preserves unlinked records", async () => {
+  const csvFile = new File(
+    ["Problem,Approach\nMerge Intervals,Sort by start"],
+    "practice.csv",
+    { type: "text/csv" },
+  );
+  uploadFile.mockResolvedValue({
+    ...preview,
+    entries: problems.slice(0, 1),
+    csv: {
+      ...preview.csv,
+      columns: [
+        { index: 0, label: "Problem" },
+        { index: 1, label: "Approach" },
+      ],
+      selected: { ...preview.csv.selected, url: -1, title: 0 },
+    },
+  });
+  setup();
+  await click("File or text");
+  fireEvent.change(screen.getByLabelText("Import file"), {
+    target: { files: [csvFile] },
+  });
+  await click("Preview entries");
+  const column = screen.getByLabelText("Link column");
+  expect(column).toHaveValue("-1");
+  expect(
+    within(column).getByRole("option", { name: "None" }),
+  ).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Add to library" })).toBeEnabled();
+  fireEvent.change(column, { target: { value: "0" } });
+  await click("Update preview");
+  fireEvent.change(column, { target: { value: "-1" } });
+  expect(
+    screen.queryByRole("button", { name: "Add to library" }),
+  ).not.toBeInTheDocument();
+  await click("Update preview");
+  expect(uploadFile).toHaveBeenLastCalledWith(csvFile, {
+    keywords: "",
+    url_column: -1,
+  });
+  expect(screen.getByText(problems[0].context)).toBeVisible();
+});
+
+test("saved entries without URLs retain read, favorite, mute and bulk actions", async () => {
+  mockUnlinkedItem();
+  setup("/items/one");
+  const title = await screen.findByText(problems[0].title);
+  expect(title.tagName).toBe("SPAN");
+  expect(title.closest("a")).toBeNull();
+  await act(async () => fireEvent.click(title));
+  expect(patch).not.toHaveBeenCalled();
+  await click(`Mark read: ${problems[0].title}`);
+  expect(patch).toHaveBeenLastCalledWith("/links/problem-0", { read: true });
+  await click(`Favorite entry: ${problems[0].title}`);
+  expect(patch).toHaveBeenLastCalledWith("/links/problem-0", {
+    favorite: true,
+  });
+  await click(`Mute entry: ${problems[0].title}`);
+  expect(patch).toHaveBeenLastCalledWith("/links/problem-0", { ignored: true });
+  fireEvent.click(screen.getByLabelText(`Select entry: ${problems[0].title}`));
+  await click("Favorite");
+  expect(post).toHaveBeenCalledWith("/links/bulk", {
+    action: "favorite",
+    ids: ["problem-0"],
+    item_id: "one",
+  });
+  expect(screen.getByLabelText("Search entries")).toBeInTheDocument();
+  fireEvent.click(screen.getByLabelText(`Details for ${problems[0].title}`));
+  expect(screen.getByText(problems[0].context)).toBeVisible();
 });

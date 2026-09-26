@@ -121,6 +121,9 @@ function ItemDetail({ id }) {
     [],
   );
   const [item, setItem] = useState(null);
+  const imported = ["csv", "document"].includes(item?.source_type);
+  const entryLabel = imported ? "entry" : "link";
+  const entryLabels = imported ? "entries" : "links";
   const [error, setError] = useState(""),
     [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false),
@@ -259,12 +262,12 @@ function ItemDetail({ id }) {
         grouping
           ? action === "merge"
             ? `${r.updated} rows merged with the row above.${r.skipped ? " The first row has no row above it." : ""}`
-            : `${r.updated} links separated.`
+            : `${r.updated} ${entryLabels} separated.`
           : action === "delete"
-            ? `${r.updated} links moved to Trash. Refresh will keep them there.`
+            ? `${r.updated} ${entryLabels} moved to Trash. Refresh will keep them there.`
             : range
-              ? `${r.updated} links marked read in the current order. The selected link was kept as it was.`
-              : `${r.updated} links updated.`,
+              ? `${r.updated} ${entryLabels} marked read in the current order. The selected ${entryLabel} was kept as it was.`
+              : `${r.updated} ${entryLabels} updated.`,
       );
     } catch (e) {
       setError(e.message);
@@ -480,9 +483,12 @@ function ItemDetail({ id }) {
       <section
         className={`collection-panel ${selection.selecting ? "is-selecting" : ""}`}
       >
-        <div className="tabs" aria-label="Link filters">
+        <div
+          className="tabs"
+          aria-label={imported ? "Entry filters" : "Link filters"}
+        >
           {[
-            ["all", "All links"],
+            ["all", `All ${entryLabels}`],
             ["unread", "Unread"],
             ["new", "New"],
             ["favorites", "Favorites"],
@@ -510,6 +516,7 @@ function ItemDetail({ id }) {
           rangeActions={filter !== "trash" && filter !== "ignored"}
           visible={visibleIds}
           patternSelection
+          noun={entryLabels}
           mergeActions={!item.deleted && filter !== "trash"}
           onAction={selectedAction}
           busy={busy || loading}
@@ -519,7 +526,7 @@ function ItemDetail({ id }) {
           <form
             className="search-form"
             role="search"
-            aria-label="Link search"
+            aria-label={imported ? "Entry search" : "Link search"}
             onSubmit={(event) => {
               event.preventDefault();
               submitSearch();
@@ -528,7 +535,7 @@ function ItemDetail({ id }) {
             <label className="search">
               <Icon as={SearchIcon} />
               <input
-                aria-label="Search links"
+                aria-label={`Search ${entryLabels}`}
                 type="search"
                 maxLength={300}
                 placeholder="Search"
@@ -539,7 +546,7 @@ function ItemDetail({ id }) {
           </form>
           <FilterOptions label="Sort">
             <select
-              aria-label="Order links by"
+              aria-label={`Order ${entryLabels} by`}
               value={sort}
               onChange={(e) => choose("sort", e.target.value)}
             >
@@ -562,7 +569,7 @@ function ItemDetail({ id }) {
 
         {initialLoading ? (
           <div className="empty" role="status">
-            Loading links…
+            Loading {entryLabels}…
           </div>
         ) : data.links.length ? (
           data.links.map((l, index) => (
@@ -576,7 +583,7 @@ function ItemDetail({ id }) {
                 <label className="row-select">
                   <input
                     type="checkbox"
-                    aria-label={`Select link: ${l.title}`}
+                    aria-label={`Select ${entryLabel}: ${l.title}`}
                     checked={selection.has(l.id)}
                     onChange={(event) =>
                       selection.toggle(
@@ -604,7 +611,7 @@ function ItemDetail({ id }) {
                     <span className="badge">New</span>
                   )}
                   {l.number != null && <span>No. {l.number}</span>}
-                  {!l.url && <span>No link</span>}
+                  {!l.url && !imported && <span>No link</span>}
                   <button
                     className="read-status"
                     aria-label={`${l.read ? "Mark unread" : "Mark read"}: ${l.title}`}
@@ -630,17 +637,18 @@ function ItemDetail({ id }) {
                 <IconButton
                   icon={StarIcon}
                   active={l.favorite}
-                  label={`${l.favorite ? "Unfavorite" : "Favorite"} link: ${l.title}`}
+                  label={`${l.favorite ? "Unfavorite" : "Favorite"} ${entryLabel}: ${l.title}`}
                   onClick={() => updateLink(l.id, { favorite: !l.favorite })}
                 />
                 <IconButton
                   icon={EyeOffIcon}
                   active={l.ignored}
-                  label={`${l.ignored ? "Unmute" : "Mute"} link: ${l.title}`}
+                  label={`${l.ignored ? "Unmute" : "Mute"} ${entryLabel}: ${l.title}`}
                   onClick={() => updateLink(l.id, { ignored: !l.ignored })}
                 />
                 <ActionMenu
                   record={l}
+                  noun={entryLabels}
                   rangeActions={filter !== "trash" && filter !== "ignored"}
                   links
                   mergeActions={!item.deleted && filter !== "trash"}
@@ -652,7 +660,10 @@ function ItemDetail({ id }) {
                 <div className="entry-details">
                   {l.members?.length > 1 && (
                     <details className="merged-links">
-                      <summary>{l.members.length} links in this entry</summary>
+                      <summary>
+                        {l.members.length} {entryLabels} in this{" "}
+                        {imported ? "group" : "entry"}
+                      </summary>
                       <ul>
                         {l.members.map((member) => (
                           <li key={member.id}>
@@ -700,16 +711,22 @@ function ItemDetail({ id }) {
         ) : (
           <div className="empty">
             <h2>
-              {searchError ? "Links unavailable" : "No links in this view"}
+              {searchError
+                ? `${imported ? "Entries" : "Links"} unavailable`
+                : `No ${entryLabels} in this view`}
             </h2>
-            <p>Change the filter, or refresh to check for content.</p>
+            <p>
+              {imported
+                ? "Change the filter or update the import."
+                : "Change the filter, or refresh to check for content."}
+            </p>
           </div>
         )}
         <div className="pagination">
           <span>
             {data.total
               ? `${offset + 1}–${Math.min(offset + 50, data.total)} of ${data.total}`
-              : "0 links"}{" "}
+              : `0 ${entryLabels}`}{" "}
             · Ordered by{" "}
             {data.sort_used === "source"
               ? "source"
@@ -749,8 +766,8 @@ function ItemDetail({ id }) {
             : `${item.pages_scanned} pages · ${item.methods.join(", ")}`}
         </p>
         <p>
-          {item.dated_count || 0} of {item.total_count} links have a source
-          date.
+          {item.dated_count || 0} of {item.total_count} {entryLabels} have a
+          source date.
         </p>
       </details>
       {params.get("settings") === "1" && !item.deleted && (
