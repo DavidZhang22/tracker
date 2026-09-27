@@ -998,6 +998,10 @@ a.entry-title:hover {
 .selection-toolbar {
   padding-block: 14px;
 }
+.selection-toolbar > select {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
 .selection-toolbar .selection-control {
   flex-wrap: nowrap;
   flex: 0 0 auto;
