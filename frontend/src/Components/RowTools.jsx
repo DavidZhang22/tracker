@@ -328,6 +328,8 @@ export function SelectionBar({
   rangeActions = false,
   mergeActions = false,
   patternSelection = false,
+  onClearNew,
+  hasNew = false,
   children,
 }) {
   const check = useRef();
@@ -392,6 +394,19 @@ export function SelectionBar({
           </select>
         </div>
         {children}
+        {onClearNew && !selected.length && !trash && (
+          <select
+            aria-label="More item actions"
+            value=""
+            disabled={busy || !hasNew}
+            onChange={onClearNew}
+          >
+            <option value="" disabled>
+              More actions
+            </option>
+            <option value="acknowledge">Clear new badges</option>
+          </select>
+        )}
       </div>
       {(!!selected.length || selection.selecting) && (
         <div
@@ -453,6 +468,7 @@ export function SelectionBar({
                         <>
                           <option value="read">Mark read</option>
                           <option value="unread">Mark unread</option>
+                          <option value="acknowledge">Clear new badges</option>
                           {rangeActions && selected.length === 1 && (
                             <>
                               <option value="read-before">

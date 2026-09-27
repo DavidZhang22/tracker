@@ -133,6 +133,11 @@ def test_two_accounts_cannot_read_mutate_refresh_or_bulk_other_library(app):
             "/api/links/bulk",
             {"ids": [lid], "item_id": item["id"], "action": "delete"},
         ),
+        (
+            "post",
+            "/api/links/bulk",
+            {"ids": [lid], "item_id": item["id"], "action": "acknowledge"},
+        ),
         ("post", "/api/items/bulk", {"ids": [item["id"]], "action": "delete"}),
         (
             "post",

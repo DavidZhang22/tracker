@@ -232,7 +232,7 @@ test("item view honors and validates linked controls; Continue is absent in Tras
   );
   await screen.findByRole("heading", { name: "My series" });
   expect(
-    screen.getByRole("button", { name: "Trash", exact: true }),
+    screen.getByRole("button", { name: "Trash 0", exact: true }),
   ).toHaveAttribute("aria-pressed", "true");
   expect(screen.getByLabelText("Order links by")).toHaveValue("auto");
   expect(screen.getByLabelText("Order direction")).toHaveValue("asc");

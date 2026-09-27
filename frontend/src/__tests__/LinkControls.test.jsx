@@ -259,7 +259,7 @@ test("a merged row exposes every URL, supports separation and uses Muted wording
     rows[1].url,
   );
   expect(
-    screen.getByRole("button", { name: "Muted", exact: true }),
+    screen.getByRole("button", { name: "Muted 0", exact: true }),
   ).toBeInTheDocument();
   await click(screen.getByLabelText("Actions for Chapter 1"));
   await click(await screen.findByRole("menuitem", { name: "Separate links" }));
@@ -274,9 +274,11 @@ test("a merged row exposes every URL, supports separation and uses Muted wording
 test("cached views are invalidated after a link changes", async () => {
   view();
   await screen.findByText("Chapter 1");
-  await click(screen.getByRole("button", { name: "Favorites", exact: true }));
+  await click(screen.getByRole("button", { name: "Favorites 0", exact: true }));
   await waitFor(() => expect(requests()).toHaveLength(2));
-  await click(screen.getByRole("button", { name: "All links", exact: true }));
+  await click(
+    screen.getByRole("button", { name: "All links 60", exact: true }),
+  );
   await waitFor(() =>
     expect(screen.getByLabelText("Select this page")).toBeEnabled(),
   );
@@ -387,4 +389,90 @@ test("merged web links retain each member's gathered details", async () => {
   await click(screen.getByLabelText("Details for South Hall"));
   expect(screen.getByText("Burger")).toBeVisible();
   expect(screen.getByText("Ravioli")).toBeVisible();
+});
+
+test("filter tabs show whole-item counts and keep totals while searching", async () => {
+  const counted = {
+    ...item,
+    ignored: true,
+    total_count: 721,
+    ignored_count: 3,
+    unread_count: 699,
+    read_count: 19,
+    new_count: 255,
+    favorites_count: 8,
+    trash_count: 4,
+  };
+  api.mockImplementation(async (path) =>
+    path.includes("/links?") ? { ...result, total: 1 } : counted,
+  );
+  view();
+  await screen.findByText("Chapter 1");
+  const names = [
+    "All links 718",
+    "Unread 699",
+    "New 255",
+    "Favorites 8",
+    "Read 19",
+    "Muted 3",
+    "Trash 4",
+  ];
+  for (const name of names)
+    expect(screen.getByRole("button", { name, exact: true })).toBeVisible();
+  expect(screen.queryByText(/This item is muted/)).not.toBeInTheDocument();
+  expect(screen.getByLabelText("Unmute item")).toBeEnabled();
+  fireEvent.change(screen.getByLabelText("Search links"), {
+    target: { value: "Chapter 1" },
+  });
+  fireEvent.submit(screen.getByRole("search", { name: "Link search" }));
+  await waitFor(() => expect(requests()).toHaveLength(2));
+  for (const name of names)
+    expect(screen.getByRole("button", { name, exact: true })).toBeVisible();
+});
+
+test("More actions clears new badges for the whole item and reloads counts", async () => {
+  let newCount = 2;
+  api.mockImplementation(async (path) =>
+    path.includes("/links?") ? result : { ...item, new_count: newCount },
+  );
+  post.mockImplementation(async () => {
+    newCount = 0;
+    return { ok: true };
+  });
+  view();
+  await screen.findByRole("button", { name: "New 2", exact: true });
+  expect(
+    screen.queryByRole("button", { name: "Clear new badges" }),
+  ).not.toBeInTheDocument();
+  await act(async () =>
+    fireEvent.change(screen.getByLabelText("More item actions"), {
+      target: { value: "acknowledge" },
+    }),
+  );
+  expect(post).toHaveBeenCalledWith("/items/one/acknowledge");
+  await screen.findByRole("button", { name: "New 0", exact: true });
+  expect(screen.getByLabelText("More item actions")).toBeDisabled();
+  expect(
+    screen.getByRole("button", { name: "Unread 60", exact: true }),
+  ).toBeVisible();
+});
+
+test("selected badge clearing is scoped and positions use compact numbering", async () => {
+  view();
+  await screen.findByText("Chapter 1");
+  await click(screen.getByLabelText("Select link: Chapter 2"));
+  expect(screen.getByText("#1")).toBeVisible();
+  expect(screen.getByText("#3")).toBeVisible();
+  expect(screen.queryByLabelText("More item actions")).not.toBeInTheDocument();
+  await act(async () =>
+    fireEvent.change(screen.getByLabelText("More bulk actions"), {
+      target: { value: "acknowledge" },
+    }),
+  );
+  expect(post).toHaveBeenCalledWith("/links/bulk", {
+    action: "acknowledge",
+    ids: ["c2"],
+    item_id: "one",
+  });
+  expect(screen.queryByText("#1")).not.toBeInTheDocument();
 });

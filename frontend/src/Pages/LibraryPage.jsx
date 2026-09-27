@@ -396,11 +396,6 @@ export default function LibraryPage() {
           </div>
         ) : visible.length ? (
           <div className="item-list">
-            <div className="list-heading">
-              <span>ITEM</span>
-              <span>PROGRESS</span>
-              <span />
-            </div>
             {visible.map((i) => (
               <article
                 key={i.id}

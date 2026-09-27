@@ -255,45 +255,6 @@ main {
 .button.primary:not(:disabled):hover {
   background: #00665e;
 }
-.summary-strip {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  background: white;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  margin-bottom: 28px;
-}
-.summary-strip button {
-  border: 0;
-  background: none;
-  text-align: left;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 14px;
-  padding: 25px 24px;
-  font-size: 0.875rem;
-  color: var(--muted);
-}
-.summary-strip button + button {
-  border-left: 1px solid var(--line);
-}
-.summary-strip button:hover {
-  background: #f1f8f6;
-}
-.summary-number {
-  font-size: 1.85rem;
-  color: var(--ink);
-  letter-spacing: -0.06em;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-}
-.teal {
-  color: var(--accent);
-}
-.summary-strip .icon {
-  width: 16px;
-}
 .collection-panel {
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -381,22 +342,12 @@ select {
   font-size: 0.875rem;
   max-width: 100%;
 }
-.list-heading,
 .item-row {
   display: grid;
   grid-template-columns: minmax(230px, 1fr) 130px 145px 110px;
   gap: 18px;
   align-items: center;
   padding: 22px 23px;
-}
-.list-heading {
-  background: #f8fafb;
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-  padding-top: 12px;
-  padding-bottom: 12px;
-  border-top: 1px solid var(--line);
 }
 .item-row {
   border-top: 1px solid var(--line);
@@ -987,21 +938,11 @@ a.entry-title:hover {
   .topbar {
     padding: 0 25px;
   }
-  .list-heading,
   .item-row {
     grid-template-columns: minmax(170px, 1fr) 108px 106px;
     gap: 14px;
   }
-  .list-heading span:nth-child(3),
   .last-checked {
-    display: none;
-  }
-  .summary-strip button {
-    padding: 20px 16px;
-    gap: 10px;
-    grid-template-columns: auto 1fr;
-  }
-  .summary-strip .icon {
     display: none;
   }
   .tabs {
@@ -1156,14 +1097,12 @@ a.entry-title:hover {
   padding: 1px 5px;
 }
 @media (min-width: 801px) {
-  .item-row,
-  .list-heading {
+  .item-row {
     grid-template-columns: minmax(0, 1fr) 155px 125px 110px;
   }
 }
 @media (max-width: 1100px) and (min-width: 801px) {
-  .item-row,
-  .list-heading {
+  .item-row {
     grid-template-columns: minmax(0, 1fr) 130px 110px;
   }
 }

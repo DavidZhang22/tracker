@@ -132,6 +132,7 @@ class BulkRequest(BaseModel):
         "restore",
         "read",
         "unread",
+        "acknowledge",
     ]
     item_id: str | None = None
 

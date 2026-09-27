@@ -375,6 +375,7 @@ class Store:
             rows = db.execute(
                 f"""SELECT i.*, count(l.id) total_count,
               coalesce(sum(l.ignored),0) ignored_count,
+              coalesce(sum(l.favorite=1 AND l.ignored=0),0) favorites_count,
               coalesce(sum(l.read=1 AND l.ignored=0),0) read_count,
               coalesce(sum(l.read=0 AND l.ignored=0),0) unread_count,
               coalesce(sum(l.is_new=1 AND l.ignored=0 AND l.read=0),0) new_count,
@@ -390,7 +391,22 @@ class Store:
                 (item_id,) if item_id else (trash,),
             ).fetchall()
             items = [self.decode(r) for r in rows]
+            # A group is in Trash when any member is deleted, counted once.
+            item_ids = [item["id"] for item in items]
+            trash_counts = (
+                dict(
+                    db.execute(
+                        "SELECT item_id,count(DISTINCT coalesce(merged_into,id)) "
+                        f"FROM links WHERE deleted=1 AND item_id IN ({','.join('?' for _ in item_ids)}) "
+                        "GROUP BY item_id",
+                        item_ids,
+                    )
+                )
+                if items
+                else {}
+            )
             for item in items:
+                item["trash_count"] = trash_counts.get(item["id"], 0)
                 count = item.pop("active_count")
                 numbered = item.pop("active_numbered")
                 dated = item.pop("active_dated")
@@ -1041,7 +1057,9 @@ class Store:
             "restore": "deleted=0",
         }
         if table == "links":
-            actions.update(read="read=1,is_new=0", unread="read=0")
+            actions.update(
+                read="read=1,is_new=0", unread="read=0", acknowledge="is_new=0"
+            )
         if (
             table not in {"items", "links"}
             or action not in actions

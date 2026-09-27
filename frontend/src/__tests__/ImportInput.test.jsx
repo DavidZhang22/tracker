@@ -477,7 +477,7 @@ test("pasted problems without links show titles and details before saving read c
     read_indices: [1],
   });
   expect(
-    await screen.findByRole("button", { name: "All entries" }),
+    await screen.findByRole("button", { name: /^All entries \d+$/ }),
   ).toBeVisible();
 });
 

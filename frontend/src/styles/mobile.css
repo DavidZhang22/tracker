@@ -351,24 +351,6 @@ h1,
     min-height: 44px;
     margin-bottom: 12px;
   }
-  .summary-strip {
-    margin-bottom: 22px;
-  }
-  .summary-strip button {
-    padding: 16px 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-    font-size: 0.78rem;
-    line-height: 1.4;
-  }
-  .summary-number {
-    font-size: 1.65rem;
-  }
-  .summary-strip .icon {
-    display: none;
-  }
   .tabs {
     gap: 20px;
     padding: 0 14px;
@@ -426,9 +408,6 @@ h1,
     padding-left: 10px;
     padding-right: 20px;
     text-overflow: ellipsis;
-  }
-  .list-heading {
-    display: none;
   }
   .item-row {
     grid-template-columns: minmax(0, 1fr) 44px;
@@ -733,9 +712,6 @@ h1,
   }
   .sidebar nav {
     grid-template-columns: 1fr;
-  }
-  .summary-strip button {
-    padding: 14px 10px;
   }
   .filter-options {
     grid-template-columns: minmax(0, 1fr);

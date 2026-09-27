@@ -427,32 +427,6 @@ function ItemDetail({ id }) {
           </button>
         </Notice>
       )}
-      {item.ignored && (
-        <Notice>
-          This item is muted. It is excluded from Refresh all and your active
-          library.{" "}
-          <button
-            className="text-button"
-            onClick={() => update({ ignored: false })}
-          >
-            Unmute item
-          </button>
-        </Notice>
-      )}
-      <div className="summary-strip">
-        <button onClick={() => choose("filter", "unread")}>
-          <span className="summary-number">{item.unread_count}</span>
-          <span>Unread</span>
-        </button>
-        <button onClick={() => choose("filter", "new")}>
-          <span className="summary-number teal">{item.new_count}</span>
-          <span>New items</span>
-        </button>
-        <button onClick={() => choose("filter", "read")}>
-          <span className="summary-number">{item.read_count}</span>
-          <span>Read of {item.total_count - item.ignored_count}</span>
-        </button>
-      </div>
       <Description
         item={item}
         onEdit={() => showSettings(true, true)}
@@ -478,15 +452,6 @@ function ItemDetail({ id }) {
               Add entry
             </button>
           )}
-          {item.new_count > 0 && (
-            <button
-              className="text-button"
-              onClick={() => bulk("acknowledge")}
-              disabled={busy}
-            >
-              Clear new badges
-            </button>
-          )}
           <button
             className="button"
             onClick={() => bulk("read")}
@@ -505,24 +470,28 @@ function ItemDetail({ id }) {
           aria-label={imported ? "Entry filters" : "Link filters"}
         >
           {[
-            ["all", `All ${entryLabels}`],
-            ["unread", "Unread"],
-            ["new", "New"],
-            ["favorites", "Favorites"],
-            ["read", "Read"],
-            ["ignored", "Muted"],
+            [
+              "all",
+              `All ${entryLabels}`,
+              item.total_count - item.ignored_count,
+            ],
+            ["unread", "Unread", item.unread_count],
+            ["new", "New", item.new_count],
+            ["favorites", "Favorites", item.favorites_count],
+            ["read", "Read", item.read_count],
+            ["ignored", "Muted", item.ignored_count],
             ...(item.kind === "events" || item.upcoming_count > 0
-              ? [["upcoming", "Upcoming"]]
+              ? [["upcoming", "Upcoming", item.upcoming_count]]
               : []),
-            ["trash", "Trash"],
-          ].map(([key, label]) => (
+            ["trash", "Trash", item.trash_count],
+          ].map(([key, label, count]) => (
             <button
               key={key}
               aria-pressed={filter === key}
               className={filter === key ? "selected" : ""}
               onClick={() => choose("filter", key)}
             >
-              {label}
+              {label} <span>{count ?? 0}</span>
             </button>
           ))}
         </div>
@@ -536,6 +505,8 @@ function ItemDetail({ id }) {
           noun={entryLabels}
           mergeActions={!item.deleted && filter !== "trash"}
           onAction={selectedAction}
+          onClearNew={!item.deleted ? () => bulk("acknowledge") : undefined}
+          hasNew={item.new_count > 0}
           busy={busy || loading}
           trash={filter === "trash"}
           links
@@ -621,9 +592,7 @@ function ItemDetail({ id }) {
                   onAuxClick={(e) => openLink(e, l)}
                 />
                 <div className="entry-subtitle">
-                  {selection.selecting && (
-                    <span>Position {offset + index + 1}</span>
-                  )}
+                  {selection.selecting && <span>#{offset + index + 1}</span>}
                   {l.is_new && !l.read && !l.ignored && (
                     <span className="badge">New</span>
                   )}

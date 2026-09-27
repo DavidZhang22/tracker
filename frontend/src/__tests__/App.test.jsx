@@ -371,7 +371,7 @@ test("changing a link filter clears bulk selection", async () => {
   await screen.findByText("Chapter 1");
   await click(screen.getByLabelText("Select link: Chapter 1"));
   expect(screen.getByText("1 selected")).toBeInTheDocument();
-  await click(screen.getByRole("button", { name: "Favorites", exact: true }));
+  await click(screen.getByRole("button", { name: "Favorites 0", exact: true }));
   expect(screen.queryByText("1 selected")).not.toBeInTheDocument();
 });
 

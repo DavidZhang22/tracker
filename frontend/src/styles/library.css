@@ -28,16 +28,12 @@
 .library-panel .toolbar {
   padding-block: 16px;
 }
-.library-panel .item-row,
-.library-panel .list-heading {
+.library-panel .item-row {
   grid-template-columns: minmax(0, 1fr) 164px 110px;
   gap: 20px;
 }
 .library-panel .item-row {
   padding-block: 20px;
-}
-.library-panel .list-heading {
-  font-size: 0.6875rem;
 }
 .library-panel .item-identity {
   gap: 12px;
@@ -77,8 +73,7 @@
 }
 
 @media (max-width: 1000px) and (min-width: 801px) and (pointer: fine) {
-  .library-panel .item-row,
-  .library-panel .list-heading {
+  .library-panel .item-row {
     grid-template-columns: minmax(0, 1fr) 130px 110px;
     gap: 14px;
   }
