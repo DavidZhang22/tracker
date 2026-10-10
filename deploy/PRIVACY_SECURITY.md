@@ -48,6 +48,22 @@ remove a completed record only after all copies predating that deletion are
 gone, including independent/manual backups. Do not retain request emails or
 identity evidence longer than justified by the request and applicable law.
 
+## Browser session privacy
+
+Signing in, signing out, changing a password, and closing an account notify
+other tabs to recheck the session. The signal carries no account data or tokens.
+Private views unmount before revalidation, including after an API 401 or a page
+restored from browser history. A failed or stale status request cannot restore
+the previous account's view. Server-side authorization remains the boundary
+for every private API operation.
+
+The October 10, 2026 focused review covered account isolation, recovery, exports,
+source fetching, imports, shared caches and public file/API exposure. It also
+updated AnyIO to 4.14.2 and pypdf to 6.19.0, with minimum patched versions in the
+manifest and exact versions in the lockfile. Both production dependency audits
+reported no known vulnerabilities after those updates. Re-run audits when
+updating dependencies; this review is not a guarantee against every vulnerability.
+
 ## Requests arriving by email
 
 Monitor the configured contact mailbox. Optional recovery email delivery is
@@ -60,7 +76,7 @@ For a verified request when the person cannot sign in, run the private operator
 CLI on the VM. Deletion prompts for the username again and is irreversible:
 
 ```sh
-cd /home/azureuser/tracker
+cd /opt/trackify
 sudo docker compose --env-file deploy/.env -f deploy/compose.yaml exec app \
   /app/backend/.venv/bin/python -m app.tracker.accounts delete USERNAME
 

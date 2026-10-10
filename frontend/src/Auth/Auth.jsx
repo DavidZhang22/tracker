@@ -3,6 +3,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import { Link } from "react-router-dom";
@@ -10,6 +11,7 @@ import { api, post } from "../api";
 import { Notice } from "../Components/Notice";
 import AppLoading from "../Components/AppLoading";
 import PublicLayout from "../Components/PublicLayout";
+import { notifySessionChange, watchSessionChanges } from "./sessionEvents";
 
 const AuthContext = createContext({ required: false, user: null });
 export const useAuth = () => useContext(AuthContext);
@@ -18,19 +20,49 @@ export function AuthBoundary({ children }) {
   const [sessionNotice, setSessionNotice] = useState("");
   const [status, setStatus] = useState(null),
     [error, setError] = useState("");
+  const pending = useRef(null);
+  const generation = useRef(0);
+  const replaceStatus = useCallback((next) => {
+    generation.current += 1;
+    pending.current?.abort();
+    setStatus(next);
+  }, []);
   const load = useCallback(async () => {
+    const current = ++generation.current;
+    pending.current?.abort();
+    const controller = new AbortController();
+    pending.current = controller;
+    setStatus(null);
+    setError("");
     try {
-      setStatus(await api("/auth/status"));
-      setError("");
+      const next = await api("/auth/status", { signal: controller.signal });
+      if (current === generation.current) setStatus(next);
     } catch (e) {
-      setError(e.message);
+      if (current === generation.current && e.name !== "AbortError")
+        setError(e.message);
     }
   }, []);
   useEffect(() => {
     load();
+    const stopWatching = watchSessionChanges(load);
+    const restored = (event) => {
+      if (event.persisted) load();
+    };
     window.addEventListener("trackify:unauthorized", load);
-    return () => window.removeEventListener("trackify:unauthorized", load);
+    window.addEventListener("pageshow", restored);
+    return () => {
+      generation.current += 1;
+      pending.current?.abort();
+      stopWatching();
+      window.removeEventListener("trackify:unauthorized", load);
+      window.removeEventListener("pageshow", restored);
+    };
   }, [load]);
+  const endSession = (message = "") => {
+    setSessionNotice(message);
+    replaceStatus({ ...status, user: null });
+    notifySessionChange();
+  };
   if (!status)
     return (
       <AppLoading>
@@ -51,7 +83,10 @@ export function AuthBoundary({ children }) {
           notice={sessionNotice}
           registration={status.registration}
           inviteRequired={status.invite_required ?? true}
-          onSignedIn={(user) => setStatus({ ...status, user })}
+          onSignedIn={(user) => {
+            replaceStatus({ ...status, user });
+            notifySessionChange();
+          }}
         />
       </PublicLayout>
     );
@@ -60,13 +95,10 @@ export function AuthBoundary({ children }) {
       key={status.user?.id ?? status.user?.username ?? "local"}
       value={{
         ...status,
-        endSession: (message = "") => {
-          setSessionNotice(message);
-          setStatus({ ...status, user: null });
-        },
+        endSession,
         logout: async () => {
           await post("/auth/logout");
-          setStatus({ ...status, user: null });
+          endSession();
         },
       }}
     >

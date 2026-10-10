@@ -4,6 +4,7 @@ import { ArrowLeftIcon } from "@heroicons/react/outline";
 import { Icon } from "../Components/Icons";
 import { post } from "../api";
 import { Notice } from "../Components/Notice";
+import { notifySessionChange } from "./sessionEvents";
 import { useAuth } from "./Auth";
 import AccountData from "./AccountData";
 import RecoveryEmail from "./RecoveryEmail";
@@ -33,6 +34,7 @@ export default function AccountPage({ embedded = false }) {
       setCurrent("");
       setPassword("");
       setRepeat("");
+      notifySessionChange();
       setMessage("Password changed. Other sessions have been signed out.");
     } catch (e) {
       setError(e.message);

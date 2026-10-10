@@ -4,7 +4,9 @@ import { MemoryRouter } from "react-router-dom";
 import RecoveryPage from "../Auth/RecoveryPage";
 import RecoveryEmail from "../Auth/RecoveryEmail";
 import { api, post } from "../api";
+import { notifySessionChange } from "../Auth/sessionEvents";
 vi.mock("../api", () => ({ api: vi.fn(), post: vi.fn() }));
+vi.mock("../Auth/sessionEvents", () => ({ notifySessionChange: vi.fn() }));
 beforeEach(() => {
   vi.resetAllMocks();
   window.history.replaceState(null, "", "/");
@@ -50,6 +52,7 @@ test("opening an email does not consume its token; continuation exchanges it wit
     await screen.findByText("The new passwords do not match."),
   ).toBeInTheDocument();
   expect(post).toHaveBeenCalledTimes(1);
+  expect(notifySessionChange).not.toHaveBeenCalled();
   fireEvent.change(screen.getByLabelText("Repeat new password"), {
     target: { value: "a-new-password" },
   });
@@ -58,6 +61,7 @@ test("opening an email does not consume its token; continuation exchanges it wit
   expect(post).toHaveBeenCalledWith("/auth/recovery/password", {
     new_password: "a-new-password",
   });
+  expect(notifySessionChange).toHaveBeenCalledTimes(1);
 });
 
 test("verification requires an explicit click and does not sign in", async () => {

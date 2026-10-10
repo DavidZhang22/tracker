@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api, post } from "../api";
 import { Notice } from "../Components/Notice";
+import { notifySessionChange } from "./sessionEvents";
 import "../styles/recovery.css";
 
 export default function RecoveryPage({ verify = false }) {
@@ -82,6 +83,7 @@ export default function RecoveryPage({ verify = false }) {
         }
       } else if (grant) {
         await post("/auth/recovery/password", { new_password: password });
+        notifySessionChange();
         setPassword("");
         setRepeat("");
         setGrant(null);
