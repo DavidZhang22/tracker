@@ -14,7 +14,7 @@ Migration and public DNS cutover completed on October 10, 2026.
 | Data volume | `catchup_tracker-data` |
 | Domain | `tracki.fyi`, pointing to `204.168.136.246` (Cloudflare DNS only) |
 | Previous domain | `mediatrackify.duckdns.org`, redirects to `tracki.fyi` |
-| Application release | `b9b539d` |
+| Application release | `3325cd7` |
 
 ## Prepared state
 
@@ -70,9 +70,19 @@ docker exec catchup-app-1 /app/backend/.venv/bin/python -c \
   "import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:8000/api/ready', timeout=5).status)"
 ```
 
-Images are also tagged `catchup-app:hetzner-b9b539d` and
-`catchup-browser:hetzner-b9b539d`. Container restart policies restore the
-running configuration after a host restart.
+The current app image is tagged `catchup-app:security-3325cd7`; it includes
+cross-tab session invalidation, AnyIO 4.14.2 and pypdf 6.19.0. The prior app
+image is retained as `catchup-app:before-security-3325cd7` for emergency rollback.
+The renderer remains `catchup-browser:hetzner-b9b539d`. Container restart
+policies restore the running configuration after a host restart.
+
+The security release passed the full frontend suite (262 tests), authentication
+and privacy tests, and source-fetch/import regression tests. An isolated Linux
+container check verified signup, account separation, origin checks, logout and
+private-response cache headers. Public HTTPS checks confirmed the new frontend
+code, nine initial assets, readiness, anonymous private-API rejection and the
+old-domain redirect after activation. No Cloudflare, proxy or firewall rules
+were changed for this release.
 
 ## Backups
 
