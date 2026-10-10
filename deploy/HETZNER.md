@@ -12,7 +12,8 @@ Migration and public DNS cutover completed on October 10, 2026.
 | Application directory | `/opt/trackify` |
 | Compose project | `catchup` |
 | Data volume | `catchup_tracker-data` |
-| Domain | `mediatrackify.duckdns.org`, pointing to `204.168.136.246` |
+| Domain | `tracki.fyi`, pointing to `204.168.136.246` (Cloudflare DNS only) |
+| Previous domain | `mediatrackify.duckdns.org`, redirects to `tracki.fyi` |
 | Application release | `b9b539d` |
 
 ## Prepared state
@@ -58,9 +59,10 @@ docker compose -p catchup --env-file deploy/.env \
   -f deploy/compose.yaml logs --tail=50 app browser web
 ```
 
-The production proxy serves HTTPS using the transferred certificate. TLS
-validation, four application routes, seven initial static assets, readiness
-and anonymous library rejection passed checks against the Hetzner IP.
+The production proxy serves `tracki.fyi` using a verified, automatically renewed
+Let's Encrypt certificate. TLS validation, four application routes, eight initial
+static assets, readiness, anonymous library rejection and exact-origin checks
+passed after the domain cutover.
 Check the private application's readiness from the host:
 
 ```sh
@@ -113,8 +115,20 @@ public URL connected to Hetzner with a valid HTTPS certificate and returned
 is enabled, as it was on Azure. Existing credentials and session records were
 preserved; an interactive password sign-in was not performed during migration.
 
-If IPv6 is enabled later, use `2a01:4f9:c012:ead9::1`. A custom domain can be
-added separately without another database move.
+The primary hostname is now `tracki.fyi`. Its Cloudflare A record is DNS only
+(gray cloud), pointing to `204.168.136.246`. Keep it DNS only with the current
+proxy configuration; enabling Cloudflare proxying requires Full (strict) TLS
+and trusted Cloudflare client-IP forwarding for accurate per-client limits.
+No AAAA or `www` record was configured for the new domain.
+
+`deploy/.env` sets `TRACKER_DOMAIN=tracki.fyi`. The host-specific file
+`deploy/redirects/legacy.caddy` redirects the old DuckDNS hostname to the new
+hostname with HTTP 308, preserving paths and query strings. Keep the DuckDNS
+record pointed at this server so old bookmarks and certificate renewals work.
+Users sign in again at the new hostname because session cookies are host-only;
+accounts, passwords and libraries stay in the same data volume.
+
+If IPv6 is enabled later, use `2a01:4f9:c012:ead9::1`.
 
 Temporary transfer archives and extracted copies were removed after validation.
 Each server retains a private verification report at
