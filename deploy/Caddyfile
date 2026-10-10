@@ -20,3 +20,5 @@
         flush_interval -1
     }
 }
+
+import redirects/*.caddy

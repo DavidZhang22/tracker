@@ -74,3 +74,6 @@ backend/tests/live-report.json
 backend/tests/collections-report.json
 # Historical cache paths created by running commands from the wrong directory.
 backend/backend/data/
+
+# Host-specific redirects are configured on the deployment server.
+deploy/redirects/*.caddy
