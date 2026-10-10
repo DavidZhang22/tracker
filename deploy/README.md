@@ -1,6 +1,6 @@
 # Hosting Trackify
 
-The Docker Compose stack runs FastAPI, a network-isolated Chromium worker and Caddy HTTPS on one Linux VM. SQLite uses a persistent volume; no managed database or paid inference service is needed. The current deployment is documented in [AZURE.md](AZURE.md).
+The Docker Compose stack runs FastAPI, a network-isolated Chromium worker and Caddy HTTPS on one Linux VM. SQLite uses a persistent volume; no managed database or paid inference service is needed. The Azure source is documented in [AZURE.md](AZURE.md). The prepared Hetzner server and remaining migration steps are in [HETZNER.md](HETZNER.md).
 
 ## Setup
 
@@ -68,7 +68,7 @@ The same command supports `create USERNAME` for private account creation. When i
 
 Keep the Compose project name `catchup`: deployed data resides in `catchup_tracker-data`. Renaming the project would select new empty volumes. Session cookie names and backup filenames also retain their original names for compatibility.
 
-Use SQLite's online backup API and verify snapshots. Do not copy a live database file without its WAL state. The current VM's daily backup, retention and restore process is documented in [AZURE.md](AZURE.md) and [PRIVACY_SECURITY.md](PRIVACY_SECURITY.md). Never restore a backup without applying the current account-erasure ledger. Keep private off-server backups; the default daily job stores snapshots on the VM.
+Use SQLite's online backup API and verify snapshots. Do not copy a live database file without its WAL state. Daily backup, retention and restore procedures are documented in [AZURE.md](AZURE.md), [HETZNER.md](HETZNER.md) and [PRIVACY_SECURITY.md](PRIVACY_SECURITY.md). Never restore a backup without applying the current account-erasure ledger. Keep private off-server backups; the default daily job stores snapshots on the VM.
 
 `/api/ready` returns 503 when storage is unavailable. Writes fail visibly and existing data is preserved. Authentication, exact-origin checks and per-account authorization remain enabled in production. Models, scans and browser rendering have bounded concurrency and resource limits; see [SAFEGUARDS.md](SAFEGUARDS.md).
 

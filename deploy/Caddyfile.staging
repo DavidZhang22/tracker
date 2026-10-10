@@ -1,0 +1,5 @@
+:80 {
+    header Cache-Control "no-store"
+    header Retry-After "3600"
+    respond "Trackify migration is being prepared." 503
+}
