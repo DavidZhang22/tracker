@@ -1,8 +1,14 @@
-# Trackify deployment
+# Azure source deployment
 
 Azure VM: `20.25.217.119`, Ubuntu 24.04, SSH user `azureuser`.
-Domain: `mediatrackify.duckdns.org`; its A record must point to the Azure IP.
+Domain: `mediatrackify.duckdns.org`; its A record now points to Hetzner, `204.168.136.246`.
 Application directory: `/home/azureuser/tracker`.
+
+On October 10, 2026, the current data and HTTPS certificates were copied and
+verified on [Hetzner](HETZNER.md). The Azure app and renderer are stopped, Caddy
+serves maintenance mode, and the backup timer is disabled. These instructions
+describe the source deployment; do not start it again after the cutover without
+reconciling new Hetzner writes and account deletions.
 
 The stack uses Docker Compose, a private app container, and Caddy on ports 80/443.
 Accounts and libraries live in the persistent `catchup_tracker-data` volume.

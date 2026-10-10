@@ -1,6 +1,6 @@
 # Hosting Trackify
 
-The Docker Compose stack runs FastAPI, a network-isolated Chromium worker and Caddy HTTPS on one Linux VM. SQLite uses a persistent volume; no managed database or paid inference service is needed. The Azure source is documented in [AZURE.md](AZURE.md). The prepared Hetzner server and remaining migration steps are in [HETZNER.md](HETZNER.md).
+The Docker Compose stack runs FastAPI, a network-isolated Chromium worker and Caddy HTTPS on one Linux VM. SQLite uses a persistent volume; no managed database or paid inference service is needed. The Azure source is documented in [AZURE.md](AZURE.md). The Hetzner deployment and DNS cutover status are in [HETZNER.md](HETZNER.md).
 
 ## Setup
 

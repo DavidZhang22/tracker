@@ -1,6 +1,6 @@
 # Hetzner deployment
 
-Prepared on October 10, 2026. The Azure data import and DNS cutover are pending.
+Migration and public DNS cutover completed on October 10, 2026.
 
 | Setting | Value |
 | --- | --- |
@@ -12,7 +12,7 @@ Prepared on October 10, 2026. The Azure data import and DNS cutover are pending.
 | Application directory | `/opt/trackify` |
 | Compose project | `catchup` |
 | Data volume | `catchup_tracker-data` |
-| Domain | `mediatrackify.duckdns.org`, still pointing to Azure |
+| Domain | `mediatrackify.duckdns.org`, pointing to `204.168.136.246` |
 | Application release | `b9b539d` |
 
 ## Prepared state
@@ -27,35 +27,41 @@ TCP 80/443 and UDP 443 for both IPv4 and IPv6. Automatic security updates are
 enabled.
 
 The deployment uses `TRACKER_LINK_MODEL=cascade` and two analysis workers.
-`deploy/.env` is private (mode 600). Registration is closed and email delivery
-is disabled during staging. The hosting description identifies Hetzner Cloud
+`deploy/.env` is private (mode 600). Public registration is restored to the source setting. Email delivery
+remains disabled until an email sender is configured. The hosting description identifies Hetzner Cloud
 in Helsinki, Finland.
 
 The deployed build comes from committed source. Unfinished local model
 experiments, local databases and credentials were excluded. Native inference,
 the cascade, 384-dimensional semantic embeddings, JavaScript pagination,
 entry actions, authentication and frontend assets passed staging checks.
-These checks used synthetic data and did not import any user accounts.
+The initial model and renderer checks used synthetic data. The final migration
+then copied the stopped source's accounts, libraries, shared caches, environment
+settings and Caddy certificate state. Every transferred file matched its SHA-256
+checksum. Database integrity checks and logical comparisons confirmed that
+accounts, password hashes, preferences, items, entries and the erasure ledger
+matched the source after startup.
 The server was rebooted into kernel 7.0.0-38-generic; the services recovered
 automatically and the model/browser checks passed again.
 
-## Staging operations
+## Operations
 
-Run these commands from `/opt/trackify`. Keep the staging override until the
-final import is verified:
+Run these commands from `/opt/trackify`. The running deployment uses the
+production configuration:
 
 ```sh
 docker compose -p catchup --env-file deploy/.env \
-  -f deploy/compose.yaml -f deploy/compose.staging.yaml up -d --no-build --wait
+  -f deploy/compose.yaml up -d --no-build --wait
 docker compose -p catchup --env-file deploy/.env \
-  -f deploy/compose.yaml -f deploy/compose.staging.yaml ps
+  -f deploy/compose.yaml ps
 docker compose -p catchup --env-file deploy/.env \
-  -f deploy/compose.yaml -f deploy/compose.staging.yaml logs --tail=50 app browser web
+  -f deploy/compose.yaml logs --tail=50 app browser web
 ```
 
-The staging proxy returns HTTP 503 with a maintenance message on port 80. It
-does not expose the empty staging library or request a TLS certificate. Check
-the private application's readiness from the host:
+The production proxy serves HTTPS using the transferred certificate. TLS
+validation, four application routes, seven initial static assets, readiness
+and anonymous library rejection passed checks against the Hetzner IP.
+Check the private application's readiness from the host:
 
 ```sh
 docker exec catchup-app-1 /app/backend/.venv/bin/python -c \
@@ -87,8 +93,7 @@ Nice=10
 
 The timer is installed from `deploy/catchup-backup.timer`. The backup script
 uses SQLite's backup API, verifies integrity and retains at most seven
-snapshots for seven days. The initial empty staging databases passed backup
-verification.
+snapshots for seven days. The migrated account and library databases passed backup verification.
 
 ```sh
 systemctl start catchup-backup.service
@@ -99,35 +104,41 @@ systemctl list-timers catchup-backup.timer --no-pager
 These snapshots are on the same VM. Private off-server backup storage still
 needs to be configured. Do not publish archives or commit them to Git.
 
-## Remaining migration
+## DNS cutover and Azure retirement
 
-1. Reactivate Azure and confirm its current accounts and libraries. Preserve
-   the latest source data, configuration and account-erasure ledger.
-2. Put Azure into maintenance mode, stop application writes and make a final
-   verified snapshot. Include all account libraries and settings. Preserve
-   shared scan caches and recipes when transferring the stopped data volume.
-3. Transfer through SSH into a private staging directory on Hetzner. Keep
-   source credentials out of terminal output. Copy the source environment
-   settings, retaining the Hetzner hosting description and leaving email
-   delivery disabled. Registration should stay closed until validation.
-4. Validate all databases and compare account/item counts. Apply the current
-   erasure ledger when restoring any snapshot using
-   `deploy/prepare-restore.py`; never reintroduce deleted accounts or old
-   recovery addresses. Stop the Hetzner app before replacing its data, and
-   preserve the container user's ownership. Keep a copy for rollback.
-5. Transfer the existing Caddy certificate state consistently or arrange
-   certificate issuance after the DNS change. Verify the restored app and
-   private library access before exposing it.
-6. Update the domain's A record to `204.168.136.246`. If an AAAA record is used,
-   it must point to `2a01:4f9:c012:ead9::1`. Start the production proxy without
-   the staging override, recreating the web container so its bind mount
-   attaches the production Caddyfile. Verify HTTPS, sign-in, library counts,
-   refreshes and a new backup. Restore the intended registration mode.
-7. Keep Azure available for rollback until verification passes. If users
-   have already written data on Hetzner, reconcile those writes before any
-   rollback. Remove unneeded Azure resources only after the migration is
-   accepted.
+The DuckDNS A record points to `204.168.136.246`; no AAAA record is set.
+Cloudflare and Google resolvers both returned the new address. The normal
+public URL connected to Hetzner with a valid HTTPS certificate and returned
+200 for readiness and 401 for an anonymous library request. Public registration
+is enabled, as it was on Azure. Existing credentials and session records were
+preserved; an interactive password sign-in was not performed during migration.
+
+If IPv6 is enabled later, use `2a01:4f9:c012:ead9::1`. A custom domain can be
+added separately without another database move.
+
+Temporary transfer archives and extracted copies were removed after validation.
+Each server retains a private verification report at
+`/root/trackify-migration-20261010/verification.json`. The new daily backup
+was verified against the migrated account and library databases.
+
+Azure's application and browser containers are stopped. Its Caddy container
+serves maintenance mode, and its backup timer is disabled. The frozen source
+volume and its verified final backup remain available for rollback. Azure
+resources have not been deleted or deallocated.
+
+Do not restart the Azure app or restore its old data after users have written
+to Hetzner without reconciling those changes and the latest account-erasure
+ledger. Use `deploy/prepare-restore.py` when restoring snapshots; it applies
+current deletions and credentials and revokes restored sessions.
+
+After the user verifies access, retire the
+unused Azure VM, disks and public IP. Deleting those resources is a separate
+step; stopping the guest alone does not remove all charges.
+
+The optional `deploy/compose.staging.yaml` override serves an HTTP 503
+maintenance page for future empty staging deployments. Do not add it to the
+normal production command.
 
 Do not change the Compose project name: a different name selects new, empty
-volumes. See [AZURE.md](AZURE.md) for the source server and
+volumes. See [AZURE.md](AZURE.md) for the frozen source and
 [PRIVACY_SECURITY.md](PRIVACY_SECURITY.md) for restoration safeguards.
